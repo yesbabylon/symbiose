@@ -5,23 +5,7 @@
         "data": [
             {
                 "id": 1,
-                "name": "Software"
-            },
-            {
-                "id": 2,
-                "name": "Infrastructure"
-            },
-            {
-                "id": 3,
-                "name": "Data"
-            },
-            {
-                "id": 4,
-                "name": "Access"
-            },
-            {
-                "id": 5,
-                "name": "Mobility"
+                "name": "Provider Category default"
             }
         ]
     }

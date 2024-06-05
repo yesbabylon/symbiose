@@ -1,20 +1,70 @@
 [
     {
+        "name": "sale\\SaleEntry",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "has_receivable": true,
+                "receivable_id": 1,
+                "is_billable": true,
+                "customer_id": 2002,
+                "product_id": 2003,
+                "price_id": 2003,
+                "qty": 1,
+                "free_qty": 0,
+                "discount": 0,
+                "object_class": "sale\\subscription\\Subscription",
+                "object_id": 4,
+                "status": "billed"
+            },
+            {
+                "id": 2,
+                "has_receivable": false,
+                "is_billable": true,
+                "customer_id": 2001,
+                "product_id": 2001,
+                "price_id": 2001,
+                "qty": 1,
+                "free_qty": 0,
+                "discount": 0,
+                "object_class": "sale\\subscription\\Subscription",
+                "object_id": 5,
+                "status": "pending"
+            }
+        ]
+    },
+    {
         "name": "inventory\\service\\SubscriptionEntry",
         "lang": "en",
         "data": [
             {
                 "id": 1,
-                "has_receivable": false,
-                "is_billable": true,
-                "customer_id": 2,
-                "product_id": 3,
-                "price_id": 3,
+                "state": "instance",
+                "has_receivable": true,
+                "receivable_id": 1,
+                "price_id": 2003,
                 "qty": 1,
-                "object_class": "inventory\\service\\Subscription",
+                "free_qty": 0,
+                "discount": 0,
+                "object_class": "sale\\subscription\\Subscription",
                 "object_id": 4,
+                "status": "billed",
+                "date_from": "2024-04-01T00:00:00+00:00",
+                "date_to": "2024-05-01T00:00:00+00:00"
+            },
+            {
+                "id": 2,
+                "has_receivable": false,
+                "price_id": 2001,
+                "qty": 1,
+                "free_qty": 0,
+                "discount": 0,
+                "object_class": "sale\\subscription\\Subscription",
+                "object_id": 5,
+                "status": "pending",
                 "date_from": "2024-03-01T00:00:00+00:00",
-                "date_to": "2024-04-01T00:00:00+00:00"
+                "date_to": "2024-09-01T00:00:00+00:00"
             }
         ]
     }

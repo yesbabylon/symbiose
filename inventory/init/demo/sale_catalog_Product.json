@@ -1,49 +1,65 @@
 [
     {
+        "name": "sale\\catalog\\ProductModel",
+        "lang": "en",
+        "data": [
+            {
+                "id": 2000,
+                "name": "Product tool",
+                "family_id": 1,
+                "can_buy": false,
+                "can_sell": true,
+                "type": "service",
+                "consumable_type": "storable",
+                "tracking_type": "sku"
+            }
+        ]
+    },
+    {
         "name": "sale\\catalog\\Product",
         "lang": "en",
         "data": [
             {
-                "id": 1,
+                "id": 2001,
                 "label": "Calendar plugin",
                 "sku": "123.123.123",
-                "product_model_id": 1
+                "product_model_id": 2000
             },
             {
-                "id": 2,
+                "id": 2002,
                 "label": "sale plugin",
                 "sku": "321.321.321",
-                "product_model_id": 1
+                "product_model_id": 2000
             },
             {
-                "id": 3,
+                "id": 2003,
                 "label": "Library FPF ",
                 "sku": "321.654.312",
-                "product_model_id": 1
+                "product_model_id": 2000
             },
             {
-                "id": 4,
+                "id": 2004,
                 "label": "cloud product",
                 "sku": "1233.123.123",
-                "product_model_id": 1
+                "product_model_id": 2000
             },
             {
-                "id": 5,
+                "id": 2005,
                 "label": "user access",
                 "sku": "11.22.33",
-                "product_model_id": 1
+                "product_model_id": 2000
             },
             {
-                "id": 6,
+                "id": 2006,
                 "label": "payment",
                 "sku": "444.55.66",
-                "product_model_id": 1
+                "product_model_id": 2000
             },
             {
-                "id": 7,
+                "id": 2007,
                 "label": "management organization",
                 "sku": "44.55.77.88",
-                "product_model_id": 1
+                "product_model_id": 2000
             }
         ]
     }
