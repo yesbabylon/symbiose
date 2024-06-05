@@ -1,0 +1,47 @@
+{
+    "name": "Rechereche saisies de temps",
+    "description": "Recherche avancée de saisies de temps.",
+    "model": {
+        "description": {
+            "label": "Description"
+        },
+        "user_id": {
+            "label": "Utilisateur"
+        },
+        "date": {
+            "label": "Date"
+        },
+        "customer_id": {
+            "label": "Client"
+        },
+        "project_id": {
+            "label": "Projet"
+        },
+        "origin": {
+            "label": "Origine",
+            "selection": {
+                "all": "Toutes",
+                "project": "Projet",
+                "backlog": "Backlog",
+                "email": "E-mail",
+                "support": "Support"
+            }
+        },
+        "has_receivable": {
+            "label": "A un percevable"
+        },
+        "is_billable": {
+            "label": "Est facturée"
+        },
+        "status": {
+            "label": "Status",
+            "selection": {
+                "all": "Tous",
+                "pending": "En cours",
+                "ready": "Prête",
+                "validated": "Validée",
+                "billed": "Facturée"
+            }
+        }
+    }
+}
