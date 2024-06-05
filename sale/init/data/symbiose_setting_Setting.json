@@ -10,7 +10,7 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 7,
-                "description":"Sequence numbering format",
+                "description": "Sequence numbering format",
                 "help": "Format to use for generating bookings numbering.",
                 "type": "string"
             },
@@ -21,7 +21,7 @@
                 "package": "sale",
                 "section_id": 7,
                 "is_sequence": true,
-                "description":"Current sequence for booking numbering.",
+                "description": "Current sequence for booking numbering.",
                 "help": ""
             },
             {
@@ -31,7 +31,7 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 7,
-                "description":"Number of days of validity of an option.",
+                "description": "Number of days of validity of an option.",
                 "help": "",
                 "type": "integer"
             },
@@ -42,7 +42,7 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 6,
-                "description":"Format for invoices number (sequence).",
+                "description": "Format for invoices number (sequence).",
                 "help": "Format for producing the number of the invoices (according to sequence accounting conventions).",
                 "type": "string"
             },
@@ -53,7 +53,7 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 6,
-                "description":"Fiscal year for the invoice.",
+                "description": "Fiscal year for the invoice.",
                 "help": "Fiscal year for the invoice.",
                 "type": "integer"
             },
@@ -64,7 +64,7 @@
                 "package": "sale",
                 "section_id": 6,
                 "is_sequence": true,
-                "description":"Sequence for the invoice.",
+                "description": "Sequence for the invoice.",
                 "help": "Sequence for the invoice."
             },
             {
@@ -74,7 +74,7 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Invoice title.",
+                "description": "Invoice title.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
                 "is_multilang": true
@@ -86,10 +86,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Credit note title.",
+                "description": "Credit note title.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1052,
@@ -98,10 +98,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Customer name label.",
+                "description": "Customer name label.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1053,
@@ -110,10 +110,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Customer address label.",
+                "description": "Customer address label.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1054,
@@ -122,10 +122,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Company registration number label.",
+                "description": "Company registration number label.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1055,
@@ -134,10 +134,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Company VAT number label.",
+                "description": "Company VAT number label.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1056,
@@ -146,10 +146,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Number label for invoice lines table.",
+                "description": "Number label for invoice lines table.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1057,
@@ -158,10 +158,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Date label for invoice lines table.",
+                "description": "Date label for invoice lines table.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1058,
@@ -170,10 +170,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Status label for invoice lines table.",
+                "description": "Status label for invoice lines table.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1059,
@@ -182,10 +182,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Paid status label of invoice.",
+                "description": "Paid status label of invoice.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1060,
@@ -194,10 +194,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"To pay status label of invoice.",
+                "description": "To pay status label of invoice.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1061,
@@ -206,10 +206,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"To refund status label of invoice.",
+                "description": "To refund status label of invoice.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1062,
@@ -218,10 +218,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Product column label for invoice lines table.",
+                "description": "Product column label for invoice lines table.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1063,
@@ -230,10 +230,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Quantity column label for invoice lines table.",
+                "description": "Quantity column label for invoice lines table.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1064,
@@ -242,10 +242,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Free quantity column label for invoice lines table.",
+                "description": "Free quantity column label for invoice lines table.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1065,
@@ -254,10 +254,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Unit price column label for invoice lines table.",
+                "description": "Unit price column label for invoice lines table.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1066,
@@ -266,10 +266,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Discount column label for invoice lines table.",
+                "description": "Discount column label for invoice lines table.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1067,
@@ -278,10 +278,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"VAT column label for invoice lines table.",
+                "description": "VAT column label for invoice lines table.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1068,
@@ -290,10 +290,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Taxes column label for invoice lines table.",
+                "description": "Taxes column label for invoice lines table.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1069,
@@ -302,10 +302,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Price ex. VAT column label for invoice lines table.",
+                "description": "Price ex. VAT column label for invoice lines table.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1070,
@@ -314,10 +314,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Price column label for invoice lines table.",
+                "description": "Price column label for invoice lines table.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1071,
@@ -326,10 +326,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Total excluding VAT label for invoice lines table.",
+                "description": "Total excluding VAT label for invoice lines table.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1072,
@@ -338,10 +338,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Total including VAT label for invoice lines table.",
+                "description": "Total including VAT label for invoice lines table.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1073,
@@ -350,10 +350,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Invoice footer registration number label.",
+                "description": "Invoice footer registration number label.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1074,
@@ -362,10 +362,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Invoice footer IBAN label.",
+                "description": "Invoice footer IBAN label.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1075,
@@ -374,10 +374,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Invoice footer email address label.",
+                "description": "Invoice footer email address label.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1076,
@@ -386,10 +386,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Invoice footer website label.",
+                "description": "Invoice footer website label.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1077,
@@ -398,10 +398,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Invoice footer telephone number label.",
+                "description": "Invoice footer telephone number label.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1078,
@@ -410,10 +410,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Invoice footer fax number label.",
+                "description": "Invoice footer fax number label.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1079,
@@ -422,10 +422,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Pdf document page number label.",
+                "description": "Pdf document page number label.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1080,
@@ -434,10 +434,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Balance delay label.",
+                "description": "Balance delay label.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1081,
@@ -446,10 +446,10 @@
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 1,
-                "description":"Pdf document communication label.",
+                "description": "Pdf document communication label.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             },
             {
                 "id": 1082,
@@ -458,10 +458,10 @@
                 "package": "sale",
                 "form_control": "textarea",
                 "section_id": 1,
-                "description":"Notice for avoiding confusion between invoices and proforma.",
+                "description": "Notice for avoiding confusion between invoices and proforma.",
                 "help": "Used in invoice pdf version.",
                 "type": "string",
-                "is_multilang":  true
+                "is_multilang": true
             }
         ]
     },
@@ -472,229 +472,229 @@
             {
                 "id": 1011,
                 "title": "Format de réservation",
-                "description":"Format de réservation",
+                "description": "Format de réservation",
                 "help": "Format pour la num\u00e9rotation des r\u00e9servations."
             },
             {
                 "id": 1012,
                 "title": "Séquence pour les références de réservation",
-                "description":"",
+                "description": "",
                 "help": ""
             },
             {
                 "id": 1013,
                 "title": "Jours de validit\u00e9 d'une option",
-                "description":"Jours de validit\u00e9 d'une option",
+                "description": "Jours de validit\u00e9 d'une option",
                 "help": "Nombre de jours de validit\u00e9 d'une option."
             },
             {
                 "id": 1014,
                 "title": "Invoices sequence format",
-                "description":"Format for invoices sequence (number).",
+                "description": "Format for invoices sequence (number).",
                 "help": "Format for the sequence of the invoices (according to accounting conventions)."
             },
             {
                 "id": 1015,
                 "title": "Année fiscale",
-                "description":"Année fiscale en cours..",
+                "description": "Année fiscale en cours..",
                 "help": "Année fiscale courante à utiliser pour l'émission des factures."
             },
             {
                 "id": 1016,
                 "title": "Séquence des factures",
-                "description":"Format de séquence des factures.",
+                "description": "Format de séquence des factures.",
                 "help": "Format de séquence à utiliser pour la numéroatation des factures."
             },
             {
                 "id": 1050,
                 "title": "Titre facture",
-                "description":"Libellé du titre de facture.",
+                "description": "Libellé du titre de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1051,
                 "title": "Titre note de crédit",
-                "description":"Libellé du titre de note de crédit.",
+                "description": "Libellé du titre de note de crédit.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1052,
                 "title": "Libellé nom client",
-                "description":"Libellé nom client.",
+                "description": "Libellé nom client.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1053,
                 "title": "Libellé adresse client",
-                "description":"Libellé adresse client.",
+                "description": "Libellé adresse client.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1054,
                 "title": "Libellé numéro de registre",
-                "description":"Libellé du numéro de registre de l'entreprise.",
+                "description": "Libellé du numéro de registre de l'entreprise.",
                 "help": "Used in invoice pdf version."
             },
             {
                 "id": 1055,
                 "title": "Libellé numéro de TVA",
-                "description":"Libellé du numéro de TVA de l'entreprise.",
+                "description": "Libellé du numéro de TVA de l'entreprise.",
                 "help": "Used in invoice pdf version."
             },
             {
                 "id": 1056,
                 "title": "Libellé numéro",
-                "description":"Libellé du numéro de facture.",
+                "description": "Libellé du numéro de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1057,
                 "title": "Libellé date",
-                "description":"Libellé date de facture.",
+                "description": "Libellé date de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1058,
                 "title": "Libellé status",
-                "description":"Libellé status de facture.",
+                "description": "Libellé status de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1059,
                 "title": "Status payé",
-                "description":"Libellé status payé de la facture.",
+                "description": "Libellé status payé de la facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1060,
                 "title": "Status à payer",
-                "description":"Libellé status à payer de la facture.",
+                "description": "Libellé status à payer de la facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1061,
                 "title": "Status à rembourser",
-                "description":"Libellé status à rembourser de la facture.",
+                "description": "Libellé status à rembourser de la facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1062,
                 "title": "Libellé colonne étiquette produit",
-                "description":"Libellé de la colonne produit pour le tableau des lignes de facture.",
+                "description": "Libellé de la colonne produit pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1063,
                 "title": "Libellé colonne quantité",
-                "description":"Libellé de la colonne quantité pour le tableau des lignes de facture.",
+                "description": "Libellé de la colonne quantité pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1064,
                 "title": "Libellé colonne quantité gratuite",
-                "description":"Libellé de la colonne quantité gratuite pour le tableau des lignes de facture.",
+                "description": "Libellé de la colonne quantité gratuite pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1065,
                 "title": "Libellé colonne prix unitaire",
-                "description":"Libellé de la colonne prix unitaire pour le tableau des lignes de facture.",
+                "description": "Libellé de la colonne prix unitaire pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1066,
                 "title": "Libellé colonne rabais",
-                "description":"Libellé de la colonne rabais pour le tableau des lignes de facture.",
+                "description": "Libellé de la colonne rabais pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1067,
                 "title": "Libellé colonne TVA",
-                "description":"Libellé de la colonne TVA pour le tableau des lignes de facture.",
+                "description": "Libellé de la colonne TVA pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1068,
                 "title": "Libellé colonne tax",
-                "description":"Libellé de la colonne tax pour le tableau des lignes de facture.",
+                "description": "Libellé de la colonne tax pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1069,
                 "title": "Libellé colonne prix HTVA",
-                "description":"Libellé de la colonne prix HTVA pour le tableau des lignes de facture.",
+                "description": "Libellé de la colonne prix HTVA pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1070,
                 "title": "Libellé colonne prix",
-                "description":"Libellé de la colonne prix pour le tableau des lignes de facture.",
+                "description": "Libellé de la colonne prix pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1071,
                 "title": "Libellé prix total hors TVA",
-                "description":"Libellé prix total hors TVA pour le tableau des lignes de facture.",
+                "description": "Libellé prix total hors TVA pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1072,
                 "title": "Libellé prix total TVA comprise",
-                "description":"Libellé prix total TVA comprise pour le tableau des lignes de facture.",
+                "description": "Libellé prix total TVA comprise pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1073,
                 "title": "Libellé numéro registre pied de page",
-                "description":"Libellé du numéro de registre se trouvant en pied de page.",
+                "description": "Libellé du numéro de registre se trouvant en pied de page.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1074,
                 "title": "Libellé IBAN pied de page",
-                "description":"Libellé du numéro IBAN se trouvant en pied de page.",
+                "description": "Libellé du numéro IBAN se trouvant en pied de page.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1075,
                 "title": "Libellé e-mail pied de page",
-                "description":"Libellé de l'adresse e-mail se trouvant en pied de page.",
+                "description": "Libellé de l'adresse e-mail se trouvant en pied de page.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1076,
                 "title": "Libellé web pied de page",
-                "description":"Libellé du site web se trouvant en pied de page.",
+                "description": "Libellé du site web se trouvant en pied de page.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1077,
                 "title": "Libellé tel pied de page",
-                "description":"Libellé du numéro de téléphone se trouvant en pied de page.",
+                "description": "Libellé du numéro de téléphone se trouvant en pied de page.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1078,
                 "title": "Libellé fax pied de page",
-                "description":"Libellé du numéro de fax se trouvant en pied de page.",
+                "description": "Libellé du numéro de fax se trouvant en pied de page.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1079,
                 "title": "Libellé page pdf",
-                "description":"Libellé du numéro de page pour le document pdf.",
+                "description": "Libellé du numéro de page pour le document pdf.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1080,
                 "title": "Libellé Délai paiement solde.",
-                "description":"Libellé du délai de paiement pour le document pdf.",
+                "description": "Libellé du délai de paiement pour le document pdf.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
                 "id": 1081,
                 "title": "Libellé communication paiement",
-                "description":"Libellé de communication de paiement pour le document pdf.",
+                "description": "Libellé de communication de paiement pour le document pdf.",
                 "help": "Utilisé pour la version pdf de la facture."
             }
         ]
