@@ -6,7 +6,7 @@
 */
 namespace symbiose\setting;
 
-class SettingValue extends \core\setting\SettingValue {
+class SettingSequence extends \core\setting\SettingSequence {
 
     public static function getColumns() {
         return [
