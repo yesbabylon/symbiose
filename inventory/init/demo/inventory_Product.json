@@ -25,14 +25,14 @@
                 "id": 3,
                 "name": "Management drive",
                 "is_internal": false,
-                "customer_id": 2
+                "customer_id": 2002
             },
             {
                 "id": 4,
                 "creator": 4,
                 "name": "Calendar Birthday",
                 "is_internal": false,
-                "customer_id": 1
+                "customer_id": 2001
             }
         ]
     }

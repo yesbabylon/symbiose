@@ -4,44 +4,44 @@
         "lang": "en",
         "data": [
             {
-                "id": 1,
+                "id": 2001,
                 "price": 50,
                 "price_type": "direct",
-                "price_list_id": 5,
+                "price_list_id": 1,
                 "accounting_rule_id": 1,
-                "product_id": 1
+                "product_id": 2001
             },
             {
-                "id": 2,
+                "id": 2002,
                 "price": 15,
                 "price_type": "direct",
-                "price_list_id": 5,
+                "price_list_id": 1,
                 "accounting_rule_id": 1,
-                "product_id": 2
+                "product_id": 2002
             },
             {
-                "id": 3,
+                "id": 2003,
                 "price": 20,
                 "price_type": "direct",
-                "price_list_id": 5,
+                "price_list_id": 1,
                 "accounting_rule_id": 1,
-                "product_id": 3
+                "product_id": 2003
             },
             {
-                "id": 4,
+                "id": 2004,
                 "price": 25,
                 "price_type": "direct",
-                "price_list_id": 5,
+                "price_list_id": 1,
                 "accounting_rule_id": 1,
-                "product_id": 4
+                "product_id": 2004
             },
             {
-                "id": 5,
+                "id": 2005,
                 "price": 30,
                 "price_type": "direct",
-                "price_list_id": 5,
+                "price_list_id": 1,
                 "accounting_rule_id": 1,
-                "product_id": 5
+                "product_id": 2005
             }
         ]
     }

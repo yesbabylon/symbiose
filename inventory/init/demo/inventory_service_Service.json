@@ -11,7 +11,7 @@
                 "is_auto_renew": true,
                 "product_id": 1,
                 "has_external_provider": true,
-                "service_provider_id": 1
+                "service_provider_id": 1101
             },
             {
                 "id": 2,
@@ -21,7 +21,7 @@
                 "is_auto_renew": false,
                 "product_id": 1,
                 "has_external_provider": true,
-                "service_provider_id": 2
+                "service_provider_id": 1102
             },
             {
                 "id": 3,
@@ -30,8 +30,7 @@
                 "is_billable": true,
                 "is_auto_renew": true,
                 "product_id": 1,
-                "has_external_provider": true,
-                "service_provider_id": 3
+                "has_external_provider": false
             },
             {
                 "id": 4,

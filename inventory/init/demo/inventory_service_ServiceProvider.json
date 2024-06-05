@@ -1,67 +1,51 @@
 [
     {
+        "name": "identity\\Identity",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1101,
+                "legal_name": "Google Analytics",
+                "organisation_id": 1,
+                "type_id": 3,
+                "has_vat": false,
+                "address_country": "BE",
+                "supplier_id": 1101
+            },
+            {
+                "id": 1102,
+                "legal_name": "Microsoft 365",
+                "organisation_id": 1,
+                "type_id": 3,
+                "has_vat": false,
+                "address_country": "BE",
+                "supplier_id": 1102
+            }
+        ]
+    },
+    {
         "name": "inventory\\service\\ServiceProvider",
         "lang": "en",
         "data": [
             {
-                "id": 1,
-                "organisation_id": 1,
+                "id": 1101,
                 "is_internal": true,
                 "owner_identity_id": 1,
-                "partner_identity_id": 11,
+                "partner_identity_id": 1101,
                 "relationship": "supplier",
-                "type_id": 3,
-                "has_vat": false,
                 "legal_name": "Google Analytics",
-                "address_country": "BE",
                 "login_url": "https://analytics.google.com",
-                "service_provider_category_id": 3
+                "service_provider_category_id": 1
             },
             {
-                "id": 2,
-                "organisation_id": 1,
+                "id": 1102,
                 "is_internal": true,
                 "owner_identity_id": 1,
-                "partner_identity_id": 12,
+                "partner_identity_id": 1102,
                 "relationship": "supplier",
-                "type_id": 3,
-                "has_vat": false,
                 "legal_name": "Microsoft 365",
                 "login_url": "https://admin.microsoft.com",
                 "service_provider_category_id": 1
-            },
-            {
-                "id": 3,
-                "organisation_id": 1,
-                "is_internal": true,
-                "owner_identity_id": 1,
-                "partner_identity_id": 15,
-                "relationship": "supplier",
-                "type_id": 3,
-                "legal_name": "WPML",
-                "login_url": "https://wpml.org",
-                "service_provider_category_id": 2
-            },
-            {
-                "id": 4,
-                "organisation_id": 1,
-                "owner_identity_id": 1,
-                "partner_identity_id": 16,
-                "relationship": "supplier",
-                "legal_name": "FPDF provider",
-                "type_id": 3,
-                "service_provider_category_id": 1
-            },
-            {
-                "id": 5,
-                "organisation_id": 1,
-                "is_internal": true,
-                "owner_identity_id": 1,
-                "partner_identity_id": 17,
-                "relationship": "supplier",
-                "legal_name": "Google drive",
-                "type_id": 3,
-                "service_provider_category_id": 3
             }
         ]
     }
