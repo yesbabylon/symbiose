@@ -60,6 +60,13 @@
             ]
         }
     ],
+    "header": {
+        "actions": {
+            "ACTION.SAVE": [
+                { "id": "SAVE_AND_VIEW" }
+            ]
+        }
+    },
     "layout": {
         "groups": [
             {
@@ -195,6 +202,7 @@
                     {
                         "id": "section.sale",
                         "label": "Sale",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
