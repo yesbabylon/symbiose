@@ -36,11 +36,6 @@
             },
             "help": ""
         },
-        "is_balance_invoice": {
-            "label": "Facture de solde",
-            "description": "La facture finale peut être générée directement.",
-            "help": ""
-        },
         "amount_share": {
             "label": "Part du paiement",
             "description": "Part du paiement sur le montant total dû.",
