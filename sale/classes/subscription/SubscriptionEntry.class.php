@@ -11,6 +11,10 @@ use sale\SaleEntry;
 
 class SubscriptionEntry extends SaleEntry {
 
+    public static function getDescription() {
+        return 'A subscription entry represents one period of a subscription. Like a sale entry a receivable can be generated from it.';
+    }
+
     public static function getColumns(): array {
         return [
 

@@ -1,0 +1,43 @@
+{
+    "model": {
+        "server_type": {
+            "label": "Type",
+            "description": "Type du serveur.",
+            "selection": {
+                "front": "Front",
+                "node": "Nœud",
+                "storage": "Stockage"
+            },
+            "help": ""
+        },
+        "product_id": {
+            "label": "Produit",
+            "description": "Le produit qui utilise ce serveur.",
+            "help": ""
+        },
+        "access_id": {
+            "label": "Accès",
+            "description": "Accès au serveur.",
+            "help": ""
+        },
+        "instance_id": {
+            "label": "Instance",
+            "description": "Instance executée sur le serveur",
+            "help": ""
+        },
+        "ip_address_id": {
+            "label": "Adresse IP",
+            "description": "Adresse IP du serveur.",
+            "help": ""
+        },
+        "software_id": {
+            "label": "Logiciel",
+            "description": "Logiciel installé sur le serveur.",
+            "help": ""
+        }
+    },
+    "view": {
+    },
+    "error": {
+    }
+}

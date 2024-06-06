@@ -128,12 +128,8 @@
                                                 "value": "products_ids",
                                                 "width": "100%",
                                                 "label": "Products",
-                                                "widget": {
-                                                    "header": {
-                                                        "actions": {
-                                                            "ACTION.CREATE": false
-                                                        }
-                                                    }
+                                                "widget":{
+                                                    "view": "list.selection"
                                                 }
                                             }
                                         ]

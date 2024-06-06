@@ -16,8 +16,7 @@
         "data": [
             {
                 "id": 1,
-                "name": "Plan de paiement par défaut",
-                "rate_class_id": 1
+                "name": "Plan de paiement par défaut"
             }
         ]
     }

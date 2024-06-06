@@ -25,14 +25,10 @@ list($params, $providers) = eQual::announce([
             'type'           => 'many2one',
             'foreign_object' => 'core\User'
         ],
-        'show_filter_date' => [
-            'type'           => 'boolean',
-            'default'        => false
-        ],
         'date' => [
             'description'    => 'Display only entries that occurred on selected date',
             'type'           => 'date',
-            'default'        => time()
+            'default'        => null
         ],
         'customer_id' => [
             'description'    => 'Display only entries of selected customer',
@@ -91,10 +87,6 @@ list($params, $providers) = eQual::announce([
 $context = $providers['context'];
 
 $domain = [ ['object_class', '=', 'timetrack\Project'] ];
-
-if(!$params['show_filter_date']) {
-    unset($params['date']);
-}
 
 if(isset($params['description']) && strlen($params['description']) > 0) {
     $domain[] = ['description', 'ilike', '%'.$params['description'].'%'];

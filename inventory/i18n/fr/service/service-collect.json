@@ -1,0 +1,68 @@
+{
+    "model": {
+        "has_subscription": {
+            "label": "Y a-t-il de abonnement?",
+            "description": "Le service a-t-il un abonnement ?",
+            "selection": {
+                "all": "Tous",
+                "yes": "Oui",
+                "no": "Non"
+            },
+            "help": ""
+        },
+        "is_billable": {
+            "label": "Est-il facturable ?",
+            "description": "Le service est facturable ?",
+            "selection": {
+                "all": "Tous",
+                "yes": "Oui",
+                "no": "Non"
+            },
+            "help": ""
+        },
+        "is_auto_renew": {
+            "label": "Est-il renouvelle ?",
+            "description": "Le service se renouvelle automatiquement ?",
+            "selection": {
+                "all": "Tous",
+                "yes": "Oui",
+                "no": "Non"
+            },
+            "help": ""
+        },
+        "service_provider_id":{
+            "label": "Fournisseur de service",
+            "description": "Fournisseur de service du service.",
+            "help": ""
+        },
+        "product_id":{
+            "label": "Produit",
+            "description": "Produit qui utilise le service.",
+            "help": ""
+        },
+        "customer_id": {
+            "label": "Client",
+            "description": "Le client associé au service",
+            "help": ""
+        },
+        "software_id": {
+            "label": "Logiciel",
+            "description": "Le logiciel associé au service",
+            "help": ""
+        },
+        "subscription_id": {
+            "label": "Abonnement",
+            "description": "L'abonnement associé au service",
+            "help": ""
+        },
+        "access_id": {
+            "label": "Accès",
+            "description": "L'accès pour se connecter au service",
+            "help": ""
+        }
+    },
+    "view": {
+    },
+    "error": {
+    }
+}

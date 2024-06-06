@@ -4,7 +4,6 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 namespace sale;
 
 use eQual;
@@ -26,7 +25,7 @@ class SaleEntry extends Model {
             'code' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'description'       => 'Entry code',
+                'description'       => 'Entry code.',
                 'function'          => 'calcCode'
             ],
 

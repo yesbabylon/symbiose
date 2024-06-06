@@ -3,9 +3,9 @@
     "plural": "Paiements",
     "description": "",
     "model": {
-        "partner_id": {
+        "customer_id": {
             "label": "Client",
-            "description": "Client de la réservation associée au paiement.",
+            "description": "Client associée au paiement.",
             "help": ""
         },
         "amount": {
@@ -49,7 +49,7 @@
             "help": ""
         },
         "statement_line_id": {
-            "label": "Ligne d'extrait'",
+            "label": "Ligne d'extrait",
             "description": "La ligne de relevé bancaire à laquelle se rapporte le paiement.",
             "help": ""
         },
@@ -62,6 +62,15 @@
             "label": "Financement",
             "description": "Financement de réservation lié au paiement.",
             "help": ""
+        },
+        "status": {
+            "label": "Status",
+            "description": "Status du paiement",
+            "selection": {
+                "pending": "En cours",
+                "paid": "Payé"
+            },
+            "help": ""
         }
     },
     "view": {
@@ -69,11 +78,8 @@
             "name": "Paiement",
             "description": "",
             "layout": {
-                "section.payment_section": {
+                "section.details": {
                     "label": "Détails"
-                },
-                "section.fundings_section": {
-                    "label": "Financements"
                 }
             }            
         },

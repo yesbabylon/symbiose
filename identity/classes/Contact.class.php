@@ -39,15 +39,18 @@ class Contact extends Partner {
 
         ];
     }
+
     public static function onafterupdate($self, $values) {
         parent::onafterupdate($self, $values);
 
-        $self->read(['partner_identity_id' => ['id', 'contact_id']]);
-        foreach($self as $id => $contact) {
-            if(is_null($contact['partner_identity_id']['contact_id'])) {
-                Identity::id($contact['partner_identity_id']['id'])->update(['contact_id' => $id]);
+        // If to make sale\customer\Contact work
+        if(get_called_class() === self::class) {
+            $self->read(['partner_identity_id' => ['id', 'contact_id']]);
+            foreach($self as $id => $contact) {
+                if(is_null($contact['partner_identity_id']['contact_id'])) {
+                    Identity::id($contact['partner_identity_id']['id'])->update(['contact_id' => $id]);
+                }
             }
         }
     }
-
 }

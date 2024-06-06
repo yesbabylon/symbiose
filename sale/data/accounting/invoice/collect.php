@@ -1,10 +1,9 @@
 <?php
 /*
     This file is part of the Discope property management software.
-    Author: Yesbabylon SRL, 2020-2022
+    Author: Yesbabylon SRL, 2020-2024
     License: GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 
 use equal\orm\Domain;
 
@@ -13,7 +12,7 @@ list($params, $providers) = eQual::announce([
     'extends'       => 'core_model_collect',
     'params'        => [
 
-        'entity' =>  [
+        'entity' => [
             'description'       => 'name',
             'type'              => 'string',
             'default'           => 'sale\accounting\invoice\Invoice'
@@ -30,42 +29,41 @@ list($params, $providers) = eQual::announce([
         ],
 
         'date_from' => [
-            'type'               => 'date',
-            'description'        => "First date of the time interval.",
-            'default'            => strtotime("-20 Years")
+            'type'              => 'date',
+            'description'       => "First date of the time interval.",
+            'default'           => null
         ],
 
         'date_to' => [
             'type'              => 'date',
             'description'       => "Last date of the time interval.",
-            'default'           => strtotime("+10 Years")
+            'default'           => null
         ],
 
         'status' => [
             'type'              => 'string',
             'description'       => 'Version of the invoice.',
-            'selection'         => ['all','proforma','invoice','cancelled'],
+            'selection'         => ['all', 'proforma', 'invoice', 'cancelled'],
             'default'           => 'all'
         ],
 
-        'customer_id'=> [
+        'customer_id' => [
             'type'              => 'many2one',
             'foreign_object'    => 'sale\customer\Customer',
             'description'       => 'Customer of the subscription.'
-        ],
+        ]
+
     ],
     'response'      => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => [ 'context', 'orm' ]
+    'providers'     => ['context']
 ]);
-/**
- * @var \equal\php\Context $context
- * @var \equal\orm\ObjectManager $orm
- */
-list($context, $orm) = [ $providers['context'], $providers['orm'] ];
+
+/** @var \equal\php\Context $context */
+list('context' => $context) = $providers;
 
 //   Add conditions to the domain to consider advanced parameters
 $domain = $params['domain'];

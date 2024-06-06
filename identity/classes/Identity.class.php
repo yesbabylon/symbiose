@@ -9,6 +9,7 @@ namespace identity;
 use equal\orm\Model;
 use hr\employee\Employee;
 use sale\customer\Customer;
+use sale\customer\Contact as CustomerContact;
 use purchase\supplier\Supplier;
 
 /**
@@ -33,7 +34,14 @@ class Identity extends Model {
                 'function'          => 'calcName',
                 'store'             => true,
                 'instant'           => true,
-                'dependents'        => ['user_id' => 'name', 'contact_id' => 'name', 'employee_id' => 'name', 'customer_id' => 'name', 'supplier_id' => 'name'],
+                'dependents'        => [
+                    'user_id'             => 'name',
+                    'contact_id'          => 'name',
+                    'customer_contact_id' => 'name',
+                    'employee_id'         => 'name',
+                    'customer_id'         => 'name',
+                    'supplier_id'         => 'name'
+                ],
                 'description'       => 'The display name of the identity.',
                 'help'              => "The display name is a computed field that returns a concatenated string containing either the firstname+lastname, or the legal name of the Identity, based on the kind of Identity.\n
                     For instance, 'name', for a company with \"My Company\" as legal name will return \"My Company\". \n
@@ -408,6 +416,15 @@ class Identity extends Model {
                 'onupdate'          => 'onupdateContactId'
             ],
 
+            'customer_contact_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\Contact',
+                'foreign_field'     => 'partner_identity_id',
+                'description'       => 'Customer contact associated to this identity, if any.',
+                'visible'           => [['is_organisation', '=', false]],
+                'onupdate'          => 'onupdateCustomerContactId'
+            ],
+
             'employee_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'hr\employee\Employee',
@@ -481,13 +498,16 @@ class Identity extends Model {
     }
 
     private static function _updateField($self, $field) {
-        $self->read(['user_id', 'contact_id', 'employee_id', 'customer_id', 'supplier_id', $field]);
+        $self->read(['user_id', 'contact_id', 'customer_contact_id', 'employee_id', 'customer_id', 'supplier_id', $field]);
         foreach($self as $id => $identity) {
             if($identity['user_id']) {
                 User::id($identity['user_id'])->update([$field => $identity[$field]]);
             }
             if($identity['contact_id']) {
                 Contact::id($identity['contact_id'])->update([$field => $identity[$field]]);
+            }
+            if($identity['customer_contact_id']) {
+                CustomerContact::id($identity['customer_contact_id'])->update([$field => $identity[$field]]);
             }
             if($identity['employee_id']) {
                 Employee::id($identity['employee_id'])->update([$field => $identity[$field]]);
@@ -576,6 +596,13 @@ class Identity extends Model {
         $self->read(['contact_id']);
         foreach($self as $id => $identity) {
             Contact::id($identity['contact_id'])->update(['partner_identity_id' => $id]);
+        }
+    }
+
+    public static function onupdateCustomerContactId($self) {
+        $self->read(['customer_contact_id']);
+        foreach($self as $id => $identity) {
+            CustomerContact::id($identity['customer_contact_id'])->update(['partner_identity_id' => $id]);
         }
     }
 

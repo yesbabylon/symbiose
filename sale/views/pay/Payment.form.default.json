@@ -9,8 +9,6 @@
             {
                 "sections": [
                     {
-                        "label": "General Info",
-                        "id": "section.payment_section",
                         "rows": [
                             {
                                 "columns": [
@@ -19,28 +17,23 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "status",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "amount",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "communication",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "receipt_date",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "payment_method",
-                                                "width": "50%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "payment_origin",
-                                                "width": "50%"
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "receipt_date",
+                                                "width": "33%"
                                             }
                                         ]
                                     },
@@ -48,9 +41,38 @@
                                         "width": "50%",
                                         "items": [
                                             {
+                                                "type": "label",
+                                                "width": "50%"
+                                            },
+                                            {
                                                 "type": "field",
-                                                "label": "Statement Line",
-                                                "value": "statement_line_id",
+                                                "label": "Funding",
+                                                "value": "funding_id",
+                                                "width": "50%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.details",
+                        "label": "Details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "payment_method",
                                                 "width": "50%"
                                             },
                                             {
@@ -61,15 +83,30 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Voucher Reference",
-                                                "value": "voucher_ref",
+                                                "label": "Statement Line",
+                                                "value": "statement_line_id",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "funding_id",
+                                                "label": "Voucher Reference",
+                                                "value": "voucher_ref",
                                                 "width": "100%"
-                                            }                                            
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "communication",
+                                                "width": "100%"
+                                            }
                                         ]
                                     }
                                 ]

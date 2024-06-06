@@ -11,7 +11,7 @@
                 "date_to": "2024-03-01T00:00:00+00:00",
                 "duration": "yearly",
                 "service_id": 2,
-                "product_id": 1
+                "product_id": 2001
             },
             {
                 "id": 2,
@@ -20,7 +20,7 @@
                 "date_to": "2024-08-01T00:00:00+00:00",
                 "duration": "yearly",
                 "service_id": 3,
-                "product_id": 1
+                "product_id": 2001
             },
             {
                 "id": 3,
@@ -29,7 +29,7 @@
                 "date_to": "2024-03-02T00:00:00+00:00",
                 "duration": "monthly",
                 "service_id": 1,
-                "product_id": 7
+                "product_id": 2007
             },
             {
                 "id": 4,
@@ -38,7 +38,7 @@
                 "date_to": "2024-05-01T00:00:00+00:00",
                 "duration": "monthly",
                 "service_id": 4,
-                "product_id": 3
+                "product_id": 2003
             },
             {
                 "id": 5,
@@ -47,7 +47,7 @@
                 "date_to": "2024-09-01T00:00:00+00:00",
                 "duration": "half-yearly",
                 "service_id": 5,
-                "product_id": 1
+                "product_id": 2001
             }
         ]
     }

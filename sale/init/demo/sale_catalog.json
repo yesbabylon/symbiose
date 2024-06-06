@@ -1,0 +1,528 @@
+[
+    {
+        "name": "sale\\catalog\\Family",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "Choco Brand",
+                "path": null
+            },
+            {
+                "id": 2,
+                "name": "Choco Supplier Brand",
+                "path": null
+            }
+        ]
+    },
+    {
+        "name": "sale\\catalog\\Category",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "Chocolate",
+                "code": "choco",
+                "description": "<p>Chocolate based products</p>"
+            }
+        ]
+    },
+    {
+        "name": "sale\\catalog\\ProductModel",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "Chocolate bar",
+                "family_id": 1,
+                "can_buy": false,
+                "can_sell": true,
+                "type": "consumable",
+                "consumable_type": "storable",
+                "tracking_type": "sku"
+            },
+            {
+                "id": 2,
+                "name": "Chocolate eggs",
+                "family_id": 1,
+                "can_buy": false,
+                "can_sell": true,
+                "type": "consumable",
+                "consumable_type": "storable",
+                "tracking_type": "sku"
+            },
+            {
+                "id": 3,
+                "name": "Chocolate drops",
+                "family_id": 2,
+                "can_buy": true,
+                "can_sell": true,
+                "type": "consumable",
+                "consumable_type": "storable",
+                "tracking_type": "sku"
+            }
+        ]
+    },
+    {
+        "name": "sale\\catalog\\Product",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "product_model_id": 1,
+                "label": "Chocolate bar 71% (100g)",
+                "description": "<p>Chocolate bar 71% cocoa (100g)</p>",
+                "sku": "0041256001"
+            },
+            {
+                "id": 2,
+                "product_model_id": 1,
+                "label": "Chocolate bar 65% (100g)",
+                "description": "<p>Chocolate bar 65% cocoa (100g)</p>",
+                "sku": "0041256002"
+            },
+            {
+                "id": 3,
+                "product_model_id": 1,
+                "label": "Chocolate bar 50% (100g)",
+                "description": "<p>Chocolate bar 50% cocoa (100g)</p>",
+                "sku": "0041256003"
+            },
+            {
+                "id": 4,
+                "product_model_id": 1,
+                "label": "Chocolate bar 71% (200g)",
+                "description": "<p>Chocolate bar 71% cocoa (200g)</p>",
+                "sku": "0041256011"
+            },
+            {
+                "id": 5,
+                "product_model_id": 1,
+                "label": "Chocolate bar 65% (200g)",
+                "description": "<p>Chocolate bar 65% cocoa (200g)</p>",
+                "sku": "0041256012"
+            },
+            {
+                "id": 6,
+                "product_model_id": 1,
+                "label": "Chocolate bar 50% (200g)",
+                "description": "<p>Chocolate bar 50% cocoa (200g)</p>",
+                "sku": "0041256013"
+            },
+            {
+                "id": 7,
+                "product_model_id": 2,
+                "label": "Chocolate eggs black (200g)",
+                "description": "<p>Chocolate eggs black (200g)</p>",
+                "sku": "0041256020"
+            },
+            {
+                "id": 8,
+                "product_model_id": 2,
+                "label": "Chocolate eggs white (200g)",
+                "description": "<p>Chocolate eggs white (200g)</p>",
+                "sku": "0041256021"
+            },
+            {
+                "id": 9,
+                "product_model_id": 2,
+                "label": "Chocolate eggs black (500g)",
+                "description": "<p>Chocolate eggs black (500g)</p>",
+                "sku": "0041256030"
+            },
+            {
+                "id": 10,
+                "product_model_id": 2,
+                "label": "Chocolate eggs white (500g)",
+                "description": "<p>Chocolate eggs white (500g)</p>",
+                "sku": "0041256031"
+            },
+            {
+                "id": 11,
+                "product_model_id": 3,
+                "label": "Chocolate drops 71% (1kg)",
+                "description": "<p>Chocolate drops 71% cocoa (1kg)</p>",
+                "sku": "0041256040"
+            },
+            {
+                "id": 12,
+                "product_model_id": 3,
+                "label": "Chocolate drops 65% (1kg)",
+                "description": "<p>Chocolate drops 65% cocoa (1kg)</p>",
+                "sku": "0041256041"
+            },
+            {
+                "id": 13,
+                "product_model_id": 3,
+                "label": "Chocolate drops 50% (1kg)",
+                "description": "<p>Chocolate drops 50% cocoa (1kg)</p>",
+                "sku": "0041256042"
+            },
+            {
+                "id": 14,
+                "product_model_id": 3,
+                "label": "Chocolate drops 71% (5kg)",
+                "description": "<p>Chocolate drops 71% cocoa (5kg)</p>",
+                "sku": "0041256050"
+            },
+            {
+                "id": 15,
+                "product_model_id": 3,
+                "label": "Chocolate drops 65% (5kg)",
+                "description": "<p>Chocolate drops 65% cocoa (5kg)</p>",
+                "sku": "0041256051"
+            },
+            {
+                "id": 16,
+                "product_model_id": 3,
+                "label": "Chocolate drops 50% (5kg)",
+                "description": "<p>Chocolate drops 50% cocoa (5kg)</p>",
+                "sku": "0041256052"
+            }
+        ]
+    },
+    {
+        "name": "sale\\catalog\\Option",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "product_model_id": 1,
+                "name": "Cocoa percentage",
+                "description": "Cocoa percentage of the chocolate bar"
+            },
+            {
+                "id": 2,
+                "product_model_id": 1,
+                "name": "Weight",
+                "description": "Weight of the chocolate bar"
+            },
+            {
+                "id": 3,
+                "product_model_id": 2,
+                "name": "Color",
+                "description": "Color of the chocolate eggs"
+            },
+            {
+                "id": 4,
+                "product_model_id": 2,
+                "name": "Weight",
+                "description": "Weight of the chocolate eggs"
+            },
+            {
+                "id": 5,
+                "product_model_id": 3,
+                "name": "Cocoa percentage",
+                "description": "Cocoa percentage of the chocolate drops"
+            },
+            {
+                "id": 6,
+                "product_model_id": 3,
+                "name": "Weight",
+                "description": "Weight of the chocolate drops"
+            }
+        ]
+    },
+    {
+        "name": "sale\\catalog\\OptionValue",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "option_id": 1,
+                "value": "0.71",
+                "name": "71%",
+                "description": "<p>71% cocoa</p>"
+            },
+            {
+                "id": 2,
+                "option_id": 1,
+                "value": "0.65",
+                "name": "65%",
+                "description": "<p>65% cocoa</p>"
+            },
+            {
+                "id": 3,
+                "option_id": 1,
+                "value": "0.50",
+                "name": "50%",
+                "description": "<p>50% cocoa</p>"
+            },
+            {
+                "id": 4,
+                "option_id": 2,
+                "value": "100",
+                "name": "100g",
+                "description": "<p>Net weight 100g</p>"
+            },
+            {
+                "id": 5,
+                "option_id": 2,
+                "value": "200",
+                "name": "200g",
+                "description": "<p>Net weight 200g</p>"
+            },
+            {
+                "id": 6,
+                "option_id": 3,
+                "value": "black",
+                "name": "Black",
+                "description": "<p>Black chocolate 65%</p>"
+            },
+            {
+                "id": 7,
+                "option_id": 3,
+                "value": "white",
+                "name": "White",
+                "description": "<p>White chocolate 10%</p>"
+            },
+            {
+                "id": 8,
+                "option_id": 4,
+                "value": "200",
+                "name": "200g",
+                "description": "<p>Net weight 200g</p>"
+            },
+            {
+                "id": 9,
+                "option_id": 4,
+                "value": "500",
+                "name": "500g",
+                "description": "<p>Net weight 500g</p>"
+            },
+            {
+                "id": 10,
+                "option_id": 5,
+                "value": "0.71",
+                "name": "71%",
+                "description": "<p>71% cocoa</p>"
+            },
+            {
+                "id": 11,
+                "option_id": 5,
+                "value": "0.65",
+                "name": "65%",
+                "description": "<p>65% cocoa</p>"
+            },
+            {
+                "id": 12,
+                "option_id": 5,
+                "value": "0.50",
+                "name": "50%",
+                "description": "<p>50% cocoa</p>"
+            },
+            {
+                "id": 13,
+                "option_id": 6,
+                "value": "1000",
+                "name": "1kg",
+                "description": "<p>Net weight 1kg</p>"
+            },
+            {
+                "id": 14,
+                "option_id": 6,
+                "value": "5000",
+                "name": "5kg",
+                "description": "<p>Net weight 5kg</p>"
+            }
+        ]
+    },
+    {
+        "name": "sale\\catalog\\ProductAttribute",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "option_id": 1,
+                "option_value_id": 1
+            },
+            {
+                "id": 2,
+                "product_id": 1,
+                "option_id": 2,
+                "option_value_id": 4
+            },
+            {
+                "id": 3,
+                "product_id": 2,
+                "option_id": 1,
+                "option_value_id": 2
+            },
+            {
+                "id": 4,
+                "product_id": 2,
+                "option_id": 2,
+                "option_value_id": 4
+            },
+            {
+                "id": 5,
+                "product_id": 3,
+                "option_id": 1,
+                "option_value_id": 3
+            },
+            {
+                "id": 6,
+                "product_id": 3,
+                "option_id": 2,
+                "option_value_id": 4
+            },
+            {
+                "id": 7,
+                "product_id": 4,
+                "option_id": 1,
+                "option_value_id": 1
+            },
+            {
+                "id": 8,
+                "product_id": 4,
+                "option_id": 2,
+                "option_value_id": 5
+            },
+            {
+                "id": 9,
+                "product_id": 5,
+                "option_id": 1,
+                "option_value_id": 2
+            },
+            {
+                "id": 10,
+                "product_id": 5,
+                "option_id": 2,
+                "option_value_id": 5
+            },
+            {
+                "id": 11,
+                "product_id": 6,
+                "option_id": 1,
+                "option_value_id": 3
+            },
+            {
+                "id": 12,
+                "product_id": 6,
+                "option_id": 2,
+                "option_value_id": 5
+            },
+            {
+                "id": 13,
+                "product_id": 7,
+                "option_id": 3,
+                "option_value_id": 6
+            },
+            {
+                "id": 14,
+                "product_id": 7,
+                "option_id": 4,
+                "option_value_id": 8
+            },
+            {
+                "id": 15,
+                "product_id": 8,
+                "option_id": 3,
+                "option_value_id": 7
+            },
+            {
+                "id": 16,
+                "product_id": 8,
+                "option_id": 4,
+                "option_value_id": 8
+            },
+            {
+                "id": 17,
+                "product_id": 9,
+                "option_id": 3,
+                "option_value_id": 6
+            },
+            {
+                "id": 18,
+                "product_id": 9,
+                "option_id": 4,
+                "option_value_id": 9
+            },
+            {
+                "id": 19,
+                "product_id": 10,
+                "option_id": 3,
+                "option_value_id": 7
+            },
+            {
+                "id": 20,
+                "product_id": 10,
+                "option_id": 4,
+                "option_value_id": 9
+            },
+            {
+                "id": 21,
+                "product_id": 11,
+                "option_id": 5,
+                "option_value_id": 10
+            },
+            {
+                "id": 22,
+                "product_id": 11,
+                "option_id": 6,
+                "option_value_id": 13
+            },
+            {
+                "id": 23,
+                "product_id": 12,
+                "option_id": 5,
+                "option_value_id": 11
+            },
+            {
+                "id": 24,
+                "product_id": 12,
+                "option_id": 6,
+                "option_value_id": 13
+            },
+            {
+                "id": 25,
+                "product_id": 13,
+                "option_id": 5,
+                "option_value_id": 12
+            },
+            {
+                "id": 26,
+                "product_id": 13,
+                "option_id": 6,
+                "option_value_id": 13
+            },
+            {
+                "id": 27,
+                "product_id": 14,
+                "option_id": 5,
+                "option_value_id": 10
+            },
+            {
+                "id": 28,
+                "product_id": 14,
+                "option_id": 6,
+                "option_value_id": 14
+            },
+            {
+                "id": 29,
+                "product_id": 15,
+                "option_id": 5,
+                "option_value_id": 11
+            },
+            {
+                "id": 30,
+                "product_id": 15,
+                "option_id": 6,
+                "option_value_id": 14
+            },
+            {
+                "id": 31,
+                "product_id": 16,
+                "option_id": 5,
+                "option_value_id": 12
+            },
+            {
+                "id": 32,
+                "product_id": 16,
+                "option_id": 6,
+                "option_value_id": 14
+            }
+        ]
+    }
+]

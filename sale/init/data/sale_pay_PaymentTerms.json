@@ -6,7 +6,7 @@
             {
                 "id": 1,
                 "name": "15 days invoice",
-                "description": "Payment within 15 days from the date of issuance",
+                "description": "Payment within 15 days from the date of issuance.",
                 "delay_from": "created",
                 "delay_count": 15,
                 "is_active": true

@@ -16,13 +16,15 @@ class PaymentPlan extends Model {
             'name' => [
                 'type'              => 'string',
                 'description'       => 'The name of the plan.',
-                'required'          => true
+                'required'          => true,
+                'multilang'         => true
             ],
 
             'description' => [
                 'type'              => 'string',
                 'usage'             => 'text/plain',
-                'description'       => 'The name of the plan.'
+                'description'       => 'The name of the plan.',
+                'multilang'         => true
             ],
 
             'rate_class_id' => [

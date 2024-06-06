@@ -83,6 +83,7 @@
                                                 "width": "50%"
                                             },
                                             {
+                                                "id": "item.emission_date",
                                                 "type": "field",
                                                 "value": "emission_date",
                                                 "width": "50%"

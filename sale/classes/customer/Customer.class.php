@@ -1,7 +1,7 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace sale\customer;
@@ -74,56 +74,63 @@ class Customer extends \identity\Partner {
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\receivable\Receivable',
                 'foreign_field'     => 'customer_id',
-                'description'       => 'List receivables of the customers.'
+                'description'       => 'List receivables of the customer.'
             ],
 
             'sales_entries_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\SaleEntry',
                 'foreign_field'     => 'customer_id',
-                'description'       => 'List sales entries of the customers.'
+                'description'       => 'List sales entries of the customer.'
             ],
 
             'bookings_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\Booking',
                 'foreign_field'     => 'booking_id',
-                'description'       => 'List bookings of the customers.'
+                'description'       => 'List bookings of the customer.'
             ],
 
             'products_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'inventory\Product',
                 'foreign_field'     => 'customer_id',
-                'description'       => 'List products of the customers.'
+                'description'       => 'List products of the customer.'
             ],
 
             'softwares_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'inventory\Software',
                 'foreign_field'     => 'customer_id',
-                'description'       => 'List softwares of the customers.'
+                'description'       => 'List softwares of the customer.'
             ],
 
             'services_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'inventory\service\Service',
                 'foreign_field'     => 'customer_id',
-                'description'       => 'List services of the customers.'
+                'description'       => 'List services of the customer.'
             ],
 
             'subscriptions_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\subscription\Subscription',
                 'foreign_field'     => 'customer_id',
-                'description'       => 'List subscriptions of the customers.'
+                'description'       => 'List subscriptions of the customer.'
             ],
 
             'invoices_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\accounting\invoice\Invoice',
                 'foreign_field'     => 'customer_id',
-                'description'       => 'List invoices of the customers.'
+                'description'       => 'List invoices of the customer.'
+            ],
+
+            'contacts_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\customer\Contact',
+                'foreign_field'     => 'customer_id',
+                'description'       => 'List contacts of the customer.'
             ],
 
             'customer_external_ref' => [
@@ -189,5 +196,4 @@ class Customer extends \identity\Partner {
             }
         }
     }
-
 }
