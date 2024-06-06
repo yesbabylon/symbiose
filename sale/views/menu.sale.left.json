@@ -524,13 +524,13 @@
                                 }
                             },
                             {
-                                "id": "settings.payment.plan",
+                                "id": "settings.payment.funding.plans",
                                 "type": "entry",
-                                "label": "Plans",
+                                "label": "Funding plans",
                                 "icon": "book",
-                                "description": "Display all payments palns.",
+                                "description": "Display all funding plans.",
                                 "context": {
-                                    "entity": "sale\\pay\\PaymentPlan",
+                                    "entity": "sale\\pay\\FundingPlan",
                                     "view": "list.default",
                                     "order": "id",
                                     "sort": "asc"
