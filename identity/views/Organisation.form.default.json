@@ -229,6 +229,27 @@
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "label": "Banks Accounts",
+                        "id": "section.organisation_banksaccounts",
+                        "visible": ["state", "<>", "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "bank_account_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }
