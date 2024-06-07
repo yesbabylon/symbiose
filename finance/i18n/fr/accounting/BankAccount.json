@@ -1,0 +1,38 @@
+{
+    "name": "Compte bancaire",
+    "plural": "Compte bancaires",
+    "description": "Le plan comptable est une liste organisationnelle contenant tous les comptes financiers de l'entreprise.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom du compte bancaire.",
+            "help": ""
+        },
+        "organisation_id": {
+            "label": "Organisation",
+            "description": "L'organisation à laquelle appartient l'organigramme.",
+            "help": ""
+        },
+        "bank_name": {
+            "label": "Nom de la banque",
+            "description" : "Le nom de la banque où l'organisation détient son compte."
+        },
+        "bank_country": {
+            "label": "Pays de la banque",
+            "description": "Le pays où l'organisation détient le compte bancaire, spécifié à l'aide du code ISO 3166-2..",
+            "help": ""
+        },
+        "bank_account_iban": {
+            "label": "IBAN",
+            "description": "Numéro de compte bancaire au format international.",
+            "help": ""
+        },
+        "bank_account_bic": {
+            "label": "BIC",
+            "description": "Numéro d'identification de la banque.",
+            "help": ""
+        }
+    },
+    "view": {},
+    "error": {}
+}

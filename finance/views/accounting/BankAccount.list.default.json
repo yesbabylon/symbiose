@@ -1,0 +1,36 @@
+{
+    "name": "Bank Account List ",
+    "description": "This view is intented for displaying the bank accounts",
+    "access": {
+        "groups": ["finance.default.user"]
+     },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "bank_account_iban",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "bank_account_bic",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "bank_country",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "bank_name",
+                "width": "20%"
+            }
+        ]
+    }
+}
