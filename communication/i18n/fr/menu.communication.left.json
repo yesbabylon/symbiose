@@ -1,11 +1,15 @@
 {
     "name": "Menu de gauche communication.",
     "view": {
-        "item.templates": {
+        "templates": {
             "label": "Modèles",
             "help": ""
         },
-        "item.categories": {
+        "templates.all": {
+            "label": "Tous",
+            "help": ""
+        },
+        "templates.categories": {
             "label": "Catégories",
             "help": ""
         }

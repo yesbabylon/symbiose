@@ -4,30 +4,39 @@
     "layout": {
         "items": [
             {
-                "id": "item.templates",
-                "type": "entry",
+                "id": "templates",
                 "label": "Templates",
+                "description": "",
                 "icon": "description",
-                "description": "",
-                "context": {
-                    "entity": "communication\\Template",
-                    "view": "list.default",
-                    "order": "id",
-                    "sort": "asc"
-                }
-            },
-            {
-                "id": "item.categories",
-                "type": "entry",
-                "label": "Categories",
-                "icon": "category",
-                "description": "",
-                "context": {
-                    "entity": "communication\\TemplateCategory",
-                    "view": "list.default",
-                    "order": "id",
-                    "sort": "asc"
-                }
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "templates.all",
+                        "type": "entry",
+                        "label": "All",
+                        "icon": "list",
+                        "description": "",
+                        "context": {
+                            "entity": "communication\\template\\Template",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "templates.categories",
+                        "type": "entry",
+                        "label": "Categories",
+                        "icon": "category",
+                        "description": "",
+                        "context": {
+                            "entity": "communication\\template\\TemplateCategory",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    }
+                ]
             }
         ]
     }

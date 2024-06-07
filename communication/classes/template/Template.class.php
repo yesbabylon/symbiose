@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-namespace communication;
+namespace communication\template;
 
 use equal\orm\Model;
 
@@ -40,7 +40,7 @@ class Template extends Model {
 
             'category_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'communication\TemplateCategory',
+                'foreign_object'    => 'communication\template\TemplateCategory',
                 'description'       => "The category the template belongs to.",
                 'dependents'        => ['name'],
                 'required'          => true
@@ -57,7 +57,7 @@ class Template extends Model {
 
             'parts_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'communication\TemplatePart',
+                'foreign_object'    => 'communication\template\TemplatePart',
                 'foreign_field'     => 'template_id',
                 'description'       => 'List of templates parts related to the template.',
                 'ondetach'          => 'delete'
@@ -65,7 +65,7 @@ class Template extends Model {
 
             'attachments_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'communication\TemplateAttachment',
+                'foreign_object'    => 'communication\template\TemplateAttachment',
                 'foreign_field'     => 'template_id',
                 'description'       => 'List of attachments related to the template, if any.'
             ]

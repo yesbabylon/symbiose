@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-namespace communication;
+namespace communication\template;
 
 use equal\orm\Model;
 
@@ -30,7 +30,7 @@ class TemplateCategory extends Model {
 
             'templates_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'communication\Template',
+                'foreign_object'    => 'communication\template\Template',
                 'foreign_field'     => 'category_id',
                 'description'       => "Templates that are related to this category, if any."
             ]
