@@ -16,6 +16,7 @@ class Message extends Model {
 
             'moment' => [
                 'type'              => 'datetime',
+                'description'       => 'Message emission date and time.',
                 'default'           => function () { return time(); },
                 'required'          => true
             ],

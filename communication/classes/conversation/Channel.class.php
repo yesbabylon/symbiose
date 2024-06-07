@@ -34,14 +34,15 @@ class Channel extends Model {
                 'foreign_field'     => 'channels_ids',
                 'rel_table'         => 'communication_channel_rel_core_user',
                 'rel_foreign_key'   => 'user_id',
-                'rel_local_key'     => 'channel_id'
+                'rel_local_key'     => 'channel_id',
+                'description'       => 'Users that can take part in channel\'s conversations.'
             ],
 
             'conversations_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'communication\conversation\Conversation',
                 'foreign_field'     => 'channel_id',
-                'description'       => 'The conversations of the channel.'
+                'description'       => 'Conversations of the channel.'
             ]
 
         ];
