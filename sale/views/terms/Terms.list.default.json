@@ -1,0 +1,38 @@
+{
+    "name": "Terms",
+    "description": "Default listing of all terms.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "organisation_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "publication_date",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "lang_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "document_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "url",
+                "width": "20%"
+            }
+        ]
+    }
+}

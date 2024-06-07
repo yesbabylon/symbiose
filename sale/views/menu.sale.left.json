@@ -550,6 +550,28 @@
                                 }
                             }
                         ]
+                    },
+                    {
+                        "id": "settings.terms",
+                        "type": "parent",
+                        "label": "Terms",
+                        "icon": "description",
+                        "description": "Settings terms parent menu.",
+                        "children": [
+                            {
+                                "id": "settings.terms.terms",
+                                "type": "entry",
+                                "label": "All",
+                                "icon": "list",
+                                "description": "Display all terms.",
+                                "context": {
+                                    "entity": "sale\\terms\\Terms",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            }
+                        ]
                     }
                 ]
             }

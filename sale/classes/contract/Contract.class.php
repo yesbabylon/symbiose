@@ -1,10 +1,12 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace sale\contract;
+
 use equal\orm\Model;
 
 class Contract extends Model {
@@ -17,10 +19,9 @@ class Contract extends Model {
         return "Contracts are formal agreement regarding the delivery of products or services concluded between two parties.";
     }
 
-
     public static function getColumns() {
-
         return [
+
             'name' => [
                 'type'              => 'computed',
                 'function'          => 'calcName',
@@ -66,7 +67,6 @@ class Contract extends Model {
             'customer_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
-                'domain'            => ['relationship', '=', 'customer'],
                 'description'       => 'The customer the contract relates to.',
             ],
 
@@ -99,46 +99,37 @@ class Contract extends Model {
         ];
     }
 
-    public static function calcName($om, $oids, $lang) {
+    public static function calcName($self) {
         $result = [];
-        $res = $om->read(get_called_class(), $oids, ['id', 'customer_id.name']);
-        foreach($res as $oid => $odata) {
-            $result[$oid] = "{$odata['customer_id.name']} - {$odata['id']}";
+        $self->read(['customer_id' => ['name']]);
+        foreach($self as $id => $contract) {
+            $result[$id] = "{$contract['customer_id']['name']} - {$contract['id']}";
         }
+
         return $result;
     }
 
-    /**
-     * Compute the VAT excl. total price of the contract, with discounts applied.
-     *
-     */
-    public static function calcTotal($om, $oids, $lang) {
+    public static function calcTotal($self): array {
         $result = [];
-        $contracts = $om->read(__CLASS__, $oids, ['contract_lines_ids.total']);
-
-        foreach($contracts as $oid => $contract) {
-            $result[$oid] = array_reduce($contract['contract_lines_ids.total'], function ($c, $a) {
+        $self->read(['contract_lines_ids' => ['total']]);
+        foreach($self as $id => $contract) {
+            $result[$id] = array_reduce($contract['contract_lines_ids']->get(true), function ($c, $a) {
                 return $c + $a['total'];
             }, 0.0);
         }
+
         return $result;
     }
 
-    /**
-     * Compute the final VAT incl. price of the contract.
-     *
-     */
-    public static function calcPrice($om, $oids, $lang) {
+    public static function calcPrice($self): array {
         $result = [];
-        $contracts = $om->read(__CLASS__, $oids, ['contract_lines_ids.price']);
-
-        foreach($contracts as $oid => $contract) {
-            $result[$oid] = array_reduce($contract['contract_lines_ids.price'], function ($c, $a) {
+        $self->read(['contract_lines_ids' => ['price']]);
+        foreach($self as $id => $contract) {
+            $result[$id] = array_reduce($contract['contract_lines_ids']->get(true), function ($c, $a) {
                 return $c + $a['price'];
             }, 0.0);
         }
 
         return $result;
     }
-
 }
