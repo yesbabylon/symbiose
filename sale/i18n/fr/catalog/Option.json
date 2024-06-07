@@ -3,14 +3,9 @@
 	"plural": "Options",
 	"description": "",
 	"model": {
-		"name": {
-			"label": "Identification",
-			"description": "Nom unique de cette option.",
-			"help": ""
-		},
-		"family_id": {
-			"label": "Famille",
-			"description": "Famille de produits à laquelle appartient cette option.",
+		"product_model_id": {
+			"label": "Modèle de produit",
+			"description": "Modèle de produit auquel appartient cette option.",
 			"help": ""
 		},
 		"description": {
@@ -23,7 +18,12 @@
 		"form.default": {
 			"name": "Option",
 			"description": "",
-			"layout": {}
+			"layout": {
+				"section.description": {
+					"label": "Description",
+					"help": ""
+				}
+			}
 		},
 		"list.default": {
 			"name": "Options",

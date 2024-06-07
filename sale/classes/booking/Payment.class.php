@@ -1,15 +1,15 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace sale\booking;
 
 class Payment extends \sale\pay\Payment {
 
     public static function getColumns() {
-
         return [
 
             'booking_id' => [
@@ -17,15 +17,15 @@ class Payment extends \sale\pay\Payment {
                 'result_type'       => 'many2one',
                 'function'          => 'calcBookingId',
                 'foreign_object'    => 'sale\booking\Booking',
-                'description'       => 'The booking the payement relates to, if any (computed).',
+                'description'       => 'The booking the payment relates to, if any (computed).',
                 'store'             => true
             ],
 
             'funding_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Funding',
-                'description'       => 'The funding the payement relates to, if any.',
-                'onupdate'          => 'sale\pay\Payment::onupdateFundingId'
+                'description'       => 'The funding the payment relates to, if any.',
+                'onupdate'          => 'onupdateFundingId'
             ],
 
             'payment_method' => [
@@ -34,49 +34,46 @@ class Payment extends \sale\pay\Payment {
                     'cash',                 // cash money
                     'bank_card',            // electronic payment with bank (or credit) card
                     'booking',              // payment through addition to the final (balance) invoice of a specific booking
-                    'voucher'               // gift, coupon, or tour-operator voucher                    
+                    'voucher'               // gift, coupon or tour-operator voucher
                 ],
                 'description'       => "The method used for payment at the cashdesk.",
-                'visible'           => [ ['payment_origin', '=', 'cashdesk'] ],
+                'visible'           => ['payment_origin', '=', 'cashdesk'],
                 'default'           => 'cash'
             ]
 
         ];
     }
 
-
-    public static function calcBookingId($om, $oids, $lang) {
+    public static function calcBookingId($self) {
         $result = [];
-        $items = $om->read(self::getType(), $oids, ['funding_id.booking_id']);
-        foreach($items as $oid => $odata) {
-            $result[$oid] = $odata['funding_id.booking_id'];
+        $self->read(['funding_id']['booking_id']);
+        foreach($self as $id => $payment) {
+            $result[$id] = $payment['funding_id']['booking_id'];
         }
+
         return $result;
     }
 
-
-    /**
-     * Signature for single object change from views.
-     *
-     * @param  Object   $om        Object Manager instance.
-     * @param  Array    $event     Associative array holding changed fields as keys, and their related new values.
-     * @param  Array    $values    Copy of the current (partial) state of the object.
-     * @param  String   $lang      Language (char 2) in which multilang field are to be processed.
-     * @return Array    Associative array mapping fields with their resulting values.
-     */
-    public static function onchange($om, $event, $values, $lang='en') {
+    public static function onchange($event, $values) {
         $result = [];
 
         if(isset($event['funding_id'])) {
-            $fundings = $om->read('sale\booking\Funding', $event['funding_id'], ['type', 'due_amount', 'booking_id.customer_id.id', 'booking_id.customer_id.name', 'invoice_id.partner_id.id', 'invoice_id.partner_id.name'], $lang);
-            if($fundings > 0) {
-                $funding = reset($fundings);
+            $funding = Funding::id($event['funding_id'])
+                ->read(['type', 'due_amount', 'booking_id' => ['customer_id' => ['name']], 'invoice_id' => ['customer_id' => ['name']]])
+                ->first();
 
-                if($funding['type'] == 'invoice')  {
-                    $result['partner_id'] = [ 'id' => $funding['invoice_id.partner_id.id'], 'name' => $funding['invoice_id.partner_id.name'] ];
+            if(!is_null($funding)) {
+                if($funding['funding_type'] == 'invoice')  {
+                    $result['customer_id'] = [
+                        'id'   => $funding['invoice_id']['customer_id']['id'],
+                        'name' => $funding['invoice_id']['customer_id']['name']
+                    ];
                 }
                 else {
-                    $result['partner_id'] = [ 'id' => $funding['booking_id.customer_id.id'], 'name' => $funding['booking_id.customer_id.name'] ];
+                    $result['customer_id'] = [
+                        'id'   => $funding['booking_id']['customer_id']['id'],
+                        'name' => $funding['booking_id']['customer_id']['name']
+                    ];
                 }
 
                 if(isset($values['amount']) && $values['amount'] > $funding['due_amount']) {
@@ -88,8 +85,35 @@ class Payment extends \sale\pay\Payment {
         return $result;
     }
 
+    /**
+     * Assign customer_id and invoice_id from invoice relating to funding, if any.
+     * Force recomputing of target funding computed fields (is_paid and paid_amount).
+     */
+    public static function onupdateFundingId($self, $values) {
+        trigger_error("ORM::calling sale\booking\Payment::onupdateFundingId", QN_REPORT_DEBUG);
 
-    public static function getConstraints() {
-        return parent::getConstraints();
+        $funding_fields = [
+            'funding_type',
+            'due_amount',
+            'booking_id' => ['customer_id'],
+        ];
+
+        $self->read(['funding_id', 'customer_id', 'funding_id' => $funding_fields, 'amount', 'statement_line_id']);
+        foreach($self as $id => $payment) {
+            if($payment['funding_id']) {
+                // make sure a customer_id is assigned to the payment
+                if(is_null($payment['customer_id']) && isset($payment['funding_id']['booking_id'])) {
+                    self::id($id)->update([
+                        'customer_id' => $payment['funding_id']['booking_id']['customer_id'],
+                        'invoice_id'  => $payment['funding_id']['booking_id']['id'],
+                    ]);
+                }
+
+                self::id($id)->update(['is_paid' => null, 'paid_amount' => null]);
+                $fundings_ids[] = $payment['funding_id'];
+            }
+        }
+
+        Funding::ids($fundings_ids)->read(['is_paid', 'paid_amount']);
     }
 }

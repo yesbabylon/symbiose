@@ -1,0 +1,45 @@
+{
+    "name": "Project",
+    "plural": "Projects",
+    "description": "Un projet organise les saisies de temps et permet de configurer un modèle de vente pour appliquer automatiquement les champs liés à la vente d'une entrée de temps.",
+    "model": {
+        "description": {
+            "label": "Description",
+            "description": "Description du projet.",
+            "help": ""
+        },
+        "customer_id": {
+            "label": "Client",
+            "description": "Client à qui le projet est destiné.",
+            "help": ""
+        },
+        "instance_id": {
+            "label": "Instance",
+            "description": "L'instance hébergeant le projet.",
+            "help": ""
+        },
+        "time_entry_sale_model_id": {
+            "label": "Modèle de vente",
+            "description": "Le modèle de vente à appliquer sur les saisies de temps du projet.",
+            "help": ""
+        },
+        "receivable_queue_id": {
+            "label": "File d'attente des percevables",
+            "description": "La file d'attente des percevables à utiliser pour les percevables générés par les saisies de temps du projet.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Projet",
+            "description": "Formulaire de modification par défaut d'un projet.",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Projets",
+            "description": "Liste des projets.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

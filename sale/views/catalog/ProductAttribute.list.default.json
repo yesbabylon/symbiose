@@ -8,27 +8,15 @@
         "items": [
             {
                 "type": "field",
-                "label": "Name",
-                "value": "name",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "label": "Product",
-                "value": "product_id",
-                "width": "20%"
-            },
-            {
-                "type": "field",
                 "label": "Option",
                 "value": "option_id",
-                "width": "20%"
+                "width": "50%"
             },
             {
                 "type": "field",
                 "label": "Option Value",
                 "value": "option_value_id",
-                "width": "20%"
+                "width": "50%"
             }
         ]
     }

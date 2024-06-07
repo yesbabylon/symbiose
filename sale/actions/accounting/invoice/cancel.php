@@ -13,8 +13,7 @@ list($params, $providers) = eQual::announce([
 
         'id' =>  [
             'type'              => 'integer',
-            'description'       => 'Identifier of the targeted invoice.',
-            'required'          => true
+            'description'       => 'Identifier of the targeted invoice.'
         ],
 
         'ids' =>  [

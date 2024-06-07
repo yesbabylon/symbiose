@@ -1,8 +1,8 @@
 <?php
 /*
-    This file is part of the eQual framework <http://www.github.com/cedricfrancoys/equal>
-    Some Rights Reserved, Cedric Francoys, 2010-2024
-    Licensed under GNU GPL 3 license <http://www.gnu.org/licenses/>
+    This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
+    Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
 namespace inventory\server;
@@ -12,7 +12,7 @@ use equal\orm\Model;
 class Instance extends Model {
 
     public static function getDescription() {
-        return 'Instance running on a server, for example a Docker instance.';
+        return 'Instance manages service or product instances, detailing type, version, URL, access information, and running software.';
     }
 
     public static function getColumns()
@@ -82,7 +82,7 @@ class Instance extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'inventory\Software',
                 'foreign_field'     => 'instance_id',
-                'description'       => 'Information about softwares running on the instance.'
+                'description'       => 'Information about the list of  software running on the instance.'
             ]
 
         ];

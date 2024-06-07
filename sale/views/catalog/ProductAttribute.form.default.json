@@ -1,6 +1,6 @@
 {
     "name": "Product Attribute",
-    "description": "A Product Attrribute corresponds to the value of an attribute available for a Product of a given Family.",
+    "description": "A Product Attribute corresponds to the value of an attribute available for a Product of a given Family.",
     "access": {
         "groups": ["pos.default.user", "sale.default.user"]
      },
@@ -17,33 +17,46 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Name",
-                                                "value": "name",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "heading": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Product",
-                                                "value": "product_id",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "heading": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
                                                 "label": "Option",
                                                 "value": "option_id",
-                                                "width": "50%"
+                                                "width": "66%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Option Value",
                                                 "value": "option_value_id",
-                                                "width": "50%"                                                
+                                                "width": "66%",
+                                                "visible": ["option_id", "<>", null]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Product model",
+                                                "value": "product_model_id",
+                                                "width": "66%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Product",
+                                                "value": "product_id",
+                                                "width": "66%",
+                                                "readonly": true
                                             }
                                         ]
                                     }

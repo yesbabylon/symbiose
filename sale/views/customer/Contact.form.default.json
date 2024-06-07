@@ -1,0 +1,27 @@
+{
+    "name": "Contact",
+    "description": "Customer contact form.",
+    "access": {
+        "groups": ["sale.default.user"]
+    },
+    "layout": {
+        "extends": {
+            "entity": "identity\\Partner",
+            "view": "form.default"
+        },
+        "update": {
+            "column.middle-empty": {
+                "attributes": {
+                    "items": [
+                        {
+                            "type": "field",
+                            "label": "Customer",
+                            "value": "customer_id",
+                            "width": "100%"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

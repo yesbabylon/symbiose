@@ -7,12 +7,11 @@
 
 namespace sale\accounting\invoice;
 
-use finance\accounting\InvoiceLine as FinanceInvoiceLine;
 use sale\catalog\Product;
 use sale\price\Price;
 use sale\price\PriceList;
 
-class InvoiceLine extends FinanceInvoiceLine {
+class InvoiceLine extends \finance\accounting\InvoiceLine {
 
     public static function getColumns() {
         return [

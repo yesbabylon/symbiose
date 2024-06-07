@@ -35,18 +35,6 @@
                           "label": "Billable",
                           "value": "is_billable",
                           "width": "15%"
-                      },
-                      {
-                        "type": "field",
-                        "label": "Expired",
-                        "value": "is_expired",
-                        "width": "15%"
-                      },
-                      {
-                        "type": "field",
-                        "label": "Up coming expiry",
-                        "value": "has_upcoming_expiry",
-                        "width": "15%"
                       }
                     ]
                   },
@@ -54,22 +42,10 @@
                     "width": "100%",
                     "items": [
                       {
-                        "type": "field",
-                        "value": "is_internal",
-                        "label": "Is internal",
-                        "width": "15%"
-                      },
-                      {
                           "type": "field",
                           "value": "customer_id",
                           "label": "Customer",
                           "width": "20%"
-                      },
-                      {
-                        "type": "field",
-                        "value": "has_external_provider",
-                        "label": "has external provider",
-                        "width": "15%"
                       },
                       {
                         "type": "field",
@@ -92,12 +68,6 @@
                         "type": "field",
                         "value": "software_id",
                         "label": "Software",
-                        "width": "20%"
-                      },
-                      {
-                        "type": "field",
-                        "value": "detail_id",
-                        "label": "Detail",
                         "width": "20%"
                       },
                       {

@@ -1,0 +1,22 @@
+[
+    {
+        "name": "symbiose\\setting\\SettingValue",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1012,
+                "setting_id": 1012,
+                "name": "sale.booking.sequence",
+                "organisation_id": 1,
+                "value": 1
+            },
+            {
+                "id": 1016,
+                "setting_id": 1016,
+                "name": "sale.invoice.sequence",
+                "organisation_id": 1,
+                "value": 1
+            }
+        ]
+    }
+]

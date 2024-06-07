@@ -93,6 +93,16 @@
                         "type": "parent",
                         "children": [
                             {
+                                "id": "settings.settings.settings",
+                                "type": "entry",
+                                "label": "Available Settings",
+                                "description": "",
+                                "context": {
+                                    "entity": "symbiose\\setting\\Setting",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
                                 "id": "settings.settings.settings_values",
                                 "type": "entry",
                                 "label": "Settings values",
@@ -103,12 +113,12 @@
                                 }
                             },
                             {
-                                "id": "settings.settings.settings",
+                                "id": "settings.settings.settings_sequences",
                                 "type": "entry",
-                                "label": "Available Settings",
+                                "label": "Settings sequences",
                                 "description": "",
                                 "context": {
-                                    "entity": "symbiose\\setting\\Setting",
+                                    "entity": "symbiose\\setting\\SettingSequence",
                                     "view": "list.default"
                                 }
                             }

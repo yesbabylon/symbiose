@@ -106,6 +106,9 @@
                 },
                 "section.pack_lines": {
                     "label": "Produits du pack"
+                },
+                "section.subscriptions": {
+                    "label": "Abonnements"
                 }
             }
         },

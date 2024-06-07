@@ -212,6 +212,11 @@
             "description": "Contact associé à cette identité.",
             "help": ""
         },
+        "customer_contact_id": {
+            "label": "Contact client",
+            "description": "Contact client associé à cette identité.",
+            "help": ""
+        },
         "employee_id": {
             "label": "Employé",
             "description": "Employé associé à cette identité.",

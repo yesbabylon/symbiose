@@ -288,7 +288,10 @@ class Partner extends Model {
             }
             else {
                 foreach($values as $field => $value) {
-                    Identity::id($partner['partner_identity_id'])->update([$field => $value]);
+                    $non_editable_fields = ['user_id', 'contact_id', 'customer_contact_id', 'employee_id', 'supplier_id', 'customer_id'];
+                    if(!in_array($field, $non_editable_fields)) {
+                        Identity::id($partner['partner_identity_id'])->update([$field => $value]);
+                    }
                 }
             }
         }

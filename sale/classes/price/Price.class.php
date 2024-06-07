@@ -1,14 +1,22 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace sale\price;
+
 use equal\orm\Model;
 use finance\accounting\AccountingRule;
 
 class Price extends Model {
+
+    public static function getDescription() {
+        return 'A price is an amount of money that a customer has to pay for a product/service.'
+            .' It\'s described by an amount, a vat rate, an accounting rule and is part of a price list.';
+    }
+
     public static function getColumns() {
         return [
 
@@ -41,6 +49,7 @@ class Price extends Model {
 
             'price_type' => [
                 'type'              => 'string',
+                'description'       => 'If computed a calculation method is used to compute the price amount.',
                 'selection'         => ['direct', 'computed'],
                 'default'           => 'direct'
             ],
@@ -48,7 +57,7 @@ class Price extends Model {
             'calculation_method_id' => [
                 'type'              => 'string',
                 'description'       => "Method to use for price computation.",
-                'visible'           => ['type', '=', 'computed']
+                'visible'           => ['price_type', '=', 'computed']
             ],
 
             'price_list_id' => [

@@ -13,7 +13,7 @@ list($params, $providers) = announce([
     'description'	=>	"Bulk update and verify subscription expiration.",
     'params' 		=>	[
         'ids' => [
-            'description'       => 'List of Subscription identifiers the check against emptyness.',
+            'description'       => 'List of subscription identifiers.',
             'type'              => 'array'
         ]
     ],

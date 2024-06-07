@@ -143,13 +143,7 @@
                                                 "label": "Accesses",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "view": "list.selection",
-                                                    "header": {
-                                                        "actions": {
-                                                            "ACTION.SELECT": false,
-                                                            "ACTION.CREATE": false
-                                                        }
-                                                    }
+                                                    "view": "list.selection"
                                                 }
                                             }
                                         ]

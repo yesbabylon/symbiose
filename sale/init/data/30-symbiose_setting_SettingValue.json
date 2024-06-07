@@ -1,6 +1,6 @@
 [
     {
-        "name": "core\\setting\\SettingValue",
+        "name": "symbiose\\setting\\SettingValue",
         "lang": "en",
         "data": [
             {
@@ -9,13 +9,6 @@
                 "name": "sale.booking.sequence_format",
                 "user_id": 0,
                 "value": "%05d{sequence}"
-            },
-            {
-                "id": 1012,
-                "setting_id": 1012,
-                "name": "sale.booking.sequence",
-                "user_id": 0,
-                "value": 1
             },
             {
                 "id": 1013,
@@ -37,13 +30,6 @@
                 "name": "sale.invoice.fiscal_year",
                 "user_id": 0,
                 "value": 2024
-            },
-            {
-                "id": 1016,
-                "setting_id": 1016,
-                "name": "sale.invoice.sequence",
-                "user_id": 0,
-                "value": 1
             },
             {
                 "id": 1050,

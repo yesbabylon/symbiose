@@ -8,7 +8,7 @@
 use sale\subscription\Subscription;
 
 list($params, $providers) = eQual::announce([
-    'description' => 'Update expiration and verify subscription expiration.',
+    'description' => 'Verify the columns expiration of the subscription.',
     'params'      => [
         'id' =>  [
             'description' => 'ID of the subscription.',

@@ -47,8 +47,8 @@
             "help": "Numéro de la facture, selon la logique d'organisation."
         },
         "emission_date": {
-            "label": "Date",
-            "description": "Date de création de la facture.",
+            "label": "Date d'émission",
+            "description": "Date d'émission de la facture.",
             "help": ""
         },
         "organisation_id": {
