@@ -20,10 +20,13 @@ class Service extends Model {
     {
         return [
             'name' => [
-                'type'              => 'string',
-                'unique'            => true,
-                'required'          => true,
-                'description'       => 'Unique identifier of the service. (ex: Google API, mailtrap.io).'
+                'type'              => 'computed',
+                'function'          => 'calcName',
+                'result_type'       => 'string',
+                'description'       => 'The display name of the service based on the service model and product.',
+                'store'             => true,
+                'instant'           => true,
+                'readonly'          => true,
             ],
 
             'description' => [
@@ -32,25 +35,66 @@ class Service extends Model {
                 'description'       => 'Information about a service.',
             ],
 
+            'service_model_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'inventory\service\ServiceModel',
+                'description'       => 'The service model to which the service belongs.',
+                'required'          => true,
+                'dependents'        => ['has_subscription', 'is_billable']
+            ],
+
             'has_subscription' => [
-                'type'              => 'boolean',
-                'description'       => 'The service has a subscription.',
-                'default'           => false,
-                'dependencies'      => ['is_billable','is_internal'],
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => 'The service has a subscription (computed by Service Model).',
+                'function'          => 'calcHasSubscription',
+                'readonly'          => true,
+                'store'             => true,
+                'instant'           => true
             ],
 
             'is_billable' => [
-                'type'              => 'boolean',
-                'description'       => 'The service is billable.',
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => 'The service is billable (computed by Service Model).',
                 'visible'           => ['has_subscription', '=', true],
-                'default'           => false,
+                'function'          => 'calcIsBillable',
+                'readonly'          => true,
+                'store'             => true,
+                'instant'           => true
             ],
 
             'is_auto_renew' => [
-                'type'              => 'boolean',
-                'description'       => 'The service is auto renew.',
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => 'The service is auto renew (computed by Service Model).',
                 'visible'           => ['has_subscription', '=', true],
-                'default'           => false
+                'function'          => 'calcIsAutoRenew',
+                'readonly'          => true,
+                'store'             => true,
+                'instant'           => true
+            ],
+
+            'has_external_provider' => [
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => 'The service has external provider (computed by Service Model)..',
+                'function'          => 'calcHasExternalProvider',
+                'readonly'          => true,
+                'store'             => true,
+                'instant'           => true
+            ],
+
+            'service_provider_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'inventory\service\ServiceProvider',
+                'description'       => 'The service provider to which the service belongs (computed by Service Model)..',
+                'visible'           => ['has_external_provider', '=', true],
+                'function'          => 'calcServiceProvider',
+                'readonly'          => true,
+                'store'             => true,
+                'instant'           => true
             ],
 
             'product_id' => [
@@ -81,19 +125,6 @@ class Service extends Model {
                 'visible'           => ['is_internal', '=', false],
                 'store'             => true,
                 'instant'           => true
-            ],
-
-            'has_external_provider' => [
-                'type'              => 'boolean',
-                'description'       => 'The service has external provider.',
-                'default'           =>  false
-            ],
-
-            'service_provider_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'inventory\service\ServiceProvider',
-                'description'       => 'The service provider to which the service belongs.',
-                'visible'           => ['has_external_provider', '=', true]
             ],
 
             'details_ids' => [
@@ -127,16 +158,29 @@ class Service extends Model {
         ];
     }
 
-    public static function onchange($event) {
+    public static function onchange($event,$values) {
         $result = [];
 
-        if(isset($event['has_external_provider'])){
-            $result['service_provider_id'] = '';
+        if(isset($event['service_model_id']) && $event['service_model_id'] > 0){
+            $service_model = ServiceModel::search(['id', '=', $event['service_model_id']])
+                ->read(['has_subscription', 'is_auto_renew', 'is_billable', 'has_external_provider', 'service_provider_id' => ['id','name']])
+                ->first();
+
+            $result = [
+                'has_subscription'          => $service_model['has_subscription'],
+                'is_auto_renew'             => $service_model['is_auto_renew'],
+                'is_billable'               => $service_model['is_billable'],
+                'has_external_provider'     => $service_model['has_external_provider'],
+                'service_provider_id'       => $service_model['service_provider_id']
+            ];
+
         }
 
-        if(isset($event['has_subscription'])){
-                $result['is_auto_renew'] = false;
-                $result['is_billable'] = false;
+        if(isset($event['service_model_id']) || isset($event['product_id'])) {
+            $result['name'] = self::createName([
+                'service_model_id'        => $event['service_model_id'] ?? $values['service_model_id'],
+                'product_id'              => $event['product_id'] ?? $values['product_id'],
+            ]);
         }
 
         if(isset($event['product_id']) && $event['product_id'] > 0){
@@ -150,6 +194,59 @@ class Service extends Model {
 
         return $result;
 
+    }
+
+    public static function calcServiceProvider($self) {
+        return self::calcFromServiceModel($self, 'service_provider_id');
+    }
+
+    public static function calcHasExternalProvider($self) {
+        return self::calcFromServiceModel($self, 'has_external_provider');
+    }
+
+    public static function calcIsAutoRenew($self) {
+        return self::calcFromServiceModel($self, 'is_auto_renew');
+    }
+
+    public static function calcIsBillable($self) {
+        return self::calcFromServiceModel($self, 'is_billable');
+    }
+
+    public static function calcHasSubscription($self) {
+        return self::calcFromServiceModel($self, 'has_subscription');
+    }
+
+    private static function calcFromServiceModel($self, $column): array {
+        $result = [];
+        $self->read(['service_model_id' => [$column]]);
+        foreach($self as $id => $service) {
+            if(isset($service['service_model_id'][$column])) {
+                $result[$id] = $service['service_model_id'][$column];
+            }
+        }
+
+        return $result;
+    }
+
+    public static function calcName($self) {
+        $result = [];
+        $self->read(['service_model_id', 'product_id']);
+        foreach($self as $id => $service) {
+            $result[$id]  = self::createName($service);
+        }
+        return $result;
+    }
+
+    private static function createName($service) {
+        $name = '';
+
+        $service_model = ServiceModel::id($service['service_model_id'])->read(['id','name'])->first(true);
+        $product = Product::id($service['product_id'])->read(['id','name'])->first(true);
+
+        if(isset($service_model)  &&  strlen($service_model['id']) > 0 && isset($product) &&  strlen($product['id']) > 0){
+            $name = '['.$service_model['name']. ' - '. $product['name'] .']';
+        }
+        return $name;
     }
 
     public static function calcIsInternal($self) {

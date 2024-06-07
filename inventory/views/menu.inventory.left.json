@@ -302,31 +302,20 @@
                         ]
                     },
                     {
-                        "id": "item.settings.detail",
+                        "id": "item.settings.service.model",
                         "type": "parent",
-                        "label": "Details",
-                        "icon": "book",
+                        "label": "Services Model",
+                        "icon": "settings_applications",
                         "description": "",
                         "children": [
                             {
-                                "id": "inventory.settings.detail.all",
+                                "id": "inventory.settings.services.models.all",
                                 "type": "entry",
                                 "label": "All",
                                 "icon": "list",
                                 "description": "",
                                 "context": {
-                                    "entity": "inventory\\service\\Detail",
-                                    "view": "list.default"
-                                }
-                            },
-                            {
-                                "id": "inventory.settings.detail.category",
-                                "type": "entry",
-                                "label": "Categories",
-                                "icon": "library_books",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\service\\DetailCategory",
+                                    "entity": "inventory\\service\\ServiceModel",
                                     "view": "list.default"
                                 }
                             }
@@ -358,6 +347,37 @@
                                 "description": "",
                                 "context": {
                                     "entity": "inventory\\service\\ServiceProviderCategory",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "item.settings.detail",
+                        "type": "parent",
+                        "label": "Details",
+                        "icon": "book",
+                        "description": "",
+                        "children": [
+                            {
+                                "id": "inventory.settings.detail.all",
+                                "type": "entry",
+                                "label": "All",
+                                "icon": "list",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\service\\Detail",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "inventory.settings.detail.category",
+                                "type": "entry",
+                                "label": "Categories",
+                                "icon": "library_books",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\service\\DetailCategory",
                                     "view": "list.default"
                                 }
                             }

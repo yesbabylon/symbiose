@@ -1,9 +1,8 @@
 {
-    "name": "Services",
-    "description": "Default listing of all services.",
+    "name": "Services Models",
+    "description": "Default listing of all services models.",
     "order": "id",
     "sort": "asc",
-    "controller": "inventory_service_service-collect",
     "operations": {
         "total": {
             "name": {
@@ -18,7 +17,7 @@
             "ACTION.CREATE": [
                 {
                     "view": "form.create",
-                    "description": "Overload form to use for service creation."
+                    "description": "Overload form to use for service model creation."
                 }
             ]
         }
@@ -37,12 +36,6 @@
                 "value": "name",
                 "width": "20%",
                 "sortable": true
-            },
-            {
-                "type": "field",
-                "value": "service_model_id",
-                "label": "Service Model",
-                "width": "20%"
             },
             {
                 "type": "field",
@@ -67,28 +60,6 @@
             },
             {
                 "type": "field",
-                "value": "is_internal",
-                "label": "Is internal",
-                "width": "15%",
-                "sortable": true,
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "product_id",
-                "label": "Product",
-                "width": "25%",
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "customer_id",
-                "label": "Customer",
-                "width": "20%",
-                "readonly": true
-            },
-            {
-                "type": "field",
                 "value": "has_external_provider",
                 "label": "External provider",
                 "width": "20%",
@@ -100,16 +71,6 @@
                 "width": "20%",
                 "label": "Provider",
                 "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "accesses_ids",
-                "visible": false
-            },
-            {
-                "type": "field",
-                "value": "subscriptions_ids",
-                "visible": false
             }
         ]
     }
