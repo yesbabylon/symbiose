@@ -1,7 +1,0 @@
-{
-    "description": "",
-    "view": {
-        "item.home": {"label": "Accueil", "help": ""},
-        "item.documents_imports": {"label": "Importer", "help": ""}	
-    }
-}

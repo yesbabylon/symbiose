@@ -1,13 +1,11 @@
 {
     "name": "Document Category",
-    "description": "A Document's Category is a group of documents that have a common element",
+    "description": "A Document's Category is a group of documents that have a common element.",
     "layout": {
         "groups": [
             {
                 "sections": [
                     {
-                        "label": "General Info",
-                        "id": "section.category",
                         "rows": [
                             {
                                 "columns": [
@@ -21,24 +19,38 @@
                                                 "widget": {
                                                     "heading": true
                                                 }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Parent",
-                                                "value": "parent_id",
-                                                "width": "50%"
                                             }
                                         ]
-                                    },
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.details",
+                        "label": "Details",
+                        "rows": [
+                            {
+                                "columns": [
                                     {
                                         "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Parent",
+                                                "value": "parent_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "path",
-                                                "width": "100%",
-                                                "widget":{
-                                                    "readonly":true
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
                                                 }
                                             }
                                         ]
@@ -69,7 +81,7 @@
                     },
                     {
                         "label": "Documents",
-                        "id": "section.document",
+                        "id": "section.documents",
                         "rows": [
                             {
                                 "columns": [
@@ -95,9 +107,8 @@
                             }
                         ]
                     }
-
                 ]
             }
-       ]
+        ]
     }
 }

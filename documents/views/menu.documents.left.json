@@ -1,50 +1,41 @@
 {
-    "name": "Documents menu",
+    "name": "Documents left menu",
     "layout": {
         "items": [
             {
                 "id": "item.documents",
+                "type": "entry",
                 "label": "Documents",
-                "description": "",
-                "icon": "attachment",
-                "type": "parent",
-                "children": [
-                    {
-                        "id": "item.all_documents",
-                        "type": "entry",
-                        "label": "All documents",
-                        "description": "",
-                        "route": "/",
-                        "context": {
-                            "entity": "documents\\Document",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "desc"
-                        }
-                    },
-                    {
-                        "id": "item.all_categories",
-                        "type": "entry",
-                        "label": "All categories",
-                        "description": "",
-                        "route": "/",
-                        "context": {
-                            "entity": "documents\\DocumentCategory",
-                            "view": "list.default"
-                        }
-                    },
-                    {
-                        "id": "item.all_tags",
-                        "type": "entry",
-                        "label": "All tags",
-                        "description": "",
-                        "route": "/",
-                        "context": {
-                            "entity": "documents\\DocumentTag",
-                            "view": "list.default"
-                        }
-                    }
-                ]
+                "icon": "description",
+                "description": "Menu display all documents.",
+                "context": {
+                    "entity": "documents\\Document",
+                    "view": "list.default",
+                    "order": "created",
+                    "sort": "desc"
+                }
+            },
+            {
+                "id": "item.categories",
+                "type": "entry",
+                "label": "Categories",
+                "icon": "category",
+                "description": "Menu display all categories.",
+                "context": {
+                    "entity": "documents\\DocumentCategory",
+                    "view": "list.default"
+                }
+            },
+            {
+                "id": "item.tags",
+                "type": "entry",
+                "label": "Tags",
+                "icon": "sell",
+                "description": "Menu display all tags.",
+                "context": {
+                    "entity": "documents\\DocumentTag",
+                    "view": "list.default"
+                }
             }
         ]
     }
