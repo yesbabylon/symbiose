@@ -1,32 +1,40 @@
 {
-	"name": "Catégorie de modèle",
-	"plural": "Catégories de modèle",
-	"description": "",
-	"model": {
-		"name":{
-			"label":"Nom",
-			"description": "Etiquette courte pour faciliter l'identification de la catégorie.",
-			"help": ""
-		},
-		"templates_ids":{
-			"label":"Modèles", 
-			"description": "Modèles liés à cette catégorie.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Catégorie de modèle",
-			"description": "Liste des catégories des modèles.",
-			"layout": {}
-		},
-		"list.default": {
-			"name": "Catégories de modèle",
-			"description": "Liste des catégories de modèles.",
-			"layout": {}
-		}
-	},
-	"error": {
-	
-	}
+    "name": "Catégorie de modèle",
+    "plural": "Catégories de modèle",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Etiquette courte pour faciliter l'identification de la catégorie.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Brève description de la catégorie et de son usage.",
+            "help": ""
+        },
+        "templates_ids": {
+            "label": "Modèles",
+            "description": "Modèles liés à cette catégorie.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Catégorie de modèle",
+            "description": "Formulaire de modification d'une catégorie de modèle.",
+            "layout": {
+                "section.template": {
+                    "label": "Modèles"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Catégories de modèle",
+            "description": "Liste des catégories de modèles.",
+            "layout": {}
+        }
+    },
+    "error": {
+    }
 }

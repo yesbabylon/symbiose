@@ -1,36 +1,40 @@
 {
-	"name": "Partie de modèle",
-	"plural": "Parties de modèle",
-	"description": "",
-	"model": {
-		"name":{
-			"label":"Nom",
-			"description": "",
-			"help": ""
-		},
-		"template_id":{
-			"label":"Template", 
-			"description": "",
-			"help": ""
-		},
-        "value":{
-			"label":"Valeur", 
-			"description": "",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Partie de modèle",
-			"description": "",
-			"layout": {}
-		},
-		"list.default": {
-			"name": "Parties de modèle",
-			"description": "",
-			"layout": {}
-		}
-	},
-	"error": {
-	}
+    "name": "Partie de modèle",
+    "plural": "Parties de modèle",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Libellé",
+            "description": "Code d'identification de la partie de modèle.",
+            "help": ""
+        },
+        "template_id": {
+            "label": "Modèle",
+            "description": "Le modèle auquel la partie appartient.",
+            "help": ""
+        },
+        "value": {
+            "label": "Valeur",
+            "description": "Modèle body (html)",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Partie de modèle",
+            "description": "",
+            "layout": {
+				"template.content": {
+					"label": "Contenu"
+				}
+			}
+        },
+        "list.default": {
+            "name": "Parties de modèle",
+            "description": "",
+            "layout": {}
+        }
+    },
+    "error": {
+    }
 }

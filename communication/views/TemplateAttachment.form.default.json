@@ -10,25 +10,15 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "50%",
+                                                "width": "100%",
                                                 "widget": {
                                                     "heading": true
                                                 }
-                                            },
-                                            {
-                                                "type": "label",
-                                                "value": "",
-                                                "width": "25%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "lang_id",
-                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
@@ -37,11 +27,26 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "lang_id",
+                                                "width": "33%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "template_id",
                                                 "width": "50%",
-                                                "visible": false
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             }
-
                                         ]
                                     }
                                 ]

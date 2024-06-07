@@ -1,0 +1,13 @@
+{
+    "name": "Menu de gauche communication.",
+    "view": {
+        "item.templates": {
+            "label": "Modèles",
+            "help": ""
+        },
+        "item.categories": {
+            "label": "Catégories",
+            "help": ""
+        }
+    }
+}

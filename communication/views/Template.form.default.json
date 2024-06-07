@@ -10,25 +10,31 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "code",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "heading": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "category_id",
-                                                "width": "25%"
+                                                "width": "66%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "type",
-                                                "width": "25%"
+                                                "width": "33%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "category_id",
+                                                "width": "50%"
                                             }
                                         ]
                                     }
@@ -43,6 +49,7 @@
                     {
                         "id":  "template.parts",
                         "label": "Parts",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -63,6 +70,7 @@
                     {
                         "id":  "template.attachments",
                         "label": "Attachments",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -72,6 +80,26 @@
                                             {
                                                 "type": "field",
                                                 "value": "attachments_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id":  "template.description",
+                        "label": "Description",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "description",
                                                 "width": "100%"
                                             }
                                         ]

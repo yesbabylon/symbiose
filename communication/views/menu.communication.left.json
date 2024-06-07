@@ -1,5 +1,5 @@
 {
-    "name": "Communication menu",
+    "name": "Communication left menu",
     "search": false,
     "layout": {
         "items": [
@@ -11,6 +11,19 @@
                 "description": "",
                 "context": {
                     "entity": "communication\\Template",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item.categories",
+                "type": "entry",
+                "label": "Categories",
+                "icon": "category",
+                "description": "",
+                "context": {
+                    "entity": "communication\\TemplateCategory",
                     "view": "list.default",
                     "order": "id",
                     "sort": "asc"
