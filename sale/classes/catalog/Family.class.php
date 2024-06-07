@@ -28,7 +28,6 @@ class Family extends Model {
                 'required'          => true,
                 'multilang'         => true,
                 'unique'            => true,
-                'onupdate'          => 'onupdateName',
                 'dependents'        => ['path']
             ],
 
@@ -43,8 +42,8 @@ class Family extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Family',
                 'description'       => "Product Family which current family belongs to, if any.",
-                'onupdate'          => 'onupdateParentId',
-                'dependents'        => ['path']
+                'dependents'        => ['path'],
+                'domain'            => ['id', '<>', 'object.id']
             ],
 
             'path' => [
@@ -52,7 +51,8 @@ class Family extends Model {
                 'result_type'       => 'string',
                 'description'       => 'Full path of the family with ancestors.',
                 'store'             => true,
-                'function'          => 'calcPath'
+                'function'          => 'calcPath',
+                'dependents'        => ['children_ids' => ['path']]
             ],
 
             'product_models_ids' => [
@@ -88,31 +88,6 @@ class Family extends Model {
             $parent_family['name'].'/'.$path,
             $parent_family['parent_id']
         );
-    }
-
-    public static function onupdateName($self) {
-        foreach($self as $family) {
-            self::resetChildrenPath($family['id']);
-        }
-    }
-
-    public static function onupdateParentId($self) {
-        foreach($self as $family) {
-            self::resetChildrenPath($family['id']);
-        }
-    }
-
-    public static function resetChildrenPath($parent_id) {
-        $children_ids = self::search(['parent_id', '=', $parent_id])->ids();
-
-        self::ids($children_ids)
-            ->update(['path' => null]);
-
-        if(!empty($children_ids)) {
-            foreach($children_ids as $child_id) {
-                self::resetChildrenPath($child_id);
-            }
-        }
     }
 
     public static function canupdate($self, $values) {

@@ -1,9 +1,10 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace documents;
 
 use equal\orm\Model;
@@ -17,6 +18,7 @@ class Document extends Model {
 
     public static function getColumns() {
         return [
+
             'name' => [
                 'type'              => 'string',
                 'required'          => true
@@ -63,6 +65,13 @@ class Document extends Model {
                 'readonly'          => true
             ],
 
+            'lang_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'core\Lang',
+                'description'       => 'Language used in the document.',
+                'default'           => 1
+            ],
+
             'category_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'documents\DocumentCategory',
@@ -76,7 +85,16 @@ class Document extends Model {
                 'rel_table'         => 'documents_rel_document_tag',
                 'rel_foreign_key'   => 'tag_id',
                 'rel_local_key'     => 'document_id',
-                'description'       => 'List of product models assigned to this tag.'
+                'description'       => 'Tags of the document.'
+            ],
+
+            'tags' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => 'Short tags listing, max 50 characters.',
+                'store'             => false,
+                'function'          => 'calcTags',
+                'readonly'          => true
             ],
 
             'public' => [
@@ -102,6 +120,17 @@ class Document extends Model {
             ]
 
         ];
+    }
+
+    public static function calcTags($self) {
+        $result = [];
+        $self->read(['tags_ids' => ['name']]);
+        foreach($self as $id => $document) {
+            $tags = implode(', ', array_column($document['tags_ids']->get(true), 'name'));
+            $result[$id] = strlen($tags) > 50 ? (substr($tags, 0, 50) . '...') : $tags;
+        }
+
+        return $result;
     }
 
     public static function calcReadableSize($self) {

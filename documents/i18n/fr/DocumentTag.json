@@ -10,7 +10,12 @@
         },
         "description": {
             "label": "Description",
-            "description": "Raison de la réservation.",
+            "description": "Description du but et de l'utilisation de l'étiquette.",
+            "help": ""
+        },
+        "documents_ids": {
+            "label": "Documents",
+            "description": "Documents étiquetés.",
             "help": ""
         }
     },
@@ -19,10 +24,10 @@
             "name": "Étiquette",
             "description": "",
             "layout": {
-                "section.tag_info": {
-                    "label": "Infos Étiquette"
+                "section.description": {
+                    "label": "Description"
                 },
-                "section.tag_documents": {
+                "section.documents": {
                     "label": "Documents"
                 }
         },
