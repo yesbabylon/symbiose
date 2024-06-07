@@ -91,7 +91,6 @@ class Module extends Model
                 'sort' => 'asc',
                 'ondetach' => 'delete',
                 'onupdate' => 'onupdateChaptersIds'
-
             ],
 
             'course_id' => [
@@ -100,7 +99,6 @@ class Module extends Model
                 'description' => 'Course the module relates to.',
                 'ondelete' => 'cascade'         // delete module when parent course is deleted
             ]
-
         ];
     }
 

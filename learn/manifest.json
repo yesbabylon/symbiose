@@ -35,6 +35,8 @@
                     "view": "list.default"
                 }
             }
-        }
+        },
+        "learning",
+        "qursus"
     ]
 }

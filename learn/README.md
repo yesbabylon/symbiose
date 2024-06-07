@@ -17,7 +17,8 @@ The student can follow the lesson using the web app that is deployed in `/public
 
 **Schema of the application**
 
-A Learn application contains one or several courses which can contain one or several modules which are themselves divided
+A Learn application contains one or several courses which can contain one or several modules which are themselves
+divided
 into chapters and pages. Each page has sections and "leaves". Leaves are divided into groups of 8 spaces per leaf. Those
 spaces can contain widgets. A widget can be a picture, a text, a title, some code excerpt... A course can also have a
 bundle which is basically a zipped piece of attachments (video, pictures, pdf files) the student can download and follow
@@ -98,7 +99,7 @@ Now in your learn package you should see :
 
 ## II / Classes and Controllers
 
-Fundamentally the learn application can be schematized this way :
+Fundamentally, the Learn application can be schematized this way :
 
 ```bash
 ├─Course
@@ -119,31 +120,34 @@ Fundamentally the learn application can be schematized this way :
 ### Course
 
 A course is at the basis of a Learn. It has a title, a subtitle and languages it is available into. Some (learning)
-modules will be attached to the course. For example, the package **Learning eQual** could have modules called **back-end ,
+modules will be attached to the course. For example, the package **Learning eQual** could have modules called *
+*back-end ,
 front-end, low-code**.
 
-To create a course, go to the In the dashboard menu, select Course and click on the button create. You should get a form and enter the title, the slug of the package which
-should be unique. You can add a subtitle if you wish. Don't forget to click on the save button.
+To create a course, go to the In the dashboard menu, select Course and click on the button create. You should get a form
+and enter the title, the slug of the package which
+should be unique. You can add a subtitle if you wish. Remember to click on the save button.
 
 #### A course is defined by :
 
-| Property    | Type      | Description                                                                                                 |
-|-------------|-----------|-------------------------------------------------------------------------------------------------------------|
-| name        | unique    |                                                                                                             |
+| Property    | Type      | Description                                                                                                   |
+|-------------|-----------|---------------------------------------------------------------------------------------------------------------|
+| name        | unique    |                                                                                                               |
 | title       | string    | The title is `multilang` so you can set a different one according to the language the course is available in. |
-| subtitle    | string    | This field is `multilang` so you can set a different one according to the language.                         |
-| description | text      |                                                                                                             |
-| modules     | alias     | Alias of modules_ids.                                                                                       |
-| module_ids  | one2many  |                                                                                                             |
-| quizzes_ids | one2many  |                                                                                                             |
-| bundles_ids | one2many  |                                                                                                             |
-| langs_ids   | many2many | Course can have many languages and a language can be available in many courses.                                 |
+| subtitle    | string    | This field is `multilang` so you can set a different one according to the language.                           |
+| description | text      |                                                                                                               |
+| modules     | alias     | Alias of modules_ids.                                                                                         |
+| module_ids  | one2many  |                                                                                                               |
+| quizzes_ids | one2many  |                                                                                                               |
+| bundles_ids | one2many  |                                                                                                               |
+| langs_ids   | many2many | Course can have many languages and a language can be available in many courses.                               |
 
 ![Create and update a Course](./doc/course.png)
 
 If the course is deleted, its associated modules are deleted too.
 
-To create a course or any other entity like a Module a Chapter you can also use the usual eQual controllers and replace by
+To create a course or any other entity like a Module a Chapter, you can also use the usual eQual controllers and replace
+by
 the appropriate entity name and fields:
 http://wpeq.local/equal.php/?do=model_create&entity=learn\Course&fields[state]=draft&lang=en
 
@@ -212,10 +216,10 @@ Now you can check your newly updated course by using eQual model_collect.
 You can have a course so a course available in one or several languages. They are defined by the Lang.class.php. A
 language has a
 
-| Property  | Type     | Description                                                                                 |
-|-----------|----------|---------------------------------------------------------------------------------------------|
-| name      | string   |                                                                                             |
-| code      | string   | ISO 639-1 language code                                                                     |
+| Property    | Type     | Description                                                                                   |
+|-------------|----------|-----------------------------------------------------------------------------------------------|
+| name        | string   |                                                                                               |
+| code        | string   | ISO 639-1 language code                                                                       |
 | courses_ids | many2one | Relation many2one to the courses the language is used in <br><br> **Example :** ``[1, 2, 3]`` |
 
 ### Quiz
@@ -223,25 +227,26 @@ language has a
 You can create one or many quizzes for a course. When the course is deleted so are its quizzes.
 They are defined by the Quiz.class.php. A quiz has a
 
-| Property   | Type     | Description                                                                                                                                            |
-|------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
-| identifier | integer  |                                                                                                                                                        |
-| name       | string   |                                                                                                                                                        |
-| quiz-code  | integer  | Integer which is multilang language code.<br><br>**Example :** <ul><li> **1** for english</li> <li>**2** for french</li> <li>**3** for dutch</li></ul> |
-| courses_ids  | many2one | Relation many2one to the courses the language is used. <br><br> **Example :** ``[1, 2, 3]``                                                              |
+| Property    | Type     | Description                                                                                                                                            |
+|-------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| identifier  | integer  |                                                                                                                                                        |
+| name        | string   |                                                                                                                                                        |
+| quiz-code   | integer  | Integer which is multilang language code.<br><br>**Example :** <ul><li> **1** for english</li> <li>**2** for french</li> <li>**3** for dutch</li></ul> |
+| courses_ids | many2one | Relation many2one to the courses the language is used. <br><br> **Example :** ``[1, 2, 3]``                                                            |
 
 ### Bundle and Bundle attachments
 
-You can create one or many Bundles for a course. When the course is deleted so are its Bundles. Basically a Bundle is a zip
+You can create one or many Bundles for a course. When the course is deleted so are its Bundles. Basically a Bundle is a
+zip
 folder the student can download. It contains attachments files that are used to follow the course.
 They are defined by the Bundle.class.php and BundleAttachment.class.php. A Bundle has a
 
-| Property        | Type     | Description                                                                             |
-|-----------------|----------|-----------------------------------------------------------------------------------------|
-| name            | string   |                                                                                         |
-| description     | string   |                                                                                         |
-| attachments_ids | many2one | Relation many2one between the bundle and its attachments                                |
-| courses_ids       | many2one | Relation many2one to the courses the bundle is used.<br><br> **Example :** ``[1 , 2, 3]`` |
+| Property        | Type     | Description                                                                               |
+|-----------------|----------|-------------------------------------------------------------------------------------------|
+| name            | string   |                                                                                           |
+| description     | string   |                                                                                           |
+| attachments_ids | many2one | Relation many2one between the bundle and its attachments                                  |
+| courses_ids     | many2one | Relation many2one to the courses the bundle is used.<br><br> **Example :** ``[1 , 2, 3]`` |
 
 When a bundle is deleted the attachment is removed to. A bundle attachment is defined by :
 
@@ -262,15 +267,15 @@ A Module is a major part in the course. It contains chapters. A Module is define
 | identifier    | integer  | Unique identifier.                                                                                                            |
 | title         | string   | Description of the module as presented to user.                                                                               |
 | name          | unique   | Alias of the title.                                                                                                           |
-| order         | integer  | The module position in the course.                                                                                              |
-| link          | computed | URL of the module visual editor. <br><br> Example: http://equal.local/learn/?mode=edit&module=11&lang=en*                    |
+| order         | integer  | The module position in the course.                                                                                            |
+| link          | computed | URL of the module visual editor. <br><br> Example: http://equal.local/learn/?mode=edit&module=11&lang=en*                     |
 | page_count    | computed | Total amount of pages in the module.                                                                                          |
 | chapter_count | computed | Total amount of chapters in the module.                                                                                       |
 | description   | text     | Description of the module content.                                                                                            |
 | duration      | integer  | Indicative duration, in minutes, for completing the module.                                                                   |
 | chapters      | alias    | Alias of ``chapters_ids``                                                                                                     |
 | chapters_ids  | one2many | Relationship one2many between the module and its many chapters. <br><br>When the module is deleted, chapters are deleted too. |
-| course_id       | many2one | Relationship many2one between the module and its parent course. <br><br>When the course is deleted, modules are deleted too.      |
+| course_id     | many2one | Relationship many2one between the module and its parent course. <br><br>When the course is deleted, modules are deleted too.  |
 
 #### Creating a Module :
 
@@ -282,8 +287,8 @@ A module is a major part in your course. It will be divided into chapters and pa
 
 #### The modules controllers and actions :
 
-If you want to visualize all modules of a given course you can use the terminal and the learn_modules controller or for
-instance make a http request at http://equal.local?get=learn_modules&course_id=5 :
+If you want to visualize all modules of a given course, you can use the terminal and the learn_modules controller or for
+instance, make an http request at http://equal.local?get=learn_modules&course_id=5 :
 
 ```bash
 ./equal.run --get=learn_modules --course_id=5
@@ -324,7 +329,7 @@ instance make a http request at http://equal.local?get=learn_modules&course_id=5
 ]
 ```
 
-If you then want to see a given module content lets call the controller learn_module and give it the param --id=11
+If you then want to see a given module content, lets call the controller learn_module and give it the param --id=11
 which is the id of the first module:
 
 ```bash
@@ -452,7 +457,7 @@ A Chapter is a major part in the course. It contains chapters. A chapter is defi
 | Property          | Type     | Description                                                                                                                                                       |
 |-------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | identifier        | integer  | Unique identifier.                                                                                                                                                |
-| order             | integer  | The chapter position in the course.                                                                                                                                 |
+| order             | integer  | The chapter position in the course.                                                                                                                               |
 | name              | alias    | Alias of the title.                                                                                                                                               |
 | title  (required) | string   | Description of the chapter presented to user.                                                                                                                     |
 | page_count        | computed | Total amount of pages in the chapter.                                                                                                                             |
@@ -484,7 +489,9 @@ A page is defined by :
 | leaves           | alias    | Alias of leaves_ids.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | leaves_ids       | one2many | Relationship one2many. A page can have many leaves. Leaves are deleted when the page is detached.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 
-| chapter_id       | many2one | Relationship many2one between the page and its parent chapter. Many pages can be in one chapter. When the chapter is deleted so are its pages. When the chapter_id is updated, the ``$page['chapter_id']`` is also updated to match the new value.                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| chapter_id | many2one | Relationship many2one between the page and its parent chapter. Many pages can be in one
+chapter. When the chapter is deleted so are its pages. When the chapter_id is updated, the ``$page['chapter_id']`` is
+also updated to match the new value. |
 
 A page usually contains two leaves. Pages are displayed flex row with one leaf on the left and a second one on the
 right.
@@ -511,7 +518,6 @@ A leaf is defined by :
 | page_id            | many2one | Relation many2one between the leaf and the page. Many leaves can be in one page.                                                                                                                                                                                                                                                                                                       |
 
 ![Create Leaf](./doc/leaf.png)
-
 
 ## Group
 
@@ -598,8 +604,8 @@ It is defined by :
 | Property       | Type     | Description                                                                                                                                                             |
 |----------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | code           | computed | Computed result type integer function getCode : a unique identifier used for generating verification url.                                                               |
-| code_alpha     | computed | Computed result type string function getCodeAlpha: retrieve the course based on verification url code of 4 chars (3 letters + 1 digit).                                   |
-| course_id        | many2one | Relation many2one, many users can access one course.                                                                                                                      |
+| code_alpha     | computed | Computed result type string function getCodeAlpha: retrieve the course based on verification url code of 4 chars (3 letters + 1 digit).                                 |
+| course_id      | many2one | Relation many2one, many users can access one course.                                                                                                                    |
 | master_user_id | integer  | In case of multi-accounts, external user id.                                                                                                                            |
 | user_id        | integer  | External user identifier that is granted access.                                                                                                                        |
 | is_complete    | computed | Computed result type ``boolean``, function ``getIsComplete`` : The user has finished the programs modules from the UserStatus the value is_complete is set to ``true``. |
@@ -610,15 +616,15 @@ It is defined by :
 
 It is defined by :
 
-| Property      | Type     | Description                                                                                                |
-|---------------|----------|------------------------------------------------------------------------------------------------------------|
-| course_id       | many2one | Relation many2one, many UserStatus can be in one course. It is used to determine the completeness of a course. |
-| module_id     | many2one | Relation many2one, many UserStatus can be in one Module.                                                   |
-| user_id       | integer  | External user identifier that is granted access                                                            |
-| chapter_index | integer  | Chapter index/identifier within the module.                                                                |
-| page_index    | integer  | Page index/identifier within the module.                                                                   |
-| page_count    | integer  | Number of pages reviewed so far by the user.                                                               |
-| is_complete   | boolean  | ``true`` if the user has finished the module.                                                              |
+| Property      | Type     | Description                                                                                                    |
+|---------------|----------|----------------------------------------------------------------------------------------------------------------|
+| course_id     | many2one | Relation many2one, many UserStatus can be in one course. It is used to determine the completeness of a course. |
+| module_id     | many2one | Relation many2one, many UserStatus can be in one Module.                                                       |
+| user_id       | integer  | External user identifier that is granted access                                                                |
+| chapter_index | integer  | Chapter index/identifier within the module.                                                                    |
+| page_index    | integer  | Page index/identifier within the module.                                                                       |
+| page_count    | integer  | Number of pages reviewed so far by the user.                                                                   |
+| is_complete   | boolean  | ``true`` if the user has finished the module.                                                                  |
 
 It has two methods : getUnique that returns ``['module_id','user_id']`` and onupdate is complete which will set
 is_complete to true if the user has completed all modules.
