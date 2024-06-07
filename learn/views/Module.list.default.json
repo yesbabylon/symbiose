@@ -6,7 +6,7 @@
             {
                 "type": "field",
                 "value": "identifier",
-                "width": "10%",
+                "width": "5%",
                 "widget": {
                     "readonly": true
                 }
@@ -14,28 +14,28 @@
             {
                 "type": "field",
                 "value": "order",
-                "width": "10%"
+                "width": "5%"
             },
             {
                 "type": "field",
                 "value": "title",
-                "width": "30%"
+                "width": "40%"
             },
             {
                 "type": "field",
                 "value": "duration",
-                "width": "10%"
+                "width": "5%"
             },
             {
                 "type": "field",
                 "label": "Total pages",
                 "value": "page_count",
-                "width": "10%"
+                "width": "5%"
             },
             {
                 "type": "field",
                 "value": "link",
-                "width": "30%"
+                "width": "40%"
             }
         ]
     }

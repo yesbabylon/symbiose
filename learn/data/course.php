@@ -28,16 +28,17 @@ $user_id = $auth->userId();
 
 $access_ids = UserAccess::search([['course_id', '=', $params['course_id']], ['user_id', '=', $user_id]])->ids();
 
-if (!count($access_ids)) {
-    throw new Exception('missing_licence', QN_ERROR_NOT_ALLOWED);
-}
+// Todo: AlexisVS: Disabled for development purpose
+//if (!count($access_ids)) {
+//    throw new Exception('missing_licence', QN_ERROR_NOT_ALLOWED);
+//}
 
 $data = Course::search(['id', '=', $params['course_id']])->read([
     'name',
     'title',
     'subtitle',
     'description',
-    'langs_ids'=> ['id', 'name', 'code'],
+    'langs_ids' => ['id', 'name', 'code'],
     'modules' => [
         'id',
         'identifier',

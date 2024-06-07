@@ -1,8 +1,8 @@
 {
-    "name": "learn",
+    "name": "Learn",
     "description": "",
     "url": "/learn",
-    "icon": "",
+    "icon": "school",
     "color": "#ff0000",
     "access": {
         "groups": [

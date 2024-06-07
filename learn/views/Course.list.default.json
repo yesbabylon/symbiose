@@ -1,12 +1,12 @@
 {
-    "name": "Training Programs list",
+    "name": "Course list",
     "description": "",
     "layout": {
         "items": [
             {
                 "type": "field",
                 "value": "id",
-                "width": "15%"
+                "width": "5%"
             },
             {
                 "type": "field",
@@ -16,12 +16,12 @@
             {
                 "type": "field",
                 "value": "title",
-                "width": "25%"
+                "width": "35%"
             },
             {
                 "type": "field",
                 "value": "subtitle",
-                "width": "25%"
+                "width": "45%"
             }
         ]
     }
