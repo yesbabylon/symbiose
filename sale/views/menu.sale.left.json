@@ -524,13 +524,13 @@
                                 }
                             },
                             {
-                                "id": "settings.payment.plan",
+                                "id": "settings.payment.funding.plans",
                                 "type": "entry",
-                                "label": "Plans",
+                                "label": "Funding plans",
                                 "icon": "book",
-                                "description": "Display all payments palns.",
+                                "description": "Display all funding plans.",
                                 "context": {
-                                    "entity": "sale\\pay\\PaymentPlan",
+                                    "entity": "sale\\pay\\FundingPlan",
                                     "view": "list.default",
                                     "order": "id",
                                     "sort": "asc"
@@ -544,6 +544,28 @@
                                 "description": "Display all payments terms.",
                                 "context": {
                                     "entity": "sale\\pay\\PaymentTerms",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "settings.terms",
+                        "type": "parent",
+                        "label": "Terms",
+                        "icon": "description",
+                        "description": "Settings terms parent menu.",
+                        "children": [
+                            {
+                                "id": "settings.terms.terms",
+                                "type": "entry",
+                                "label": "All",
+                                "icon": "list",
+                                "description": "Display all terms.",
+                                "context": {
+                                    "entity": "sale\\terms\\Terms",
                                     "view": "list.default",
                                     "order": "id",
                                     "sort": "asc"
