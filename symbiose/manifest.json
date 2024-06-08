@@ -5,27 +5,8 @@
     "authors": ["Yesbabylon"],
     "license": "LGPL-3",
     "depends_on": [
-        "core",
-        "identity",
-        "finance",
-        "documents",
-        "calendar",
-        "stats",
-        "support",
-        "learn",
-        "hr",
-        "communication",
-        "purchase",
-        "realestate",
-        "sale",
-        "inventory",
-        "timetrack",
-        "talentlead"
+        "core"
     ],
-    "requires": {
-        "twig/intl-extra": "^3.9.2",
-        "twig/twig": "^3.0"
-    },
     "apps": [
         {
             "id": "settings",
