@@ -51,38 +51,52 @@ class Organisation extends Identity {
                 'foreign_field'     => 'organisation_id',
                 'description'       => 'List of the bank account of the organisation',
                 'ondetach'          => 'delete',
+                'order'             => 'id',
+                'sort'              => 'asc'
             ],
 
             'bank_account_iban' => [
                 'type'              => 'string',
                 'usage'             => 'uri/urn:iban',
                 'description'       => "Number of the bank account of the Identity, if any.",
-                'onupdate'          => 'onupdateBankAccount'
+                'onupdate'          => 'onupdateBankAccountIban'
             ],
 
             'bank_account_bic' => [
                 'type'              => 'string',
                 'description'       => "Identifier of the Bank related to the Organisation's bank account, when set.",
-                'onupdate'          => 'onupdateBankAccount'
+                'onupdate'          => 'onupdateBankAccountBic'
             ],
 
         ];
     }
 
-    public static function onupdateBankAccount($self) {
-        $self->read(['id','bank_account_iban','bank_account_bic', 'bank_account_ids']);
+    public static function onupdateBankAccountIban($self) {
+        $self->read(['bank_account_ids', 'bank_account_iban', 'bank_account_bic']);
         foreach($self as $id => $organisation) {
-            $bankAccount_ids = BankAccount::search(['id', 'in', $organisation['bank_account_ids']])->ids();
-            if(!$bankAccount_ids) {
+            if(!isset($organisation['bank_account_ids']) || empty($organisation['bank_account_ids'])) {
                 BankAccount::create([
                     'organisation_id'   => $organisation['id'],
                     'bank_account_iban' => $organisation['bank_account_iban'],
                     'bank_account_bic'  => $organisation['bank_account_bic']
                 ]);
-            } else {
-                $first_bankAcccount = min($bankAccount_ids);
-                BankAccount::id($first_bankAcccount)->update([
-                    'bank_account_iban' => $organisation['bank_account_iban'],
+            }
+            else {
+                $bank_account_id = reset($organisation['bank_account_ids']);
+                BankAccount::id($bank_account_id)->update([
+                    'bank_account_iban' => $organisation['bank_account_iban']
+                ]);
+            }
+        }
+    }
+
+    public static function onupdateBankAccountBic($self) {
+        $self->read(['bank_account_ids', 'bank_account_bic']);
+        foreach($self as $id => $organisation) {
+            // #memo - we don't create an account here since IBAN might not have been provided
+            if(isset($organisation['bank_account_ids']) && !empty($organisation['bank_account_ids'])) {
+                $bank_account_id = reset($organisation['bank_account_ids']);
+                BankAccount::id($bank_account_id)->update([
                     'bank_account_bic'  => $organisation['bank_account_bic']
                 ]);
             }
