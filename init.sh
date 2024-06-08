@@ -1,6 +1,6 @@
 #!/bin/bash
 cd ..
-./equal.run --do=init_package --package=sbcore
+./equal.run --do=init_package --package=symbiose
 ./equal.run --do=init_package --package=calendar
 ./equal.run --do=init_package --package=communication
 ./equal.run --do=init_package --package=documents
