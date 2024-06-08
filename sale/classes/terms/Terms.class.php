@@ -49,10 +49,10 @@ class Terms extends Model {
                 'foreign_object'    => 'documents\Document',
                 'description'       => 'The document the explaining the payment terms.'
             ],
-            
+
             'url' => [
                 'type'              => 'string',
-                'usage'             => 'url',
+                'usage'             => 'uri/url',
                 'description'       => 'Access link to the the payment terms.'
             ]
 

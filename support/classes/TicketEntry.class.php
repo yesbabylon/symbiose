@@ -25,7 +25,7 @@ class TicketEntry extends Model {
             ],
 
             'description' => [
-                'type'              => 'text',
+                'type'              => 'string',
                 'usage'             => 'plain/text',
                 'description'       => "Message of the entry.",
                 'onupdate'          => 'onupdateDescription'

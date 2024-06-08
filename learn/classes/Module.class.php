@@ -67,7 +67,8 @@ class Module extends Model
             ],
 
             'description' => [
-                'type' => 'text',
+                'type' => 'string',
+                'type' => 'text/plain',
                 'multilang' => true
             ],
 
