@@ -4,7 +4,6 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 namespace finance\accounting;
 
 use equal\orm\Model;
@@ -22,8 +21,7 @@ class BankAccount extends Model {
                 'description'       => 'The display name of the organization and IBAN.',
                 'store'             => true,
                 'instant'           => true,
-                'readonly'          => true,
-                'unique'            => true
+                'readonly'          => true
             ],
 
             'organisation_id' => [
@@ -58,30 +56,47 @@ class BankAccount extends Model {
                 'description'       => 'The IBAN number of the organization’s bank account.',
                 'dependents'        => ['name','bank_country'],
                 'required'          => true,
-                'onupdate'          => 'onupdateOrganisationBA'
+                'onupdate'          => 'onupdateBankAccountIban'
             ],
 
             'bank_account_bic' => [
                 'type'              => 'string',
                 'description'       => 'The BIC code of the bank related to the organization’s bank account.',
-                'onupdate'          => 'onupdateOrganisationBA'
+                'onupdate'          => 'onupdateBankAccountBic'
             ]
 
         ];
     }
 
 
-    public static function onupdateOrganisationBA($self) {
-        $self->read(['id','organisation_id','bank_account_iban','bank_account_bic']);
+    public static function onupdateBankAccountIban($self) {
+        $self->read(['organisation_id', 'bank_account_iban']);
         foreach($self as $id => $bankAccount) {
-            $organisation = Organisation::id($bankAccount['organisation_id'])->read(['id', 'bank_account_ids'])->first(true);
-            if ($organisation){
-                $first_bank_acccount = min($organisation['bank_account_ids']);
-                if($id == $first_bank_acccount) {
+            $organisation = Organisation::id($bankAccount['organisation_id'])->read(['id', 'bank_account_ids'])->first();
+            if($organisation) {
+                // by convention, if current bank account is the first of the organisation, sync back with iban from organisation
+                $first_bank_account_id = min($organisation['bank_account_ids']);
+                if($id == $first_bank_account_id) {
                     Organisation::id($bankAccount['organisation_id'])
                        ->update([
-                           'bank_account_iban' => $bankAccount['bank_account_iban'],
-                           'bank_account_bic'  => $bankAccount['bank_account_bic']
+                           'bank_account_iban' => $bankAccount['bank_account_iban']
+                       ]);
+               }
+            }
+        }
+    }
+
+    public static function onupdateBankAccountBic($self) {
+        $self->read(['organisation_id', 'bank_account_bic']);
+        foreach($self as $id => $bankAccount) {
+            $organisation = Organisation::id($bankAccount['organisation_id'])->read(['id', 'bank_account_ids'])->first();
+            if($organisation) {
+                // by convention, if current bank account is the first of the organisation, sync back with iban from organisation
+                $first_bank_account_id = min($organisation['bank_account_ids']);
+                if($id == $first_bank_account_id) {
+                    Organisation::id($bankAccount['organisation_id'])
+                       ->update([
+                           'bank_account_bic' => $bankAccount['bank_account_bic']
                        ]);
                }
             }
@@ -91,17 +106,14 @@ class BankAccount extends Model {
     public static function onchange($event, $values) {
         $result = [];
 
-        if(isset($event['bank_account_iban'])){
-            $result['bank_country'] = self::createBankCountry(['bank_account_iban' => $event['bank_account_iban']]);
+        if(isset($event['bank_account_iban'])) {
+            $result['bank_country'] = self::computeCountryFromIban($event['bank_account_iban']);
         }
 
-        if(isset($event['organisation_id'])|| isset($event['bank_account_iban'])) {
-
-            $result['name'] = self::createName([
-                'organisation_id'        => $event['organisation_id'] ?? $values['organisation_id'],
-                'bank_account_iban'      => $event['bank_account_iban'] ?? $values['bank_account_iban'],
-            ]);
+        if(isset($event['organisation_id']) || isset($event['bank_account_iban'])) {
+            $result['name'] = self::computeName($event['organisation_id'] ?? $values['organisation_id'], $event['bank_account_iban'] ?? $values['bank_account_iban']);
         }
+
         return $result;
     }
 
@@ -109,49 +121,47 @@ class BankAccount extends Model {
         $result = [];
         $self->read(['bank_account_iban']);
         foreach($self as $id => $bankAccount) {
-            $result[$id]  = self::createBankCountry($bankAccount);
+            $result[$id]  = self::computeCountryFromIban($bankAccount['bank_account_iban']);
         }
         return $result;
     }
-
-    private static function createBankCountry($bankAccount) {
-        $country = '';
-        if(isset($bankAccount['bank_account_iban']) && strlen($bankAccount['bank_account_iban']) > 0){
-            $country = substr($bankAccount['bank_account_iban'], 0, 2);
-        }
-        return $country;
-    }
-
 
     public static function calcName($self) {
         $result = [];
         $self->read(['organisation_id', 'bank_account_iban']);
         foreach($self as $id => $bankAccount) {
-            $result[$id]  = self::createName($bankAccount);
+            $result[$id] = self::computeName($bankAccount['organisation_id'], $bankAccount['bank_account_iban']);
         }
         return $result;
-    }
-
-
-    private static function createName($bankAccount) {
-        $name = '';
-        $organisation = Organisation::id($bankAccount['organisation_id'])->read(['id','name'])->first(true);
-        if(isset($organisation) && isset($bankAccount['bank_account_iban']) && strlen($bankAccount['bank_account_iban']) > 0){
-            $name = '['.$organisation['name']. ' - '. $bankAccount['bank_account_iban'] .']';
-        }
-        return $name;
     }
 
     public static function candelete($self) {
         $self->read(['organisation_id']);
         foreach($self as $bankAccount) {
-            $organisation = Organisation::id($bankAccount['organisation_id'])->read(['id', 'bank_account_ids'])->first(true);
-            if (count($organisation['bank_account_ids']) == 1 ) {
-                return ['id' => ['non_removable' => 'The bank account cannot be removed. The organization must have at least one bank account.']];
+            $organisation = Organisation::id($bankAccount['organisation_id'])->read(['bank_account_ids'])->first();
+            if(count($organisation['bank_account_ids']) <= 1 ) {
+                return ['id' => ['non_removable' => 'The bank account cannot be removed. Organizations must have at least one bank account.']];
             }
         }
 
         return parent::candelete($self);
+    }
+
+    private static function computeCountryFromIban($iban) {
+        $country = '';
+        if($iban && strlen($iban) > 0) {
+            $country = substr($iban, 0, 2);
+        }
+        return $country;
+    }
+
+    private static function computeName($organisation_id, $iban) {
+        $name = '';
+        $organisation = Organisation::id($organisation_id)->read(['name'])->first();
+        if($organisation && $iban && strlen($iban) > 0){
+            $name = $organisation['name'] . ' - ' . $iban;
+        }
+        return $name;
     }
 
 }
