@@ -42,7 +42,7 @@ class Module extends Model
 
             'link' => [
                 'type' => 'computed',
-                'description' => "URL to visual edior of the module.",
+                'description' => "URL to visual editor of the module.",
                 'function' => 'calcLink',
                 'result_type' => 'string',
                 'usage' => 'uri/url',
@@ -68,7 +68,7 @@ class Module extends Model
 
             'description' => [
                 'type' => 'string',
-                'type' => 'text/plain',
+                'usage' => 'text/plain',
                 'multilang' => true
             ],
 
