@@ -17,7 +17,7 @@
                 "before": [
                     {
                         "id": "section.customer_products",
-                        "label": "Inventory Products",
+                        "label": "Products",
                         "rows": [
                             {
                                 "columns": [
