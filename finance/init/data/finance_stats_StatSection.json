@@ -1,0 +1,24 @@
+[
+    {
+        "name": "finance\\stats\\StatSection",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 1,
+                "name": "SALE",
+                "code": "SALE",
+                "description": null,
+                "label": null,
+                "stat_chart_id": null
+            },
+            {
+                "id": 1,
+                "name": "PURCHASE",
+                "code": "PURCHASE",
+                "description": null,
+                "label": null,
+                "stat_chart_id": null
+            }
+        ]
+    }
+]
