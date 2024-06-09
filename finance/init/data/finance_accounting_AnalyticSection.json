@@ -1,0 +1,16 @@
+[
+    {
+        "name": "finance\\accounting\\AnalyticSection",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "1ORG",
+                "code": "1ORG",
+                "is_locked": false,
+                "label": "Organisation",
+                "analytic_chart_id": null
+            }
+        ]
+    }
+]
