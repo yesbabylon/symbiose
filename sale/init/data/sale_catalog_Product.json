@@ -1,0 +1,20 @@
+[
+    {
+        "name": "sale\\catalog\\Product",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "label": "Service Provision",
+                "sku": "S0001",
+                "product_model_id": 1
+            },
+            {
+                "id": 1,
+                "label": "Deposit for services",
+                "sku": "DEPOSIT",
+                "product_model_id": 2
+            }
+        ]
+    }
+]

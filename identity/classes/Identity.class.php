@@ -355,7 +355,7 @@ class Identity extends Model {
             // Companies can also have an official website.
             'website' => [
                 'type'              => 'string',
-                'usage'             => 'url',
+                'usage'             => 'uri/url',
                 'description'       => 'Organization main official website URL, if any.',
                 'visible'           => ['type', '<>', 'I']
             ],

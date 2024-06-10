@@ -7,6 +7,29 @@
     "license": "LGPL-3",
     "depends_on": ["core"],
     "lang": ["en", "fr"],
-    "apps": ["documents"],
+    "apps": [
+        {
+            "id": "documents",
+            "name": "Documents",
+            "extends": "app",
+            "description": "Application documents",
+            "icon": "description",
+            "color": "#42a983",
+            "access": {
+                "groups": [
+                    "users"
+                ]
+            },
+            "params": {
+                "menus": {
+                    "left": "documents.left"
+                },
+                "context": {
+                    "entity": "documents\\Document",
+                    "view": "list.default"
+                }
+            }
+        }
+    ],
     "tags": ["documents", "binaries", "files"]
 }

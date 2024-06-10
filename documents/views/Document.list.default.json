@@ -29,31 +29,37 @@
                 "type": "field",
                 "label": "Created",
                 "value": "created",
-                "width": "17.5%",
+                "width": "20%",
                 "readonly": true
             },
             {
                 "type": "field",
                 "label": "Type",
                 "value": "type",
-                "width": "8%"
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Language",
+                "value": "lang_id",
+                "width": "10%"
             },
             {
                 "type": "field",
                 "value": "link",
-                "width": "35%",
+                "width": "33%",
                 "readonly": true
             },
             {
                 "type": "field",
                 "value": "public",
-                "width": "5%"
+                "width": "10%"
             },
             {
                 "type": "field",
-                "value": "tags_ids",
+                "value": "tags",
                 "label": "Tags",
-                "width": "10%",
+                "width": "20%",
                 "readonly": true
             }
         ]

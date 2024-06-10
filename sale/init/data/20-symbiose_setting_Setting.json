@@ -68,6 +68,50 @@
                 "help": "Sequence for the invoice."
             },
             {
+                "id": 1017,
+                "code": "account_sales",
+                "title": "Sales Account",
+                "package": "sale",
+                "section_id": 6,
+                "form_control": "input",
+                "type": "string",
+                "description": "Default Accounting account for sales.",
+                "help": "Account for accounts entries relating to customers sales."
+            },
+            {
+                "id": 1018,
+                "code": "account_sales-taxes",
+                "title": "Sales Taxes Account",
+                "package": "sale",
+                "section_id": 6,
+                "form_control": "input",
+                "type": "string",
+                "description": "Accounting account for sales taxes.",
+                "help": "Account for accounts entries relating to taxes resulting from customers sales."
+            },
+            {
+                "id": 1019,
+                "code": "account_sales-debtors",
+                "title": "Trade Debtors Account",
+                "package": "sale",
+                "section_id": 6,
+                "form_control": "input",
+                "type": "string",
+                "description": "Accounting account for receivables.",
+                "help": "Account for invoiced services with payment yet to be received."
+            },
+            {
+                "id": 1020,
+                "code": "downpayment_sku",
+                "title": "Downpayment Product",
+                "package": "sale",
+                "section_id": 6,
+                "form_control": "input",
+                "type": "string",
+                "description": "SKU to use for downpayments.",
+                "help": "Product from the catalog to be used for invoiced downpayments (product is expected to be assigned to an accounting rule)."
+            },
+            {
                 "id": 1050,
                 "code": "label_invoice",
                 "title": "Invoice title",
@@ -504,6 +548,30 @@
                 "title": "Séquence des factures",
                 "description": "Format de séquence des factures.",
                 "help": "Format de séquence à utiliser pour la numéroatation des factures."
+            },
+            {
+                "id": 1017,
+                "title": "Compte des Ventes",
+                "description": "Compte comptable par défaut pour les ventes.",
+                "help": "Compte pour l'enregistrement des ventes clients."
+            },
+            {
+                "id": 1018,
+                "title": "Compte des taxes de vente",
+                "description": "Compte comptable pour les taxes de vente.",
+                "help": "Compte pour l'enregistrement comptable des taxes liées aux ventes clients."
+            },
+            {
+                "id": 1019,
+                "title": "Compte débiteur",
+                "description": "Compte comptable débiteur commercial.",
+                "help": "Compte comptable pour les services facturés dont le paiement n'a pas encore été reçu."
+            },
+            {
+                "id": 1020,
+                "title": "Produit pour Acomptes",
+                "description": "SKU à utiliser pour les acomptes.",
+                "help": "Produit du catalogue à utiliser pour les acomptes facturés (le poduit est censé être associé à une règle comptable)."
             },
             {
                 "id": 1050,

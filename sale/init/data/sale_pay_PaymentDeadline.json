@@ -11,7 +11,6 @@
                 "delay_from_event_offset": 0,
                 "delay_count": 15,
                 "payment_deadline_type": "invoice",
-                "is_balance_invoice": true,
                 "amount_share": 1,
                 "payment_plan_id": 1
             }
@@ -29,7 +28,6 @@
                 "delay_from_event_offset": 0,
                 "delay_count": 15,
                 "payment_deadline_type": "invoice",
-                "is_balance_invoice": true,
                 "amount_share": 1,
                 "payment_plan_id": 1
             }

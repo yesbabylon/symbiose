@@ -4,7 +4,6 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 namespace sale\accounting\invoice;
 
 use symbiose\setting\Setting;
@@ -45,11 +44,9 @@ class Invoice extends \finance\accounting\Invoice {
             ],
 
             'invoice_number' => [
-                'type'              => 'computed',
-                'result_type'       => 'string',
+                'type'              => 'string',
                 'description'       => 'Number of the invoice, according to organization logic.',
-                'function'          => 'calcInvoiceNumber',
-                'store'             => true
+                'default'           => '[proforma]'
             ],
 
             'payment_reference' => [
@@ -96,8 +93,7 @@ class Invoice extends \finance\accounting\Invoice {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => 'The counter party organization the invoice relates to.',
-                'required'          => true,
-                'dependencies'      => ['invoice_number']
+                'required'          => true
             ],
 
             'customer_ref' => [
@@ -139,36 +135,6 @@ class Invoice extends \finance\accounting\Invoice {
         return $result;
     }
 
-    public static function calcInvoiceNumber($self): array {
-        $result = [];
-        $self->read(['status', 'organisation_id', 'customer_id' => ['name']]);
-        foreach($self as $id => $invoice) {
-            // no code is generated for proforma
-            if($invoice['status'] == 'proforma') {
-                $result[$id] = '[proforma]['.date('Y-m-d').']';
-                continue;
-            }
-
-            $result[$id] = '';
-
-            $organisation_id = $invoice['organisation_id'];
-
-            $format = Setting::get_value('sale', 'invoice', 'sequence_format', '%2d{year}-%05d{sequence}');
-            $year = Setting::get_value('sale', 'invoice', 'fiscal_year', date('Y'));
-            $sequence = Setting::fetch_and_add('sale', 'invoice', 'sequence', 1, compact('organisation_id'));
-
-            if($sequence) {
-                $result[$id] = Setting::parse_format($format, [
-                    'year'      => $year,
-                    'org'       => $organisation_id,
-                    'sequence'  => $sequence
-                ]);
-            }
-        }
-
-        return $result;
-    }
-
     public static function calcPaymentReference($self): array {
         $result = [];
         $self->read(['invoice_number']);
@@ -178,7 +144,7 @@ class Invoice extends \finance\accounting\Invoice {
             // arbitrary value for balance (final) invoice
             $code_ref = 200;
 
-            $result[$id] = self::_get_payment_reference($code_ref, $invoice_number);
+            $result[$id] = self::computePaymentReference($code_ref, $invoice_number);
         }
 
         return $result;
@@ -193,7 +159,7 @@ class Invoice extends \finance\accounting\Invoice {
      *  as 10000000 % 97 = 76
      *  we do (aaa * 76 + bbbbbbb) % 97
      */
-    protected static function _get_payment_reference($prefix, $suffix) {
+    protected static function computePaymentReference($prefix, $suffix) {
         $a = intval($prefix);
         $b = intval($suffix);
         $control = ((76*$a) + $b ) % 97;
@@ -237,18 +203,18 @@ class Invoice extends \finance\accounting\Invoice {
                 'transitions' => [
                     'invoice' => [
                         'description' => 'Update the invoice status based on the `invoice` field.',
-                        'help' => 'The `invoice` field is set by a dedicated controller that manages invoice approval requests.',
-                        'policies' => [
+                        'help'        => 'The `invoice` field is set by a dedicated controller that manages invoice approval requests.',
+                        'policies'    => [
                             'can-be-invoiced',
                         ],
-                        'onbefore' => 'onbeforeInvoice',
-                        'onafter' => 'onafterInvoice',
-                        'status' => 'invoice',
+                        'onbefore'  => 'onbeforeInvoice',
+                        'onafter'   => 'onafterInvoice',
+                        'status'    => 'invoice',
                     ],
                     'cancel-proforma' => [
                         'description' => 'Delete the proforma and set receivables statuses back to pending.',
                         'onafter' => 'onafterCancelProforma',
-                        'status' => 'proforma',
+                        'status'  => 'proforma',
                     ]
                 ],
             ],
@@ -278,29 +244,45 @@ class Invoice extends \finance\accounting\Invoice {
     }
 
     public static function onbeforeInvoice($self) {
-        $self->read(['id']);
-        foreach($self as $id => $invoice) {
-            // Data modified before status changed to "invoice" because fields can only be updated while invoice has status "proforma"
-            self::id($id)
-                ->update(['emission_date' => time()]);
+        // generate the accounting entries according to the invoices lines.
+        $invoices_accounting_entries = self::computeAccountingEntries($self);
+        // create new entries objects
+        foreach($invoices_accounting_entries as $id => $accounting_entries) {
+            foreach($accounting_entries as $accounting_entry) {
+                $accounting_entry['invoice_id'] = $id;
+                AccountingEntry::create($accounting_entry);
+            }
         }
+        // assign an invoice number
+        $self->read(['organisation_id']);
+        foreach($self as $id => $invoice) {
 
-        try {
-            $self->do('create_accounting_entries');
-        } catch(\Exception $e) {
-            trigger_error("PHP::unable to create invoice accounting entries: {$e->getMessage()}", QN_REPORT_ERROR);
+            $format = Setting::get_value('sale', 'invoice', 'sequence_format', '%2d{year}-%05d{sequence}', ['organisation_id' => $invoice['organisation_id']]);
+            $year = Setting::get_value('sale', 'invoice', 'fiscal_year', date('Y'), ['organisation_id' => $invoice['organisation_id']]);
+            $sequence = Setting::fetch_and_add('sale', 'invoice', 'sequence', 1, ['organisation_id' => $invoice['organisation_id']]);
+
+            if($sequence) {
+                $invoice_number = Setting::parse_format($format, [
+                    'year'      => $year,
+                    'org'       => $invoice['organisation_id'],
+                    'sequence'  => $sequence
+                ]);
+                self::update(['invoice_number' => $invoice_number, 'due_date' => null]);
+            }
         }
     }
 
+    /**
+     * Generate the fundings for a collection of invoices that just transitioned to "invoiced".
+     * Fundings must be created here because due_date is set at invoice emission
+    */
     public static function onafterInvoice($self) {
-        // Force computing the invoice number that was set to null in onbeforeInvoice
-        $self->read(['invoice_number', 'due_date']);
-
-        // Funding must be created here because it needs the due_date force computed above
         try {
+            // #memo - failing in emitting the fundings cannot interrupt the transition
             $self->do('create_funding');
-        } catch(\Exception $e) {
-            trigger_error("PHP::unable to create funding: {$e->getMessage()}", QN_REPORT_ERROR);
+        }
+        catch(\Exception $e) {
+            trigger_error("PHP::error while creating invoices funding: {$e->getMessage()}", EQ_REPORT_ERROR);
         }
     }
 
@@ -308,9 +290,9 @@ class Invoice extends \finance\accounting\Invoice {
         $self->read(['id']);
         foreach($self as $invoice) {
             $receivables_ids = Receivable::search([
-                ['status', '=', 'invoiced'],
-                ['invoice_id', '=', $invoice['id']],
-            ])
+                    ['status', '=', 'invoiced'],
+                    ['invoice_id', '=', $invoice['id']],
+                ])
                 ->ids();
 
             Receivable::ids($receivables_ids)
@@ -363,17 +345,6 @@ class Invoice extends \finance\accounting\Invoice {
 
     public static function getActions() {
         return [
-            'create_accounting_entries' => [
-                'description'   => 'Generates and creates the accounting entries according to the invoice lines.',
-                'policies'      => [],
-                'function'      => 'doCreateAccountingEntries'
-            ],
-            'generate_accounting_entries' => [
-                'description'   => 'Generates the accounting entries according to the invoice lines.',
-                'help'          => 'Returns generated accounting entries mapped by invoice lines.',
-                'policies'      => [],
-                'function'      => 'doGenerateAccountingEntries'
-            ],
             'reverse' => [
                 'description'   => 'Creates a new invoice of type credit note to reverse invoice.',
                 'help'          => 'Reversing an invoice can only be done when status is "invoice".',
@@ -389,51 +360,38 @@ class Invoice extends \finance\accounting\Invoice {
     }
 
     /**
-     * Generates the accounting entries according to the invoice lines.
+     * Returns generated accounting entries mapped by invoice id.
      */
-    public static function doCreateAccountingEntries($self) {
-        $invoice_lines_accounting_entries = $self->do('generate_accounting_entries');
-
-        // create new entries objects
-        foreach($invoice_lines_accounting_entries as $invoice_line_accounting_entries) {
-            foreach($invoice_line_accounting_entries as $accounting_entry) {
-                AccountingEntry::create($accounting_entry);
-            }
-        }
-    }
-
-    /**
-     * Returns generated accounting entries mapped by invoice lines.
-     */
-    public static function doGenerateAccountingEntries($self): array {
+    public static function computeAccountingEntries($self): array {
         $result = [];
         $self->read(['status', 'invoice_type', 'organisation_id', 'invoice_lines_ids']);
-
-        // retrieve specific accounts numbers
-        $account_sales = Setting::get_value('finance', 'invoice', 'account.sales', 'not_found');
-        $account_sales_taxes = Setting::get_value('finance', 'invoice', 'account.sales_taxes', 'not_found');
-        $account_trade_debtors = Setting::get_value('finance', 'invoice', 'account.trade_debtors', 'not_found');
-
-        $account_sales = AccountChartLine::search(['code', '=', $account_sales])->read(['id'])->first();
-        $account_sales_taxes = AccountChartLine::search(['code', '=', $account_sales_taxes])->read(['id'])->first();
-        $account_trade_debtors = AccountChartLine::search(['code', '=', $account_trade_debtors])->read(['id'])->first();
-
-        if(!isset($account_sales, $account_sales_taxes, $account_trade_debtors)) {
-            // a mandatory value could not be retrieved
-            trigger_error('QN_DEBUG_ORM::missing mandatory account', QN_REPORT_ERROR);
-            return [];
-        }
 
         foreach($self as $id => $invoice) {
             if($invoice['status'] != 'invoice') {
                 continue;
             }
 
+            $organisation_id = $invoice['organisation_id'];
+
+            // retrieve specific accounts numbers
+            $account_sales = Setting::get_value('sale', 'invoice', 'account_sales', null, ['organisation_id' => $organisation_id]);
+            $account_sales_taxes = Setting::get_value('sale', 'invoice', 'account_sales-taxes', null, ['organisation_id' => $organisation_id]);
+            $account_trade_debtors = Setting::get_value('sale', 'invoice', 'account_sales-debtors', null, ['organisation_id' => $organisation_id]);
+
+            $account_sales = AccountChartLine::search(['code', '=', $account_sales])->read(['id'])->first();
+            $account_sales_taxes = AccountChartLine::search(['code', '=', $account_sales_taxes])->read(['id'])->first();
+            $account_trade_debtors = AccountChartLine::search(['code', '=', $account_trade_debtors])->read(['id'])->first();
+
+            if(!isset($account_sales, $account_sales_taxes, $account_trade_debtors)) {
+                // a mandatory value could not be retrieved
+                trigger_error('APP::missing mandatory account', EQ_REPORT_ERROR);
+                return [];
+            }
             // default downpayment product to null
             $downpayment_product_id = 0;
 
             // retrieve downpayment product
-            $downpayment_sku = Setting::get_value('sale', 'invoice', 'downpayment.sku.'.$invoice['organisation_id']);
+            $downpayment_sku = Setting::get_value('sale', 'invoice', 'downpayment_sku', null, ['organisation_id' => $organisation_id]);
             if($downpayment_sku) {
                 $downpayment_product = Product::search(['sku', '=', $downpayment_sku])
                     ->read(['id'])
@@ -608,41 +566,40 @@ class Invoice extends \finance\accounting\Invoice {
         foreach($self as $invoice) {
             if( $invoice['status'] !== 'cancelled'
                 || $invoice['invoice_type'] !== 'invoice'
-                || isset($invoice['reversed_invoice_id'])
-            ) {
+                || isset($invoice['reversed_invoice_id']) ) {
                 continue;
             }
 
             $reversed_invoice = Invoice::create([
-                'invoice_type'        => 'credit_note',
-                'status'              => 'proforma',
-                'emission_date'       => time(),
-                'organisation_id'     => $invoice['organisation_id'],
-                'customer_id'         => $invoice['customer_id'],
-                'is_deposit'          => $invoice['is_deposit'],
-                'reversed_invoice_id' => $invoice['id']
-            ])
+                    'invoice_type'        => 'credit_note',
+                    'status'              => 'proforma',
+                    'emission_date'       => time(),
+                    'organisation_id'     => $invoice['organisation_id'],
+                    'customer_id'         => $invoice['customer_id'],
+                    'is_deposit'          => $invoice['is_deposit'],
+                    'reversed_invoice_id' => $invoice['id']
+                ])
                 ->first();
 
             foreach($invoice['invoice_line_groups_ids'] as $invoice_line_group) {
                 $reversed_group = InvoiceLineGroup::create([
-                    'name'       => $invoice_line_group['name'],
-                    'invoice_id' => $reversed_invoice['id']
-                ])
+                        'name'       => $invoice_line_group['name'],
+                        'invoice_id' => $reversed_invoice['id']
+                    ])
                     ->first(true);
 
                 foreach($invoice_line_group['invoice_lines_ids'] as $line) {
                     InvoiceLine::create([
-                        'description'            => $line['description'],
-                        'invoice_id'             => $reversed_invoice['id'],
-                        'invoice_line_group_id'  => $reversed_group['id'],
-                        'product_id'             => $line['product_id'],
-                        'price_id'               => $line['price_id'],
-                        'qty'                    => $line['qty'],
-                        'free_qty'               => $line['free_qty'],
-                        'discount'               => $line['discount'],
-                        'downpayment_invoice_id' => $line['downpayment_invoice_id']
-                    ])
+                            'description'            => $line['description'],
+                            'invoice_id'             => $reversed_invoice['id'],
+                            'invoice_line_group_id'  => $reversed_group['id'],
+                            'product_id'             => $line['product_id'],
+                            'price_id'               => $line['price_id'],
+                            'qty'                    => $line['qty'],
+                            'free_qty'               => $line['free_qty'],
+                            'discount'               => $line['discount'],
+                            'downpayment_invoice_id' => $line['downpayment_invoice_id']
+                        ])
                         ->update([
                             'vat_rate'   => $line['vat_rate'],
                             'unit_price' => $line['unit_price'],
@@ -657,7 +614,7 @@ class Invoice extends \finance\accounting\Invoice {
                 Invoice::id($invoice['id'])->update(['payment_status' => 'balanced']);
             }
             else {
-                // TODO: Alert finance_accounting reimbursement needed
+                // TODO: Alert finance_accounting - reimbursement needed
             }
 
             Invoice::id($invoice['id'])
@@ -673,14 +630,14 @@ class Invoice extends \finance\accounting\Invoice {
 
         foreach($self as $invoice) {
             $funding = Funding::create([
-                'description'         => 'Sold Invoice',
-                'invoice_id'          => $invoice['id'],
-                'due_amount'          => round($invoice['price'], 2),
-                'is_paid'             => false,
-                'funding_type'        => 'invoice',
-                'payment_reference'   => $invoice['payment_reference'],
-                'due_date'            => $invoice['due_date']
-            ])
+                    'description'         => 'Sold Invoice',
+                    'invoice_id'          => $invoice['id'],
+                    'due_amount'          => round($invoice['price'], 2),
+                    'is_paid'             => false,
+                    'funding_type'        => 'invoice',
+                    'payment_reference'   => $invoice['payment_reference'],
+                    'due_date'            => $invoice['due_date']
+                ])
                 ->first();
 
             Invoice::id($invoice['id'])

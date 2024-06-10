@@ -1,10 +1,12 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace sale\contract;
+
 use equal\orm\Model;
 
 class ContractLine extends Model {
@@ -14,8 +16,8 @@ class ContractLine extends Model {
     }
 
     public static function getColumns() {
-
         return [
+
             'name' => [
                 'type'              => 'computed',
                 'function'          => 'calcName',
@@ -109,45 +111,33 @@ class ContractLine extends Model {
         ];
     }
 
-    public static function calcName($om, $oids, $lang) {
+    public static function calcName($self) {
         $result = [];
-        $res = $om->read(get_called_class(), $oids, ['product_id.label']);
-        foreach($res as $oid => $odata) {
-            $result[$oid] = "{$odata['product_id.label']}";
+        $self->read(['product_id' => ['label']]);
+        foreach($self as $id => $line) {
+            $result[$id] = $line['product_id']['label'];
         }
+
         return $result;
     }
 
-    /**
-     * Compute the VAT excl. total price of the line, with discounts applied.
-     *
-     */
-    public static function calcTotal($om, $oids, $lang) {
+    public static function calcTotal($self) {
         $result = [];
-        $lines = $om->read(__CLASS__, $oids, ['unit_price', 'qty', 'free_qty', 'discount']);
-
-        if($lines > 0 && count($lines)) {
-            foreach($lines as $lid => $line) {
-                $result[$lid] = $line['unit_price'] * (1 - $line['discount']) * ($line['qty'] - $line['free_qty']);
-            }
+        $self->read(['unit_price', 'qty', 'free_qty', 'discount']);
+        foreach($self as $id => $line) {
+            $result[$id] = $line['unit_price'] * (1 - $line['discount']) * ($line['qty'] - $line['free_qty']);
         }
+
         return $result;
     }
 
-    /**
-     * Compute the final VAT incl. price of the line.
-     *
-     */
-    public static function calcPrice($om, $oids, $lang) {
+    public static function calcPrice($self) {
         $result = [];
-        $lines = $om->read(__CLASS__, $oids, ['total', 'vat_rate']);
-
-        if($lines > 0 && count($lines)) {
-            foreach($lines as $lid => $line) {
-                $result[$lid] = round($line['total'] * (1 + $line['vat_rate']), 2);
-            }
+        $self->read(['total', 'vat_rate']);
+        foreach($self as $id => $line) {
+            $result[$id] = round($line['total'] * (1 + $line['vat_rate']), 2);
         }
+
         return $result;
     }
-
 }

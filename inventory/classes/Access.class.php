@@ -54,7 +54,7 @@ class Access extends Model {
             'url' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'usage'             => 'url',
+                'usage'             => 'uri/url',
                 'description'       => 'The URL to access.',
                 'function'          => 'calUrl',
                 'store'             => true,

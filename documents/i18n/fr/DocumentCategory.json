@@ -8,25 +8,25 @@
             "description": "Nom de la catégorie.",
             "help": ""
         },
-        "parent_id":{
+        "parent_id": {
             "label": "Parent",
             "description": "La catégorie parente.",
-            "help":""
+            "help": ""
         },
-        "documents_ids":{
+        "documents_ids": {
             "label": "Document",
             "description": "Le document auquel la catégorie se rapporte.",
-            "help":""
+            "help": ""
         },
-        "children_ids":{
-            "label":"Sous-catégories",
-            "description":"Les catégories enfants.",
-            "help":""
+        "children_ids": {
+            "label": "Sous-catégories",
+            "description": "Les catégories enfants.",
+            "help": ""
         },
-        "path":{
-            "label":"Path",
-            "description":"Chemin d'accès.",
-            "help":""
+        "path": {
+            "label": "Path",
+            "description": "Chemin d'accès.",
+            "help": ""
         }
     },
     "view": {
@@ -34,20 +34,20 @@
             "name": "Catégorie",
             "description": "",
             "layout": {
-                "section.category": {
-                    "label": "Infos catégorie"
+                "section.details": {
+                    "label": "Détails"
                 },
                 "section.children": {
                     "label": "Sous-catégories"
                 },
-                "section.document":{
+                "section.documents": {
                     "label": "Documents"
                 }
-        },
-        "list.default": {
-            "name": "Liste des catégories",
-            "description": "Liste des catégories.",
-            "layout": {}
+            },
+            "list.default": {
+                "name": "Catégories",
+                "description": "Liste des catégories.",
+                "layout": {}
             }
         }
     }

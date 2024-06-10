@@ -1,22 +1,22 @@
 [
     {
-        "name": "sale\\pay\\PaymentPlan",
+        "name": "sale\\pay\\FundingPlan",
         "lang": "en",
         "data": [
             {
                 "id": 1,
-                "name": "Default payment plan",
+                "name": "Default funding plan",
                 "rate_class_id": 1
             }
         ]
     },
     {
-        "name": "sale\\pay\\PaymentPlan",
+        "name": "sale\\pay\\FundingPlan",
         "lang": "fr",
         "data": [
             {
                 "id": 1,
-                "name": "Plan de paiement par défaut"
+                "name": "Plan de financement par défaut"
             }
         ]
     }
