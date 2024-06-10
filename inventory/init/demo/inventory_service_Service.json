@@ -6,26 +6,41 @@
             {
                 "id": 1,
                 "service_model_id": 1,
+                "has_subscription": true,
+                "is_billable": true,
+                "is_auto_renew": true,
                 "product_id": 1
             },
             {
                 "id": 2,
                 "service_model_id": 2,
+                "has_subscription": true,
+                "is_billable": false,
+                "is_auto_renew": true,
                 "product_id": 1
             },
             {
                 "id": 3,
                 "service_model_id": 3,
+                "has_subscription": true,
+                "is_billable": false,
+                "is_auto_renew": true,
                 "product_id": 1
             },
             {
                 "id": 4,
                 "service_model_id": 4,
+                "has_subscription": true,
+                "is_billable": true,
+                "is_auto_renew": false,
                 "product_id": 3
             },
             {
                 "id": 5,
                 "service_model_id": 5,
+                "has_subscription": true,
+                "is_billable": true,
+                "is_auto_renew": false,
                 "product_id": 4
             }
         ]

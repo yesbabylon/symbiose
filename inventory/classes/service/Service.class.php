@@ -44,35 +44,24 @@ class Service extends Model {
             ],
 
             'has_subscription' => [
-                'type'              => 'computed',
-                'result_type'       => 'boolean',
-                'description'       => 'The service has a subscription (computed by Service Model).',
-                'function'          => 'calcHasSubscription',
-                'readonly'          => true,
-                'store'             => true,
-                'instant'           => true
+                'type'              => 'boolean',
+                'description'       => 'The service has a subscription.',
+                'default'           => false,
+                'dependencies'      => ['is_billable','is_internal'],
             ],
 
             'is_billable' => [
-                'type'              => 'computed',
-                'result_type'       => 'boolean',
-                'description'       => 'The service is billable (computed by Service Model).',
+                'type'              => 'boolean',
+                'description'       => 'The service is billable.',
                 'visible'           => ['has_subscription', '=', true],
-                'function'          => 'calcIsBillable',
-                'readonly'          => true,
-                'store'             => true,
-                'instant'           => true
+                'default'           => false,
             ],
 
             'is_auto_renew' => [
-                'type'              => 'computed',
-                'result_type'       => 'boolean',
-                'description'       => 'The service is auto renew (computed by Service Model).',
+                'type'              => 'boolean',
+                'description'       => 'The service is auto renew.',
                 'visible'           => ['has_subscription', '=', true],
-                'function'          => 'calcIsAutoRenew',
-                'readonly'          => true,
-                'store'             => true,
-                'instant'           => true
+                'default'           => false
             ],
 
             'has_external_provider' => [
@@ -163,13 +152,10 @@ class Service extends Model {
 
         if(isset($event['service_model_id']) && $event['service_model_id'] > 0){
             $service_model = ServiceModel::search(['id', '=', $event['service_model_id']])
-                ->read(['has_subscription', 'is_auto_renew', 'is_billable', 'has_external_provider', 'service_provider_id' => ['id','name']])
+                ->read(['has_external_provider', 'service_provider_id' => ['id','name']])
                 ->first();
 
             $result = [
-                'has_subscription'          => $service_model['has_subscription'],
-                'is_auto_renew'             => $service_model['is_auto_renew'],
-                'is_billable'               => $service_model['is_billable'],
                 'has_external_provider'     => $service_model['has_external_provider'],
                 'service_provider_id'       => $service_model['service_provider_id']
             ];
@@ -202,18 +188,6 @@ class Service extends Model {
 
     public static function calcHasExternalProvider($self) {
         return self::calcFromServiceModel($self, 'has_external_provider');
-    }
-
-    public static function calcIsAutoRenew($self) {
-        return self::calcFromServiceModel($self, 'is_auto_renew');
-    }
-
-    public static function calcIsBillable($self) {
-        return self::calcFromServiceModel($self, 'is_billable');
-    }
-
-    public static function calcHasSubscription($self) {
-        return self::calcFromServiceModel($self, 'has_subscription');
     }
 
     private static function calcFromServiceModel($self, $column): array {
