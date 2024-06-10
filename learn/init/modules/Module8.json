@@ -77,7 +77,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": []
                 },
                 {
@@ -116,7 +115,6 @@
                             "contrast": "dark"
                         }
                     ],
-                    "type": "basic",
                     "next_active": []
                 }
             ]
@@ -204,7 +202,6 @@
                             "contrast": "dark"
                         }
                     ],
-                    "type": "basic",
                     "next_active": []
                 },
                 {
@@ -255,7 +252,7 @@
                                     "fixed": true,
                                     "widgets": [
                                         {
-                                            "type": "notice",
+                                            "type": "text",
                                             "content": "click on the examples:",
                                             "align": "right"
                                         }
@@ -443,7 +440,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": [
                         "$page.actions_counter",
                         "=",
@@ -493,7 +489,6 @@
                             "contrast": "dark"
                         }
                     ],
-                    "type": "basic",
                     "next_active": []
                 },
                 {
@@ -598,7 +593,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": [
                         "$page.submitted",
                         "=",
@@ -703,7 +697,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": [
                         "$page.submitted",
                         "=",
@@ -761,7 +754,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": []
                 },
                 {
@@ -832,7 +824,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": []
                 },
                 {
@@ -952,7 +943,6 @@
                             ]
                         }
                     ],
-                    "type": "basic",
                     "next_active": [
                         "$page.actions_counter",
                         ">",
@@ -1021,7 +1011,6 @@
                             "contrast": "dark"
                         }
                     ],
-                    "type": "basic",
                     "next_active": []
                 }
             ]
@@ -1109,7 +1098,6 @@
                             "contrast": "dark"
                         }
                     ],
-                    "type": "basic",
                     "next_active": []
                 },
                 {
@@ -1153,9 +1141,9 @@
                                     "fixed": true,
                                     "widgets": [
                                         {
-                                            "type": "notice",
+                                            "type": "text",
                                             "content": "click on the items to explore the various types of Insider Threats.",
-                                            "align": "center"
+                                            "align": "left"
                                         }
                                     ]
                                 },
@@ -1332,7 +1320,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": [
                         "$page.actions_counter",
                         "=",
@@ -1388,7 +1375,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": []
                 },
                 {
@@ -1404,35 +1390,7 @@
                                         {
                                             "type": "page_title",
                                             "content": "Select an Insider attack",
-                                            "align": "center"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "direction": "horizontal",
-                                    "row_span": 3,
-                                    "fixed": true,
-                                    "widgets": [
-                                        {
-                                            "identifier": 1,
-                                            "type": "selector_section",
-                                            "content": "",
-                                            "section_id": 1,
-                                            "image_url": "../images/module2/widget-successful_failure.png"
-                                        },
-                                        {
-                                            "identifier": 2,
-                                            "type": "selector_section",
-                                            "content": "",
-                                            "section_id": 2,
-                                            "image_url": "../images/module2/widget-successful_plot.png"
-                                        },
-                                        {
-                                            "identifier": 3,
-                                            "type": "selector_section",
-                                            "content": "",
-                                            "section_id": 3,
-                                            "image_url": "../images/module2/widget-maritime_catastrophe.png"
+                                            "align": "left"
                                         }
                                     ]
                                 }
@@ -1441,1287 +1399,10 @@
                             "contrast": "dark"
                         }
                     ],
-                    "type": "basic",
                     "next_active": [
                         "$page.actions_counter",
                         "=",
                         3
-                    ],
-                    "sections": [
-                        {
-                            "identifier": 1,
-                            "pages": [
-                                {
-                                    "identifier": 1,
-                                    "leaves": [
-                                        {
-                                            "identifier": 1,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": "'Terrorist Attacks on civil aviation are frequent, and often involve Insiders.''"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "light"
-                                        },
-                                        {
-                                            "identifier": 2,
-                                            "groups": [
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 3,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Incident status:"
-                                                        },
-                                                        {
-                                                            "type": "page_description",
-                                                            "content": "Unsuccessful terrorist plot in Somalia"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-successful_failure.png",
-                                            "background_stretch": true
-                                        }
-                                    ]
-                                },
-                                {
-                                    "identifier": 2,
-                                    "leaves": [
-                                        {
-                                            "identifier": 1,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": "'Government authority employees can also become Insiders.'"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "light"
-                                        },
-                                        {
-                                            "identifier": 2,
-                                            "groups": [
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 3,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "The Insiders:",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "A team consisting of:  * The Head of Security of the Somali Civil Aviation Authority  * Security screeners  * A police officer  * A porter  * Immigration officers"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "row_span": 1
-                                                },
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 2,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Possible motivation",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "Political and religious belief  (all Insiders were suspected memebers of 'al Shabaab')."
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-successful_failure.png",
-                                            "background_stretch": true
-                                        }
-                                    ],
-                                    "type": "basic",
-                                    "next_active": []
-                                },
-                                {
-                                    "identifier": 3,
-                                    "leaves": [
-                                        {
-                                            "identifier": 1,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "align": "right",
-                                                            "content": "Do your colleagues sometimes bypass security measures "
-                                                        },
-                                                        {
-                                                            "type": "headline",
-                                                            "align": "center",
-                                                            "content": "?"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "row_span": 1
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "identifier": 1,
-                                                            "type": "page_title",
-                                                            "content": "Yes",
-                                                            "on_click": "select_one()",
-                                                            "align": "center"
-                                                        },
-                                                        {
-                                                            "identifier": 2,
-                                                            "type": "page_title",
-                                                            "content": "No",
-                                                            "on_click": "select_one()",
-                                                            "align": "center"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "light"
-                                        },
-                                        {
-                                            "identifier": 2,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 2,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": "Bypassing security measures is not only a bad idea; in most cases, it is also illegal, and could lead to criminal prosecution. Remind your co-workers that bypassing security measures also sets a bad example to all their other colleagues.",
-                                                            "align": "left"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-successful_failure.png",
-                                            "background_stretch": true,
-                                            "visible": [
-                                                "$page.selection",
-                                                "=",
-                                                1
-                                            ]
-                                        },
-                                        {
-                                            "identifier": 3,
-                                            "groups": [
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 2,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Plot:",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "In 2016, airport employees handed a laptop containing an explosive device to a passenger. Activating an explosive device at high altitude would have brought the plane down, killing all 74 passengers and crew."
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "'A successful failure'",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "The explosive device was activated too early."
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 2,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Harm done:",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "* Two persons injured onboard the aircraft.  * One casualty (the person carrying the explosive device).  * Breach in the fuselage of the Daallo Airlines airplane (Airbus A321)."
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-successful_failure.png",
-                                            "background_stretch": true,
-                                            "visible": [
-                                                "$page.selection",
-                                                "=",
-                                                2
-                                            ]
-                                        }
-                                    ],
-                                    "type": "basic",
-                                    "next_active": [
-                                        "$page.actions_counter",
-                                        "=",
-                                        1
-                                    ]
-                                },
-                                {
-                                    "identifier": 4,
-                                    "leaves": [
-                                        {
-                                            "identifier": 1,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": "'Insiders have access to secured areas, and they sometimes strike without raising (many) red flags.'"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "light"
-                                        },
-                                        {
-                                            "identifier": 2,
-                                            "groups": [
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Missed red flags:",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "The malfunctioning of security procedures was not addressed."
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "row_span": 1
-                                                },
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 2,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Lessons learned:",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "* European aircraft operating in conflict zone areas and airports are more vulnerable to Insider Threats.  * Failed states with weak governments result in unreliable security systems."
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-successful_failure.png",
-                                            "background_stretch": true
-                                        }
-                                    ],
-                                    "type": "basic",
-                                    "next_active": []
-                                },
-                                {
-                                    "identifier": 5,
-                                    "leaves": [
-                                        {
-                                            "identifier": 1,
-                                            "groups": [
-                                                {
-                                                    "row_span": 5
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "identifier": 1,
-                                                            "type": "text",
-                                                            "content": ""
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "light"
-                                        },
-                                        {
-                                            "identifier": 2,
-                                            "groups": [
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 4,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Start protecting each other!",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "What you can learn from this Insider attack:  * If you feel unsafe because (sub)contractors show no security awareness or do not obey security policies and procedures, please report!  * If you feel that the stated identity of co-workers or subcontractors raises concern, please report!  * Report everything that is amiss. It is better to have a report that results in 'no harm done/intended' than to keep silent and miss the next Insider attack."
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-successful_failure.png",
-                                            "background_stretch": true
-                                        }
-                                    ],
-                                    "type": "basic",
-                                    "next_active": [
-                                        "$page.actions_counter",
-                                        "=",
-                                        1
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "identifier": 2,
-                            "pages": [
-                                {
-                                    "identifier": 2,
-                                    "leaves": [
-                                        {
-                                            "identifier": 1,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 5,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": "'A 2014 report by US scientists states that a terrorist attack at the Indian Point Nuclear Plant could result in 44.000 deaths from acute radiation syndrome in individuals within 80 km (50 miles) of the plant.'"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "light"
-                                        },
-                                        {
-                                            "identifier": 2,
-                                            "groups": [
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "fixed": true,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Incident status:",
-                                                            "align": "left"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "row_span": 1
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 3,
-                                                    "fixed": true,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Successful sabotage of a Nuclear Plant in Belgium; currently under investigation",
-                                                            "align": "left"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "background_opacity": 1,
-                                            "background_image": "../images/module2/widget-successful_plot.png",
-                                            "background_stretch": true,
-                                            "contrast": "dark"
-                                        }
-                                    ],
-                                    "type": "basic",
-                                    "next_active": []
-                                },
-                                {
-                                    "identifier": 1,
-                                    "leaves": [
-                                        {
-                                            "identifier": 1,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "align": "right",
-                                                            "content": "Do you know that there are 182 nuclear power plants in operation in Europe"
-                                                        },
-                                                        {
-                                                            "type": "chapter_title",
-                                                            "align": "center",                                                            
-                                                            "content": "?"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "row_span": 1
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "identifier": 1,
-                                                            "type": "page_title",
-                                                            "content": "Yes",
-                                                            "on_click": "select_one()",
-                                                            "align": "center"
-                                                        },
-                                                        {
-                                                            "identifier": 2,
-                                                            "type": "page_title",
-                                                            "content": "No",
-                                                            "on_click": "select_one()",
-                                                            "align": "center"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "light"
-                                        },
-                                        {
-                                            "identifier": 2,
-                                            "groups": [
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 2,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "The Insiders:",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "The perpetrator(a) have not been identified/found yet.    Around 60 people accessed the restricted area on the day of the sabotage. They were all employees or subcontractors with secure area access."
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "row_span": 1
-                                                },
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Possible motivation:",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "Political and religious belief"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "visible": [
-                                                "$page.selection",
-                                                "=",
-                                                1
-                                            ],
-                                            "background_opacity": 1,
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-successful_plot.png",
-                                            "background_stretch": true
-                                        },
-                                        {
-                                            "identifier": 3,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 3,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": "In 2016, there was an incident (Negligent Insider Threat) at the Gundremmingen (Germany) nuclear power plant. The facility's computers were found to be infected with viruses, but they did not appear to have posted a threat to the facility's operations because it was isolated from the Internet. Furthermore, malware was also found on 18 removable data drives, mainly USB sticks, in office computers maintained separetely from the plant's operating systems.",
-                                                            "align": "left"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "visible": [
-                                                "$page.selection",
-                                                "=",
-                                                2
-                                            ],
-                                            "background_opacity": 1,
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-successful_plot.png",
-                                            "background_stretch": true
-                                        }
-                                    ],
-                                    "type": "basic",
-                                    "next_active": [
-                                        "$page.actions_counter",
-                                        "=",
-                                        1
-                                    ]
-                                },
-                                {
-                                    "identifier": 1,
-                                    "leaves": [
-                                        {
-                                            "identifier": 1,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "align": "right",
-                                                            "content": "Do you feel that some areas at your workplace need better access monitoring"
-                                                        },
-                                                        {
-                                                            "type": "chapter_title",
-                                                            "align": "center",
-                                                            "content": "?"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "row_span": 1
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "identifier": 1,
-                                                            "type": "page_title",
-                                                            "content": "Yes",
-                                                            "on_click": "select_one()",
-                                                            "align": "center"
-                                                        },
-                                                        {
-                                                            "identifier": 2,
-                                                            "type": "page_title",
-                                                            "content": "No",
-                                                            "on_click": "select_one()",
-                                                            "align": "center"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "light"
-                                        },
-                                        {
-                                            "identifier": 2,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 3,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": "Take the initiative. Discuss with your colleagues what you think could be improved, and then report it to your management. Never miss an opportunity to point out weak spots!",
-                                                            "align": "left"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "visible": [
-                                                "$page.selection",
-                                                "=",
-                                                1
-                                            ],
-                                            "background_opacity": 1,
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-successful_plot.png",
-                                            "background_stretch": true
-                                        },
-                                        {
-                                            "identifier": 3,
-                                            "groups": [
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Plot:",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "Commiting sabotage in order to shut down Belgium's 'Doel 4' nuclear power plant."
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "row_span": 1
-                                                },
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 2,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Harm done:",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "*No casualties  * 6 months shutdown time for one of the reactors  * €138 million in repair costs  * Risk of (unplanned) electricity shortages"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "visible": [
-                                                "$page.selection",
-                                                "=",
-                                                2
-                                            ],
-                                            "background_opacity": 1,
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-successful_plot.png",
-                                            "background_stretch": true
-                                        }
-                                    ],
-                                    "type": "basic",
-                                    "next_active": [
-                                        "$page.actions_counter",
-                                        "=",
-                                        2
-                                    ]
-                                },
-                                {
-                                    "identifier": 1,
-                                    "leaves": [
-                                        {
-                                            "identifier": 1,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": "Would your organisation be better off with more CCTV cameras"
-                                                        },
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "?"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "row_span": 1
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "identifier": 1,
-                                                            "type": "page_title",
-                                                            "content": "Yes",
-                                                            "on_click": "select_one()",
-                                                            "align": "center"
-                                                        },
-                                                        {
-                                                            "identifier": 2,
-                                                            "type": "page_title",
-                                                            "content": "No",
-                                                            "on_click": "select_one()",
-                                                            "align": "center"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "light"
-                                        },
-                                        {
-                                            "identifier": 3,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 3,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": "Take the initiative. Discuss with your colleagues where you feel that CCTV coverage is lacking or could be improved, and then report it to your management. Never miss an opportunity to point out weak spots!",
-                                                            "align": "left"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "visible": [
-                                                "$page.selection",
-                                                "=",
-                                                1
-                                            ],
-                                            "background_opacity": 1,
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-successful_plot.png",
-                                            "background_stretch": true
-                                        },
-                                        {
-                                            "identifier": 3,
-                                            "groups": [
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Missed red flags:",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "Gap in security policies and procedures."
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "row_span": 1
-                                                },
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 3,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Lessons learned:",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "* Stricter security policies and procedures tailored to specific environments.  * Stricter screening in the hiring process and the contracting process.  * More CCTV cameras installed.  * Registered access to restricted areas.  * No individual access to restricted areas (access only in pairs)."
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "visible": [
-                                                "$page.selection",
-                                                "=",
-                                                2
-                                            ],
-                                            "background_opacity": 1,
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-successful_plot.png",
-                                            "background_stretch": true
-                                        }
-                                    ],
-                                    "type": "basic",
-                                    "next_active": [
-                                        "$page.actions_counter",
-                                        "=",
-                                        2
-                                    ]
-                                },
-                                {
-                                    "identifier": 1,
-                                    "leaves": [
-                                        {
-                                            "identifier": 1,
-                                            "groups": [
-                                                {
-                                                    "row_span": 5
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": ""
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "light"
-                                        },
-                                        {
-                                            "identifier": 2,
-                                            "groups": [
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 4,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Start protecting each other!",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "**What you can learn from this Insider attack:**  * If you feel that restricted areas are not monitored, please report!  * If you feel that current security procedures or measures are not adequate, please report!  * Report everything that is amiss. It is better to have a report that results in 'no harm done/intended' than to keep silent and miss the next Insider attack."
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "background_opacity": 1,
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-successful_plot.png",
-                                            "background_stretch": true
-                                        }
-                                    ],
-                                    "type": "basic",
-                                    "next_active": [
-                                        "$page.actions_counter",
-                                        "=",
-                                        1
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "identifier": 3,
-                            "pages": [
-                                {
-                                    "identifier": 3,
-                                    "leaves": [
-                                        {
-                                            "identifier": 1,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 2,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": "Transport equipment, such as ships, can be used as a weapon.'"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "light"
-                                        },
-                                        {
-                                            "identifier": 2,
-                                            "groups": [
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "fixed": true,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Incident status:",
-                                                            "align": "left"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "row_span": 1
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 3,
-                                                    "fixed": true,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Prevented terrorist plot in international waters",
-                                                            "align": "left"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "background_image": "../images/module2/widget-maritime_catastrophe.png",
-                                            "background_stretch": true,
-                                            "contrast": "dark"
-                                        }
-                                    ],
-                                    "type": "basic",
-                                    "next_active": []
-                                },
-                                {
-                                    "identifier": 1,
-                                    "leaves": [
-                                        {
-                                            "identifier": 1,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": "Do you sometimes spot unauthorised people in restricted areas"
-                                                        },
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "?"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "row_span": 1
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "identifier": 1,
-                                                            "type": "page_title",
-                                                            "content": "Yes",
-                                                            "on_click": "select_one()",
-                                                            "align": "center"
-                                                        },
-                                                        {
-                                                            "identifier": 2,
-                                                            "type": "page_title",
-                                                            "content": "No",
-                                                            "on_click": "select_one()",
-                                                            "align": "center"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "light"
-                                        },
-                                        {
-                                            "identifier": 2,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 3,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": "Challenge everyone who does not seem to be in his/her place, or who lacks proper identification/credentials/badges. When in doubt, report to your supervisor what you noticed and let security handle the situation.",
-                                                            "align": "left"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "visible": [
-                                                "$page.selection",
-                                                "=",
-                                                1
-                                            ],
-                                            "background_opacity": 1,
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-maritime_catastrophe.png",
-                                            "background_stretch": true
-                                        },
-                                        {
-                                            "identifier": 3,
-                                            "groups": [
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 2,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "The Insiders:",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "**Vessel deck crew:**  Various individuals with forged passports and seafarer certificates.    **Agency:**  Responsible for hiring vessel deck crew."
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "row_span": 1
-                                                },
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Possible motivation:",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "* Financial gain  * Political and religious belief"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "visible": [
-                                                "$page.selection",
-                                                "=",
-                                                2
-                                            ],
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-maritime_catastrophe.png",
-                                            "background_stretch": true
-                                        }
-                                    ],
-                                    "type": "basic",
-                                    "next_active": [
-                                        "$page.actions_counter",
-                                        "=",
-                                        2
-                                    ]
-                                },
-                                {
-                                    "identifier": 1,
-                                    "leaves": [
-                                        {
-                                            "identifier": 1,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": "'A ship with chlorine gas was part of an Insider Threat plot, which fortunately failed.'"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "light"
-                                        },
-                                        {
-                                            "identifier": 3,
-                                            "groups": [
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 3,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Plot:"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "**Taking control of a chemical tanker carrying chlorine gas in order to:**  * Discharge the chlorine gas in a port area to cause massive damage to local and public facilities, as well as psychological damage, or  * Sabotage the ship and set it on fire to shut down important commercial shipping infrastructure and cause econonimcaldamage, or  * Sabotage the ship and set it on fire close to a cruise ship.",
-                                                            "align": "left"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-maritime_catastrophe.png",
-                                            "background_stretch": true
-                                        }
-                                    ],
-                                    "type": "basic",
-                                    "next_active": []
-                                },
-                                {
-                                    "identifier": 1,
-                                    "leaves": [
-                                        {
-                                            "identifier": 1,
-                                            "groups": [
-                                                {
-                                                    "row_span": 3
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": "'This case demonstrates the big threat that Insiders are, or can be, and what was missed in detecting Insiders.'"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "light"
-                                        },
-                                        {
-                                            "identifier": 2,
-                                            "groups": [
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 2,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Missed red flags:",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "* Difference between the stated identity and the true identity of vessel deck crew.  * Gap in security policies and procedures."
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Lessons learned:",
-                                                            "align": "left"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 2,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": "* Procedures concerning crew recruitment (pre-employment checks) were lacking, although the defence system was functioning.  * Increased interest in the maritime sector from terrorists.  * Extra research into maritime vulnerabilities is necessary.",
-                                                            "align": "left"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-maritime_catastrophe.png",
-                                            "background_stretch": true
-                                        }
-                                    ],
-                                    "type": "basic",
-                                    "next_active": []
-                                },
-                                {
-                                    "identifier": 1,
-                                    "leaves": [
-                                        {
-                                            "identifier": 1,
-                                            "groups": [
-                                                {
-                                                    "row_span": 5
-                                                },
-                                                {
-                                                    "direction": "horizontal",
-                                                    "row_span": 1,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "text",
-                                                            "content": ""
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "light"
-                                        },
-                                        {
-                                            "identifier": 2,
-                                            "groups": [
-                                                {
-                                                    "direction": "vertical",
-                                                    "row_span": 4,
-                                                    "widgets": [
-                                                        {
-                                                            "type": "page_title",
-                                                            "content": "Start protecting each other!",
-                                                            "align": "left"
-                                                        },
-                                                        {
-                                                            "type": "text",
-                                                            "content": "**What you can learn from this Insider attack:**  * If you feel unsafe because (sub)contractors show no security awareness or do not obey security policies and procedures, please report!  * If you feel that the stated identity of co-workers or subcontractors raises concern, please report!"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "contrast": "dark",
-                                            "background_image": "../images/module2/widget-maritime_catastrophe.png",
-                                            "background_stretch": true
-                                        }
-                                    ],
-                                    "type": "basic",
-                                    "next_active": [
-                                        "$page.actions_counter",
-                                        "=",
-                                        1
-                                    ]
-                                }
-                            ]
-                        }
                     ]
                 },
                 {
@@ -2772,7 +1453,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": []
                 },
                 {
@@ -2975,7 +1655,6 @@
                             "background_opacity": 1
                         }
                     ],
-                    "type": "basic",
                     "next_active": [
                         "$page.actions_counter",
                         "=",
@@ -3044,7 +1723,6 @@
                             "contrast": "dark"
                         }
                     ],
-                    "type": "basic",
                     "next_active": []
                 }
             ]
@@ -3132,7 +1810,6 @@
                             "contrast": "dark"
                         }
                     ],
-                    "type": "basic",
                     "next_active": []
                 },
                 {
@@ -3202,7 +1879,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": []
                 },
                 {
@@ -3234,7 +1910,7 @@
                                         {
                                             "type": "subtitle",
                                             "content": "Will you be more aware of the importance of security measures from now on?",
-                                            "align": "center"
+                                            "align": "left"
                                         }
                                     ]
                                 },
@@ -3246,14 +1922,14 @@
                                             "identifier": 1,
                                             "type": "page_title",
                                             "content": "Yes",
-                                            "align": "center",
+                                            "align": "left",
                                             "on_click": "select_one()"
                                         },
                                         {
                                             "identifier": 2,
                                             "type": "page_title",
                                             "content": "No",
-                                            "align": "center",
+                                            "align": "left",
                                             "on_click": "select_one()"
                                         }
                                     ]
@@ -3293,7 +1969,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": [
                         "$page.actions_counter",
                         "=",
@@ -3329,7 +2004,7 @@
                                         {
                                             "type": "subtitle",
                                             "content": "Will you report a security breach, if you come across it?",
-                                            "align": "center"
+                                            "align": "left"
                                         }
                                     ]
                                 },
@@ -3341,14 +2016,14 @@
                                             "identifier": 1,
                                             "type": "page_title",
                                             "content": "Yes",
-                                            "align": "center",
+                                            "align": "left",
                                             "on_click": "select_one()"
                                         },
                                         {
                                             "identifier": 2,
                                             "type": "page_title",
                                             "content": "No",
-                                            "align": "center",
+                                            "align": "left",
                                             "on_click": "select_one()"
                                         }
                                     ]
@@ -3368,7 +2043,7 @@
                                         {
                                             "type": "page_title",
                                             "content": "Tip 2",
-                                            "align": "right"
+                                            "align": "left"
                                         }
                                     ]
                                 },
@@ -3388,7 +2063,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": [
                         "$page.actions_counter",
                         "=",
@@ -3424,7 +2098,7 @@
                                         {
                                             "type": "subtitle",
                                             "content": "Will you speak up if you are concerned?",
-                                            "align": "center"
+                                            "align": "left"
                                         }
                                     ]
                                 },
@@ -3436,14 +2110,14 @@
                                             "identifier": 1,
                                             "type": "page_title",
                                             "content": "Yes",
-                                            "align": "center",
+                                            "align": "left",
                                             "on_click": "select_one()"
                                         },
                                         {
                                             "identifier": 2,
                                             "type": "page_title",
                                             "content": "No",
-                                            "align": "center",
+                                            "align": "left",
                                             "on_click": "select_one()"
                                         }
                                     ]
@@ -3481,7 +2155,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": [
                         "$page.actions_counter",
                         "=",
@@ -3517,7 +2190,7 @@
                                         {
                                             "type": "subtitle",
                                             "content": "Will you speak up if you see something out of the ordinary?",
-                                            "align": "center"
+                                            "align": "left"
                                         }
                                     ]
                                 },
@@ -3529,14 +2202,14 @@
                                             "identifier": 1,
                                             "type": "page_title",
                                             "content": "Yes",
-                                            "align": "center",
+                                            "align": "left",
                                             "on_click": "select_one()"
                                         },
                                         {
                                             "identifier": 2,
                                             "type": "page_title",
                                             "content": "No",
-                                            "align": "center",
+                                            "align": "left",
                                             "on_click": "select_one()"
                                         }
                                     ]
@@ -3574,7 +2247,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": [
                         "$page.actions_counter",
                         "=",
@@ -3610,7 +2282,7 @@
                                         {
                                             "type": "subtitle",
                                             "content": "Will you make others aware of security measures, if they are unknowing?",
-                                            "align": "center"
+                                            "align": "left"
                                         }
                                     ]
                                 },
@@ -3622,14 +2294,14 @@
                                             "identifier": 1,
                                             "type": "page_title",
                                             "content": "Yes",
-                                            "align": "center",
+                                            "align": "left",
                                             "on_click": "select_one()"
                                         },
                                         {
                                             "identifier": 2,
                                             "type": "page_title",
                                             "content": "No",
-                                            "align": "center",
+                                            "align": "left",
                                             "on_click": "select_one()"
                                         }
                                     ]
@@ -3667,7 +2339,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": [
                         "$page.actions_counter",
                         "=",
@@ -3725,7 +2396,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": []
                 },
                 {
@@ -3889,7 +2559,6 @@
                             "background_opacity": 1
                         }
                     ],
-                    "type": "basic",
                     "next_active": [
                         "$page.actions_counter",
                         "=",
@@ -3926,7 +2595,7 @@
                                             "type": "chapter_title",
                                             "content": "Download your certificate",
                                             "align": "right",
-                                            "on_click": "download_certificate()"
+                                            "on_click": "select_one()"
                                         },
                                         {
                                             "identifier": 1,
@@ -3937,7 +2606,7 @@
                                             "identifier": 2,
                                             "type": "image_popup",
                                             "image_url": "../images/AT/widget-download.png",
-                                            "on_click": "download_certificate()",
+                                            "on_click": "select_one()",
                                             "has_separator_right": true
                                         }
                                     ]
@@ -3947,7 +2616,6 @@
                             "contrast": "light"
                         }
                     ],
-                    "type": "basic",
                     "next_active": []
                 },
                 {
@@ -4012,7 +2680,6 @@
                             "contrast": "dark"
                         }
                     ],
-                    "type": "basic",
                     "next_active": []
                 },
                 {
@@ -4040,17 +2707,17 @@
                                     "widgets": [
                                         {
                                             "identifier": 1,
-                                            "type": "selector-at",
+                                            "type": "selector",
                                             "content": "Awareness    Estimated learning time:  10 minutes"
                                         },
                                         {
                                             "identifier": 2,
-                                            "type": "selector-at",
+                                            "type": "selector",
                                             "content": "Research    Estimated learning time:  13 minutes"
                                         },
                                         {
                                             "identifier": 3,
-                                            "type": "selector-at",
+                                            "type": "selector",
                                             "content": "Get involved    Estimated learning time:  7 mintues"
                                         }
                                     ]
@@ -4063,16 +2730,15 @@
                                         {
                                             "type": "text",
                                             "content": "**You have completed this Insider Threat Awareness training!    You can exit this training by closing the tab in your window.**",
-                                            "align": "center"
+                                            "align": "left"
                                         }
                                     ]
                                 }
                             ],
                             "background_opacity": 1,
-                            "contrast": "none"
+                            "contrast": "dark"
                         }
-                    ],
-                    "type": "basic"
+                    ]
                 }
             ]
         }

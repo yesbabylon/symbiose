@@ -6,7 +6,7 @@
             {
                 "type": "field",
                 "value": "identifier",
-                "width": "10%",
+                "width": "5%",
                 "widget": {
                     "readonly": true
                 }
@@ -14,7 +14,7 @@
             {
                 "type": "field",
                 "value": "order",
-                "width": "10%"
+                "width": "5%"
             }
         ]
     }

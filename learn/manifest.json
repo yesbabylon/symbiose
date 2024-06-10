@@ -2,9 +2,41 @@
     "name": "learn",
     "description": "Learn package.",
     "version": "1.0",
-    "authors": ["Yesbabylon"],
+    "authors": [
+        "Yesbabylon"
+    ],
     "license": "LGPL-3",
-    "depends_on": ["core"],
-    "lang": ["en", "fr"],
-    "apps": ["learn", "learning", "qursus"]
+    "depends_on": [
+        "core"
+    ],
+    "lang": [
+        "en",
+        "fr"
+    ],
+    "apps": [
+        {
+            "id": "courses",
+            "name": "learn",
+            "extends": "app",
+            "description": "Courses management.",
+            "icon": "school",
+            "access": {
+                "groups": [
+                    "admins"
+                ]
+            },
+            "params": {
+                "menus": {
+                    "left": "learn.left"
+                },
+                "context": {
+                    "description": "Learn App root context.",
+                    "entity": "learn\\Course",
+                    "view": "list.default"
+                }
+            }
+        },
+        "learning",
+        "qursus"
+    ]
 }

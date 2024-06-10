@@ -1,32 +1,33 @@
 <?php
+
 use learn\UserAccess;
 use learn\Module;
 
 list($params, $providers) = announce([
-    'description'   => "Returns a fully loaded JSON formatted single module.",
-    'params'        => [
-        'id' =>  [
-            'description'   => 'Module identifier (id field).',
-            'type'          => 'integer',
-            'required'      => true
+    'description' => "Returns a fully loaded JSON formatted single module.",
+    'params' => [
+        'id' => [
+            'description' => 'Module identifier (id field).',
+            'type' => 'integer',
+            'required' => true
         ],
-        'lang' =>  [
-            'description'   => 'Language requested for multilang values.',
-            'type'          => 'string',
-            'default'       => constant('DEFAULT_LANG')
+        'lang' => [
+            'description' => 'Language requested for multilang values.',
+            'type' => 'string',
+            'default' => constant('DEFAULT_LANG')
         ]
     ],
-    'response'      => [
-        'content-type'  => 'application/json',
-        'charset'       => 'utf-8',
+    'response' => [
+        'content-type' => 'application/json',
+        'charset' => 'utf-8',
         'accept-origin' => '*',
         // 'cacheable'     => true,
-        'expires'       => 3600
+        'expires' => 3600
     ],
-    'providers'     => ['context', 'orm', 'auth']
+    'providers' => ['context', 'orm', 'auth']
 ]);
 
-list($context, $orm) = [ $providers['context'], $providers['orm'] ];
+list($context, $orm) = [$providers['context'], $providers['orm']];
 
 /*
     Retrieve current user id
@@ -73,124 +74,124 @@ if($user_id > 3) {
 */
 
 $module = $search->read([
+    'id',
+    'name',
+    'identifier',
+    'order',
+    'title',
+    'description',
+    'duration',
+    'page_count',
+    'chapter_count',
+    'course_id' => ['id', 'name', 'title', 'subtitle', 'description', 'langs_ids' => ['id', 'name', 'code']],
+    'chapters' => [
         'id',
         'identifier',
         'order',
         'title',
-        'description',
         'duration',
-    'page_count',
-    'chapter_count',
-        'course_id',
-//        => ['id', 'name', 'title', 'subtitle', 'description', 'langs_ids'=> ['id', 'name', 'code']],
-        'chapters' => [
+        'description',
+        'page_count',
+        'pages' => [
             'id',
             'identifier',
             'order',
-            'title',
-            'duration',
-            'description',
-            'page_count',
-            'pages' => [
+            'next_active',
+            'next_active_rule',
+            'leaves' => [
                 'id',
                 'identifier',
                 'order',
-                'next_active',
-                'next_active_rule',
-                'leaves' => [
+                'visible',
+                'visibility_rule',
+                'background_image',
+                'background_stretch',
+                'background_opacity',
+                'contrast',
+                'groups' => [
                     'id',
                     'identifier',
                     'order',
+                    'direction',
+                    'row_span',
                     'visible',
                     'visibility_rule',
-                    'background_image',
-                    'background_stretch',
-                    'background_opacity',
-                    'contrast',
-                    'groups' => [
+                    'fixed',
+                    'widgets' => [
                         'id',
                         'identifier',
                         'order',
-                        'direction',
-                        'row_span',
-                        'visible',
-                        'visibility_rule',
-                        'fixed',
-                        'widgets' => [
-                            'id',
-                            'identifier',
-                            'order',
-                            'content',
-                            'type',
-                            'section_id',
-                            'image_url',
-                            'video_url',
-                            'sound_url',
-                            'has_separator_left',
-                            'has_separator_right',
-                            'align',
-                            'on_click'
-                        ]
+                        'content',
+                        'type',
+                        'section_id',
+                        'image_url',
+                        'video_url',
+                        'sound_url',
+                        'has_separator_left',
+                        'has_separator_right',
+                        'align',
+                        'on_click'
                     ]
-                ],
-                'sections' => [
+                ]
+            ],
+            'sections' => [
+                'id',
+                'identifier',
+                'order',
+                'pages' => [
                     'id',
                     'identifier',
                     'order',
-                    'pages' => [
+                    'next_active',
+                    'leaves' => [
                         'id',
                         'identifier',
                         'order',
-                        'next_active',
-                        'leaves' => [
+                        'visible',
+                        'background_image',
+                        'background_stretch',
+                        'background_opacity',
+                        'contrast',
+                        'groups' => [
                             'id',
                             'identifier',
                             'order',
+                            'direction',
+                            'row_span',
                             'visible',
-                            'background_image',
-                            'background_stretch',
-                            'background_opacity',
-                            'contrast',
-                            'groups' => [
+                            'fixed',
+                            'widgets' => [
                                 'id',
                                 'identifier',
                                 'order',
-                                'direction',
-                                'row_span',
-                                'visible',
-                                'fixed',
-                                'widgets' => [
-                                    'id',
-                                    'identifier',
-                                    'order',
-                                    'content',
-                                    'type',
-                                    'section_id',
-                                    'image_url',
-                                    'video_url',
-                                    'sound_url',
-                                    'has_separator_left',
-                                    'has_separator_right',
-                                    'align',
-                                    'on_click'
-                                ]
+                                'content',
+                                'type',
+                                'section_id',
+                                'image_url',
+                                'video_url',
+                                'sound_url',
+                                'has_separator_left',
+                                'has_separator_right',
+                                'align',
+                                'on_click'
                             ]
                         ]
                     ]
                 ]
             ]
-
         ]
-    ],
+
+    ]
+],
     $params['lang']
 )
-->adapt('json')
-->first(true);
+    ->adapt('json')
+    ->first(true);
 
-if(!$module) {
+if (!$module) {
     throw new Exception("unknown_entity", QN_ERROR_INVALID_PARAM);
 }
 
 $context->httpResponse()
-        ->body($module)
-        ->send();
+    ->body($module)
+    ->send();

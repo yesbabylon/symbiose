@@ -19,6 +19,7 @@ class BundleAttachment extends Model {
 
             'url' => [
                 'type'              => 'string',
+                'usage'             => 'uri/url',
                 'multilang'         => true
             ],
 

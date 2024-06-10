@@ -1,9 +1,6 @@
 {
-    "name": "Payment Deadlines",
-    "description": "This view is intended for displaying the list of payment deadlines.",
-    "access": {
-        "groups": ["sale.default.user"]
-     },
+    "name": "Terms",
+    "description": "Default listing of all terms.",
     "layout": {
         "items": [
             {
@@ -13,27 +10,27 @@
             },
             {
                 "type": "field",
-                "value": "payment_deadline_type",
+                "value": "organisation_id",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "delay_count",
+                "value": "publication_date",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "lang_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "document_id",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "delay_from_event",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "value": "delay_from_event_offset",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "value": "amount_share",
+                "value": "url",
                 "width": "20%"
             }
         ]

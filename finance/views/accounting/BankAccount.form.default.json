@@ -1,0 +1,92 @@
+{
+    "name": "Bank Account",
+    "description": "Default form for bank account.",
+    "access": {
+        "groups": ["finance.default.user"]
+     },
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "66%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "66%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label" : "Organisation",
+                                                "value": "organisation_id",
+                                                "readonly": true,
+                                                "width": "33%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "label": "General Info",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "40%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label" : "IBAN",
+                                                "value": "bank_account_iban",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label" : "BIC",
+                                                "value": "bank_account_bic",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "bank_country",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "bank_name",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

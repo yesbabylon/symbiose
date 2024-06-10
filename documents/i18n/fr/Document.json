@@ -3,82 +3,94 @@
     "plural": "Documents",
     "description": "Vue par défaut pour la liste des documents.",
     "model": {
-        "name":{
+        "name": {
             "label": "Nom",
             "description": "Nom du document.",
             "help": ""
         },
-        "data":{
-            "label":"Données",
-            "description":"Données binaires brutes du document.",
+        "data": {
+            "label": "Données",
+            "description": "Données binaires brutes du document.",
             "help": ""
         },
-        "type":{
-            "label":"Type de média",
-            "description":"Identifiant de format de données." ,
+        "type": {
+            "label": "Type de média",
+            "description": "Identifiant de format de données.",
             "help": ""
         },
-        "size":{
+        "size": {
             "label": "Taille",
             "description": "Taille du fichier (en octets).",
             "help": ""
         },
-        "readable_size":{
+        "readable_size": {
             "label": "Taille",
             "description": "Taille du document (format simplifié).",
             "help": ""
         },
-        "hash":{
+        "hash": {
             "label": "Clé",
-            "description": "Clé de hash unique du docyment.",
+            "description": "Clé de hash unique du document.",
             "help": ""
         },
         "link": {
             "label": "Lien",
             "description": "Lien direct du document.",
-            "help":""
+            "help": ""
         },
-        "public":{
+        "public": {
             "label": "Public",
             "description": "Le document est accessible par tous.",
             "help": ""
         },
-        "category_id":{
+        "lang_id": {
+            "label": "Langue",
+            "description": "Langue du document.",
+            "help": ""
+        },
+        "category_id": {
             "label": "Catégorie",
             "description": "Catégorie dans laquelle se trouve le document.",
             "help": ""
         },
-        "preview_image":{
+        "tags_ids": {
+            "label": "Étiquettes",
+            "description": "Étiquettes du document.",
+            "help": ""
+        },
+        "tags": {
+            "label": "Étiquettes",
+            "description": "Courte liste des étiquettes du document.",
+            "help": ""
+        },
+        "preview_image": {
             "label": "Aperçu",
             "description": "Vignette d'aperçu du document.",
             "help": ""
         },
-        "template_attachments_ids":{
+        "template_attachments_ids": {
             "label": "Pièces jointes",
             "description": "Pièces jointes utilisant le document.",
             "help": ""
-        }        
+        }
     },
     "view": {
         "form.default": {
             "name": "Document",
             "description": "",
             "layout": {
-                "section.document_info": {
-                    "label": "Infos Document"
+                "section.details": {
+                    "label": "Dètails"
                 },
-                "section.document_tag":{
+                "section.tags": {
                     "label": "Étiquettes"
-                },
-                "section.template_attachments":{
-                    "label": "Pièces jointes"
                 }
             }
         },
         "list.default": {
-            "name": "Liste des Documents",
+            "name": "Documents",
             "description": "Liste des documents.",
             "layout": {}
-            }
+        }
     }
 }

@@ -334,7 +334,7 @@
                                     "row_span": 1,
                                     "widgets": [
                                         {
-                                            "type": "notice",
+                                            "type": "text",
                                             "content": "Click on the 4 must knows:"
                                         }
                                     ]
@@ -654,7 +654,7 @@
                                     "row_span": 1,
                                     "widgets": [
                                         {
-                                            "type": "notice",
+                                            "type": "text",
                                             "content": "Click on the items to explore the various types of Insider Threats."
                                         }
                                     ]
@@ -884,7 +884,7 @@
                                     "row_span": 1,
                                     "widgets": [
                                         {
-                                            "type": "notice",
+                                            "type": "text",
                                             "content": "Click on the items to explore the Insider Threat data."
                                         }
                                     ]

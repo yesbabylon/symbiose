@@ -745,7 +745,7 @@
                                     "fixed": true,
                                     "widgets": [
                                         {
-                                            "type": "notice",
+                                            "type": "text",
                                             "content": "Browse through the 4 series of tips:"
                                         }
                                     ]

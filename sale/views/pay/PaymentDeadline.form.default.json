@@ -31,8 +31,7 @@
                                                 "width": "50%"
                                             },
                                             {
-                                                "type": "field",
-                                                "value": "is_balance_invoice",
+                                                "type": "label",
                                                 "width": "50%"
                                             },
                                             {

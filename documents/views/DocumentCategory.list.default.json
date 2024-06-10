@@ -6,19 +6,19 @@
             {
                 "type": "field",
                 "value": "name",
-                "width": "20%"
+                "width": "33%"
             },
             {
                 "type": "field",
                 "label": "Parent",
                 "value": "parent_id",
-                "width": "20%"
+                "width": "33%"
             },
             {
                 "type": "field",
                 "label": "Path",
                 "value": "path",
-                "width": "30%"
+                "width": "33%"
             }
         ]
     }

@@ -1,16 +1,16 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace sale\pay;
+
 use equal\orm\Model;
 
 class PaymentDeadline extends Model {
 
     public static function getColumns() {
-
         return [
 
             'name' => [
@@ -55,13 +55,6 @@ class PaymentDeadline extends Model {
                 'description'       => "Deadlines are installment except for last one, the final invoice."
             ],
 
-            'is_balance_invoice' => [
-                'type'              => 'boolean',
-                'default'           => false,
-                'description'       => "Mark invoice as the final balance invoice (no installment).",
-                'visible'           => ['type', '=', 'invoice']
-            ],
-
             'amount_share' => [
                 'type'              => 'float',
                 'usage'             => 'amount/percent',
@@ -71,11 +64,11 @@ class PaymentDeadline extends Model {
 
             'payment_plan_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\pay\PaymentPlan',
+                'foreign_object'    => 'sale\pay\FundingPlan',
                 'description'       => "The payment plan the deadline applies to.",
                 'ondelete'          => 'delete'
             ]
+
         ];
     }
-
 }

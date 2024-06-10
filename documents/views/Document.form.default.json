@@ -23,7 +23,13 @@
                                             {
                                                 "type": "field",
                                                 "value": "data",
-                                                "width": "100%"
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Language",
+                                                "value": "lang_id",
+                                                "width": "50%"
                                             }
                                         ]
                                     },
@@ -56,8 +62,8 @@
             {
                 "sections": [
                     {
-                        "label":"Document details",
-                        "id": "section.document_info",
+                        "id": "section.details",
+                        "label":"Details",
                         "rows": [
                             {
                                 "columns": [
@@ -96,8 +102,8 @@
                         ]
                     },
                     {
+                        "id": "section.tags",
                         "label":"Tags",
-                        "id": "section.document_tag",
                         "rows": [
                             {
                                 "columns": [
