@@ -17,17 +17,20 @@ list($params, $providers) = announce([
         'charset' => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers' => ['context', 'orm', 'auth']
+    'providers' => ['context', 'orm', 'auth'],
+    'constants' => ['ROOT_APP_URL'],
 ]);
 
 $pack = Course::search([['id', '=', 1]])->first();
 
 if (!$pack) {
+    $title = 'YesBabylon test pack';
     Course::create([
         'id' => 1,
-        'title' => 'YesBabylon test pack',
+        'title' => $title,
         'subtitle' => 'Découvrer notre pack de test',
-        'description' => 'lorem ipsum dolor sit amet babylon'
+        'description' => 'lorem ipsum dolor sit amet babylon',
+        'link' => constant('ROOT_APP_URL') . '/learning/' . $title
     ]);
 }
 
