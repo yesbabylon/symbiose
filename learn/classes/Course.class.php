@@ -37,16 +37,16 @@ class Course extends Model
                 'usage' => 'text/plain',
                 'multilang' => true
             ],
-//
-//            'link' => [
-//                'type' => 'computed',
-//                'description' => 'URL of the program page.',
-//                'function' => 'calcLink',
-//                'store' => true,
-//                'result_type' => 'string',
-//                'usage' => 'uri/url',
-//                'multilang' => true
-//            ],
+
+            'link' => [
+                'type' => 'computed',
+                'description' => 'URL of the program page.',
+                'function' => 'calcLink',
+                'store' => true,
+                'result_type' => 'string',
+                'usage' => 'uri/url',
+                'multilang' => true
+            ],
 
             'modules' => [
                 'type' => 'alias',
@@ -95,18 +95,17 @@ class Course extends Model
      * @param $lang
      * @return array
      */
-//    public static function calcLink(ObjectManager $om, array $oids, $lang): array
-//    {
-//        $result = [];
-//
-//        $courses = $om->read(__CLASS__, $oids, ['title'], $lang);
-//        $url = \config\constant('ROOT_APP_URL');
-//
-//        foreach ($courses as $oid => $course) {
-//            $result[$oid] = $url . '/learning/' . $course['title'];
-//        }
-//
-//        return $result;
-//    }
+    public static function calcLink(ObjectManager $om, array $oids, $lang): array
+    {
+        $result = [];
 
+        $courses = $om->read(__CLASS__, $oids, ['title'], $lang);
+        $url = \config\constant('ROOT_APP_URL');
+
+        foreach ($courses as $oid => $course) {
+            $result[$oid] = $url . '/#/learning/' . $course['title'];
+        }
+
+        return $result;
+    }
 }

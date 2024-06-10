@@ -68,6 +68,20 @@
                     "items": [
                       {
                         "type": "field",
+                        "value": "link",
+                        "width": "100%"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "columns": [
+                  {
+                    "width": "100%",
+                    "items": [
+                      {
+                        "type": "field",
                         "value": "description",
                         "width": "100%"
                       }

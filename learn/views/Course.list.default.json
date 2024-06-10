@@ -21,7 +21,12 @@
             {
                 "type": "field",
                 "value": "subtitle",
-                "width": "45%"
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "link",
+                "width": "20%"
             }
         ]
     }

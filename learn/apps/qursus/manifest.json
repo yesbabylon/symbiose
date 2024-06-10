@@ -1,13 +1,13 @@
 {
-    "name": "qursus",
+    "name": "qursus app",
     "description": "",
     "url": "/qursus",
     "icon": "school",
-    "color": "#29A1A1",
+    "color": "#C6742B",
     "access": {
         "groups": [
-            "users",
-            "admins"
+            "admins",
+            "users"
         ]
     },
     "show_in_apps": true
