@@ -30,7 +30,7 @@ if (!$pack) {
         'title' => $title,
         'subtitle' => 'Découvrer notre pack de test',
         'description' => 'lorem ipsum dolor sit amet babylon',
-        'link' => constant('ROOT_APP_URL') . '/learning/' . $title
+        'link' => constant('ROOT_APP_URL') . '/learning/#/' . $title
     ]);
 }
 

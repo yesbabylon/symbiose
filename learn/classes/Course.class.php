@@ -103,7 +103,7 @@ class Course extends Model
         $url = \config\constant('ROOT_APP_URL');
 
         foreach ($courses as $oid => $course) {
-            $result[$oid] = $url . '/#/learning/' . $course['title'];
+            $result[$oid] = $url . '/learning/#/' . $course['title'];
         }
 
         return $result;
