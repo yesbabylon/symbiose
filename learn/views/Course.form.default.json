@@ -1,178 +1,192 @@
 {
-  "name": "Course",
-  "description": "",
-  "layout": {
-    "groups": [
-      {
-        "sections": [
-          {
-            "rows": [
-              {
-                "columns": [
-                  {
-                    "width": "100%",
-                    "items": [
-                      {
-                        "type": "field",
-                        "value": "title",
-                        "width": "100%",
-                        "widget": {
-                          "heading": true
-                        }
-                      }
-                    ]
-                  }
+    "name": "Course",
+    "description": "",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "title",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 ]
-              }
-            ]
-          }
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.details",
+                        "label": "Details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "subtitle",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "view_link",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "edit_link",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.modules",
+                        "label": "Modules",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "modules_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.bundles",
+                        "label": "Bundles",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "bundles_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.quizzes",
+                        "label": "Quizzes",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "quizzes_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.langs",
+                        "label": "Languages",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "langs_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
         ]
-      },
-      {
-        "sections": [
-          {
-            "id": "section.details",
-            "label": "Details",
-            "rows": [
-              {
-                "columns": [
-                  {
-                    "width": "50%",
-                    "items": [
-                      {
-                        "type": "field",
-                        "value": "subtitle",
-                        "width": "100%"
-                      }
-                    ]
-                  },
-                  {
-                    "width": "50%",
-                    "items": [
-                      {
-                        "type": "field",
-                        "value": "name",
-                        "width": "100%",
-                        "widget": {
-                          "heading": true
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "columns": [
-                  {
-                    "width": "100%",
-                    "items": [
-                      {
-                        "type": "field",
-                        "value": "link",
-                        "width": "100%"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "columns": [
-                  {
-                    "width": "100%",
-                    "items": [
-                      {
-                        "type": "field",
-                        "value": "description",
-                        "width": "100%"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "id": "section.modules",
-            "label": "Modules",
-            "rows": [
-              {
-                "columns": [
-                  {
-                    "width": "100%",
-                    "items": [
-                      {
-                        "type": "field",
-                        "value": "modules_ids",
-                        "width": "100%"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "id": "section.bundles",
-            "label": "Bundles",
-            "rows": [
-              {
-                "columns": [
-                  {
-                    "width": "100%",
-                    "items": [
-                      {
-                        "type": "field",
-                        "value": "bundles_ids",
-                        "width": "100%"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "id": "section.quizzes",
-            "label": "Quizzes",
-            "rows": [
-              {
-                "columns": [
-                  {
-                    "width": "100%",
-                    "items": [
-                      {
-                        "type": "field",
-                        "value": "quizzes_ids",
-                        "width": "100%"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "id": "section.langs",
-            "label": "Languages",
-            "rows": [
-              {
-                "columns": [
-                  {
-                    "width": "100%",
-                    "items": [
-                      {
-                        "type": "field",
-                        "value": "langs_ids",
-                        "width": "100%"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+    }
 }

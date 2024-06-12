@@ -10,27 +10,44 @@ use learn\Widget;
 
 list($params, $providers) = announce([
     'description' => "",
-    'params' => [
+    'params'      => [
     ],
-    'response' => [
-        'content-type' => 'application/json',
-        'charset' => 'utf-8',
+    'response'    => [
+        'content-type'  => 'application/json',
+        'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers' => ['context', 'orm', 'auth'],
-    'constants' => ['ROOT_APP_URL'],
+    'providers'   => ['context',
+        'orm',
+        'auth'],
 ]);
 
-$pack = Course::search([['id', '=', 1]])->first();
+$pack = Course::search([['id',
+    '=',
+    1]])->first();
 
 if (!$pack) {
-    $title = 'YesBabylon test pack';
+    $createSlug = function ($title) {
+        // Convert the title to lowercase
+        $slug = strtolower($title);
+
+        // Replace any non-alphanumeric characters (except for hyphens) with spaces
+        $slug = preg_replace('/[^a-z0-9-]+/', ' ', $slug);
+
+        // Replace spaces with hyphens
+        $slug = str_replace(' ', '-', $slug);
+
+        // Remove any leading or trailing hyphens
+        return trim($slug, '-');
+    };
+
+    $title = $createSlug('YesBabylon test pack');
+
     Course::create([
-        'id' => 1,
-        'title' => $title,
-        'subtitle' => 'Découvrer notre pack de test',
+        'id'          => 1,
+        'title'       => $title,
+        'subtitle'    => 'Découvrer notre pack de test',
         'description' => 'lorem ipsum dolor sit amet babylon',
-        'link' => constant('ROOT_APP_URL') . '/learning/#/' . $title
     ]);
 }
 
@@ -41,19 +58,19 @@ for ($i = 1; $i <= 8; $i++) {
     $module = json_decode($data, true);
 
     $oModule = Module::create([
-        'identifier' => $module['identifier'],
-        'title' => $module['title'],
+        'identifier'  => $module['identifier'],
+        'title'       => $module['title'],
         'description' => $module['description'],
-        'duration' => $module['duration'],
-        'course_id' => 1,
-        'order' => $module['identifier']
+        'duration'    => $module['duration'],
+        'course_id'   => 1,
+        'order'       => $module['identifier']
     ])->first();
 
     foreach ($module['chapters'] as $chapter_index => $chapter) {
         $oChapter = Chapter::create([
             'identifier' => $chapter_index + 1,
-            'title' => $chapter['title'],
-            'module_id' => $oModule['id']
+            'title'      => $chapter['title'],
+            'module_id'  => $oModule['id']
         ])->first();
 
         foreach ($chapter['pages'] as $page_index => $page) {
