@@ -1,0 +1,61 @@
+{
+    "name": "Modèle de service",
+    "plural": "Modèles de services",
+    "description": "Vue par défaut pour la liste des modèles de services",
+    "model": {
+        "name":{
+            "label": "Nom",
+            "description": "Nom du modèle de service .",
+            "help": ""
+        },
+        "description":{
+            "label": "Description",
+            "description": "Description du modèle de service .",
+            "help": ""
+        },
+        "has_subscription": {
+            "label": "Abonnement?",
+            "description": "Le modèle de service a-t-il un abonnement?",
+            "help": ""
+        },
+        "has_external_provider":{
+            "label": "Fournisseur externe?",
+            "description": "Le modèle de service  a un fournisseur externe?.",
+            "help": ""
+        },
+        "is_billable": {
+            "label": "Est-il facturable?",
+            "description": "Le modèle de service  est facturable?",
+            "help": ""
+        },
+        "is_auto_renew": {
+            "label": "Est-il renouvelle?",
+            "description": "Le modèle de service se renouvelle-t-il automatiquement ?",
+            "help": ""
+        },
+        "service_provider_id":{
+            "label": "Fournisseur de service",
+            "description": "Fournisseur du modèle de service.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Service Model",
+            "description": "",
+            "layout": {
+                "section.info":{
+                    "label": "Infos sur le modèle de service"
+                },
+                "section.services":{
+                    "label": "Services"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Liste des modèles de services",
+            "description": "Liste des modèles de services.",
+            "layout": {}
+        }
+    }
+}

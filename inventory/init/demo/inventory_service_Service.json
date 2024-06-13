@@ -5,50 +5,43 @@
         "data": [
             {
                 "id": 1,
-                "name": "Google Analytics account",
+                "service_model_id": 1,
                 "has_subscription": true,
                 "is_billable": true,
                 "is_auto_renew": true,
-                "product_id": 1,
-                "has_external_provider": true,
-                "service_provider_id": 1101
+                "product_id": 1
             },
             {
                 "id": 2,
-                "name": "Microsoft 365 account",
+                "service_model_id": 2,
                 "has_subscription": true,
-                "is_billable": true,
-                "is_auto_renew": false,
-                "product_id": 1,
-                "has_external_provider": true,
-                "service_provider_id": 1102
+                "is_billable": false,
+                "is_auto_renew": true,
+                "product_id": 1
             },
             {
                 "id": 3,
-                "name": "Wordpress multilang",
+                "service_model_id": 3,
                 "has_subscription": true,
-                "is_billable": true,
+                "is_billable": false,
                 "is_auto_renew": true,
-                "product_id": 1,
-                "has_external_provider": false
+                "product_id": 1
             },
             {
                 "id": 4,
-                "name": "Services FPDF",
+                "service_model_id": 4,
                 "has_subscription": true,
                 "is_billable": true,
-                "is_auto_renew": true,
-                "product_id": 3,
-                "has_external_provider": false
+                "is_auto_renew": false,
+                "product_id": 3
             },
             {
                 "id": 5,
-                "name": "services calendar",
+                "service_model_id": 5,
                 "has_subscription": true,
                 "is_billable": true,
-                "is_auto_renew": true,
-                "product_id": 4,
-                "has_external_provider": false
+                "is_auto_renew": false,
+                "product_id": 4
             }
         ]
     }

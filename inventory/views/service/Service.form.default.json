@@ -19,6 +19,12 @@
                                                 "widget": {
                                                     "heading": true
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "service_model_id",
+                                                "label": "Service Model",
+                                                "width": "60%"
                                             }
                                         ]
                                     },

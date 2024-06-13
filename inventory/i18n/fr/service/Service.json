@@ -13,6 +13,11 @@
             "description": "Description du service.",
             "help": ""
         },
+        "service_model_id":{
+            "label": "Modèle de service",
+            "description": "Le modèle de service.",
+            "help": ""
+        },
         "has_subscription": {
             "label": "Abonnement?",
             "description": "Le service a-t-il un abonnement?",
@@ -40,7 +45,7 @@
         },
         "service_provider_id":{
             "label": "Fournisseur de service",
-            "description": "Fournisseur de service du service.",
+            "description": "Fournisseur de service.",
             "help": ""
         },
         "product_id":{
