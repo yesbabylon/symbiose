@@ -20,8 +20,13 @@
             },
             {
                 "type": "field",
-                "value": "subtitle",
-                "width": "45%"
+                "value": "view_link",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "edit_link",
+                "width": "20%"
             }
         ]
     }

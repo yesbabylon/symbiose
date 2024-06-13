@@ -39,6 +39,7 @@ $data = Course::search(['id', '=', $params['course_id']])->read([
     'subtitle',
     'description',
     'langs_ids' => ['id', 'name', 'code'],
+    'creator',
     'modules' => [
         'id',
         'identifier',
