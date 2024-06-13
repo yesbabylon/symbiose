@@ -75,7 +75,7 @@ if (!$chapter) {
 
 $status_ids = UserStatus::search([['user_id', '=', $user_id], ['module_id', '=', $params['module_id']]])->ids();
 
-if (!count($status_ids)) {
+if (count($status_ids) < 1) {
     // first status recording for user_id: module_id
     UserStatus::create([
         'user_id' => $user_id,

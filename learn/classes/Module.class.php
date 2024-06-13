@@ -18,102 +18,109 @@ class Module extends Model
     {
         return [
             'identifier' => [
-                'type' => 'integer',
+                'type'        => 'integer',
                 'description' => 'Unique identifier the module within the course.',
-                'default' => 1
+                'default'     => 1
             ],
 
             'order' => [
-                'type' => 'integer',
+                'type'        => 'integer',
                 'description' => 'Position of the module in the course.'
             ],
 
             'name' => [
-                'type' => 'alias',
+                'type'  => 'alias',
                 'alias' => 'title'
             ],
 
             'title' => [
-                'type' => 'string',
-                'required' => true,
+                'type'        => 'string',
+                'required'    => true,
                 'description' => "Description of the module as presented to user.",
-                'multilang' => true
+                'multilang'   => true
             ],
 
             'link' => [
-                'type' => 'computed',
+                'type'        => 'computed',
                 'description' => "URL to visual editor of the module.",
-                'function' => 'calcLink',
+                'function'    => 'calcLink',
                 'result_type' => 'string',
-                'usage' => 'uri/url',
-                'store' => true,
-                'multilang' => true
+                'usage'       => 'uri/url',
+                'store'       => true,
+                'multilang'   => true
             ],
 
             'page_count' => [
-                'type' => 'computed',
+                'type'        => 'computed',
                 'description' => "Total amount of pages in the module.",
-                'function' => 'calcPageCount',
+                'function'    => 'calcPageCount',
                 'result_type' => 'integer',
-                'store' => true
+                'store'       => true
             ],
 
             'chapter_count' => [
-                'type' => 'computed',
+                'type'        => 'computed',
                 'description' => "Total amount of chapters in the module.",
-                'function' => 'calcChapterCount',
+                'function'    => 'calcChapterCount',
                 'result_type' => 'integer',
-                'store' => true
+                'store'       => true
             ],
 
             'description' => [
-                'type' => 'string',
-                'usage' => 'text/plain',
+                'type'      => 'string',
+                'usage'     => 'text/plain',
                 'multilang' => true
             ],
 
             'duration' => [
-                'type' => 'computed',
+                'type'        => 'computed',
                 'description' => "Total duration of chapters in the module.",
-                'function' => 'calcChaptersDuration',
+                'function'    => 'calcChaptersDuration',
                 'result_type' => 'integer'
             ],
 
             'chapters' => [
-                'type' => 'alias',
+                'type'  => 'alias',
                 'alias' => 'chapters_ids'
             ],
 
             'chapters_ids' => [
-                'type' => 'one2many',
+                'type'           => 'one2many',
                 'foreign_object' => 'learn\Chapter',
-                'foreign_field' => 'module_id',
-                'order' => 'order',
-                'sort' => 'asc',
-                'ondetach' => 'delete',
-                'onupdate' => 'onupdateChaptersIds'
+                'foreign_field'  => 'module_id',
+                'order'          => 'order',
+                'sort'           => 'asc',
+                'ondetach'       => 'delete',
+                'onupdate'       => 'onupdateChaptersIds'
             ],
 
             'course_id' => [
-                'type' => 'many2one',
+                'type'           => 'many2one',
                 'foreign_object' => 'learn\Course',
-                'description' => 'Course the module relates to.',
-                'ondelete' => 'cascade'         // delete module when parent course is deleted
+                'description'    => 'Course the module relates to.',
+                'ondelete'       => 'cascade'
+                // delete module when parent course is deleted
             ]
         ];
     }
 
-    public static function calcLink($om, $oids, $lang): array
+    public static function calcLink(ObjectManager $om, $oids, $lang): array
     {
         $result = [];
 
         foreach ($oids as $oid) {
-            $url = \config\constant('ROOT_APP_URL');
-            $result[$oid] = $url . '/qursus' . '?mode=edit&module=' . $oid . '&lang=' . $lang;
+            $course_id = $om->read(__CLASS__, $oid, ['course_id'], $lang)['course_id'];
+            $course_title = $om->read('learn\Course', $course_id, ['title'], $lang)['title'];
+            $result[$oid] =
+                '/learning/#/course/' . Course::formatLinkIdNumber($course_id) .
+                '/' . Course::createSlug($course_title) .
+                '?mode=edit&module=' . $oid .
+                '&lang=' . $lang;
         }
 
         return $result;
     }
+
 
     public static function calcPageCount($om, $oids, $lang)
     {

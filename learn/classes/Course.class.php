@@ -115,7 +115,7 @@ class Course extends Model
         foreach ($courses as $oid => $course) {
             $id = self::formatLinkIdNumber($course['id']);
             $title = self::createSlug($course['title']);
-            
+
             $result[$oid] = '/learning/#/course/' . $id . '/' . $title;
         }
 
@@ -153,7 +153,7 @@ class Course extends Model
      * @param $title
      * @return string
      */
-    private static function createSlug($title): string
+    public static function createSlug($title): string
     {
         // Convert the title to lowercase
         $slug = strtolower($title);
