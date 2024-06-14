@@ -1,124 +1,121 @@
 {
-  "name": "Module",
-  "description": "",
-  "layout": {
-    "groups": [
-      {
-        "sections": [
-          {
-            "rows": [
-              {
-                "columns": [
-                  {
-                    "width": "100%",
-                    "items": [
-                      {
-                        "type": "field",
-                        "value": "title",
-                        "width": "100%",
-                        "widget": {
-                          "heading": true
-                        }
-                      }
-                    ]
-                  }
+    "name": "Module",
+    "description": "",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "title",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "identifier",
+                                                "width": "33%",
+                                                "widget": {
+                                                    "min": 0
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "order",
+                                                "width": "33%",
+                                                "widget": {
+                                                    "min": 0
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "duration",
+                                                "width": "33%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 ]
-              },
-              {
-                "columns": [
-                  {
-                    "width": "100%",
-                    "items": [
-                      {
-                        "type": "field",
-                        "value": "identifier",
-                        "width": "33%",
-                        "widget": {
-                          "min": 0
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "value": "order",
-                        "width": "33%",
-                        "widget": {
-                          "min": 0
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "value": "duration",
-                        "width": "33%"
-                      }
-                    ]
-                  }
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.details",
+                        "label": "Details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "link",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.chapters",
+                        "label": "Chapters",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "chapters_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 ]
-              }
-            ]
-          }
+            }
         ]
-      },
-      {
-        "sections": [
-          {
-            "id": "section.details",
-            "label": "Details",
-            "rows": [
-              {
-                "columns": [
-                  {
-                    "width": "100%",
-                    "items": [
-                      {
-                        "type": "field",
-                        "value": "link",
-                        "width": "100%",
-                        "widget": {
-                          "readonly": true
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "columns": [
-                  {
-                    "width": "100%",
-                    "items": [
-                      {
-                        "type": "field",
-                        "value": "description",
-                        "width": "100%"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "id": "section.chapters",
-            "label": "Chapters",
-            "rows": [
-              {
-                "columns": [
-                  {
-                    "width": "100%",
-                    "items": [
-                      {
-                        "type": "field",
-                        "value": "chapters_ids",
-                        "width": "100%"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+    }
 }

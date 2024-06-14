@@ -32,17 +32,22 @@
                       {
                         "type": "field",
                         "value": "identifier",
-                        "width": "33%"
+                        "width": "25%"
+                      },
+                      {
+                        "type": "field",
+                        "value": "order",
+                        "width": "25%"
                       },
                       {
                         "type": "field",
                         "value": "duration",
-                        "width": "33%"
+                        "width": "25%"
                       },
                       {
                         "type": "field",
                         "value": "page_count",
-                        "width": "33%"
+                        "width": "25%"
                       }
                     ]
                   }
