@@ -1,0 +1,50 @@
+[
+    {
+        "name": "inventory\\service\\ServiceModel",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "Google Analytics account",
+                "has_subscription": true,
+                "is_billable": true,
+                "is_auto_renew": true,
+                "has_external_provider": true,
+                "service_provider_id": 1101
+            },
+            {
+                "id": 2,
+                "name": "Microsoft 365 account",
+                "has_subscription": true,
+                "is_billable": true,
+                "is_auto_renew": false,
+                "has_external_provider": true,
+                "service_provider_id": 1102
+            },
+            {
+                "id": 3,
+                "name": "Wordpress multilang",
+                "has_subscription": true,
+                "is_billable": true,
+                "is_auto_renew": true,
+                "has_external_provider": false
+            },
+            {
+                "id": 4,
+                "name": "Services FPDF",
+                "has_subscription": true,
+                "is_billable": true,
+                "is_auto_renew": true,
+                "has_external_provider": false
+            },
+            {
+                "id": 5,
+                "name": "services calendar",
+                "has_subscription": true,
+                "is_billable": true,
+                "is_auto_renew": true,
+                "has_external_provider": false
+            }
+        ]
+    }
+]

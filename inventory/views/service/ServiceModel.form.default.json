@@ -1,6 +1,6 @@
 {
-    "name": "Service",
-    "description": "Creation form for Service.",
+    "name": "Service Model",
+    "description": "Creation form for Service Model.",
     "layout": {
         "groups": [
             {
@@ -10,39 +10,30 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "66%",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "60%",
+                                                "width": "33%",
                                                 "widget": {
                                                     "heading": true
                                                 }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "service_model_id",
-                                                "label": "Service Model",
-                                                "width": "60%"
-                                            }
-
-                                        ]
-                                    },
-                                    {
-                                        "id": "column.product",
-                                        "width": "33%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "product_id",
-                                                "label": "Product",
-                                                "width": "100%"
                                             }
                                         ]
                                     }
                                 ]
-                            },
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.info",
+                        "label": "General Info",
+                        "rows": [
                             {
                                 "columns": [
                                     {
@@ -58,26 +49,6 @@
                                                 "type": "field",
                                                 "value": "service_provider_id",
                                                 "label": "Provider",
-                                                "width": "50%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "id": "column.product-details",
-                                        "width": "33%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "is_internal",
-                                                "label": "Is internal",
-                                                "readonly": true,
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "customer_id",
-                                                "label": "Customer",
-                                                "readonly": true,
                                                 "width": "50%"
                                             }
                                         ]
@@ -145,6 +116,28 @@
                                             {
                                                 "type": "field",
                                                 "value": "description",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.services",
+                        "label": "Services",
+                        "visible": ["state", "<>", "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "services_ids",
                                                 "width": "100%"
                                             }
                                         ]
