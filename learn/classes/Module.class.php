@@ -10,6 +10,7 @@ namespace learn;
 use equal\orm\Collection;
 use equal\orm\Model;
 use equal\orm\ObjectManager;
+use Exception;
 
 class Module extends Model
 {
@@ -103,20 +104,20 @@ class Module extends Model
 		];
 	}
 
-	public static function calcLink(ObjectManager $om, $oids, $lang): array
+	/**
+	 * @throws Exception
+	 */
+	public static function calcLink(Collection $self, ObjectManager $om, $lang): array
 	{
 		$result = [];
 
-		foreach ($oids as $oid) {
-			$course_id = ($om->read(__CLASS__, $oid, ['course_id'], $lang))['course_id'];
+		$self->read(['course_id']);
 
-			$course_title = $om->read('learn\Course', $course_id, ['title'], $lang)['title'];
-			$result[$oid] =
-				'/learning/#/course/' . Course::formatLinkIdNumber($course_id) .
-				'/' . Course::createSlug($course_title) .
-				'?mode=edit' .
-				'&module=' . $oid .
-				'&lang=' . $lang;
+		foreach ($self as $id => $module) {
+
+			$course_id = $module['course_id'];
+			$course_title = $om->read('learn\Course', $module['course_id'], ['title'], $lang)['title'];
+			$result[$id] = '/learning/#/course/' . Course::formatLinkIdNumber($course_id) . '/' . Course::createSlug($course_title) . '?mode=edit' . '&module=' . $id . '&lang=' . $lang;
 		}
 
 		return $result;
@@ -140,14 +141,14 @@ class Module extends Model
 		return $result;
 	}
 
-	public static function calcChapterCount($om, $oids, $lang)
+	public static function calcChapterCount(Collection $self)
 	{
 		$result = [];
 
-		$modules = $om->read(__CLASS__, $oids, ['chapters_ids'], $lang);
+		$self->read(['chapters_ids']);
 
-		foreach ($modules as $oid => $module) {
-			$result[$oid] = count($module['chapters_ids']);
+		foreach ($self as $id => $module) {
+			$result[$id] = count($module['chapters_ids']);
 		}
 
 		return $result;
@@ -178,5 +179,6 @@ class Module extends Model
 
 		return $result;
 	}
+
 
 }
