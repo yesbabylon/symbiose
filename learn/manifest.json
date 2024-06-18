@@ -16,10 +16,11 @@
     "apps": [
         {
             "id": "courses",
-            "name": "learn",
+            "name": "Learn",
             "extends": "app",
             "description": "Courses management.",
             "icon": "school",
+            "color": "#004d95",
             "access": {
                 "groups": [
                     "admins"
