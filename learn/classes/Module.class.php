@@ -114,9 +114,8 @@ class Module extends Model
 		$self->read(['course_id']);
 
 		foreach ($self as $id => $module) {
-
 			$course_id = $module['course_id'];
-			$course_title = $om->read('learn\Course', $module['course_id'], ['title'], $lang)['title'];
+			$course_title = $om->read('learn\Course', $course_id, ['title'], $lang)[$course_id]['title'];
 			$result[$id] = '/learning/#/course/' . Course::formatLinkIdNumber($course_id) . '/' . Course::createSlug($course_title) . '?mode=edit' . '&module=' . $id . '&lang=' . $lang;
 		}
 
