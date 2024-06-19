@@ -31,7 +31,7 @@ class PaymentTerms extends Model {
                 'type'              => 'string',
                 'description'       => 'Description of the terms (1 sentence, displayed in docs).',
                 'multilang'         => true,
-                'required'          => true                
+                'required'          => true
             ],
 
             'delay_from' => [

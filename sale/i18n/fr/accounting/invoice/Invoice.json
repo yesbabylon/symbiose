@@ -49,7 +49,14 @@
                     "label": "Imprimer facture groupée"
                 }
             },
-            "layout": {}
+            "layout": {
+                "sections.invoice.lines": {
+                    "label": "Lignes de facture"
+                },
+                "sections.invoice.entries": {
+                    "label": "Écritures comptables"
+                }
+            }
         },
         "list.default": {
             "name": "Factures",

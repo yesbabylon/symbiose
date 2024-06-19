@@ -19,7 +19,7 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "66%",
                                         "items": [
                                             {
                                                 "type": "field",
@@ -33,11 +33,29 @@
                                                 "widget": {
                                                     "heading": true
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "customer_id",
+                                                "label": "Customer",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "receivables_queue_id",
+                                                "label": "Receivable queue",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date",
+                                                "label": "Date",
+                                                "width": "33%"
                                             }
                                         ]
                                     },
                                     {
-                                        "width": "30%",
+                                        "width": "10%",
                                         "items": []
                                     },
                                     {
@@ -47,48 +65,8 @@
                                                 "type": "field",
                                                 "value": "price",
                                                 "label": "Total inc. VAT",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "heading": true
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "50%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "customer_id",
-                                                "label": "Customer",
-                                                "width": "50%"
+                                                "width": "100%"
                                             },
-                                            {
-                                                "type": "field",
-                                                "value": "receivables_queue_id",
-                                                "label": "Receivable queue",
-                                                "width": "50%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "30%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "date",
-                                                "label": "Date",
-                                                "width": "50%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "20%",
-                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "invoice_id",

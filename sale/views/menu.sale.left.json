@@ -512,19 +512,6 @@
                         "description": "Settings payments parent menu.",
                         "children": [
                             {
-                                "id": "settings.payment.deadline",
-                                "type": "entry",
-                                "label": "Deadline",
-                                "icon": "alarm",
-                                "description": "Display all payments deadlines.",
-                                "context": {
-                                    "entity": "sale\\pay\\PaymentDeadline",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            },
-                            {
                                 "id": "settings.payment.funding.plans",
                                 "type": "entry",
                                 "label": "Funding plans",
@@ -540,7 +527,7 @@
                             {
                                 "id": "settings.payment.terms",
                                 "type": "entry",
-                                "label": "Terms",
+                                "label": "Payment terms",
                                 "icon": "analytics",
                                 "description": "Display all payments terms.",
                                 "context": {

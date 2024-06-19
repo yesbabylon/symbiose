@@ -68,7 +68,7 @@
         },
         "due_date": {
             "label": "Échéance",
-            "description": "Date limité avant laquelle le montant est dû.",
+            "description": "Date limite pour laquelle le montant est dû.",
             "help": ""
         },
         "invoice_lines_ids": {
@@ -85,7 +85,7 @@
             "label": "Note de crédit",
             "description": "La note de crédit associée à la facture.",
             "help": ""
-        }        
+        }
     },
     "view": {
         "form.default": {
