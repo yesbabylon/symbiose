@@ -55,11 +55,11 @@
                                         ]
                                     },
                                     {
-                                        "width": "10%",
+                                        "width": "16%",
                                         "items": []
                                     },
                                     {
-                                        "width": "20%",
+                                        "width": "16%",
                                         "items": [
                                             {
                                                 "type": "field",
