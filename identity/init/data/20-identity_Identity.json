@@ -1,0 +1,23 @@
+[
+    {
+        "name": "identity\\Identity",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "type_id": 3,
+                "legal_name": "Your company name Inc.",
+                "short_name": "Your company",
+                "has_parent": false,
+                "is_organisation": true,
+                "organisation_id": 1
+            },
+            {
+                "id": 2,
+                "type_id": 1,
+                "firstname": "John",
+                "lastname": "Doe"
+            }
+        ]
+    }
+]
