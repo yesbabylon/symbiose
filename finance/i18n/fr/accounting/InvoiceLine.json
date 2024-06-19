@@ -59,8 +59,8 @@
             "help": ""
         },
         "receivable_id": {
-            "label": "Percevable",
-            "description": "Le percevable qui a généré la ligne de facture.",
+            "label": "Créance",
+            "description": "La créance qui a généré la ligne de facture.",
             "help": ""
         }
     },

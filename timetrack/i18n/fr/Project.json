@@ -24,8 +24,8 @@
             "help": ""
         },
         "receivable_queue_id": {
-            "label": "File d'attente des percevables",
-            "description": "La file d'attente des percevables à utiliser pour les percevables générés par les saisies de temps du projet.",
+            "label": "File d'attente des créances",
+            "description": "La file d'attente des créances à utiliser pour les créances générés par les saisies de temps du projet.",
             "help": ""
         }
     },

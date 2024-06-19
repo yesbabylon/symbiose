@@ -28,7 +28,7 @@
             }
         },
         "has_receivable": {
-            "label": "A un percevable"
+            "label": "A une créance"
         },
         "is_billable": {
             "label": "Est facturée"

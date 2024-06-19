@@ -60,7 +60,7 @@
         },
         "ref_account": {
             "label": "Compte de référence",
-            "description": "IBAN arbitraire associé au client.",
+            "description": "Référence du compte client dans un éventuel logiciel comptable externe.",
             "help": ""
         },
         "is_tour_operator": {
