@@ -104,9 +104,7 @@ class Invoice extends Model {
 
             'emission_date' => [
                 'type'              => 'datetime',
-                'description'       => 'Emission date of the invoice.',
-                'help'              => 'Is set when the invoice change status from proforma to invoice.',
-                'dependencies'      => ['invoice_number']
+                'description'       => 'Date at which the invoice was emitted.'
             ],
 
             'due_date' => [

@@ -88,6 +88,13 @@ class Invoice extends \finance\accounting\Invoice {
                 'instant'           => true
             ],
 
+            'emission_date' => [
+                'type'              => 'datetime',
+                'description'       => 'Reference date for computing the due date.',
+                'help'              => 'This value can be changed while the invoice is `proforma`, but cannot be changed afterward (once emitted).',
+                'default'           => function() { return time(); },
+            ],
+
             'due_date' => [
                 'type'              => 'computed',
                 'result_type'       => 'date',
@@ -259,6 +266,8 @@ class Invoice extends \finance\accounting\Invoice {
         $result = [];
         $self->read(['emission_date', 'payment_terms_id' => ['delay_from', 'delay_count']]);
         foreach($self as $id => $invoice) {
+            $result[$id] = strtotime('+1 month');
+
             if(!isset($invoice['emission_date'], $invoice['payment_terms_id']['delay_from'], $invoice['payment_terms_id']['delay_count'])) {
                 continue;
             }
