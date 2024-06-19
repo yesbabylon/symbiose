@@ -45,11 +45,10 @@ class Invoice extends Model {
                 'type'              => 'string',
                 'description'       => 'Current status of the invoice.',
                 'selection'         => [
-                    'proforma',             // draft invoice (no number yet)
                     'invoice',              // final invoice (with unique number and accounting entries)
                     'cancelled'             // the invoice has been cancelled (through reversing entries)
                 ],
-                'default'           => 'proforma'
+                'default'           => 'invoice'
             ],
 
             'invoice_type' => [
@@ -69,7 +68,7 @@ class Invoice extends Model {
                     'sell',
                     'buy'
                 ],
-                'default'          => 'sell'
+                'default'          => 'buy'
             ],
 
             'invoice_number' => [
@@ -163,27 +162,6 @@ class Invoice extends Model {
         ];
     }
 
-    public static function getPolicies(): array {
-        return [
-            'can-be-invoiced' => [
-                'description' => 'Verifies that the proforma can be invoiced.',
-                'function'    => 'policyCanBeInvoiced'
-            ]
-        ];
-    }
-
-    public static function policyCanBeInvoiced($self): array {
-        $result = [];
-        $self->read(['invoice_lines_ids']);
-        foreach($self as $id => $invoice) {
-            if(count($invoice['invoice_lines_ids']) === 0) {
-                $result[$id] = false;
-            }
-        }
-
-        return $result;
-    }
-
     public static function getWorkflow() {
         return [
             'proforma' => [
@@ -249,54 +227,4 @@ class Invoice extends Model {
         return $result;
     }
 
-    /**
-     * Check whether an object can be updated, and perform some additional operations if necessary.
-     * This method can be overridden to define a more precise set of tests.
-     *
-     * @param  \equal\orm\ObjectManager   $om         ObjectManager instance.
-     * @param  array                      $oids       List of objects identifiers.
-     * @param  array                      $values     Associative array holding the new values to be assigned.
-     * @param  string                     $lang       Language in which multilang fields are being updated.
-     * @return array                      Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
-     */
-    public static function canupdate($om, $oids, $values, $lang = 'en') {
-        $res = $om->read(self::getType(), $oids, ['status']);
-
-        if($res > 0) {
-            foreach($res as $oid => $odata) {
-                if($odata['status'] == 'invoice') {
-                    if(!isset($values['status']) || !in_array($values['status'], ['invoice', 'cancelled'])) {
-                        // only allow editable fields
-                        $editable_fields = ['payment_status'];
-                        $sale_editable_fields = ['customer_ref']; // Editable fields of sale\accounting\Invoice
-
-                        if( count(array_diff(array_keys($values), array_merge($editable_fields, $sale_editable_fields))) ) {
-                            return ['status' => ['non_editable' => 'Invoice can only be updated while its status is proforma.']];
-                        }
-                    }
-                }
-            }
-        }
-        return parent::canupdate($om, $oids, $values, $lang);
-    }
-
-    /**
-     * Check whether the invoice can be deleted.
-     *
-     * @param  \equal\orm\ObjectManager    $om         ObjectManager instance.
-     * @param  array                       $oids       List of objects identifiers.
-     * @return array                       Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
-     */
-    public static function candelete($om, $oids) {
-        $res = $om->read(get_called_class(), $oids, ['status']);
-
-        if($res > 0) {
-            foreach($res as $oid => $odata) {
-                if($odata['status'] != 'proforma') {
-                    return ['status' => ['non_removable' => 'Invoice can only be deleted while its status is proforma.']];
-                }
-            }
-        }
-        return parent::candelete($om, $oids);
-    }
 }

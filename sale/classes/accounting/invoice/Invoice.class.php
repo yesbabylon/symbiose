@@ -36,6 +36,36 @@ class Invoice extends \finance\accounting\Invoice {
                 'default'           => 1
             ],
 
+            'status' => [
+                'type'              => 'string',
+                'description'       => 'Current status of the invoice.',
+                'selection'         => [
+                    'proforma',             // draft invoice (no number yet)
+                    'invoice',              // final invoice (with unique number and accounting entries)
+                    'cancelled'             // the invoice has been cancelled (through reversing entries)
+                ],
+                'default'           => 'proforma'
+            ],
+
+            'reversed_invoice_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\accounting\invoice\Invoice',
+                'description'       => 'Credit note that was created for cancelling the invoice, if any.',
+                'visible'           => ['status', '=', 'cancelled']
+            ],
+
+            'is_deposit' => [
+                'type'              => 'boolean',
+                'description'       => 'Marks the invoice as a deposit invoice relating to a downpayment (funding).',
+                'default'           => false
+            ],
+
+            'funding_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\pay\Funding',
+                'description'       => 'The funding related to the invoice.'
+            ],
+
             'invoice_purpose' => [
                 'type'              => 'string',
                 'description'       => 'Is the invoice concerning a sale to a customer or a buy from a supplier.',
@@ -101,24 +131,82 @@ class Invoice extends \finance\accounting\Invoice {
                 'description'       => 'Reference that must appear on invoice (requested by customer).'
             ],
 
-            'is_deposit' => [
-                'type'              => 'boolean',
-                'description'       => 'Marks the invoice as a deposit one, relating to a downpayment.',
-                'default'           => false
-            ],
-
             'payment_terms_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\PaymentTerms',
                 'description'       => 'The payment terms to apply to the invoice.',
                 'default'           => 1
-            ],
-
-            'funding_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\pay\Funding',
-                'description'       => 'The funding related to the invoice.'
             ]
+
+        ];
+    }
+
+    public static function getPolicies(): array {
+        return [
+            'can-be-invoiced' => [
+                'description' => 'Verifies that the proforma can be invoiced.',
+                'function'    => 'policyCanBeInvoiced'
+            ]
+        ];
+    }
+
+    public static function policyCanBeInvoiced($self): array {
+        $result = [];
+        $self->read(['invoice_lines_ids']);
+        foreach($self as $id => $invoice) {
+            if(count($invoice['invoice_lines_ids']) === 0) {
+                $result[$id] = false;
+            }
+        }
+
+        return $result;
+    }
+
+    public static function getWorkflow() {
+        return [
+            'proforma' => [
+                'description' => 'Draft invoice, still waiting to be completed and for customer approval.',
+                'icon' => 'edit',
+                'transitions' => [
+                    'invoice' => [
+                        'description' => 'Update the invoice status based on the `invoice` field.',
+                        'help'        => 'The `invoice` field is set by a dedicated controller that manages invoice approval requests.',
+                        'policies'    => [
+                            'can-be-invoiced',
+                        ],
+                        'onbefore'  => 'onbeforeInvoice',
+                        'onafter'   => 'onafterInvoice',
+                        'status'    => 'invoice',
+                    ],
+                    'cancel-proforma' => [
+                        'description' => 'Delete the proforma and set receivables statuses back to pending.',
+                        'onafter' => 'onafterCancelProforma',
+                        'status'  => 'proforma',
+                    ]
+                ],
+            ],
+            'invoice' => [
+                'description' => 'Invoice can no longer be modified and can be sent to the customer.',
+                'icon' => 'receipt_long',
+                'transitions' => [
+                    'cancel' => [
+                        'description' => 'Set the invoice and receivables statuses as cancelled.',
+                        'onafter' => 'onafterCancel',
+                        'status' => 'cancelled',
+                    ],
+                    'cancel-keep-receivables' => [
+                        'description' => 'Set the invoice status as cancelled and set receivables statuses back to pending.',
+                        'onafter' => 'onafterCancelKeepReceivables',
+                        'status' => 'cancelled',
+                    ],
+                ],
+            ],
+            'cancelled' => [
+                'description' => 'The invoice was cancelled.',
+                'icon' => 'cancel',
+                'transitions' => [
+                ],
+            ],
         ];
     }
 
@@ -195,54 +283,6 @@ class Invoice extends \finance\accounting\Invoice {
         return $result;
     }
 
-    public static function getWorkflow() {
-        return [
-            'proforma' => [
-                'description' => 'Draft invoice, still waiting to be completed and for customer approval.',
-                'icon' => 'edit',
-                'transitions' => [
-                    'invoice' => [
-                        'description' => 'Update the invoice status based on the `invoice` field.',
-                        'help'        => 'The `invoice` field is set by a dedicated controller that manages invoice approval requests.',
-                        'policies'    => [
-                            'can-be-invoiced',
-                        ],
-                        'onbefore'  => 'onbeforeInvoice',
-                        'onafter'   => 'onafterInvoice',
-                        'status'    => 'invoice',
-                    ],
-                    'cancel-proforma' => [
-                        'description' => 'Delete the proforma and set receivables statuses back to pending.',
-                        'onafter' => 'onafterCancelProforma',
-                        'status'  => 'proforma',
-                    ]
-                ],
-            ],
-            'invoice' => [
-                'description' => 'Invoice can no longer be modified and can be sent to the customer.',
-                'icon' => 'receipt_long',
-                'transitions' => [
-                    'cancel' => [
-                        'description' => 'Set the invoice and receivables statuses as cancelled.',
-                        'onafter' => 'onafterCancel',
-                        'status' => 'cancelled',
-                    ],
-                    'cancel-keep-receivables' => [
-                        'description' => 'Set the invoice status as cancelled and set receivables statuses back to pending.',
-                        'onafter' => 'onafterCancelKeepReceivables',
-                        'status' => 'cancelled',
-                    ],
-                ],
-            ],
-            'cancelled' => [
-                'description' => 'The invoice was cancelled.',
-                'icon' => 'cancel',
-                'transitions' => [
-                ],
-            ],
-        ];
-    }
-
     public static function onbeforeInvoice($self) {
         // generate the accounting entries according to the invoices lines.
         $invoices_accounting_entries = self::computeAccountingEntries($self);
@@ -263,10 +303,10 @@ class Invoice extends \finance\accounting\Invoice {
 
             if($sequence) {
                 $invoice_number = Setting::parse_format($format, [
-                    'year'      => $year,
-                    'org'       => $invoice['organisation_id'],
-                    'sequence'  => $sequence
-                ]);
+                        'year'      => $year,
+                        'org'       => $invoice['organisation_id'],
+                        'sequence'  => $sequence
+                    ]);
                 self::update(['invoice_number' => $invoice_number, 'due_date' => null]);
             }
         }
@@ -643,5 +683,54 @@ class Invoice extends \finance\accounting\Invoice {
             Invoice::id($invoice['id'])
                 ->update(['funding_id' => $funding['id']]);
         }
+    }
+
+    /**
+     * Check whether an object can be updated, and perform some additional operations if necessary.
+     * This method can be overridden to define a more precise set of tests.
+     *
+     * @param  \equal\orm\ObjectManager   $om         ObjectManager instance.
+     * @param  array                      $ids        List of objects identifiers.
+     * @param  array                      $values     Associative array holding the new values to be assigned.
+     * @param  string                     $lang       Language in which multilang fields are being updated.
+     * @return array                      Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
+     */
+    public static function canupdate($om, $ids, $values, $lang = 'en') {
+        $res = $om->read(self::getType(), $ids, ['status']);
+
+        if($res > 0) {
+            foreach($res as $id => $invoice) {
+                // only allow editable fields
+                if($invoice['status'] != 'proforma') {
+                    // editable fields for sale\accounting\invoice\Invoice
+                    $editable_fields = ['payment_status', 'customer_ref', 'funding_id'];
+
+                    if( count(array_diff(array_keys($values), $editable_fields)) ) {
+                        return ['status' => ['non_editable' => "Invoice can only be updated while its status is proforma ({$id})."]];
+                    }
+                }
+            }
+        }
+        return parent::canupdate($om, $ids, $values, $lang);
+    }
+
+    /**
+     * Check whether the invoice can be deleted.
+     *
+     * @param  \equal\orm\ObjectManager    $om         ObjectManager instance.
+     * @param  array                       $ids       List of objects identifiers.
+     * @return array                       Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
+     */
+    public static function candelete($om, $ids) {
+        $res = $om->read(get_called_class(), $ids, ['status']);
+
+        if($res > 0) {
+            foreach($res as $id => $invoice) {
+                if($invoice['status'] != 'proforma') {
+                    return ['status' => ['non_removable' => 'Invoice can only be deleted while its status is proforma.']];
+                }
+            }
+        }
+        return parent::candelete($om, $ids);
     }
 }
