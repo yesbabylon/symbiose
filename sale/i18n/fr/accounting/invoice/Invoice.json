@@ -21,6 +21,11 @@
                 "buy": "achat"
             },
             "help": ""
+        },
+        "payment_terms_id": {
+            "label": "Conditions de paiement",
+            "description": "Conditions de paiement d'application pour la facture.",
+            "help": "Ces conditions sont communiquées au client pour la l'acquittement de la facture."
         }
     },
     "view": {
