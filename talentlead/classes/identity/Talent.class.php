@@ -25,7 +25,7 @@ class Talent extends \identity\Partner {
                 'type'              => 'string',
                 'usage'             => 'uri/url',
                 'description'       => 'URL of a linkedin page.',
-                'visible'           => ['type', '<>', 'I']
+                'visible'           => ['type', '<>', 'IN']
             ],
 
             'origin' => [
