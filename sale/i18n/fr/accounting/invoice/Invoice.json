@@ -22,6 +22,11 @@
             },
             "help": ""
         },
+        "funding_id": {
+            "label": "Financement",
+            "description": "Financement associé à la facture.",
+            "help": "Le client est invité à s'acquitter de la facture en la finançant via un ou plusieurs paiements."
+        },
         "payment_terms_id": {
             "label": "Conditions de paiement",
             "description": "Conditions de paiement d'application pour la facture.",
