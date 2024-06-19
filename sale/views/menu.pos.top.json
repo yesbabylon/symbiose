@@ -13,7 +13,7 @@
                 "type": "entry",
                 "route": "/",
                 "context": {
-                    "entity": "lodging\\sale\\pos\\CashdeskSession",
+                    "entity": "sale\\pos\\CashdeskSession",
                     "view": "dashboard.default"
                 }
             }

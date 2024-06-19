@@ -44,7 +44,7 @@
                                 "label": "CA Réservations",
                                 "description": "",
                                 "context": {
-                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "entity": "sale\\booking\\Booking",
                                     "view": "chart.default"
                                 }
                             },
@@ -54,7 +54,7 @@
                                 "label": "Nombre de réservations",
                                 "description": "",
                                 "context": {
-                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "entity": "sale\\booking\\Booking",
                                     "view": "chart.bookingCount"
                                 }
                             },
@@ -64,7 +64,7 @@
                                 "label": "Nombre de personnes",
                                 "description": "",
                                 "context": {
-                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "entity": "sale\\booking\\Booking",
                                     "view": "chart.compositionItem"
                                 }
                             },
@@ -74,7 +74,7 @@
                                 "label": "Nombre de nuitées",
                                 "description": "",
                                 "context": {
-                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "entity": "sale\\booking\\Booking",
                                     "view": "chart.accomodation"
                                 }
                             },
@@ -84,7 +84,7 @@
                                 "label": "INS",
                                 "description": "",
                                 "context": {
-                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "entity": "sale\\booking\\Booking",
                                     "view": "chart.INS"
                                 }
                             },
@@ -94,7 +94,7 @@
                                 "label": "CA repas",
                                 "description": "",
                                 "context": {
-                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "entity": "sale\\booking\\Booking",
                                     "view": "chart.meal"
                                 }
                             },
@@ -104,7 +104,7 @@
                                 "label": "CA non facturé",
                                 "description": "",
                                 "context": {
-                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "entity": "sale\\booking\\Booking",
                                     "view": "chart.noInvoice"
                                 }
                             },
@@ -114,7 +114,7 @@
                                 "label": "SKU",
                                 "description": "",
                                 "context": {
-                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "entity": "sale\\booking\\Booking",
                                     "view": "chart.sku"
                                 }
                             },
@@ -124,7 +124,7 @@
                                 "label": "Type de séjour",
                                 "description": "",
                                 "context": {
-                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "entity": "sale\\booking\\Booking",
                                     "view": "chart.sojournType"
                                 }
                             },
@@ -134,7 +134,7 @@
                                 "label": "Nombre de taxes de séjour",
                                 "description": "",
                                 "context": {
-                                    "entity": "lodging\\sale\\booking\\BookingLine",
+                                    "entity": "sale\\booking\\BookingLine",
                                     "view": "chart.taxes"
                                 }
                             },
@@ -144,7 +144,7 @@
                                 "label": "CA prévisionnel",
                                 "description": "",
                                 "context": {
-                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "entity": "sale\\booking\\Booking",
                                     "view": "chart.provisionalCA"
                                 }
                             }
@@ -193,15 +193,14 @@
                                 "label": "Total Remboursements",
                                 "description": "",
                                 "context": {
-                                    "entity": "lodging\\sale\\booking\\Funding",
+                                    "entity": "sale\\booking\\Funding",
                                     "view": "chart.default"
                                 }
                             }
                         ]
                     }
                 ]
-            }             
-
+            }
         ]
     }
 }

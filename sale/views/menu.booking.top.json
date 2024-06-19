@@ -29,7 +29,7 @@
                 "type": "entry",
                 "route": "/bookings",
                 "context": {
-                    "entity": "lodging\\sale\\booking\\Booking",
+                    "entity": "sale\\booking\\Booking",
                     "view": "list.default",
                     "order": "id",
                     "sort": "desc"

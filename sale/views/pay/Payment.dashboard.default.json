@@ -57,10 +57,9 @@
                                                 "label": "CA total Réservations",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "entity": "sale\\booking\\Booking",
                                                 "view": "chart.default"
                                             }
-
                                         ]
                                     }
                                 ]

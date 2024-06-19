@@ -5,7 +5,7 @@
         "groups": ["pos.default.user"]
     },
     "layout": {
-        "entity": "lodging\\sale\\pos\\CashdeskSession",
+        "entity": "sale\\pos\\CashdeskSession",
         "group_by": "range",
         "range_interval": "month",
         "range_from": "date.this.year.first",

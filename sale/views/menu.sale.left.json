@@ -3,7 +3,7 @@
     "access": {
         "groups": ["sale.default.user"]
     },
-    "show_search": true,
+    "search": true,
     "layout": {
         "items": [
             {

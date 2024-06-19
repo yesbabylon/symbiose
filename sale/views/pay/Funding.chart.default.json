@@ -4,9 +4,9 @@
     "access": {
         "groups": ["sale.default.user"]
     },
-    "controller": "core_model_chart",    
+    "controller": "core_model_chart",
     "layout": {
-        "entity": "lodging\\sale\\booking\\Funding",
+        "entity": "sale\\booking\\Funding",
         "group_by": "range",
         "range_interval": "year",
         "range_from": "date.this.year.first",
