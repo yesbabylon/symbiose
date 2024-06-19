@@ -143,7 +143,7 @@ class Price extends Model {
         return $result;
     }
 
-    public static function onchange($event, $self) {
+    public static function onchange($event, $values) {
         $result = [];
 
         if(isset($event['accounting_rule_id'])) {
@@ -151,13 +151,11 @@ class Price extends Model {
             $result['vat_rate'] = $rule['vat_rule_id']['rate'];
         }
 
-        if(isset($event['price'])) {
-            $price = $self->read(['vat_rate'])->first();
-            $result['price_vat'] = self::computePriceVatIncluded($event['price'], $price['vat_rate']);
+        if(isset($event['price']) && isset($values['vat_rate'])) {
+            $result['price_vat'] = self::computePriceVatIncluded($event['price'], $values['vat_rate']);
         }
-        elseif(isset($event['price_vat'])) {
-            $price = $self->read(['vat_rate'])->first();
-            $result['price'] = self::computePriceVatExcluded($event['price_vat'], $price['vat_rate']);
+        elseif(isset($event['price_vat']) && isset($values['vat_rate'])) {
+            $result['price'] = self::computePriceVatExcluded($event['price_vat'], $values['vat_rate']);
         }
 
         return $result;
