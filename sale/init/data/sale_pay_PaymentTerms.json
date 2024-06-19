@@ -5,10 +5,42 @@
         "data": [
             {
                 "id": 1,
-                "name": "15 days invoice",
+                "name": "Net 15 days",
                 "description": "Payment within 15 days from the date of issuance.",
                 "delay_from": "created",
                 "delay_count": 15,
+                "is_active": true
+            },
+            {
+                "id": 2,
+                "name": "Net 30 days",
+                "description": "Payment within 30 days from the date of issuance.",
+                "delay_from": "created",
+                "delay_count": 30,
+                "is_active": true
+            },
+            {
+                "id": 3,
+                "name": "Net 60 days",
+                "description": "Payment within 60 days from the date of issuance.",
+                "delay_from": "created",
+                "delay_count": 60,
+                "is_active": false
+            },
+            {
+                "id": 4,
+                "name": "15 days EOM",
+                "description": "Payment within two weeks from the end of the month following the one of the invoice date.",
+                "delay_from": "next_month",
+                "delay_count": 15,
+                "is_active": true
+            },
+            {
+                "id": 5,
+                "name": "30 days EOM",
+                "description": "Payment before the end of the month following the one of the invoice date.",
+                "delay_from": "next_month",
+                "delay_count": 30,
                 "is_active": true
             }
         ]
@@ -19,8 +51,28 @@
         "data": [
             {
                 "id": 1,
-                "name": "15 jours facture",
-                "description": "Paiement endéans 15 jours depuis la date d'émission."
+                "name": "Net 15 jours",
+                "description": "Paiement dans les 15 jours à partir de la date d'émission."
+            },
+            {
+                "id": 2,
+                "name": "Net 30 jours",
+                "description": "Paiement dans les 30 jours à partir de la date d'émission."
+            },
+            {
+                "id": 3,
+                "name": "Net 60 jours",
+                "description": "Paiement dans les 60 jours à partir de la date d'émission."
+            },
+            {
+                "id": 4,
+                "name": "15 jours FDM",
+                "description": "Paiement dans les deux semaines suivant la fin du mois de la date de la facture."
+            },
+            {
+                "id": 5,
+                "name": "30 jours FDM",
+                "description": "Paiement avant la fin du mois suivant celui de la date de la facture."
             }
         ]
     }
