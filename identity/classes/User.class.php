@@ -18,7 +18,7 @@ class User extends \core\User {
             'identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'domain'            => ['type', '=', 'I'],
+                'domain'            => ['type', '=', 'IN'],
                 'description'       => 'The contact related to the user.',
                 'dependencies'      => ['name']
             ],

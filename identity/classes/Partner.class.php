@@ -103,39 +103,39 @@ class Partner extends Model {
             'legal_name' => [
                 'type'              => 'string',
                 'description'       => 'Full name of the Identity.',
-                'visible'           => [ ['type', '<>', 'I'] ]
+                'visible'           => [ ['type', '<>', 'IN'] ]
             ],
 
             'firstname' => [
                 'type'              => 'string',
                 'description'       => "Full name of the contact (must be a person, not a role).",
-                'visible'           => ['type', '=', 'I']
+                'visible'           => ['type', '=', 'IN']
             ],
 
             'lastname' => [
                 'type'              => 'string',
                 'description'       => 'Reference contact surname.',
-                'visible'           => ['type', '=', 'I']
+                'visible'           => ['type', '=', 'IN']
             ],
 
             'gender' => [
                 'type'              => 'string',
                 'selection'         => ['M' => 'Male', 'F' => 'Female', 'X' => 'Non-binary'],
                 'description'       => 'Reference contact gender.',
-                'visible'           => ['type', '=', 'I']
+                'visible'           => ['type', '=', 'IN']
             ],
 
             'title' => [
                 'type'              => 'string',
                 'selection'         => ['Dr' => 'Doctor', 'Ms' => 'Miss', 'Mrs' => 'Misses', 'Mr' => 'Mister', 'Pr' => 'Professor'],
                 'description'       => 'Reference contact title.',
-                'visible'           => ['type', '=', 'I']
+                'visible'           => ['type', '=', 'IN']
             ],
 
             'date_of_birth' => [
                 'type'              => 'date',
                 'description'       => 'Date of birth.',
-                'visible'           => ['type', '=', 'I']
+                'visible'           => ['type', '=', 'IN']
             ],
 
             'lang_id' => [

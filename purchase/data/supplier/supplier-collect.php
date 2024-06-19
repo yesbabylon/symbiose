@@ -23,9 +23,9 @@ list($params, $providers) = eQual::announce([
         'type' => [
             'type'        => 'string',
             'description' => 'Code of the type of identity.',
-            'selection'   => ['all', 'I', 'SE', 'C', 'NP', 'PA'],
+            'selection'   => ['all', 'IN', 'SE', 'CO', 'NP', 'PA'],
             'readonly'    => true,
-            'default'     => 'C'
+            'default'     => 'CO'
         ],
 
         'registration_number' => [
