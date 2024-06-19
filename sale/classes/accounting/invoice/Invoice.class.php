@@ -307,7 +307,7 @@ class Invoice extends \finance\accounting\Invoice {
                         'org'       => $invoice['organisation_id'],
                         'sequence'  => $sequence
                     ]);
-                self::update(['invoice_number' => $invoice_number, 'due_date' => null]);
+                self::id($id)->update(['invoice_number' => $invoice_number, 'due_date' => null]);
             }
         }
     }
