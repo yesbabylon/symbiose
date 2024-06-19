@@ -278,11 +278,11 @@ class Invoice extends \finance\accounting\Invoice {
 
             switch($from) {
                 case 'created':
-                    $due_date = $emission_date + ($delay * 24 * 3600);
+                    $due_date = $emission_date + ($delay * 86400);
                     break;
                 case 'next_month':
                 default:
-                    $due_date = strtotime(date('Y-m-t', $emission_date)) + ($delay * 24 * 3600);
+                    $due_date = strtotime(date('Y-m-t', $emission_date)) + ($delay * 86400);
                     break;
             }
 
