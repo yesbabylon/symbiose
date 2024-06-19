@@ -1,12 +1,18 @@
 {
     "name": "symbiose",
-    "description": "This package is used in order to group all packages forming Symbiose ERP.",
+    "description": "This package is used for grouping all packages forming Symbiose ERP.",
     "version": "2.0",
     "authors": ["Yesbabylon"],
     "license": "LGPL-3",
     "depends_on": [
         "core"
     ],
+    "config": {
+        "ORG_NAME": "Yesbabylon",
+        "ORG_URL": "https://symbiose.yesbabylon.com",
+        "APP_NAME": "Symbiose",
+        "APP_LOGO_URL": "/assets/img/brand/logo.svg"
+    },
     "apps": [
         {
             "id": "settings",
