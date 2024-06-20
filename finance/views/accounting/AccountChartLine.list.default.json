@@ -1,9 +1,11 @@
 {
     "name": "Accounting Charts List",
-    "description": "This view is intented for displaying the accounting charts.",
+    "description": "This view is intended for displaying the accounting charts.",
     "access": {
         "groups": ["finance.default.user"]
-     },
+    },
+    "order": "level,name",
+    "sort": "asc",
     "layout": {
         "items": [
             {
@@ -29,8 +31,15 @@
             },
             {
                 "type": "field",
+                "value": "level",
+                "width": "15%",
+                "visible": false
+            },
+            {
+                "type": "field",
                 "value": "nature",
-                "width": "15%"
+                "width": "15%",
+                "visible": false
             },
             {
                 "type": "field",

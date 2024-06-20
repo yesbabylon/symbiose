@@ -140,14 +140,9 @@ class AccountChartLine extends Model {
 
     public static function calcName($self) {
         $result = [];
-        $self->read(['code']);
+        $self->read(['code', 'level']);
         foreach($self as $id => $line) {
-            if(strlen($line['code']) < 6) {
-                $result[$id] = str_pad($line['code'], 6, '0');
-            }
-            else {
-                $result[$id] = $line['code'];
-            }
+            $result[$id] = str_pad($line['code'], $line['level'], '0');
         }
         return $result;
     }
