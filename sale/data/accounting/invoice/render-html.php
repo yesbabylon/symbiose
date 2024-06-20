@@ -246,11 +246,13 @@ $getLabels = function($lang) {
 
 /* #memo - empty 1x1 data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII= */
 $createInvoicePaymentQrCodeUri = function($invoice) {
-    $result = '';
+    // default to blank image
+    $result = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=';
     try {
         if(!isset($invoice['payment_reference'])) {
             throw new Exception('missing_payment_reference', EQ_ERROR_INVALID_PARAM);
         }
+        // #todo - use a TXT adapter
         $payment_reference = DataFormatter::format($invoice['payment_reference'], 'scor');
         $image = eQual::run('get', 'finance_payment_generate-qr-code', [
                 'recipient_name'    => $invoice['organisation_id']['legal_name'],
