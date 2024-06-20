@@ -38,17 +38,18 @@ class AccountChartLine extends Model {
 
             'line_class' => [
                 'type'              => 'string',
-                'usage'             => 'text/plain:1',
+                'usage'             => 'text/plain:2',
                 'description'       => "The accounting class of the account.",
+                // #memo - we need a string value because PHp doesnt make a distinction between string and numbers for array keys (therefore map is ignored)
                 'selection'         => [
-                    '0' => 'Linking and closing accounts',
-                    '1' => 'Equity',
-                    '2' => 'Investments',
-                    '3' => 'Inventories and work-in-progress',
-                    '4' => 'Short-term receivables and payables',
-                    '5' => 'Deferred income and expenses',
-                    '6' => 'Expenses',
-                    '7' => 'Revenues'
+                    '00' => 'Linking and closing accounts',
+                    '01' => 'Equity',
+                    '02' => 'Investments',
+                    '03' => 'Inventories and work-in-progress',
+                    '04' => 'Short-term receivables and payables',
+                    '05' => 'Deferred income and expenses',
+                    '06' => 'Expenses',
+                    '07' => 'Revenues'
                 ],
                 'required'          => true
             ],
