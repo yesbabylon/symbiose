@@ -74,6 +74,14 @@ class AccountChartLine extends Model {
                 'description'       => "The parent account (line) the account is part of."
             ],
 
+            'children_accounts_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'finance\accounting\AccountChartLine',
+                'foreign_field'     => 'parent_account_id',
+                'description'       => "The children accounts linked to the account (next level)."
+            ],
+
+
             /* parent chart of accounts */
             'account_chart_id' => [
                 'type'              => 'many2one',
