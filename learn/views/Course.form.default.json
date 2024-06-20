@@ -146,26 +146,6 @@
                         ]
                     },
                     {
-                        "id": "section.quizzes",
-                        "label": "Quizzes",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "quizzes_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
                         "id": "section.langs",
                         "label": "Languages",
                         "rows": [

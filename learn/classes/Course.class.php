@@ -176,6 +176,6 @@ class Course extends Model
 	 */
 	public static function formatLinkIdNumber($num): string
 	{
-		return str_pad($num, 8, '0', STR_PAD_LEFT);
+		return str_pad($num, 4, '0', STR_PAD_LEFT);
 	}
 }
