@@ -1,0 +1,58 @@
+{
+    "name": "Accounting Charts List",
+    "description": "This view is intended for displaying the accounting charts.",
+    "access": {
+        "groups": ["finance.default.user"]
+    },
+    "order": "name",
+    "sort": "asc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "15%",
+                "align": "right"
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "35%"
+            },
+            {
+                "type": "field",
+                "label": "Analytic Section",
+                "value": "analytic_section_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "level",
+                "width": "15%",
+                "visible": false
+            },
+            {
+                "type": "field",
+                "value": "nature",
+                "width": "15%",
+                "visible": false
+            },
+            {
+                "type": "field",
+                "value": "line_class",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "line_type",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Visible",
+                "value": "is_visible",
+                "width": "10%"
+            }
+        ]
+    }
+}
