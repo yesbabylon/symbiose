@@ -20,7 +20,7 @@
                         "description": "Display all bank statements.",
                         "icon": "list",
                         "context": {
-                            "entity": "sale\\pay\\BankStatement",
+                            "entity": "finance\\bank\\BankStatement",
                             "view": "list.default"
                         }
                     },
@@ -31,7 +31,7 @@
                         "icon": "list",
                         "description": "Display all bank statements lines.",
                         "context": {
-                            "entity": "sale\\pay\\BankStatementLine",
+                            "entity": "finance\\bank\\BankStatementLine",
                             "view": "list.default"
                         }
                     }

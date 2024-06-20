@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-namespace sale\pay;
+namespace finance\bank;
 
 use equal\orm\Model;
 
@@ -25,7 +25,7 @@ class BankStatementLine extends Model {
 
             'bank_statement_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\pay\BankStatement',
+                'foreign_object'    => 'finance\bank\BankStatement',
                 'description'       => 'The bank statement the line relates to.'
             ],
 
@@ -140,8 +140,6 @@ class BankStatementLine extends Model {
     }
 
     public static function onupdateStatus($om, $oids, $values, $lang) {
-        trigger_error("ORM::calling sale\pay\BankStatementLine::onupdateStatus", QN_REPORT_DEBUG);
-
         $lines = $om->read(self::getType(), $oids, ['status', 'bank_statement_id', 'payments_ids.partner_id']);
 
         if($lines > 0) {
@@ -157,9 +155,9 @@ class BankStatementLine extends Model {
                     }
                 }
             }
-            $om->update('sale\pay\BankStatement', $bank_statements_ids, ['status' => null]);
+            $om->update('finance\bank\BankStatement', $bank_statements_ids, ['status' => null]);
             // force immediate re-computing
-            $om->read('sale\pay\BankStatement', $bank_statements_ids, ['status']);
+            $om->read('finance\bank\BankStatement', $bank_statements_ids, ['status']);
         }
     }
 

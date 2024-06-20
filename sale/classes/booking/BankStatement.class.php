@@ -6,7 +6,7 @@
 */
 namespace sale\booking;
 
-class BankStatement extends \sale\pay\BankStatement {
+class BankStatement extends \finance\bank\BankStatement {
 
     public static function getColumns() {
 

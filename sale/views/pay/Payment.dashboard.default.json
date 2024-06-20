@@ -29,7 +29,7 @@
                                                 "label": "Extraits bancaires",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "sale\\pay\\BankStatement",
+                                                "entity": "finance\\bank\\BankStatement",
                                                 "view": "list.dashboard",
                                                 "domain": ["status", "=", "pending"]
                                             }
