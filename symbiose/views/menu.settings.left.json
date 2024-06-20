@@ -60,6 +60,15 @@
                 ]
             },
             {
+
+                "id": "sale",
+                "label": "Sales",
+                "description": "",
+                "icon": "storefront",
+                "type": "parent",
+                "route": "/settings/sale"
+            },
+            {
                 "id": "settings",
                 "label": "Configuration",
                 "description": "",

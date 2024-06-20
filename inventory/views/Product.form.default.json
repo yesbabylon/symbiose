@@ -215,7 +215,8 @@
                                                 "widget": {
                                                     "header": {
                                                         "actions": {
-                                                            "ACTION.SELECT": false
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
                                                         }
                                                     }
                                                 }

@@ -61,7 +61,7 @@
         },
         "reference": {
             "label": "Référence",
-            "description": "Référence completant l'origine.",
+            "description": "Référence pour compléter l'origine.",
             "help": ""
         }
     },
