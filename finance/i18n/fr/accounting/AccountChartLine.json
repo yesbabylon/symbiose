@@ -72,12 +72,12 @@
             "help": ""
         },
         "is_visible": {
-            "label": "Visible?",
+            "label": "Visible",
             "description": "Permet de masquer le compte dans les listes.",
             "help": ""
         }
     },
-    "view": {       
+    "view": {
     },
     "error": {
 

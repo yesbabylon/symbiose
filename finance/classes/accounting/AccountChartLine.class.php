@@ -37,18 +37,18 @@ class AccountChartLine extends Model {
             ],
 
             'line_class' => [
-                'type'              => 'integer',
-                'usage'             => 'number/natural',
+                'type'              => 'string',
+                'usage'             => 'text/plain:1',
                 'description'       => "The accounting class of the account.",
                 'selection'         => [
-                    0 => 'Linking and closing accounts',
-                    1 => 'Equity',
-                    2 => 'Investments',
-                    3 => 'Inventories and work-in-progress',
-                    4 => 'Short-term receivables and payables',
-                    5 => 'Deferred income and expenses',
-                    6 => 'Expenses',
-                    7 => 'Revenues',
+                    '0' => 'Linking and closing accounts',
+                    '1' => 'Equity',
+                    '2' => 'Investments',
+                    '3' => 'Inventories and work-in-progress',
+                    '4' => 'Short-term receivables and payables',
+                    '5' => 'Deferred income and expenses',
+                    '6' => 'Expenses',
+                    '7' => 'Revenues'
                 ],
                 'required'          => true
             ],
