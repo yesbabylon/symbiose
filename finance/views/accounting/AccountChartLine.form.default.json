@@ -1,16 +1,14 @@
 {
-    "name": "Accounting Chart",
-    "description": "Default form for accounting chart with all fields.",
+    "name": "Accounting Chart Line",
+    "description": "Detail of an accounting chart line with all fields.",
     "access": {
         "groups": ["finance.default.user"]
-     },
+    },
     "layout": {
         "groups": [
             {
                 "sections": [
                     {
-                        "label": "General Info",
-                        "id": "section.accounting_rules_section",
                         "rows": [
                             {
                                 "columns": [
@@ -41,6 +39,30 @@
                                                 "label": "Analytic Section",
                                                 "value": "analytic_section_id",
                                                 "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "label": "Sub accounts",
+                        "id": "section.children_accounts",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "children_accounts_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }
