@@ -53,6 +53,7 @@ class Instance extends Model {
 
             'url' => [
                 'type'              => 'string',
+                'usage'             => 'uri/url',
                 'description'       => 'Front-end home URL.'
             ],
 
