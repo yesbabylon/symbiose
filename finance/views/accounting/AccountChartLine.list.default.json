@@ -4,6 +4,7 @@
     "access": {
         "groups": ["finance.default.user"]
     },
+    "group_by": ["line_class", "parent_account_id"],
     "order": "name,level",
     "sort": "asc",
     "domain": ["is_visible", "=", true],
@@ -18,7 +19,7 @@
             {
                 "type": "field",
                 "value": "description",
-                "width": "30%"
+                "width": "30y%"
             },
             {
                 "type": "field",
