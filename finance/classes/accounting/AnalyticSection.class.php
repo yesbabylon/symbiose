@@ -14,7 +14,7 @@ class AnalyticSection extends Model {
     }
 
     public static function getDescription() {
-        return "Analytic sections allow to group spendings and revenues independently from the chart of accounts.";
+        return "Analytic sections allow to group expenses and revenues independently from the chart of accounts.";
     }
 
     public static function getColumns() {
@@ -36,6 +36,16 @@ class AnalyticSection extends Model {
                 'description'       => "Short description of the section.",
             ],
 
+            'section_type' => [
+                'type'              => 'string',
+                'description'       => "Can the section be updated.",
+                'selection'         => [
+                    'costs',
+                    'profit'
+                ],
+                'default'           => 'costs'
+            ],
+
             'is_locked' => [
                 'type'              => 'boolean',
                 'description'       => "Can the section be updated.",
@@ -47,11 +57,10 @@ class AnalyticSection extends Model {
                 'description'       => "Short description of the section."
             ],
 
-            /* parent chart of accounts */
             'analytic_chart_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\AnalyticChart',
-                'description'       => "The chart of accounts the line belongs to.",
+                'description'       => "The analytic chart the section belongs to.",
                 'required'          => true
             ]
 
