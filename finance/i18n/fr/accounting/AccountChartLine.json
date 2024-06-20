@@ -27,7 +27,21 @@
             "description": "Type d'opération auquel cette règle se rapporte.",
             "help": ""
         },
-        "accounting_chart_line_type": {
+        "line_class": {
+            "label": "Classe",
+            "description": "La classe du compte.",
+            "selection": {
+                "0": "Ouverture et fermeture des comptes",
+                "1": "Capitaux propres",
+                "2": "Frais d’établissement, actifs immobilisés et créances à plus d'un an",
+                "3": "Stocks et commandes en-cours",
+                "4": "Créances et dettes à un an au plus",
+                "5": "Placements de trésorerie et valeurs disponibles",
+                "6": "Charges",
+                "7": "Produits"
+            }
+        },
+        "line_type": {
             "label": "Type",
             "description": "Type d'opération auquel cette règle se rapporte.",
             "selection": {

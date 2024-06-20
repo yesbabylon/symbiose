@@ -8,8 +8,13 @@
         "items": [
             {
                 "type": "field",
-                "value": "code",
+                "value": "name",
                 "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "code",
+                "width": "10%"
             },
             {
                 "type": "field",
@@ -25,6 +30,16 @@
             {
                 "type": "field",
                 "value": "nature",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "line_class",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "line_type",
                 "width": "15%"
             },
             {
