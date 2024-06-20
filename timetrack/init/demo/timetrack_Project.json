@@ -56,7 +56,7 @@
                 "name": "Wordpress website hestoria.com",
                 "description": "Wordpress website with domain name hestoria.com",
                 "customer_id": 1200,
-                "instance_id": null,
+                "product_id": null,
                 "time_entry_sale_model_id": 1,
                 "receivable_queue_id": null
             }

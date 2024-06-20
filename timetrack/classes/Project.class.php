@@ -17,8 +17,8 @@ class Project extends Model {
     }
 
     public static function getDescription(): string {
-        return 'A project is linked to a customer and time entries.'
-            .' It organises time entries and allows to configure a sale model to auto apply sale related fields of a time entry.';
+        return 'A project is linked to a customer and a series of time entries.'
+            .' It organizes time entries and allows to configure a sale model to auto apply sale related fields of a time entry.';
     }
 
     public static function getColumns(): array {
@@ -42,10 +42,10 @@ class Project extends Model {
                 'description'     => 'Which customer is the project for.'
             ],
 
-            'instance_id' => [
+            'product_id' => [
                 'type'            => 'many2one',
-                'foreign_object'  => 'inventory\server\Instance',
-                'description'     => 'The instance hosting the project.'
+                'foreign_object'  => 'inventory\Product',
+                'description'     => 'The product the the project refers to, if any.'
             ],
 
             'time_entry_sale_model_id' => [

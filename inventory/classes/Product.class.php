@@ -30,6 +30,12 @@ class Product extends Model {
                 'description'       => 'Short presentation of the product.'
             ],
 
+            'url' => [
+                'type'              => 'string',
+                'usage'             => 'uri/url',
+                'description'       => 'Main URL of the product, if any.'
+            ],
+
             'is_internal' => [
                 'type'              => 'boolean',
                 'description'       => 'The product is internal.',

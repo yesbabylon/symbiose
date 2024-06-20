@@ -13,9 +13,9 @@
             "description": "Client à qui le projet est destiné.",
             "help": ""
         },
-        "instance_id": {
-            "label": "Instance",
-            "description": "L'instance hébergeant le projet.",
+        "product_id": {
+            "label": "Produit",
+            "description": "Le produit (logiciel) auquel se rapporte le projet.",
             "help": ""
         },
         "time_entry_sale_model_id": {
