@@ -41,7 +41,7 @@ class Organisation extends Identity {
 
             'type' => [
                 'type'              => 'string',
-                'default'           => 'C',
+                'default'           => 'CO',
                 'readonly'          => true
             ],
 
