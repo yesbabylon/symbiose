@@ -53,6 +53,15 @@ class TimeEntry extends SaleEntry {
                 'onupdate'       => 'onupdateProjectId'
             ],
 
+            'inventory_product_id' => [
+                'type'            => 'computed',
+                'result_type'     => 'many2one',
+                'foreign_object'  => 'inventory\Product',
+                'description'     => 'The product the the time entry refers to, if any.',
+                'function'        => 'calcInventoryProductId',
+                'store'           => true
+            ],
+
             'customer_id' => [
                 'type'           => 'computed',
                 'result_type'    => 'many2one',
@@ -340,6 +349,15 @@ class TimeEntry extends SaleEntry {
         $self->read(['project_id' => ['time_entry_sale_model_id' => 'product_id']]);
         foreach($self as $id => $entry) {
             $result[$id] = $entry['project_id']['time_entry_sale_model_id']['product_id'] ?? null;
+        }
+        return $result;
+    }
+
+    public static function calcInventoryProductId($self) {
+        $result = [];
+        $self->read(['project_id' => ['product_id']]);
+        foreach($self as $id => $entry) {
+            $result[$id] = $entry['project_id']['product_id'] ?? null;
         }
         return $result;
     }
