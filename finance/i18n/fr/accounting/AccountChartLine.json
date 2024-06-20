@@ -31,14 +31,14 @@
             "label": "Classe",
             "description": "La classe du compte.",
             "selection": {
-                "0": "Ouverture et fermeture des comptes",
-                "1": "Capitaux propres",
-                "2": "Frais d’établissement, actifs immobilisés et créances à plus d'un an",
-                "3": "Stocks et commandes en-cours",
-                "4": "Créances et dettes à un an au plus",
-                "5": "Placements de trésorerie et valeurs disponibles",
-                "6": "Charges",
-                "7": "Produits"
+                "00": "Ouverture et fermeture des comptes",
+                "01": "Capitaux propres",
+                "02": "Frais d’établissement, actifs immobilisés et créances à plus d'un an",
+                "03": "Stocks et commandes en-cours",
+                "04": "Créances et dettes à un an au plus",
+                "05": "Placements de trésorerie et valeurs disponibles",
+                "06": "Charges",
+                "07": "Produits"
             }
         },
         "line_type": {
