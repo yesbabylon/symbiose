@@ -12,9 +12,7 @@
                 "type": "field",
                 "value": "name",
                 "width": "15%",
-                "widget":{
-                    "align": "right"
-                }
+                "align": "right"
             },
             {
                 "type": "field",
