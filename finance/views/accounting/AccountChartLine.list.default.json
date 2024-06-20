@@ -6,6 +6,7 @@
     },
     "order": "name,level",
     "sort": "asc",
+    "domain": ["is_visible", "=", true],
     "layout": {
         "items": [
             {
@@ -17,7 +18,7 @@
             {
                 "type": "field",
                 "value": "description",
-                "width": "35%"
+                "width": "30%"
             },
             {
                 "type": "field",
@@ -40,18 +41,12 @@
             {
                 "type": "field",
                 "value": "line_class",
-                "width": "15%"
+                "width": "25%"
             },
             {
                 "type": "field",
                 "value": "line_type",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "label": "Visible",
-                "value": "is_visible",
-                "width": "10%"
+                "width": "25%"
             }
         ]
     }
