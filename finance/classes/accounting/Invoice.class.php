@@ -90,7 +90,7 @@ class Invoice extends Model {
                     'pending',          // non-paid, payment terms delay running
                     'overdue',          // non-paid, and payment terms delay is over
                     'debit_balance',    // partially paid: buyer still has to pay something
-                    'credit_balance',   // fully paid and a reimbursement to buyer is required
+                    'credit_balance',   // over paid: reimbursement to buyer is required
                     'balanced'          // fully paid and balanced
                 ],
                 'visible'           => ['status', '=', 'invoice'],
