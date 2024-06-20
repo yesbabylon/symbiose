@@ -131,9 +131,12 @@ class AccountChartLine extends Model {
 
     public static function calcLevel($self) {
         $result = [];
-        $self->read(['code']);
+        $self->read(['parent_account_id' => ['level']]);
         foreach($self as $id => $line) {
-            $result[$id] = strlen($line['code']);
+            $result[$id] = 1;
+            if(isset($line['parent_account_id']['level'])) {
+                $result[$id] = $line['parent_account_id']['level'] + 1;
+            }
         }
         return $result;
     }
@@ -142,7 +145,12 @@ class AccountChartLine extends Model {
         $result = [];
         $self->read(['code', 'level']);
         foreach($self as $id => $line) {
-            $result[$id] = str_pad($line['code'], $line['level'], '0');
+            if(strlen($line['code']) < 6) {
+                $result[$id] = str_pad($line['code'], 6, '0');
+            }
+            else {
+                $result[$id] = $line['code'];
+            }
         }
         return $result;
     }
