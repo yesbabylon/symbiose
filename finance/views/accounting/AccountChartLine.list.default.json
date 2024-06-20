@@ -4,7 +4,7 @@
     "access": {
         "groups": ["finance.default.user"]
     },
-    "order": "level,name",
+    "order": "name,level",
     "sort": "asc",
     "layout": {
         "items": [
