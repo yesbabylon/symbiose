@@ -4,7 +4,8 @@
     "access": {
         "groups": ["finance.default.user"]
     },
-    "group_by": ["line_class", "parent_account_id"],
+    "group_by": ["line_class"],
+    "limit": 1000,
     "order": "name,level",
     "sort": "asc",
     "domain": ["is_visible", "=", true],
