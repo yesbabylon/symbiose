@@ -142,8 +142,11 @@ class AccountChartLine extends Model {
         $result = [];
         $self->read(['parent_account_id' => ['level']]);
         foreach($self as $id => $line) {
-            $result[$id] = 1;
-            if(isset($line['parent_account_id']['level'])) {
+            $result[$id] = null;
+            if(!isset($line['parent_account_id'])) {
+                $result[$id] = 1;
+            }
+            elseif(isset($line['parent_account_id']['level'])) {
                 $result[$id] = $line['parent_account_id']['level'] + 1;
             }
         }
