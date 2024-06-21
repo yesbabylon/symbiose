@@ -30,6 +30,12 @@ class Product extends Model {
                 'description'       => 'Short presentation of the product.'
             ],
 
+            'url' => [
+                'type'              => 'string',
+                'usage'             => 'uri/url',
+                'description'       => 'Main URL of the product, if any.'
+            ],
+
             'is_internal' => [
                 'type'              => 'boolean',
                 'description'       => 'The product is internal.',
@@ -75,6 +81,22 @@ class Product extends Model {
                 'foreign_object'    => 'inventory\Software',
                 'foreign_field'     => 'product_id',
                 'description'       => 'List of software associated with the product.'
+            ],
+
+            'projects_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'timetrack\Project',
+                'foreign_field'     => 'product_id',
+                'ondetach'          => 'null',
+                'description'       => 'Projects linked to the product.'
+            ],
+
+            'time_entries_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'timetrack\TimeEntry',
+                'foreign_field'     => 'inventory_product_id',
+                'ondetach'          => 'null',
+                'description'       => 'Time entries linked to the product.'
             ]
 
         ];

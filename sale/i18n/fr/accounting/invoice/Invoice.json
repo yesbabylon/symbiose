@@ -21,6 +21,16 @@
                 "buy": "achat"
             },
             "help": ""
+        },
+        "funding_id": {
+            "label": "Financement",
+            "description": "Financement associé à la facture.",
+            "help": "Le client est invité à s'acquitter de la facture en la finançant via un ou plusieurs paiements."
+        },
+        "payment_terms_id": {
+            "label": "Conditions de paiement",
+            "description": "Conditions de paiement d'application pour la facture.",
+            "help": "Ces conditions sont communiquées au client pour la l'acquittement de la facture."
         }
     },
     "view": {
@@ -49,7 +59,14 @@
                     "label": "Imprimer facture groupée"
                 }
             },
-            "layout": {}
+            "layout": {
+                "sections.invoice.lines": {
+                    "label": "Lignes de facture"
+                },
+                "sections.invoice.entries": {
+                    "label": "Écritures comptables"
+                }
+            }
         },
         "list.default": {
             "name": "Factures",

@@ -37,18 +37,19 @@ class AccountChartLine extends Model {
             ],
 
             'line_class' => [
-                'type'              => 'integer',
-                'usage'             => 'number/natural',
+                'type'              => 'string',
+                'usage'             => 'text/plain:2',
                 'description'       => "The accounting class of the account.",
+                // #memo - we need a string value because PHp doesnt make a distinction between string and numbers for array keys (therefore map is ignored)
                 'selection'         => [
-                    0 => 'Linking and closing accounts',
-                    1 => 'Equity',
-                    2 => 'Investments',
-                    3 => 'Inventories and work-in-progress',
-                    4 => 'Short-term receivables and payables',
-                    5 => 'Deferred income and expenses',
-                    6 => 'Expenses',
-                    7 => 'Revenues',
+                    '00' => 'Linking and closing accounts',
+                    '01' => 'Equity',
+                    '02' => 'Investments',
+                    '03' => 'Inventories and work-in-progress',
+                    '04' => 'Short-term receivables and payables',
+                    '05' => 'Deferred income and expenses',
+                    '06' => 'Expenses',
+                    '07' => 'Revenues'
                 ],
                 'required'          => true
             ],
@@ -72,6 +73,14 @@ class AccountChartLine extends Model {
                 'foreign_object'    => 'finance\accounting\AccountChartLine',
                 'description'       => "The parent account (line) the account is part of."
             ],
+
+            'children_accounts_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'finance\accounting\AccountChartLine',
+                'foreign_field'     => 'parent_account_id',
+                'description'       => "The children accounts linked to the account (next level)."
+            ],
+
 
             /* parent chart of accounts */
             'account_chart_id' => [
@@ -131,23 +140,24 @@ class AccountChartLine extends Model {
 
     public static function calcLevel($self) {
         $result = [];
-        $self->read(['code']);
+        $self->read(['parent_account_id' => ['level']]);
         foreach($self as $id => $line) {
-            $result[$id] = strlen($line['code']);
+            $result[$id] = null;
+            if(!isset($line['parent_account_id'])) {
+                $result[$id] = 1;
+            }
+            elseif(isset($line['parent_account_id']['level'])) {
+                $result[$id] = $line['parent_account_id']['level'] + 1;
+            }
         }
         return $result;
     }
 
     public static function calcName($self) {
         $result = [];
-        $self->read(['code']);
+        $self->read(['code', 'level']);
         foreach($self as $id => $line) {
-            if(strlen($line['code']) < 6) {
-                $result[$id] = str_pad($line['code'], 6, '0');
-            }
-            else {
-                $result[$id] = $line['code'];
-            }
+            $result[$id] = str_pad($line['code'], $line['level'], '0');
         }
         return $result;
     }

@@ -224,9 +224,12 @@ class Product extends Model {
     public static function onupdateProductModelId($self) {
         $self->read(['groups_ids', 'product_model_id' => ['is_pack', 'has_own_price','can_sell','can_buy' , 'groups_ids', 'family_id']]);
         foreach($self as $id => $product) {
+            if(count($product['groups_ids'])) {
+                self::id($id)
+                    // remove current groups
+                    ->update(['groups_ids' => array_map(function ($a) { return -$a; }, $product['groups_ids'])]);
+            }
             self::id($id)
-                // remove current groups
-                ->update(['groups_ids' => array_map(function ($a) { return -$a; }, $product['groups_ids'])])
                 // set values according to assigned model
                 ->update([
                     'is_pack'       => null,

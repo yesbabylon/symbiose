@@ -1,6 +1,6 @@
 {
     "name": "learn",
-    "description": "Learn package.",
+    "description": "Package dedicated to e-learning and training, knowledge sharing and assessments.",
     "version": "1.0",
     "authors": [
         "Yesbabylon"
@@ -36,8 +36,6 @@
                     "view": "list.default"
                 }
             }
-        },
-        "learning",
-        "qursus"
+        }
     ]
 }

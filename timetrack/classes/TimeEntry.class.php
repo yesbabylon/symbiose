@@ -53,6 +53,15 @@ class TimeEntry extends SaleEntry {
                 'onupdate'       => 'onupdateProjectId'
             ],
 
+            'inventory_product_id' => [
+                'type'            => 'computed',
+                'result_type'     => 'many2one',
+                'foreign_object'  => 'inventory\Product',
+                'description'     => 'The product the the time entry refers to, if any.',
+                'function'        => 'calcInventoryProductId',
+                'store'           => true
+            ],
+
             'customer_id' => [
                 'type'           => 'computed',
                 'result_type'    => 'many2one',
@@ -211,12 +220,13 @@ class TimeEntry extends SaleEntry {
         return $current_hour;
     }
 
-    public static function generateTicketLink($instance_url, $ticket_id): string {
-        $url = $instance_url ?? '';
-        if(substr($url, -1) !== '/') {
-            $url .= '/';
+    public static function computeTicketLink($url, $ticket_id): string {
+        $result = $url ?? '';
+        if(substr($result, -1) !== '/') {
+            $result .= '/';
         }
-        return $url.'support/#/ticket/'.$ticket_id;
+        $result .= 'support/#/ticket/'.$ticket_id;
+        return $result;
     }
 
     public static function defaultUserId($auth) {
@@ -268,8 +278,8 @@ class TimeEntry extends SaleEntry {
         }
 
         if(isset($event['ticket_id'])) {
-            $project = Project::id($values['project_id'])->read(['instance_id' => 'url'])->first();
-            $result['ticket_link'] = self::generateTicketLink($project['instance_id']['url'], $event['ticket_id']);
+            $project = Project::id($values['project_id'])->read(['product_id' => 'url'])->first();
+            $result['ticket_link'] = self::computeTicketLink($project['product_id']['url'], $event['ticket_id']);
         }
 
         if(isset($event['project_id'])) {
@@ -339,6 +349,15 @@ class TimeEntry extends SaleEntry {
         $self->read(['project_id' => ['time_entry_sale_model_id' => 'product_id']]);
         foreach($self as $id => $entry) {
             $result[$id] = $entry['project_id']['time_entry_sale_model_id']['product_id'] ?? null;
+        }
+        return $result;
+    }
+
+    public static function calcInventoryProductId($self) {
+        $result = [];
+        $self->read(['project_id' => ['product_id']]);
+        foreach($self as $id => $entry) {
+            $result[$id] = $entry['project_id']['product_id'] ?? null;
         }
         return $result;
     }
@@ -414,10 +433,10 @@ class TimeEntry extends SaleEntry {
 
     public static function calcTicketLink($self): array {
         $result = [];
-        $self->read(['origin', 'ticket_id', 'project_id' => ['instance_id' => ['url']]]);
+        $self->read(['origin', 'ticket_id', 'project_id' => ['product_id' => ['url']]]);
         foreach($self as $id => $entry) {
             if($entry['origin'] == 'support') {
-                $result[$id] = self::generateTicketLink($entry['project_id']['instance_id']['url'], $entry['ticket_id']);
+                $result[$id] = self::computeTicketLink($entry['project_id']['product_id']['url'], $entry['ticket_id']);
             }
         }
         return $result;

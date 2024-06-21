@@ -1,0 +1,14 @@
+[
+    {
+        "name": "finance\\accounting\\AccountingJournal",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "Sales Accounting Journal",
+                "organisation_id": 1,
+                "accounting_journal_type": "sales"
+            }
+        ]
+    }
+]

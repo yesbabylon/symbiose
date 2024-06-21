@@ -48,9 +48,7 @@ class VatRule extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\AccountChartLine',
                 'description'       => "Account which the tax amount relates to.",
-            ],
-
-            // #todo - if several accounting accounts are involved (distinct shares), we need to use a VatRuleLine class holding `account_id` and `share` fields
+            ]
 
         ];
     }

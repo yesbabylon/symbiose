@@ -129,7 +129,7 @@ class Price extends Model {
         $result = [];
         $self->read(['price', 'vat_rate']);
         foreach($self as $id => $price) {
-            $result[$id] = round($price['price'] * (1.0 + $price['vat_rate']), 2);
+            $result[$id] = self::computePriceVatIncluded($price['price'], $price['vat_rate']);
         }
         return $result;
     }
@@ -143,14 +143,30 @@ class Price extends Model {
         return $result;
     }
 
-    public static function onchange($event, $self) {
+    public static function onchange($event, $values) {
         $result = [];
 
         if(isset($event['accounting_rule_id'])) {
             $rule = AccountingRule::id($event['accounting_rule_id'])->read(['vat_rule_id' => 'rate'])->first();
             $result['vat_rate'] = $rule['vat_rule_id']['rate'];
         }
+
+        if(isset($event['price']) && isset($values['vat_rate'])) {
+            $result['price_vat'] = self::computePriceVatIncluded($event['price'], $values['vat_rate']);
+        }
+        elseif(isset($event['price_vat']) && isset($values['vat_rate'])) {
+            $result['price'] = self::computePriceVatExcluded($event['price_vat'], $values['vat_rate']);
+        }
+
         return $result;
+    }
+
+    public function computePriceVatIncluded($price, $vat_rate) {
+        return round($price * (1.0 + $vat_rate), 2);
+    }
+
+    public function computePriceVatExcluded($price_vat, $vat_rate) {
+        return $price_vat / (1.0 + $vat_rate);
     }
 
     public function getUnique() {
@@ -158,6 +174,5 @@ class Price extends Model {
             ['product_id', 'price_list_id']
         ];
     }
-
 
 }

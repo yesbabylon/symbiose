@@ -76,7 +76,7 @@ class Payment extends Model {
 
             'statement_line_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\pay\BankStatementLine',
+                'foreign_object'    => 'finance\bank\BankStatementLine',
                 'description'       => 'The bank statement line the payment relates to.',
                 'visible'           => ['payment_origin', '=', 'bank']
             ],

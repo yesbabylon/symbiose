@@ -4,7 +4,6 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 namespace finance\accounting;
 
 use core\setting\Setting;
@@ -45,11 +44,11 @@ class Invoice extends Model {
                 'type'              => 'string',
                 'description'       => 'Current status of the invoice.',
                 'selection'         => [
-                    'proforma',             // draft invoice (no number yet)
-                    'invoice',              // final invoice (with unique number and accounting entries)
-                    'cancelled'             // the invoice has been cancelled (through reversing entries)
+                    'invoice',
+                    'cancelled'
                 ],
-                'default'           => 'proforma'
+                'default'           => 'invoice',
+                'help'              => "Status set to 'invoice' means the invoice has been emitted with a unique number and accounting entries. `cancelled` means that the invoice has been cancelled through a credit note (and related reversing entries)."
             ],
 
             'invoice_type' => [
@@ -69,7 +68,7 @@ class Invoice extends Model {
                     'sell',
                     'buy'
                 ],
-                'default'          => 'sell'
+                'default'          => 'buy'
             ],
 
             'invoice_number' => [
@@ -91,7 +90,7 @@ class Invoice extends Model {
                     'pending',          // non-paid, payment terms delay running
                     'overdue',          // non-paid, and payment terms delay is over
                     'debit_balance',    // partially paid: buyer still has to pay something
-                    'credit_balance',   // fully paid and a reimbursement to buyer is required
+                    'credit_balance',   // over paid: reimbursement to buyer is required
                     'balanced'          // fully paid and balanced
                 ],
                 'visible'           => ['status', '=', 'invoice'],
@@ -105,9 +104,7 @@ class Invoice extends Model {
 
             'emission_date' => [
                 'type'              => 'datetime',
-                'description'       => 'Emission date of the invoice.',
-                'help'              => 'Is set when the invoice change status from proforma to invoice.',
-                'dependencies'      => ['invoice_number']
+                'description'       => 'Date at which the invoice was emitted.'
             ],
 
             'due_date' => [
@@ -163,27 +160,6 @@ class Invoice extends Model {
         ];
     }
 
-    public static function getPolicies(): array {
-        return [
-            'can-be-invoiced' => [
-                'description' => 'Verifies that the proforma can be invoiced.',
-                'function'    => 'policyCanBeInvoiced'
-            ]
-        ];
-    }
-
-    public static function policyCanBeInvoiced($self): array {
-        $result = [];
-        $self->read(['invoice_lines_ids']);
-        foreach($self as $id => $invoice) {
-            if(count($invoice['invoice_lines_ids']) === 0) {
-                $result[$id] = false;
-            }
-        }
-
-        return $result;
-    }
-
     public static function getWorkflow() {
         return [
             'proforma' => [
@@ -204,7 +180,7 @@ class Invoice extends Model {
                 ],
             ],
             'invoice' => [
-                'description' => 'Invoice can no longer be modified.',
+                'description' => 'Invoice has been emitted and can no longer be modified.',
                 'icon' => 'receipt_long',
                 'transitions' => [
                     'cancel' => [
@@ -214,7 +190,7 @@ class Invoice extends Model {
                 ],
             ],
             'cancelled' => [
-                'description' => 'The invoice was cancelled.',
+                'description' => 'The invoice has been cancelled.',
                 'icon' => 'cancel',
                 'transitions' => [
                 ],
@@ -249,54 +225,4 @@ class Invoice extends Model {
         return $result;
     }
 
-    /**
-     * Check whether an object can be updated, and perform some additional operations if necessary.
-     * This method can be overridden to define a more precise set of tests.
-     *
-     * @param  \equal\orm\ObjectManager   $om         ObjectManager instance.
-     * @param  array                      $oids       List of objects identifiers.
-     * @param  array                      $values     Associative array holding the new values to be assigned.
-     * @param  string                     $lang       Language in which multilang fields are being updated.
-     * @return array                      Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
-     */
-    public static function canupdate($om, $oids, $values, $lang = 'en') {
-        $res = $om->read(self::getType(), $oids, ['status']);
-
-        if($res > 0) {
-            foreach($res as $oid => $odata) {
-                if($odata['status'] == 'invoice') {
-                    if(!isset($values['status']) || !in_array($values['status'], ['invoice', 'cancelled'])) {
-                        // only allow editable fields
-                        $editable_fields = ['payment_status'];
-                        $sale_editable_fields = ['customer_ref']; // Editable fields of sale\accounting\Invoice
-
-                        if( count(array_diff(array_keys($values), array_merge($editable_fields, $sale_editable_fields))) ) {
-                            return ['status' => ['non_editable' => 'Invoice can only be updated while its status is proforma.']];
-                        }
-                    }
-                }
-            }
-        }
-        return parent::canupdate($om, $oids, $values, $lang);
-    }
-
-    /**
-     * Check whether the invoice can be deleted.
-     *
-     * @param  \equal\orm\ObjectManager    $om         ObjectManager instance.
-     * @param  array                       $oids       List of objects identifiers.
-     * @return array                       Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
-     */
-    public static function candelete($om, $oids) {
-        $res = $om->read(get_called_class(), $oids, ['status']);
-
-        if($res > 0) {
-            foreach($res as $oid => $odata) {
-                if($odata['status'] != 'proforma') {
-                    return ['status' => ['non_removable' => 'Invoice can only be deleted while its status is proforma.']];
-                }
-            }
-        }
-        return parent::candelete($om, $oids);
-    }
 }

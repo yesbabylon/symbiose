@@ -60,6 +60,9 @@
                 },
                 "section.softwares": {
                     "label": "Logiciels"
+                },
+                "section.time_entries": {
+                    "label": "Prestations"
                 }
             }
         },

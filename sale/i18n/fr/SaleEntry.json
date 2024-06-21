@@ -19,13 +19,13 @@
             "help": ""
         },
         "has_receivable": {
-            "label": "A un percevable",
-            "description": "L'entée de vente est liée à un percevable.",
+            "label": "A un créance",
+            "description": "L'entée de vente est liée à un créance.",
             "help": ""
         },
         "receivable_id": {
-            "label": "Percevable",
-            "description": "Percevable lié à l'entrée de vente.",
+            "label": "Créance",
+            "description": "Créance lié à l'entrée de vente.",
             "help": ""
         },
         "is_billable": {
@@ -79,8 +79,8 @@
             "help": ""
         },
         "receivable_name": {
-            "label": "Nom du percevable",
-            "description": "Nom donné au percevable généré.",
+            "label": "Nom de la créance",
+            "description": "Nom donné à la créance générée.",
             "help": ""
         },
         "status": {
@@ -90,7 +90,7 @@
                 "pending": "En cours",
                 "ready": "Prête",
                 "validated": "Validée",
-                "billed": "Facturée"
+                "billed": "Comptabilisée"
             },
             "help": ""
         }

@@ -6,7 +6,7 @@
 */
 
 namespace identity;
-use finance\accounting\BankAccount;
+use finance\bank\BankAccount;
 
 class Organisation extends Identity {
 
@@ -41,13 +41,13 @@ class Organisation extends Identity {
 
             'type' => [
                 'type'              => 'string',
-                'default'           => 'C',
+                'default'           => 'CO',
                 'readonly'          => true
             ],
 
             'bank_account_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'finance\accounting\BankAccount',
+                'foreign_object'    => 'finance\bank\BankAccount',
                 'foreign_field'     => 'organisation_id',
                 'description'       => 'List of the bank account of the organisation',
                 'ondetach'          => 'delete',

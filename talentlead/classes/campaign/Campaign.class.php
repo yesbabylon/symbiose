@@ -21,7 +21,7 @@ class Campaign extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'talentlead\sale\customer\Customer',
                 // 'onupdate'          => 'onupdateTypeId',
-                // 'default'           => 1,                                    // default is 'I' individual
+                // 'default'           => 1,                                    // default is 'IN' individual
                 'description'       => 'Customer touched by the campaign.'
             ],
 

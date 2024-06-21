@@ -30,7 +30,7 @@ class AccountingJournal extends Model {
 
             'description' => [
                 'type'              => 'string',
-                'description'       => 'Verbose detail of the role of the journale.',
+                'description'       => 'Verbose detail of the role of the journal.',
                 'multilang'         => true
             ],
 
@@ -55,17 +55,19 @@ class AccountingJournal extends Model {
 
             'organisation_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => \identity\Identity::getType(),
+                'foreign_object'    => 'identity\Organisation',
                 'description'       => "The organisation the journal belongs to.",
                 'default'           => 1
             ],
 
             'accounting_entries_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => AccountingEntry::getType(),
+                'foreign_object'    => 'finance\accounting\AccountingEntry',
                 'foreign_field'     => 'journal_id',
                 'description'       => 'Accounting entries relating to the journal.',
-                'ondetach'          => 'null'
+                'ondetach'          => 'null',
+                'order'             => 'created',
+                'sort'              => 'desc'
             ]
 
         ];

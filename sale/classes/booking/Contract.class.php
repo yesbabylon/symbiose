@@ -37,13 +37,12 @@ class Contract extends \sale\contract\Contract {
         ];
     }
 
-    public static function calcName($om, $oids, $lang) {
+    public static function calcName($self) {
         $result = [];
-
-        $res = $om->read(get_called_class(), $oids, ['booking_id', 'customer_id.name', 'booking_id.name']);
-        foreach($res as $oid => $odata) {
-            $ids = $om->search(get_called_class(), ['booking_id', '=', $odata['booking_id']]);
-            $result[$oid] = sprintf("%s - %s - %d", $odata['customer_id.name'], $odata['booking_id.name'], count($ids));
+        $self->read(['booking_id', 'customer_id' => ['name'], 'booking_id' => ['id', 'name']]);
+        foreach($self as $id => $contract) {
+            $ids = self::search(['booking_id', '=', $contract['booking_id']['id']]);
+            $result[$id] = sprintf("%s - %s - %d", $contract['customer_id']['name'], $contract['booking_id']['name'], count($ids));
         }
         return $result;
     }

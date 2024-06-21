@@ -41,10 +41,10 @@ class Setting extends \core\setting\Setting {
         $orm = $providers['orm'];
 
         $settings_ids = $orm->search(self::getType(), [
-            ['package', '=', $package],
-            ['section', '=', $section],
-            ['code', '=', $code]
-        ]);
+                ['package', '=', $package],
+                ['section', '=', $section],
+                ['code', '=', $code]
+            ]);
 
         if($settings_ids > 0 && count($settings_ids)) {
 
@@ -65,7 +65,10 @@ class Setting extends \core\setting\Setting {
                     }
                 }
                 if($setting_sequence_id > 0) {
-                    $result = $orm->fetchAndAdd(SettingSequence::getType(), $setting_sequence_id, 'value', $increment);
+                    $res = $orm->fetchAndAdd(SettingSequence::getType(), $setting_sequence_id, 'value', $increment);
+                    if($res > 0 && count($res)) {
+                        $result = $res[$setting_sequence_id];
+                    }
                 }
             }
         }

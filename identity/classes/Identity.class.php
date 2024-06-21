@@ -52,7 +52,7 @@ class Identity extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\IdentityType',
                 'onupdate'          => 'onupdateTypeId',
-                // default is 'I' individual
+                // default is 'IN' individual
                 'default'           => 1,
                 'dependents  '      => ['type', 'name'],
                 'description'       => 'Type of identity.'
@@ -100,7 +100,7 @@ class Identity extends Model {
             'legal_name' => [
                 'type'              => 'string',
                 'description'       => 'Full name of the Identity.',
-                'visible'           => [ ['type', '<>', 'I'] ],
+                'visible'           => [ ['type', '<>', 'IN'] ],
                 'dependents  '      => ['name'],
                 'onupdate'          => 'onupdateLegalName'
             ],
@@ -108,14 +108,14 @@ class Identity extends Model {
             'short_name' => [
                 'type'              => 'string',
                 'description'       => 'Usual name to be used as a memo for identifying the organization (acronym or short name).',
-                'visible'           => [ ['type', '<>', 'I'] ],
+                'visible'           => [ ['type', '<>', 'IN'] ],
                 'dependents'        => ['name']
             ],
 
             'has_vat' => [
                 'type'              => 'boolean',
                 'description'       => 'Does the organization have a VAT number?',
-                'visible'           => [ ['type', '<>', 'I'], ['has_parent', '=', false] ],
+                'visible'           => [ ['type', '<>', 'IN'], ['has_parent', '=', false] ],
                 'default'           => false,
                 'onupdate'          => 'onupdateHasVat'
             ],
@@ -123,14 +123,14 @@ class Identity extends Model {
             'vat_number' => [
                 'type'              => 'string',
                 'description'       => 'Value Added Tax identification number, if any.',
-                'visible'           => [ ['has_vat', '=', true], ['type', '<>', 'I'], ['has_parent', '=', false] ],
+                'visible'           => [ ['has_vat', '=', true], ['type', '<>', 'IN'], ['has_parent', '=', false] ],
                 'onupdate'          => 'onupdateVatNumber'
             ],
 
             'registration_number' => [
                 'type'              => 'string',
                 'description'       => 'Organization registration number (company number).',
-                'visible'           => [ ['type', '<>', 'I'] ]
+                'visible'           => [ ['type', '<>', 'IN'] ]
             ],
 
             /*
@@ -139,7 +139,7 @@ class Identity extends Model {
             'citizen_identification' => [
                 'type'              => 'string',
                 'description'       => 'Citizen registration number, if any.',
-                'visible'           => [ ['type', '=', 'I'] ]
+                'visible'           => [ ['type', '=', 'IN'] ]
             ],
 
             'nationality' => [
@@ -156,22 +156,22 @@ class Identity extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\Identity',
                 'foreign_field'     => 'parent_id',
-                'domain'            => ['type', '<>', 'I'],
+                'domain'            => ['type', '<>', 'IN'],
                 'description'       => 'Children departments of the organization, if any.',
-                'visible'           => [ ['type', '<>', 'I'] ]
+                'visible'           => [ ['type', '<>', 'IN'] ]
             ],
 
             'has_parent' => [
                 'type'              => 'boolean',
                 'description'       => 'Does the identity have a parent organization?',
-                'visible'           => [ ['type', '<>', 'I'] ],
+                'visible'           => [ ['type', '<>', 'IN'] ],
                 'default'           => false
             ],
 
             'parent_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'domain'            => ['type', '<>', 'I'],
+                'domain'            => ['type', '<>', 'IN'],
                 'description'       => 'Parent company of which the organization is a branch (department), if any.',
                 'visible'           => [ ['has_parent', '=', true] ]
             ],
@@ -190,7 +190,7 @@ class Identity extends Model {
                 'foreign_object'    => 'identity\User',
                 'foreign_field'     => 'owner_identity_id',
                 'description'       => 'List of users of the identity, if any.' ,
-                'visible'           => [ ['type', '<>', 'I'] ]
+                'visible'           => [ ['type', '<>', 'IN'] ]
             ],
 
             'employees_ids' => [
@@ -198,7 +198,7 @@ class Identity extends Model {
                 'foreign_object'    => 'hr\employee\Employee',
                 'foreign_field'     => 'owner_identity_id',
                 'description'       => 'List of employees of the organization, if any.' ,
-                'visible'           => [ ['type', '<>', 'I'] ]
+                'visible'           => [ ['type', '<>', 'IN'] ]
             ],
 
             'customers_ids' => [
@@ -207,7 +207,7 @@ class Identity extends Model {
                 'foreign_field'     => 'owner_identity_id',
                 'domain'            => ['relationship', '=', 'customer'],
                 'description'       => 'List of customers of the organization, if any.',
-                'visible'           => [ ['type', '<>', 'I'] ]
+                'visible'           => [ ['type', '<>', 'IN'] ]
             ],
 
             'suppliers_ids' => [
@@ -215,7 +215,7 @@ class Identity extends Model {
                 'foreign_object'    => 'purchase\supplier\Supplier',
                 'foreign_field'     => 'owner_identity_id',
                 'description'       => 'List of suppliers of the organization, if any.',
-                'visible'           => [ ['type', '<>', 'I'] ]
+                'visible'           => [ ['type', '<>', 'IN'] ]
             ],
 
 
@@ -226,7 +226,7 @@ class Identity extends Model {
             'firstname' => [
                 'type'              => 'string',
                 'description'       => "Full name of the contact (must be a person, not a role).",
-                'visible'           => ['type', '=', 'I'],
+                'visible'           => ['type', '=', 'IN'],
                 'dependents'        => ['name'],
                 'onupdate'          => 'onupdateFirstname'
             ],
@@ -234,7 +234,7 @@ class Identity extends Model {
             'lastname' => [
                 'type'              => 'string',
                 'description'       => 'Reference contact surname.',
-                'visible'           => ['type', '=', 'I'],
+                'visible'           => ['type', '=', 'IN'],
                 'dependents'        => ['name'],
                 'onupdate'          => 'onupdateLastname'
             ],
@@ -243,20 +243,20 @@ class Identity extends Model {
                 'type'              => 'string',
                 'selection'         => ['M' => 'Male', 'F' => 'Female', 'X' => 'Non-binary'],
                 'description'       => 'Reference contact gender.',
-                'visible'           => ['type', '=', 'I']
+                'visible'           => ['type', '=', 'IN']
             ],
 
             'title' => [
                 'type'              => 'string',
                 'selection'         => ['Dr' => 'Doctor', 'Ms' => 'Miss', 'Mrs' => 'Misses', 'Mr' => 'Mister', 'Pr' => 'Professor'],
                 'description'       => 'Reference contact title.',
-                'visible'           => ['type', '=', 'I']
+                'visible'           => ['type', '=', 'IN']
             ],
 
             'date_of_birth' => [
                 'type'              => 'date',
                 'description'       => 'Date of birth.',
-                'visible'           => ['type', '=', 'I']
+                'visible'           => ['type', '=', 'IN']
             ],
 
             'lang_id' => [
@@ -357,7 +357,7 @@ class Identity extends Model {
                 'type'              => 'string',
                 'usage'             => 'uri/url',
                 'description'       => 'Organization main official website URL, if any.',
-                'visible'           => ['type', '<>', 'I']
+                'visible'           => ['type', '<>', 'IN']
             ],
 
             // an identity can have additional addresses
@@ -378,14 +378,14 @@ class Identity extends Model {
                 'domain'            => ['relationship', '=', 'contact'],
                 'description'       => 'Contact (natural person) that can legally represent the organization.',
                 'onupdate'          => 'onupdateReferencePartnerId',
-                'visible'           => [ ['type', '<>', 'I'], ['type', '<>', 'SE'] ]
+                'visible'           => [ ['type', '<>', 'IN'], ['type', '<>', 'SE'] ]
             ],
 
             'user_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\User',
                 'description'       => 'User associated to this identity, if any.',
-                'visible'           => [['type', '=', 'I'], ['is_organisation', '=', false]],
+                'visible'           => [['type', '=', 'IN'], ['is_organisation', '=', false]],
                 'onupdate'          => 'onupdateUserId'
             ],
 
@@ -476,7 +476,7 @@ class Identity extends Model {
         $self->read(['type', 'firstname', 'lastname', 'legal_name', 'short_name']);
         foreach($self as $id => $identity) {
             $parts = [];
-            if($identity['type'] == 'I') {
+            if($identity['type'] == 'IN') {
                 if(isset($identity['firstname']) && strlen($identity['firstname'])) {
                     $parts[] = ucfirst($identity['firstname']);
                 }

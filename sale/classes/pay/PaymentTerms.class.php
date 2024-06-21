@@ -31,12 +31,12 @@ class PaymentTerms extends Model {
                 'type'              => 'string',
                 'description'       => 'Description of the terms (1 sentence, displayed in docs).',
                 'multilang'         => true,
-                'required'          => true                
+                'required'          => true
             ],
 
             'delay_from' => [
                 'type'              => 'string',
-                'selection'         => ['created','next_month'],
+                'selection'         => ['created', 'next_month'],
                 'description'       => "Event from which the delay is relative to."
             ],
 

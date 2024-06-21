@@ -3,39 +3,9 @@
     "access": {
         "groups": ["sale.default.user"]
     },
+    "search": true,
     "layout": {
         "items": [
-            {
-                "id": "bank_statements",
-                "label": "Bank statements",
-                "icon": "list_alt",
-                "description": "Bank statements parent menu.",
-                "type": "parent",
-                "children": [
-                    {
-                        "id": "bank_statements.all",
-                        "type": "entry",
-                        "label": "All",
-                        "description": "Display all bank statements.",
-                        "icon": "list",
-                        "context": {
-                            "entity": "sale\\pay\\BankStatement",
-                            "view": "list.default"
-                        }
-                    },
-                    {
-                        "id": "bank_statements.lines.all",
-                        "type": "entry",
-                        "label": "Lines",
-                        "icon": "list",
-                        "description": "Display all bank statements lines.",
-                        "context": {
-                            "entity": "sale\\pay\\BankStatementLine",
-                            "view": "list.default"
-                        }
-                    }
-                ]
-            },
             {
                 "id": "customers",
                 "type": "parent",
@@ -328,24 +298,6 @@
                 ]
             },
             {
-                "id": "fundings",
-                "type": "parent",
-                "label": "Fundings",
-                "icon": "person",
-                "children": [
-                    {
-                        "id": "fundings.all",
-                        "type": "entry",
-                        "label": "All",
-                        "icon": "list",
-                        "context": {
-                            "entity": "sale\\pay\\Funding",
-                            "view": "list.default"
-                        }
-                    }
-                ]
-            },
-            {
                 "id": "catalog",
                 "type": "parent",
                 "label": "Catalog",
@@ -511,19 +463,6 @@
                         "description": "Settings payments parent menu.",
                         "children": [
                             {
-                                "id": "settings.payment.deadline",
-                                "type": "entry",
-                                "label": "Deadline",
-                                "icon": "alarm",
-                                "description": "Display all payments deadlines.",
-                                "context": {
-                                    "entity": "sale\\pay\\PaymentDeadline",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            },
-                            {
                                 "id": "settings.payment.funding.plans",
                                 "type": "entry",
                                 "label": "Funding plans",
@@ -539,7 +478,7 @@
                             {
                                 "id": "settings.payment.terms",
                                 "type": "entry",
-                                "label": "Terms",
+                                "label": "Payment terms",
                                 "icon": "analytics",
                                 "description": "Display all payments terms.",
                                 "context": {

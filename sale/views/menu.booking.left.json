@@ -22,7 +22,7 @@
                         "description": "",
                         "route": "/bookings",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Booking",
+                            "entity": "sale\\booking\\Booking",
                             "view": "list.default",
                             "order": "id",
                             "sort": "desc"
@@ -35,7 +35,7 @@
                         "description": "",
                         "route": "/bookings",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Booking",
+                            "entity": "sale\\booking\\Booking",
                             "view": "list.default",
                             "domain": ["status", "=", "quote"]
                         }
@@ -47,7 +47,7 @@
                         "description": "",
                         "route": "/bookings",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Booking",
+                            "entity": "sale\\booking\\Booking",
                             "view": "list.default",
                             "domain": ["status", "=", "option"]
                         }
@@ -59,7 +59,7 @@
                         "description": "",
                         "route": "/bookings",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Booking",
+                            "entity": "sale\\booking\\Booking",
                             "view": "list.default",
                             "domain": ["status", "=", "confirmed"]
                         }
@@ -71,7 +71,7 @@
                         "description": "",
                         "route": "/bookings",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Booking",
+                            "entity": "sale\\booking\\Booking",
                             "view": "list.default",
                             "domain": ["status", "=", "checkedin"]
                         }
@@ -83,7 +83,7 @@
                         "description": "",
                         "route": "/bookings",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Booking",
+                            "entity": "sale\\booking\\Booking",
                             "view": "list.default",
                             "domain": ["status", "in", ["invoiced", "debit_balanced", "credit_balanced"]]
                         }
@@ -95,7 +95,7 @@
                         "description": "",
                         "route": "/bookings",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Booking",
+                            "entity": "sale\\booking\\Booking",
                             "view": "list.default",
                             "domain": ["status", "=", "balanced"]
                         }
@@ -107,7 +107,7 @@
                         "description": "",
                         "route": "/bookings",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Booking",
+                            "entity": "sale\\booking\\Booking",
                             "view": "list.default",
                             "domain": ["state", "=", "archive"]
                         }
@@ -128,7 +128,7 @@
                         "icon": "add",
                         "route": "/bookings",
                         "context": {
-                            "entity": "lodging\\identity\\Identity",
+                            "entity": "identity\\Identity",
                             "view": "form.create",
                             "purpose": "create"
                         }
@@ -140,7 +140,7 @@
                         "description": "",
                         "route": "/bookings",
                         "context": {
-                            "entity": "lodging\\identity\\Identity",
+                            "entity": "identity\\Identity",
                             "view": "list.default"
                         }
                     },
@@ -177,7 +177,7 @@
                         "description": "",
                         "route": "/consumptions",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Consumption",
+                            "entity": "sale\\booking\\Consumption",
                             "view": "list.checkins",
                             "domain": ["schedule_from", "<>", "00:00:00"]
                         }
@@ -189,7 +189,7 @@
                         "description": "",
                         "route": "/consumptions",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Consumption",
+                            "entity": "sale\\booking\\Consumption",
                             "view": "list.meals"
                         }
                     },
@@ -200,7 +200,7 @@
                         "description": "",
                         "route": "/consumptions",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Consumption",
+                            "entity": "sale\\booking\\Consumption",
                             "view": "list.cleanups"
                         }
                     },
@@ -211,7 +211,7 @@
                         "description": "",
                         "route": "/consumptions",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Consumption",
+                            "entity": "sale\\booking\\Consumption",
                             "view": "list.occupancies"
                         }
                     }

@@ -19,7 +19,7 @@
                         "description": "",
                         "route": "/sessions",
                         "context": {
-                            "entity": "lodging\\sale\\pos\\CashdeskSession",
+                            "entity": "sale\\pos\\CashdeskSession",
                             "view": "list.default",
                             "order": "created",
                             "sort": "desc",
@@ -33,7 +33,7 @@
                         "description": "",
                         "route": "/sessions",
                         "context": {
-                            "entity": "lodging\\sale\\pos\\CashdeskSession",
+                            "entity": "sale\\pos\\CashdeskSession",
                             "view": "list.reconciled",
                             "order": "created",
                             "sort": "desc",
@@ -46,7 +46,7 @@
                         "label": "Orders  ",
                         "description": "",
                         "context": {
-                            "entity": "lodging\\sale\\pos\\Order",
+                            "entity": "sale\\pos\\Order",
                             "view": "list.default",
                             "domain": [[["status", "=", "pending"]]]
                         }

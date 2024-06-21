@@ -99,18 +99,6 @@
                 "description": "Projects",
                 "children": [
                     {
-                        "id": "projects.new",
-                        "type": "entry",
-                        "label": "New",
-                        "icon": "add",
-                        "description": "Add new project",
-                        "context": {
-                            "entity": "timetrack\\Project",
-                            "view": "form.create",
-                            "purpose": "create"
-                        }
-                    },
-                    {
                         "id": "projects.all",
                         "type": "entry",
                         "label": "All",

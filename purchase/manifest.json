@@ -14,7 +14,7 @@
             "name": "Purchase",
             "extends": "app",
             "description": "Application purchase",
-            "icon": "storefront",
+            "icon": "shopping_cart_checkout",
             "color": "#a13a32",
             "access": {
                 "groups": [

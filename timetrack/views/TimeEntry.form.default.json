@@ -4,7 +4,7 @@
     "actions": [
         {
             "id": "action.transition.ready",
-            "label": "Ready",
+            "label": "Submit",
             "controller": "model_transition",
             "params": {
                 "entity": "timetrack\\TimeEntry",
@@ -17,12 +17,12 @@
             ]
         },
         {
-            "id": "action.transition.refuse",
-            "label": "Refuse",
+            "id": "action.transition.validate",
+            "label": "Validate",
             "controller": "model_transition",
             "params": {
                 "entity": "timetrack\\TimeEntry",
-                "transition": "refuse",
+                "transition": "validate",
                 "ids": []
             },
             "visible": [
@@ -31,12 +31,12 @@
             ]
         },
         {
-            "id": "action.transition.validate",
-            "label": "Validate",
+            "id": "action.transition.refuse",
+            "label": "Refuse",
             "controller": "model_transition",
             "params": {
                 "entity": "timetrack\\TimeEntry",
-                "transition": "validate",
+                "transition": "refuse",
                 "ids": []
             },
             "visible": [

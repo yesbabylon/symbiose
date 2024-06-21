@@ -61,7 +61,7 @@
         },
         "reference": {
             "label": "Référence",
-            "description": "Référence completant l'origine.",
+            "description": "Référence pour compléter l'origine.",
             "help": ""
         }
     },
@@ -71,7 +71,7 @@
             "description": "Formulaire de modification par défaut d'une saisie de temps.",
             "actions": {
                 "action.transition.ready": {
-                    "label": "Prête",
+                    "label": "Soumettre",
                     "help": ""
                 },
                 "action.transition.refuse": {

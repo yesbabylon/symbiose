@@ -6,7 +6,7 @@
             {
                 "name": "100000",
                 "code": "1",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 1,
                 "description": "Equity, Provisions for Liabilities and Charges, and Long-Term Debts",
                 "parent_account_id": null,
@@ -22,7 +22,7 @@
             {
                 "name": "200000",
                 "code": "2",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 1,
                 "description": "Formation Expenses, Fixed Assets, and Long-Term Receivables",
                 "parent_account_id": null,
@@ -38,7 +38,7 @@
             {
                 "name": "300000",
                 "code": "3",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 1,
                 "description": "Inventory and Orders in Progress",
                 "parent_account_id": null,
@@ -54,7 +54,7 @@
             {
                 "name": "400000",
                 "code": "4",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 1,
                 "description": "Short-Term Receivables and Payables",
                 "parent_account_id": null,
@@ -70,7 +70,7 @@
             {
                 "name": "500000",
                 "code": "5",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 1,
                 "description": "Cash and Cash Equivalents",
                 "parent_account_id": null,
@@ -86,7 +86,7 @@
             {
                 "name": "600000",
                 "code": "6",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 1,
                 "description": "Expenses",
                 "parent_account_id": null,
@@ -102,7 +102,7 @@
             {
                 "name": "700000",
                 "code": "7",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 1,
                 "description": "Income",
                 "parent_account_id": null,
@@ -118,7 +118,7 @@
             {
                 "name": "100000",
                 "code": "10",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 2,
                 "description": "Capital",
                 "parent_account_id": 1,
@@ -134,7 +134,7 @@
             {
                 "name": "110000",
                 "code": "11",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 2,
                 "description": "Contributions Outside Capital",
                 "parent_account_id": 1,
@@ -150,7 +150,7 @@
             {
                 "name": "120000",
                 "code": "12",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 2,
                 "description": "Revaluation Surpluses",
                 "parent_account_id": 1,
@@ -166,7 +166,7 @@
             {
                 "name": "130000",
                 "code": "13",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 2,
                 "description": "Reserves",
                 "parent_account_id": 1,
@@ -182,7 +182,7 @@
             {
                 "name": "140000",
                 "code": "14",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 2,
                 "description": "Retained Earnings",
                 "parent_account_id": 1,
@@ -198,7 +198,7 @@
             {
                 "name": "150000",
                 "code": "15",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 2,
                 "description": "Capital Grants",
                 "parent_account_id": 1,
@@ -214,7 +214,7 @@
             {
                 "name": "160000",
                 "code": "16",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 2,
                 "description": "Provisions and Deferred Taxes",
                 "parent_account_id": 1,
@@ -230,7 +230,7 @@
             {
                 "name": "170000",
                 "code": "17",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 2,
                 "description": "Long-Term Debts",
                 "parent_account_id": 1,
@@ -246,7 +246,7 @@
             {
                 "name": "190000",
                 "code": "19",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 2,
                 "description": "Interim Dividends",
                 "parent_account_id": 1,
@@ -262,7 +262,7 @@
             {
                 "name": "200000",
                 "code": "20",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 2,
                 "description": "Formation Expenses",
                 "parent_account_id": 2,
@@ -278,7 +278,7 @@
             {
                 "name": "210000",
                 "code": "21",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 2,
                 "description": "Intangible Assets",
                 "parent_account_id": 2,
@@ -294,7 +294,7 @@
             {
                 "name": "220000",
                 "code": "22",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 2,
                 "description": "Land and Buildings",
                 "parent_account_id": 2,
@@ -310,7 +310,7 @@
             {
                 "name": "230000",
                 "code": "23",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 2,
                 "description": "Plant, Machinery and Equipment",
                 "parent_account_id": 2,
@@ -326,7 +326,7 @@
             {
                 "name": "240000",
                 "code": "24",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 2,
                 "description": "Furniture and Vehicles",
                 "parent_account_id": 2,
@@ -342,7 +342,7 @@
             {
                 "name": "250000",
                 "code": "25",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 2,
                 "description": "Assets Held Under Finance Leases",
                 "parent_account_id": 2,
@@ -358,7 +358,7 @@
             {
                 "name": "260000",
                 "code": "26",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 2,
                 "description": "Other Tangible Assets",
                 "parent_account_id": 2,
@@ -374,7 +374,7 @@
             {
                 "name": "270000",
                 "code": "27",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 2,
                 "description": "Assets Under Construction and Advance Payments",
                 "parent_account_id": 2,
@@ -390,7 +390,7 @@
             {
                 "name": "280000",
                 "code": "28",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 2,
                 "description": "Financial Assets",
                 "parent_account_id": 2,
@@ -406,7 +406,7 @@
             {
                 "name": "290000",
                 "code": "29",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 2,
                 "description": "Long-Term Receivables",
                 "parent_account_id": 2,
@@ -422,7 +422,7 @@
             {
                 "name": "300000",
                 "code": "30",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 2,
                 "description": "Raw Materials",
                 "parent_account_id": 3,
@@ -438,7 +438,7 @@
             {
                 "name": "310000",
                 "code": "31",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 2,
                 "description": "Supplies",
                 "parent_account_id": 3,
@@ -454,7 +454,7 @@
             {
                 "name": "320000",
                 "code": "32",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 2,
                 "description": "Work in Progress",
                 "parent_account_id": 3,
@@ -470,7 +470,7 @@
             {
                 "name": "330000",
                 "code": "33",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 2,
                 "description": "Finished Goods",
                 "parent_account_id": 3,
@@ -486,7 +486,7 @@
             {
                 "name": "340000",
                 "code": "34",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 2,
                 "description": "Merchandise",
                 "parent_account_id": 3,
@@ -502,7 +502,7 @@
             {
                 "name": "350000",
                 "code": "35",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 2,
                 "description": "Real Estate Held for Sale",
                 "parent_account_id": 3,
@@ -518,7 +518,7 @@
             {
                 "name": "360000",
                 "code": "36",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 2,
                 "description": "Advance Payments for Inventory",
                 "parent_account_id": 3,
@@ -534,7 +534,7 @@
             {
                 "name": "370000",
                 "code": "37",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 2,
                 "description": "Orders in Progress",
                 "parent_account_id": 3,
@@ -550,7 +550,7 @@
             {
                 "name": "400000",
                 "code": "40",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 2,
                 "description": "Trade Receivables",
                 "parent_account_id": 4,
@@ -566,7 +566,7 @@
             {
                 "name": "410000",
                 "code": "41",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 2,
                 "description": "Other Receivables",
                 "parent_account_id": 4,
@@ -582,7 +582,7 @@
             {
                 "name": "420000",
                 "code": "42",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 2,
                 "description": "Long-Term Liabilities Due Within One Year",
                 "parent_account_id": 4,
@@ -598,7 +598,7 @@
             {
                 "name": "430000",
                 "code": "43",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 2,
                 "description": "Financial Debts",
                 "parent_account_id": 4,
@@ -614,7 +614,7 @@
             {
                 "name": "440000",
                 "code": "44",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 2,
                 "description": "Trade Debts",
                 "parent_account_id": 4,
@@ -630,7 +630,7 @@
             {
                 "name": "450000",
                 "code": "45",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 2,
                 "description": "Tax, Salary and Social Debts",
                 "parent_account_id": 4,
@@ -646,7 +646,7 @@
             {
                 "name": "460000",
                 "code": "46",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 2,
                 "description": "Advances on Orders",
                 "parent_account_id": 4,
@@ -662,7 +662,7 @@
             {
                 "name": "470000",
                 "code": "47",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 2,
                 "description": "Debts Resulting from the Appropriation of Profits",
                 "parent_account_id": 4,
@@ -678,7 +678,7 @@
             {
                 "name": "480000",
                 "code": "48",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 2,
                 "description": "Other Debts",
                 "parent_account_id": 4,
@@ -694,7 +694,7 @@
             {
                 "name": "490000",
                 "code": "49",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 2,
                 "description": "Accruals and Deferrals",
                 "parent_account_id": 4,
@@ -710,7 +710,7 @@
             {
                 "name": "500000",
                 "code": "50",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 2,
                 "description": "Own Shares",
                 "parent_account_id": 5,
@@ -726,7 +726,7 @@
             {
                 "name": "510000",
                 "code": "51",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 2,
                 "description": "Shares, Participations and Cash Investments Other than Fixed Income Securities",
                 "parent_account_id": 5,
@@ -742,7 +742,7 @@
             {
                 "name": "520000",
                 "code": "52",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 2,
                 "description": "Fixed Income Securities",
                 "parent_account_id": 5,
@@ -758,7 +758,7 @@
             {
                 "name": "530000",
                 "code": "53",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 2,
                 "description": "Term Deposits",
                 "parent_account_id": 5,
@@ -774,7 +774,7 @@
             {
                 "name": "540000",
                 "code": "54",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 2,
                 "description": "Matured Securities for Collection",
                 "parent_account_id": 5,
@@ -790,7 +790,7 @@
             {
                 "name": "550000",
                 "code": "55",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 2,
                 "description": "Credit Institutions",
                 "parent_account_id": 5,
@@ -806,7 +806,7 @@
             {
                 "name": "580000",
                 "code": "58",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 2,
                 "description": "Internal Transfers",
                 "parent_account_id": 5,
@@ -822,7 +822,7 @@
             {
                 "name": "600000",
                 "code": "60",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 2,
                 "description": "Raw Materials and Goods",
                 "parent_account_id": 6,
@@ -838,7 +838,7 @@
             {
                 "name": "610000",
                 "code": "61",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 2,
                 "description": "Services and Miscellaneous Goods",
                 "parent_account_id": 6,
@@ -854,7 +854,7 @@
             {
                 "name": "620000",
                 "code": "62",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 2,
                 "description": "Remunerations, Social Charges and Pensions",
                 "parent_account_id": 6,
@@ -870,7 +870,7 @@
             {
                 "name": "630000",
                 "code": "63",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 2,
                 "description": "Depreciation, Impairments and Provisions for Risks",
                 "parent_account_id": 6,
@@ -886,7 +886,7 @@
             {
                 "name": "640000",
                 "code": "64",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 2,
                 "description": "Other Operating Expenses",
                 "parent_account_id": 6,
@@ -902,7 +902,7 @@
             {
                 "name": "650000",
                 "code": "65",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 2,
                 "description": "Financial Expenses",
                 "parent_account_id": 6,
@@ -918,7 +918,7 @@
             {
                 "name": "660000",
                 "code": "66",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 2,
                 "description": "Non-Recurring Operating and Financial Expenses",
                 "parent_account_id": 6,
@@ -934,7 +934,7 @@
             {
                 "name": "670000",
                 "code": "67",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 2,
                 "description": "Impôts sur le résultat",
                 "parent_account_id": 6,
@@ -950,7 +950,7 @@
             {
                 "name": "680000",
                 "code": "68",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 2,
                 "description": "Transferts aux impôts différés et aux réserves immunisées",
                 "parent_account_id": 6,
@@ -966,7 +966,7 @@
             {
                 "name": "690000",
                 "code": "69",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 2,
                 "description": "Affectations et prélèvements",
                 "parent_account_id": 6,
@@ -982,7 +982,7 @@
             {
                 "name": "700000",
                 "code": "70",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 2,
                 "description": "Revenue",
                 "parent_account_id": 7,
@@ -998,7 +998,7 @@
             {
                 "name": "710000",
                 "code": "71",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 2,
                 "description": "Changes in Inventory and Orders in Progress",
                 "parent_account_id": 7,
@@ -1014,7 +1014,7 @@
             {
                 "name": "720000",
                 "code": "72",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 2,
                 "description": "Capitalized Production",
                 "parent_account_id": 7,
@@ -1030,7 +1030,7 @@
             {
                 "name": "740000",
                 "code": "74",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 2,
                 "description": "Other Operating Income",
                 "parent_account_id": 7,
@@ -1046,7 +1046,7 @@
             {
                 "name": "750000",
                 "code": "75",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 2,
                 "description": "Financial Income",
                 "parent_account_id": 7,
@@ -1062,7 +1062,7 @@
             {
                 "name": "760000",
                 "code": "76",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 2,
                 "description": "Non-Recurring Operating and Financial Income",
                 "parent_account_id": 7,
@@ -1078,7 +1078,7 @@
             {
                 "name": "770000",
                 "code": "77",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 2,
                 "description": "Adjustments to Taxes and Reversal of Tax Provisions",
                 "parent_account_id": 7,
@@ -1094,7 +1094,7 @@
             {
                 "name": "780000",
                 "code": "78",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 2,
                 "description": "Withdrawals from Exempt Reserves and Deferred Taxes",
                 "parent_account_id": 7,
@@ -1110,7 +1110,7 @@
             {
                 "name": "790000",
                 "code": "79",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 2,
                 "description": "Allocations and Withdrawals",
                 "parent_account_id": 7,
@@ -1126,7 +1126,7 @@
             {
                 "name": "100000",
                 "code": "100",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Subscribed Capital",
                 "parent_account_id": 10,
@@ -1142,7 +1142,7 @@
             {
                 "name": "101000",
                 "code": "101",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Uncalled Capital",
                 "parent_account_id": 10,
@@ -1158,7 +1158,7 @@
             {
                 "name": "110000",
                 "code": "110",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Available Contribution Outside Capital",
                 "parent_account_id": 11,
@@ -1174,7 +1174,7 @@
             {
                 "name": "111000",
                 "code": "111",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Unavailable Contribution Outside Capital",
                 "parent_account_id": 11,
@@ -1190,7 +1190,7 @@
             {
                 "name": "120000",
                 "code": "120",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Revaluation Surplus on Intangible Assets",
                 "parent_account_id": 12,
@@ -1206,7 +1206,7 @@
             {
                 "name": "121000",
                 "code": "121",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Revaluation Surplus on Tangible Assets",
                 "parent_account_id": 12,
@@ -1222,7 +1222,7 @@
             {
                 "name": "122000",
                 "code": "122",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Revaluation Surplus on Financial Assets",
                 "parent_account_id": 12,
@@ -1238,7 +1238,7 @@
             {
                 "name": "123000",
                 "code": "123",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Revaluation Surplus on Inventory",
                 "parent_account_id": 12,
@@ -1254,7 +1254,7 @@
             {
                 "name": "124000",
                 "code": "124",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Reversal of Impairment on Cash Investments",
                 "parent_account_id": 12,
@@ -1270,7 +1270,7 @@
             {
                 "name": "130000",
                 "code": "130",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Legal Reserves",
                 "parent_account_id": 13,
@@ -1286,7 +1286,7 @@
             {
                 "name": "131000",
                 "code": "131",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Other Unavailable Reserves",
                 "parent_account_id": 13,
@@ -1302,7 +1302,7 @@
             {
                 "name": "132000",
                 "code": "132",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Exempt Reserves",
                 "parent_account_id": 13,
@@ -1318,7 +1318,7 @@
             {
                 "name": "133000",
                 "code": "133",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Available Reserves",
                 "parent_account_id": 13,
@@ -1334,7 +1334,7 @@
             {
                 "name": "160000",
                 "code": "160",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Provisions for Pensions and Similar Obligations",
                 "parent_account_id": 16,
@@ -1350,7 +1350,7 @@
             {
                 "name": "161000",
                 "code": "161",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Provisions for Tax Liabilities",
                 "parent_account_id": 16,
@@ -1366,7 +1366,7 @@
             {
                 "name": "162000",
                 "code": "162",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Provisions for Major Repairs and Maintenance",
                 "parent_account_id": 16,
@@ -1382,7 +1382,7 @@
             {
                 "name": "163000",
                 "code": "163",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Provisions for Environmental Liabilities",
                 "parent_account_id": 16,
@@ -1398,7 +1398,7 @@
             {
                 "name": "164000",
                 "code": "164",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Provisions for Other Risks and Charges",
                 "parent_account_id": 16,
@@ -1414,7 +1414,7 @@
             {
                 "name": "165000",
                 "code": "165",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Provisions for Other Risks and Charges",
                 "parent_account_id": 16,
@@ -1430,7 +1430,7 @@
             {
                 "name": "168000",
                 "code": "168",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Deferred Taxes",
                 "parent_account_id": 16,
@@ -1446,7 +1446,7 @@
             {
                 "name": "170000",
                 "code": "170",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Subordinated Loans",
                 "parent_account_id": 17,
@@ -1462,7 +1462,7 @@
             {
                 "name": "171000",
                 "code": "171",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Non-Subordinated Bonds",
                 "parent_account_id": 17,
@@ -1478,7 +1478,7 @@
             {
                 "name": "172000",
                 "code": "172",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Finance Lease Liabilities",
                 "parent_account_id": 17,
@@ -1494,7 +1494,7 @@
             {
                 "name": "173000",
                 "code": "173",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Credit Institutions",
                 "parent_account_id": 17,
@@ -1510,7 +1510,7 @@
             {
                 "name": "174000",
                 "code": "174",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Other Loans",
                 "parent_account_id": 17,
@@ -1526,7 +1526,7 @@
             {
                 "name": "175000",
                 "code": "175",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Trade Payables",
                 "parent_account_id": 17,
@@ -1542,7 +1542,7 @@
             {
                 "name": "176000",
                 "code": "176",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Advances on Orders",
                 "parent_account_id": 17,
@@ -1558,7 +1558,7 @@
             {
                 "name": "178000",
                 "code": "178",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Cash Guarantees Received",
                 "parent_account_id": 17,
@@ -1574,7 +1574,7 @@
             {
                 "name": "179000",
                 "code": "179",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 3,
                 "description": "Other Debts",
                 "parent_account_id": 17,
@@ -1590,7 +1590,7 @@
             {
                 "name": "200000",
                 "code": "200",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Formation Expenses",
                 "parent_account_id": 20,
@@ -1606,7 +1606,7 @@
             {
                 "name": "201000",
                 "code": "201",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Loan Issue Expenses",
                 "parent_account_id": 20,
@@ -1622,7 +1622,7 @@
             {
                 "name": "202000",
                 "code": "202",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Other Formation Expenses",
                 "parent_account_id": 20,
@@ -1638,7 +1638,7 @@
             {
                 "name": "204000",
                 "code": "204",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Restructuring Costs",
                 "parent_account_id": 20,
@@ -1654,7 +1654,7 @@
             {
                 "name": "210000",
                 "code": "210",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Research and Development Expenses",
                 "parent_account_id": 21,
@@ -1670,7 +1670,7 @@
             {
                 "name": "211000",
                 "code": "211",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Concessions, Patents, Licenses, Know-how, Trademarks and Similar Rights",
                 "parent_account_id": 21,
@@ -1686,7 +1686,7 @@
             {
                 "name": "212000",
                 "code": "212",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Goodwill",
                 "parent_account_id": 21,
@@ -1702,7 +1702,7 @@
             {
                 "name": "213000",
                 "code": "213",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Advance Payments",
                 "parent_account_id": 21,
@@ -1718,7 +1718,7 @@
             {
                 "name": "220000",
                 "code": "220",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Land",
                 "parent_account_id": 22,
@@ -1734,7 +1734,7 @@
             {
                 "name": "221000",
                 "code": "221",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Buildings",
                 "parent_account_id": 22,
@@ -1750,7 +1750,7 @@
             {
                 "name": "222000",
                 "code": "222",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Constructed Land",
                 "parent_account_id": 22,
@@ -1766,7 +1766,7 @@
             {
                 "name": "223000",
                 "code": "223",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Other Real Rights on Buildings",
                 "parent_account_id": 22,
@@ -1782,7 +1782,7 @@
             {
                 "name": "250000",
                 "code": "250",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Land and Buildings (Finance Lease)",
                 "parent_account_id": 25,
@@ -1798,7 +1798,7 @@
             {
                 "name": "251000",
                 "code": "251",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Plant, Machinery and Equipment (Finance Lease)",
                 "parent_account_id": 25,
@@ -1814,7 +1814,7 @@
             {
                 "name": "252000",
                 "code": "252",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Furniture and Vehicles (Finance Lease)",
                 "parent_account_id": 25,
@@ -1830,7 +1830,7 @@
             {
                 "name": "280000",
                 "code": "280",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Participations in Affiliated Companies",
                 "parent_account_id": 28,
@@ -1846,7 +1846,7 @@
             {
                 "name": "281000",
                 "code": "281",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Receivables from Affiliated Companies",
                 "parent_account_id": 28,
@@ -1862,7 +1862,7 @@
             {
                 "name": "282000",
                 "code": "282",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Participations in Companies with which there is a Participation Link",
                 "parent_account_id": 28,
@@ -1878,7 +1878,7 @@
             {
                 "name": "283000",
                 "code": "283",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Receivables from Companies with which there is a Participation Link",
                 "parent_account_id": 28,
@@ -1894,7 +1894,7 @@
             {
                 "name": "284000",
                 "code": "284",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Other Shares and Participations",
                 "parent_account_id": 28,
@@ -1910,7 +1910,7 @@
             {
                 "name": "285000",
                 "code": "285",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Other Receivables",
                 "parent_account_id": 28,
@@ -1926,7 +1926,7 @@
             {
                 "name": "288000",
                 "code": "288",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Cash Guarantees Paid",
                 "parent_account_id": 28,
@@ -1942,7 +1942,7 @@
             {
                 "name": "290000",
                 "code": "290",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Trade Receivables",
                 "parent_account_id": 29,
@@ -1958,7 +1958,7 @@
             {
                 "name": "291000",
                 "code": "291",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 3,
                 "description": "Other Receivables",
                 "parent_account_id": 29,
@@ -1974,7 +1974,7 @@
             {
                 "name": "300000",
                 "code": "300",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Acquisition Value",
                 "parent_account_id": 30,
@@ -1990,7 +1990,7 @@
             {
                 "name": "309000",
                 "code": "309",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Recorded Impairments",
                 "parent_account_id": 30,
@@ -2006,7 +2006,7 @@
             {
                 "name": "310000",
                 "code": "310",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Acquisition Value",
                 "parent_account_id": 31,
@@ -2022,7 +2022,7 @@
             {
                 "name": "319000",
                 "code": "319",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Recorded Impairments",
                 "parent_account_id": 31,
@@ -2038,7 +2038,7 @@
             {
                 "name": "320000",
                 "code": "320",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Acquisition Value",
                 "parent_account_id": 32,
@@ -2054,7 +2054,7 @@
             {
                 "name": "329000",
                 "code": "329",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Recorded Impairments",
                 "parent_account_id": 32,
@@ -2070,7 +2070,7 @@
             {
                 "name": "330000",
                 "code": "330",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Acquisition Value",
                 "parent_account_id": 33,
@@ -2086,7 +2086,7 @@
             {
                 "name": "339000",
                 "code": "339",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Recorded Impairments",
                 "parent_account_id": 33,
@@ -2102,7 +2102,7 @@
             {
                 "name": "340000",
                 "code": "340",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Acquisition Value",
                 "parent_account_id": 34,
@@ -2118,7 +2118,7 @@
             {
                 "name": "349000",
                 "code": "349",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Recorded Impairments",
                 "parent_account_id": 34,
@@ -2134,7 +2134,7 @@
             {
                 "name": "350000",
                 "code": "350",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Acquisition Value",
                 "parent_account_id": 35,
@@ -2150,7 +2150,7 @@
             {
                 "name": "359000",
                 "code": "359",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Recorded Impairments",
                 "parent_account_id": 35,
@@ -2166,7 +2166,7 @@
             {
                 "name": "360000",
                 "code": "360",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Advance Payments",
                 "parent_account_id": 36,
@@ -2182,7 +2182,7 @@
             {
                 "name": "369000",
                 "code": "369",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Recorded Impairments",
                 "parent_account_id": 36,
@@ -2198,7 +2198,7 @@
             {
                 "name": "370000",
                 "code": "370",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Acquisition Value",
                 "parent_account_id": 37,
@@ -2214,7 +2214,7 @@
             {
                 "name": "371000",
                 "code": "371",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Recognized Profit",
                 "parent_account_id": 37,
@@ -2230,7 +2230,7 @@
             {
                 "name": "379000",
                 "code": "379",
-                "line_class": 3,
+                "line_class": "03",
                 "level": 3,
                 "description": "Recorded Impairments",
                 "parent_account_id": 37,
@@ -2246,7 +2246,7 @@
             {
                 "name": "400000",
                 "code": "400",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Customers",
                 "parent_account_id": 40,
@@ -2262,7 +2262,7 @@
             {
                 "name": "401000",
                 "code": "401",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Notes Receivable",
                 "parent_account_id": 40,
@@ -2278,7 +2278,7 @@
             {
                 "name": "404000",
                 "code": "404",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Revenue to be Received",
                 "parent_account_id": 40,
@@ -2294,7 +2294,7 @@
             {
                 "name": "406000",
                 "code": "406",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Advance Payments",
                 "parent_account_id": 40,
@@ -2310,7 +2310,7 @@
             {
                 "name": "407000",
                 "code": "407",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Doubtful Receivables",
                 "parent_account_id": 40,
@@ -2326,7 +2326,7 @@
             {
                 "name": "409000",
                 "code": "409",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Recorded Impairments",
                 "parent_account_id": 40,
@@ -2342,7 +2342,7 @@
             {
                 "name": "410000",
                 "code": "410",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Called Up Capital Not Paid",
                 "parent_account_id": 41,
@@ -2358,7 +2358,7 @@
             {
                 "name": "411000",
                 "code": "411",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Recoverable VAT",
                 "parent_account_id": 41,
@@ -2374,7 +2374,7 @@
             {
                 "name": "412000",
                 "code": "412",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Recoverable Taxes",
                 "parent_account_id": 41,
@@ -2390,7 +2390,7 @@
             {
                 "name": "414000",
                 "code": "414",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Revenue to be Received",
                 "parent_account_id": 41,
@@ -2406,7 +2406,7 @@
             {
                 "name": "416000",
                 "code": "416",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Various",
                 "parent_account_id": 41,
@@ -2422,7 +2422,7 @@
             {
                 "name": "417000",
                 "code": "417",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Doubtful Receivables",
                 "parent_account_id": 41,
@@ -2438,7 +2438,7 @@
             {
                 "name": "418000",
                 "code": "418",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Cash Guarantees Paid",
                 "parent_account_id": 41,
@@ -2454,7 +2454,7 @@
             {
                 "name": "419000",
                 "code": "419",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Recorded Impairments",
                 "parent_account_id": 41,
@@ -2470,7 +2470,7 @@
             {
                 "name": "430000",
                 "code": "430",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Bank Loans",
                 "parent_account_id": 43,
@@ -2486,7 +2486,7 @@
             {
                 "name": "431000",
                 "code": "431",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Promises",
                 "parent_account_id": 43,
@@ -2502,7 +2502,7 @@
             {
                 "name": "432000",
                 "code": "432",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Acceptance Credits",
                 "parent_account_id": 43,
@@ -2518,7 +2518,7 @@
             {
                 "name": "433000",
                 "code": "433",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Bank Current Account Debts",
                 "parent_account_id": 43,
@@ -2534,7 +2534,7 @@
             {
                 "name": "439000",
                 "code": "439",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Other Loans",
                 "parent_account_id": 43,
@@ -2550,7 +2550,7 @@
             {
                 "name": "440000",
                 "code": "440",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Suppliers",
                 "parent_account_id": 44,
@@ -2566,7 +2566,7 @@
             {
                 "name": "441000",
                 "code": "441",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Notes Payable",
                 "parent_account_id": 44,
@@ -2582,7 +2582,7 @@
             {
                 "name": "444000",
                 "code": "444",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Invoices to be Received",
                 "parent_account_id": 44,
@@ -2598,7 +2598,7 @@
             {
                 "name": "450000",
                 "code": "450",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Estimated Tax Liabilities",
                 "parent_account_id": 45,
@@ -2614,7 +2614,7 @@
             {
                 "name": "451000",
                 "code": "451",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "VAT Payable",
                 "parent_account_id": 45,
@@ -2630,7 +2630,7 @@
             {
                 "name": "452000",
                 "code": "452",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Taxes Payable",
                 "parent_account_id": 45,
@@ -2646,7 +2646,7 @@
             {
                 "name": "453000",
                 "code": "453",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Withholding Taxes",
                 "parent_account_id": 45,
@@ -2662,7 +2662,7 @@
             {
                 "name": "454000",
                 "code": "454",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "National Social Security Office",
                 "parent_account_id": 45,
@@ -2678,7 +2678,7 @@
             {
                 "name": "455000",
                 "code": "455",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Salaries",
                 "parent_account_id": 45,
@@ -2694,7 +2694,7 @@
             {
                 "name": "456000",
                 "code": "456",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Holiday Pay",
                 "parent_account_id": 45,
@@ -2710,7 +2710,7 @@
             {
                 "name": "459000",
                 "code": "459",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Other Social Debts",
                 "parent_account_id": 45,
@@ -2726,7 +2726,7 @@
             {
                 "name": "470000",
                 "code": "470",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Dividends and Directors' Fees from Previous Periods",
                 "parent_account_id": 47,
@@ -2742,7 +2742,7 @@
             {
                 "name": "471000",
                 "code": "471",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Dividends for the Period",
                 "parent_account_id": 47,
@@ -2758,7 +2758,7 @@
             {
                 "name": "472000",
                 "code": "472",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Directors' Fees for the Period",
                 "parent_account_id": 47,
@@ -2774,7 +2774,7 @@
             {
                 "name": "473000",
                 "code": "473",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Other Beneficiaries",
                 "parent_account_id": 47,
@@ -2790,7 +2790,7 @@
             {
                 "name": "480000",
                 "code": "480",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Matured Bonds and Coupons",
                 "parent_account_id": 48,
@@ -2806,7 +2806,7 @@
             {
                 "name": "488000",
                 "code": "488",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Cash Guarantees Received",
                 "parent_account_id": 48,
@@ -2822,7 +2822,7 @@
             {
                 "name": "489000",
                 "code": "489",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Other Debts",
                 "parent_account_id": 48,
@@ -2838,7 +2838,7 @@
             {
                 "name": "490000",
                 "code": "490",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Deferred Charges",
                 "parent_account_id": 49,
@@ -2854,7 +2854,7 @@
             {
                 "name": "491000",
                 "code": "491",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Accrued Income",
                 "parent_account_id": 49,
@@ -2870,7 +2870,7 @@
             {
                 "name": "492000",
                 "code": "492",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Accrued Charges",
                 "parent_account_id": 49,
@@ -2886,7 +2886,7 @@
             {
                 "name": "493000",
                 "code": "493",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Deferred Income",
                 "parent_account_id": 49,
@@ -2902,7 +2902,7 @@
             {
                 "name": "499000",
                 "code": "499",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 3,
                 "description": "Suspense Accounts",
                 "parent_account_id": 49,
@@ -2918,7 +2918,7 @@
             {
                 "name": "510000",
                 "code": "510",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 3,
                 "description": "Acquisition Value",
                 "parent_account_id": 51,
@@ -2934,7 +2934,7 @@
             {
                 "name": "511000",
                 "code": "511",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 3,
                 "description": "Uncalled Amounts",
                 "parent_account_id": 51,
@@ -2950,7 +2950,7 @@
             {
                 "name": "519000",
                 "code": "519",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 3,
                 "description": "Recorded Impairments",
                 "parent_account_id": 51,
@@ -2966,7 +2966,7 @@
             {
                 "name": "520000",
                 "code": "520",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 3,
                 "description": "Acquisition Value",
                 "parent_account_id": 52,
@@ -2982,7 +2982,7 @@
             {
                 "name": "529000",
                 "code": "529",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 3,
                 "description": "Recorded Impairments",
                 "parent_account_id": 52,
@@ -2998,7 +2998,7 @@
             {
                 "name": "530000",
                 "code": "530",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 3,
                 "description": "More than One Year",
                 "parent_account_id": 53,
@@ -3014,7 +3014,7 @@
             {
                 "name": "531000",
                 "code": "531",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 3,
                 "description": "More than One Month and up to One Year",
                 "parent_account_id": 53,
@@ -3030,7 +3030,7 @@
             {
                 "name": "532000",
                 "code": "532",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 3,
                 "description": "Up to One Month",
                 "parent_account_id": 53,
@@ -3046,7 +3046,7 @@
             {
                 "name": "539000",
                 "code": "539",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 3,
                 "description": "Recorded Impairments",
                 "parent_account_id": 53,
@@ -3062,7 +3062,7 @@
             {
                 "name": "550000",
                 "code": "550",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 3,
                 "description": "Bank Accounts",
                 "parent_account_id": 55,
@@ -3078,7 +3078,7 @@
             {
                 "name": "570000",
                 "code": "570",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 3,
                 "description": "Cash",
                 "parent_account_id": 55,
@@ -3094,7 +3094,7 @@
             {
                 "name": "578000",
                 "code": "578",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 3,
                 "description": "Stamps",
                 "parent_account_id": 55,
@@ -3110,7 +3110,7 @@
             {
                 "name": "600000",
                 "code": "600",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Purchases of Raw Materials",
                 "parent_account_id": 60,
@@ -3126,7 +3126,7 @@
             {
                 "name": "601000",
                 "code": "601",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Purchases of Supplies",
                 "parent_account_id": 60,
@@ -3142,7 +3142,7 @@
             {
                 "name": "602000",
                 "code": "602",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Purchases of Services, Works and Studies",
                 "parent_account_id": 60,
@@ -3158,7 +3158,7 @@
             {
                 "name": "603000",
                 "code": "603",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "General Subcontracting",
                 "parent_account_id": 60,
@@ -3174,7 +3174,7 @@
             {
                 "name": "604000",
                 "code": "604",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Purchases of Goods",
                 "parent_account_id": 60,
@@ -3190,7 +3190,7 @@
             {
                 "name": "605000",
                 "code": "605",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Purchases of Real Estate for Sale",
                 "parent_account_id": 60,
@@ -3206,7 +3206,7 @@
             {
                 "name": "608000",
                 "code": "608",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Discounts, Rebates and Refunds",
                 "parent_account_id": 60,
@@ -3222,7 +3222,7 @@
             {
                 "name": "609000",
                 "code": "609",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Changes in Inventory",
                 "parent_account_id": 60,
@@ -3238,7 +3238,7 @@
             {
                 "name": "617000",
                 "code": "617",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Temporary Staff and Persons Made Available to the Company",
                 "parent_account_id": 61,
@@ -3254,7 +3254,7 @@
             {
                 "name": "618000",
                 "code": "618",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Remunerations, Extra-Legal Insurance Premiums, Retirement and Survival Pensions for Administrators, Managers and Active Partners Not Allocated Under an Employment Contract",
                 "parent_account_id": 61,
@@ -3270,7 +3270,7 @@
             {
                 "name": "620000",
                 "code": "620",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Direct Remunerations and Social Benefits",
                 "parent_account_id": 62,
@@ -3286,7 +3286,7 @@
             {
                 "name": "621000",
                 "code": "621",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Employer Contributions for Social Insurance",
                 "parent_account_id": 62,
@@ -3302,7 +3302,7 @@
             {
                 "name": "622000",
                 "code": "622",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Employer Contributions for Extra-Legal Insurance",
                 "parent_account_id": 62,
@@ -3318,7 +3318,7 @@
             {
                 "name": "623000",
                 "code": "623",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Other Personnel Expenses",
                 "parent_account_id": 62,
@@ -3334,7 +3334,7 @@
             {
                 "name": "624000",
                 "code": "624",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Retirement and Survival Pensions",
                 "parent_account_id": 62,
@@ -3350,7 +3350,7 @@
             {
                 "name": "630000",
                 "code": "630",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Depreciation and Impairments on Fixed Assets",
                 "parent_account_id": 63,
@@ -3366,7 +3366,7 @@
             {
                 "name": "631000",
                 "code": "631",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Impairments on Inventory",
                 "parent_account_id": 63,
@@ -3382,7 +3382,7 @@
             {
                 "name": "632000",
                 "code": "632",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Impairments on Orders in Progress",
                 "parent_account_id": 63,
@@ -3398,7 +3398,7 @@
             {
                 "name": "633000",
                 "code": "633",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Impairments on Trade Receivables Due in More than One Year",
                 "parent_account_id": 63,
@@ -3414,7 +3414,7 @@
             {
                 "name": "634000",
                 "code": "634",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Impairments on Trade Receivables Due in One Year or Less",
                 "parent_account_id": 63,
@@ -3430,7 +3430,7 @@
             {
                 "name": "635000",
                 "code": "635",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Provisions for Pensions and Similar Obligations",
                 "parent_account_id": 63,
@@ -3446,7 +3446,7 @@
             {
                 "name": "636000",
                 "code": "636",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Provisions for Major Repairs and Maintenance",
                 "parent_account_id": 63,
@@ -3462,7 +3462,7 @@
             {
                 "name": "637000",
                 "code": "637",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Provisions for Environmental Liabilities",
                 "parent_account_id": 63,
@@ -3478,7 +3478,7 @@
             {
                 "name": "638000",
                 "code": "638",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Provisions for Other Risks and Charges",
                 "parent_account_id": 63,
@@ -3494,7 +3494,7 @@
             {
                 "name": "640000",
                 "code": "640",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Operating Taxes",
                 "parent_account_id": 64,
@@ -3510,7 +3510,7 @@
             {
                 "name": "641000",
                 "code": "641",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Losses on Realizations of Tangible Assets",
                 "parent_account_id": 64,
@@ -3526,7 +3526,7 @@
             {
                 "name": "642000",
                 "code": "642",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Losses on Realizations of Trade Receivables",
                 "parent_account_id": 64,
@@ -3542,7 +3542,7 @@
             {
                 "name": "643000",
                 "code": "643",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Other Operating Expenses",
                 "parent_account_id": 64,
@@ -3558,7 +3558,7 @@
             {
                 "name": "649000",
                 "code": "649",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Operating Expenses Transferred to Assets as Restructuring Costs",
                 "parent_account_id": 64,
@@ -3574,7 +3574,7 @@
             {
                 "name": "650000",
                 "code": "650",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Debt Charges",
                 "parent_account_id": 65,
@@ -3590,7 +3590,7 @@
             {
                 "name": "651000",
                 "code": "651",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Impairments on Current Assets",
                 "parent_account_id": 65,
@@ -3606,7 +3606,7 @@
             {
                 "name": "652000",
                 "code": "652",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Losses on Realizations of Current Assets",
                 "parent_account_id": 65,
@@ -3622,7 +3622,7 @@
             {
                 "name": "653000",
                 "code": "653",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Discount Charges",
                 "parent_account_id": 65,
@@ -3638,7 +3638,7 @@
             {
                 "name": "654000",
                 "code": "654",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Exchange Rate Differences",
                 "parent_account_id": 65,
@@ -3654,7 +3654,7 @@
             {
                 "name": "655000",
                 "code": "655",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Currency Conversion Differences",
                 "parent_account_id": 65,
@@ -3670,7 +3670,7 @@
             {
                 "name": "656000",
                 "code": "656",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Provisions of a Financial Nature",
                 "parent_account_id": 65,
@@ -3686,7 +3686,7 @@
             {
                 "name": "657000",
                 "code": "657",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Other Financial Expenses",
                 "parent_account_id": 65,
@@ -3702,7 +3702,7 @@
             {
                 "name": "659000",
                 "code": "659",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Financial Expenses Transferred to Assets as Restructuring Costs",
                 "parent_account_id": 65,
@@ -3718,7 +3718,7 @@
             {
                 "name": "660000",
                 "code": "660",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Non-Recurring Depreciation and Impairments",
                 "parent_account_id": 66,
@@ -3734,7 +3734,7 @@
             {
                 "name": "661000",
                 "code": "661",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Impairments on Financial Assets",
                 "parent_account_id": 66,
@@ -3750,7 +3750,7 @@
             {
                 "name": "662000",
                 "code": "662",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Provisions for Non-Recurring Risks and Charges",
                 "parent_account_id": 66,
@@ -3766,7 +3766,7 @@
             {
                 "name": "663000",
                 "code": "663",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Moins-values sur réalisation d'actifs immobilisés",
                 "parent_account_id": 66,
@@ -3782,7 +3782,7 @@
             {
                 "name": "664000",
                 "code": "664",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Other Non-Recurring Operating Expenses",
                 "parent_account_id": 66,
@@ -3798,7 +3798,7 @@
             {
                 "name": "665000",
                 "code": "665",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Other Non-Recurring Operating Expenses",
                 "parent_account_id": 66,
@@ -3814,7 +3814,7 @@
             {
                 "name": "666000",
                 "code": "666",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Other Non-Recurring Operating Expenses",
                 "parent_account_id": 66,
@@ -3830,7 +3830,7 @@
             {
                 "name": "667000",
                 "code": "667",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Other Non-Recurring Operating Expenses",
                 "parent_account_id": 66,
@@ -3846,7 +3846,7 @@
             {
                 "name": "668000",
                 "code": "668",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Other Non-Recurring Financial Expenses",
                 "parent_account_id": 66,
@@ -3862,7 +3862,7 @@
             {
                 "name": "669000",
                 "code": "669",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Charges non récurrentes portées à l'actif au titre de frais de restructuration",
                 "parent_account_id": 66,
@@ -3878,7 +3878,7 @@
             {
                 "name": "670000",
                 "code": "670",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Impôts belges sur le résultat de l’exercice",
                 "parent_account_id": 67,
@@ -3894,7 +3894,7 @@
             {
                 "name": "671000",
                 "code": "671",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Impôts belges sur le résultat d'exercices antérieurs",
                 "parent_account_id": 67,
@@ -3910,7 +3910,7 @@
             {
                 "name": "672000",
                 "code": "672",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Foreign Income Taxes for the Period",
                 "parent_account_id": 67,
@@ -3926,7 +3926,7 @@
             {
                 "name": "673000",
                 "code": "673",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Foreign Income Taxes for Previous Periods",
                 "parent_account_id": 67,
@@ -3942,7 +3942,7 @@
             {
                 "name": "680000",
                 "code": "680",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Transfers to Deferred Taxes",
                 "parent_account_id": 68,
@@ -3958,7 +3958,7 @@
             {
                 "name": "689000",
                 "code": "689",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Transfers to Exempt Reserves",
                 "parent_account_id": 68,
@@ -3974,7 +3974,7 @@
             {
                 "name": "690000",
                 "code": "690",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Loss Carried Forward from Previous Period",
                 "parent_account_id": 69,
@@ -3990,7 +3990,7 @@
             {
                 "name": "691000",
                 "code": "691",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Allocations to Contributions",
                 "parent_account_id": 69,
@@ -4006,7 +4006,7 @@
             {
                 "name": "692000",
                 "code": "692",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Dotation aux réserves",
                 "parent_account_id": 69,
@@ -4022,7 +4022,7 @@
             {
                 "name": "693000",
                 "code": "693",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Profit Carried Forward",
                 "parent_account_id": 69,
@@ -4038,7 +4038,7 @@
             {
                 "name": "694000",
                 "code": "694",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Remuneration of Contributions",
                 "parent_account_id": 69,
@@ -4054,7 +4054,7 @@
             {
                 "name": "695000",
                 "code": "695",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Remuneration of Administrators or Managers",
                 "parent_account_id": 694,
@@ -4070,7 +4070,7 @@
             {
                 "name": "696000",
                 "code": "696",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Remuneration of Employees",
                 "parent_account_id": 694,
@@ -4086,7 +4086,7 @@
             {
                 "name": "697000",
                 "code": "697",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 3,
                 "description": "Other Allocations",
                 "parent_account_id": 694,
@@ -4102,7 +4102,7 @@
             {
                 "name": "700000",
                 "code": "700",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Sales and Services",
                 "parent_account_id": 70,
@@ -4118,7 +4118,7 @@
             {
                 "name": "701000",
                 "code": "701",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Sales and Services",
                 "parent_account_id": 70,
@@ -4134,7 +4134,7 @@
             {
                 "name": "702000",
                 "code": "702",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Sales and Services",
                 "parent_account_id": 70,
@@ -4150,7 +4150,7 @@
             {
                 "name": "703000",
                 "code": "703",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Sales and Services",
                 "parent_account_id": 70,
@@ -4166,7 +4166,7 @@
             {
                 "name": "704000",
                 "code": "704",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Sales and Services",
                 "parent_account_id": 70,
@@ -4182,7 +4182,7 @@
             {
                 "name": "705000",
                 "code": "705",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Sales and Services",
                 "parent_account_id": 70,
@@ -4198,7 +4198,7 @@
             {
                 "name": "706000",
                 "code": "706",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Sales and Services",
                 "parent_account_id": 70,
@@ -4214,7 +4214,7 @@
             {
                 "name": "707000",
                 "code": "707",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Sales and Services",
                 "parent_account_id": 70,
@@ -4230,7 +4230,7 @@
             {
                 "name": "708000",
                 "code": "708",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Discounts, Rebates and Refunds Granted",
                 "parent_account_id": 70,
@@ -4246,7 +4246,7 @@
             {
                 "name": "712000",
                 "code": "712",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Changes in Work in Progress",
                 "parent_account_id": 71,
@@ -4262,7 +4262,7 @@
             {
                 "name": "713000",
                 "code": "713",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Changes in Finished Goods",
                 "parent_account_id": 71,
@@ -4278,7 +4278,7 @@
             {
                 "name": "715000",
                 "code": "715",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Changes in Real Estate Held for Sale",
                 "parent_account_id": 71,
@@ -4294,7 +4294,7 @@
             {
                 "name": "717000",
                 "code": "717",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Changes in Orders in Progress",
                 "parent_account_id": 71,
@@ -4310,7 +4310,7 @@
             {
                 "name": "740000",
                 "code": "740",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Operating Grants and Compensatory Amounts",
                 "parent_account_id": 74,
@@ -4326,7 +4326,7 @@
             {
                 "name": "741000",
                 "code": "741",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Gains on Realizations of Tangible Assets",
                 "parent_account_id": 74,
@@ -4342,7 +4342,7 @@
             {
                 "name": "742000",
                 "code": "742",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Gains on Realizations of Trade Receivables",
                 "parent_account_id": 74,
@@ -4358,7 +4358,7 @@
             {
                 "name": "743000",
                 "code": "743",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Operating Income",
                 "parent_account_id": 74,
@@ -4374,7 +4374,7 @@
             {
                 "name": "744000",
                 "code": "744",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Operating Income",
                 "parent_account_id": 74,
@@ -4390,7 +4390,7 @@
             {
                 "name": "745000",
                 "code": "745",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Operating Income",
                 "parent_account_id": 74,
@@ -4406,7 +4406,7 @@
             {
                 "name": "746000",
                 "code": "746",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Operating Income",
                 "parent_account_id": 74,
@@ -4422,7 +4422,7 @@
             {
                 "name": "747000",
                 "code": "747",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Operating Income",
                 "parent_account_id": 74,
@@ -4438,7 +4438,7 @@
             {
                 "name": "748000",
                 "code": "748",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Operating Income",
                 "parent_account_id": 74,
@@ -4454,7 +4454,7 @@
             {
                 "name": "749000",
                 "code": "749",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Operating Income",
                 "parent_account_id": 74,
@@ -4470,7 +4470,7 @@
             {
                 "name": "750000",
                 "code": "750",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Income from Financial Fixed Assets",
                 "parent_account_id": 75,
@@ -4486,7 +4486,7 @@
             {
                 "name": "751000",
                 "code": "751",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Income from Current Assets",
                 "parent_account_id": 75,
@@ -4502,7 +4502,7 @@
             {
                 "name": "752000",
                 "code": "752",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Gains on Realizations of Current Assets",
                 "parent_account_id": 75,
@@ -4518,7 +4518,7 @@
             {
                 "name": "753000",
                 "code": "753",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Capital and Interest Subsidies",
                 "parent_account_id": 75,
@@ -4534,7 +4534,7 @@
             {
                 "name": "754000",
                 "code": "754",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Exchange Rate Differences",
                 "parent_account_id": 75,
@@ -4550,7 +4550,7 @@
             {
                 "name": "755000",
                 "code": "755",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Currency Conversion Differences",
                 "parent_account_id": 75,
@@ -4566,7 +4566,7 @@
             {
                 "name": "756000",
                 "code": "756",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Financial Income",
                 "parent_account_id": 75,
@@ -4582,7 +4582,7 @@
             {
                 "name": "757000",
                 "code": "757",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Financial Income",
                 "parent_account_id": 75,
@@ -4598,7 +4598,7 @@
             {
                 "name": "758000",
                 "code": "758",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Financial Income",
                 "parent_account_id": 75,
@@ -4614,7 +4614,7 @@
             {
                 "name": "759000",
                 "code": "759",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Financial Income",
                 "parent_account_id": 75,
@@ -4630,7 +4630,7 @@
             {
                 "name": "760000",
                 "code": "760",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Reversal of Depreciation and Impairments",
                 "parent_account_id": 76,
@@ -4646,7 +4646,7 @@
             {
                 "name": "761000",
                 "code": "761",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Reversal of Impairments on Financial Fixed Assets",
                 "parent_account_id": 76,
@@ -4662,7 +4662,7 @@
             {
                 "name": "762000",
                 "code": "762",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Reversal of Provisions for Non-Recurring Risks and Charges",
                 "parent_account_id": 76,
@@ -4678,7 +4678,7 @@
             {
                 "name": "763000",
                 "code": "763",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Gains on Realizations of Fixed Assets",
                 "parent_account_id": 76,
@@ -4694,7 +4694,7 @@
             {
                 "name": "764000",
                 "code": "764",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Non-Recurring Operating Income",
                 "parent_account_id": 76,
@@ -4710,7 +4710,7 @@
             {
                 "name": "765000",
                 "code": "765",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Non-Recurring Operating Income",
                 "parent_account_id": 76,
@@ -4726,7 +4726,7 @@
             {
                 "name": "766000",
                 "code": "766",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Non-Recurring Operating Income",
                 "parent_account_id": 76,
@@ -4742,7 +4742,7 @@
             {
                 "name": "767000",
                 "code": "767",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Non-Recurring Operating Income",
                 "parent_account_id": 76,
@@ -4758,7 +4758,7 @@
             {
                 "name": "768000",
                 "code": "768",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Non-Recurring Operating Income",
                 "parent_account_id": 76,
@@ -4774,7 +4774,7 @@
             {
                 "name": "769000",
                 "code": "769",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Other Non-Recurring Financial Income",
                 "parent_account_id": 76,
@@ -4790,7 +4790,7 @@
             {
                 "name": "771000",
                 "code": "771",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Belgian Income Taxes",
                 "parent_account_id": 77,
@@ -4806,7 +4806,7 @@
             {
                 "name": "773000",
                 "code": "773",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Foreign Income Taxes",
                 "parent_account_id": 77,
@@ -4822,7 +4822,7 @@
             {
                 "name": "780000",
                 "code": "780",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Withdrawals from Deferred Taxes",
                 "parent_account_id": 78,
@@ -4838,7 +4838,7 @@
             {
                 "name": "789000",
                 "code": "789",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Withdrawals from Exempt Reserves",
                 "parent_account_id": 78,
@@ -4854,7 +4854,7 @@
             {
                 "name": "790000",
                 "code": "790",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Profit Carried Forward from Previous Period",
                 "parent_account_id": 79,
@@ -4870,7 +4870,7 @@
             {
                 "name": "791000",
                 "code": "791",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Withdrawals from Contributions",
                 "parent_account_id": 79,
@@ -4886,7 +4886,7 @@
             {
                 "name": "792000",
                 "code": "792",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Withdrawals from Reserves",
                 "parent_account_id": 79,
@@ -4902,7 +4902,7 @@
             {
                 "name": "793000",
                 "code": "793",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Loss Carried Forward",
                 "parent_account_id": 79,
@@ -4918,7 +4918,7 @@
             {
                 "name": "794000",
                 "code": "794",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 3,
                 "description": "Intervention of Partners (or the Owner) in the Loss",
                 "parent_account_id": 79,
@@ -4934,7 +4934,7 @@
             {
                 "name": "110000",
                 "code": "1100",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Share Premium",
                 "parent_account_id": 110,
@@ -4950,7 +4950,7 @@
             {
                 "name": "110900",
                 "code": "1109",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Other",
                 "parent_account_id": 110,
@@ -4966,7 +4966,7 @@
             {
                 "name": "111000",
                 "code": "1110",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Share Premium",
                 "parent_account_id": 111,
@@ -4982,7 +4982,7 @@
             {
                 "name": "111900",
                 "code": "1119",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Other",
                 "parent_account_id": 111,
@@ -4998,7 +4998,7 @@
             {
                 "name": "131100",
                 "code": "1311",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Statutorily Restricted Reserves",
                 "parent_account_id": 131,
@@ -5014,7 +5014,7 @@
             {
                 "name": "131200",
                 "code": "1312",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Reserve for Own Shares",
                 "parent_account_id": 131,
@@ -5030,7 +5030,7 @@
             {
                 "name": "131300",
                 "code": "1313",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Financial Support",
                 "parent_account_id": 131,
@@ -5046,7 +5046,7 @@
             {
                 "name": "131900",
                 "code": "1319",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Other",
                 "parent_account_id": 131,
@@ -5062,7 +5062,7 @@
             {
                 "name": "168000",
                 "code": "1680",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Deferred Taxes on Capital Grants",
                 "parent_account_id": 168,
@@ -5078,7 +5078,7 @@
             {
                 "name": "168100",
                 "code": "1681",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Deferred Taxes on Realized Gains on Intangible Assets",
                 "parent_account_id": 168,
@@ -5094,7 +5094,7 @@
             {
                 "name": "168200",
                 "code": "1682",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Deferred Taxes on Realized Gains on Tangible Assets",
                 "parent_account_id": 168,
@@ -5110,7 +5110,7 @@
             {
                 "name": "168700",
                 "code": "1687",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Deferred Taxes on Realized Gains on Public Sector Securities",
                 "parent_account_id": 168,
@@ -5126,7 +5126,7 @@
             {
                 "name": "168800",
                 "code": "1688",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Foreign Deferred Taxes",
                 "parent_account_id": 168,
@@ -5142,7 +5142,7 @@
             {
                 "name": "170000",
                 "code": "1700",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Convertible",
                 "parent_account_id": 170,
@@ -5158,7 +5158,7 @@
             {
                 "name": "170100",
                 "code": "1701",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Non-Convertible",
                 "parent_account_id": 170,
@@ -5174,7 +5174,7 @@
             {
                 "name": "171000",
                 "code": "1710",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Convertible",
                 "parent_account_id": 171,
@@ -5190,7 +5190,7 @@
             {
                 "name": "171100",
                 "code": "1711",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Non-Convertible",
                 "parent_account_id": 171,
@@ -5206,7 +5206,7 @@
             {
                 "name": "173000",
                 "code": "1730",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Bank Loans",
                 "parent_account_id": 173,
@@ -5222,7 +5222,7 @@
             {
                 "name": "173100",
                 "code": "1731",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Promises",
                 "parent_account_id": 173,
@@ -5238,7 +5238,7 @@
             {
                 "name": "173200",
                 "code": "1732",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Acceptance Credits",
                 "parent_account_id": 173,
@@ -5254,7 +5254,7 @@
             {
                 "name": "175000",
                 "code": "1750",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Suppliers",
                 "parent_account_id": 175,
@@ -5270,7 +5270,7 @@
             {
                 "name": "175100",
                 "code": "1751",
-                "line_class": 1,
+                "line_class": "01",
                 "level": 4,
                 "description": "Notes Payable",
                 "parent_account_id": 175,
@@ -5286,7 +5286,7 @@
             {
                 "name": "280000",
                 "code": "2800",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Acquisition Value",
                 "parent_account_id": 280,
@@ -5302,7 +5302,7 @@
             {
                 "name": "280100",
                 "code": "2801",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Uncalled Amounts",
                 "parent_account_id": 280,
@@ -5318,7 +5318,7 @@
             {
                 "name": "280800",
                 "code": "2808",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Recorded Gains",
                 "parent_account_id": 280,
@@ -5334,7 +5334,7 @@
             {
                 "name": "280900",
                 "code": "2809",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Recorded Impairments",
                 "parent_account_id": 280,
@@ -5350,7 +5350,7 @@
             {
                 "name": "281000",
                 "code": "2810",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Accounts Receivable",
                 "parent_account_id": 281,
@@ -5366,7 +5366,7 @@
             {
                 "name": "281100",
                 "code": "2811",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Notes Receivable",
                 "parent_account_id": 281,
@@ -5382,7 +5382,7 @@
             {
                 "name": "281200",
                 "code": "2812",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Receivables from Associated Companies - Fixed Income Securities",
                 "parent_account_id": 281,
@@ -5398,7 +5398,7 @@
             {
                 "name": "281700",
                 "code": "2817",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Receivables from Associated Companies - Doubtful",
                 "parent_account_id": 281,
@@ -5414,7 +5414,7 @@
             {
                 "name": "281900",
                 "code": "2819",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Receivables from Associated Companies - Recorded Impairments",
                 "parent_account_id": 281,
@@ -5430,7 +5430,7 @@
             {
                 "name": "282000",
                 "code": "2820",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Acquisition Value",
                 "parent_account_id": 282,
@@ -5446,7 +5446,7 @@
             {
                 "name": "282100",
                 "code": "2821",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Uncalled Amounts",
                 "parent_account_id": 282,
@@ -5462,7 +5462,7 @@
             {
                 "name": "282800",
                 "code": "2828",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Recorded Gains",
                 "parent_account_id": 282,
@@ -5478,7 +5478,7 @@
             {
                 "name": "282900",
                 "code": "2829",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Recorded Impairments",
                 "parent_account_id": 282,
@@ -5494,7 +5494,7 @@
             {
                 "name": "283000",
                 "code": "2830",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Accounts Receivable",
                 "parent_account_id": 283,
@@ -5510,7 +5510,7 @@
             {
                 "name": "283100",
                 "code": "2831",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Notes Receivable",
                 "parent_account_id": 283,
@@ -5526,7 +5526,7 @@
             {
                 "name": "283200",
                 "code": "2832",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Fixed Income Securities",
                 "parent_account_id": 283,
@@ -5542,7 +5542,7 @@
             {
                 "name": "283700",
                 "code": "2837",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Doubtful Receivables",
                 "parent_account_id": 283,
@@ -5558,7 +5558,7 @@
             {
                 "name": "283900",
                 "code": "2839",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Recorded Impairments",
                 "parent_account_id": 283,
@@ -5574,7 +5574,7 @@
             {
                 "name": "284000",
                 "code": "2840",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Acquisition Value",
                 "parent_account_id": 284,
@@ -5590,7 +5590,7 @@
             {
                 "name": "284100",
                 "code": "2841",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Uncalled Amounts",
                 "parent_account_id": 284,
@@ -5606,7 +5606,7 @@
             {
                 "name": "284800",
                 "code": "2848",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Recorded Gains",
                 "parent_account_id": 284,
@@ -5622,7 +5622,7 @@
             {
                 "name": "284900",
                 "code": "2849",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Recorded Impairments",
                 "parent_account_id": 284,
@@ -5638,7 +5638,7 @@
             {
                 "name": "285000",
                 "code": "2850",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Accounts Receivable",
                 "parent_account_id": 285,
@@ -5654,7 +5654,7 @@
             {
                 "name": "285100",
                 "code": "2851",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Notes Receivable",
                 "parent_account_id": 285,
@@ -5670,7 +5670,7 @@
             {
                 "name": "285200",
                 "code": "2852",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Fixed Income Securities",
                 "parent_account_id": 285,
@@ -5686,7 +5686,7 @@
             {
                 "name": "285700",
                 "code": "2857",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Doubtful Receivables",
                 "parent_account_id": 285,
@@ -5702,7 +5702,7 @@
             {
                 "name": "285900",
                 "code": "2859",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Recorded Impairments",
                 "parent_account_id": 285,
@@ -5718,7 +5718,7 @@
             {
                 "name": "290000",
                 "code": "2900",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Customers",
                 "parent_account_id": 290,
@@ -5734,7 +5734,7 @@
             {
                 "name": "290100",
                 "code": "2901",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Notes Receivable",
                 "parent_account_id": 290,
@@ -5750,7 +5750,7 @@
             {
                 "name": "290600",
                 "code": "2906",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Trade Receivables - Advance Payments",
                 "parent_account_id": 290,
@@ -5766,7 +5766,7 @@
             {
                 "name": "290700",
                 "code": "2907",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Doubtful Receivables",
                 "parent_account_id": 290,
@@ -5782,7 +5782,7 @@
             {
                 "name": "290900",
                 "code": "2909",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Recorded Impairments",
                 "parent_account_id": 290,
@@ -5798,7 +5798,7 @@
             {
                 "name": "291000",
                 "code": "2910",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Accounts Receivable",
                 "parent_account_id": 291,
@@ -5814,7 +5814,7 @@
             {
                 "name": "291100",
                 "code": "2911",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Notes Receivable",
                 "parent_account_id": 291,
@@ -5830,7 +5830,7 @@
             {
                 "name": "291700",
                 "code": "2917",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Doubtful Receivables",
                 "parent_account_id": 291,
@@ -5846,7 +5846,7 @@
             {
                 "name": "291900",
                 "code": "2919",
-                "line_class": 2,
+                "line_class": "02",
                 "level": 4,
                 "description": "Recorded Impairments",
                 "parent_account_id": 291,
@@ -5862,7 +5862,7 @@
             {
                 "name": "412000",
                 "code": "4120",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 4,
                 "description": "Recoverable Belgian Income Taxes",
                 "parent_account_id": 412,
@@ -5878,7 +5878,7 @@
             {
                 "name": "412100",
                 "code": "4121",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 4,
                 "description": "Other Receivables - Recoverable Belgian Income Taxes",
                 "parent_account_id": 412,
@@ -5894,7 +5894,7 @@
             {
                 "name": "412200",
                 "code": "4122",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 4,
                 "description": "Other Receivables - Recoverable Belgian Income Taxes",
                 "parent_account_id": 412,
@@ -5910,7 +5910,7 @@
             {
                 "name": "412300",
                 "code": "4123",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 4,
                 "description": "Other Receivables - Recoverable Belgian Income Taxes",
                 "parent_account_id": 412,
@@ -5926,7 +5926,7 @@
             {
                 "name": "412400",
                 "code": "4124",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 4,
                 "description": "Other Receivables - Recoverable Belgian Income Taxes",
                 "parent_account_id": 412,
@@ -5942,7 +5942,7 @@
             {
                 "name": "412500",
                 "code": "4125",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 4,
                 "description": "Other Recoverable Belgian Taxes",
                 "parent_account_id": 412,
@@ -5958,7 +5958,7 @@
             {
                 "name": "412600",
                 "code": "4126",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 4,
                 "description": "Other Receivables - Other Recoverable Belgian Taxes",
                 "parent_account_id": 412,
@@ -5974,7 +5974,7 @@
             {
                 "name": "412700",
                 "code": "4127",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 4,
                 "description": "Other Receivables - Other Recoverable Belgian Taxes",
                 "parent_account_id": 412,
@@ -5990,7 +5990,7 @@
             {
                 "name": "412800",
                 "code": "4128",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 4,
                 "description": "Recoverable Foreign Taxes",
                 "parent_account_id": 412,
@@ -6006,7 +6006,7 @@
             {
                 "name": "450000",
                 "code": "4500",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 4,
                 "description": "Belgian Income Taxes",
                 "parent_account_id": 450,
@@ -6022,7 +6022,7 @@
             {
                 "name": "450100",
                 "code": "4501",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 4,
                 "description": "Estimated Tax Liabilities - Belgian Income Taxes",
                 "parent_account_id": 450,
@@ -6038,7 +6038,7 @@
             {
                 "name": "450500",
                 "code": "4505",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 4,
                 "description": "Other Belgian Taxes",
                 "parent_account_id": 450,
@@ -6054,7 +6054,7 @@
             {
                 "name": "450800",
                 "code": "4508",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 4,
                 "description": "Foreign Taxes",
                 "parent_account_id": 450,
@@ -6070,7 +6070,7 @@
             {
                 "name": "452000",
                 "code": "4520",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 4,
                 "description": "Belgian Income Taxes",
                 "parent_account_id": 452,
@@ -6086,7 +6086,7 @@
             {
                 "name": "452500",
                 "code": "4525",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 4,
                 "description": "Other Belgian Taxes",
                 "parent_account_id": 452,
@@ -6102,7 +6102,7 @@
             {
                 "name": "452800",
                 "code": "4528",
-                "line_class": 4,
+                "line_class": "04",
                 "level": 4,
                 "description": "Foreign Taxes",
                 "parent_account_id": 452,
@@ -6118,7 +6118,7 @@
             {
                 "name": "510000",
                 "code": "5100",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 4,
                 "description": "Shares and Participations",
                 "parent_account_id": 510,
@@ -6134,7 +6134,7 @@
             {
                 "name": "510100",
                 "code": "5101",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 4,
                 "description": "Cash Investments Other than Fixed Income Securities",
                 "parent_account_id": 510,
@@ -6150,7 +6150,7 @@
             {
                 "name": "511000",
                 "code": "5110",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 4,
                 "description": "Shares and Participations",
                 "parent_account_id": 511,
@@ -6166,7 +6166,7 @@
             {
                 "name": "519000",
                 "code": "5190",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 4,
                 "description": "Shares and Participations",
                 "parent_account_id": 519,
@@ -6182,7 +6182,7 @@
             {
                 "name": "519100",
                 "code": "5191",
-                "line_class": 5,
+                "line_class": "05",
                 "level": 4,
                 "description": "Cash Investments Other than Fixed Income Securities",
                 "parent_account_id": 519,
@@ -6198,7 +6198,7 @@
             {
                 "name": "609000",
                 "code": "6090",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Changes in Inventory of Raw Materials",
                 "parent_account_id": 609,
@@ -6214,7 +6214,7 @@
             {
                 "name": "609100",
                 "code": "6091",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Changes in Inventory of Supplies",
                 "parent_account_id": 609,
@@ -6230,7 +6230,7 @@
             {
                 "name": "609400",
                 "code": "6094",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Changes in Inventory of Goods",
                 "parent_account_id": 609,
@@ -6246,7 +6246,7 @@
             {
                 "name": "609500",
                 "code": "6095",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Changes in Inventory of Real Estate for Sale",
                 "parent_account_id": 609,
@@ -6262,7 +6262,7 @@
             {
                 "name": "620000",
                 "code": "6200",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Administrators or Managers",
                 "parent_account_id": 620,
@@ -6278,7 +6278,7 @@
             {
                 "name": "620100",
                 "code": "6201",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Management Staff",
                 "parent_account_id": 620,
@@ -6294,7 +6294,7 @@
             {
                 "name": "620200",
                 "code": "6202",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Employees",
                 "parent_account_id": 620,
@@ -6310,7 +6310,7 @@
             {
                 "name": "620300",
                 "code": "6203",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Workers",
                 "parent_account_id": 620,
@@ -6326,7 +6326,7 @@
             {
                 "name": "620400",
                 "code": "6204",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Other Staff Members",
                 "parent_account_id": 620,
@@ -6342,7 +6342,7 @@
             {
                 "name": "624000",
                 "code": "6240",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Administrators or Managers",
                 "parent_account_id": 624,
@@ -6358,7 +6358,7 @@
             {
                 "name": "624100",
                 "code": "6241",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Staff",
                 "parent_account_id": 624,
@@ -6374,7 +6374,7 @@
             {
                 "name": "630000",
                 "code": "6300",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Depreciation on Formation Expenses",
                 "parent_account_id": 630,
@@ -6390,7 +6390,7 @@
             {
                 "name": "630100",
                 "code": "6301",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Depreciation on Intangible Assets",
                 "parent_account_id": 630,
@@ -6406,7 +6406,7 @@
             {
                 "name": "630200",
                 "code": "6302",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Depreciation on Tangible Assets",
                 "parent_account_id": 630,
@@ -6422,7 +6422,7 @@
             {
                 "name": "630800",
                 "code": "6308",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Impairments on Intangible Assets",
                 "parent_account_id": 630,
@@ -6438,7 +6438,7 @@
             {
                 "name": "630900",
                 "code": "6309",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Impairments on Tangible Assets",
                 "parent_account_id": 630,
@@ -6454,7 +6454,7 @@
             {
                 "name": "631000",
                 "code": "6310",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Allocations",
                 "parent_account_id": 631,
@@ -6470,7 +6470,7 @@
             {
                 "name": "631100",
                 "code": "6311",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Reversals",
                 "parent_account_id": 631,
@@ -6486,7 +6486,7 @@
             {
                 "name": "632000",
                 "code": "6320",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Allocations",
                 "parent_account_id": 632,
@@ -6502,7 +6502,7 @@
             {
                 "name": "632100",
                 "code": "6321",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Reversals",
                 "parent_account_id": 632,
@@ -6518,7 +6518,7 @@
             {
                 "name": "633000",
                 "code": "6330",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Allocations",
                 "parent_account_id": 633,
@@ -6534,7 +6534,7 @@
             {
                 "name": "633100",
                 "code": "6331",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Reversals",
                 "parent_account_id": 633,
@@ -6550,7 +6550,7 @@
             {
                 "name": "634000",
                 "code": "6340",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Allocations",
                 "parent_account_id": 634,
@@ -6566,7 +6566,7 @@
             {
                 "name": "634100",
                 "code": "6341",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Reversals",
                 "parent_account_id": 634,
@@ -6582,7 +6582,7 @@
             {
                 "name": "635000",
                 "code": "6350",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Allocations",
                 "parent_account_id": 635,
@@ -6598,7 +6598,7 @@
             {
                 "name": "635100",
                 "code": "6351",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Utilizations and Reversals",
                 "parent_account_id": 635,
@@ -6614,7 +6614,7 @@
             {
                 "name": "636000",
                 "code": "6360",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Allocations",
                 "parent_account_id": 636,
@@ -6630,7 +6630,7 @@
             {
                 "name": "636100",
                 "code": "6361",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Utilizations and Reversals",
                 "parent_account_id": 636,
@@ -6646,7 +6646,7 @@
             {
                 "name": "637000",
                 "code": "6370",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Allocations",
                 "parent_account_id": 637,
@@ -6662,7 +6662,7 @@
             {
                 "name": "637100",
                 "code": "6371",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Utilizations and Reversals",
                 "parent_account_id": 637,
@@ -6678,7 +6678,7 @@
             {
                 "name": "638000",
                 "code": "6380",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Allocations",
                 "parent_account_id": 638,
@@ -6694,7 +6694,7 @@
             {
                 "name": "638100",
                 "code": "6381",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Utilizations and Reversals",
                 "parent_account_id": 638,
@@ -6710,7 +6710,7 @@
             {
                 "name": "650000",
                 "code": "6500",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Interest, Commissions and Fees on Debts",
                 "parent_account_id": 650,
@@ -6726,7 +6726,7 @@
             {
                 "name": "650100",
                 "code": "6501",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Amortization of Loan Issue Expenses",
                 "parent_account_id": 650,
@@ -6742,7 +6742,7 @@
             {
                 "name": "650200",
                 "code": "6502",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Capitalized Interest",
                 "parent_account_id": 650,
@@ -6758,7 +6758,7 @@
             {
                 "name": "651000",
                 "code": "6510",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Allocations",
                 "parent_account_id": 651,
@@ -6774,7 +6774,7 @@
             {
                 "name": "651100",
                 "code": "6511",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Reversals",
                 "parent_account_id": 651,
@@ -6790,7 +6790,7 @@
             {
                 "name": "656000",
                 "code": "6560",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Allocations",
                 "parent_account_id": 656,
@@ -6806,7 +6806,7 @@
             {
                 "name": "656100",
                 "code": "6561",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Utilizations and Reversals",
                 "parent_account_id": 656,
@@ -6822,7 +6822,7 @@
             {
                 "name": "660000",
                 "code": "6600",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "On Formation Expenses",
                 "parent_account_id": 660,
@@ -6838,7 +6838,7 @@
             {
                 "name": "660100",
                 "code": "6601",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "On Intangible Assets",
                 "parent_account_id": 660,
@@ -6854,7 +6854,7 @@
             {
                 "name": "660200",
                 "code": "6602",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "On Tangible Assets",
                 "parent_account_id": 660,
@@ -6870,7 +6870,7 @@
             {
                 "name": "662000",
                 "code": "6620",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Provisions for Non-Recurring Operating Risks and Charges",
                 "parent_account_id": 662,
@@ -6886,7 +6886,7 @@
             {
                 "name": "662100",
                 "code": "6621",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Provisions pour risques et charges financiers non récurrents",
                 "parent_account_id": 662,
@@ -6902,7 +6902,7 @@
             {
                 "name": "663000",
                 "code": "6630",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Losses on Realization of Intangible and Tangible Assets",
                 "parent_account_id": 663,
@@ -6918,7 +6918,7 @@
             {
                 "name": "663100",
                 "code": "6631",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Losses on Realization of Financial Assets",
                 "parent_account_id": 663,
@@ -6934,7 +6934,7 @@
             {
                 "name": "669000",
                 "code": "6690",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Non-Recurring Operating Expenses Transferred to Assets as Restructuring Costs",
                 "parent_account_id": 669,
@@ -6950,7 +6950,7 @@
             {
                 "name": "669100",
                 "code": "6691",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Non-Recurring Financial Expenses Transferred to Assets as Restructuring Costs",
                 "parent_account_id": 669,
@@ -6966,7 +6966,7 @@
             {
                 "name": "670000",
                 "code": "6700",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Belgian Income Taxes and Prepayments Due or Paid",
                 "parent_account_id": 670,
@@ -6982,7 +6982,7 @@
             {
                 "name": "670100",
                 "code": "6701",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Excess Tax Prepayments Carried as Assets",
                 "parent_account_id": 670,
@@ -6998,7 +6998,7 @@
             {
                 "name": "670200",
                 "code": "6702",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Estimated Tax Charges",
                 "parent_account_id": 670,
@@ -7014,7 +7014,7 @@
             {
                 "name": "671000",
                 "code": "6710",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Additional Belgian Income Taxes Due or Paid for Previous Periods",
                 "parent_account_id": 671,
@@ -7030,7 +7030,7 @@
             {
                 "name": "671100",
                 "code": "6711",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Estimated Additional Belgian Income Taxes for Previous Periods",
                 "parent_account_id": 671,
@@ -7046,7 +7046,7 @@
             {
                 "name": "671200",
                 "code": "6712",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Tax Provisions",
                 "parent_account_id": 671,
@@ -7062,7 +7062,7 @@
             {
                 "name": "692000",
                 "code": "6920",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Allocations to Legal Reserves",
                 "parent_account_id": 692,
@@ -7078,7 +7078,7 @@
             {
                 "name": "692100",
                 "code": "6921",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 4,
                 "description": "Allocations to Other Reserves",
                 "parent_account_id": 692,
@@ -7094,7 +7094,7 @@
             {
                 "name": "717000",
                 "code": "7170",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 4,
                 "description": "Acquisition Value",
                 "parent_account_id": 717,
@@ -7110,7 +7110,7 @@
             {
                 "name": "717100",
                 "code": "7171",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 4,
                 "description": "Recognized Profit",
                 "parent_account_id": 717,
@@ -7126,7 +7126,7 @@
             {
                 "name": "760000",
                 "code": "7600",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 4,
                 "description": "On Intangible Assets",
                 "parent_account_id": 760,
@@ -7142,7 +7142,7 @@
             {
                 "name": "760100",
                 "code": "7601",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 4,
                 "description": "On Tangible Assets",
                 "parent_account_id": 760,
@@ -7158,7 +7158,7 @@
             {
                 "name": "762000",
                 "code": "7620",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 4,
                 "description": "Reversal of Provisions for Non-Recurring Operating Risks and Charges",
                 "parent_account_id": 762,
@@ -7174,7 +7174,7 @@
             {
                 "name": "762100",
                 "code": "7621",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 4,
                 "description": "Reversal of Provisions for Non-Recurring Financial Risks and Charges",
                 "parent_account_id": 762,
@@ -7190,7 +7190,7 @@
             {
                 "name": "763000",
                 "code": "7630",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 4,
                 "description": "Gains on Realizations of Intangible and Tangible Assets",
                 "parent_account_id": 763,
@@ -7206,7 +7206,7 @@
             {
                 "name": "763100",
                 "code": "7631",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 4,
                 "description": "Gains on Realizations of Financial Assets",
                 "parent_account_id": 763,
@@ -7222,7 +7222,7 @@
             {
                 "name": "771000",
                 "code": "7710",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 4,
                 "description": "Adjustments to Belgian Income Taxes Due or Paid",
                 "parent_account_id": 771,
@@ -7238,7 +7238,7 @@
             {
                 "name": "771100",
                 "code": "7711",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 4,
                 "description": "Adjustments to Estimated Belgian Income Taxes",
                 "parent_account_id": 771,
@@ -7254,7 +7254,7 @@
             {
                 "name": "771200",
                 "code": "7712",
-                "line_class": 7,
+                "line_class": "07",
                 "level": 4,
                 "description": "Reversal of Tax Provisions",
                 "parent_account_id": 771,
@@ -7270,7 +7270,7 @@
             {
                 "name": "662000",
                 "code": "66200",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 5,
                 "description": "Provisions for Non-Recurring Operating Risks and Charges - Allocations",
                 "parent_account_id": 6620,
@@ -7286,7 +7286,7 @@
             {
                 "name": "662010",
                 "code": "66201",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 5,
                 "description": "Provisions for Non-Recurring Operating Risks and Charges - Utilization",
                 "parent_account_id": 6620,
@@ -7302,7 +7302,7 @@
             {
                 "name": "662100",
                 "code": "66210",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 5,
                 "description": "Provisions for Non-Recurring Financial Risks and Charges - Allocations",
                 "parent_account_id": 6621,
@@ -7318,7 +7318,7 @@
             {
                 "name": "662110",
                 "code": "66211",
-                "line_class": 6,
+                "line_class": "06",
                 "level": 5,
                 "description": "Provisions for Non-Recurring Financial Risks and Charges - Utilization",
                 "parent_account_id": 6621,

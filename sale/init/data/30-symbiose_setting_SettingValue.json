@@ -42,14 +42,21 @@
             {
                 "id": 1019,
                 "setting_id": 1019,
-                "name": "sale.invoice.account_sales-debtors",
+                "name": "sale.invoice.account_trade-debtors",
                 "value": "400"
             },
             {
                 "id": 1020,
                 "setting_id": 1020,
                 "name": "sale.invoice.downpayment_sku",
-                "value": "DEPOSIT"
+                "value": "DOWNPAYMENT"
+            },
+            {
+                "id": 1021,
+                "setting_id": 1021,
+                "organisation_id": 1,
+                "name": "sale.invoice.account_downpayment",
+                "value": "460"
             },
             {
                 "id": 1050,

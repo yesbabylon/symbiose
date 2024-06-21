@@ -9,7 +9,7 @@
                 "code": "1ORG",
                 "is_locked": false,
                 "label": "Organisation",
-                "analytic_chart_id": null
+                "analytic_chart_id": 1
             }
         ]
     }

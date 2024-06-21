@@ -14,7 +14,7 @@ class AccountingEntry extends Model {
     }
 
     public static function getDescription() {
-        return "Accounting entries translate the invoice lines into entries that must be created in the accounting books.";
+        return "Accounting entries convert invoice lines into records of financial transactions in the accounting books.";
     }
 
     public static function getColumns() {

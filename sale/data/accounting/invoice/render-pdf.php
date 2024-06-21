@@ -79,7 +79,7 @@ $dompdf->setPaper('A4');
 $dompdf->loadHtml($html, 'UTF-8');
 $dompdf->render();
 
-$page_label = Setting::get_value('sale', 'invoice', 'labels.pdf-page', 'p. {PAGE_NUM} / {PAGE_COUNT}', 0, $params['lang']);
+$page_label = Setting::get_value('sale', 'invoice', 'labels.pdf-page', 'p. {PAGE_NUM} / {PAGE_COUNT}', [], $params['lang']);
 
 $canvas = $dompdf->getCanvas();
 $font = $dompdf->getFontMetrics()->getFont('helvetica', 'regular');

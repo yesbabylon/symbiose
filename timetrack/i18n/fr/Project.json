@@ -13,9 +13,9 @@
             "description": "Client à qui le projet est destiné.",
             "help": ""
         },
-        "instance_id": {
-            "label": "Instance",
-            "description": "L'instance hébergeant le projet.",
+        "product_id": {
+            "label": "Produit",
+            "description": "Le produit (logiciel) auquel se rapporte le projet.",
             "help": ""
         },
         "time_entry_sale_model_id": {
@@ -24,8 +24,8 @@
             "help": ""
         },
         "receivable_queue_id": {
-            "label": "File d'attente des percevables",
-            "description": "La file d'attente des percevables à utiliser pour les percevables générés par les saisies de temps du projet.",
+            "label": "File d'attente des créances",
+            "description": "La file d'attente des créances à utiliser pour les créances générés par les saisies de temps du projet.",
             "help": ""
         }
     },
