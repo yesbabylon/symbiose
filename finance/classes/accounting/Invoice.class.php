@@ -4,7 +4,6 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 namespace finance\accounting;
 
 use core\setting\Setting;
@@ -45,10 +44,11 @@ class Invoice extends Model {
                 'type'              => 'string',
                 'description'       => 'Current status of the invoice.',
                 'selection'         => [
-                    'invoice',              // final invoice (with unique number and accounting entries)
-                    'cancelled'             // the invoice has been cancelled (through reversing entries)
+                    'invoice',
+                    'cancelled'
                 ],
-                'default'           => 'invoice'
+                'default'           => 'invoice',
+                'help'              => "Status set to 'invoice' means the invoice has been emitted with a unique number and accounting entries. `cancelled` means that the invoice has been cancelled through a credit note (and related reversing entries)."
             ],
 
             'invoice_type' => [
@@ -180,7 +180,7 @@ class Invoice extends Model {
                 ],
             ],
             'invoice' => [
-                'description' => 'Invoice can no longer be modified.',
+                'description' => 'Invoice has been emitted and can no longer be modified.',
                 'icon' => 'receipt_long',
                 'transitions' => [
                     'cancel' => [
@@ -190,7 +190,7 @@ class Invoice extends Model {
                 ],
             ],
             'cancelled' => [
-                'description' => 'The invoice was cancelled.',
+                'description' => 'The invoice has been cancelled.',
                 'icon' => 'cancel',
                 'transitions' => [
                 ],
