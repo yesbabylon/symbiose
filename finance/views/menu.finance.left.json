@@ -64,7 +64,7 @@
                     {
                         "id": "bank_statements.all",
                         "type": "entry",
-                        "label": "All",
+                        "label": "Bank statements",
                         "description": "Display all bank statements.",
                         "icon": "list",
                         "context": {
@@ -75,7 +75,7 @@
                     {
                         "id": "bank_statements.lines.all",
                         "type": "entry",
-                        "label": "Lines",
+                        "label": "Statements Lines",
                         "icon": "list",
                         "description": "Display all bank statements lines.",
                         "context": {
