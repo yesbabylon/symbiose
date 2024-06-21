@@ -1,22 +1,10 @@
 {
-    "name": "Accounting menu",
+    "name": "Finance & Accounting menu",
     "access": {
       "groups": ["finance.default.user"]
    },
     "layout": {
         "items": [
-            {
-                "id": "item.home",
-                "label": "Home",
-                "description": "",
-                "icon": "menu_book",
-                "type": "entry",
-                "route": "/",
-                "context": {
-                    "entity": "finance\\accounting\\Invoice",
-                    "view": "list.dashboard"
-                }
-            },
             {
                 "id": "item.invoices",
                 "label": "Invoices",

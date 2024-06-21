@@ -1,0 +1,147 @@
+{
+    "name": "Accounting menu",
+    "access": {
+      "groups": ["finance.default.user"]
+    },
+    "layout": {
+        "items": [
+            {
+                "id": "item.invoices",
+                "label": "Invoices",
+                "description": "Invoices parent menu.",
+                "icon": "receipt_long",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "invoices.sales",
+                        "type": "entry",
+                        "label": "Sales invoices",
+                        "icon": "list",
+                        "description": "Show all sales invoices.",
+                        "context": {
+                            "entity": "sale\\accounting\\Invoice",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "invoices.purchase",
+                        "type": "entry",
+                        "label": "Purchase invoices",
+                        "icon": "list",
+                        "description": "Show all purchase invoices.",
+                        "context": {
+                            "entity": "finance\\accounting\\Invoice",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "fundings",
+                "type": "parent",
+                "label": "Fundings",
+                "icon": "person",
+                "children": [
+                    {
+                        "id": "fundings.all",
+                        "type": "entry",
+                        "label": "All",
+                        "icon": "list",
+                        "context": {
+                            "entity": "sale\\pay\\Funding",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "bank",
+                "label": "Bank",
+                "icon": "list_alt",
+                "description": "Bank statements & info.",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "bank_statements.all",
+                        "type": "entry",
+                        "label": "All",
+                        "description": "Display all bank statements.",
+                        "icon": "list",
+                        "context": {
+                            "entity": "finance\\bank\\BankStatement",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "bank_statements.lines.all",
+                        "type": "entry",
+                        "label": "Lines",
+                        "icon": "list",
+                        "description": "Display all bank statements lines.",
+                        "context": {
+                            "entity": "finance\\bank\\BankStatementLine",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "accounting",
+                "type": "parent",
+                "label": "Accounting",
+                "icon": "person",
+                "children": [
+                    {
+                        "id": "finance.accounting.account_chart",
+                        "type": "entry",
+                        "label": "Chart of accounts",
+                        "description": "",
+                        "context": {
+                            "entity": "finance\\accounting\\AccountChartLine",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "finance.accounting.accounting_journals",
+                        "type": "entry",
+                        "label": "Accounting journals",
+                        "description": "",
+                        "context": {
+                            "entity": "finance\\accounting\\AccountingJournal",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "item.settings",
+                "label": "Settings",
+                "description": "",
+                "icon": "settings",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "finance.accounting.vat_rules",
+                        "type": "entry",
+                        "label": "VAT rules",
+                        "description": "",
+                        "context": {
+                            "entity": "finance\\tax\\VatRule",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "finance.accounting.accounting_rules",
+                        "type": "entry",
+                        "label": "Accounting rules",
+                        "description": "",
+                        "context": {
+                            "entity": "finance\\accounting\\AccountingRule",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

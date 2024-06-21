@@ -41,6 +41,30 @@
             "label": "Paramètres",
             "help": ""
         },
+        "bank": {
+            "label": "Banque",
+            "help": ""
+        },
+        "bank_statements.statements_to_process": {
+            "label": "Extraits à réconcilier",
+            "help": ""
+        },
+        "bank_statements.all": {
+            "label": "Tous les extraits",
+            "help": ""
+        },
+        "bank_statements.lines_to_review": {
+            "label": "Paiements à réconcilier",
+            "help": ""
+        },
+        "bank_statements.statements_ready": {
+            "label": "Paiements réconciliés",
+            "help": ""
+        },
+        "bank_statements.all_lines": {
+            "label": "Tous les paiements",
+            "help": ""
+        },
         "finance.accounting.vat_rules": {
             "label": "Règles TVA",
             "help": ""

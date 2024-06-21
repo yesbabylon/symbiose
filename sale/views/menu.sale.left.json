@@ -7,37 +7,6 @@
     "layout": {
         "items": [
             {
-                "id": "bank_statements",
-                "label": "Bank statements",
-                "icon": "list_alt",
-                "description": "Bank statements parent menu.",
-                "type": "parent",
-                "children": [
-                    {
-                        "id": "bank_statements.all",
-                        "type": "entry",
-                        "label": "All",
-                        "description": "Display all bank statements.",
-                        "icon": "list",
-                        "context": {
-                            "entity": "finance\\bank\\BankStatement",
-                            "view": "list.default"
-                        }
-                    },
-                    {
-                        "id": "bank_statements.lines.all",
-                        "type": "entry",
-                        "label": "Lines",
-                        "icon": "list",
-                        "description": "Display all bank statements lines.",
-                        "context": {
-                            "entity": "finance\\bank\\BankStatementLine",
-                            "view": "list.default"
-                        }
-                    }
-                ]
-            },
-            {
                 "id": "customers",
                 "type": "parent",
                 "label": "Customers",
@@ -324,24 +293,6 @@
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc"
-                        }
-                    }
-                ]
-            },
-            {
-                "id": "fundings",
-                "type": "parent",
-                "label": "Fundings",
-                "icon": "person",
-                "children": [
-                    {
-                        "id": "fundings.all",
-                        "type": "entry",
-                        "label": "All",
-                        "icon": "list",
-                        "context": {
-                            "entity": "sale\\pay\\Funding",
-                            "view": "list.default"
                         }
                     }
                 ]

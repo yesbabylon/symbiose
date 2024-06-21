@@ -24,8 +24,8 @@
             },
             "params": {
                 "menus": {
-                    "left": "accounting.left",
-                    "top": "accounting.top"
+                    "left": "finance.left",
+                    "top": "finance.top"
                 }
             }
         }
