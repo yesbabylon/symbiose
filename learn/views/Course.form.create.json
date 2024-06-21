@@ -41,12 +41,6 @@
                                                 "value": "chapter_id",
                                                 "width": "50%",
                                                 "visible": false
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "section_id",
-                                                "width": "50%",
-                                                "visible": false
                                             }
                                         ]
                                     }
