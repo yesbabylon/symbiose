@@ -124,25 +124,7 @@ else {
 					['order', '=', 1]
 				])->read(['page_count'])->first(true);
 
-
 				$page_count = $nextChapter['page_count'];
-
-				// log info
-				(new \equal\error\Reporter())->info(print_r([
-					'$module[order]'     => $module['order'],
-					'$module[order] + 1' => $module['order'] + 1,
-					'next_module_id'     => $next_module_id,
-					'nextChapter'        => $nextChapter,
-					'new userStatus'     => [
-						'course_id'     => $module['course_id'],
-						'module_id'     => intval($next_module_id),
-						'user_id'       => $user_id,
-						'chapter_index' => 0,
-						'page_index'    => 0,
-						'page_count'    => $page_count,
-						'is_complete'   => 0
-					]
-				], true));
 
 				UserStatus::create([
 					'course_id'     => $module['course_id'],
