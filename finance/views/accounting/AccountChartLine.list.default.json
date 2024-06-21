@@ -14,13 +14,13 @@
             {
                 "type": "field",
                 "value": "name",
-                "width": "15%",
+                "width": "10%",
                 "align": "right"
             },
             {
                 "type": "field",
                 "value": "description",
-                "width": "30y%"
+                "width": "30%"
             },
             {
                 "type": "field",
