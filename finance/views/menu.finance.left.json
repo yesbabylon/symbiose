@@ -110,16 +110,7 @@
                             "entity": "finance\\accounting\\AccountingJournal",
                             "view": "list.default"
                         }
-                    }
-                ]
-            },
-            {
-                "id": "item.settings",
-                "label": "Settings",
-                "description": "",
-                "icon": "settings",
-                "type": "parent",
-                "children": [
+                    },
                     {
                         "id": "finance.accounting.vat_rules",
                         "type": "entry",
