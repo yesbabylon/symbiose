@@ -23,7 +23,7 @@
             "description": "",
             "help": ""
         },
-        "accounting_journal_type": {
+        "journal_type": {
             "label": "Type",
             "selection": {
                 "general_ledger": "grand livre",

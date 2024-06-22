@@ -40,7 +40,7 @@ class AccountingJournal extends Model {
                 'unique'            => true
             ],
 
-            'accounting_journal_type' => [
+            'journal_type' => [
                 'type'              => 'string',
                 'selection'         => [
                     'general_ledger',

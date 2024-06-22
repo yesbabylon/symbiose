@@ -7,7 +7,7 @@
                 "id": 1,
                 "name": "Sales Accounting Journal",
                 "organisation_id": 1,
-                "accounting_journal_type": "sales"
+                "journal_type": "sales"
             }
         ]
     }

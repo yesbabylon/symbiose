@@ -528,7 +528,7 @@ class Invoice extends \finance\accounting\Invoice {
                 throw new \Exception('invalid_invoice', EQ_ERROR_UNKNOWN);
             }
 
-            $journal = AccountingJournal::search([['organisation_id', '=', $invoice['organisation_id']], ['accounting_journal_type', '=', 'sales']])->read(['id'])->first();
+            $journal = AccountingJournal::search([['organisation_id', '=', $invoice['organisation_id']], ['journal_type', '=', 'sales']])->read(['id'])->first();
 
             if(!$journal) {
                 throw new \Exception('missing_mandatory_journal', EQ_ERROR_INVALID_CONFIG);
