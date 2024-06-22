@@ -522,24 +522,28 @@ class Invoice extends \finance\accounting\Invoice {
     public static function doGenerateAccountingEntries($self) {
         $self->read(['id', 'organisation_id']);
         foreach($self as $id => $invoice) {
-            $accounting_entries = self::computeAccountingEntries($id);
+            try {
+                $accounting_entries = self::computeAccountingEntries($id);
 
-            if(empty($accounting_entries)) {
-                throw new \Exception('invalid_invoice', EQ_ERROR_UNKNOWN);
+                if(empty($accounting_entries)) {
+                    throw new \Exception('invalid_invoice', EQ_ERROR_UNKNOWN);
+                }
+
+                $journal = AccountingJournal::search([['organisation_id', '=', $invoice['organisation_id']], ['journal_type', '=', 'sales']])->read(['id'])->first();
+
+                if(!$journal) {
+                    throw new \Exception('missing_mandatory_journal', EQ_ERROR_INVALID_CONFIG);
+                }
+
+                // create new entries objects and assign to the sale journal
+                foreach($accounting_entries as $entry) {
+                    $entry['journal_id'] = $journal['id'];
+                    AccountingEntry::create($entry);
+                }
             }
-
-            $journal = AccountingJournal::search([['organisation_id', '=', $invoice['organisation_id']], ['journal_type', '=', 'sales']])->read(['id'])->first();
-
-            if(!$journal) {
-                throw new \Exception('missing_mandatory_journal', EQ_ERROR_INVALID_CONFIG);
+            catch(\Exception $e) {
+                trigger_error($e->getMessage(), EQ_REPORT_ERROR);
             }
-
-            // create new entries objects and assign to the sale journal
-            foreach($accounting_entries as $entry) {
-                $entry['journal_id'] = $journal['id'];
-                AccountingEntry::create($entry);
-            }
-
         }
     }
 
