@@ -583,8 +583,11 @@ class Invoice extends \finance\accounting\Invoice {
                 ->read([
                     'name', 'description', 'product_id', 'qty', 'total', 'price',
                     'price_id' => [
-                        'vat_rule_id' => ['account_id'],
-                        'accounting_rule_id' => ['accounting_rule_line_ids' => ['share', 'account_id']]]
+                        'accounting_rule_id' => [
+                            'vat_rule_id' => ['account_id'],
+                            'accounting_rule_line_ids' => ['share', 'account_id']
+                        ]
+                    ]
                 ]);
 
             foreach($lines as $lid => $line) {
@@ -602,13 +605,13 @@ class Invoice extends \finance\accounting\Invoice {
                     throw new \Exception("APP::invoice line [{$lid}] without accounting rule lines for invoice [{$invoice_id}]", EQ_ERROR_UNKNOWN);
                 }
 
-                if(!isset($line['price_id']['vat_rule_id'])) {
+                if(!isset($line['price_id']['accounting_rule_id']['vat_rule_id'])) {
                     throw new \Exception("APP::invoice line [{$lid}] without VAT rule for invoice [{$invoice_id}]", EQ_ERROR_UNKNOWN);
                 }
 
                 $vat_amount = ($line['price'] < 0 ? -1 : 1) * (abs($line['price']) - abs($line['total']));
                 // #memo - Only one VAT rate can be applied per line: we should only retrieve the associated account.
-                $account_vat = $line['price_id']['vat_rule_id']['account_id'];
+                $account_vat = $line['price_id']['accounting_rule_id']['vat_rule_id']['account_id'];
 
                 if(!isset($map_accounting_entries[$account_vat])) {
                     $map_accounting_entries[$account_vat] = 0.0;
