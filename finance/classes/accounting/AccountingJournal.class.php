@@ -78,9 +78,13 @@ class AccountingJournal extends Model {
 
     public static function calcName($self) {
         $result = [];
-        $self->read(['code', 'description']);
+        $self->read(['journal_type', 'code', 'description']);
         foreach($self as $id => $journal) {
-            $result[$id] = $journal['description'].' ('.$journal['code'].')';
+            $name = $journal['description'].' ['.$journal['journal_type'].']';
+            if($journal['journal_type'] && strlen($journal['journal_type'])) {
+                $name .= ' ('.$journal['code'].')';
+            }
+            $result[$id] = $name;
         }
         return $result;
     }

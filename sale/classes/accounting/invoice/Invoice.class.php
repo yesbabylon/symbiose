@@ -529,7 +529,7 @@ class Invoice extends \finance\accounting\Invoice {
                     throw new \Exception('invalid_invoice', EQ_ERROR_UNKNOWN);
                 }
 
-                $journal = AccountingJournal::search([['organisation_id', '=', $invoice['organisation_id']], ['journal_type', '=', 'sales']])->read(['id'])->first();
+                $journal = AccountingJournal::search([['organisation_id', '=', $invoice['organisation_id']], ['journal_type', '=', 'SALE']])->read(['id'])->first();
 
                 if(!$journal) {
                     throw new \Exception('missing_mandatory_journal', EQ_ERROR_INVALID_CONFIG);
@@ -655,7 +655,7 @@ class Invoice extends \finance\accounting\Invoice {
             // create credit lines on sales & taxes accounts
             foreach($map_accounting_entries as $account_id => $amount) {
                 $account = AccountChartLine::id($account_id)->read(['description'])->first();
-                $accounting_entries[] = [
+                $result[] = [
                         'name'          => $account['description'],
                         'has_invoice'   => true,
                         'invoice_id'    => $invoice_id,

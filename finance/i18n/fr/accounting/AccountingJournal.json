@@ -26,11 +26,13 @@
         "journal_type": {
             "label": "Type",
             "selection": {
-                "general_ledger": "grand livre",
-                "sales": "journal des ventes",
-                "purchases": "journal des achats",
-                "bank_cash": "journal de trésorerie",
-                "miscellaneous": "journal des opérations diverses"
+                "LEDG": "grand livre",
+                "SALE": "journal des ventes",
+                "PURC": "journal des achats",
+                "CASH": "journal de trésorerie",
+                "PAYR": "journal des paies",
+                "ASST": "journal des immobilisations",
+                "MISC": "journal des opérations diverses"
             },
             "description": "",
             "help": ""
