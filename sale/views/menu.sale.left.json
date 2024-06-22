@@ -54,141 +54,53 @@
                 ]
             },
             {
-                "id": "sale_entries",
+                "id": "sales",
                 "type": "parent",
-                "label": "Sale entries",
+                "label": "Sales",
                 "icon": "done",
                 "description": "Sale entries parent menu.",
                 "children": [
                     {
-                        "id": "sale_entries.new",
-                        "type": "entry",
-                        "label": "New",
-                        "icon": "add",
-                        "description": "Add new entry.",
-                        "context": {
-                            "entity": "sale\\SaleEntry",
-                            "view": "form.create",
-                            "purpose": "create"
-                        }
-                    },
-                    {
-                        "id": "sale_entries.all",
-                        "type": "entry",
-                        "label": "All",
-                        "icon": "list",
-                        "description": "Display all sale entries.",
-                        "context": {
-                            "entity": "sale\\SaleEntry",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
-                        "id": "sale_entries.to-bill",
-                        "type": "entry",
-                        "label": "To bill",
-                        "icon": "payments",
-                        "description": "Display sale entries ready to be billed.",
-                        "context": {
-                            "entity": "sale\\SaleEntry",
-                            "view": "list.billable",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
-                        "id": "sale_entries.billed",
-                        "type": "entry",
-                        "label": "Billed",
-                        "icon": "receipt_long",
-                        "description": "Display billed sale entries.",
-                        "context": {
-                            "entity": "sale\\SaleEntry",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc",
-                            "domain": [ ["status", "=", "billed"] ]
-                        }
-                    },
-                    {
-                        "id": "sale_entries.archived",
-                        "type": "entry",
-                        "label": "Archived",
-                        "icon": "inventory",
-                        "description": "Archived entries",
-                        "context": {
-                            "entity": "sale\\SaleEntry",
-                            "view": "list.default",
-                            "order": "created",
-                            "sort": "desc",
-                            "domain": [ ["state", "=", "archive"] ]
-                        }
-                    }
-                ]
-            },
-            {
-                "id": "subscriptions",
-                "type": "parent",
-                "label": "Subscriptions",
-                "icon": "subscriptions",
-                "description": "Subscriptions parent menu.",
-                "children": [
-                    {
-                        "id": "subscriptions.all",
-                        "type": "entry",
-                        "label": "All",
-                        "icon": "list",
-                        "description": "Display all subscriptions.",
-                        "context": {
-                            "entity": "sale\\subscription\\Subscription",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
-                        "id": "subscriptions.entries",
+                        "id": "sales",
                         "type": "parent",
-                        "label": "Entries",
-                        "icon": "check",
-                        "description": "Subscription entries parent menu.",
+                        "label": "Sales",
+                        "icon": "done",
+                        "description": "Sale entries parent menu.",
                         "children": [
                             {
-                                "id": "subscriptions.entries.all",
+                                "id": "sales.sale_entries.all",
                                 "type": "entry",
                                 "label": "All",
                                 "icon": "list",
-                                "description": "Display all subscription entries.",
+                                "description": "Display all sale entries.",
                                 "context": {
-                                    "entity": "sale\\subscription\\SubscriptionEntry",
+                                    "entity": "sale\\SaleEntry",
                                     "view": "list.default",
                                     "order": "id",
                                     "sort": "asc"
                                 }
                             },
                             {
-                                "id": "subscriptions.entries.to-bill",
+                                "id": "sales.subscription",
                                 "type": "entry",
                                 "label": "To bill",
                                 "icon": "payments",
-                                "description": "Display subscription entries ready to be billed.",
+                                "description": "Display sale entries ready to be billed.",
                                 "context": {
-                                    "entity": "sale\\subscription\\SubscriptionEntry",
-                                    "view": "list.billable",
+                                    "entity": "sale\\subscription\\Subscription",
+                                    "view": "list.default",
                                     "order": "id",
                                     "sort": "asc"
                                 }
                             },
                             {
-                                "id": "subscriptions.entries.billed",
+                                "id": "sale_entries.billed",
                                 "type": "entry",
                                 "label": "Billed",
                                 "icon": "receipt_long",
-                                "description": "Display billed subscription entries.",
+                                "description": "Display billed sale entries.",
                                 "context": {
-                                    "entity": "sale\\subscription\\SubscriptionEntry",
+                                    "entity": "sale\\SaleEntry",
                                     "view": "list.default",
                                     "order": "id",
                                     "sort": "asc",
@@ -196,13 +108,13 @@
                                 }
                             },
                             {
-                                "id": "subscriptions.entries.archived",
+                                "id": "sale_entries.archived",
                                 "type": "entry",
                                 "label": "Archived",
                                 "icon": "inventory",
                                 "description": "Archived entries",
                                 "context": {
-                                    "entity": "sale\\subscription\\SubscriptionEntry",
+                                    "entity": "sale\\SaleEntry",
                                     "view": "list.default",
                                     "order": "created",
                                     "sort": "desc",
@@ -210,7 +122,92 @@
                                 }
                             }
                         ]
-                    }
+                    },
+                    {
+                        "id": "subscriptions",
+                        "type": "parent",
+                        "label": "Subscriptions",
+                        "icon": "subscriptions",
+                        "description": "Subscriptions parent menu.",
+                        "children": [
+                            {
+                                "id": "subscriptions.all",
+                                "type": "entry",
+                                "label": "All",
+                                "icon": "list",
+                                "description": "Display all subscriptions.",
+                                "context": {
+                                    "entity": "sale\\subscription\\Subscription",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "subscriptions.entries",
+                                "type": "parent",
+                                "label": "Entries",
+                                "icon": "check",
+                                "description": "Subscription entries parent menu.",
+                                "children": [
+                                    {
+                                        "id": "subscriptions.entries.all",
+                                        "type": "entry",
+                                        "label": "All",
+                                        "icon": "list",
+                                        "description": "Display all subscription entries.",
+                                        "context": {
+                                            "entity": "sale\\subscription\\SubscriptionEntry",
+                                            "view": "list.default",
+                                            "order": "id",
+                                            "sort": "asc"
+                                        }
+                                    },
+                                    {
+                                        "id": "subscriptions.entries.to-bill",
+                                        "type": "entry",
+                                        "label": "To bill",
+                                        "icon": "payments",
+                                        "description": "Display subscription entries ready to be billed.",
+                                        "context": {
+                                            "entity": "sale\\subscription\\SubscriptionEntry",
+                                            "view": "list.billable",
+                                            "order": "id",
+                                            "sort": "asc"
+                                        }
+                                    },
+                                    {
+                                        "id": "subscriptions.entries.billed",
+                                        "type": "entry",
+                                        "label": "Billed",
+                                        "icon": "receipt_long",
+                                        "description": "Display billed subscription entries.",
+                                        "context": {
+                                            "entity": "sale\\subscription\\SubscriptionEntry",
+                                            "view": "list.default",
+                                            "order": "id",
+                                            "sort": "asc",
+                                            "domain": [ ["status", "=", "billed"] ]
+                                        }
+                                    },
+                                    {
+                                        "id": "subscriptions.entries.archived",
+                                        "type": "entry",
+                                        "label": "Archived",
+                                        "icon": "inventory",
+                                        "description": "Archived entries",
+                                        "context": {
+                                            "entity": "sale\\subscription\\SubscriptionEntry",
+                                            "view": "list.default",
+                                            "order": "created",
+                                            "sort": "desc",
+                                            "domain": [ ["state", "=", "archive"] ]
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    } 
                 ]
             },
             {
@@ -305,91 +302,100 @@
                 "description": "Catalog parent menu.",
                 "children": [
                     {
-                        "id": "catalog.products",
-                        "type": "entry",
-                        "label": "Products",
-                        "icon": "book",
-                        "description": "Display all catalog products.",
-                        "context": {
-                            "entity": "sale\\catalog\\Product",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
-                        "id": "catalog.product_models",
-                        "type": "entry",
-                        "label": "Product models",
-                        "icon": "bookmark",
-                        "description": "Display all catalog product models",
-                        "context": {
-                            "entity": "sale\\catalog\\ProductModel",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
-                        "id": "catalog.categories",
-                        "type": "entry",
-                        "label": "Categories",
-                        "icon": "category",
-                        "description": "Display all catalog product categories.",
-                        "context": {
-                            "entity": "sale\\catalog\\Category",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
-                        "id": "catalog.families",
-                        "type": "entry",
-                        "label": "Families",
-                        "icon": "list",
-                        "description": "Display all catalog product families.",
-                        "context": {
-                            "entity": "sale\\catalog\\Family",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    }
-                ]
-            },
-            {
-                "id": "prices",
-                "type": "parent",
-                "label": "Prices",
-                "icon": "price_check",
-                "description": "Pries parent menu.",
-                "children": [
-                    {
-                        "id": "prices.all",
-                        "type": "entry",
+                        "id": "catalog.prices",
+                        "type": "parent",
                         "label": "Prices",
-                        "icon": "attach_money",
-                        "description": "Display all prices.",
-                        "context": {
-                            "entity": "sale\\price\\Price",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
+                        "icon": "price_check",
+                        "description": "Catalog parent menu.",
+                        "children": [
+                            {
+                                "id": "prices.all",
+                                "type": "entry",
+                                "label": "Prices",
+                                "icon": "attach_money",
+                                "description": "Display all prices.",
+                                "context": {
+                                    "entity": "sale\\price\\Price",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "prices.pricelists",
+                                "type": "entry",
+                                "label": "Price Lists",
+                                "icon": "list",
+                                "description": "Display all price lists.",
+                                "context": {
+                                    "entity": "sale\\price\\PriceList",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            }
+                        ]
                     },
                     {
-                        "id": "prices.pricelists",
-                        "type": "entry",
-                        "label": "Price Lists",
-                        "icon": "list",
-                        "description": "Display all price lists.",
-                        "context": {
-                            "entity": "sale\\price\\PriceList",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
+                        "id": "catalog.products",
+                        "type": "parent",
+                        "label": "Products",
+                        "icon": "collections_bookmark",
+                        "description": "Catalog parent menu.",
+                        "children": [
+                            {
+                                "id": "catalog.products.all",
+                                "type": "entry",
+                                "label": "Products",
+                                "icon": "book",
+                                "description": "Display all catalog products.",
+                                "context": {
+                                    "entity": "sale\\catalog\\Product",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "catalog.product_models",
+                                "type": "entry",
+                                "label": "Product models",
+                                "icon": "bookmark",
+                                "description": "Display all catalog product models",
+                                "context": {
+                                    "entity": "sale\\catalog\\ProductModel",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "catalog.categories",
+                                "type": "entry",
+                                "label": "Categories",
+                                "icon": "category",
+                                "description": "Display all catalog product categories.",
+                                "context": {
+                                    "entity": "sale\\catalog\\Category",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "catalog.families",
+                                "type": "entry",
+                                "label": "Families",
+                                "icon": "list",
+                                "description": "Display all catalog product families.",
+                                "context": {
+                                    "entity": "sale\\catalog\\Family",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            }
+                        ]
                     }
                 ]
             },
