@@ -7,7 +7,8 @@
                 "id": 1,
                 "name": "default",
                 "share": 1,
-                "accounting_rule_id": 1
+                "accounting_rule_id": 1,
+                "account_id": 1
             }
         ]
     }
