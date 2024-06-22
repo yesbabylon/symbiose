@@ -82,15 +82,15 @@
             "help": ""
         },
         "reversed_invoice_id": {
-            "label": "Note de crédit",
-            "description": "La note de crédit associée à la facture.",
-            "help": ""
+            "label": "Pièce inverse",
+            "description": "La pièce comptable inverse de la facture.",
+            "help": "Cette valeur correspond à la facture annulée dans le cas d'une note de crédit; et à la note de crédit dans le cas d'une facture qui a été annulée."
         }
     },
     "view": {
         "form.default": {
             "name": "Facture",
-            "description": "Une facture est un document juridique délivré par un vendeur à un acheteur qui se rapporte à une vente et fait partie du système comptable.",
+            "description": "Détail d'une facture de vente.",
             "layout": {
                 "sections.invoice_lines": {
                     "label": "Lignes de facture"

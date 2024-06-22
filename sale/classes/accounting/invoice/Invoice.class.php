@@ -53,7 +53,7 @@ class Invoice extends \finance\accounting\Invoice {
                 'visible'           => ['status', '=', 'cancelled']
             ],
 
-            'is_deposit' => [
+            'is_downpayment' => [
                 'type'              => 'boolean',
                 'description'       => 'Marks the invoice as a deposit invoice relating to a downpayment (funding).',
                 'default'           => false
@@ -411,28 +411,28 @@ class Invoice extends \finance\accounting\Invoice {
      */
     public static function doReverseInvoice($self) {
         $self->read([
-            'status',
-            'invoice_type',
-            'reversed_invoice_id',
-            'organisation_id',
-            'customer_id',
-            'is_deposit',
-            'invoice_line_groups_ids' => [
-                'name',
-                'invoice_lines_ids' => [
-                    'product_id',
-                    'price_id',
-                    'qty',
-                    'free_qty',
-                    'discount',
-                    'downpayment_invoice_id',
-                    'vat_rate',
-                    'unit_price',
-                    'total',
-                    'price'
+                'status',
+                'invoice_type',
+                'reversed_invoice_id',
+                'organisation_id',
+                'customer_id',
+                'is_downpayment',
+                'invoice_line_groups_ids' => [
+                    'name',
+                    'invoice_lines_ids' => [
+                        'product_id',
+                        'price_id',
+                        'qty',
+                        'free_qty',
+                        'discount',
+                        'downpayment_invoice_id',
+                        'vat_rate',
+                        'unit_price',
+                        'total',
+                        'price'
+                    ]
                 ]
-            ]
-        ]);
+            ]);
 
         foreach($self as $invoice) {
             if( $invoice['status'] !== 'cancelled'
@@ -447,9 +447,10 @@ class Invoice extends \finance\accounting\Invoice {
                     'emission_date'       => time(),
                     'organisation_id'     => $invoice['organisation_id'],
                     'customer_id'         => $invoice['customer_id'],
-                    'is_deposit'          => $invoice['is_deposit'],
+                    'is_downpayment'      => $invoice['is_downpayment'],
                     'reversed_invoice_id' => $invoice['id']
                 ])
+                ->read(['id'])
                 ->first();
 
             foreach($invoice['invoice_line_groups_ids'] as $invoice_line_group) {
@@ -481,11 +482,12 @@ class Invoice extends \finance\accounting\Invoice {
             }
 
             if(in_array($invoice['payment_status'], ['pending', 'overdue'])) {
+                // no payment was received yet : mark both invoices as balanced (no transaction required)
                 Invoice::id($reversed_invoice['id'])->update(['payment_status' => 'balanced']);
                 Invoice::id($invoice['id'])->update(['payment_status' => 'balanced']);
             }
             else {
-                // TODO: Alert finance_accounting - reimbursement needed
+                // #todo: Alert finance_accounting - reimbursement needed
             }
 
             Invoice::id($invoice['id'])

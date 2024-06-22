@@ -25,7 +25,7 @@
         "funding_id": {
             "label": "Financement",
             "description": "Financement associé à la facture.",
-            "help": "Le client est invité à s'acquitter de la facture en la finançant via un ou plusieurs paiements."
+            "help": "Le financement représente l'invitation envoyée au client pour s'acquitter de la facture en la finançant via un ou plusieurs paiements."
         },
         "payment_terms_id": {
             "label": "Conditions de paiement",
@@ -38,25 +38,16 @@
             "name": "Facture",
             "description": "",
             "actions": {
-                "action.download-pdf": {
-                    "label": "Télécharger pdf"
+                "action.cancel": {
+                    "label": "Annuler"
                 },
-                "action.download-detailed-pdf": {
-                    "label": "Télécharger pdf détaillé"
-                },
-                "action.download-grouped-pdf": {
-                    "label": "Télécharger pdf groupé"
+                "action.cancel-proforma": {
+                    "label": "Supprimer"
                 }
             },
             "routes": {
                 "route.print.pdf": {
                     "label": "Imprimer facture"
-                },
-                "route.print-detailed.pdf": {
-                    "label": "Imprimer facture détaillée"
-                },
-                "route.print-grouped.pdf": {
-                    "label": "Imprimer facture groupée"
                 }
             },
             "layout": {
