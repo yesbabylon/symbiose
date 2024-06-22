@@ -2,10 +2,82 @@
     "name": "Order",
     "description": "",
     "access": {
-        "groups": ["order.default.user"]
+        "groups": [
+            "order.default.user"
+        ]
     },
     "layout": {
         "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "66%",
+                                                "label": "Reference",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "delivery_date",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "payment_status",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "33%",
+                                                "visible": false
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": []
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "customer_id",
+                                                "width": "100%",
+                                                "label": "Customer",
+                                                "widget": {
+                                                    "view": "form.create"
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "customer_reference",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
             {
                 "sections": [
                     {
@@ -19,48 +91,8 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Reference",
-                                                "value": "name",
-                                                "width": "33%",
-                                                "widget": {
-                                                    "heading": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "description",
-                                                "width": "66%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Type",
-                                                "value": "type_id",
-                                                "width": "33%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "status",
-                                                "width": "33%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Customer",
-                                                "value": "customer_id",
-                                                "width": "33%",
-                                                "widget": {
-                                                    "view": "form.create"
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Organisation of Payer",
-                                                "value": "has_payer_organisation",
-                                                "width": "33%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "payer_organisation_id",
-                                                "width": "33%"                                                
+                                                "width": "100%"
                                             }
                                         ]
                                     }
@@ -69,8 +101,8 @@
                         ]
                     },
                     {
-                        "label": "Contacts",
-                        "id": "section.order_contacts",
+                        "label": "Fundings",
+                        "id": "section.fundings",
                         "rows": [
                             {
                                 "columns": [
@@ -79,7 +111,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "contacts_ids",
+                                                "value": "fundings_ids",
                                                 "width": "100%"
                                             }
                                         ]
@@ -100,7 +132,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "contracts_ids",
-                                                "width": "100%"                                                
+                                                "width": "100%"
                                             }
                                         ]
                                     }
@@ -110,7 +142,7 @@
                     },
                     {
                         "label": "Products",
-                        "id": "section.order_products",
+                        "id": "section.products",
                         "rows": [
                             {
                                 "columns": [
@@ -120,6 +152,26 @@
                                             {
                                                 "type": "field",
                                                 "value": "order_lines_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Invoices",
+                        "id": "section.invoices",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "invoices_ids",
                                                 "width": "100%"
                                             }
                                         ]
