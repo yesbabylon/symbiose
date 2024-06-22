@@ -57,13 +57,13 @@ class AccountingRuleLine extends Model {
     }
 
 
-    public static function calcAccount($om, $oids, $lang) {
+    public static function calcAccount($om, $ids, $lang) {
         $result = [];
 
-        $res = $om->read(get_called_class(), $oids, ['account_id.code']);
+        $res = $om->read(get_called_class(), $ids, ['account_id.code']);
         if($res > 0 && count($res)) {
-            foreach($res as $oid => $odata) {
-                $result[$oid] = $odata['account_id.code'];
+            foreach($res as $id => $line) {
+                $result[$id] = $line['account_id.code'];
             }
         }
         return $result;
