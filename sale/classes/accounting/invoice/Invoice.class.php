@@ -615,13 +615,13 @@ class Invoice extends \finance\accounting\Invoice {
 
                 $vat_amount = ($line['price'] < 0 ? -1 : 1) * (abs($line['price']) - abs($line['total']));
                 // #memo - Only one VAT rate can be applied per line: we should only retrieve the associated account.
-                $account_vat = $line['price_id']['accounting_rule_id']['vat_rule_id']['account_id'];
+                $vat_account_id = $line['price_id']['accounting_rule_id']['vat_rule_id']['account_id'];
 
-                if(!isset($map_accounting_entries[$account_vat])) {
-                    $map_accounting_entries[$account_vat] = 0.0;
+                if(!isset($map_accounting_entries[$vat_account_id])) {
+                    $map_accounting_entries[$vat_account_id] = 0.0;
                 }
 
-                $map_accounting_entries[$account_vat] += $vat_amount;
+                $map_accounting_entries[$vat_account_id] += $vat_amount;
 
                 $remaining_amount = $line['total'];
 
@@ -642,11 +642,11 @@ class Invoice extends \finance\accounting\Invoice {
                         $remaining_amount -= $amount;
                     }
 
-                    if(!isset($accounting_entries[$ruleLine['account_id']])) {
-                        $accounting_entries[$ruleLine['account_id']] = 0.0;
+                    if(!isset($map_accounting_entries[$ruleLine['account_id']])) {
+                        $map_accounting_entries[$ruleLine['account_id']] = 0.0;
                     }
 
-                    $accounting_entries[$ruleLine['account_id']] += $amount;
+                    $map_accounting_entries[$ruleLine['account_id']] += $amount;
 
                     ++$i;
                 }

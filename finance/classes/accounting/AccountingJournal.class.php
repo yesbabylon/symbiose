@@ -25,20 +25,23 @@ class AccountingJournal extends Model {
                 'result_type'       => 'string',
                 'description'       => 'Label for identifying the journal.',
                 'function'          => 'calcName',
-                'store'             => true
+                'store'             => true,
+                'multilang'         => true
             ],
 
             'description' => [
                 'type'              => 'string',
                 'description'       => 'Verbose detail of the role of the journal.',
-                'multilang'         => true
+                'multilang'         => true,
+                'dependents'        => ['name']
             ],
 
             'code' => [
                 'type'              => 'string',
                 'description'       => 'Unique code (optional).',
                 'help'              => 'Additional code to match journal in an external tool.',
-                'unique'            => true
+                'unique'            => true,
+                'dependents'        => ['name']
             ],
 
             'journal_type' => [
@@ -53,7 +56,8 @@ class AccountingJournal extends Model {
                     'MISC'      => 'General (miscellaneous)'
                 ],
                 "required"          => true,
-                'description'       => "Type of journal or ledger."
+                'description'       => "Type of journal or ledger.",
+                'dependents'        => ['name']
             ],
 
             'organisation_id' => [

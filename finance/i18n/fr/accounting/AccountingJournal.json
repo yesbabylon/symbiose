@@ -15,7 +15,7 @@
         },
         "code": {
             "label": "Code du journal",
-            "description": "",
+            "description": "Code facultatif de référence pour correspondance externe.",
             "help": ""
         },
         "organisation_id": {
@@ -27,12 +27,12 @@
             "label": "Type",
             "selection": {
                 "LEDG": "grand livre",
-                "SALE": "journal des ventes",
-                "PURC": "journal des achats",
-                "CASH": "journal de trésorerie",
-                "PAYR": "journal des paies",
-                "ASST": "journal des immobilisations",
-                "MISC": "journal des opérations diverses"
+                "SALE": "jour. des ventes",
+                "PURC": "jour. des achats",
+                "CASH": "jour. de trésorerie",
+                "PAYR": "jour. des paies",
+                "ASST": "jour. des immobilisations",
+                "MISC": "jour. des opérations diverses"
             },
             "description": "",
             "help": ""
