@@ -61,9 +61,9 @@
                 "description": "Sale entries parent menu.",
                 "children": [
                     {
-                        "id": "sales",
+                        "id": "sales.sale_entries",
                         "type": "parent",
-                        "label": "Sales",
+                        "label": "Sale Entries",
                         "icon": "done",
                         "description": "Sale entries parent menu.",
                         "children": [
@@ -124,14 +124,14 @@
                         ]
                     },
                     {
-                        "id": "subscriptions",
+                        "id": "sales.subscriptions",
                         "type": "parent",
                         "label": "Subscriptions",
                         "icon": "subscriptions",
                         "description": "Subscriptions parent menu.",
                         "children": [
                             {
-                                "id": "subscriptions.all",
+                                "id": "sales.subscriptions.all",
                                 "type": "entry",
                                 "label": "All",
                                 "icon": "list",
@@ -144,14 +144,14 @@
                                 }
                             },
                             {
-                                "id": "subscriptions.entries",
+                                "id": "sales.subscriptions.entries",
                                 "type": "parent",
                                 "label": "Entries",
                                 "icon": "check",
                                 "description": "Subscription entries parent menu.",
                                 "children": [
                                     {
-                                        "id": "subscriptions.entries.all",
+                                        "id": "sales.subscriptions.entries.all",
                                         "type": "entry",
                                         "label": "All",
                                         "icon": "list",
@@ -164,7 +164,7 @@
                                         }
                                     },
                                     {
-                                        "id": "subscriptions.entries.to-bill",
+                                        "id": "sales.subscriptions.entries.to-bill",
                                         "type": "entry",
                                         "label": "To bill",
                                         "icon": "payments",
@@ -177,7 +177,7 @@
                                         }
                                     },
                                     {
-                                        "id": "subscriptions.entries.billed",
+                                        "id": "sales.subscriptions.entries.billed",
                                         "type": "entry",
                                         "label": "Billed",
                                         "icon": "receipt_long",
@@ -191,7 +191,7 @@
                                         }
                                     },
                                     {
-                                        "id": "subscriptions.entries.archived",
+                                        "id": "sales.subscriptions.entries.archived",
                                         "type": "entry",
                                         "label": "Archived",
                                         "icon": "inventory",
@@ -207,7 +207,29 @@
                                 ]
                             }
                         ]
-                    } 
+                    },
+                    {
+                        "id": "sales.orders",
+                        "type": "parent",
+                        "label": "Orders",
+                        "icon": "shop",
+                        "description": "Orders parent menu.",
+                        "children": [
+                            {
+                                "id": "sales.order.all",
+                                "type": "entry",
+                                "label": "All",
+                                "icon": "list",
+                                "description": "Display all orders.",
+                                "context": {
+                                    "entity": "sale\\order\\Order",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            }
+                        ]
+                    }
                 ]
             },
             {
