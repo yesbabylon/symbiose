@@ -36,39 +36,6 @@
             "controller": "sale_accounting_invoice_cancel",
             "confirm": true,
             "visible": ["status", "=", "invoice"]
-        },
-        {
-            "id": "action.download-pdf",
-            "label": "Download pdf",
-            "description": "Download invoice pdf version (lines without groups).",
-            "controller": "sale_accounting_invoice_download-pdf",
-            "confirm": false,
-            "params": {
-                "id": "object.id",
-                "mode": "simple"
-            }
-        },
-        {
-            "id": "action.download-detailed-pdf",
-            "label": "Download detailed pdf",
-            "description": "Download detailed invoice pdf version (lines by groups).",
-            "controller": "sale_accounting_invoice_download-pdf",
-            "confirm": false,
-            "params": {
-                "id": "object.id",
-                "mode": "detailed"
-            }
-        },
-        {
-            "id": "action.download-grouped-pdf",
-            "label": "Download grouped pdf",
-            "description": "Download grouped invoice pdf version (groups by vat rate).",
-            "controller": "sale_accounting_invoice_download-pdf",
-            "confirm": false,
-            "params": {
-                "id": "object.id",
-                "mode": "grouped"
-            }
         }
     ],
     "routes": [
@@ -77,25 +44,7 @@
             "label": "Print invoice",
             "description": "Displays all lines but without group.",
             "icon": "print",
-            "route": "/?get=sale_accounting_invoice_render-pdf&mode=simple&id=object.id",
-            "target": "_blank",
-            "absolute": true
-        },
-        {
-            "id": "route.print-detailed.pdf",
-            "label": "Print detailed invoice",
-            "description": "Displays all lines by group.",
-            "icon": "print",
             "route": "/?get=sale_accounting_invoice_render-pdf&mode=detailed&id=object.id",
-            "target": "_blank",
-            "absolute": true
-        },
-        {
-            "id": "route.print-grouped.pdf",
-            "label": "Print grouped invoice",
-            "description": "Displays only groups by vat.",
-            "icon": "print",
-            "route": "/?get=sale_accounting_invoice_render-pdf&mode=grouped&id=object.id",
             "target": "_blank",
             "absolute": true
         }
