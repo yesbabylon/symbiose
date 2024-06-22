@@ -9,8 +9,6 @@
             {
                 "sections": [
                     {
-                        "label": "General Info",
-                        "id": "section.accounting_journal_section",
                         "rows": [
                             {
                                 "columns": [
@@ -20,16 +18,59 @@
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "50%",
+                                                "width": "100%",
                                                 "widget": {
                                                     "heading": true,
                                                     "readonly": true
                                                 }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": []
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "organisation_id",
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "code",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "journal_type",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "label": "General Info",
+                        "id": "section.description",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "100%"
                                             }
                                         ]
                                     }
