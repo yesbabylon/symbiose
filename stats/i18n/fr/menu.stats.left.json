@@ -10,8 +10,8 @@
             "label": "Stats Documents",
             "help": ""
         },
-        "stats.booking": {
-            "label": "Stats Réservation",
+        "stats.order": {
+            "label": "Stats Commande",
             "help": ""
         },
         "stats.sale": {

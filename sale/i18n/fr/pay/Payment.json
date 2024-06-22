@@ -60,7 +60,7 @@
         },
         "funding_id": {
             "label": "Financement",
-            "description": "Financement de réservation lié au paiement.",
+            "description": "Financement de commande lié au paiement.",
             "help": ""
         },
         "status": {

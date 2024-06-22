@@ -1,0 +1,43 @@
+{
+    "name": "Contracts",
+    "description": "List of contracts relating to orders.",
+    "access": {
+        "groups": ["order.default.user"]
+    },
+    "order": "created",
+    "sort": "desc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "order_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "date",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "valid_until",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "price",
+                "width": "15%"
+            }
+        ]
+    }
+}

@@ -22,8 +22,8 @@
                 "section.customer_details": {
                     "label": "Détails"
                 },
-                "section.customer_bookings": {
-                    "label": "Historique des Réservations"
+                "section.customer_orders": {
+                    "label": "Historique des Commandes"
                 }
             }
         },

@@ -1,0 +1,32 @@
+{
+	"name": "Financement",
+	"plural": "Financements",
+	"description": "",
+	"model": {
+		"order_id": {
+			"label": "Commande",
+			"description": "La commande sur laquelle porte le contrat.",
+			"help": ""
+		}
+	},
+	"view": {
+		"form.default": {
+			"name": "Financement",
+			"description": "",
+			"layout": {
+				"section.funding": {
+					"label": "Info Générales"
+				},
+				"section.payments": {
+					"label": "Paiements"
+				}
+			}
+		},
+		"list.default": {
+			"name": "Financements",
+			"description": "Liste des financement.",
+			"layout": {}
+		}
+	},
+	"error": {}
+}

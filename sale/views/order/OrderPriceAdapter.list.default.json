@@ -1,0 +1,39 @@
+{
+    "name": "Order Line Price Adapters",
+    "description": "This view is intended for displaying the list of order line price adapters.",
+    "access": {
+        "groups": ["order.default.user"]
+     },
+    "layout": {
+        "items": [
+            {
+                "type": "field",   
+                "label": "Order",         
+                "value": "order_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",     
+                "label": "Order Line",       
+                "value": "order_line_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",            
+                "value": "type",
+                "width": "20%"
+            },
+            {
+                "type": "field",            
+                "value": "value",
+                "width": "20%"
+            },
+            {
+                "type": "field",    
+                "label": "Discount",        
+                "value": "discount_id",
+                "width": "20%"
+            }
+        ]
+    }
+}

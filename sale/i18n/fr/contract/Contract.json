@@ -10,7 +10,7 @@
         },
         "description": {
             "label": "Description",
-            "description": "Brève description du motif de la réservation (optionel).",
+            "description": "Brève description du motif de la commande (optionel).",
             "help": ""
         },
         "status": {
@@ -41,12 +41,12 @@
         },
         "price": {
             "label": "Prix TTC",
-            "description": "Prix total TTC de la réservation.",
+            "description": "Prix total TTC de la commande.",
             "help": ""
         },
         "total": {
             "label": "Total HT",
-            "description": "Prix total hors-taxes de la réservation.",
+            "description": "Prix total hors-taxes de la commande.",
             "help": ""
         }
     },

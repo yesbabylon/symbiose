@@ -88,14 +88,8 @@
             "selection": {
                 "none": "Aucune",
                 "cleanup_daily": "Nettoyage quotidien",
-                "cleanup_full": "Nettoyage complet",
-                "repair": "Réparation & Maintenance"
+                "cleanup_full": "Nettoyage complet"
             },
-            "description": "",
-            "help": ""
-        },
-        "repairs_ids": {
-            "label": "Blocages",
             "description": "",
             "help": ""
         }

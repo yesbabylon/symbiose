@@ -13,8 +13,8 @@
             "description": "La classe tarifaire applicable au plan de paiement.",
             "help": ""
         },
-        "booking_type_id": {
-            "label": "Type de réservation",
+        "order_type_id": {
+            "label": "Type de commande",
             "description": "La classe tarifaire applicable au plan de paiement.",
             "help": ""
         }

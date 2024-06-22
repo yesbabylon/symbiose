@@ -1,0 +1,73 @@
+{
+    "name": "Fundings",
+    "description": "List of fundings related to a order.",
+    "access": {
+        "groups": ["order.default.user"]
+    },
+    "operations": {
+        "total": {
+            "amount_share": {
+                "operation": "SUM",
+                "usage": "amount/percent"
+            },
+            "due_amount": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "issue_date",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "due_date",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "is_paid",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "amount_share",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "payment_reference",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "paid_amount",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "due_amount",
+                "width": "10%"
+            }
+        ]
+    }
+}

@@ -3,7 +3,7 @@
     "description": "List of Tour Operators.",
     "domain": ["is_tour_operator", "=", true],
     "access": {
-        "groups": ["sale.default.user", "booking.default.user"]
+        "groups": ["sale.default.user", "order.default.user"]
     },
     "layout": {
         "items": [

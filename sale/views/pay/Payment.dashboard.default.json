@@ -54,10 +54,10 @@
                                             },
                                             {
                                                 "id": "item.sale4",
-                                                "label": "CA total Réservations",
+                                                "label": "CA total Commandes",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "sale\\booking\\Booking",
+                                                "entity": "sale\\order\\Order",
                                                 "view": "chart.default"
                                             }
                                         ]

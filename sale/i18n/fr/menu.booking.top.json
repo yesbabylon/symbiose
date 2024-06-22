@@ -1,8 +1,0 @@
-{
-	"description": "",
-	"view": {
-		"item.home": {"label": "Accueil", "help": ""},
-		"item.planning": {"label": "Planning", "help": ""},
-		"item.bookings": {"label": "Réservations", "help": ""}				
-	}
-}

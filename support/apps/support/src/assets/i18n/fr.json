@@ -65,8 +65,8 @@
 	"SB_ERROR_BROKEN_CONSTRAINT": "Valeur invalide (au moins une contrainte non respectée).",
 	"SB_ERROR_ONUPDATE_DENIED": "L'objet n'accepte pas la sauvegarde dans cet état.",
 	
-	"SB_ERROR_BOOKING_CONFLICT_OBJECT": "Cette réservation a été modifiée entretemps par un autre utilisateur.",
-	"SB_ERROR_BOOKING_INVALID_STATUS": "La réservation n'est pas modifiable. Repassez en devis pour la modifier.",
+	"SB_ERROR_ORDER_CONFLICT_OBJECT": "Cette commande a été modifiée entretemps par un autre utilisateur.",
+	"SB_ERROR_ORDER_INVALID_STATUS": "La commande n'est pas modifiable. Repassez en devis pour la modifier.",
 
     "AUTH_SIGNIN_TITLE": "Connexion",
     "AUTH_SIGNIN_SIGNIN": "S'identifier dans Symbiose",
@@ -94,7 +94,7 @@
     "AUTH_ERROR_SERVER_ERROR": "Une erreur s'est produite au niveau du serveur. Veuillez réessayer dans quelques minutes.",
     "AUTH_ERROR_MISSING_EMAIL": "Adresse email requise",    
  
-    "APPS_APP_BOOKING": "Réservations",
+    "APPS_APP_ORDER": "Commandes",
     "APPS_APP_POS": "Point de vente",
     "APPS_APP_ACCOUNTING": "Compta",
     "APPS_APP_SALES": "Ventes",
@@ -127,8 +127,8 @@
     "DOCS_DIALOG_CONTENT_DELETE":"Êtes-vous sûr de vouloir supprimer le document ?",
 	
     
-    "BOOKING_PLANNING_HEADER_TODAY": "Aujourd'hui",
+    "ORDER_PLANNING_HEADER_TODAY": "Aujourd'hui",
 
 
-    "empty_booking": "La réservation est vide."
+    "empty_order": "La commande est vide."
 }

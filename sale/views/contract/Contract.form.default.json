@@ -2,7 +2,7 @@
     "name": "Contracts",
     "description": "Contracts are formal agreement regarding the delivery of products or services concluded between two parties.",
     "access": {
-        "groups": ["booking.default.user"]
+        "groups": ["order.default.user"]
     },
     "layout": {
         "groups": [

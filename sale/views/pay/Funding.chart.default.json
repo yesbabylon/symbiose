@@ -6,7 +6,7 @@
     },
     "controller": "core_model_chart",
     "layout": {
-        "entity": "sale\\booking\\Funding",
+        "entity": "sale\\order\\Funding",
         "group_by": "range",
         "range_interval": "year",
         "range_from": "date.this.year.first",

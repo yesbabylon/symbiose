@@ -1,0 +1,48 @@
+{
+    "name": "Order Line Group",
+    "description": "Order line groups are related to a order and describe one or more sojourns and their related consumptions.",
+    "access": {
+        "groups": ["order.default.user"]
+     },
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Name",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Order",
+                                                "value": "order_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "order_lines_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

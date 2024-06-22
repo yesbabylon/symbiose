@@ -1,0 +1,135 @@
+{
+    "name": "Order",
+    "description": "",
+    "access": {
+        "groups": ["order.default.user"]
+    },
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "label": "General info",
+                        "id": "section.order_info",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Reference",
+                                                "value": "name",
+                                                "width": "33%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "66%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Type",
+                                                "value": "type_id",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Customer",
+                                                "value": "customer_id",
+                                                "width": "33%",
+                                                "widget": {
+                                                    "view": "form.create"
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Organisation of Payer",
+                                                "value": "has_payer_organisation",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "payer_organisation_id",
+                                                "width": "33%"                                                
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Contacts",
+                        "id": "section.order_contacts",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "contacts_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Contracts",
+                        "id": "section.order_contracts",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "contracts_ids",
+                                                "width": "100%"                                                
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Products",
+                        "id": "section.order_products",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "order_lines_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

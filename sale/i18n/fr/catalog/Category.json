@@ -18,9 +18,9 @@
 			"description": "Liste des modèles de produits affectés à cette catégorie.",
 			"help": ""
 		},
-		"booking_types_ids": {
-			"label": "Types de réservation",
-			"description": "Liste des types de réservation affectés à cette catégorie.",
+		"order_types_ids": {
+			"label": "Types de commande",
+			"description": "Liste des types de commande affectés à cette catégorie.",
 			"help": ""
 		}
 	},
@@ -35,8 +35,8 @@
 				"section.product_models": {
 					"label": "Modèles de produit"
 				},
-				"section.booking_types": {
-					"label": "Type de réservation"
+				"section.order_types": {
+					"label": "Type de commande"
 				}
 			}
 		},

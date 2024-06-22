@@ -1,0 +1,105 @@
+{
+    "name": "Order Line",
+    "description": "Order lines describe the products and quantities that are part of a order.",
+    "access": {
+        "groups": ["order.default.user"]
+     },
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "label": "General info",
+                        "id": "section.order_line",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Line Order Group",
+                                                "value": "order_line_group_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Order",
+                                                "value": "order_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Product",
+                                                "value": "product_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Price",
+                                                "value": "price_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Quanity",
+                                                "value": "qty",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "payment_mode",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "vat_rate",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "order",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Price Adapter",
+                        "id": "section.price_adapter",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "price_adapters_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -2,7 +2,7 @@
     "name": "Properties",
     "description": "Properties available.",
     "access": {
-        "groups": ["booking.default.user"]
+        "groups": ["order.default.user"]
      },
     "layout": {
         "groups": [

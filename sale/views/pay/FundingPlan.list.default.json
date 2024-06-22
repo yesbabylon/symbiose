@@ -19,7 +19,7 @@
             },
             {
                 "type": "field",
-                "value": "booking_type_id",
+                "value": "order_type_id",
                 "width": "20%"
             }
         ]

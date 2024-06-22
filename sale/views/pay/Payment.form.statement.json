@@ -42,8 +42,8 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Booking",
-                                                "value": "booking_id",
+                                                "label": "Order",
+                                                "value": "order_id",
                                                 "width": "50%",
                                                 "widget": {
                                                     "readonly": true,

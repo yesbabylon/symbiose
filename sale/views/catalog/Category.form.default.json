@@ -86,8 +86,8 @@
                         ]
                     },
                     {
-                        "label": "Booking Types",
-                        "id": "section.booking_types",
+                        "label": "Order Types",
+                        "id": "section.order_types",
                         "visible" : ["state" , "<>", "draft"],
                         "rows": [
                             {
@@ -97,7 +97,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "booking_types_ids",
+                                                "value": "order_types_ids",
                                                 "width": "100%"
                                             }
                                         ]

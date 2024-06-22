@@ -6,13 +6,13 @@
             {
                 "id": 1011,
                 "setting_id": 1011,
-                "name": "sale.booking.sequence_format",
+                "name": "sale.order.sequence_format",
                 "value": "%05d{sequence}"
             },
             {
                 "id": 1013,
                 "setting_id": 1013,
-                "name": "sale.booking.option_validity",
+                "name": "sale.order.option_validity",
                 "value": 10
             },
             {

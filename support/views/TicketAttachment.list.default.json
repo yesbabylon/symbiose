@@ -1,6 +1,6 @@
 {
     "name": "Document list",
-    "description": "This view is intended for displaying the list of bookings.",
+    "description": "This view is intended for displaying the list of orders.",
     "layout": {
         "items": [
             {

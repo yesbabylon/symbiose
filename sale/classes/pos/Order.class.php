@@ -53,7 +53,7 @@ class Order extends Model {
 
             'customer_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => \sale\customer\Customer::getType(),
+                'foreign_object'    => 'sale\customer\Customer',
                 'description'       => 'The customer the order relates to.'
             ],
 
@@ -73,7 +73,7 @@ class Order extends Model {
 
             'funding_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => \sale\pay\Funding::getType(),
+                'foreign_object'    => 'sale\pay\Funding',
                 'description'       => 'The booking funding that relates to the order, if any.',
                 'visible'           => ['has_funding', '=', true],
                 'onupdate'          => 'onupdateFundingId'
@@ -146,7 +146,7 @@ class Order extends Model {
 
             'accounting_entries_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => \finance\accounting\AccountingEntry::getType(),
+                'foreign_object'    => 'finance\accounting\AccountingEntry',
                 'foreign_field'     => 'order_id',
                 'description'       => 'Accounting entries relating to the lines of the order.',
                 'ondetach'          => 'delete'

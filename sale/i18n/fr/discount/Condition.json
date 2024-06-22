@@ -16,7 +16,7 @@
 				"season": "saison",
 				"nb_pers": "nombre de personnes",
 				"duration": "durée",
-				"count_booking_24": "count_booking_24"
+				"count_order_24": "count_order_24"
 			}
 		},
 		"operator": {

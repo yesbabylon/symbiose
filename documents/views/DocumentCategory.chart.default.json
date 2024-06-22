@@ -1,6 +1,6 @@
 {
     "name": "Documents Categories list",
-    "description": "This view displays the list of bookings categories: the most recent on top.",
+    "description": "This view displays the list of orders categories: the most recent on top.",
     "access": {
         "groups": ["documents.default.user"]
     },

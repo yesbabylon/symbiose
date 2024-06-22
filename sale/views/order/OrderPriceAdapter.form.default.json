@@ -1,0 +1,62 @@
+{
+    "name": "Order Line Price Adapter",
+    "description": "Adapters allow to get the final price of a order line, either by performing a direct computation, or by using a discount definition.",
+    "access": {
+        "groups": ["order.default.user"]
+     },
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Order",
+                                                "value": "order_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Order Line",
+                                                "value": "order_line_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Manual Discount",
+                                                "value": "is_manual_discount",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "discount",
+                                                "value": "discount_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "value",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

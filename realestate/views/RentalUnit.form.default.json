@@ -2,7 +2,7 @@
     "name": "Rental Units",
     "description": "A rental unit is a ressource that can be rented to a customer.",
     "access": {
-        "groups": ["booking.default.user"]
+        "groups": ["order.default.user"]
     },
     "layout": {
         "groups": [

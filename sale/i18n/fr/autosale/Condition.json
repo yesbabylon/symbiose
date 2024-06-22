@@ -14,7 +14,7 @@
 			"selection": { 
                 "nb_pers" : "nb_pers", 
                 "nb_nights": "nb_nuits", 
-                "count_booking_12": "compte_réservation_12"
+                "count_order_12": "compte_commande_12"
             },
 			"help": ""
 		},

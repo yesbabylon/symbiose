@@ -1,0 +1,35 @@
+{
+    "name": "Facture",
+    "plural": "Factures",
+    "description": "",
+    "model": {
+        "order_id": {
+            "label": "Commande",
+            "description": "La commande à laquelle est liée la facture.",
+            "help": ""
+        },
+        "funding_id": {
+            "label": "Financement",
+            "description": "Financement auquel est liée la facture.",
+            "help": ""
+        },
+        "payment_terms_id": {
+            "label": "Conditions de paiement",
+            "description": "Les conditions de paiement qui s'appliquent à la facture.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Facture",
+            "description": "Une facture est un document juridique qui se rapporte à une commande et fait partie du système comptable.",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Factures",
+            "description": "Liste des facture.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

@@ -1,0 +1,29 @@
+{
+    "name": "Order Line Groups",
+    "description": "This view is intended for displaying the list of order line groups.",
+    "access": {
+        "groups": ["order.default.user"]
+     },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Name",
+                "value": "name",
+                "width": "50%"
+            },
+            {
+                "type": "field",       
+                "label": "Order",     
+                "value": "order_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",    
+                "label": "Order Lines",        
+                "value": "order_lines_ids",
+                "width": "20%"
+            }
+        ]
+    }
+}

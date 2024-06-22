@@ -32,119 +32,119 @@
                         ]
                     },
                     {
-                        "id": "settings.all_stats.bookings",
+                        "id": "settings.all_stats.orders",
                         "icon": "settings",
                         "type": "parent",
-                        "label": "Bookings values",
+                        "label": "Orders values",
                         "description": "",
                         "children": [
                             {
-                                "id": "settings.all_bookings",
+                                "id": "settings.all_orders",
                                 "type": "entry",
-                                "label": "CA Réservations",
+                                "label": "CA Commandes",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
+                                    "entity": "sale\\order\\Order",
                                     "view": "chart.default"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings",
+                                "id": "settings.all_orders.total_orders",
                                 "type": "entry",
-                                "label": "Nombre de réservations",
+                                "label": "Nombre de commandes",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
-                                    "view": "chart.bookingCount"
+                                    "entity": "sale\\order\\Order",
+                                    "view": "chart.orderCount"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.compositionItem",
+                                "id": "settings.all_orders.compositionItem",
                                 "type": "entry",
                                 "label": "Nombre de personnes",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
+                                    "entity": "sale\\order\\Order",
                                     "view": "chart.compositionItem"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings.accomodation",
+                                "id": "settings.all_orders.total_orders.accomodation",
                                 "type": "entry",
                                 "label": "Nombre de nuitées",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
+                                    "entity": "sale\\order\\Order",
                                     "view": "chart.accomodation"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings.INS",
+                                "id": "settings.all_orders.total_orders.INS",
                                 "type": "entry",
                                 "label": "INS",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
+                                    "entity": "sale\\order\\Order",
                                     "view": "chart.INS"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_meals",
+                                "id": "settings.all_orders.total_meals",
                                 "type": "entry",
                                 "label": "CA repas",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
+                                    "entity": "sale\\order\\Order",
                                     "view": "chart.meal"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings.noInvoice",
+                                "id": "settings.all_orders.total_orders.noInvoice",
                                 "type": "entry",
                                 "label": "CA non facturé",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
+                                    "entity": "sale\\order\\Order",
                                     "view": "chart.noInvoice"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings.sku",
+                                "id": "settings.all_orders.total_orders.sku",
                                 "type": "entry",
                                 "label": "SKU",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
+                                    "entity": "sale\\order\\Order",
                                     "view": "chart.sku"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings.sojournType",
+                                "id": "settings.all_orders.total_orders.sojournType",
                                 "type": "entry",
                                 "label": "Type de séjour",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
+                                    "entity": "sale\\order\\Order",
                                     "view": "chart.sojournType"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings.taxes",
+                                "id": "settings.all_orders.total_orders.taxes",
                                 "type": "entry",
                                 "label": "Nombre de taxes de séjour",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\BookingLine",
+                                    "entity": "sale\\order\\OrderLine",
                                     "view": "chart.taxes"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings.provisional",
+                                "id": "settings.all_orders.total_orders.provisional",
                                 "type": "entry",
                                 "label": "CA prévisionnel",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
+                                    "entity": "sale\\order\\Order",
                                     "view": "chart.provisionalCA"
                                 }
                             }
@@ -193,7 +193,7 @@
                                 "label": "Total Remboursements",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Funding",
+                                    "entity": "sale\\order\\Funding",
                                     "view": "chart.default"
                                 }
                             }

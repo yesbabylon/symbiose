@@ -1,0 +1,119 @@
+{
+    "name": "Commande",
+    "plural": "Commandes",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Référence",
+            "description": "Numéro de la commande.",
+            "help": ""
+        },
+        "description": {
+            "label": "Observations",
+            "description": "Notes et commentaires sur la commande.",
+            "help": ""
+        },
+        "customer_id": {
+            "label": "Client",
+            "description": "Le client au nom de qui sera établie la commande.",
+            "help": ""
+        },
+        "price": {
+            "label": "Prix TTC",
+            "description": "Prix total TTC de la commande.",
+            "help": ""
+        },
+        "total": {
+            "label": "Total HT",
+            "description": "Prix total hors-taxes de la commande.",
+            "help": ""
+        },
+        "has_contract": {
+            "label": "A un contrat",
+            "description": "Un contrat a-t-il déjà été généré ?",
+            "help": "Un contrat a-t-il déjà été généré ? Le drapeau est remis à zéro en cas de changements avant le séjour."
+        },
+        "contracts_ids": {
+            "label": "Contrats",
+            "description": "Liste des contrats liés à la commande, le cas échéant.",
+            "help": ""
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut de la commande.",
+            "selection": {
+                "quote": "devis",
+                "option": "option",
+                "confirmed": "confirmée",
+                "validated": "validée",
+                "checkedin": "en cours",
+                "checkedout": "terminée",
+                "invoiced": "facturée",
+                "debit_balance": "solde débiteur",
+                "credit_balance": "solde créditeur",
+                "balanced": "clôturée"
+            },
+            "help": ""
+        },
+        "is_cancelled": {
+            "label": "Annulée",
+            "description": "Commande annulée par le client.",
+            "help": ""
+        },
+        "is_noexpiry": {
+            "label": "Pas d'expiration",
+            "description": "Option sans limite de temps.",
+            "help": ""
+        },
+        "delivery_date": {
+            "label": "Du",
+            "description": "Premier jour du séjour.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Commande",
+            "description": "",
+            "layout": {
+                "section.order_info": {
+                    "label": "Infos générales"
+                },
+                "section.order_description": {
+                    "label": "Description"
+                },
+                "section.order_contracts": {
+                    "label": "Contrats"
+                },
+                "section.order_fundings": {
+                    "label": "Financements"
+                },
+                "section.order_invoices": {
+                    "label": "Factures"
+                },
+                "section.order_products": {
+                    "label": "Services"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Commandes",
+            "description": "Liste des commandes.",
+            "layout": {}
+        }
+    },
+    "error": {
+        "customer_id": {
+            "missing_mandatory": "Champ obligatoire."
+        },
+        "center_id": {
+            "missing_mandatory": "Champ obligatoire."
+        },
+        "status": {
+            "non_editable": "Le statut de la commande ne permet pas son édition."
+        },
+        "errors": {
+            "overorder_detected": "Surorder détecté"
+        }
+    }
+}

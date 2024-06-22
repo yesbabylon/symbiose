@@ -2,7 +2,7 @@
     "name": "Tour Operator",
     "description": "Tour operator form (Partner)",
     "access": {
-        "groups": ["sale.default.user", "booking.default.user"]
+        "groups": ["sale.default.user", "order.default.user"]
     },
     "layout": {
         "groups": [
@@ -115,8 +115,8 @@
                         ]
                     },
                     {
-                        "id": "section.customer_bookings",
-                        "label": "Bookings",
+                        "id": "section.customer_orders",
+                        "label": "Orders",
                         "rows": [
                             {
                                 "columns": [
@@ -125,7 +125,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "bookings_ids",
+                                                "value": "orders_ids",
                                                 "width": "100%"
                                             }                                            
                                         ]

@@ -2,7 +2,7 @@
     "name": "Contract Line Group",
     "description": "",
     "access": {
-        "groups": ["booking.default.user"]
+        "groups": ["order.default.user"]
      },
     "layout": {
         "groups": [

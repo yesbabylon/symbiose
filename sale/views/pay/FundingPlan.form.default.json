@@ -45,8 +45,8 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Booking Type",
-                                                "value": "booking_type_id",
+                                                "label": "Order Type",
+                                                "value": "order_type_id",
                                                 "width": "40%"
                                             }
                                         ]

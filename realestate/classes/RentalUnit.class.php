@@ -112,13 +112,6 @@ class RentalUnit extends Model {
                 'dependencies'      => ['has_parent']
             ],
 
-            'repairs_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'sale\booking\Repair',
-                'foreign_field'     => 'rental_unit_id',
-                'description'       => "The repairs the rental unit is assigned to."
-            ],
-
             // Status relates to current status (NOW) of a rental unit. For availability, refer to related Consumptions
             'status' => [
                 'type'              => 'string',
@@ -140,8 +133,7 @@ class RentalUnit extends Model {
                 'selection'         => [
                     'none',                 // unit does not require any action
                     'cleanup_daily',        // unit requires a daily cleanup
-                    'cleanup_full',         // unit requires a full cleanup
-                    'repair'                // unit requires repair or maintenance
+                    'cleanup_full'          // unit requires a full cleanup
                 ],
                 'description'       => 'Action required for the rental unit.',
                 'default'           => 'none'
@@ -165,16 +157,6 @@ class RentalUnit extends Model {
                 'type'              => 'many2one',
                 'description'       => "Category which current unit belongs to, if any.",
                 'foreign_object'    => 'realestate\RentalUnitCategory'
-            ],
-
-            'repairings_ids' => [
-                'type'              => 'many2many',
-                'foreign_object'    => 'sale\booking\Repairing',
-                'foreign_field'     => 'rental_units_ids',
-                'rel_table'         => 'sale_rel_repairing_rentalunit',
-                'rel_foreign_key'   => 'repairing_id',
-                'rel_local_key'     => 'rental_unit_id',
-                'description'       => 'List of scheduled repairing assigned to the rental units.'
             ]
 
         ];

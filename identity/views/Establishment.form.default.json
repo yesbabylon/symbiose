@@ -2,7 +2,7 @@
     "name": "Establishment",
     "description": "Basic form for displaying an Establishment.",
     "access": {
-        "groups": ["booking.default.user"]
+        "groups": ["order.default.user"]
      },
     "layout": {
         "groups": [

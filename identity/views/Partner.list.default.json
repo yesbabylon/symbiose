@@ -2,7 +2,7 @@
     "name": "Partners",
     "description": "This view is intended for displaying basic listing of existing Partners.",
     "access": {
-        "groups": ["booking.default.user", "sale.default.user"]
+        "groups": ["order.default.user", "sale.default.user"]
      },
     "layout": {
         "items": [

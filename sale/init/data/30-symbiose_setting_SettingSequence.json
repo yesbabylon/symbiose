@@ -6,7 +6,7 @@
             {
                 "id": 1012,
                 "setting_id": 1012,
-                "name": "sale.booking.sequence",
+                "name": "sale.order.sequence",
                 "organisation_id": 1,
                 "value": 1
             },

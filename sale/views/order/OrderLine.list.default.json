@@ -1,0 +1,42 @@
+{
+    "name": "Order Followups",
+    "description": "This view is intended for displaying the list of order lines.",
+    "access": {
+        "groups": ["order.default.user"]
+     },
+    "order": "order_line_group_id,order",
+    "sort": "asc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Line Order Group",
+                "value": "order_line_group_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Product",
+                "value": "product_id",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "Quantity",
+                "value": "qty",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "price",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "order",
+                "width": "15%",
+                "visible": false
+            }
+        ]
+    }
+}

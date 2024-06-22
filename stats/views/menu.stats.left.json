@@ -44,107 +44,107 @@
                         ]
                     },
                     {
-                        "id": "stats.booking",
+                        "id": "stats.order",
                         "icon": "settings",
                         "type": "parent",
-                        "label": "Bookings values",
+                        "label": "Orders values",
                         "description": "",
                         "children": [
                             {
-                                "id": "stats.booking.bookings",
+                                "id": "stats.order.orders",
                                 "type": "entry",
-                                "label": "CA Réservations",
+                                "label": "CA Commandes",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
+                                    "entity": "sale\\order\\Order",
                                     "view": "chart.default",
                                     "mode": "grid"
                                 }
                             },
                             {
-                                "id": "stats.booking.total_bookings",
+                                "id": "stats.order.total_orders",
                                 "type": "entry",
-                                "label": "Nombre de réservations",
+                                "label": "Nombre de commandes",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
-                                    "view": "chart.bookingCount",
+                                    "entity": "sale\\order\\Order",
+                                    "view": "chart.orderCount",
                                     "mode": "grid"
                                 }
                             },
                             {
-                                "id": "stats.booking.compositionItem",
+                                "id": "stats.order.compositionItem",
                                 "type": "entry",
                                 "label": "Nombre de personnes",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
+                                    "entity": "sale\\order\\Order",
                                     "view": "chart.compositionItem",
                                     "mode": "grid"
                                 }
                             },
                             {
-                                "id": "stats.booking.total_bookings.accomodation",
+                                "id": "stats.order.total_orders.accomodation",
                                 "type": "entry",
                                 "label": "Nombre de nuitées",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
+                                    "entity": "sale\\order\\Order",
                                     "view": "chart.accomodation",
                                     "mode": "grid"
                                 }
                             },
                             {
-                                "id": "stats.booking.total_meals",
+                                "id": "stats.order.total_meals",
                                 "type": "entry",
                                 "label": "CA repas",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
+                                    "entity": "sale\\order\\Order",
                                     "view": "chart.meal",
                                     "mode": "grid"
                                 }
                             },
                             {
-                                "id": "stats.booking.total_bookings.noInvoice",
+                                "id": "stats.order.total_orders.noInvoice",
                                 "type": "entry",
                                 "label": "CA non facturé",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
+                                    "entity": "sale\\order\\Order",
                                     "view": "chart.noInvoice",
                                     "mode": "grid"
                                 }
                             },
                             {
-                                "id": "stats.booking.total_bookings.sojournType",
+                                "id": "stats.order.total_orders.sojournType",
                                 "type": "entry",
                                 "label": "Type de séjour",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
+                                    "entity": "sale\\order\\Order",
                                     "view": "chart.sojournType",
                                     "mode": "grid"
                                 }
                             },
                             {
-                                "id": "stats.booking.total_bookings.taxes",
+                                "id": "stats.order.total_orders.taxes",
                                 "type": "entry",
                                 "label": "Taxes de séjour",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\BookingLine",
+                                    "entity": "sale\\order\\OrderLine",
                                     "view": "chart.taxes",
                                     "mode": "grid"
                                 }
                             },
                             {
-                                "id": "stats.booking.total_bookings.provisional",
+                                "id": "stats.order.total_orders.provisional",
                                 "type": "entry",
                                 "label": "CA prévisionnel",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Booking",
+                                    "entity": "sale\\order\\Order",
                                     "view": "chart.provisionalCA",
                                     "mode": "grid"
                                 }
@@ -196,7 +196,7 @@
                                 "label": "Total Reimbursements",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\booking\\Funding",
+                                    "entity": "sale\\order\\Funding",
                                     "view": "chart.default",
                                     "mode": "grid"
                                 }

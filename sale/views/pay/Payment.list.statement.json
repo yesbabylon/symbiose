@@ -30,7 +30,7 @@
             {
                 "type": "field",
                 "label": "Funding",
-                "value": "booking_id",
+                "value": "order_id",
                 "width": "20%"
             },
             {

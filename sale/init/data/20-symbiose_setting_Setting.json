@@ -6,22 +6,22 @@
             {
                 "id": 1011,
                 "code": "sequence_format",
-                "title": "Booking numbering format",
+                "title": "Order numbering format",
                 "package": "sale",
                 "form_control": "input",
                 "section_id": 7,
                 "description": "Sequence numbering format",
-                "help": "Format to use for generating bookings numbering.",
+                "help": "Format to use for generating orders numbering.",
                 "type": "string"
             },
             {
                 "id": 1012,
                 "code": "sequence",
-                "title": "Current sequence for booking numbering",
+                "title": "Current sequence for order numbering",
                 "package": "sale",
                 "section_id": 7,
                 "is_sequence": true,
-                "description": "Current sequence for booking numbering.",
+                "description": "Current sequence for order numbering.",
                 "help": ""
             },
             {
@@ -526,13 +526,13 @@
         "data": [
             {
                 "id": 1011,
-                "title": "Format de réservation",
-                "description": "Format de réservation",
+                "title": "Format de commande",
+                "description": "Format de commande",
                 "help": "Format pour la num\u00e9rotation des r\u00e9servations."
             },
             {
                 "id": 1012,
-                "title": "Séquence pour les références de réservation",
+                "title": "Séquence pour les références de commande",
                 "description": "",
                 "help": ""
             },

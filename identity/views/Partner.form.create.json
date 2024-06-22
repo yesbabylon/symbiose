@@ -1,6 +1,6 @@
 {
     "access": {
-        "groups": ["booking.default.user", "sale.default.user"]
+        "groups": ["order.default.user", "sale.default.user"]
     },
     "layout": {
         "groups": [

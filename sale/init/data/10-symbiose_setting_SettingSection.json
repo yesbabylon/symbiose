@@ -11,9 +11,9 @@
             },
             {
                 "id": 7,
-                "code": "booking",
-                "name": "Booking",
-                "description": "Settings related to booking."
+                "code": "order",
+                "name": "Order",
+                "description": "Settings related to order."
             }
        ]
     },
@@ -28,8 +28,8 @@
             },
             {
                 "id": 7,
-                "name": "Réservations",
-                "description": "Paramètres pour les réservations."
+                "name": "Commandes",
+                "description": "Paramètres pour les commandes."
             }
        ]
     }
