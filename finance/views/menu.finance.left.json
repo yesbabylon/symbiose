@@ -19,7 +19,7 @@
                         "icon": "list",
                         "description": "Show all sales invoices.",
                         "context": {
-                            "entity": "sale\\accounting\\Invoice",
+                            "entity": "sale\\accounting\\invoice\\Invoice",
                             "view": "list.default"
                         }
                     },
