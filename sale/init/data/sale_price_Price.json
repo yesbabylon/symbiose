@@ -1,0 +1,16 @@
+[
+    {
+        "name": "sale\\price\\Price",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "price": 100.0,
+                "price_type": "direct",
+                "price_list_id": 1,
+                "accounting_rule_id": 1,
+                "product_id": 1
+            }
+        ]
+    }
+]

@@ -279,14 +279,16 @@
                                                 "value": "has_receivable",
                                                 "label": "Has Receivable",
                                                 "readonly": true,
-                                                "width": "25%"
+                                                "width": "25%",
+                                                "visible": false
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "receivable_id",
                                                 "label": "Receivable",
                                                 "readonly": true,
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "visible": ["has_receivable", "=", true]
                                             }
                                         ]
                                     }

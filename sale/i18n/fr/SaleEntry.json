@@ -19,8 +19,8 @@
             "help": ""
         },
         "has_receivable": {
-            "label": "A un créance",
-            "description": "L'entée de vente est liée à un créance.",
+            "label": "A une Créance",
+            "description": "L'entrée de vente est liée à un créance.",
             "help": ""
         },
         "receivable_id": {

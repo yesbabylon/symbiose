@@ -5,7 +5,7 @@
         "data": [
             {
                 "id": 100,
-                "name": "Service",
+                "name": "Hourly services",
                 "path": null
             }
         ]
@@ -16,7 +16,7 @@
         "data": [
             {
                 "id": 100,
-                "name": "Time entry 1h default model",
+                "name": "Time entry (1h) default model",
                 "family_id": 1,
                 "can_buy": false,
                 "can_sell": true,
@@ -32,8 +32,8 @@
                 "id": 100,
                 "product_model_id": 100,
                 "label": "Time entry 1h default",
-                "description": "<p>Service for 1 hour of work concerning a time entry.</p>",
-                "sku": "0000000100"
+                "description": "Service (1 hour) relating to a time entry.",
+                "sku": "S-001"
             }
         ]
     },
@@ -44,7 +44,7 @@
             {
                 "id": 100,
                 "product_id": 100,
-                "price": 0,
+                "price": 99.00,
                 "price_list_id": 1,
                 "accounting_rule_id": 1
             }
@@ -58,8 +58,8 @@
                 "id": 1,
                 "name": "Default sale model",
                 "origin": "project",
-                "product_id": 100,
-                "price_id": 100
+                "product_id": 1,
+                "price_id": 1
             }
         ]
     },
