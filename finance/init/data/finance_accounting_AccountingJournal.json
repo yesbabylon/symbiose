@@ -5,9 +5,10 @@
         "data": [
             {
                 "id": 1,
-                "name": "Sales Accounting Journal",
+                "name": "Sales Accounting Journal (SALE)",
                 "organisation_id": 1,
-                "journal_type": "sales"
+                "journal_type": "SALE",
+                "description": "Sales Accounting Journal"
             }
         ]
     }

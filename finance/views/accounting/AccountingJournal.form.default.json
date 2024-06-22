@@ -17,7 +17,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
+                                                "value": "description",
                                                 "width": "100%",
                                                 "widget": {
                                                     "heading": true,
@@ -58,26 +58,6 @@
             },
             {
                 "sections": [
-                    {
-                        "label": "General Info",
-                        "id": "section.description",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "description",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
                     {
                         "label": "Accounting Entries",
                         "id": "section.accounting_entries_section",

@@ -37,17 +37,20 @@ class AccountingJournal extends Model {
             'code' => [
                 'type'              => 'string',
                 'description'       => 'Unique code (optional).',
+                'help'              => 'Additional code to match journal in an external tool.',
                 'unique'            => true
             ],
 
             'journal_type' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'general_ledger',
-                    'sales',
-                    'purchases',
-                    'bank_cash',
-                    'miscellaneous'
+                    'LEDG'      => 'General Ledger',
+                    'SALE'      => 'Sales',
+                    'PURC'      => 'Purchases',
+                    'CASH'      => 'Bank & Cash',
+                    'PAYR'      => 'Payroll',
+                    'ASST'      => 'Fixed Assets',
+                    'MISC'      => 'General (miscellaneous)'
                 ],
                 "required"          => true,
                 'description'       => "Type of journal or ledger."
@@ -73,12 +76,11 @@ class AccountingJournal extends Model {
         ];
     }
 
-    public static function calcName($om, $oids, $lang) {
+    public static function calcName($self) {
         $result = [];
-        $journals = $om->read(__CLASS__, $oids, ['code', 'organisation_id.name'], $lang);
-
-        foreach($journals as $oid => $journal) {
-            $result[$oid] = $journal['code'].' - '.$journal['organisation_id.name'];
+        $self->read(['code', 'description']);
+        foreach($self as $id => $journal) {
+            $result[$id] = $journal['description'].' ('.$journal['code'].')';
         }
         return $result;
     }
