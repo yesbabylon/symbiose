@@ -4,7 +4,6 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 namespace sale\price;
 
 use equal\orm\Model;
@@ -13,8 +12,8 @@ use finance\accounting\AccountingRule;
 class Price extends Model {
 
     public static function getDescription() {
-        return 'A price is an amount of money that a customer has to pay for a product/service.'
-            .' It\'s described by an amount, a vat rate, an accounting rule and is part of a price list.';
+        return 'A price is an amount of money that corresponds to the sale price of a product or service.'
+            .' It is described by an amount, a vat rate, an accounting rule and is part of a price list.';
     }
 
     public static function getColumns() {
@@ -109,9 +108,9 @@ class Price extends Model {
 
     public static function calcName($self) {
         $result = [];
-        $self->read(['product_id' => 'sku', 'price_list_id' => 'name']);
+        $self->read(['product_id' => ['id', 'sku'], 'price_list_id' => 'name']);
         foreach($self as $id => $product) {
-            $result[$id] = "{$product['product_id']['sku']} - {$product['price_list_id']['name']}";
+            $result[$id] = "{$product['product_id']['sku']} [{$product['product_id']['id']}] - {$product['price_list_id']['name']}";
         }
         return $result;
     }
