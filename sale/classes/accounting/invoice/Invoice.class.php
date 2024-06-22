@@ -520,9 +520,12 @@ class Invoice extends \finance\accounting\Invoice {
      * Create the accounting entries according tp invoices lines.
      */
     public static function doGenerateAccountingEntries($self) {
-        $self->read(['id', 'organisation_id']);
+        $self->read(['id', 'organisation_id', 'accounting_entries_ids']);
         foreach($self as $id => $invoice) {
             try {
+                // remove previously created entries, if any (there should be none)
+                AccountingEntry::ids($invoice['accounting_entries_ids'])->delete(true);
+                // generate accounting entries
                 $accounting_entries = self::computeAccountingEntries($id);
 
                 if(empty($accounting_entries)) {
@@ -574,7 +577,7 @@ class Invoice extends \finance\accounting\Invoice {
                 throw new \Exception('APP::missing mandatory account trade debtors', EQ_ERROR_INVALID_CONFIG);
             }
 
-            $invoice = self::id($invoice_id)->read(['id', 'organisation_id', 'invoice_type', 'invoice_lines_ids'])->first();
+            $invoice = self::id($invoice_id)->read(['id', 'invoice_type', 'invoice_lines_ids'])->first();
 
             if(!$invoice) {
                 throw new \Exception('ORM::unknown invoice ['.$invoice_id.']', EQ_ERROR_INVALID_PARAM);
@@ -585,7 +588,7 @@ class Invoice extends \finance\accounting\Invoice {
             // fetch invoice lines
             $lines = InvoiceLine::ids($invoice['invoice_lines_ids'])
                 ->read([
-                    'name', 'description', 'product_id', 'qty', 'total', 'price',
+                    'total', 'price',
                     'price_id' => [
                         'accounting_rule_id' => [
                             'vat_rule_id' => ['account_id'],
@@ -613,7 +616,6 @@ class Invoice extends \finance\accounting\Invoice {
                     throw new \Exception("APP::invoice line [{$lid}] without VAT rule for invoice [{$invoice_id}]", EQ_ERROR_UNKNOWN);
                 }
 
-                $vat_amount = ($line['price'] < 0 ? -1 : 1) * (abs($line['price']) - abs($line['total']));
                 // #memo - Only one VAT rate can be applied per line: we should only retrieve the associated account.
                 $vat_account_id = $line['price_id']['accounting_rule_id']['vat_rule_id']['account_id'];
 
@@ -621,6 +623,7 @@ class Invoice extends \finance\accounting\Invoice {
                     $map_accounting_entries[$vat_account_id] = 0.0;
                 }
 
+                $vat_amount = ($line['price'] < 0 ? -1.0 : 1.0) * (abs($line['price']) - abs($line['total']));
                 $map_accounting_entries[$vat_account_id] += $vat_amount;
 
                 $remaining_amount = $line['total'];
@@ -660,8 +663,8 @@ class Invoice extends \finance\accounting\Invoice {
                         'has_invoice'   => true,
                         'invoice_id'    => $invoice_id,
                         'account_id'    => $account_id,
-                        'debit'         => ($invoice['type'] == 'credit_note')?$amount:0.0,
-                        'credit'        => ($invoice['type'] == 'invoice')?$amount:0.0
+                        'debit'         => ($invoice['invoice_type'] == 'credit_note')?$amount:0.0,
+                        'credit'        => ($invoice['invoice_type'] == 'invoice')?$amount:0.0
                     ];
             }
 
@@ -671,8 +674,8 @@ class Invoice extends \finance\accounting\Invoice {
                     'has_invoice'   => true,
                     'invoice_id'    => $invoice_id,
                     'account_id'    => $accountTradeDebtors['id'],
-                    'debit'         => ($invoice['type'] == 'invoice')?$amount:0.0,
-                    'credit'        => ($invoice['type'] == 'credit_note')?$amount:0.0
+                    'debit'         => ($invoice['invoice_type'] == 'invoice')?$amount:0.0,
+                    'credit'        => ($invoice['invoice_type'] == 'credit_note')?$amount:0.0
                 ];
 
         }
