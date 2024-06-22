@@ -650,7 +650,7 @@ class Invoice extends \finance\accounting\Invoice {
 
             // create credit lines on sales & taxes accounts
             foreach($map_accounting_entries as $account_id => $amount) {
-                $account = AccountChartLine::id($account_id)->read(['description']);
+                $account = AccountChartLine::id($account_id)->read(['description'])->first();
                 $accounting_entries[] = [
                         'name'          => $account['description'],
                         'has_invoice'   => true,
