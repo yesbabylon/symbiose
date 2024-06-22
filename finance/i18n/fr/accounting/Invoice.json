@@ -92,10 +92,10 @@
             "name": "Facture",
             "description": "Une facture est un document juridique délivré par un vendeur à un acheteur qui se rapporte à une vente et fait partie du système comptable.",
             "layout": {
-                "sections.invoice.lines": {
+                "sections.invoice_lines": {
                     "label": "Lignes de facture"
                 },
-                "sections.invoice.entries": {
+                "sections.invoice_entries": {
                     "label": "Écritures comptables"
                 }
             }
