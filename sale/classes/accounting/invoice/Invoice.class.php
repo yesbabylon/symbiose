@@ -577,7 +577,7 @@ class Invoice extends \finance\accounting\Invoice {
                 throw new \Exception('APP::missing mandatory account trade debtors', EQ_ERROR_INVALID_CONFIG);
             }
 
-            $invoice = self::id($invoice_id)->read(['id', 'invoice_type', 'invoice_lines_ids'])->first();
+            $invoice = self::id($invoice_id)->read(['id', 'price', 'invoice_type', 'invoice_lines_ids'])->first();
 
             if(!$invoice) {
                 throw new \Exception('ORM::unknown invoice ['.$invoice_id.']', EQ_ERROR_INVALID_PARAM);
@@ -674,8 +674,8 @@ class Invoice extends \finance\accounting\Invoice {
                     'has_invoice'   => true,
                     'invoice_id'    => $invoice_id,
                     'account_id'    => $accountTradeDebtors['id'],
-                    'debit'         => ($invoice['invoice_type'] == 'invoice')?$amount:0.0,
-                    'credit'        => ($invoice['invoice_type'] == 'credit_note')?$amount:0.0
+                    'debit'         => ($invoice['invoice_type'] == 'invoice')?$invoice['price']:0.0,
+                    'credit'        => ($invoice['invoice_type'] == 'credit_note')?$invoice['price']:0.0
                 ];
 
         }
