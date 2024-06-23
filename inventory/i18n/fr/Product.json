@@ -1,7 +1,7 @@
 {
-    "name": "Produit",
-    "plural": "Produits",
-    "description": "Un produit inventaire est composé de services, logiciels, serveurs et instances. Il peut être interne ou appartenir à un client.",
+    "name": "Produit digital",
+    "plural": "Produits digitaux",
+    "description": "Un produit digital est composé de services, logiciels, serveurs et instances. Il peut être interne ou appartenir à un client.",
     "model": {
         "name": {
             "label": "Nom",

@@ -15,11 +15,6 @@ class Order extends Model {
 
     public static function getColumns() {
         return [
-            'creator' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'identity\User',
-                'description'       => 'User who created the entry.'
-            ],
 
             'name' => [
                 'type'              => 'computed',

@@ -195,4 +195,12 @@ class Customer extends \identity\Partner {
             }
         }
     }
+
+    public static function onchange($self, $event, $values) {
+        $result = parent::onchange($self, $event, $values);
+        if(isset($event['type_id'])) {
+            $result['customer_type_id'] = CustomerType::id($event['type_id'])->read(['id', 'name'])->first(true);
+        }
+        return $result;
+    }
 }

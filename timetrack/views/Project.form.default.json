@@ -27,7 +27,10 @@
                                                 "type": "field",
                                                 "label": "Product",
                                                 "value": "product_id",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "autoselect": false
+                                                }
                                             }
                                         ]
                                     },
@@ -49,7 +52,19 @@
                                                 "type": "field",
                                                 "label": "Customer",
                                                 "value": "customer_id",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "form.inventory",
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": [
+                                                                {
+                                                                    "view": "form.create"
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                }
                                             },
                                             {
                                                 "type": "field",

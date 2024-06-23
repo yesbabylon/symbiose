@@ -1,6 +1,6 @@
 {
-    "name": "Product",
-    "description": "Default form for Product.",
+    "name": "Digital Product",
+    "description": "Digital Product details.",
     "layout": {
         "groups": [
             {
@@ -45,14 +45,16 @@
                                                 "value": "customer_id",
                                                 "label": "Customer",
                                                 "width": "100%",
-                                                "header": {
+                                                "widget": {
                                                     "view": "form.inventory",
-                                                    "actions": {
-                                                        "ACTION.CREATE": [
-                                                            {
-                                                                "view": "form.create"
-                                                            }
-                                                        ]
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": [
+                                                                {
+                                                                    "view": "form.create"
+                                                                }
+                                                            ]
+                                                        }
                                                     }
                                                 }
                                             }

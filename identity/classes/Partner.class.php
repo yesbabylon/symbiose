@@ -91,7 +91,8 @@ class Partner extends Model {
             'has_vat' => [
                 'type'              => 'boolean',
                 'description'       => 'Does the organization have a VAT number?',
-                'default'           => false
+                'default'           => false,
+                'visible'           => [ ['type', '<>', 'IN'] ]
             ],
 
             'vat_number' => [
@@ -211,8 +212,8 @@ class Partner extends Model {
     public static function calcType($self) {
         $result = [];
         $self->read(['type_id' => ['code']]);
-        foreach($self as $id => $identity) {
-            $result[$id] = $identity['type_id']['code'];
+        foreach($self as $id => $partner) {
+            $result[$id] = $partner['type_id']['code'];
         }
         return $result;
     }

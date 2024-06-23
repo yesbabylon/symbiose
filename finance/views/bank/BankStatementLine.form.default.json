@@ -90,7 +90,7 @@
                                                                 "view": "form.statement",
                                                                 "domain": [ ["amount", "=", "object.amount"], ["receipt_date", "=", "object.date"] ]
                                                             } ]
-                                                        }    
+                                                        }
                                                     }
                                                 }
                                             }

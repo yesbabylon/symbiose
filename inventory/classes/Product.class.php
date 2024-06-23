@@ -11,8 +11,12 @@ use equal\orm\Model;
 
 class Product extends Model {
 
+    public static function getName() {
+        return 'Digital Product.';
+    }
+
     public static function getDescription() {
-        return 'Inventory products are composed of services, softwares, servers and instances. They are either owned by a company or by a customer.';
+        return 'Digital products are composed of services, softwares, servers and instances. They are either owned by a company or by a customer.';
     }
 
     public static function getColumns() {

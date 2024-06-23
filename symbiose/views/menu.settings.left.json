@@ -60,13 +60,36 @@
                 ]
             },
             {
-
                 "id": "sale",
                 "label": "Sales",
                 "description": "",
                 "icon": "storefront",
                 "type": "parent",
                 "route": "/settings/sale"
+            },
+            {
+                "id": "finance",
+                "label": "Finance",
+                "description": "",
+                "icon": "paid",
+                "type": "parent",
+                "route": "/settings/finance"
+            },
+            {
+                "id": "purchase",
+                "label": "Purchase",
+                "description": "",
+                "icon": "shopping_cart_checkout",
+                "type": "parent",
+                "route": "/settings/purchase"
+            },
+            {
+                "id": "inventory",
+                "label": "Inventory",
+                "description": "",
+                "icon": "analytics",
+                "type": "parent",
+                "route": "/settings/inventory"
             },
             {
                 "id": "settings",

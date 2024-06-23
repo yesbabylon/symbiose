@@ -92,7 +92,7 @@
                                                 "type": "field",
                                                 "value": "reversed_invoice_id",
                                                 "width": "33%",
-                                                "visible": [[["status", "=", "cancelled"]], ["invoice_type", "=", "credit_note"]]
+                                                "visible": [[["status", "=", "cancelled"]], [["invoice_type", "=", "credit_note"]]]
                                             },
                                             {
                                                 "type": "field",

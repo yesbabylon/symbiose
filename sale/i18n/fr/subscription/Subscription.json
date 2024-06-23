@@ -80,7 +80,7 @@
             "help": ""
         },
         "is_auto_renew": {
-            "label": "Auto renouvellement",
+            "label": "Renouvellement auto",
             "description": "L'abonnement peut-il être auto-renouvelé.",
             "help": ""
         }

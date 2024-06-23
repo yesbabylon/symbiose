@@ -1,6 +1,6 @@
 {
     "name": "Customer",
-    "description": "Form holding basic information about a customer (Partner).",
+    "description": "Form holding basic information about a customer.",
     "access": {
         "groups": ["sale.default.user"]
     },

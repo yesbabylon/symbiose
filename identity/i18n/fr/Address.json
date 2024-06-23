@@ -45,13 +45,13 @@
             "help": ""
         },
         "address_zip": {
-            "label": "Code Postal",
+            "label": "CP",
             "description": "Code Postal.",
             "help": ""
         },
         "address_state": {
-            "label": "État ou région",
-            "description": "État ou région.",
+            "label": "Région",
+            "description": "État, région, province, département.",
             "help": ""
         },
         "address_country": {
