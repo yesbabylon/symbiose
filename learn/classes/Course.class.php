@@ -141,7 +141,7 @@ class Course extends Model
 			$id = self::formatLinkIdNumber($course['id']);
 			$title = self::createSlug($course['title']);
 
-			$result[$oid] = '/learning/#/course/' . $id . '/' . $title . '?mode=edit';
+			$result[$oid] = '/learning/#/course/' . $id . '/' . $title . '?mode=edit' . '&lang=' . $lang;
 		}
 
 		return $result;
