@@ -9,10 +9,10 @@
             "ACTION.EDIT": false
         }
     },
+    "extends": {
+        "entity": "sale\\customer\\Customer",
+        "view": "form.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "sale\\customer\\Customer",
-            "view": "form.default"
-        }
     }
 }

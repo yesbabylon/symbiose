@@ -28,6 +28,9 @@
                 },
                 "section.identity_description": {
                     "label": "Description"
+                },
+                "section.bank_accounts": {
+                    "label": "Comptes bancaires"
                 }
             }
         },

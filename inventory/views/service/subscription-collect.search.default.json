@@ -1,11 +1,11 @@
 {
     "name": "Subscriptions search",
     "description": "Advanced collector for Subscriptions",
+    "extends": {
+        "entity": "sale\\subscription\\subscription-collect",
+        "view": "search.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "sale\\subscription\\subscription-collect",
-            "view": "search.default"
-        },
         "update": {
             "item.expired": {
                 "after": [

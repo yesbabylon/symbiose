@@ -4,11 +4,11 @@
     "access": {
         "groups": ["finance.default.user", "sale.default.user"]
     },
+    "extends": {
+        "entity": "finance\\accounting\\InvoiceLine",
+        "view": "form.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "finance\\accounting\\InvoiceLine",
-            "view": "form.default"
-        },
         "update": {
             "column.invoice-and-line-group": {
                 "after": [

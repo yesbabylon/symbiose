@@ -6,11 +6,11 @@
     },
     "controller": "purchase_accounting_invoice_collect",
     "domain" : ["supplier_id", ">", 0],
+    "extends": {
+        "entity": "finance\\accounting\\Invoice",
+        "view": "list.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "finance\\accounting\\Invoice",
-            "view": "list.default"
-        },
         "remove": [
             "item.invoice_purpose"
         ],

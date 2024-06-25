@@ -4,11 +4,11 @@
     "access": {
         "groups": ["pos.default.user", "sale.default.user"]
     },
+    "extends": {
+        "entity": "sale\\catalog\\Product",
+        "view": "form.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "sale\\catalog\\Product",
-            "view": "form.default"
-        },
         "remove": [
             "section.product",
             "section.attributes",

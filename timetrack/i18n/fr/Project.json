@@ -33,7 +33,11 @@
         "form.default": {
             "name": "Projet",
             "description": "Formulaire de modification par défaut d'un projet.",
-            "layout": {}
+            "layout": {
+                "section.time_entries": {
+                    "label": "Prestations"
+                }
+            }
         },
         "list.default": {
             "name": "Projets",

@@ -16,11 +16,11 @@
             ]
         }
     },
+    "extends": {
+        "entity": "finance\\accounting\\Invoice",
+        "view": "list.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "finance\\accounting\\Invoice",
-            "view": "list.default"
-        },
         "remove": [
             "item.invoice_purpose"
         ],

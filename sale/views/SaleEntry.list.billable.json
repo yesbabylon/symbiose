@@ -24,11 +24,11 @@
             ]
         }
     },
+    "extends": {
+        "entity": "sale\\SaleEntry",
+        "view": "list.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "sale\\SaleEntry",
-            "view": "list.default"
-        },
         "remove": [
             "item.is_billable",
             "item.has_receivable",

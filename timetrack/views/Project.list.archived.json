@@ -13,10 +13,10 @@
             ]
         }
     },
+    "extends": {
+        "entity": "timetrack\\Project",
+        "view": "list.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "timetrack\\Project",
-            "view": "list.default"
-        }
     }
 }

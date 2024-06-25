@@ -11,11 +11,11 @@
             ]
         }
     },
+    "extends": {
+        "entity": "identity\\Partner",
+        "view": "form.create"
+    },
     "layout": {
-        "extends": {
-            "entity": "identity\\Partner",
-            "view": "form.create"
-        },
         "remove": [
             "field.has_vat"
         ],

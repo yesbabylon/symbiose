@@ -4,10 +4,10 @@
     "access": {
         "groups": ["purchase.default.user"]
     },
+    "extends": {
+        "entity": "finance\\accounting\\InvoiceLine",
+        "view": "form.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "finance\\accounting\\InvoiceLine",
-            "view": "form.default"
-        }
     }
 }

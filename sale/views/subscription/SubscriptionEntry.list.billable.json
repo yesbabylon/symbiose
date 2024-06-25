@@ -25,11 +25,11 @@
         }
     },
     "domain": ["object_class", "=", "sale\\subscription\\Subscription"],
+    "extends": {
+        "entity": "sale\\subscription\\SubscriptionEntry",
+        "view": "list.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "sale\\subscription\\SubscriptionEntry",
-            "view": "list.default"
-        },
         "remove": [
             "item.is_billable",
             "item.has_receivable",

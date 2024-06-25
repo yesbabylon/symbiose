@@ -25,11 +25,11 @@
             ]
         }
     },
+    "extends": {
+        "entity": "timetrack\\TimeEntry",
+        "view": "list.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "timetrack\\TimeEntry",
-            "view": "list.default"
-        },
         "remove": [
             "item.status"
         ]

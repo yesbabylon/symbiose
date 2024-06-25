@@ -31,11 +31,11 @@
             }
         }
     ],
+    "extends": {
+        "entity": "finance\\accounting\\Invoice",
+        "view": "form.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "finance\\accounting\\Invoice",
-            "view": "form.default"
-        },
         "remove": [
             "item.invoice_purpose",
             "section.accounting_entries"

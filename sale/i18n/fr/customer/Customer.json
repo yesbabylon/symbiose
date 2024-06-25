@@ -85,11 +85,29 @@
                 "section.customer": {
                     "label": "Spécifités du client"
                 },
-                "section.advanced": {
-                    "label": "Avancé"
-                },
                 "section.customer_orders": {
                     "label": "Historique des Commandes"
+                },
+                "section.advanced": {
+                    "label": "Avancé"
+                }
+            }
+        },
+        "form.inventory": {
+            "name": "Client",
+            "description": "Formulaire de base pour afficher un client (Partenaire).",
+            "layout": {
+                "section.products": {
+                    "label": "Produits"
+                },
+                "section.services": {
+                    "label": "Services"
+                },
+                "section.softwares": {
+                    "label": "Logiciels"
+                },
+                "section.subscriptions": {
+                    "label": "Souscriptions"
                 }
             }
         },

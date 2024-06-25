@@ -6,10 +6,10 @@
             "ACTION.EDIT": false
         }
     },
+    "extends": {
+        "entity": "timetrack\\Project",
+        "view": "form.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "timetrack\\Project",
-            "view": "form.default"
-        }
     }
 }

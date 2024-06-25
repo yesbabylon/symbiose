@@ -11,10 +11,10 @@
             ]
         }
     },
+    "extends": {
+        "entity": "sale\\customer\\Customer",
+        "view": "form.create"
+    },
     "layout": {
-        "extends": {
-            "entity": "sale\\customer\\Customer",
-            "view": "form.create"
-        }
     }
 }

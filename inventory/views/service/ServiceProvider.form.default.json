@@ -1,11 +1,11 @@
 {
     "name": "Service Provider",
     "description": "Form holding basic information about a provider (Partner).",
+    "extends": {
+        "entity": "identity\\Partner",
+        "view": "form.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "identity\\Partner",
-            "view": "form.default"
-        },
         "remove": [
             "group.partner_info"
         ],

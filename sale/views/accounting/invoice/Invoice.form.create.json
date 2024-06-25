@@ -4,11 +4,11 @@
     "access": {
         "groups": ["sale.default.user"]
     },
+    "extends": {
+        "entity": "finance\\accounting\\Invoice",
+        "view": "form.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "finance\\accounting\\Invoice",
-            "view": "form.default"
-        },
         "remove": [
             "item.invoice_purpose",
             "item.due_date",

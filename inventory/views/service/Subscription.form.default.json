@@ -14,10 +14,10 @@
             "controller": "sale_subscription_add-subscriptionentry"
         }
     ],
+    "extends": {
+        "entity": "sale\\subscription\\Subscription",
+        "view": "form.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "sale\\subscription\\Subscription",
-            "view": "form.default"
-        }
     }
 }

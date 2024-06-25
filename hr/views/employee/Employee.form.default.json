@@ -4,11 +4,11 @@
     "access": {
         "groups": ["hr.default.user"]
     },
+    "extends": {
+        "entity": "identity\\Partner",
+        "view": "form.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "identity\\Partner",
-            "view": "form.default"
-        },
         "remove": [
             "section.advanced",
             "group.partner_info",

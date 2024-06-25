@@ -231,8 +231,8 @@
                         ]
                     },
                     {
-                        "label": "Banks Accounts",
-                        "id": "section.organisation_banksaccounts",
+                        "label": "Bank Accounts",
+                        "id": "section.bank_accounts",
                         "visible": ["state", "<>", "draft"],
                         "rows": [
                             {

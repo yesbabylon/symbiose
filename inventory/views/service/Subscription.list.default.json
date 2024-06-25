@@ -37,11 +37,11 @@
             ]
         }
     },
+    "extends": {
+        "entity": "sale\\subscription\\Subscription",
+        "view": "list.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "sale\\subscription\\Subscription",
-            "view": "list.default"
-        },
         "update": {
             "item.customer": {
                 "before": [

@@ -16,10 +16,10 @@
             ]
         }
     },
+    "extends": {
+        "entity": "sale\\customer\\Customer",
+        "view": "list.inventory"
+    },
     "layout": {
-        "extends": {
-            "entity": "sale\\customer\\Customer",
-            "view": "list.inventory"
-        }
     }
 }

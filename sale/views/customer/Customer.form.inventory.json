@@ -16,7 +16,7 @@
             "section.identity_info": {
                 "before": [
                     {
-                        "id": "section.customer_products",
+                        "id": "section.products",
                         "label": "Products",
                         "rows": [
                             {
@@ -46,7 +46,7 @@
                         ]
                     },
                     {
-                        "id": "section.product_services",
+                        "id": "section.services",
                         "label": "Services",
                         "rows": [
                             {
@@ -106,7 +106,7 @@
                         ]
                     },
                     {
-                        "id": "section.customers_softwares",
+                        "id": "section.softwares",
                         "label": "Softwares",
                         "rows": [
                             {

@@ -18,11 +18,11 @@
             ]
         }
     ],
+    "extends": {
+        "entity": "sale\\SaleEntry",
+        "view": "form.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "sale\\SaleEntry",
-            "view": "form.default"
-        },
         "update": {
             "row.main-info-first": {
                 "attributes": {

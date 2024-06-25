@@ -19,11 +19,11 @@
         }
     },
     "limit": 100,
+    "extends": {
+        "entity": "finance\\accounting\\InvoiceLine",
+        "view": "list.default"
+    },
     "layout": {
-        "extends": {
-            "entity": "finance\\accounting\\InvoiceLine",
-            "view": "list.default"
-        },
         "remove": [
             "item.name"
         ],
