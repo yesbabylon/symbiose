@@ -2,7 +2,7 @@
     "name": "Contract Lines",
     "description": "This view is intended for displaying the list of contract lines.",
     "access": {
-        "groups": ["order.default.user"]
+        "groups": ["order.default.users"]
     },
     "operations": {
         "total": {

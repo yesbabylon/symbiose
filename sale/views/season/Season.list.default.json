@@ -2,7 +2,7 @@
     "name": "Seasons",
     "description": "This view is intended for displaying the list of seasons.",
     "access": {
-        "groups": ["sale.default.admin"]
+        "groups": ["sale.default.admins"]
      },
     "layout": {
         "items": [

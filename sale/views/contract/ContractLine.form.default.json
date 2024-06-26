@@ -2,7 +2,7 @@
     "name": "Contract Line",
     "description": "",
     "access": {
-        "groups": ["order.default.user"]
+        "groups": ["order.default.users"]
      },
     "layout": {
         "groups": [

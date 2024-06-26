@@ -2,7 +2,7 @@
     "name": "Invoice Lines",
     "description": "Displays invoice lines.",
     "access": {
-        "groups": ["sale.default.user"]
+        "groups": ["sale.default.users"]
     },
     "group_by": [
         {

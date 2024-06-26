@@ -2,7 +2,7 @@
     "name": "Rate Class List",
     "description": "This view is intended for displaying the list of rate classes.",
     "access": {
-        "groups": ["sale.default.user", "order.default.user"]
+        "groups": ["sale.default.users", "order.default.users"]
      },
     "layout": {
         "items": [

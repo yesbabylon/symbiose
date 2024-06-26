@@ -2,7 +2,7 @@
     "name": "Tour Operator",
     "description": "Tour operator form (Partner)",
     "access": {
-        "groups": ["sale.default.user", "order.default.user"]
+        "groups": ["sale.default.users", "order.default.users"]
     },
     "layout": {
         "groups": [

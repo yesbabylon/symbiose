@@ -2,7 +2,7 @@
     "name": "Invoice Line",
     "description": "Invoice lines describe the products and quantities that are part of an invoice.",
     "access": {
-        "groups": ["finance.default.user", "sale.default.user"]
+        "groups": ["finance.default.users", "sale.default.users"]
     },
     "extends": {
         "entity": "finance\\accounting\\InvoiceLine",

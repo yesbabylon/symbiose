@@ -2,7 +2,7 @@
     "name": "Customer",
     "description": "Form holding the inventory details of a given customer.",
     "access": {
-        "groups": ["inventory.default.user"]
+        "groups": ["inventory.default.users"]
     },
     "extends": {
         "entity": "identity\\Partner",

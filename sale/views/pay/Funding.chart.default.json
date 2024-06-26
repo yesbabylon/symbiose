@@ -2,7 +2,7 @@
     "name": "Sale list",
     "description": "This view displays the list of Fundings",
     "access": {
-        "groups": ["sale.default.user"]
+        "groups": ["sale.default.users"]
     },
     "controller": "core_model_chart",
     "layout": {

@@ -2,7 +2,7 @@
     "name": "Cash Desk Session List",
     "description": "This view displays the list of Cash Desk Sessions.",
     "access": {
-        "groups": ["pos.default.user"]
+        "groups": ["pos.default.users"]
     },
     "layout": {
         "entity": "sale\\pos\\CashdeskSession",

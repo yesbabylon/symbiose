@@ -2,12 +2,12 @@
     "name": "Customer",
     "description": "Form for creating a new customer.",
     "access": {
-        "groups": ["sale.default.user", "inventory.default.user"]
+        "groups": ["sale.default.users", "inventory.default.users"]
     },
     "header": {
         "actions": {
             "ACTION.SAVE": [
-                { "id": "SAVE_AND_VIEW" }
+                { "id": "SAVE_AND_CLOSE" }
             ]
         }
     },

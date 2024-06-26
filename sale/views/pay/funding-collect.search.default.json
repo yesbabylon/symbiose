@@ -2,7 +2,7 @@
     "name": "Funding",
     "description": "Advanced collector for Fundings.",
     "access": {
-        "groups": ["sale.default.user"]
+        "groups": ["sale.default.users"]
     },
     "layout": {
         "groups": [

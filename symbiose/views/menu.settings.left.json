@@ -1,7 +1,7 @@
 {
     "name": "Settings menu",
     "access": {
-        "groups": ["setting.default.user"]
+        "groups": ["setting.default.users"]
     },
     "search": true,
     "layout": {

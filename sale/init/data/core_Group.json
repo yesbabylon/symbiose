@@ -5,7 +5,7 @@
         "data": [
             {
                 "id": 1001,
-                "name": "sale.default.administrators",
+                "name": "sale.default.admins",
                 "display_name": "Sales \/ All \/ Administrators",
                 "description": "Updating products and adding new products to the catalog."
             },
@@ -17,7 +17,7 @@
             },
             {
                 "id": 1011,
-                "name": "sale.catalog.administrators",
+                "name": "sale.catalog.admins",
                 "display_name": "Sales \/ Catalog \/ Administrators",
                 "description": "Updating products and adding new products to the catalog."
             },
@@ -35,7 +35,7 @@
             },
             {
                 "id": 1022,
-                "name": "sale.pricelist.administrators",
+                "name": "sale.pricelist.admins",
                 "display_name": "Sales \/ Price lists \/ Administrators",
                 "description": "Updating prices and fares."
             },
@@ -47,7 +47,7 @@
             },
             {
                 "id": 1032,
-                "name": "sale.discounts.administrators",
+                "name": "sale.discounts.admins",
                 "display_name": "Sales \/ Discount \/ Administrators",
                 "description": "Creating and updating discount lists."
             }

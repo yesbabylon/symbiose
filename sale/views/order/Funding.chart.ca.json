@@ -2,7 +2,7 @@
     "name": "Funding list",
     "description": "This view displays the total of reimbursements that happened",
     "access": {
-        "groups": ["finance.default.user"]
+        "groups": ["finance.default.users"]
     },
     "controller": "core_model_chart",
     "layout": {

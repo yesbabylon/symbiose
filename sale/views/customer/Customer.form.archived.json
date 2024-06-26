@@ -2,7 +2,7 @@
     "name": "Customer",
     "description": "Form holding basic information about an archived customer (Partner).",
     "access": {
-        "groups": ["sale.default.user"]
+        "groups": ["sale.default.users"]
     },
     "header": {
         "actions": {

@@ -2,7 +2,7 @@
     "name": "Archived customers",
     "description": "This view is intended for displaying basic listing of archived Customers for inventory package.",
     "access": {
-        "groups": ["inventory.default.user"]
+        "groups": ["inventory.default.users"]
     },
     "domain": ["state", "=", "archive"],
     "header": {

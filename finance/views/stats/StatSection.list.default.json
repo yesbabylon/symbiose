@@ -2,7 +2,7 @@
     "name": "Statistic Section List",
     "description": "This view is intented for displaying the statistic section.",
     "access": {
-        "groups": ["stat.default.user"]
+        "groups": ["stat.default.users"]
      },
     "layout": {
         "items": [

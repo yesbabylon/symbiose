@@ -2,7 +2,7 @@
     "name": "Order Line Groups",
     "description": "This view is intended for displaying the list of order line groups.",
     "access": {
-        "groups": ["order.default.user"]
+        "groups": ["order.default.users"]
      },
     "layout": {
         "items": [

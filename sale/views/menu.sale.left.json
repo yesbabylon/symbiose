@@ -1,7 +1,7 @@
 {
     "name": "Sale menu",
     "access": {
-        "groups": ["sale.default.user"]
+        "groups": ["sale.default.users"]
     },
     "search": true,
     "layout": {

@@ -2,7 +2,7 @@
     "name": "Périodes de la saison",
     "description": "This view is intended for displaying the list of season period.",
     "access": {
-        "groups": ["sale.default.admin"]
+        "groups": ["sale.default.admins"]
     },
     "order": "date_from",
     "group_by": ["month"],

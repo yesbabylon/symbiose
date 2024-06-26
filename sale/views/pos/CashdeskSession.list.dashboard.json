@@ -2,7 +2,7 @@
     "name": "Cashdesk Sessions",
     "description": "List of cashdesk logs (sessions).",
     "access": {
-        "groups": ["pos.default.user"]
+        "groups": ["pos.default.users"]
      },
     "layout": {
         "items": [

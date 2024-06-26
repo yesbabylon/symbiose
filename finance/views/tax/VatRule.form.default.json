@@ -2,7 +2,7 @@
     "name": "Vat Rules",
     "description": "VAT rules allow to specify which VAT rate applies for a given kind of operation.",
     "access": {
-        "groups": ["finance.default.user"]
+        "groups": ["finance.default.users"]
      },
     "layout": {
         "groups": [

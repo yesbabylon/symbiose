@@ -2,7 +2,7 @@
     "name": "Customer",
     "description": "Form holding the inventory details of a given archived customer.",
     "access": {
-        "groups": ["inventory.default.user"]
+        "groups": ["inventory.default.users"]
     },
     "header": {
         "actions": {

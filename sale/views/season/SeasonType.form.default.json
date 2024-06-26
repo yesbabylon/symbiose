@@ -2,7 +2,7 @@
     "name": "Season Type",
     "description": "",
     "access": {
-        "groups": ["sale.default.admin"]
+        "groups": ["sale.default.admins"]
      },
     "layout": {
         "groups": [

@@ -2,7 +2,7 @@
     "name": "Contract Line Groups",
     "description": "This view is intended for displaying the list of contract line groups.",
     "access": {
-        "groups": ["order.default.user"]
+        "groups": ["order.default.users"]
     },
     "layout": {
         "items": [

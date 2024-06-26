@@ -2,7 +2,7 @@
     "name": "Accounting Rules",
     "description": "Default view for accounting rules with all fields",
     "access": {
-        "groups": ["finance.default.user"]
+        "groups": ["finance.default.users"]
      },
     "layout": {
         "groups": [

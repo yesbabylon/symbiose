@@ -2,7 +2,7 @@
     "name": "Product favorites",
     "description": "List of product favorites.",
     "access": {
-        "groups": ["pos.default.user", "sale.default.user"]
+        "groups": ["pos.default.users", "sale.default.users"]
     },
     "order": "order",
     "sort": "asc",

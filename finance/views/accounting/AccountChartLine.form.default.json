@@ -2,7 +2,7 @@
     "name": "Accounting Chart Line",
     "description": "Detail of an accounting chart line with all fields.",
     "access": {
-        "groups": ["finance.default.user"]
+        "groups": ["finance.default.users"]
     },
     "layout": {
         "groups": [

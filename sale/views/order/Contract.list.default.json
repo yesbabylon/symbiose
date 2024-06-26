@@ -2,7 +2,7 @@
     "name": "Contracts",
     "description": "List of contracts relating to orders.",
     "access": {
-        "groups": ["order.default.user"]
+        "groups": ["order.default.users"]
     },
     "order": "created",
     "sort": "desc",

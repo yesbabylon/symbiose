@@ -2,7 +2,7 @@
     "name": "Statistic Charts List",
     "description": "This view is intented for displaying the statistics charts.",
     "access": {
-        "groups": ["stat.default.user"]
+        "groups": ["stat.default.users"]
      },
     "layout": {
         "items": [

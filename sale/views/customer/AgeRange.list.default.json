@@ -2,7 +2,7 @@
     "name": "Customer Nature List",
     "description": "Currently defined age ranges.",
     "access": {
-        "groups": ["sale.default.user", "order.default.user"]
+        "groups": ["sale.default.users", "order.default.users"]
     },
     "layout": {
         "items": [

@@ -2,7 +2,7 @@
     "name": "Order payment line",
     "description": "List of order payment lines.",
     "access": {
-        "groups": ["pos.default.user"]
+        "groups": ["pos.default.users"]
     },
     "operations": {
         "total": {

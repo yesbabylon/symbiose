@@ -1,6 +1,6 @@
 {
     "access": {
-        "groups": ["order.default.user", "sale.default.user"]
+        "groups": ["order.default.users", "sale.default.users"]
     },
     "layout": {
         "groups": [

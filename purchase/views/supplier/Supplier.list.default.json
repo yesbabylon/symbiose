@@ -3,7 +3,7 @@
     "description": "This view is intended for displaying basic listing of existing Suppliers.",
     "controller": "purchase_supplier_supplier-collect",
     "access": {
-        "groups": ["purchase.default.user"]
+        "groups": ["purchase.default.users"]
     },
     "header": {
         "actions": {

@@ -6,7 +6,7 @@
     "color": "#83C33F",
     "access": {
         "groups": [
-            "documents.default.user",
+            "documents.default.users",
             "documents.default.administrator"
         ]
     },

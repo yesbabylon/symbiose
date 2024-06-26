@@ -2,7 +2,7 @@
     "name": "Cashdesk Log",
     "description": "",
     "access": {
-        "groups": ["pos.default.user"]
+        "groups": ["pos.default.users"]
     },
     "routes": [
         {

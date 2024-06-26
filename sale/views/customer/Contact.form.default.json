@@ -2,7 +2,7 @@
     "name": "Contact",
     "description": "Customer contact form.",
     "access": {
-        "groups": ["sale.default.user"]
+        "groups": ["sale.default.users"]
     },
     "extends": {
         "entity": "identity\\Partner",

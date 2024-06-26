@@ -2,7 +2,7 @@
     "name": "Accounting Charts List",
     "description": "This view is intended for displaying the accounting charts.",
     "access": {
-        "groups": ["finance.default.user"]
+        "groups": ["finance.default.users"]
     },
     "group_by": ["line_class"],
     "limit": 1000,

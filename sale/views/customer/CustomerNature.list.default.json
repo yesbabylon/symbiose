@@ -2,7 +2,7 @@
     "name": "Customer Nature List",
     "description": "This view is intended for displaying the list of customer natures.",
     "access": {
-        "groups": ["sale.default.user", "order.default.user"]
+        "groups": ["sale.default.users", "order.default.users"]
      },
     "layout": {
         "items": [

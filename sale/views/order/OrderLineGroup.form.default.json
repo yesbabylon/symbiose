@@ -2,7 +2,7 @@
     "name": "Order Line Group",
     "description": "Order line groups are related to a order and describe one or more sojourns and their related consumptions.",
     "access": {
-        "groups": ["order.default.user"]
+        "groups": ["order.default.users"]
      },
     "layout": {
         "groups": [

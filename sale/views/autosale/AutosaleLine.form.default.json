@@ -2,7 +2,7 @@
     "name": "Autosale Line",
     "description": "",
     "access": {
-        "groups": ["sale.default.user"]
+        "groups": ["sale.default.users"]
      },
     "layout": {
         "groups": [

@@ -2,7 +2,7 @@
     "name": "Contacts",
     "description": "Listing of existing contacts Partners.",
     "access": {
-        "groups": ["order.default.user", "sale.default.user"]
+        "groups": ["order.default.users", "sale.default.users"]
      },
     "domain": ["relationship", "=", "contact"],
     "layout": {

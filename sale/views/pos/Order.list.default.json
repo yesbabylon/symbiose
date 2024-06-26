@@ -2,7 +2,7 @@
     "name": "Orders",
     "description": "List of Point of Sale orders.",
     "access": {
-        "groups": ["pos.default.user"]
+        "groups": ["pos.default.users"]
     },
     "header": {
         "actions": {

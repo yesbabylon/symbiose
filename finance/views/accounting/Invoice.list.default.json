@@ -2,7 +2,7 @@
     "name": "Invoices",
     "description": "This view is intended for displaying the invoices.",
     "access": {
-        "groups": ["finance.default.user"]
+        "groups": ["finance.default.users"]
     },
     "controller": "finance_accounting_invoice-collect",
     "header": {

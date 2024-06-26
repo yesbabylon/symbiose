@@ -3,7 +3,7 @@
     "description": "This view is intended for displaying basic listing of existing Customers.",
     "controller": "sale_customer_customer-collect",
     "access": {
-        "groups": ["sale.default.user"]
+        "groups": ["sale.default.users"]
     },
     "header": {
         "actions": {

@@ -2,7 +2,7 @@
     "name": "Partner",
     "description": "Basic form for displaying a Partner",
     "access": {
-        "groups": ["order.default.user"]
+        "groups": ["order.default.users"]
     },
     "layout": {
         "groups": [

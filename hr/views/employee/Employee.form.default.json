@@ -2,7 +2,7 @@
     "name": "Employee",
     "description": "Form holding basic information about an employee (Partner).",
     "access": {
-        "groups": ["hr.default.user"]
+        "groups": ["hr.default.users"]
     },
     "extends": {
         "entity": "identity\\Partner",

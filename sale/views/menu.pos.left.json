@@ -1,7 +1,7 @@
 {
     "name": "PoS menu",
     "access": {
-        "groups": ["pos.default.user"]
+        "groups": ["pos.default.users"]
     },
     "layout": {
         "items": [

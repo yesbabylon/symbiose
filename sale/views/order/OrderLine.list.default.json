@@ -2,7 +2,7 @@
     "name": "Order Followups",
     "description": "This view is intended for displaying the list of order lines.",
     "access": {
-        "groups": ["order.default.user"]
+        "groups": ["order.default.users"]
      },
     "order": "order_line_group_id,order",
     "sort": "asc",

@@ -2,7 +2,7 @@
     "name": "Invoice Lines",
     "description": "This view is intended for displaying the invoice lines.",
     "access": {
-        "groups": ["finance.default.user"]
+        "groups": ["finance.default.users"]
     },
     "group_by": [
         {

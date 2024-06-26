@@ -2,7 +2,7 @@
     "name": "Season Type",
     "description": "This view is intended for displaying the list of season years.",
     "access": {
-        "groups": ["sale.default.admin"]
+        "groups": ["sale.default.admins"]
      },
     "layout": {
         "items": [

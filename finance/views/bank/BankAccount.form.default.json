@@ -2,7 +2,7 @@
     "name": "Bank Account",
     "description": "Default form for bank account.",
     "access": {
-        "groups": ["finance.default.user"]
+        "groups": ["finance.default.users"]
      },
     "layout": {
         "groups": [

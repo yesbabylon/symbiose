@@ -2,7 +2,7 @@
     "name": "Operation Lines",
     "description": "This view is intended for displaying the list of operation lines.",
     "access": {
-        "groups": ["pos.default.user"]
+        "groups": ["pos.default.users"]
     },
     "operations": {
         "total": {

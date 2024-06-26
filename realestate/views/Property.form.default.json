@@ -2,7 +2,7 @@
     "name": "Properties",
     "description": "Properties available.",
     "access": {
-        "groups": ["order.default.user"]
+        "groups": ["order.default.users"]
      },
     "layout": {
         "groups": [

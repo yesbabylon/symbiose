@@ -2,7 +2,7 @@
     "name": "Funding list",
     "description": "This view displays the list of orders: the most recent on top.",
     "access": {
-        "groups": ["finance.default.user"]
+        "groups": ["finance.default.users"]
     },
     "controller": "core_model_chart",
     "layout": {

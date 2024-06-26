@@ -2,7 +2,7 @@
     "name": "Customer",
     "description": "Form holding basic information about a customer.",
     "access": {
-        "groups": ["sale.default.user"]
+        "groups": ["sale.default.users"]
     },
     "extends": {
         "entity": "identity\\Partner",

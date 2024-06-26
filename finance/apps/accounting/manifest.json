@@ -6,7 +6,7 @@
     "color": "#29A1A1",
     "access": {
         "groups": [
-            "finance.default.user",
+            "finance.default.users",
             "finance.default.administrator"
         ]
     },

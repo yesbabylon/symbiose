@@ -2,7 +2,7 @@
     "name": "PackLine",
     "description": "A Pack Line corresponds to the relation between a 'pack' product (bundle) and another product that it includes.",
     "access": {
-        "groups": ["pos.default.user", "sale.default.user"]
+        "groups": ["pos.default.users", "sale.default.users"]
     },
     "layout": {
         "groups": [

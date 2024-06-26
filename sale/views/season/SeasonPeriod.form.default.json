@@ -2,7 +2,7 @@
     "name": "Période de la saison",
     "description": "",
     "access": {
-        "groups": ["sale.default.admin"]
+        "groups": ["sale.default.admins"]
      },
     "layout": {
         "groups": [

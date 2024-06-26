@@ -6,7 +6,7 @@
     "color": "#E95367",
     "access": {
         "groups": [
-            "pos.default.user",
+            "pos.default.users",
             "pos.default.administrator"
         ]
     },

@@ -2,7 +2,7 @@
     "name": "Order Payment line",
     "description": "",
     "access": {
-        "groups": ["pos.default.user"]
+        "groups": ["pos.default.users"]
      },
     "layout": {
         "groups": [

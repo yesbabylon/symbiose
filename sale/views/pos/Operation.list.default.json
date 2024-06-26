@@ -2,7 +2,7 @@
     "name": "Operations",
     "description": "List of cashdesk operations.",
     "access": {
-        "groups": ["pos.default.user"]
+        "groups": ["pos.default.users"]
     },
     "order": "created",
     "sort": "desc",

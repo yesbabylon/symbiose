@@ -3,7 +3,7 @@
     "description": "This view is intended for displaying basic listing of existing Customers for inventory package.",
     "controller": "inventory_sale_customer_customer-collect",
     "access": {
-        "groups": ["inventory.default.user"]
+        "groups": ["inventory.default.users"]
     },
     "header": {
         "actions": {

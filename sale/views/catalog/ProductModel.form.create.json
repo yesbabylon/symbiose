@@ -2,7 +2,7 @@
     "name": "Product Model",
     "description": "Product Models act as common denominator for products variants (referred to as Products).",
     "access": {
-        "groups": ["pos.default.user", "sale.default.user"]
+        "groups": ["pos.default.users", "sale.default.users"]
     },
     "extends": {
         "entity": "sale\\catalog\\ProductModel",

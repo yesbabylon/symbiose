@@ -2,7 +2,7 @@
     "name": "Operation Line",
     "description": "",
     "access": {
-        "groups": ["pos.default.user"]
+        "groups": ["pos.default.users"]
      },
     "layout": {
         "groups": [

@@ -2,7 +2,7 @@
     "name": "Order payment",
     "description": "List of order payments.",
     "access": {
-        "groups": ["pos.default.user"]
+        "groups": ["pos.default.users"]
     },
     "operations": {
         "total": {

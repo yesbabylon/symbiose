@@ -2,7 +2,7 @@
     "name": "Product Attribute",
     "description": "A Product Attribute corresponds to the value of an attribute available for a Product of a given Family.",
     "access": {
-        "groups": ["pos.default.user", "sale.default.user"]
+        "groups": ["pos.default.users", "sale.default.users"]
      },
     "layout": {
         "groups": [

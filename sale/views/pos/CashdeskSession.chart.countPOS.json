@@ -2,7 +2,7 @@
     "name": "Order Lines",
     "description": "This view displays the quantity of Order Lines: the most recent on top.",
     "access": {
-        "groups": ["pos.default.user"]
+        "groups": ["pos.default.users"]
     },
     "layout": {
         "entity": "sale\\pos\\OrderLine",

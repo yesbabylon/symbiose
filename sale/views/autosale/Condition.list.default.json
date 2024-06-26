@@ -2,7 +2,7 @@
     "name": "Conditions",
     "description": "This view is intended for displaying the list of conditions.",
     "access": {
-        "groups": ["sale.default.user"]
+        "groups": ["sale.default.users"]
      },
     "layout": {
         "items": [

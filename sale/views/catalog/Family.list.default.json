@@ -2,7 +2,7 @@
     "name": "Families",
     "description": "This view is intended for displaying the list of families.",
     "access": {
-        "groups": ["pos.default.user", "sale.default.user"]
+        "groups": ["pos.default.users", "sale.default.users"]
      },
     "layout": {
         "items": [

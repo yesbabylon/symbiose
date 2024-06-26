@@ -7,7 +7,7 @@
     "header": {
         "actions": {
             "ACTION.EDIT": {
-                "visible": ["support.default.user", "in", "user.groups"]
+                "visible": ["support.default.users", "in", "user.groups"]
             },
             "ACTION.SAVE": [
                 {

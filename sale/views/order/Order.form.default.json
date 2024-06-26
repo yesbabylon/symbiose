@@ -3,7 +3,7 @@
     "description": "",
     "access": {
         "groups": [
-            "order.default.user"
+            "order.default.users"
         ]
     },
     "layout": {

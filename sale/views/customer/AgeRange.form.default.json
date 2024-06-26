@@ -2,7 +2,7 @@
     "name": "Age Range",
     "description": "",
     "access": {
-        "groups": ["sale.default.user", "order.default.user"]
+        "groups": ["sale.default.users", "order.default.users"]
     },
     "layout": {
         "groups": [

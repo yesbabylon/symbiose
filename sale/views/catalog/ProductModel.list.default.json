@@ -2,7 +2,7 @@
     "name": "Product Models",
     "description": "This view is intended for displaying the list of product models.",
     "access": {
-        "groups": ["pos.default.user", "sale.default.user"]
+        "groups": ["pos.default.users", "sale.default.users"]
     },
     "header": {
         "actions": {

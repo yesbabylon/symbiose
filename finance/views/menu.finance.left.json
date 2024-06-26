@@ -1,7 +1,7 @@
 {
     "name": "Accounting menu",
     "access": {
-      "groups": ["finance.default.user"]
+      "groups": ["finance.default.users"]
     },
     "layout": {
         "items": [

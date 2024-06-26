@@ -2,7 +2,7 @@
     "name": "Order Line",
     "description": "Order lines describe the products and quantities that are part of a order.",
     "access": {
-        "groups": ["order.default.user"]
+        "groups": ["order.default.users"]
      },
     "layout": {
         "groups": [

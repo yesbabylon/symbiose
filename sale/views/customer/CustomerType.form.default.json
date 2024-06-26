@@ -2,7 +2,7 @@
     "name": "Customer Types",
     "description": "",
     "access": {
-        "groups": ["sales.default.administrators"]
+        "groups": ["sales.default.admins"]
     },
     "layout": {
         "groups": [

@@ -2,7 +2,7 @@
     "name": "Customer",
     "description": "Creation form holding the inventory details of a given customer.",
     "access": {
-        "groups": ["inventory.default.user"]
+        "groups": ["inventory.default.users"]
     },
     "header": {
         "actions": {

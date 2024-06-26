@@ -2,7 +2,7 @@
     "name": "Statistic Chart",
     "description": "Default form for statistic chart with all fields.",
     "access": {
-        "groups": ["stat.default.user"]
+        "groups": ["stat.default.users"]
      },
     "layout": {
         "groups": [

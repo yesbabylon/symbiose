@@ -2,7 +2,7 @@
     "name": "Payment Terms",
     "description": "This view is intended for displaying the list of payment deadlines.",
     "access": {
-        "groups": ["sale.default.user"]
+        "groups": ["sale.default.users"]
      },
     "layout": {
         "items": [

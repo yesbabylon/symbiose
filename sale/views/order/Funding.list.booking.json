@@ -2,7 +2,7 @@
     "name": "Fundings",
     "description": "List of fundings related to a order.",
     "access": {
-        "groups": ["order.default.user"]
+        "groups": ["order.default.users"]
     },
     "operations": {
         "total": {

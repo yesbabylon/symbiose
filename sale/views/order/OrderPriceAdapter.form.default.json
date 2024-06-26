@@ -2,7 +2,7 @@
     "name": "Order Line Price Adapter",
     "description": "Adapters allow to get the final price of a order line, either by performing a direct computation, or by using a discount definition.",
     "access": {
-        "groups": ["order.default.user"]
+        "groups": ["order.default.users"]
      },
     "layout": {
         "groups": [

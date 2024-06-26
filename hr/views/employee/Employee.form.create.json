@@ -2,7 +2,7 @@
     "name": "Customer",
     "description": "This form holds the fields for creating a new Customer.",
     "access": {
-        "groups": ["hr.default.user"]
+        "groups": ["hr.default.users"]
     },
     "header": {
         "actions": {

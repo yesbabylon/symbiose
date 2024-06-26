@@ -2,7 +2,7 @@
     "name": "Guarantees",
     "description": "Default list of guarantees.",
     "access": {
-        "groups": ["sale.default.user"]
+        "groups": ["sale.default.users"]
      },
     "layout": {
         "items": [

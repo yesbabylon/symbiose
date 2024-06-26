@@ -6,7 +6,7 @@
     "color": "#653BB5",
     "access": {
         "groups": [
-            "stats.default.user",
+            "stats.default.users",
             "stats.default.administrator"
         ]
     },

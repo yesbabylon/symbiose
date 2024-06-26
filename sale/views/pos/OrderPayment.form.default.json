@@ -2,7 +2,7 @@
     "name": "Order Payment",
     "description": "",
     "access": {
-        "groups": ["pos.default.user"]
+        "groups": ["pos.default.users"]
     },
     "actions": [
         {

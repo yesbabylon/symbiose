@@ -31,9 +31,11 @@ class Access extends Model {
         return [
 
             'name' => [
-                'type'              => 'string',
+                'type'              => 'computed',
+                'result_type'       => 'string',
                 'description'       => 'Name of the access.',
-                'required'          => true
+                'function'          => 'calcName',
+                'store'             => true
             ],
 
             'description' => [
@@ -65,7 +67,7 @@ class Access extends Model {
                 'type'              => 'string',
                 'description'       => 'IP address or hostname of the server.',
                 'required'          => true,
-                'dependents'        => ['url']
+                'dependents'        => ['name', 'url']
             ],
 
             'port' => [
@@ -78,7 +80,7 @@ class Access extends Model {
                 'type'              => 'string',
                 'description'       => 'Username of the account related to this access.',
                 'required'          => true,
-                'dependents'        => ['url']
+                'dependents'        => ['name', 'url']
             ],
 
             'password' => [
@@ -135,6 +137,15 @@ class Access extends Model {
         }
     }
 
+    public static function calcName($self) {
+        $result = [];
+        $self->read(['username', 'host']);
+        foreach($$self as $id => $access) {
+            $result[$id] = $access['username'].'@'.$access['host'];
+        }
+        return $result;
+    }
+
     public static function calUrl($self) {
         $result = [];
         $self->read(['port', 'host', 'access_type', 'username', 'password']);
@@ -151,13 +162,12 @@ class Access extends Model {
             $result['port'] = self::MAP_PORTS[$event['access_type']];
         }
 
-        if(
-            isset($event['access_type'])
+        if( isset($event['access_type'])
             || isset($event['username'])
             || isset($event['password'])
             || isset($event['host'])
-            || isset($event['port'])
-        ) {
+            || isset($event['port']) ) {
+
             $result['url'] = self::createUrl([
                 'access_type'   => $event['access_type'] ?? $values['access_type'],
                 'username'      => $event['username'] ?? $values['username'],

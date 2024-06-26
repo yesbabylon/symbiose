@@ -2,7 +2,7 @@
     "name": "Employees",
     "description": "List of all employees.",
     "access": {
-        "groups": ["hr.default.user"]
+        "groups": ["hr.default.users"]
     },
     "header": {
         "actions": {

@@ -2,7 +2,7 @@
     "name": "Bank Statement Lines",
     "description": "This view is intended for displaying the list of bank statement lines.",
     "access": {
-        "groups": ["sale.default.user"]
+        "groups": ["sale.default.users"]
     },
     "order": "created",
     "sort": "desc",

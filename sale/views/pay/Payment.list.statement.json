@@ -2,7 +2,7 @@
     "name": "Payments",
     "description": "List of payments related to a bank statement line.",
     "access": {
-        "groups": ["sale.default.user"]
+        "groups": ["sale.default.users"]
     },
     "operations": {
         "total": {

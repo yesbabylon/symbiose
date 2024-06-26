@@ -2,7 +2,7 @@
     "name": "Invoice",
     "description": "Invoice creation form.",
     "access": {
-        "groups": ["sale.default.user"]
+        "groups": ["sale.default.users"]
     },
     "extends": {
         "entity": "finance\\accounting\\Invoice",

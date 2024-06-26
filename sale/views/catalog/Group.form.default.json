@@ -2,7 +2,7 @@
     "name": "Group",
     "description": "",
     "access": {
-        "groups": ["pos.default.user", "sale.default.user"]
+        "groups": ["pos.default.users", "sale.default.users"]
      },
     "layout": {
         "groups": [

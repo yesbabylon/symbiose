@@ -2,7 +2,7 @@
     "name": "Fundings",
     "description": "This view is intended for displaying the list of fundings.",
     "access": {
-        "groups": ["order.default.user"]
+        "groups": ["order.default.users"]
     },
     "layout": {
         "items": [
