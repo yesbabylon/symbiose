@@ -156,7 +156,7 @@ class Identity extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\Identity',
                 'foreign_field'     => 'parent_id',
-                'domain'            => ['type', '<>', 'IN'],
+                'domain'            => [ ['id', '<>', 'object.id'], ['type', '<>', 'IN'] ],
                 'description'       => 'Children departments of the organization, if any.',
                 'visible'           => [ ['type', '<>', 'IN'] ]
             ],
@@ -171,7 +171,7 @@ class Identity extends Model {
             'parent_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'domain'            => ['type', '<>', 'IN'],
+                'domain'            => [ ['id', '<>', 'object.id'], ['type', '<>', 'IN'] ],
                 'description'       => 'Parent company of which the organization is a branch (department), if any.',
                 'visible'           => [ ['has_parent', '=', true] ]
             ],
