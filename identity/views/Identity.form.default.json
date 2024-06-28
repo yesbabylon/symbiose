@@ -374,7 +374,7 @@
                     {
                         "label": "Departments & Subsidiaries",
                         "id": "section.departments",
-                        "visible": ["has_parent", "=", false],
+                        "visible": [["type_id", ">", 1], ["has_parent", "=", false]],
                         "rows": [
                             {
                                 "columns": [
