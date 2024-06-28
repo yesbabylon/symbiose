@@ -1,0 +1,29 @@
+{
+    "name": "Canal de conversation",
+    "plural": "Canaux de conversation",
+    "description": "",
+    "model": {
+        "channel_id": {
+            "label": "Canal",
+            "description": "Canal de conversation.",
+            "help": ""
+        },
+        "is_private": {
+            "label": "Est privée",
+            "description": "Est-ce que la conversation est entre 2 utilisateurs uniquement.",
+            "help": ""
+        },
+        "user1_id": {
+            "label": "Utilisateur 1",
+            "description": "Premier utilisateur faisant partie de la conversation.",
+            "help": ""
+        },
+        "user2_id": {
+            "label": "Utilisateur 2",
+            "description": "Second utilisateur faisant partie de la conversation.",
+            "help": ""
+        }
+    },
+    "view": {},
+    "error": {}
+}

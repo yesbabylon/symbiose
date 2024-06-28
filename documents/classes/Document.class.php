@@ -114,7 +114,7 @@ class Document extends Model {
 
             'template_attachments_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'communication\TemplateAttachment',
+                'foreign_object'    => 'communication\template\TemplateAttachment',
                 'foreign_field'     => 'document_id',
                 'description'       => "The links between document and templates."
             ]

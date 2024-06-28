@@ -5,7 +5,17 @@
     "model": {
         "name": {
             "label": "Nom",
+            "description": "Code mnémo complet du modèle.",
+            "help": ""
+        },
+        "code": {
+            "label": "Code",
             "description": "Code mnémo du modèle.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Rôle et utilité du modèle.",
             "help": ""
         },
         "category_id": {
@@ -19,9 +29,20 @@
             "selection": {
                 "quote": "devis",
                 "contract": "contrat",
+                "funding": "financement",
                 "invoice": "facture",
                 "option": "option"
             },
+            "help": ""
+        },
+        "parts_ids": {
+            "label": "Parties",
+            "description": "Parties du template.",
+            "help": ""
+        },
+        "attachments_ids": {
+            "label": "Pièces jointes",
+            "description": "Pièces jointes du template.",
             "help": ""
         }
     },
@@ -30,13 +51,19 @@
             "name": "Modèle",
             "description": "Les modèles sont utilisés dans la communication et contiennent plusieurs catégories.",
             "layout": {
-                "template.content": {
-                    "label": "Contenu"
+                "template.parts": {
+                    "label": "Parties"
+                },
+                "template.attachments": {
+                    "label": "Pièces jointes"
+                },
+                "template.description": {
+                    "label": "Description"
                 }
             }
         },
         "list.default": {
-            "name": "Liste des Modèles",
+            "name": "Modèles",
             "description": "Liste des modèles.",
             "layout": {}
         }
