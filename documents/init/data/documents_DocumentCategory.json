@@ -5,7 +5,17 @@
         "data": [
             {
                 "id": 1,
-                "name": "Document category"
+                "name": "Main Category"
+            }
+        ]
+    },
+    {
+        "name": "documents\\DocumentCategory",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 1,
+                "name": "Categorie principale"
             }
         ]
     }
