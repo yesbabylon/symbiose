@@ -184,7 +184,9 @@
                                                 "value": "reference_partner_id",
                                                 "label": "Person of reference",
                                                 "width": "100%",
-                                                "domain": ["owner_identity_id", "=", "object.id"]
+                                                "widget": {
+                                                    "domain": ["owner_identity_id", "=", "object.id"]
+                                                }
                                             },
                                             {
                                                 "type": "field",
@@ -207,31 +209,37 @@
                                                 "type": "field",
                                                 "label": "Employee",
                                                 "value": "employee_id",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "domain": [ ["partner_identity_id", "=", "object.id"] ]
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Customer",
                                                 "value": "customer_id",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "domain": [ ["partner_identity_id", "=", "object.id"] ]
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Supplier",
                                                 "value": "supplier_id",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "domain": [ ["partner_identity_id", "=", "object.id"] ]
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Contact",
                                                 "value": "contact_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Customer contact",
-                                                "value": "customer_contact_id",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "domain": [ ["partner_identity_id", "=", "object.id"] ]
+                                                }
                                             }
                                         ]
                                     }
