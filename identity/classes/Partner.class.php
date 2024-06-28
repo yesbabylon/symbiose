@@ -254,7 +254,7 @@ class Partner extends Model {
     public static function oncreate($self, $values) {
         if(isset($values['partner_identity_id'])) {
             $fields = [
-                    'type_id','has_vat','vat_number','legal_name','firstname','lastname',
+                    'type_id','has_vat','vat_number','legal_name','firstname','lastname','lang_id',
                     'email','phone','mobile','fax',
                     'address_street','address_dispatch','address_zip',
                     'address_city','address_state','address_country'
@@ -272,7 +272,7 @@ class Partner extends Model {
 
     public static function onafterupdate($self, $values) {
         $fields = [
-                'type_id','has_vat','vat_number','legal_name','firstname','lastname',
+                'type_id','has_vat','vat_number','legal_name','firstname','lastname','lang_id',
                 'email','phone','mobile','fax',
                 'address_street','address_dispatch','address_zip',
                 'address_city','address_state','address_country'
@@ -285,24 +285,12 @@ class Partner extends Model {
                 continue;
             }
             if(is_null($partner['partner_identity_id'])) {
-                $identity = Identity::create([
-                        'type_id'           => $partner['type_id'],
-                        'has_vat'           => $partner['has_vat'],
-                        'vat_number'        => $partner['vat_number'],
-                        'legal_name'        => $partner['legal_name'],
-                        'firstname'         => $partner['firstname'],
-                        'lastname'          => $partner['lastname'],
-                        'email'             => $partner['email'],
-                        'phone'             => $partner['phone'],
-                        'mobile'            => $partner['mobile'],
-                        'fax'               => $partner['fax'],
-                        'address_street'    => $partner['address_street'],
-                        'address_dispatch'  => $partner['address_dispatch'],
-                        'address_zip'       => $partner['address_zip'],
-                        'address_city'      => $partner['address_city'],
-                        'address_state'     => $partner['address_state'],
-                        'address_country'   => $partner['address_country']
-                    ])
+                $map_fields = [];
+                foreach($fields as $field) {
+                    $map_fields[$field] = $partner[$field];
+                }
+
+                $identity = Identity::create($map_fields)
                     ->read(['id'])
                     ->first();
 
