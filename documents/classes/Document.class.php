@@ -75,7 +75,8 @@ class Document extends Model {
             'category_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'documents\DocumentCategory',
-                'description'       => 'Category of the document.'
+                'description'       => 'Category of the document.',
+                'default'           => 1
             ],
 
             'tags_ids' => [
