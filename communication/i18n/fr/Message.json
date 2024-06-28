@@ -1,0 +1,24 @@
+{
+    "name": "Message",
+    "plural": "Messages",
+    "description": "",
+    "model": {
+        "moment": {
+            "label": "Moment d'émission",
+            "description": "Moment d'émission du message.",
+            "help": ""
+        },
+        "user_id": {
+            "label": "Utilisateur",
+            "description": "Auteur du message.",
+            "help": ""
+        },
+        "content": {
+            "label": "Contenu",
+            "description": "Contenu du message.",
+            "help": ""
+        }
+    },
+    "view": {},
+    "error": {}
+}

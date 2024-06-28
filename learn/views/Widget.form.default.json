@@ -64,11 +64,6 @@
                                                 "type": "field",
                                                 "value": "align",
                                                 "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "section_id",
-                                                "width": "50%"
                                             }
                                         ]
                                     },

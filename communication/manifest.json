@@ -24,6 +24,10 @@
             "params": {
                 "menus": {
                     "left": "communication.left"
+                },
+                "context": {
+                    "entity": "communication\\template\\Template",
+                    "view": "list.default"
                 }
             }
         }

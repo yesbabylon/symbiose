@@ -35,7 +35,10 @@
             {
                 "type": "field",
                 "value": "link",
-                "width": "40%"
+                "width": "40%",
+                "widget": {
+                    "link": true
+                }
             }
         ]
     }

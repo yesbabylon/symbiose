@@ -1,0 +1,29 @@
+{
+    "name": "Canal de conversation",
+    "plural": "Canaux de conversation",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Libellé",
+            "description": "Nom du canal de conversation.",
+            "help": ""
+        },
+        "organisation_id": {
+            "label": "Organisation",
+            "description": "Organisation du canal.",
+            "help": ""
+        },
+        "users_ids": {
+            "label": "Utilisateurs",
+            "description": "Utilisateurs pouvant prendre part aux conversations du canal.",
+            "help": ""
+        },
+        "conversations_ids": {
+            "label": "Conversations",
+            "description": "Conversations du canal.",
+            "help": ""
+        }
+    },
+    "view": {},
+    "error": {}
+}

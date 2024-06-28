@@ -1,0 +1,14 @@
+{
+    "name": "Message de conversation",
+    "plural": "Messages de conversation",
+    "description": "",
+    "model": {
+        "conversation_id": {
+            "label": "Conversation",
+            "description": "Conversation à laquelle le message fait partie.",
+            "help": ""
+        }
+    },
+    "view": {},
+    "error": {}
+}

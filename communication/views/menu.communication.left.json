@@ -1,20 +1,42 @@
 {
-    "name": "Communication menu",
+    "name": "Communication left menu",
     "search": false,
     "layout": {
         "items": [
             {
-                "id": "item.templates",
-                "type": "entry",
+                "id": "templates",
                 "label": "Templates",
-                "icon": "description",
                 "description": "",
-                "context": {
-                    "entity": "communication\\Template",
-                    "view": "list.default",
-                    "order": "id",
-                    "sort": "asc"
-                }
+                "icon": "description",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "templates.all",
+                        "type": "entry",
+                        "label": "All",
+                        "icon": "list",
+                        "description": "",
+                        "context": {
+                            "entity": "communication\\template\\Template",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "templates.categories",
+                        "type": "entry",
+                        "label": "Categories",
+                        "icon": "category",
+                        "description": "",
+                        "context": {
+                            "entity": "communication\\template\\TemplateCategory",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    }
+                ]
             }
         ]
     }

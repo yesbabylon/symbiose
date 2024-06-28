@@ -71,13 +71,6 @@ class Widget extends Model {
                 'default'           => 'text'
             ],
 
-            'section_id' => [
-                'type'              => 'integer',
-                'description'       => 'Id of the section the widget interacts with.',
-                'visible'           => ['type', 'in', ['selector_section', 'selector_section_wide']]
-            ],
-
-
             'image_url' => [
                 'type'              => 'string',
                 'description'       => "URL of the image.",

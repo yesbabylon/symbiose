@@ -1,26 +1,26 @@
 {
     "name": "Templates",
-    "description": "This view is intented for displying the list of templates.",
+    "description": "This view is intended for displaying the list of templates.",
     "layout": {
         "items": [
             {
                 "type": "field",
                 "value": "name",
-                "width": "20%",
+                "width": "33%",
                 "sortable": true
             },
             {
                 "type": "field",
                 "label": "Category",
                 "value": "category_id",
-                "width": "20%",
+                "width": "33%",
                 "sortable": true
             },
             {
                 "type": "field",
                 "label": "Type",
                 "value": "type",
-                "width": "20%",
+                "width": "33%",
                 "sortable": true
             }
         ]
