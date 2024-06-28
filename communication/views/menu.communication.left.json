@@ -35,6 +35,74 @@
                             "order": "id",
                             "sort": "asc"
                         }
+                    },
+                    {
+                        "id": "templates.parts",
+                        "type": "entry",
+                        "label": "All template parts",
+                        "description": "",
+                        "context": {
+                            "entity": "communication\\TemplatePart",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "templates.attachments",
+                        "type": "entry",
+                        "label": "All attachments",
+                        "description": "",
+                        "context": {
+                            "entity": "communication\\TemplateAttachment",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "alerts",
+                "label": "Alerts",
+                "description": "",
+                "icon": "chrome_reader_mode",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "alert.messages",
+                        "type": "entry",
+                        "label": "All messages",
+                        "description": "",
+                        "context": {
+                            "entity": "core\\alert\\Message",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "alert.message_models",
+                        "type": "entry",
+                        "label": "Message models",
+                        "description": "",
+                        "context": {
+                            "entity": "core\\alert\\MessageModel",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "emails",
+                "label": "Emails",
+                "description": "",
+                "icon": "alternate_email",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "emails.all",
+                        "type": "entry",
+                        "label": "All emails",
+                        "description": "",
+                        "context": {
+                            "entity": "core\\Mail",
+                            "view": "list.default"
+                        }
                     }
                 ]
             }
