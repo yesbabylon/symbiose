@@ -251,13 +251,34 @@ class Partner extends Model {
         return $result;
     }
 
+    public static function oncreate($self, $values) {
+        if(isset($values['partner_identity_id'])) {
+            $fields = [
+                    'type_id','has_vat','vat_number','legal_name','firstname','lastname',
+                    'email','phone','mobile','fax',
+                    'address_street','address_dispatch','address_zip',
+                    'address_city','address_state','address_country'
+                ];
+            $identity = Identity::id($values['partner_identity_id'])
+                ->read($fields)
+                ->first();
+            $map_fields = [];
+            foreach($fields as $field) {
+                $map_fields[$field] = $identity[$field];
+            }
+            $self->update($map_fields);
+        }
+    }
+
     public static function onafterupdate($self, $values) {
-        $self->read([
-                'partner_identity_id', 'state',
-                'type_id', 'has_vat', 'vat_number', 'legal_name', 'firstname', 'lastname',
-                'email', 'phone', 'mobile', 'fax',
-                'address_street', 'address_dispatch', 'address_zip', 'address_city', 'address_state', 'address_country'
-            ]);
+        $fields = [
+                'type_id','has_vat','vat_number','legal_name','firstname','lastname',
+                'email','phone','mobile','fax',
+                'address_street','address_dispatch','address_zip',
+                'address_city','address_state','address_country'
+            ];
+
+        $self->read(array_merge($fields, ['partner_identity_id', 'state']));
 
         foreach($self as $id => $partner) {
             if($partner['state'] == 'draft') {
@@ -288,9 +309,10 @@ class Partner extends Model {
                 self::id($id)->update(['partner_identity_id' => $identity['id']]);
             }
             else {
+                $identity = Identity::id($partner['partner_identity_id'])->read($fields)->first();
                 foreach($values as $field => $value) {
                     $non_editable_fields = ['user_id', 'contact_id', 'customer_contact_id', 'employee_id', 'supplier_id', 'customer_id'];
-                    if(!in_array($field, $non_editable_fields)) {
+                    if(!in_array($field, $non_editable_fields) && strlen(strval($value)) > 0 && $value !== $identity[$field]) {
                         Identity::id($partner['partner_identity_id'])->update([$field => $value]);
                     }
                 }
