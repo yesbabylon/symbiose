@@ -123,7 +123,6 @@ $module = $search->read([
                         'order',
                         'content',
                         'type',
-                        'section_id',
                         'image_url',
                         'video_url',
                         'sound_url',
@@ -134,53 +133,7 @@ $module = $search->read([
                     ]
                 ]
             ],
-            'sections' => [
-                'id',
-                'identifier',
-                'order',
-                'pages' => [
-                    'id',
-                    'identifier',
-                    'order',
-                    'next_active',
-                    'leaves' => [
-                        'id',
-                        'identifier',
-                        'order',
-                        'visible',
-                        'background_image',
-                        'background_stretch',
-                        'background_opacity',
-                        'contrast',
-                        'groups' => [
-                            'id',
-                            'identifier',
-                            'order',
-                            'direction',
-                            'row_span',
-                            'visible',
-                            'fixed',
-                            'widgets' => [
-                                'id',
-                                'identifier',
-                                'order',
-                                'content',
-                                'type',
-                                'section_id',
-                                'image_url',
-                                'video_url',
-                                'sound_url',
-                                'has_separator_left',
-                                'has_separator_right',
-                                'align',
-                                'on_click'
-                            ]
-                        ]
-                    ]
-                ]
-            ]
         ]
-
     ]
 ],
     $params['lang']
