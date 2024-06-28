@@ -43,8 +43,7 @@ class Employee extends Partner {
 
             'date_start' => [
                 'type'              => 'date',
-                'description'       => 'Date of the first day of work.',
-                'required'          => true
+                'description'       => 'Date of the first day of work.'
             ],
 
             'date_end' => [
