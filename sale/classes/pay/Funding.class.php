@@ -160,7 +160,7 @@ class Funding extends Model {
     }
 
     /**
-     * Update the description accordint to the deadline, when set.
+     * Update the description according to the deadline, when set.
      *
      * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
      * @param  array                        $oids       List of objects identifiers.
@@ -171,7 +171,9 @@ class Funding extends Model {
         $fundings = $om->read(self::getType(), $oids, ['payment_deadline_id.name'], $lang);
         if($fundings > 0) {
             foreach($fundings as $oid => $funding) {
-                $om->update(self::getType(), $oid, ['description' => $funding['payment_deadline_id.name']], $lang);
+                if($funding['payment_deadline_id.name'] && strlen($funding['payment_deadline_id.name']) > 0) {
+                    $om->update(self::getType(), $oid, ['description' => $funding['payment_deadline_id.name']], $lang);
+                }
             }
         }
     }
