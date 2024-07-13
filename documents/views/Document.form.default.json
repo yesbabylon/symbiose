@@ -121,6 +121,27 @@
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "id": "section.roles",
+                        "label":"Tags",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "assignments_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }
