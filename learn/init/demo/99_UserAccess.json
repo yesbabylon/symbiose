@@ -1,5 +1,7 @@
-{
-    "errors": {
-        "INVALID_PARAM": "unknown_entity"
+[
+    {
+        "name": "learn\\UserAccess",
+        "lang": "en",
+        "data": []
     }
-}
+]
