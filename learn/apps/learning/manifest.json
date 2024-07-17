@@ -1,9 +1,9 @@
 {
-    "name": "learning app",
+    "name": "learning",
     "description": "",
     "url": "/learning",
     "icon": "school",
-    "color": "#AA3EC6",
+    "color": "#ff0000",
     "access": {
         "groups": [
             "admins",
