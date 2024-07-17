@@ -19,7 +19,7 @@ class UserAccess extends Model
             'code'       => [
                 'type'        => 'computed',
                 'result_type' => 'integer',
-                'function'    => 'learn\UserAccess::getCode',
+                'function'    => 'calcCode',
                 'store'       => true,
                 'description' => 'Unique random identifier.'
             ],
@@ -28,7 +28,7 @@ class UserAccess extends Model
             'code_alpha' => [
                 'type'        => 'computed',
                 'result_type' => 'string',
-                'function'    => 'learn\UserAccess::getCodeAlpha',
+                'function'    => 'calcCodeAlpha',
                 'store'       => true,
                 'description' => 'Alpha code for retrieval by URL.'
             ],
@@ -57,7 +57,7 @@ class UserAccess extends Model
             'is_complete' => [
                 'type'        => 'computed',
                 'result_type' => 'boolean',
-                'function'    => 'learn\UserAccess::getIsComplete',
+                'function'    => 'calcIsComplete',
                 'description' => 'The user has finished the course.',
                 'store'       => true
             ]
@@ -68,12 +68,11 @@ class UserAccess extends Model
     public function getUnique()
     {
         return [
-            ['course_id',
-                'user_id']
+            ['course_id','user_id']
         ];
     }
 
-    public static function getIsComplete($om, $oids, $lang)
+    public static function calcIsComplete($om, $oids, $lang)
     {
         $result = [];
 
@@ -114,7 +113,7 @@ class UserAccess extends Model
     /**
      * Generate a unique pseudo-random value for the Course.
      */
-    public static function getCode($om, $oids, $lang)
+    public static function calcCode($om, $oids, $lang)
     {
         $result = [];
 
@@ -133,7 +132,7 @@ class UserAccess extends Model
      * Compute a alpha code of 4 chars (3 letters + 1 digit) based on numeric code (unique)
      * example : nMa1
      */
-    public static function getCodeAlpha($om, $oids, $lang)
+    public static function calcCodeAlpha($om, $oids, $lang)
     {
         $result = [];
         $accesses = $om->read(__CLASS__, $oids, ['code'], $lang);
