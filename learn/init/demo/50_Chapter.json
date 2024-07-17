@@ -1,0 +1,48 @@
+[
+    {
+        "name": "learn\\Chapter",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "identifier": 1,
+                "order": 1,
+                "duration": 10,
+                "title": "Install Docker",
+                "description": "<p>This chapter provides a step-by-step guide to installing Docker on both Windows and Linux systems, ensuring that you have the necessary environment set up to use the eQual framework and Symbiose ERP effectively.</p>",
+                "module_id": 2,
+                "page_count": 2
+            },
+            {
+                "id": 2,
+                "identifier": 2,
+                "order": 2,
+                "duration": 10,
+                "title": "Start the container",
+                "description": null,
+                "module_id": 2,
+                "page_count": 1
+            },
+            {
+                "id": 3,
+                "identifier": 3,
+                "order": 3,
+                "duration": 10,
+                "title": "Configure",
+                "description": "<p>This chapter teaches you how to configure the eQual framework, including setting up the essential <code>config.json</code> file. You'll learn to initialize the database and verify DBMS connectivity. Instructions are provided for creating and customizing the config file, either through Visual Studio Code or terminal commands. The chapter also covers initializing packages and using controllers to fetch data. By the end, your development environment will be fully configured and ready for use.</p><p><br></p><p><br></p>",
+                "module_id": 2,
+                "page_count": 1
+            },
+            {
+                "id": 4,
+                "identifier": 4,
+                "order": 4,
+                "duration": 10,
+                "title": "Make first API requests",
+                "description": "<p>This chapter provides a guide to testing your eQual framework installation by making initial API requests. You'll learn how to fetch user details, list all users, and retrieve existing groups using both HTTP requests and CLI commands. The chapter also covers creating and updating entities, such as adding a new group and modifying its properties. Examples of requests and responses are included to help you verify the setup and functionality of your API.</p>",
+                "module_id": 2,
+                "page_count": 5
+            }
+        ]
+    }
+]

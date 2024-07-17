@@ -1,0 +1,17 @@
+[
+    {
+        "name": "learn\\Course",
+        "lang": "en",
+        "data": [
+            {
+                "id": 2,
+                "name": "Mastering eQual Framework and Symbiose ERP",
+                "title": "Mastering eQual Framework and Symbiose ERP",
+                "subtitle": "Effortless Web Development and Agile ERP Solutions",
+                "description": "<p><span><br></span></p><h3><strong>Mastering eQual Framework and Symbiose ERP</strong></h3><h4>Introduction to eQual Framework</h4><p>eQual is a versatile, language-agnostic framework designed to seamlessly manage the interaction between front-end applications and business logic in modern web applications.</p><p><br></p><ul><li><strong>Natively Secure</strong>: eQual provides built-in HTTP authentication support, including JWT and CORS, along with multiple access control strategies like ACL, RBAC, ABAC, and PBAC.</li><li><strong>Server-Side Scripting</strong>: Quickly implement custom logic on any route endpoint to create controllers and micro-services.</li><li><strong>Instant APIs Without Code</strong>: Automatically generate fully-featured ReST APIs with live documentation for any service.</li></ul><p>eQual is designed to minimize constraints on developers, allowing for easy mastery and flexible usage to suit individual project needs. Its high level of re-usability and declarative controller definitions reduce the need for extensive documentation.</p><h4>Introduction to Symbiose ERP</h4><p>Symbiose is an ERP solution comprised of business application components tailored for agile organizations, designed to adapt to any business logic in a dynamic market environment.</p><p><br></p><ul><li><strong>Customizable Back-End Logic</strong>: Fast development of tailored applications, adaptable to any business logic.</li><li><strong>Versatile User Interface</strong>: Configure the user interface to suit any device, ensuring seamless user experience across platforms.</li></ul><h4>What You'll Learn</h4><ul><li>How to leverage the security features of the eQual framework.</li><li>Implementing server-side logic and creating micro-services using eQual.</li><li>Generating and utilizing ReST APIs without writing additional code.</li><li>Customizing Symbiose ERP to fit specific business requirements.</li><li>Developing and configuring applications for various devices using Symbiose.</li></ul><p>This course is designed to provide you with the knowledge and skills to efficiently use the eQual framework and Symbiose ERP, enabling you to create robust, secure, and customizable web applications and business solutions.eQual is a versatile, language-agnostic, and web-oriented framework, aiming to elegantly manage interactions between front-end Apps and Business Logic involved in modern Web Applications.</p><p></p>",
+                "view_link": "/learning/#/course/0002/mastering-equal-framework-and-symbiose-erp?mode=view&lang=en",
+                "edit_link": "/learning/#/course/0002/mastering-equal-framework-and-symbiose-erp?mode=edit&lang=en"
+            }
+        ]
+    }
+]

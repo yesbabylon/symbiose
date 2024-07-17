@@ -1,0 +1,80 @@
+[
+    {
+        "name": "learn\\Page",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "identifier": 1,
+                "order": 1,
+                "next_active": "[]",
+                "next_active_rule": "always visible",
+                "chapter_id": 1
+            },
+            {
+                "id": 2,
+                "identifier": 2,
+                "order": 2,
+                "next_active": "[]",
+                "next_active_rule": "always visible",
+                "chapter_id": 1
+            },
+            {
+                "id": 3,
+                "identifier": 1,
+                "order": 1,
+                "next_active": "[]",
+                "next_active_rule": "always visible",
+                "chapter_id": 2
+            },
+            {
+                "id": 4,
+                "identifier": 1,
+                "order": 1,
+                "next_active": "[]",
+                "next_active_rule": "always visible",
+                "chapter_id": 3
+            },
+            {
+                "id": 5,
+                "identifier": 1,
+                "order": 1,
+                "next_active": "[]",
+                "next_active_rule": "always visible",
+                "chapter_id": 4
+            },
+            {
+                "id": 6,
+                "identifier": 2,
+                "order": 2,
+                "next_active": "[]",
+                "next_active_rule": "always visible",
+                "chapter_id": 4
+            },
+            {
+                "id": 7,
+                "identifier": 3,
+                "order": 3,
+                "next_active": "[]",
+                "next_active_rule": "always visible",
+                "chapter_id": 4
+            },
+            {
+                "id": 8,
+                "identifier": 4,
+                "order": 4,
+                "next_active": "[]",
+                "next_active_rule": "always visible",
+                "chapter_id": 4
+            },
+            {
+                "id": 9,
+                "identifier": 5,
+                "order": 5,
+                "next_active": "[]",
+                "next_active_rule": "always visible",
+                "chapter_id": 4
+            }
+        ]
+    }
+]

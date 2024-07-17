@@ -134,14 +134,12 @@ class Order extends Model {
             'cancellation_reason' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'other',                    // customer cancelled for a non-listed reason or without mentionning the reason (cancellation fees might apply)
-                    'overbooking',              // the booking was cancelled due to failure in delivery of the service
-                    'duplicate',                // several contacts of the same group made distinct bookings for the same sojourn
-                    'internal_impediment',      // cancellation due to an incident impacting the rental units
+                    'other',                    // customer cancelled for a non-listed reason or without mentioning the reason (cancellation fees might apply)
+                    'duplicate',                // several contacts of the same company made distinct orders for the same shipment
+                    'internal_impediment',      // cancellation due to an incident impacting the production
                     'external_impediment',      // cancellation due to external delivery failure (organisation, means of transport, ...)
-                    'health_impediment'         // cancellation for medical or mourning reason
                 ],
-                'description'       => "Reason for which the customer cancelled the booking.",
+                'description'       => "Reason for which the customer cancelled the order.",
                 'default'           => 'generic'
             ],
 
@@ -284,20 +282,6 @@ class Order extends Model {
             }
         }
 
-        return $result;
-    }
-
-    public static function calcNbPers($om, $oids, $lang) {
-        $result = [];
-        $bookings = $om->read(__CLASS__, $oids, ['order_lines_groups_ids.nb_pers']);
-
-        if($bookings > 0) {
-            foreach($bookings as $bid => $booking) {
-                $result[$bid] = array_reduce($booking['order_lines_groups_ids.nb_pers'], function ($c, $group) {
-                    return $c + $group['nb_pers'];
-                }, 0);
-            }
-        }
         return $result;
     }
 
@@ -462,7 +446,7 @@ class Order extends Model {
 
     /**
      * Check wether an object can be updated, and perform some additional operations if necessary.
-     * This method can be overriden to define a more precise set of tests.
+     * This method can be overridden to define a more precise set of tests.
      *
      * @param  object   $om         ObjectManager instance.
      * @param  array    $oids       List of objects identifiers.

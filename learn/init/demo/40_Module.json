@@ -1,0 +1,20 @@
+[
+    {
+        "name": "learn\\Module",
+        "lang": "en",
+        "data": [
+            {
+                "id": 2,
+                "identifier": 1,
+                "order": 1,
+                "title": "Installation eQual with Docker",
+                "link": "/learning/#/course/0002/mastering-equal-framework-and-symbiose-erp?mode=edit&module=2&lang=en",
+                "page_count": 9,
+                "chapter_count": 0,
+                "description": "<h2><strong>Chapter Summary: Installing Docker</strong></h2><h3>Overview:</h3><p>This chapter provides a step-by-step guide to installing Docker on both Windows and Linux systems, ensuring that you have the necessary environment set up to use the eQual framework and Symbiose ERP effectively.</p><h3>On Windows:</h3><ol><li><strong>Install Windows HyperV</strong></li><li><strong>Install WSL (Windows Subsystem for Linux)</strong></li><li><strong>Install WSL 2</strong></li><li><strong>Install a Linux Distribution</strong></li><li><strong>Install Docker Desktop</strong></li></ol><h3>On Linux:</h3><ul><li><strong>Ubuntu / Debian</strong>: Instructions for installing Docker on these distributions.</li><li><strong>Fedora</strong>: Steps to set up Docker on Fedora.</li><li><strong>CentOS</strong>: Guide for installing Docker on CentOS.</li></ul><p>This chapter ensures you have a solid foundation for running Docker, which is essential for developing and deploying applications using the eQual framework and Symbiose ERP.</p>",
+                "duration": 40,
+                "course_id": 2
+            }
+        ]
+    }
+]

@@ -1,0 +1,176 @@
+[
+    {
+        "name": "learn\\Leaf",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "identifier": 1,
+                "order": 1,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "background_image": null,
+                "background_stretch": false,
+                "background_opacity": 0.5,
+                "contrast": "dark",
+                "page_id": 1
+            },
+            {
+                "id": 2,
+                "identifier": 2,
+                "order": 2,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "background_image": null,
+                "background_stretch": false,
+                "background_opacity": 0.5,
+                "contrast": "light",
+                "page_id": 1
+            },
+            {
+                "id": 3,
+                "identifier": 1,
+                "order": 1,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "background_image": null,
+                "background_stretch": false,
+                "background_opacity": 0.5,
+                "contrast": "light",
+                "page_id": 2
+            },
+            {
+                "id": 4,
+                "identifier": 1,
+                "order": 2,
+                "visible": "['$page.selection','=',1]",
+                "visibility_rule": "$page.selection = $identifier",
+                "background_image": null,
+                "background_stretch": false,
+                "background_opacity": 0.5,
+                "contrast": "light",
+                "page_id": 2
+            },
+            {
+                "id": 6,
+                "identifier": 2,
+                "order": 3,
+                "visible": "['$page.selection','=',2]",
+                "visibility_rule": "$page.selection = $identifier",
+                "background_image": null,
+                "background_stretch": false,
+                "background_opacity": 0.5,
+                "contrast": "light",
+                "page_id": 2
+            },
+            {
+                "id": 7,
+                "identifier": 4,
+                "order": 4,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "background_image": null,
+                "background_stretch": false,
+                "background_opacity": 0.5,
+                "contrast": "light",
+                "page_id": 2
+            },
+            {
+                "id": 8,
+                "identifier": 5,
+                "order": 5,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "background_image": null,
+                "background_stretch": false,
+                "background_opacity": 0.5,
+                "contrast": "light",
+                "page_id": 2
+            },
+            {
+                "id": 9,
+                "identifier": 1,
+                "order": 1,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "background_image": null,
+                "background_stretch": false,
+                "background_opacity": 0.5,
+                "contrast": "light",
+                "page_id": 3
+            },
+            {
+                "id": 10,
+                "identifier": 1,
+                "order": 1,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "background_image": null,
+                "background_stretch": false,
+                "background_opacity": 0.5,
+                "contrast": "light",
+                "page_id": 4
+            },
+            {
+                "id": 11,
+                "identifier": 1,
+                "order": 1,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "background_image": null,
+                "background_stretch": false,
+                "background_opacity": 0.5,
+                "contrast": "light",
+                "page_id": 5
+            },
+            {
+                "id": 12,
+                "identifier": 1,
+                "order": 1,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "background_image": null,
+                "background_stretch": false,
+                "background_opacity": 0.5,
+                "contrast": "light",
+                "page_id": 6
+            },
+            {
+                "id": 13,
+                "identifier": 1,
+                "order": 1,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "background_image": null,
+                "background_stretch": false,
+                "background_opacity": 0.5,
+                "contrast": "light",
+                "page_id": 7
+            },
+            {
+                "id": 14,
+                "identifier": 1,
+                "order": 1,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "background_image": null,
+                "background_stretch": false,
+                "background_opacity": 0.5,
+                "contrast": "light",
+                "page_id": 8
+            },
+            {
+                "id": 15,
+                "identifier": 1,
+                "order": 1,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "background_image": null,
+                "background_stretch": false,
+                "background_opacity": 0.5,
+                "contrast": "light",
+                "page_id": 9
+            }
+        ]
+    }
+]

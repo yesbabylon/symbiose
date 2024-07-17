@@ -1,0 +1,349 @@
+[
+    {
+        "name": "learn\\Group",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "identifier": 1,
+                "order": 1,
+                "direction": "vertical",
+                "row_span": 3,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 1
+            },
+            {
+                "id": 2,
+                "identifier": 1,
+                "order": 1,
+                "direction": "vertical",
+                "row_span": 4,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 2
+            },
+            {
+                "id": 3,
+                "identifier": 1,
+                "order": 1,
+                "direction": "vertical",
+                "row_span": 4,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 3
+            },
+            {
+                "id": 4,
+                "identifier": 2,
+                "order": 3,
+                "direction": "horizontal",
+                "row_span": 3,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 3
+            },
+            {
+                "id": 5,
+                "identifier": 2,
+                "order": 2,
+                "direction": "vertical",
+                "row_span": 1,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 3
+            },
+            {
+                "id": 6,
+                "identifier": 1,
+                "order": 1,
+                "direction": "vertical",
+                "row_span": 6,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 4
+            },
+            {
+                "id": 12,
+                "identifier": 2,
+                "order": 2,
+                "direction": "vertical",
+                "row_span": 4,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 4
+            },
+            {
+                "id": 14,
+                "identifier": 3,
+                "order": 4,
+                "direction": "vertical",
+                "row_span": 7,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 4
+            },
+            {
+                "id": 15,
+                "identifier": 4,
+                "order": 3,
+                "direction": "vertical",
+                "row_span": 7,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 4
+            },
+            {
+                "id": 16,
+                "identifier": 5,
+                "order": 5,
+                "direction": "vertical",
+                "row_span": 4,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 4
+            },
+            {
+                "id": 17,
+                "identifier": 6,
+                "order": 6,
+                "direction": "vertical",
+                "row_span": 7,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 4
+            },
+            {
+                "id": 18,
+                "identifier": 7,
+                "order": 7,
+                "direction": "vertical",
+                "row_span": 2,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 4
+            },
+            {
+                "id": 19,
+                "identifier": 7,
+                "order": 8,
+                "direction": "vertical",
+                "row_span": 8,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 4
+            },
+            {
+                "id": 20,
+                "identifier": 9,
+                "order": 9,
+                "direction": "vertical",
+                "row_span": 8,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 4
+            },
+            {
+                "id": 21,
+                "identifier": 1,
+                "order": 1,
+                "direction": "vertical",
+                "row_span": 8,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 6
+            },
+            {
+                "id": 22,
+                "identifier": 2,
+                "order": 2,
+                "direction": "vertical",
+                "row_span": 2,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 6
+            },
+            {
+                "id": 23,
+                "identifier": 3,
+                "order": 3,
+                "direction": "horizontal",
+                "row_span": 1,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 6
+            },
+            {
+                "id": 24,
+                "identifier": 1,
+                "order": 1,
+                "direction": "vertical",
+                "row_span": 4,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 7
+            },
+            {
+                "id": 25,
+                "identifier": 1,
+                "order": 1,
+                "direction": "vertical",
+                "row_span": 4,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 8
+            },
+            {
+                "id": 26,
+                "identifier": 1,
+                "order": 1,
+                "direction": "vertical",
+                "row_span": 8,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 9
+            },
+            {
+                "id": 27,
+                "identifier": 2,
+                "order": 2,
+                "direction": "vertical",
+                "row_span": 8,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 9
+            },
+            {
+                "id": 28,
+                "identifier": 1,
+                "order": 1,
+                "direction": "vertical",
+                "row_span": 8,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 10
+            },
+            {
+                "id": 29,
+                "identifier": 2,
+                "order": 2,
+                "direction": "vertical",
+                "row_span": 8,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 10
+            },
+            {
+                "id": 30,
+                "identifier": 3,
+                "order": 3,
+                "direction": "vertical",
+                "row_span": 8,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 10
+            },
+            {
+                "id": 31,
+                "identifier": 4,
+                "order": 4,
+                "direction": "vertical",
+                "row_span": 8,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 10
+            },
+            {
+                "id": 32,
+                "identifier": 5,
+                "order": 5,
+                "direction": "vertical",
+                "row_span": 8,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 10
+            },
+            {
+                "id": 33,
+                "identifier": 1,
+                "order": 1,
+                "direction": "vertical",
+                "row_span": 8,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 11
+            },
+            {
+                "id": 34,
+                "identifier": 1,
+                "order": 1,
+                "direction": "vertical",
+                "row_span": 8,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 12
+            },
+            {
+                "id": 35,
+                "identifier": 1,
+                "order": 1,
+                "direction": "vertical",
+                "row_span": 8,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 13
+            },
+            {
+                "id": 36,
+                "identifier": 1,
+                "order": 1,
+                "direction": "vertical",
+                "row_span": 6,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 14
+            },
+            {
+                "id": 37,
+                "identifier": 1,
+                "order": 1,
+                "direction": "vertical",
+                "row_span": 3,
+                "visible": "[]",
+                "visibility_rule": "always visible",
+                "fixed": false,
+                "leaf_id": 15
+            }
+        ]
+    }
+]
