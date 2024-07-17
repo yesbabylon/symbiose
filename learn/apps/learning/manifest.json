@@ -3,7 +3,7 @@
     "description": "",
     "url": "/learning",
     "icon": "school",
-    "color": "#ff0000",
+    "color": "#AA3EC6",
     "access": {
         "groups": [
             "admins",
