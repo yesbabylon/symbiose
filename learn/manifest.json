@@ -14,8 +14,10 @@
         "fr"
     ],
     "apps": [
+        "qursus",
+        "learning",
         {
-            "id": "courses",
+            "id": "learn",
             "name": "Learn",
             "extends": "app",
             "description": "Courses management.",
