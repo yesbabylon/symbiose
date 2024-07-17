@@ -10,7 +10,8 @@ use equal\orm\Model;
 
 class Quiz extends Model {
 
-    public static function getColumns() {
+    public static function getColumns(): array
+    {
         return [
             'identifier' => [
                 'type'              => 'integer',
