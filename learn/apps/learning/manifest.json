@@ -1,5 +1,5 @@
 {
-    "name": "learning app",
+    "name": "learning",
     "description": "",
     "url": "/learning",
     "icon": "school",
@@ -10,5 +10,5 @@
             "users"
         ]
     },
-    "show_in_apps": true
+    "show_in_apps": false
 }
