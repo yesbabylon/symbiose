@@ -184,12 +184,6 @@ class CashdeskSession extends Model {
                             'description'   => 'cashdesk closing'
                         ], $lang);
 
-                        $providers = \eQual::inject(['dispatch']);
-
-                        /** @var \equal\dispatch\Dispatcher $dispatch */
-                        $dispatch = $providers['dispatch'];
-
-                        $dispatch->dispatch('lodging.pos.close-discrepancy', 'lodging\sale\pos\CashdeskSession', $sid, 'warning');
                     }
                 }
             }
