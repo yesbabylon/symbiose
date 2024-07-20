@@ -10,7 +10,8 @@ use equal\orm\Model;
 
 class BundleAttachment extends Model {
 
-    public static function getColumns() {
+    public static function getColumns(): array
+    {
         return [
             'name' => [
                 'type'              => 'string',
@@ -20,7 +21,9 @@ class BundleAttachment extends Model {
             'url' => [
                 'type'              => 'string',
                 'usage'             => 'uri/url',
-                'multilang'         => true
+                'multilang'         => true,
+                'computed'          => true,
+                'function'          => 'getLink'
             ],
 
             'bundle_id' => [
@@ -32,5 +35,9 @@ class BundleAttachment extends Model {
 
         ];
     }
+
+	public static function getLink(): string {
+		return 'https://example.com';
+	}
 
 }
