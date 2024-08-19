@@ -149,7 +149,16 @@ class Access extends Model {
 
     public static function calcUrl($self) {
         $result = [];
-        $self->read(['port', 'host', 'access_type', 'username', 'password']);
+        $self->read([
+                'port',
+                'host',
+                'access_type',
+                /*
+                // #memo - there is no practical use with this syntax
+                'username',
+                'password'
+                */
+            ]);
         foreach($self as $id => $access) {
             $result[$id] = self::createUrl($access);
         }
