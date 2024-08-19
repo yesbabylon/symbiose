@@ -8,6 +8,7 @@
 namespace inventory;
 
 use equal\orm\Model;
+use equal\orm\UsageFactory;
 
 class Access extends Model {
 
@@ -58,7 +59,7 @@ class Access extends Model {
                 'result_type'       => 'string',
                 'usage'             => 'uri/url',
                 'description'       => 'The URL to access.',
-                'function'          => 'calUrl',
+                'function'          => 'calcUrl',
                 'store'             => true,
                 'instant'           => true
             ],
@@ -146,7 +147,7 @@ class Access extends Model {
         return $result;
     }
 
-    public static function calUrl($self) {
+    public static function calcUrl($self) {
         $result = [];
         $self->read(['port', 'host', 'access_type', 'username', 'password']);
         foreach($self as $id => $access) {
@@ -168,13 +169,17 @@ class Access extends Model {
             || isset($event['host'])
             || isset($event['port']) ) {
 
+            // #memo - result could still be invalid
             $result['url'] = self::createUrl([
-                'access_type'   => $event['access_type'] ?? $values['access_type'],
-                'username'      => $event['username'] ?? $values['username'],
-                'password'      => $event['password'] ?? $values['password'],
-                'host'          => $event['host'] ?? $values['host'],
-                'port'          => $result['port'] ?? $event['port'] ?? $values['port']
-            ]);
+                    'access_type'   => $event['access_type'] ?? $values['access_type'],
+                    /*
+                    // #memo - there is no practical use with this syntax
+                    'username'      => $event['username'] ?? $values['username'],
+                    'password'      => $event['password'] ?? $values['password'],
+                    */
+                    'host'          => $event['host'] ?? $values['host'],
+                    'port'          => $result['port'] ?? $event['port'] ?? $values['port']
+                ]);
         }
 
         return $result;
