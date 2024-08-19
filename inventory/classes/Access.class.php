@@ -140,7 +140,7 @@ class Access extends Model {
     public static function calcName($self) {
         $result = [];
         $self->read(['username', 'host']);
-        foreach($$self as $id => $access) {
+        foreach($self as $id => $access) {
             $result[$id] = $access['username'].'@'.$access['host'];
         }
         return $result;
