@@ -10,7 +10,7 @@
                 "type": "field",
                 "value": "name",
                 "label": "reference",
-                "width": "5%"
+                "width": "15%"
             },
             {
                 "type": "field",
@@ -20,25 +20,24 @@
             },
             {
                 "type": "field",
-                "label": "From",
-                "value": "date_from",
+                "label": "Date",
+                "value": "delivery_date",
                 "width": "15%"
             },
             {
                 "type": "field",
-                "label": "To",
-                "value": "date_to",
-                "width": "15%"
-            },
-            {
-                "type": "field",
-                "label": "Type",
-                "value": "type_id",
-                "width": "15%"
-            },
-            {
-                "type": "field",
+                "label": "Status",
                 "value": "status",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "total",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "price",
                 "width": "15%"
             }
         ]

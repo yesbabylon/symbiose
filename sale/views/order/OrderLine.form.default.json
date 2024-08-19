@@ -25,12 +25,6 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Order",
-                                                "value": "order_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "label": "Product",
                                                 "value": "product_id",
                                                 "width": "50%"
@@ -43,8 +37,20 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Quanity",
+                                                "label": "Unit Price",
+                                                "value": "unit_price",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Quantity",
                                                 "value": "qty",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Discount",
+                                                "value": "discount",
                                                 "width": "50%"
                                             }
                                         ]
@@ -54,23 +60,33 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "payment_mode",
+                                                "label": "Free quantity",
+                                                "value": "free_qty",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "fare_benefit",
+                                                "width": "50%",
+                                                "readonly" : true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "total",
+                                                "width": "50%",
+                                                "readonly" : true
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "vat_rate",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "order",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "readonly" : true
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "price",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "readonly" : true
                                             }
                                         ]
                                     }
@@ -81,6 +97,7 @@
                     {
                         "label": "Price Adapter",
                         "id": "section.price_adapter",
+                        "visible": ["state" , "<>" , "draft"],
                         "rows": [
                             {
                                 "columns": [

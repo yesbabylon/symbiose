@@ -7,6 +7,64 @@
     "layout": {
         "items": [
             {
+                "type": "entry",
+                "label": "Orders",
+                "icon": "note",
+                "children": [
+                    {
+                        "id": "orders.new",
+                        "type": "entry",
+                        "label": "New",
+                        "icon": "add",
+                        "description": "Add new order.",
+                        "context": {
+                            "entity": "sale\\order\\Order",
+                            "view": "form.create",
+                            "purpose": "create"
+                        }
+                    },
+                    {
+                        "id": "orders.all",
+                        "type": "entry",
+                        "label": "Orders",
+                        "icon": "note",
+                        "description": "Display all orders.",
+                        "context": {
+                            "entity": "sale\\order\\Order",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "orders.group.all",
+                        "type": "entry",
+                        "label": "Orders Groups",
+                        "icon": "description",
+                        "description": "Display all orders groups.",
+                        "context": {
+                            "entity": "sale\\order\\OrderLineGroup",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "orders.group.line.all",
+                        "type": "entry",
+                        "label": "Orders Lines",
+                        "icon": "table",
+                        "description": "Display all orders lines.",
+                        "context": {
+                            "entity": "sale\\order\\OrderLine",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    }
+                ]
+            },
+            {
                 "id": "customers",
                 "type": "parent",
                 "label": "Customers",

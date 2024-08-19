@@ -29,7 +29,26 @@
                                                 "label": "Order",
                                                 "value": "order_id",
                                                 "width": "50%"
-                                            },
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "label": "Order Lines",
+                        "id": "section.order.lines",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "order_lines_ids",
