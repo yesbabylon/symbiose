@@ -186,13 +186,25 @@ class Access extends Model {
     }
 
     private static function createUrl($access) {
+        $format = '%s://';
+        $values = [ $access['access_type'] ];
+        if(isset($access['username'])) {
+            $format .= '%s';
+            $values[] = $access['username'];
+        }
+        if(isset($access['password'])) {
+            $format .= ':%s';
+            $values[] = $access['password'];
+        }
+        if(isset($access['username']) ) {
+            $format .= '@';
+        }
+        $format .= '%s';
+        $values[] = self::createAuthority($access);
         return sprintf(
-            '%s://%s:%s@%s',
-            $access['access_type'],
-            $access['username'],
-            $access['password'],
-            self::createAuthority($access)
-        );
+                $format,
+                ...$values
+            );
     }
 
     private static function createAuthority($access) {
