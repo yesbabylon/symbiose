@@ -213,15 +213,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "time_entries_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "header": {
-                                                        "actions": {
-                                                            "ACTION.SELECT": false,
-                                                            "ACTION.CREATE": false
-                                                        }
-                                                    }
-                                                }
+                                                "width": "100%"
                                             }
                                         ]
                                     }

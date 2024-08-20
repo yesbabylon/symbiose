@@ -149,7 +149,7 @@
                                                 "label": "Accesses",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "view": "list.selection"
+                                                    "view": "list.service"
                                                 }
                                             }
                                         ]
