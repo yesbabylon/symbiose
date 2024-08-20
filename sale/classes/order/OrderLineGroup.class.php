@@ -21,7 +21,7 @@ class OrderLineGroup extends Model {
         return [
             'name' => [
                 'type'              => 'string',
-                'description'       => 'Mnemo for the group.',
+                'description'       => 'Memo for the group.',
                 'default'           => ''
             ],
 
@@ -109,32 +109,6 @@ class OrderLineGroup extends Model {
         }
     }
 
-    public static function calcHasSchedulableServices($om, $oids, $lang) {
-        $result = [];
-        $groups = $om->read(self::gettype(), $oids, ['order_lines_ids']);
-        foreach($groups as $gid => $group) {
-            $result[$gid] = false;
-            $lines = $om->read(OrderLine::gettype(), $group['order_lines_ids'], ['product_id.product_model_id.type', 'product_id.product_model_id.service_type']);
-            foreach($lines as $lid => $line) {
-                if($line['product_id.product_model_id.type'] == 'service' && $line['product_id.product_model_id.service_type'] == 'schedulable') {
-                    $result[$gid] = true;
-                    break;
-                }
-            }
-        }
-        return $result;
-    }
-
-    public static function calcNbNights($om, $oids, $lang) {
-        $result = [];
-        $groups = $om->read(self::gettype(), $oids, ['date_from', 'date_to']);
-        foreach($groups as $gid => $group) {
-            $result[$gid] = round( ($group['date_to'] - $group['date_from']) / (60*60*24) );
-        }
-        return $result;
-    }
-
-
     /**
      * Get total tax-excluded price of the group, with discount applied.
      *
@@ -193,32 +167,6 @@ class OrderLineGroup extends Model {
         }
 
         return $result;
-    }
-
-
-    /**
-     * Check wether an object can be updated, and perform some additional operations if necessary.
-     * This method can be overriden to define a more precise set of tests.
-     *
-     * @param  object   $om         ObjectManager instance.
-     * @param  array    $oids       List of objects identifiers.
-     * @param  array    $values     Associative array holding the new values to be assigned.
-     * @param  string   $lang       Language in which multilang fields are being updated.
-     * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
-     */
-    public static function canupdate($om, $oids, $values, $lang='en') {
-
-        $res = $om->read(get_called_class(), $oids, [ 'date_from', 'date_to' ]);
-
-        if($res > 0) {
-            foreach($res as $oids => $odata) {
-                if($odata['date_from'] > $odata['date_to']) {
-                    return ['date_from' => ['invalid_daterange' => 'End date must be greater or equal to Start date.']];
-                }
-            }
-        }
-
-        return parent::canupdate($om, $oids, $values, $lang);
     }
 
     public static function candelete($om, $oids) {

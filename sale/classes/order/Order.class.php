@@ -6,6 +6,8 @@
 */
 namespace sale\order;
 use equal\orm\Model;
+use sale\customer\Customer;
+use identity\Identity;
 
 class Order extends Model {
 
@@ -27,7 +29,7 @@ class Order extends Model {
             'description' => [
                 'type'              => 'string',
                 'usage'             => 'text/plain',
-                'description'       => "Reason or comments about the booking, if any (for internal use).",
+                'description'       => "Reason or comments about the order, if any (for internal use).",
                 'default'           => ''
             ],
 
@@ -40,8 +42,7 @@ class Order extends Model {
             'customer_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
-                'description'       => "The customer whom the booking relates to (computed).",
-                'onupdate'          => 'onupdateCustomerId'
+                'description'       => "The customer whom the order relates to (computed)."
             ],
 
             'customer_identity_id' => [
@@ -56,7 +57,7 @@ class Order extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
                 'function'          => 'calcTotal',
-                'description'       => 'Total tax-excluded price of the booking.',
+                'description'       => 'Total tax-excluded price of the order.',
                 'store'             => true
             ],
 
@@ -65,7 +66,7 @@ class Order extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:2',
                 'function'          => 'calcPrice',
-                'description'       => 'Final tax-included price of the booking.',
+                'description'       => 'Final tax-included price of the order.',
                 'store'             => true
             ],
 
@@ -77,24 +78,24 @@ class Order extends Model {
 
             'contracts_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\booking\Contract',
+                'foreign_object'    => 'sale\order\Contract',
                 'foreign_field'     => 'order_id',
                 'sort'              => 'desc',
-                'description'       => 'List of contacts related to the booking, if any.'
+                'description'       => 'List of contacts related to the order, if any.'
             ],
 
             'order_lines_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\booking\OrderLine',
+                'foreign_object'    => 'sale\order\OrderLine',
                 'foreign_field'     => 'order_id',
-                'description'       => 'Detailed lines of the booking.'
+                'description'       => 'Detailed lines of the order.'
             ],
 
             'order_lines_groups_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\booking\OrderLineGroup',
+                'foreign_object'    => 'sale\order\OrderLineGroup',
                 'foreign_field'     => 'order_id',
-                'description'       => 'Grouped lines of the booking.',
+                'description'       => 'Grouped lines of the order.',
                 'ondetach'          => 'delete',
                 'onupdate'          => 'onupdateOrderLinesGroupsIds'
             ],
@@ -102,25 +103,25 @@ class Order extends Model {
             'status' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'quote',                    // booking is just informative: nothing has been booked in the planning
-                    'option',                   // booking has been placed in the planning for 10 days
-                    'confirmed',                // booking has been placed in the planning without time limit
+                    'quote',                    // order is just informative: nothing has been booked in the planning
+                    'option',                   // order has been placed in the planning for 10 days
+                    'confirmed',                // order has been placed in the planning without time limit
                     'validated',                // signed contract and first installment have been received
                     'checkedin',                // host is currently occupying the booked rental unit
                     'checkedout',               // host has left the booked rental unit
                     'invoiced',
                     'debit_balance',            // customer still has to pay something
                     'credit_balance',           // a reimbusrsement to customer is required
-                    'balanced'                  // booking is over and balance is cleared
+                    'balanced'                  // order is over and balance is cleared
                 ],
-                'description'       => 'Status of the booking.',
+                'description'       => 'Status of the order.',
                 'default'           => 'quote',
                 'onupdate'          => 'onupdateStatus'
             ],
 
             'is_cancelled' => [
                 'type'              => 'boolean',
-                'description'       => "Flag marking the booking as cancelled (impacts status).",
+                'description'       => "Flag marking the order as cancelled (impacts status).",
                 'default'           => false
             ],
 
@@ -155,138 +156,58 @@ class Order extends Model {
             ],
 
             'delivery_date' => [
-                'type'              => 'computed',
-                'result_type'       => 'date',
-                'function'          => 'calcDateFrom',
-                'store'             => true,
-                'default'           => function() { return time(); }
+                'type'              => 'date',
+                'default'           => time()
             ],
 
             'fundings_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\booking\Funding',
+                'foreign_object'    => 'sale\order\Funding',
                 'foreign_field'     => 'order_id',
-                'description'       => 'Fundings that relate to the booking.',
+                'description'       => 'Fundings that relate to the order.',
                 'ondetach'          => 'delete'
             ],
 
             'invoices_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\booking\Invoice',
+                'foreign_object'    => 'sale\order\Invoice',
                 'foreign_field'     => 'order_id',
-                'description'       => 'Invoices that relate to the booking.'
+                'description'       => 'Invoices that relate to the order.'
             ]
 
         ];
     }
 
-
-    public static function calcName($om, $oids, $lang) {
+    public static function onchange($event, $values) {
         $result = [];
-        $bookings = $om->read(__CLASS__, $oids, ['created', 'customer_identity_id', 'customer_identity_id.name'], $lang);
 
-        foreach($bookings as $oid => $odata) {
-            $increment = 1;
-            // search for bookings made the same day by same customer, if any
-            if(!empty($odata['customer_id'])) {
-                $bookings_ids = $om->search(__CLASS__, [ ['created', '=', $odata['created']], ['customer_identity_id','=', $odata['customer_identity_id']] ]);
-                $increment = count($bookings_ids);
-            }
-            $result[$oid] = sprintf("%s-%08d-%02d", date("ymd", $odata['created']), $odata['customer_identity_id.name'], $increment);
-        }
-        return $result;
-    }
-
-    public static function calcDateFrom($om, $oids, $lang) {
-        $result = [];
-        $bookings = $om->read(__CLASS__, $oids, ['order_lines_groups_ids']);
-
-        foreach($bookings as $bid => $booking) {
-            $min_date = PHP_INT_MAX;
-            $order_line_groups = $om->read('sale\booking\OrderLineGroup', $booking['order_lines_groups_ids'], ['date_from', 'is_sojourn', 'is_event']);
-            if($order_line_groups > 0 && count($order_line_groups)) {
-                foreach($order_line_groups as $gid => $group) {
-                    if( ($group['is_sojourn']  || $group['is_event'] ) && $group['date_from'] < $min_date) {
-                        $min_date = $group['date_from'];
-                    }
-                }
-                $result[$bid] = $min_date;
-            }
+        if(isset($event['customer_id'])) {
+            $customer = Customer::id($event['customer_id'])->read(['partner_identity_id' => ['id', 'name']])->first(true);
+            $result['customer_identity_id'] = $customer['partner_identity_id'];
         }
 
         return $result;
     }
 
-    public static function calcDateTo($om, $oids, $lang) {
+    public static function calcName($self) {
         $result = [];
-        $bookings = $om->read(__CLASS__, $oids, ['order_lines_groups_ids']);
-
-        if($bookings > 0) {
-            foreach($bookings as $bid => $booking) {
-                $max_date = 0;
-                $order_line_groups = $om->read('sale\booking\OrderLineGroup', $booking['order_lines_groups_ids'], ['date_to', 'is_sojourn', 'is_event']);
-                if($order_line_groups > 0 && count($order_line_groups)) {
-                    foreach($order_line_groups as $gid => $group) {
-                        if( ($group['is_sojourn']  || $group['is_event'] ) && $group['date_to'] > $max_date) {
-                            $max_date = $group['date_to'];
-                        }
-                    }
-                    $result[$bid] = $max_date;
-                }
+        $self->read(['id','modified', 'customer_id', 'customer_identity_id']);
+        foreach($self as $id => $order) {
+            $customer = Customer::id($order['customer_id'])->read(['partner_identity_id' => ['id', 'name']])->first(true);
+            $increment = 1 ;
+            $orders = Order::search([['customer_id','=', $order['customer_id']]])->ids();
+            if($orders){
+                $increment = count($orders);
             }
-        }
+            $result[$id] = sprintf("%s-%08d-%02d", date("ymd", $order['modified']), $customer['partner_identity_id']['id'], $increment);
 
+        }
         return $result;
     }
 
-    public static function calcTimeFrom($om, $oids, $lang) {
-        $result = [];
-        $bookings = $om->read(__CLASS__, $oids, ['order_lines_groups_ids']);
-
-        foreach($bookings as $bid => $booking) {
-            $min_date = PHP_INT_MAX;
-            $time_from = 0;
-            $order_line_groups = $om->read('sale\booking\OrderLineGroup', $booking['order_lines_groups_ids'], ['date_from', 'time_from', 'is_sojourn', 'is_event']);
-            if($order_line_groups > 0 && count($order_line_groups)) {
-                foreach($order_line_groups as $gid => $group) {
-                    if(($group['is_sojourn']  || $group['is_event'] ) && $group['date_from'] < $min_date) {
-                        $min_date = $group['date_from'];
-                        $time_from = $group['time_from'];
-                    }
-                }
-                $result[$bid] = $time_from;
-            }
-        }
-
-        return $result;
-    }
-
-    public static function calcTimeTo($om, $oids, $lang) {
-        $result = [];
-        $bookings = $om->read(__CLASS__, $oids, ['order_lines_groups_ids']);
-
-        if($bookings > 0) {
-            foreach($bookings as $bid => $booking) {
-                $max_date = 0;
-                $time_to = 0;
-                $order_line_groups = $om->read('sale\booking\OrderLineGroup', $booking['order_lines_groups_ids'], ['date_to', 'time_to', 'is_sojourn', 'is_event']);
-                if($order_line_groups > 0 && count($order_line_groups)) {
-                    foreach($order_line_groups as $gid => $group) {
-                        if(($group['is_sojourn']  || $group['is_event'] ) && $group['date_to'] > $max_date) {
-                            $max_date = $group['date_to'];
-                            $time_to = $group['time_to'];
-                        }
-                    }
-                    $result[$bid] = $time_to;
-                }
-            }
-        }
-
-        return $result;
-    }
 
     /**
-     * Payment status tells if a given booking is in order regarding the expected payment up to now.
+     * Payment status tells if a given order is in order regarding the expected payment up to now.
      */
     public static function calcPaymentStatus($om, $oids, $lang) {
         // #todo
@@ -296,13 +217,13 @@ class Order extends Model {
 
     public static function calcPrice($om, $oids, $lang) {
         $result = [];
-        $bookings = $om->read(get_called_class(), $oids, ['order_lines_groups_ids.price']);
-        if($bookings > 0) {
-            foreach($bookings as $bid => $booking) {
-                $price = array_reduce($booking['order_lines_groups_ids.price'], function ($c, $group) {
+        $orders = $om->read(get_called_class(), $oids, ['order_lines_groups_ids.price']);
+        if($orders > 0) {
+            foreach($orders as $id => $order) {
+                $price = array_reduce($order['order_lines_groups_ids.price'], function ($c, $group) {
                     return $c + $group['price'];
                 }, 0.0);
-                $result[$bid] = round($price, 2);
+                $result[$id] = round($price, 2);
             }
         }
         return $result;
@@ -310,13 +231,13 @@ class Order extends Model {
 
     public static function calcTotal($om, $oids, $lang) {
         $result = [];
-        $bookings = $om->read(get_called_class(), $oids, ['order_lines_groups_ids.total']);
-        if($bookings > 0) {
-            foreach($bookings as $bid => $booking) {
-                $total = array_reduce($booking['order_lines_groups_ids.total'], function ($c, $a) {
+        $orders = $om->read(get_called_class(), $oids, ['order_lines_groups_ids.total']);
+        if($orders > 0) {
+            foreach($orders as $id => $order) {
+                $total = array_reduce($order['order_lines_groups_ids.total'], function ($c, $a) {
                     return $c + $a['total'];
                 }, 0.0);
-                $result[$bid] = round($total, 4);
+                $result[$id] = round($total, 4);
             }
         }
         return $result;
@@ -326,16 +247,16 @@ class Order extends Model {
      * #memo - fundings can be partially paid.
      */
     public static function _updateStatusFromFundings($om, $oids, $values, $lang) {
-        $bookings = $om->read(self::getType(), $oids, ['status', 'fundings_ids'], $lang);
-        if($bookings > 0) {
-            foreach($bookings as $bid => $booking) {
+        $orders = $om->read(self::getType(), $oids, ['status', 'fundings_ids'], $lang);
+        if($orders > 0) {
+            foreach($orders as $bid => $order) {
                 $diff = 0.0;
-                $fundings = $om->read(Funding::gettype(), $booking['fundings_ids'], ['due_amount', 'paid_amount'], $lang);
+                $fundings = $om->read(Funding::gettype(), $order['fundings_ids'], ['due_amount', 'paid_amount'], $lang);
                 foreach($fundings as $fid => $funding) {
                     $diff += $funding['due_amount'] - $funding['paid_amount'];
                 }
-                // discard bookings that are not yet closed (no checkout or remaining services to invoice)
-                if(!in_array($booking['status'], ['invoiced', 'debit_balance', 'credit_balance'])) {
+
+                if(!in_array($order['status'], ['invoiced', 'debit_balance', 'credit_balance'])) {
                     continue;
                 }
                 if($diff > 0.0001 ) {
@@ -347,7 +268,7 @@ class Order extends Model {
                     $om->update(self::getType(), $bid, ['status' => 'credit_balance']);
                 }
                 else {
-                    // everything has been paid : booking can be archived
+                    // everything has been paid : order can be archived
                     $om->update(self::getType(), $bid, ['status' => 'balanced']);
                 }
             }
@@ -364,61 +285,43 @@ class Order extends Model {
     }
 
     public static function onupdateStatus($om, $oids, $values, $lang) {
-        $bookings = $om->read(get_called_class(), $oids, ['status'], $lang);
-        if($bookings > 0) {
-            foreach($bookings as $bid => $booking) {
-                if($booking['status'] == 'confirmed') {
+        $orders = $om->read(get_called_class(), $oids, ['status'], $lang);
+        if($orders > 0) {
+            foreach($orders as $bid => $order) {
+                if($order['status'] == 'confirmed') {
                     $om->update(get_called_class(), $bid, ['has_contract' => true], $lang);
                 }
             }
         }
     }
 
-    public static function onupdateCustomerId($om, $oids, $values, $lang) {
-        trigger_error("ORM::calling sale\booking\Order:onupdateCustomerId", QN_REPORT_DEBUG);
-        $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id.partner_identity_id', 'contacts_ids.partner_identity_id'], $lang);
-
-        if($bookings > 0) {
-            foreach($bookings as $bid => $booking) {
-                if(!$booking['customer_identity_id']) {
-                    $om->update(__CLASS__, $bid, ['customer_identity_id' => $booking['customer_id.partner_identity_id']], $lang);
-                }
-
-                if(!in_array($booking['customer_id.partner_identity_id'], array_map( function($a) { return $a['partner_identity_id']; }, $booking['contacts_ids.partner_identity_id']))) {
-                    // create a contact with the customer as 'booking' contact
-                    $om->create('sale\booking\Contact', ['order_id' => $bid, 'owner_identity_id' => $booking['customer_identity_id'], 'partner_identity_id' => $booking['customer_id.partner_identity_id']]);
-                }
-            }
-        }
-    }
-
     public static function onupdateCustomerIdentityId($om, $oids, $values, $lang) {
-        trigger_error("ORM::calling sale\booking\Order:onupdateCustomerIdentityId", QN_REPORT_DEBUG);
+        trigger_error("ORM::calling sale\order\Order:onupdateCustomerIdentityId", QN_REPORT_DEBUG);
         // reset name
         $om->write(__CLASS__, $oids, ['name' => null]);
-        $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id']);
+        $orders = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id']);
 
-        if($bookings > 0) {
-            foreach($bookings as $oid => $booking) {
-                if(!$booking['customer_id']) {
+        if($orders > 0) {
+            foreach($orders as $oid => $order) {
+                if(!$order['customer_id']) {
                     $partner_id = null;
 
                     // find the partner that related to this identity, if any
                     $partners_ids = $om->search('sale\customer\Customer', [
                         ['relationship', '=', 'customer'],
                         ['owner_identity_id', '=', 1],
-                        ['partner_identity_id', '=', $booking['customer_identity_id']]
+                        ['partner_identity_id', '=', $order['customer_identity_id']]
                     ]);
                     if(count($partners_ids)) {
                         $partner_id = reset($partners_ids);
                     }
                     else {
                         // read Identity [type_id]
-                        $identities = $om->read('identity\Identity', $booking['customer_identity_id'], ['type_id']);
+                        $identities = $om->read('identity\Identity', $order['customer_identity_id'], ['type_id']);
                         if($identities > 0) {
                             $identity = reset($identities);
                             $partner_id = $om->create('sale\customer\Customer', [
-                                'partner_identity_id'   => $booking['customer_identity_id'],
+                                'partner_identity_id'   => $order['customer_identity_id'],
                                 'customer_type_id'      => $identity['type_id']
                             ]);
                         }
@@ -437,7 +340,7 @@ class Order extends Model {
         if($res > 0) {
             foreach($res as $oids => $odata) {
                 if($odata['status'] != 'quote') {
-                    return ['status' => ['non_editable' => 'Non-quote bookings cannot be deleted manually.']];
+                    return ['status' => ['non_editable' => 'Non-quote orders cannot be deleted manually.']];
                 }
             }
         }
@@ -473,7 +376,7 @@ class Order extends Model {
                         $authorized_fields = ['status'];
                         foreach($values as $field => $value) {
                             if(!in_array($field, $authorized_fields)) {
-                                return ['status' => ['non_editable' => 'Invoiced bookings edition is limited.']];
+                                return ['status' => ['non_editable' => 'Invoiced orders edition is limited.']];
                             }
                         }
                     }

@@ -1,10 +1,15 @@
 {
-    "name": "Order",
-    "description": "",
+    "name": "order",
+    "description": "Form for creating a new customer.",
     "access": {
-        "groups": [
-            "order.default.users"
-        ]
+        "groups": ["sale.default.users"]
+    },
+    "header": {
+        "actions": {
+            "ACTION.SAVE": [
+                { "id": "SAVE_AND_CLOSE" }
+            ]
+        }
     },
     "layout": {
         "groups": [
@@ -25,12 +30,6 @@
                                                 "widget": {
                                                     "view": "form.create"
                                                 }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "customer_identity_id",
-                                                "width": "100%",
-                                                "label": "Customer Identity"
                                             },
                                             {
                                                 "type": "field",

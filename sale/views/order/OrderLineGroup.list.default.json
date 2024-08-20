@@ -10,19 +10,23 @@
                 "type": "field",
                 "label": "Name",
                 "value": "name",
-                "width": "50%"
+                "width": "25%"
             },
             {
-                "type": "field",       
-                "label": "Order",     
+                "type": "field",
+                "label": "Order",
                 "value": "order_id",
-                "width": "10%"
+                "width": "25%"
             },
             {
-                "type": "field",    
-                "label": "Order Lines",        
-                "value": "order_lines_ids",
-                "width": "20%"
+                "type": "field",
+                "value": "total",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "price",
+                "width": "25%"
             }
         ]
     }

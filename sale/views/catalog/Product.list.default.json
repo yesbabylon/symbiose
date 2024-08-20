@@ -20,6 +20,12 @@
         "items": [
             {
                 "type": "field",
+                "value": "id",
+                "width": "0%"
+            },
+            {
+                "type": "field",
+                "label": "Name",
                 "value": "name",
                 "width": "30%",
                 "sortable": true
