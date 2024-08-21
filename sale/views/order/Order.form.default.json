@@ -28,9 +28,9 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "customer_identity_id",
+                                                "value": "status",
                                                 "width": "100%",
-                                                "label": "Customer Identity"
+                                                "visible": ["state" , "<>" , "draft"]
                                             },
                                             {
                                                 "type": "field",
@@ -173,27 +173,6 @@
                                             {
                                                 "type": "field",
                                                 "value": "contracts_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "label": "Products",
-                        "id": "section.products",
-                        "visible": ["state" , "<>" , "draft"],
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "order_lines_ids",
                                                 "width": "100%"
                                             }
                                         ]

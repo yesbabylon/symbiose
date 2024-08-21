@@ -8,6 +8,7 @@ namespace sale\order;
 use equal\orm\Model;
 use sale\catalog\Product;
 use sale\price\Price;
+use sale\price\PriceList;
 
 class OrderLine extends Model {
 
@@ -44,10 +45,13 @@ class OrderLine extends Model {
             ],
 
             'order_id' => [
-                'type'              => 'many2one',
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
                 'foreign_object'    => 'sale\order\Order',
                 'description'       => 'The order the line relates to (for consistency, lines should be accessed using the group they belong to).',
-                'required'          => true
+                'function'          => 'calcOrder',
+                'store'             => true,
+                'instant'           => true,
             ],
 
             'product_id' => [
@@ -66,14 +70,14 @@ class OrderLine extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\price\Price',
                 'description'       => 'The price the line relates to (retrieved by price list).',
-                'dependents'        => ['unit_price' , 'vat_rate']
+                'dependents'        => ['total', 'price', 'vat_rate','order_id' => ['total', 'price'], 'order_line_group_id' => ['total', 'price']]
             ],
 
             'unit_price' => [
                 'type'              => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Unit price of the product related to the receivable.',
-                'dependents'        => ['total', 'price']
+                'dependents'        => ['total', 'price', 'vat_rate','order_id' => ['total', 'price'], 'order_line_group_id' => ['total', 'price']]
             ],
 
             'vat_rate' => [
@@ -81,7 +85,6 @@ class OrderLine extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'VAT rate that applies to this line.',
-                'dependents'        => ['total', 'price'],
                 'function'          => 'calcVatRate',
                 'store'             => true,
                 'instant'           => true
@@ -97,14 +100,15 @@ class OrderLine extends Model {
             'qty' => [
                 'type'              => 'float',
                 'description'       => 'Quantity of product items for the line.',
-                'dependents'        => ['total', 'price'],
-                'default'           => 0
+                'default'           => 0,
+                'dependents'        => ['total', 'price', 'vat_rate','order_id' => ['total', 'price'], 'order_line_group_id' => ['total', 'price']]
             ],
 
             'free_qty' => [
                 'type'              => 'integer',
                 'description'       => 'Free quantity.',
-                'default'           => 0
+                'default'           => 0,
+                'dependents'        => ['total', 'price', 'vat_rate','order_id' => ['total', 'price'], 'order_line_group_id' => ['total', 'price']]
             ],
 
             'order' => [
@@ -113,7 +117,6 @@ class OrderLine extends Model {
                 'default'           => 1
             ],
 
-            // #memo - important: to allow the maximum flexibility, percent values can hold 4 decimal digits (must not be rounded, except for display)
             'discount' => [
                 'type'              => 'float',
                 'usage'             => 'amount/rate',
@@ -165,10 +168,18 @@ class OrderLine extends Model {
         if(isset($event['product_id'])) {
             $product = Product::id($event['product_id'])->read(['product_model_id' => ['id', 'name']])->first(true);
             $result['product_model_id'] = $product['product_model_id'];
-        }
 
-        if(isset($event['price_id'])) {
-            $price = Price::id($event['price_id'])->read(['price', 'vat_rate'])->first(true);
+            $line = OrderLineGroup::id($values['order_line_group_id'])->read(['order_id' => ['id', 'name', 'delivery_date']])->first(true);
+            $date_from = strtotime(date('Y-01-01 00:00:00', $line['order_id']['delivery_date']));
+            $date_to = strtotime(date('Y-12-31 23:59:59', $line['order_id']['delivery_date']));
+
+            $price = self::getProductPrice(
+                $event['product_id'],
+                $date_from ,
+                $date_to
+            );
+
+            $result['price_id'] = $price;
             $result['unit_price'] = $price['price'];
             $result['vat_rate'] = $price['vat_rate'];
         }
@@ -182,7 +193,7 @@ class OrderLine extends Model {
             $vat_rate = $event['vat_rate'] ??  $values['vat_rate'];
             $unit_price =  $event['unit_price'] ??  $values['unit_price'];
 
-            $result['fare_benefit'] = self::calculateFareBenefit($free_qty,$qty,$price['price'],$vat_rate,$unit_price);
+            $result['fare_benefit'] = self::calculateFareBenefit($free_qty, $qty, $price['price'], $vat_rate, $unit_price);
 
             $total = self::calculateTotal($unit_price , $qty, $free_qty,  $discount);
             $result['total'] = $total;
@@ -230,6 +241,16 @@ class OrderLine extends Model {
         return round( $total  * (1.0 + $vat_rate), 2);
     }
 
+    public static function calcOrder($self) {
+        $result = [];
+        $self->read(['order_line_group_id']);
+        foreach($self as $id => $line) {
+            $order_line_group = OrderLineGroup::id($line['order_line_group_id'])->read(['order_id' => ['id', 'name']])->first(true);
+            $result[$id] = $order_line_group['order_id'];
+        }
+        return $result;
+    }
+
     public static function calcName($self) {
         $result = [];
         $self->read(['product_id']);
@@ -259,4 +280,100 @@ class OrderLine extends Model {
         return max(0.0, $benefit);
     }
 
+    public static function getProductPrice($product_id, $date_from, $date_to) {
+        $price = null;
+
+        $price_lists_ids = self::getPriceListsIds($date_from, $date_to);
+        if(!empty($price_lists_ids)) {
+            $price = Price::search([
+                ['product_id', '=', $product_id],
+                ['price_list_id', 'in', $price_lists_ids]
+            ])
+                ->read(['id', 'name', 'price' ,'vat_rate'])
+                ->first();
+        }
+
+        return $price;
+    }
+
+    public static function getPriceListsIds($date_from, $date_to) {
+        return PriceList::search([
+            [
+                ['date_from', '<', $date_from],
+                ['date_to', '>=', $date_from],
+                ['date_to', '<=', $date_to],
+                ['status', '=', 'published'],
+            ],
+            [
+                ['date_from', '>=', $date_from],
+                ['date_to', '>=', $date_from],
+                ['date_to', '<=', $date_to],
+                ['status', '=', 'published'],
+            ],
+            [
+                ['date_from', '>=', $date_from],
+                ['date_to', '>', $date_to],
+                ['status', '=', 'published'],
+            ],
+            [
+                ['date_from', '<', $date_from],
+                ['date_to', '>', $date_to],
+                ['status', '=', 'published'],
+            ]
+        ])
+        ->ids();
+    }
+
+
+    public static function canupdate($self, $values): array {
+        $self->read(['order_id', 'qty', 'free_qty']);
+        foreach($self as $line) {
+            if(isset($values['order_line_group_id'])) {
+                $group = OrderLineGroup::id($values['order_line_group_id'])
+                    ->read(['order_id'])
+                    ->first();
+
+                if($group['order_id'] !== $line['order_id']['id']) {
+                    return ['order_line_group_id' => ['invalid_param' => 'Group must be linked to same order.']];
+                }
+            }
+
+            if(isset($values['qty'])) {
+                if($values['qty'] <= 0) {
+                    return ['qty' => ['must_be_greater_than_zero' => 'Quantity must be greater than 0.']];
+                }
+
+                $free_qty = $values['free_qty'] ?? $line['free_qty'];
+                if($values['qty'] <= $free_qty) {
+                    return ['qty' => ['must_be_greater_than_free_qty' => 'Quantity must be greater than free quantity.']];
+                }
+            }
+
+            if(isset($values['free_qty'])) {
+                if($values['free_qty'] < 0) {
+                    return ['free_qty' => ['must_be_greater_than_or_equal_to_zero' => 'Free quantity must be greater than or equal to 0.']];
+                }
+
+                $qty = $values['qty'] ?? $line['qty'];
+                if($values['free_qty'] >= $qty) {
+                    return ['free_qty' => ['must_be_lower_than_qty' => 'Free quantity must be lower than quantity.']];
+                }
+            }
+
+            if(isset($values['unit_price']) && $values['unit_price'] <= 0) {
+                return ['unit_price' => ['must_be_greater_than_zero' => 'Unit price must be greater than 0.']];
+            }
+
+            if(isset($values['discount'])) {
+                if($values['discount'] < 0) {
+                    return ['discount' => ['must_be_greater_than_zero' => 'Discount must be greater than or equal to 0%.']];
+                }
+                if($values['discount'] > 0.99) {
+                    return ['discount' => ['must_be_lower_than_one' => 'Discount must be lower than 100%.']];
+                }
+            }
+        }
+
+        return parent::canupdate($self, $values);
+    }
 }

@@ -1,6 +1,6 @@
 {
     "name": "order",
-    "description": "Form for creating a new customer.",
+    "description": "Form for creating a new order.",
     "access": {
         "groups": ["sale.default.users"]
     },
