@@ -14,7 +14,7 @@ class OrderLineGroup extends Model {
     }
 
     public static function getDescription() {
-        return "Order line groups are related to a order and describe one or more sojourns and their related consumptions.";
+        return "Order line groups are related to a order and describe.";
     }
 
     public static function getColumns() {

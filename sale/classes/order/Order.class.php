@@ -130,6 +130,13 @@ class Order extends Model {
                 'visible'           => ['status', '=', 'option']
             ],
 
+            'date_expiry' => [
+                'type'              => 'date',
+                'description'       => 'Order expiration date in Option',
+                'visible'           => [["status", "=", "option"],["is_noexpiry", "=", false]],
+                'default'           => time()
+            ],
+
             'cancellation_reason' => [
                 'type'              => 'string',
                 'selection'         => [
@@ -298,9 +305,6 @@ class Order extends Model {
                 if (array_diff($fields, ['status'])) {
                     return ['status' => ['non_editable' => 'The order edition is limited.']];
                 }
-            }
-            if (!isset($values['customer_id'])) {
-                return ['customer_id' => ['missing_mandatory' => 'Customer is mandatory.']];
             }
 
         }
