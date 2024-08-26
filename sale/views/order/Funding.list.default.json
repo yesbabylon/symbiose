@@ -13,17 +13,7 @@
             },
             {
                 "type": "field",
-                "value": "issue_date",
-                "width": "15%"
-            },
-            {
-                "type": "field",
                 "value": "payment_deadline_id",
-                "width": "15%"
-            },
-            {
-                "type": "field",
-                "value": "type",
                 "width": "15%"
             },
             {
