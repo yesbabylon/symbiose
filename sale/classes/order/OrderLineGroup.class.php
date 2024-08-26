@@ -31,7 +31,7 @@ class OrderLineGroup extends Model {
                 'foreign_field'     => 'order_line_group_id',
                 'description'       => 'Order lines that belong to the group.',
                 'ondetach'          => 'delete',
-                'dependents'        => ['total', 'price', 'vat_rate',  'order_id' => ['total', 'price']]
+                'dependents'        => ['total', 'price',  'order_id' => ['total', 'price']]
             ],
 
             'order_id' => [
