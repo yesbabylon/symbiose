@@ -1,0 +1,30 @@
+{
+    "name": "Check-in",
+    "description": "Le paiement de la commande sera vérifié et le contrat sera marqué comme envoyé et signé si tel est le cas.",
+    "model": {
+        "id": {
+            "label": "Identifiant",
+            "description": "Identifiant de la commande ciblée.",
+            "help": ""
+        },
+        "no_payment": {
+            "label": "Pas de vérification des paiements",
+            "description": "Effectuer le check-in même si des paiements sont dus.",
+            "help": ""
+        },
+        "contract_sign": {
+            "label": "Signer la commande",
+            "description": "Marquer le contrat comme envoyé et signé si cela n'a pas déjà été fait.",
+            "help": ""
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_order": "La commande n'a pas été trouvée.",
+            "incompatible_status": "Action impossible pour ce statut de commande.",
+            "contract_sign_failed": "Il n'a pas été possible de traiter le contrat.",
+            "unsigned_contract": "Contrat non signé.",
+            "due_amount": "Solde dû de la commande non nul."
+        }
+    }
+}
