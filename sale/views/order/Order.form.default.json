@@ -10,12 +10,40 @@
         {
             "id": "action.option-order",
             "label": "Option",
-            "controller": "sale_order_do-option"
+            "controller": "sale_order_do-option",
+            "visible": ["status" , "=", "quote"]
         },
         {
             "id": "action.confirm-order",
             "label": "Confirm",
-            "controller": "sale_order_do-confirm"
+            "controller": "sale_order_do-confirm",
+            "visible": ["status" , "=", "option"]
+        },
+        {
+            "id": "action.confirm-order",
+            "label": "Quote to Confirm",
+            "controller": "sale_order_do-option-confirm",
+            "visible": ["status" , "=", "quote"]
+        },
+        {
+            "id": "action.checked-order",
+            "label": "Check-in",
+            "controller": "sale_order_do-checkin",
+            "visible": ["status", "in", ["confirmed", "validated"]]
+        },
+        {
+            "id": "action.order.checkout",
+            "label": "Check Out",
+            "controller": "sale_order_do-checkout",
+            "visible": ["status", "=", "checkedin"]
+        },
+        {
+            "id": "action.invoice",
+            "label": "Invoice",
+            "description": "All additional consumptions have been added. A proforma invoice will be generated.",
+            "controller": "lodging_booking_do-invoice",
+            "confirm": true,
+            "visible": [["status", "=", "checkedout"], ["is_from_channelmanager", "=", false] ]
         }
     ],
     "layout": {
@@ -162,27 +190,6 @@
                         ]
                     },
                     {
-                        "label": "Fundings",
-                        "id": "section.order_fundings",
-                        "visible": ["state" , "<>" , "draft"],
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "fundings_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
                         "label": "Contracts",
                         "id": "section.order_contracts",
                         "visible": ["state" , "<>" , "draft"],
@@ -195,6 +202,27 @@
                                             {
                                                 "type": "field",
                                                 "value": "contracts_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Fundings",
+                        "id": "section.order_fundings",
+                        "visible": ["state" , "<>" , "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "fundings_ids",
                                                 "width": "100%"
                                             }
                                         ]
