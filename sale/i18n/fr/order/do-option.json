@@ -1,0 +1,27 @@
+{
+    "name": "Prise d'option",
+    "description": "Le statut de la commande sera mis à 'option'. Aucun paiement ne sera demandé, et une expiration automatique de l'option sera planifiée.",
+    "model": {
+        "id": {
+            "label": "Identifiant",
+            "description": "Identifiant de la commande ciblée.",
+            "help": ""
+        },
+        "no_expiry": {
+            "label": "Pas d'expiration",
+            "description": "Si sélectionné, la commande restera en option sans limite de temps.",
+            "help": ""
+        },
+        "days_expiry": {
+            "label": "Jours avant expiration",
+            "description": "Nombre de jours avant l'expiration de la commande en option.",
+            "help": ""
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_order": "La commande n'a pas été trouvée.",
+            "incompatible_status": "Action impossible pour ce statut de commande."
+        }
+    }
+}
