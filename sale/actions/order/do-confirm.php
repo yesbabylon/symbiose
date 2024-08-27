@@ -6,7 +6,6 @@
 */
 
 use sale\order\Order;
-use sale\order\OrderLine;
 use sale\order\Contract;
 use sale\order\ContractLine;
 use sale\order\ContractLineGroup;
