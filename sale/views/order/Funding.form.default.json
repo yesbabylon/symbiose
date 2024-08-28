@@ -4,6 +4,20 @@
     "access": {
         "groups": ["order.default.users"]
     },
+    "actions": [
+        {
+            "id": "action.pay.append",
+            "label": "Add instant payment",
+            "controller": "sale_order_do-pay-append",
+            "visible": ["is_paid", "=", false]
+        },
+        {
+            "id": "action.pay.remove",
+            "label": "Remove payment",
+            "controller": "sale_order_do-pay-remove",
+            "visible": ["is_paid", "=", true]
+        }
+    ],
     "layout": {
         "groups": [
             {
@@ -60,10 +74,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "is_paid",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "readonly": true
-                                                }
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
@@ -103,10 +114,7 @@
                                                 "label": "Invoice",
                                                 "value": "invoice_id",
                                                 "width": "50%",
-                                                "visible" : true,
-                                                "widget": {
-                                                    "readonly": true
-                                                }
+                                                "visible" : true
                                             },
                                             {
                                                 "type": "field",
