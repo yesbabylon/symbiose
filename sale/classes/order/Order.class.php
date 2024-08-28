@@ -252,31 +252,25 @@ class Order extends Model {
     /**
      * #memo - fundings can be partially paid.
      */
-    public static function _updateStatusFromFundings($om, $oids, $values, $lang) {
-        $orders = $om->read(self::getType(), $oids, ['status', 'fundings_ids'], $lang);
-        if($orders > 0) {
-            foreach($orders as $bid => $order) {
-                $diff = 0.0;
-                $fundings = $om->read(Funding::gettype(), $order['fundings_ids'], ['due_amount', 'paid_amount'], $lang);
-                foreach($fundings as $fid => $funding) {
-                    $diff += $funding['due_amount'] - $funding['paid_amount'];
-                }
-
-                if(!in_array($order['status'], ['invoiced', 'debit_balance', 'credit_balance'])) {
-                    continue;
-                }
-                if($diff > 0.0001 ) {
-                    // an unpaid amount remains
-                    $om->update(self::getType(), $bid, ['status' => 'debit_balance']);
-                }
-                elseif($diff < 0) {
-                    // a reimbursement is due
-                    $om->update(self::getType(), $bid, ['status' => 'credit_balance']);
-                }
-                else {
-                    // everything has been paid : order can be archived
-                    $om->update(self::getType(), $bid, ['status' => 'balanced']);
-                }
+    public static function _updateStatusFromFundings($ids) {
+        $orders = Order::ids($ids)->read(['status', 'fundings_ids'])->get();
+        foreach($orders as $bid => $order) {
+            $diff = 0.0;
+            $fundings = Funding::ids($order['fundings_ids'])->read(['due_amount', 'paid_amount'])->get(true);
+            foreach($fundings as $fid => $funding) {
+                $diff += $funding['due_amount'] - $funding['paid_amount'];
+            }
+            if(!in_array($order['status'], ['invoiced', 'debit_balance', 'credit_balance'])) {
+                continue;
+            }
+            if($diff > 0.0001 ) {
+                Order::id($bid)->update(['status' => 'debit_balance']);
+            }
+            elseif($diff < 0) {
+                Order::id($bid)->update(['status' => 'credit_balance']);
+            }
+            else {
+                Order::id($bid)->update(['status' =>'balanced']);
             }
         }
     }

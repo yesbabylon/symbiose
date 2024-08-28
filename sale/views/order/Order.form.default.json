@@ -41,9 +41,9 @@
             "id": "action.invoice",
             "label": "Invoice",
             "description": "All additional consumptions have been added. A proforma invoice will be generated.",
-            "controller": "lodging_booking_do-invoice",
+            "controller": "sale_order_do-invoice",
             "confirm": true,
-            "visible": [["status", "=", "checkedout"], ["is_from_channelmanager", "=", false] ]
+            "visible": ["status", "=", "checkedout"]
         }
     ],
     "layout": {

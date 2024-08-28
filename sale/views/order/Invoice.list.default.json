@@ -8,6 +8,11 @@
         "items": [
             {
                 "type": "field",
+                "value": "invoice_number",
+                "width": "20%"
+            },
+            {
+                "type": "field",
                 "value": "name",
                 "width": "20%"
             },
@@ -15,11 +20,11 @@
                 "type": "field",
                 "label": "Order",
                 "value": "order_id",
-                "width": "10%"
+                "width": "20%"
             },
             {
                 "type": "field",
-                "value": "date",
+                "value": "emission_date",
                 "width": "20%"
             },
             {
@@ -29,13 +34,8 @@
             },
             {
                 "type": "field",
-                "value": "is_paid",
-                "width": "20%"
-            },
-            {
-                "type": "field",
                 "value": "price",
-                "width": "15%"
+                "width": "20%"
             }
         ]
     }

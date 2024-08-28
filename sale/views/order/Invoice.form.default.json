@@ -4,6 +4,14 @@
     "access": {
         "groups": ["order.default.users"]
     },
+    "actions": [
+        {
+            "id": "action.do.emit",
+            "label": "Emit",
+            "controller": "sale_order_do-emit",
+            "visible": ["status" , "=", "proforma"]
+        }
+    ],
     "layout": {
         "groups": [
             {
@@ -17,8 +25,8 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "number",
-                                                "width": "33%",
+                                                "value": "name",
+                                                "width": "50%",
                                                 "widget": {
                                                     "heading": true,
                                                     "readonly": true
@@ -26,24 +34,19 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Partner",
-                                                "value": "partner_id",
-                                                "width": "33%"
+                                                "label": "Customer",
+                                                "value": "customer_id",
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Order",
                                                 "value": "order_id",
-                                                "width": "33%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "status",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "is_paid",
+                                                "value": "status",
                                                 "width": "50%"
                                             },
                                             {
@@ -74,7 +77,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "date",
+                                                "value": "emission_date",
                                                 "width": "50%"
                                             }
                                         ]

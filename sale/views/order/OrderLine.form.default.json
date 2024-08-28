@@ -25,6 +25,14 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Order",
+                                                "value": "order_id",
+                                                "width": "50%",
+                                                "readonly" :true,
+                                                "visible": ["state", "<>", "draft"]
+                                            },
+                                            {
+                                                "type": "field",
                                                 "label": "Product",
                                                 "value": "product_id",
                                                 "width": "50%"

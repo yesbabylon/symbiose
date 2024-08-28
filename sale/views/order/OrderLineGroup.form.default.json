@@ -9,8 +9,6 @@
             {
                 "sections": [
                     {
-                        "label": "General info",
-                        "id": "section.order_line_group",
                         "rows": [
                             {
                                 "columns": [
@@ -37,7 +35,11 @@
                                 ]
                             }
                         ]
-                    },
+                    }
+                ]
+            },
+            {
+                "sections": [
                     {
                         "label": "Order Lines",
                         "id": "section.order.lines",

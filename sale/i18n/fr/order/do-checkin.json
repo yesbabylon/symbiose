@@ -13,7 +13,7 @@
             "help": ""
         },
         "contract_sign": {
-            "label": "Signer la commande",
+            "label": "Signer le contrat",
             "description": "Marquer le contrat comme envoyé et signé si cela n'a pas déjà été fait.",
             "help": ""
         }
