@@ -25,7 +25,7 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth', 'dispatch']
+    'providers'     => ['context', 'orm']
 ]);
 
 /**

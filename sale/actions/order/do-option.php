@@ -29,7 +29,7 @@ list($params, $providers) = eQual::announce([
     ],
     'access' => [
         'visibility'        => 'protected',
-        'groups'            => ['sale.default.user']
+        'groups'            => ['order.default.user']
     ],
     'response'      => [
         'content-type'  => 'application/json',

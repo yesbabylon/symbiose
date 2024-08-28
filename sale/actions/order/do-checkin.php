@@ -30,22 +30,21 @@ list($params, $providers) = announce([
     ],
     'access' => [
         'visibility'        => 'protected',
-        'groups'            => ['sale.default.user'],
+        'groups'            => ['order.default.user']
     ],
     'response'      => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth']
+    'providers'     => ['context', 'orm']
 ]);
 
 /**
  * @var \equal\php\Context                  $context
  * @var \equal\orm\ObjectManager            $orm
- * @var \equal\auth\AuthenticationManager   $auth
  */
-list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
+list($context, $orm) = [$providers['context'], $providers['orm']];
 
 
 $order = Order::id($params['id'])

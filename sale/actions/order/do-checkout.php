@@ -19,7 +19,7 @@ list($params, $providers) = announce([
     ],
     'access' => [
         'visibility'        => 'protected',
-        'groups'            => ['sale.default.user'],
+        'groups'            => ['order.default.user']
     ],
     'response'      => [
         'content-type'  => 'application/json',
@@ -32,9 +32,8 @@ list($params, $providers) = announce([
 /**
  * @var \equal\php\Context                  $context
  * @var \equal\orm\ObjectManager            $orm
- * @var \equal\auth\AuthenticationManager   $auth
  */
-list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
+list($context, $orm) = [$providers['context'], $providers['orm']];
 
 
 $order = Order::id($params['id'])->read(['id'])->first(true);
