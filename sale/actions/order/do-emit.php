@@ -110,7 +110,8 @@ if(!is_null($invoice['order_id'])) {
 
     Invoice::generateNumberInvoice((array) $invoice['id']);
 
-    $invoice_test =Invoice::id($invoice['id'])
+    Invoice::id($invoice['id'])
+        ->update(['status' => 'invoice'])
         ->read(['name','invoice_number'])->first(true);
 }
 else {
