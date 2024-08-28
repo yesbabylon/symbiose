@@ -37,7 +37,8 @@ class Funding extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => Payment::getType(),
                 'foreign_field'     => 'funding_id',
-                'description'       => 'Customer payments of the funding.'
+                'description'       => 'Customer payments of the funding.',
+                'dependents'        => ['paid_amount', 'is_paid']
             ],
 
             'funding_type' => [
@@ -75,7 +76,8 @@ class Funding extends Model {
                 'usage'             => 'amount/money:2',
                 'description'       => "Total amount that has been received (can be greater than due_amount).",
                 'function'          => 'calcPaidAmount',
-                'store'             => true
+                'store'             => true,
+                'instant'           => true
             ],
 
             'is_paid' => [
@@ -84,6 +86,7 @@ class Funding extends Model {
                 'description'       => "Has the full payment been received?",
                 'function'          => 'calcIsPaid',
                 'store'             => true,
+                'instant'           => true
             ],
 
             'amount_share' => [
