@@ -292,24 +292,27 @@ class Invoice extends \finance\accounting\Invoice {
     }
 
     public static function onbeforeInvoice($self) {
-        $self->read(['organisation_id']);
-
+        $self->read(['id','organisation_id']);
         // generate the accounting entries according to the invoices lines.
         $self->do('generate_accounting_entries');
-
-        // assign an invoice number
         foreach($self as $id => $invoice) {
+             $self::generateNumberInvoice((array) $invoice['id']);
+        }
+    }
+
+    public static function generateNumberInvoice($ids) {
+        $invoices = Invoice::ids($ids)->read(['id', 'organisation_id'])->get();
+        foreach($invoices as $bid => $invoice) {
             $format = Setting::get_value('sale', 'invoice', 'sequence_format', '%2d{year}-%05d{sequence}', ['organisation_id' => $invoice['organisation_id']]);
             $year = Setting::get_value('sale', 'invoice', 'fiscal_year', date('Y'), ['organisation_id' => $invoice['organisation_id']]);
             $sequence = Setting::fetch_and_add('sale', 'invoice', 'sequence', 1, ['organisation_id' => $invoice['organisation_id']]);
-
             if($sequence) {
                 $invoice_number = Setting::parse_format($format, [
                         'year'      => $year,
                         'org'       => $invoice['organisation_id'],
                         'sequence'  => $sequence
                     ]);
-                self::id($id)->update(['invoice_number' => $invoice_number, 'due_date' => null]);
+                Invoice::id($bid)->update(['invoice_number' => $invoice_number, 'due_date' => null]);
             }
         }
     }
