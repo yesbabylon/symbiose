@@ -148,7 +148,7 @@ class Funding extends Model {
     }
 
     public static function canupdate($self, $values) {
-        $allowed = ['is_paid', 'invoice_id'];
+        $allowed = ['is_paid', 'invoice_id','funding_type'];
         $count_non_allowed = 0;
 
         foreach($values as $field => $value) {

@@ -42,7 +42,7 @@ if(!$order) {
     throw new Exception("unknown_order", QN_ERROR_UNKNOWN_OBJECT);
 }
 
-$balance_invoice = Invoice::search([['order_id', '=', $order['id']], ['invoice_type', '=', 'invoice'], ['status', '=', 'invoice']])->read(['id'])->first(true);
+$balance_invoice = Invoice::search([['order_id', '=', $order['id']], ['is_downpayment', '=', false], ['invoice_type', '=', 'invoice'], ['status', '=', 'invoice']])->read(['id'])->first(true);
 
 if($balance_invoice) {
     throw new Exception("emitted_balance_invoice", QN_ERROR_INVALID_PARAM);

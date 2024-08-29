@@ -8,14 +8,19 @@
         {
             "id": "action.pay.append",
             "label": "Add instant payment",
-            "controller": "sale_order_do-pay-append",
+            "controller": "sale_order_funding_do-pay-append",
             "visible": ["is_paid", "=", false]
         },
         {
             "id": "action.pay.remove",
             "label": "Remove payment",
-            "controller": "sale_order_do-pay-remove",
+            "controller": "sale_order_funding_do-pay-remove",
             "visible": ["is_paid", "=", true]
+        },
+        {
+            "id": "action.invoice",
+            "label": "Create invoice",
+            "controller": "sale_order_funding_convert"
         }
     ],
     "layout": {

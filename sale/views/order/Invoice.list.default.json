@@ -13,11 +13,6 @@
             },
             {
                 "type": "field",
-                "value": "name",
-                "width": "20%"
-            },
-            {
-                "type": "field",
                 "label": "Order",
                 "value": "order_id",
                 "width": "20%"
@@ -29,7 +24,22 @@
             },
             {
                 "type": "field",
+                "value": "invoice_type",
+                "width": "20%"
+            },
+            {
+                "type": "field",
                 "value": "status",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "is_downpayment",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "is_paid",
                 "width": "20%"
             },
             {

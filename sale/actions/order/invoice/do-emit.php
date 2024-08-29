@@ -38,7 +38,7 @@ list($params, $providers) = eQual::announce([
 list($context, $om) = [$providers['context'], $providers['orm']];
 
 $invoice = Invoice::id($params['id'])
-    ->read(['id', 'state', 'deleted', 'emission_date', 'status', 'invoice_type', 'organisation_id', 'price', 'order_id', 'invoice_lines_ids'])
+    ->read(['id', 'state', 'deleted', 'emission_date', 'status', 'invoice_type', 'is_downpayment', 'organisation_id', 'price', 'order_id', 'invoice_lines_ids'])
     ->first(true);
 
 if(!$invoice) {
@@ -83,7 +83,7 @@ if(!is_null($invoice['order_id'])) {
         throw new Exception("unknown_order", QN_ERROR_UNKNOWN_OBJECT);
     }
 
-    if($invoice['invoice_type'] == 'invoice' && $order['status'] != 'invoiced') {
+    if($invoice['invoice_type'] == 'invoice' && $order['status'] != 'invoiced' && !$invoice['is_downpayment']) {
         throw new Exception("incompatible_order_status", QN_ERROR_INVALID_PARAM);
     }
 

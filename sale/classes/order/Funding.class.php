@@ -188,4 +188,5 @@ class Funding extends \sale\pay\Funding {
 
         return parent::canupdate($self, $values);
     }
+
 }

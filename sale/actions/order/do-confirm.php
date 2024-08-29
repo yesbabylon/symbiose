@@ -148,8 +148,8 @@ if($order['price'] > 0 && ($remaining_amount/$order['price']) > 0.1) {
     $funding = [
         'order_id'              => $order['id'],
         'due_amount'            => $remaining_amount,
+        'funding_type'          => 'installment',
         'is_paid'               => false,
-        'order'                 => 1,
         'due_date'              => $order['delivery_date'],
         'description'           => 'Full'
     ];

@@ -8,7 +8,7 @@
         {
             "id": "action.do.emit",
             "label": "Emit",
-            "controller": "sale_order_do-emit",
+            "controller": "sale_order_invoice_do-emit",
             "visible": ["status" , "=", "proforma"]
         }
     ],
@@ -92,7 +92,16 @@
                                             {
                                                 "type": "field",
                                                 "value": "invoice_lines_ids",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.order",
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE" : false
+                                                        },
+                                                        "selection": false
+                                                    }
+                                                }
                                             }
                                         ]
                                     }

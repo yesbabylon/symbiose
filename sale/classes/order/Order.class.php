@@ -249,10 +249,7 @@ class Order extends Model {
         return $result;
     }
 
-    /**
-     * #memo - fundings can be partially paid.
-     */
-    public static function _updateStatusFromFundings($ids) {
+    public static function updateStatusFromFundings($ids) {
         $orders = Order::ids($ids)->read(['status', 'fundings_ids'])->get();
         foreach($orders as $bid => $order) {
             $diff = 0.0;

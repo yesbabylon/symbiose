@@ -69,10 +69,10 @@ foreach($fundings as $funding) {
     }
 }
 
-eQual::run('do', 'sale_order_invoice-generate', $params);
+eQual::run('do', 'sale_order_invoice_generate', $params['id']);
 
 
-Order::id($order['id'])->update(['status' => 'invoiced']);
+//Order::id($order['id'])->update(['status' => 'invoiced']);
 
 $context->httpResponse()
         ->status(204)
