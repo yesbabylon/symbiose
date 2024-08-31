@@ -46,7 +46,7 @@ class SaleEntry extends Model {
             'detailed_description' => [
                 'type'              => 'string',
                 'usage'             => 'text/plain',
-                'description'       => 'Detailed description of the entry.'
+                'description'       => 'Detailed description of the entry (if relevant).'
             ],
 
             'has_receivable' => [
@@ -232,7 +232,7 @@ class SaleEntry extends Model {
                 'description' => 'Sale entry is still a draft and waiting to be completed.',
                 'icon' => 'edit',
                 'transitions' => [
-                    'request-validation' => [
+                    'submit' => [
                         'description' => 'Sets sale entry as ready for validation.',
                         'help' => 'Can only be applied if sale\\SaleEntry has a validation process.',
                         'policies' => [

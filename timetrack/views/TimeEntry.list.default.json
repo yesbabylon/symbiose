@@ -17,12 +17,18 @@
                     "controller": "model_transition",
                     "params": {
                         "entity": "timetrack\\TimeEntry",
-                        "transition": "request-validation"
-                    },
-                    "visible": [
-                        ["state", "<>", "draft"],
-                        ["status", "=", "pending"]
-                    ]
+                        "transition": "submit"
+                    }
+                },
+                {
+                    "id": "action.transition.validate",
+                    "label": "Validate",
+                    "icon": "task_alt",
+                    "controller": "model_transition",
+                    "params": {
+                        "entity": "timetrack\\TimeEntry",
+                        "transition": "validate"
+                    }
                 }
             ]
         }

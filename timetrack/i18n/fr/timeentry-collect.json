@@ -37,7 +37,7 @@
             "label": "Status",
             "selection": {
                 "all": "Tous",
-                "pending": "En cours",
+                "pending": "Brouillon",
                 "ready": "Prête",
                 "validated": "Validée",
                 "billed": "Comptabilisée"

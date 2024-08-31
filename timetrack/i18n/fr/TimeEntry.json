@@ -10,7 +10,7 @@
         },
         "detailed_description": {
             "label": "Description",
-            "description": "Description de l'entrée.",
+            "description": "Détails et description avancée de l'entrée (si nécessaire).",
             "help": ""
         },
         "date": {

@@ -462,7 +462,7 @@ class TimeEntry extends SaleEntry {
                 'description' => 'Time entry is still a draft and waiting to be completed.',
                 'icon' => 'edit',
                 'transitions' => [
-                    'request-validation' => [
+                    'submit' => [
                         'description' => 'Sets time entry as ready for validation.',
                         'policies' => [
                             'ready-for-validation',
