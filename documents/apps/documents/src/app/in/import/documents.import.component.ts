@@ -9,9 +9,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
-  selector: 'documents-import',
-  templateUrl: './documents.import.component.html',
-  styleUrls: ['./documents.import.component.scss']
+    selector: 'documents-import',
+    templateUrl: './documents.import.component.html',
+    styleUrls: ['./documents.import.component.scss']
 })
 export class DocumentsImportComponent implements OnInit, AfterContentInit {
 
