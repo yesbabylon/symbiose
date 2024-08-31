@@ -105,6 +105,7 @@ TimeEntry::create([
         'origin'      => $params['origin'],
         'reference'   => $params['reference'] ?? '',
         'description' => $params['description'],
+        'date'        => $date,
         'time_start'  => $start,
         'time_end'    => $end
     ])
