@@ -154,7 +154,7 @@ class Access extends Model {
                 'host',
                 'access_type',
                 /*
-                // #memo - there is no practical use with this syntax
+                // #memo - syntax including credentials is a security risk
                 'username',
                 'password'
                 */
