@@ -96,7 +96,7 @@ if(!is_null($time_zone)) {
 }
 
 $date = $params['date'];
-$begin = $date - strtotime("midnight", $date) - $params['duration'] + $tz_offset;
+$begin = time() - strtotime("midnight") - $params['duration'] + $tz_offset;
 $start = (int) (floor(floatval($begin) / 60 / 15) * 15 * 60);
 $end = $start + intval(ceil($params['duration'] / 60 / 15) * 15 * 60);
 
