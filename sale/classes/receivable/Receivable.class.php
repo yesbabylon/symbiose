@@ -146,7 +146,7 @@ class Receivable extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/rate',
                 'description'       => 'Total amount of discount to apply, if any.',
-                'relation'          => ['sale_entry_id' => ['qty']],
+                'relation'          => ['sale_entry_id' => ['discount']],
                 'store'             => true,
                 'readonly'          => true
             ],
