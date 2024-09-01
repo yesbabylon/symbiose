@@ -121,12 +121,6 @@ class TimeEntry extends SaleEntry {
              * Specific TimeEntry columns
              */
 
-            'date'       => [
-                'type'           => 'date',
-                'description'    => 'Date of the entry.',
-                'default'        => function() { return time(); },
-            ],
-
             'time_start' => [
                 'type'           => 'time',
                 'description'    => 'Start time of the entry.',
@@ -447,8 +441,7 @@ class TimeEntry extends SaleEntry {
         $self->read(['project_id', 'user_id', 'origin', 'duration']);
         foreach($self as $id => $entry) {
             if( !isset($entry['project_id'], $entry['user_id'], $entry['origin'], $entry['duration'])
-                || $entry['duration'] <= 0
-            ) {
+                    || $entry['duration'] <= 0 ) {
                 $result[$id] = false;
             }
         }

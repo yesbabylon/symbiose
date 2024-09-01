@@ -39,8 +39,14 @@ class SaleEntry extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'string',
                 'description'       => 'Short readable identifier of the entry.',
-                'store'             => true,
-                'function'          => 'calcName'
+                'function'          => 'calcName',
+                'store'             => true
+            ],
+
+            'date'       => [
+                'type'           => 'datetime',
+                'description'    => 'Date of the entry.',
+                'default'        => function() { return time(); },
             ],
 
             'detailed_description' => [
@@ -85,7 +91,7 @@ class SaleEntry extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\price\Price',
                 'description'       => 'Price of the sale.',
-                'dependencies'      => ['unit_price']
+                'dependents'        => ['unit_price', 'vat_rate']
             ],
 
             'unit_price' => [
@@ -93,8 +99,19 @@ class SaleEntry extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Unit price of the product related to the entry.',
-                'function'          => 'calcUnitPrice',
-                'store'             => true
+                'relation'          => ['price_id' => ['price']],
+                'store'             => true,
+                'readonly'          => true
+            ],
+
+            'vat_rate' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/rate',
+                'description'       => 'VAT rate to be applied.',
+                'relation'          => ['price_id' => ['price']],
+                'store'             => true,
+                'readonly'          => true
             ],
 
             'qty' => [
@@ -109,7 +126,6 @@ class SaleEntry extends Model {
                 'default'           => 0
             ],
 
-            // #memo - important: to allow maximum flexibility, percent values can hold 4 decimal digits (must not be rounded, except for display)
             'discount' => [
                 'type'              => 'float',
                 'usage'             => 'amount/rate',
@@ -119,8 +135,8 @@ class SaleEntry extends Model {
 
             'object_class' => [
                 'type'              => 'string',
-                'description'       => 'Class of the object object_id points to.',
-                'dependencies'      => ['subscription_id', 'project_id']
+                'description'       => 'Class of the object the sale entry points to.',
+                'dependents'        => ['subscription_id', 'project_id']
             ],
 
             'object_id' => [
@@ -145,14 +161,6 @@ class SaleEntry extends Model {
                 'function'          => 'calcProjectId',
                 'description'       => 'Identifier of the Project the sale entry originates from.',
                 'store'             => true
-            ],
-
-            'receivable_name' => [
-                'type'              => 'computed',
-                'result_type'       => 'string',
-                'description'       => 'Name given to the generated receivable.',
-                'function'          => 'calcReceivableName',
-                'store'             => false
             ],
 
             'status' => [
@@ -340,19 +348,6 @@ class SaleEntry extends Model {
         return $result;
     }
 
-    public static function calcUnitPrice($self) {
-        $result = [];
-        $self->read(['price_id' => ['price']]);
-        foreach($self as $id => $entry) {
-            if(!isset($entry['price_id']['price'])) {
-                continue;
-            }
-
-            $result[$id] = $entry['price_id']['price'];
-        }
-        return $result;
-    }
-
     public static function calcSubscriptionId($self) {
         $result = [];
         $self->read(['object_class', 'object_id']);
@@ -374,25 +369,6 @@ class SaleEntry extends Model {
                 $result[$id] = $entry['object_id'];
             }
         }
-        return $result;
-    }
-
-    /**
-     * #todo - unsure that this field is necessary
-     */
-    public static function calcReceivableName($self): array {
-        $result = [];
-        $self->read(['object_class', 'name', 'product_id' => ['name']]);
-
-        foreach($self as $id => $entry) {
-            $receivable_name = $entry['product_id']['name'];
-            if($entry['object_class'] === 'timetrack\Project') {
-                $receivable_name = $entry['name'];
-            }
-
-            $result[$id] = trim($receivable_name);
-        }
-
         return $result;
     }
 

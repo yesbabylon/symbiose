@@ -78,11 +78,6 @@
             "description": "Projet à l'origine de l'entrée.",
             "help": ""
         },
-        "receivable_name": {
-            "label": "Nom de la créance",
-            "description": "Nom donné à la créance générée.",
-            "help": ""
-        },
         "status": {
             "label": "Status",
             "description": "Status de l'entrée.",
