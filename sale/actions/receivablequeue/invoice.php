@@ -81,7 +81,7 @@ foreach($receivables_queues as $receivables_queue) {
             'name',
             'description',
             'customer_id',
-            'product_id' => ['id', 'name'],
+            'product_id',
             'price_id',
             'unit_price',
             'vat_rate',
@@ -118,11 +118,10 @@ foreach($receivables_queues as $receivables_queue) {
 
     foreach($receivables as $receivable) {
         $invoice_line = InvoiceLine::create([
-                'name'                  => $receivable['name'],
-                'description'           => $receivable['product_id']['name'],
+                'description'           => $receivable['name'],
                 'invoice_line_group_id' => $invoice_line_group['id'],
                 'invoice_id'            => $invoice['id'],
-                'product_id'            => $receivable['product_id']['id'],
+                'product_id'            => $receivable['product_id'],
                 'price_id'              => $receivable['price_id'],
                 'unit_price'            => $receivable['unit_price'],
                 'vat_rate'              => $receivable['vat_rate'],
