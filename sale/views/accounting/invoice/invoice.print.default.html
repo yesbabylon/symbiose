@@ -368,12 +368,12 @@
                         <tr valign="top">
                             <td style="width: 45%;">
                                 {% if line.is_group %}
-                                    <b>{{ line.name }}</b> <br />
-                                    {{ line.description }}
+                                    <b>{{ line.name }}</b>
+                                    <br />{{ line.description }}
                                 {% else %}
                                     {{ line.name }}
                                     {% if ( line.description | length ) > 0 %}
-                                        {{ line.description }}
+                                        <br />{{ line.description }}
                                     {% endif %}
                                 {% endif %}
                             </td>
