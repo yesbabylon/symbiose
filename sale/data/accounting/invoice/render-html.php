@@ -4,7 +4,6 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 use core\setting\Setting;
 use equal\data\DataFormatter;
 use sale\accounting\invoice\Invoice;
@@ -324,23 +323,28 @@ $twig = new TwigEnvironment($loader);
 $extension  = new IntlExtension();
 $twig->addExtension($extension);
 
-$template = $twig->load('invoice.'.$params['view_id'].'.html');
+try {
+    $template = $twig->load('invoice.'.$params['view_id'].'.html');
 
-
-$html = $template->render([
-        'invoice'             => $invoice,
-        'organisation'        => $invoice['organisation_id'],
-        'customer'            => $invoice['customer_id'],
-        'lines'               => $generateInvoiceLines($invoice, $params['mode']),
-        'organisation_logo'   => $getOrganisationLogo($invoice),
-        'payment_qr_code_uri' => $createInvoicePaymentQrCodeUri($invoice),
-        'timezone'            => constant('L10N_TIMEZONE'),
-        'locale'              => constant('L10N_LOCALE'),
-        'date_format'         => Setting::get_value('core', 'locale', 'date_format', 'm/d/Y'),
-        'currency'            => $getTwigCurrency(Setting::get_value('core', 'units', 'currency', '€')),
-        'labels'              => $getLabels($params['lang']),
-        'debug'               => $params['debug']
-    ]);
+    $html = $template->render([
+            'invoice'             => $invoice,
+            'organisation'        => $invoice['organisation_id'],
+            'customer'            => $invoice['customer_id'],
+            'lines'               => $generateInvoiceLines($invoice, $params['mode']),
+            'organisation_logo'   => $getOrganisationLogo($invoice),
+            'payment_qr_code_uri' => $createInvoicePaymentQrCodeUri($invoice),
+            'timezone'            => constant('L10N_TIMEZONE'),
+            'locale'              => constant('L10N_LOCALE'),
+            'date_format'         => Setting::get_value('core', 'locale', 'date_format', 'm/d/Y'),
+            'currency'            => $getTwigCurrency(Setting::get_value('core', 'units', 'currency', '€')),
+            'labels'              => $getLabels($params['lang']),
+            'debug'               => $params['debug']
+        ]);
+}
+catch(Exception $e) {
+    trigger_error('APP::Error while rendering template'.$e->getMessage(), EQ_ERROR_INVALID_CONFIG);
+    throw new Exception($e->getMessage(), EQ_ERROR_INVALID_CONFIG);
+}
 
 $context->httpResponse()
     ->body($html)
