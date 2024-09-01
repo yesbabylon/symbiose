@@ -109,7 +109,7 @@ class SaleEntry extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/rate',
                 'description'       => 'VAT rate to be applied.',
-                'relation'          => ['price_id' => ['price']],
+                'relation'          => ['price_id' => ['vat_rate']],
                 'store'             => true,
                 'readonly'          => true
             ],
