@@ -11,8 +11,8 @@ use sale\receivable\ReceivablesQueue;
 use sale\receivable\Receivable;
 
 list($params, $providers) = eQual::announce([
-    'description'   => 'Invoice pending receivables of selected queues.',
-    'help'          => 'Create invoice lines from pending receivables of selected queues. Create new invoice if no pending proforma found for customer.',
+    'description'   => "Invoice pending receivables of selected queues.\nSelect an existing invoice or leave empty to create a new one.",
+    'help'          => "Create invoice lines from pending receivables of selected queues. Create new invoice if no pending proforma found for customer.",
     'params'        => [
         'id' => [
             'type'           => 'integer',
