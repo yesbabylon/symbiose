@@ -78,6 +78,7 @@ foreach($receivables_queues as $receivables_queue) {
         ])
         ->read([
             'id',
+            'name',
             'description',
             'customer_id',
             'product_id',
