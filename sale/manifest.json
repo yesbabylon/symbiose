@@ -38,7 +38,7 @@
     ],
     "requires": {
         "dompdf/dompdf": "^2.0.8",
-        "twig/intl-extra": "^3.9.2",
-        "twig/twig": "^3.9.3"
+        "twig/intl-extra": "<=3.11.0",
+        "twig/twig": "^<=3.11.0"
     }
 }
