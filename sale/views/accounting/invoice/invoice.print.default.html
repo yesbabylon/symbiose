@@ -84,7 +84,8 @@
         header .organisation-info img {
             width: 350px;
             height: auto;
-            max-height: 100px;
+            /* #memo - we should keep this but it can lead to stretching the image and object-fit is not supported*/
+            /* max-height: 100px; */
             border: 0;
             margin-bottom: 10px;
         }
@@ -231,7 +232,7 @@
         <!-- organisation-info end -->
 
         <!-- customer-info start -->
-            <div class="customer-info {{ debug ? 'debug':'' }}">
+            <div class="customer-info {{ debug ? 'debug' : '' }}">
                 <table>
                     <tr>
                         <td style="width: 70px; vertical-align: top;">
@@ -274,14 +275,14 @@
         <!-- customer-info end -->
 
         <!-- invoice-details start -->
-            <div class="invoice-details {{ debug ? 'debug':'' }}">
+            <div class="invoice-details {{ debug ? 'debug' : '' }}">
                 <!-- invoice-ref start -->
-                    <div class="invoice-ref {{ debug ? 'debug':'' }}">
+                    <div class="invoice-ref {{ debug ? 'debug' : '' }}">
                     </div>
                 <!-- invoice-ref start -->
 
                 <!-- invoice-info start -->
-                    <div class="invoice-info {{ debug ? 'debug':'' }}">
+                    <div class="invoice-info {{ debug ? 'debug' : '' }}">
                         <h2 style="text-transform: capitalize;">
                             {{ labels.invoice }}
                         </h2>
@@ -314,7 +315,7 @@
         <!-- invoice-details end -->
     </header>
 
-    <footer class="{{ debug ? 'debug':'' }}">
+    <footer class="{{ debug ? 'debug' : '' }}">
         <!-- organisation-footer-info start -->
         <div class="organisation-info">
             <div>{{ organisation.legal_name }} - {{ organisation.address_street }} {{ organisation.address_zip }} {{ organisation.address_city }}</div>
@@ -324,7 +325,7 @@
         <!-- organisation-footer-info end -->
     </footer>
 
-    <main class="{{ debug ? 'debug':'' }}">
+    <main class="{{ debug ? 'debug' : '' }}">
         <!-- invoice-lines start -->
             <div class="invoice-lines">
                 <table class="inner" width="100%" cellpadding="4" cellspacing="0" style="page-break-inside: auto;">
