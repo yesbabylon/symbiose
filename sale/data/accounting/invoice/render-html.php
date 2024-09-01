@@ -73,14 +73,15 @@ $generateInvoiceLines = function($invoice, $mode) {
 
         if($mode !== 'simple') {
             $lines[] = [
-                'name'       => $group['name'] ?? '',
-                'price'      => null,
-                'total'      => null,
-                'unit_price' => null,
-                'vat_rate'   => null,
-                'qty'        => null,
-                'free_qty'   => null,
-                'is_group'   => true
+                'name'        => $group['name'] ?? '',
+                'description' => '',
+                'price'       => null,
+                'total'       => null,
+                'unit_price'  => null,
+                'vat_rate'    => null,
+                'qty'         => null,
+                'free_qty'    => null,
+                'is_group'    => true
             ];
         }
 
@@ -94,15 +95,16 @@ $generateInvoiceLines = function($invoice, $mode) {
             }
 
             $group_lines[] = [
-                'name'       => (strlen($line['description']) > 0) ? $line['description'] : $line['name'],
-                'price'      => round(($invoice['invoice_type'] == 'credit_note') ? (-$line['price']) : $line['price'], 2),
-                'total'      => round(($invoice['invoice_type'] == 'credit_note') ? (-$line['total']) : $line['total'], 2),
-                'unit_price' => $line['unit_price'],
-                'vat_rate'   => $line['vat_rate'],
-                'qty'        => $line['qty'],
-                'discount'   => $line['discount'],
-                'free_qty'   => $line['free_qty'],
-                'is_group'   => false
+                'name'        => $line['name'],
+                'description' => $line['description'],
+                'price'       => round(($invoice['invoice_type'] == 'credit_note') ? (-$line['price']) : $line['price'], 2),
+                'total'       => round(($invoice['invoice_type'] == 'credit_note') ? (-$line['total']) : $line['total'], 2),
+                'unit_price'  => $line['unit_price'],
+                'vat_rate'    => $line['vat_rate'],
+                'qty'         => $line['qty'],
+                'discount'    => $line['discount'],
+                'free_qty'    => $line['free_qty'],
+                'is_group'    => false
             ];
         }
 
