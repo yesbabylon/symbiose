@@ -136,6 +136,7 @@ class SaleEntry extends Model {
             'object_class' => [
                 'type'              => 'string',
                 'description'       => 'Class of the object the sale entry points to.',
+                'help'              => 'The target is an entity from which sales originate. Each sale type might have characteristics of its own.',
                 'dependents'        => ['subscription_id', 'project_id']
             ],
 
