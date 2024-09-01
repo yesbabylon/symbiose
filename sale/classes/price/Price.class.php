@@ -96,7 +96,7 @@ class Price extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'usage'             => 'amount/rate',
-                'function'          => 'calcVatRate',
+                'relation'          => ['accounting_rule_id' => ['vat_rule_id' => 'rate']],
                 'description'       => 'VAT rate applied on the price (from accounting rule).',
                 'store'             => true,
                 'readonly'          => true,
@@ -111,15 +111,6 @@ class Price extends Model {
         $self->read(['product_id' => ['id', 'sku'], 'price_list_id' => 'name']);
         foreach($self as $id => $product) {
             $result[$id] = "{$product['product_id']['sku']} [{$product['product_id']['id']}] - {$product['price_list_id']['name']}";
-        }
-        return $result;
-    }
-
-    public static function calcVatRate($self) {
-        $result = [];
-        $self->read(['accounting_rule_id' => ['vat_rule_id' => 'rate']]);
-        foreach($self as $id => $price) {
-            $result[$id] = $price['accounting_rule_id']['vat_rule_id']['rate'];
         }
         return $result;
     }
