@@ -75,7 +75,7 @@ class InvoiceLine extends \finance\accounting\InvoiceLine {
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => 'The product (SKU) the line relates to.',
                 'required'          => true,
-                'dependencies'      => ['name']
+                'dependents'      => ['name']
             ],
 
             'price_id' => [
