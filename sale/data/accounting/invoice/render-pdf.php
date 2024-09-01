@@ -4,7 +4,6 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 use core\setting\Setting;
 use Dompdf\Dompdf;
 use Dompdf\Options as DompdfOptions;
@@ -53,7 +52,7 @@ list($params, $providers) = eQual::announce([
 ]);
 
 /** @var \equal\php\Context $context */
-$context = $providers['context'];
+['context' => $context] = $providers;
 
 $invoice = Invoice::id($params['id'])
     ->read(['id'])
