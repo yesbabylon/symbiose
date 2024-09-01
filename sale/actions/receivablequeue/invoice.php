@@ -118,6 +118,7 @@ foreach($receivables_queues as $receivables_queue) {
 
     foreach($receivables as $receivable) {
         $invoice_line = InvoiceLine::create([
+                // #memo - name is computed & based on product
                 'description'           => $receivable['name'],
                 'invoice_line_group_id' => $invoice_line_group['id'],
                 'invoice_id'            => $invoice['id'],
