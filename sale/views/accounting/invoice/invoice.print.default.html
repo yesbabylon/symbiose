@@ -372,6 +372,9 @@
                                     {{ line.description }}
                                 {% else %}
                                     {{ line.name }}
+                                    {% if ( line.description | length ) > 0 %}
+                                        {{ line.description }}
+                                    {% endif %}
                                 {% endif %}
                             </td>
                             <td style="width: 8%; text-align: center;">
