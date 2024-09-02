@@ -170,12 +170,16 @@
         }
 
         main .invoice-lines table.inner tbody tr td {
-            border-bottom: 1px solid black;
+            border-bottom: 1px solid lightgrey;
             border-right: 1px solid black;
         }
 
         main .invoice-lines table.inner tbody tr td:first-child {
             border-left: 1px solid black;
+        }
+
+        main .invoice-lines table.inner tbody tr td:last-child {
+            border-bottom: 1px solid black;
         }
 
         footer {
@@ -412,16 +416,27 @@
                     <tbody>
                     <tr valign="top">
                         <td style="width: 87%; text-align: right; padding-right: 10px;">
-                            {{ labels.total_ex_vat }}
+                            {{ labels.total_excl_vat }}
                         </td>
                         <td style="width: 13%; text-align: right; border-right: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black;">
                             {{ invoice.total | format_currency(currency, [], locale) }}
                         </td>
                     </tr>
-
+                    {% for tax_label, tax_total in tax_lines %}
+                    {% if (tax_total != 0.0) %}
                     <tr>
                         <td style="text-align: right; padding-right: 10px;">
-                            <b>{{ labels.total_inc_vat }}</b>
+                            {{ tax_label }}
+                        </td>
+                        <td style="text-align: right; border-left: solid 1px black; border-bottom: solid 1px black;">
+                            {{ tax_total | format_money() }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <td style="text-align: right; padding-right: 10px;">
+                            <b>{{ labels.total_incl_vat }}</b>
                         </td>
                         <td style="text-align: right; border-right: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black;">
                             <b>{{ invoice.price | format_currency(currency, [], locale) }}</b>
