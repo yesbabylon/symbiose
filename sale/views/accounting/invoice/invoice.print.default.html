@@ -370,15 +370,16 @@
                     <tbody>
                     {% for line in lines %}
                         <tr valign="top">
+                            {% if line.is_group %}
+                            <td rowspan="7">
+                                <b>{{ line.name }}</b>
+                                <br />{{ line.description }}
+                            </td>
+                            {% else %}
                             <td style="width: 45%;">
-                                {% if line.is_group %}
-                                    <b>{{ line.name }}</b>
+                                {{ line.name }}
+                                {% if ( line.description | length ) > 0 %}
                                     <br />{{ line.description }}
-                                {% else %}
-                                    {{ line.name }}
-                                    {% if ( line.description | length ) > 0 %}
-                                        <br />{{ line.description }}
-                                    {% endif %}
                                 {% endif %}
                             </td>
                             <td style="width: 8%; text-align: center;">
@@ -407,6 +408,7 @@
                                     {{ line.total | format_money() }}
                                 {% endif %}
                             </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                     </tbody>
