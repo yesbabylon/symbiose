@@ -371,10 +371,16 @@
                     {% for line in lines %}
                         <tr valign="top">
                             {% if line.is_group %}
-                            <td colspan="7">
+                            <td style="width: 45%;">
                                 <b>{{ line.name }}</b>
                                 <br />{{ line.description }}
                             </td>
+                            <td style="width: 8%; text-align: center;"></td>
+                            <td style="width: 8%; text-align: center;"></td>
+                            <td style="width: 10%; text-align: right;"></td>
+                            <td style="width: 8%; text-align: right;"></td>
+                            <td style="width: 8%; text-align: right;"></td>
+                            <td style="width: 13%; text-align: right;"></td>
                             {% else %}
                             <td style="width: 45%;">
                                 {{ line.name }}
