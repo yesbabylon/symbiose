@@ -44,6 +44,14 @@
             "controller": "sale_order_do-invoice",
             "confirm": true,
             "visible": ["status", "=", "checkedout"]
+        },
+        {
+            "id": "action.invoice-back",
+            "label": "Back to Check Out",
+            "description": "Adaptations are still required and the proforma invoice will have to be regenerated.",
+            "controller": "sale_order_do-checkout",
+            "confirm": true,
+            "visible": [["is_invoiced", "=", false],["status", "in", ["invoiced", "debit_balance", "credit_balance", "balanced"]]]
         }
     ],
     "layout": {
@@ -75,6 +83,11 @@
                                             {
                                                 "type": "field",
                                                 "value": "customer_reference",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_invoiced",
                                                 "width": "50%"
                                             },
                                             {

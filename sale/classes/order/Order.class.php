@@ -117,6 +117,12 @@ class Order extends Model {
                 'default'           => 'quote'
             ],
 
+            'is_invoiced' => [
+                "type"              => "boolean",
+                "description"       => "Marks the order has having a non-cancelled balance invoice.",
+                "default"           => false
+            ],
+
             'is_cancelled' => [
                 'type'              => 'boolean',
                 'description'       => "Flag marking the order as cancelled (impacts status).",
