@@ -7,6 +7,7 @@
 use core\setting\Setting;
 use equal\data\DataFormatter;
 use sale\accounting\invoice\Invoice;
+use Twig\TwigFilter;
 use Twig\Environment as TwigEnvironment;
 use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
 use Twig\Extra\Intl\IntlExtension;
@@ -346,15 +347,22 @@ foreach($invoice['invoice_lines_ids'] as $line) {
     $values['tax_lines'][$tax_label] += $vat;
 }
 
-// generate HTML
-$loader = new TwigFilesystemLoader(EQ_BASEDIR.'/packages/sale/views/accounting/invoice');
-$twig = new TwigEnvironment($loader);
-
-/** @var ExtensionInterface $extension **/
-$extension  = new IntlExtension();
-$twig->addExtension($extension);
-
 try {
+    // generate HTML
+    $loader = new TwigFilesystemLoader(EQ_BASEDIR.'/packages/sale/views/accounting/invoice');
+    $twig = new TwigEnvironment($loader);
+
+    /** @var ExtensionInterface $extension **/
+    $extension  = new IntlExtension();
+    $twig->addExtension($extension);
+
+    // #todo - temp workaround against LOCALE mixups
+    $twig->addFilter(
+            new TwigFilter('format_money', function ($value) {
+                return number_format((float) $value, 2, ",", ".").' €';
+            })
+        );
+
     $template = $twig->load('invoice.'.$params['view_id'].'.html');
     $html = $template->render($values);
 }
