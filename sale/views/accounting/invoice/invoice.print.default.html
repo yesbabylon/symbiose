@@ -382,10 +382,10 @@
                                 {% endif %}
                             </td>
                             <td style="width: 8%; text-align: center;">
-                                {{ line.qty }}
+                                {{ line.qty | format_number(2) }}
                             </td>
                             <td style="width: 8%; text-align: center;">
-                                {{ line.free_qty }}
+                                {{ line.free_qty | format_number(2) }}
                             </td>
                             <td style="width: 10%; text-align: right;">
                                 {% if line.unit_price is not null %}
