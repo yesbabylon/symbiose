@@ -49,9 +49,12 @@ if($order['status'] != 'checkedout') {
 }
 
 
-$deposit_invoices = Invoice::search([['order_id', '=', $order['id']]])
-                  ->read(['status'])
-                  ->get(true);
+$deposit_invoices = Invoice::search([
+                        ['order_id', '=', $order['id']],
+                        ['is_downpayment', '=', true]
+                ])
+                ->read(['status'])
+                ->get(true);
 
 foreach($deposit_invoices as $deposit_invoice) {
     if($deposit_invoice['status'] == 'proforma') {
@@ -59,20 +62,11 @@ foreach($deposit_invoices as $deposit_invoice) {
     }
 }
 
-$fundings = Funding::search([ ['paid_amount', '=', 0], ['is_paid', '=', false], ['order_id', '=', $params['id']], ['invoice_id', '=', null] ])
-    ->read(['id', 'payments_ids'])
-    ->get(true);
+Funding::search([ ['paid_amount', '=', 0], ['order_id', '=', $params['id']]])->delete(true);
 
-foreach($fundings as $funding) {
-    if(!$funding['payments_ids'] || count($funding['payments_ids']) == 0) {
-        Funding::id($funding['id'])->delete(true);
-    }
-}
+eQual::run('do', 'sale_order_invoice_generate', ['id' => $order['id']]);
 
-eQual::run('do', 'sale_order_invoice_generate', $params['id']);
-
-
-//Order::id($order['id'])->update(['status' => 'invoiced']);
+Order::id($order['id'])->update(['status' => 'invoiced']);
 
 $context->httpResponse()
         ->status(204)

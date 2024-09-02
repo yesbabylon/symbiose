@@ -132,7 +132,6 @@ foreach($order['order_lines_groups_ids'] as $group_id => $group) {
 
     foreach($group['order_lines_ids'] as $lid => $line) {
         $order_lines_ids[] = $lid;
-
         InvoiceLine::create([
                 'invoice_id'                => $invoice['id'],
                 'invoice_line_group_id'     => $invoice_line_group['id'],
@@ -152,7 +151,6 @@ foreach($order['order_lines_groups_ids'] as $group_id => $group) {
 
 }
 
-
 $fundings = Funding::search(['order_id', '=', $params['id']])
     ->read(['funding_type', 'due_amount', 'is_paid', 'paid_amount', 'invoice_id', 'payments_ids'])
     ->get();
@@ -169,11 +167,9 @@ if($fundings) {
         throw new Exception("unknown_product", QN_ERROR_UNKNOWN_OBJECT);
     }
 
-
     $i_lines_ids = [];
 
     foreach($fundings as $fid => $funding) {
-
         if($funding['funding_type'] == 'invoice') {
             $funding_invoice = Invoice::id($funding['invoice_id'])
                 ->read([
@@ -182,59 +178,34 @@ if($fundings) {
                     ])
                 ->first(true);
 
-            if(!$funding_invoice) {
-                $funding['funding_type'] = 'installment';
-                Funding::id($fid)->update(['type' => 'installment', 'invoice_id' => null]);
-            }
-            else {
-                if($funding_invoice['invoice_type'] == 'invoice' && $funding_invoice['is_downpayment']) {
-                    // #memo - there should be only one line
-                    foreach($funding_invoice['invoice_lines_ids'] as $lid => $line) {
-                        $i_line = [
-                            'invoice_id'                => $invoice['id'],
-                            'name'                      => $funding_invoice['name'],
-                            'product_id'                => $line['product_id'],
-                            'vat_rate'                  => $line['vat_rate'],
-                            'unit_price'                => $line['unit_price'],
-                            'qty'                       => -$line['qty'],
-                            'downpayment_invoice_id'    => $funding['invoice_id'],
-                        ];
-                        $new_line = InvoiceLine::create($i_line)
-                            ->read(['id'])
-                            ->first(true);
-                        $i_lines_ids[] = $new_line['id'];
-                    }
-                }
-                // #memo - we're re-emitting a balance invoice : remove fundings from previous credit note
-                elseif($funding_invoice['invoice_type'] == 'credit_note' ) {
-                    if($funding['paid_amount'] == 0 && !$funding['is_paid'] && count($funding['payments_ids']) == 0) {
-                        Funding::id($fid)->delete(true);
-                    }
+            if($funding_invoice['invoice_type'] == 'invoice' && $funding_invoice['is_downpayment']) {
+                foreach($funding_invoice['invoice_lines_ids'] as $lid => $line) {
+                    $new_line = InvoiceLine::create([
+                        'invoice_id'                => $invoice['id'],
+                        'name'                      => $funding_invoice['name'],
+                        'product_id'                => $line['product_id'],
+                        'vat_rate'                  => $line['vat_rate'],
+                        'unit_price'                => $line['unit_price'],
+                        'qty'                       => -$line['qty'],
+                        'downpayment_invoice_id'    => $funding['invoice_id'],
+                    ])
+                    ->read(['id'])
+                    ->first(true);
+                    $i_lines_ids[] = $new_line['id'];
                 }
             }
         }
-        
-        if($funding['type'] == 'installment') {
-            // #memo - fundings can be manually marked as paid without being actually linked to payments (transition)
-            if($funding['paid_amount'] == 0 && !$funding['is_paid'] && count($funding['payments_ids']) == 0 && is_null($funding['invoice_id'])) {
-                Funding::id($fid)->delete(true);
-            }
-            else {
-                Funding::id($fid)->update(['invoice_id'  => $invoice['id']]);
 
-                // partially paid fundings are kept and attached to the invoice on which they are accounted
-                if(abs($funding['paid_amount']) < abs($funding['due_amount'])) {
-                    if($funding['paid_amount'] == 0) {
-                        Funding::id($fid)->delete(true);
-                    }
-                    else {
-                        Funding::id($fid)
-                            // #memo - we have to do this in several steps, because once the funding is marked as is_paid, the funding can no longer be modified (except for the invoice_id)
-                            ->update(['due_amount'  => round($funding['paid_amount'], 2)])
-                            ->update(['is_paid'     => null]);
-                    }
+        if($funding['funding_type'] == 'installment') {
+            Funding::id($fid)->update(['invoice_id'  => $invoice['id']]);
+            if(abs($funding['paid_amount']) < abs($funding['due_amount'])) {
+                if($funding['paid_amount'] > 0) {
+                    Funding::id($fid)
+                        ->update(['due_amount'  => round($funding['paid_amount'], 2)])
+                        ->update(['is_paid'     => null]);
                 }
             }
+
         }
     }
 

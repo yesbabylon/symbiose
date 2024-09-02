@@ -454,8 +454,7 @@ class Invoice extends \finance\accounting\Invoice {
                     'reversed_invoice_id' => $invoice['id']
                 ])
                 ->read(['id'])
-                ->first();
-
+                ->first(true);
             foreach($invoice['invoice_line_groups_ids'] as $invoice_line_group) {
                 $reversed_group = InvoiceLineGroup::create([
                         'name'       => $invoice_line_group['name'],
@@ -715,7 +714,7 @@ class Invoice extends \finance\accounting\Invoice {
                     $editable_fields = ['payment_status', 'customer_ref', 'funding_id', 'reversed_invoice_id'];
 
                     if( count(array_diff(array_keys($values), $editable_fields)) ) {
-                        return ['status' => ['non_editable' => "Invoice can only be updated while its status is proforma ({$id})."]];
+                    //    return ['status' => ['non_editable' => "Invoice can only be updated while its status is proforma ({$id})."]];
                     }
                 }
             }

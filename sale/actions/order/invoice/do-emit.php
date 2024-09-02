@@ -111,8 +111,20 @@ if(!is_null($invoice['order_id'])) {
     Invoice::generateNumberInvoice((array) $invoice['id']);
 
     Invoice::id($invoice['id'])
-        ->update(['status' => 'invoice'])
-        ->read(['name','invoice_number'])->first(true);
+        ->update(['status' => 'invoice',
+                  'is_paid' => null])
+        ->read(['name','invoice_number']);
+
+    eQual::run('do', 'sale_order_invoice_do-funding', ['id' => $params['id']]);
+
+    if($invoice['invoice_type'] == 'invoice' && !$invoice['is_downpayment']) {
+        Order::id($order['id'])->update(['is_invoiced' => true]);
+    }
+    elseif($invoice['invoice_type'] == 'credit_note' && !$invoice['is_downpayment']) {
+        Order::id($order['id'])->update(['is_invoiced' => false]);
+    }
+
+    Order::updateStatusFromFundings((array) $order['id']);
 }
 else {
     throw new Exception('invalid_invoice', EQ_ERROR_UNKNOWN);
