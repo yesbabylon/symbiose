@@ -4,13 +4,10 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 namespace sale\receivable;
 
 use core\setting\Setting;
 use equal\orm\Model;
-use sale\price\Price;
-use sale\price\PriceList;
 
 class Receivable extends Model {
 
@@ -30,19 +27,30 @@ class Receivable extends Model {
                 'domain'            => ['customer_id', '=', 'object.customer_id']
             ],
 
-            'customer_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\customer\Customer',
-                'description'       => 'The Customer to who refers the item.',
-                'readonly'          => true
-            ],
-
             'date' => [
                 'type'              => 'datetime',
                 'description'       => 'Creation date of the receivable.',
+                'help'              => 'Not all sale entries are synchronous, and a receivable might have a distinct date (i.e. subscription).',
+                'readonly'          => true
+            ],
+
+            'status' => [
+                'type'              => 'string',
+                'description'       => 'Status of the receivable (pending, invoiced or cancelled).',
+                'selection'         => [
+                    'pending',
+                    'invoiced',
+                    'cancelled'
+                ],
+                'default'           => 'pending'
+            ],
+
+            'sale_entry_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\SaleEntry',
+                'description'       => 'The sale entry the receivable originates from.',
+                'dependents'        => ['name', 'description', 'product_id', 'price_id', 'unit_price', 'vat_rate', 'qty', 'free_qty', 'discount', 'total', 'price'],
                 'required'          => true,
-                'default'           => time(),
-                'dependents'        => ['price_id'],
                 'readonly'          => true
             ],
 
@@ -56,36 +64,32 @@ class Receivable extends Model {
             ],
 
             'description' => [
-                'type'              => 'string',
+                'type'              => 'computed',
+                'result_type'       => 'string',
                 'usage'             => 'text/plain',
                 'description'       => 'Description of the receivable.',
+                'relation'          => ['sale_entry_id' => ['description']],
+                'store'             => true,
                 'readonly'          => true
             ],
 
-            'status' => [
-                'type'              => 'string',
-                'description'       => 'Status of the receivable. It can be pending, invoiced or cancelled.',
-                'selection'         => [
-                    'pending',
-                    'invoiced',
-                    'cancelled'
-                ],
-                'default'           => 'pending'
-            ],
-
-            'sale_entry_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\SaleEntry',
-                'description'       => 'The sale entry at the origin of the receivable.',
+            'customer_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'sale\customer\Customer',
+                'relation'          => ['sale_entry_id' => ['customer_id']],
+                'description'       => 'The Customer to who refers the item.',
+                'store'             => true,
                 'readonly'          => true
             ],
 
             'product_id' => [
-                'type'              => 'many2one',
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => 'The product (SKU) the receivable relates to.',
-                'required'          => true,
-                'dependents'        => ['price_id'],
+                'relation'          => ['sale_entry_id' => ['product_id']],
+                'store'             => true,
                 'readonly'          => true
             ],
 
@@ -94,8 +98,7 @@ class Receivable extends Model {
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'sale\price\Price',
                 'description'       => 'The price the receivable relates to.',
-                'dependents'        => ['unit_price'],
-                'function'          => 'calcPriceId',
+                'relation'          => ['sale_entry_id' => ['price_id']],
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -105,44 +108,46 @@ class Receivable extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Unit price of the product related to the receivable.',
-                'dependents'        => ['total', 'price'],
-                'function'          => 'calcUnitPrice',
+                'relation'          => ['sale_entry_id' => ['unit_price']],
                 'store'             => true,
                 'readonly'          => true
             ],
 
             'vat_rate' => [
-                'type'              => 'float',
+                'type'              => 'computed',
+                'result_type'       => 'float',
                 'usage'             => 'amount/rate',
                 'description'       => 'VAT rate to be applied.',
-                'default'           => 0.0,
-                'dependents'        => ['total', 'price'],
+                'relation'          => ['sale_entry_id' => ['vat_rate']],
+                'store'             => true,
                 'readonly'          => true
             ],
 
             'qty' => [
-                'type'              => 'float',
+                'type'              => 'computed',
+                'result_type'       => 'float',
                 'description'       => 'Quantity of product.',
-                'default'           => 1.0,
-                'dependents'        => ['total', 'price'],
+                'relation'          => ['sale_entry_id' => ['qty']],
+                'store'             => true,
                 'readonly'          => true
             ],
 
             'free_qty' => [
-                'type'              => 'integer',
+                'type'              => 'computed',
+                'result_type'       => 'integer',
                 'description'       => 'Free quantity of product, if any.',
-                'default'           => 0,
-                'dependents'        => ['total', 'price'],
+                'relation'          => ['sale_entry_id' => ['free_qty']],
+                'store'             => true,
                 'readonly'          => true
             ],
 
-            // #memo - important: to allow maximum flexibility, percent values can hold 4 decimal digits (must not be rounded, except for display)
             'discount' => [
-                'type'              => 'float',
+                'type'              => 'computed',
+                'result_type'       => 'float',
                 'usage'             => 'amount/rate',
                 'description'       => 'Total amount of discount to apply, if any.',
-                'default'           => 0.0,
-                'dependents'        => ['total', 'price'],
+                'relation'          => ['sale_entry_id' => ['discount']],
+                'store'             => true,
                 'readonly'          => true
             ],
 
@@ -185,57 +190,16 @@ class Receivable extends Model {
 
     public static function calcName($self) {
         $result = [];
-        $self->read(['product_id' => ['name']]);
+        $self->read(['sale_entry_id' => ['name', 'date', 'object_class'], 'product_id' => ['name']]);
+        $date_format = Setting::get_value('core', 'locale', 'date_format', 'm/d/Y');
         foreach($self as $id => $receivable) {
-            if(isset($receivable['product_id']['name'])) {
-                $result[$id] = $receivable['product_id']['name'];
+            if(($receivable['sale_entry_id']['object_class'] ?? '') == 'timetrack\Project') {
+                $result[$id] = date($date_format, $receivable['sale_entry_id']['date']).' - '.$receivable['sale_entry_id']['name'];
+            }
+            else {
+                $result[$id] = $receivable['product_id']['name'] ?? '';
             }
         }
-
-        return $result;
-    }
-
-    public static function calcPriceId($self) {
-        $result = [];
-        $self->read(['date', 'product_id']);
-        foreach($self as $id => $receivable) {
-            $price_lists_ids = PriceList::search([
-                [
-                    ['date_from', '<=', $receivable['date']],
-                    ['date_to', '>=', $receivable['date']],
-                    ['status', '=', 'published'],
-                ]
-            ])
-                ->ids();
-
-            if(empty($price_lists_ids)) {
-                continue;
-            }
-
-            $price = Price::search([
-                ['product_id', '=', $receivable['product_id']],
-                ['price_list_id', 'in', $price_lists_ids]
-            ])
-                ->read(['id'])
-                ->first();
-
-            if(isset($price)) {
-                $result[$id] = $price['id'];
-            }
-        }
-
-        return $result;
-    }
-
-    public static function calcUnitPrice($self) {
-        $result = [];
-        $self->read(['price_id' => ['price']]);
-        foreach($self as $id => $receivable) {
-            if(isset($receivable['price_id']['price'])) {
-                $result[$id] = $receivable['price_id']['price'];
-            }
-        }
-
         return $result;
     }
 

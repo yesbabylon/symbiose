@@ -7,7 +7,7 @@
 
 use sale\receivable\Receivable;
 
-list($params, $providers) = announce([
+list($params, $providers) = eQual::announce([
     'description'   => 'Invoice all pending receivables.',
     'params'        => [],
     'response'      => [
@@ -19,7 +19,7 @@ list($params, $providers) = announce([
 ]);
 
 /** @var \equal\php\Context $context */
-$context = $providers['context'];
+['context' => $context] = $providers;
 
 $pending_receivables_ids = Receivable::search(['status', '=', 'pending'])->ids();
 

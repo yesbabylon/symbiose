@@ -4,13 +4,12 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 use sale\receivable\Receivable;
 use sale\receivable\ReceivablesQueue;
 use sale\SaleEntry;
 use timetrack\Project;
 
-list($params, $providers) = announce([
+list($params, $providers) = eQual::announce([
     'description'   => 'Create a receivable from a sale entry.',
     'params'        => [
         'id' =>  [
@@ -18,7 +17,6 @@ list($params, $providers) = announce([
             'description'    => 'Identifier of the targeted sale entry.',
             'required'       => true
         ],
-
         'receivables_queue_id' => [
             'type'           => 'many2one',
             'foreign_object' => 'sale\receivable\ReceivablesQueue',
@@ -35,23 +33,18 @@ list($params, $providers) = announce([
 ]);
 
 /** @var \equal\php\Context $context */
-$context = $providers['context'];
+['context' => $context] = $providers;
 
 $getSaleEntry = function($id) {
     $sale_entry = SaleEntry::id($id)
         ->read([
             'id',
+            'date',
             'object_class',
             'object_id',
             'customer_id',
             'product_id',
             'price_id' => ['id', 'vat_rate'],
-            'unit_price',
-            'qty',
-            'free_qty',
-            'discount',
-            'has_receivable',
-            'receivable_name'
         ])
         ->first(true);
 
@@ -77,9 +70,9 @@ $getReceivablesQueue = function($sale_entry, $receivable_queue_id) {
 
     if(!is_null($receivable_queue_id)) {
         $receivables_queue = ReceivablesQueue::search([
-            ['id', '=', $receivable_queue_id],
-            ['customer_id', '=', $sale_entry['customer_id']]
-        ])
+                ['id', '=', $receivable_queue_id],
+                ['customer_id', '=', $sale_entry['customer_id']]
+            ])
             ->read(['id'])
             ->first();
 
@@ -89,15 +82,15 @@ $getReceivablesQueue = function($sale_entry, $receivable_queue_id) {
     }
     else {
         $receivables_queue = ReceivablesQueue::search(
-            ['customer_id', '=', $sale_entry['customer_id']]
-        )
+                ['customer_id', '=', $sale_entry['customer_id']]
+            )
             ->read(['id'])
             ->first();
 
         if(!$receivables_queue) {
             $receivables_queue = ReceivablesQueue::create([
-                'customer_id' => $sale_entry['customer_id']
-            ])
+                    'customer_id' => $sale_entry['customer_id']
+                ])
                 ->first();
         }
     }
@@ -115,11 +108,11 @@ $receivables_queue = $getReceivablesQueue(
 $receivable = null;
 if($sale_entry['object_class'] !== Project::class) {
     $receivable = Receivable::search([
-        ['customer_id', '=', $sale_entry['customer_id']],
-        ['product_id', '=', $sale_entry['product_id']],
-        ['price_id', '=', $sale_entry['price_id']['id']],
-        ['status', '=', 'pending']
-    ])
+            ['customer_id', '=', $sale_entry['customer_id']],
+            ['product_id', '=', $sale_entry['product_id']],
+            ['price_id', '=', $sale_entry['price_id']['id']],
+            ['status', '=', 'pending']
+        ])
         ->read(['id'])
         ->first();
 }
@@ -128,25 +121,15 @@ if(is_null($receivable)) {
     $object_name = 'Sale';
     if(!is_null($sale_entry['object_class'])) {
         $object_name = array_reverse(
-            explode('\\', $sale_entry['object_class'])
-        )[0];
+                explode('\\', $sale_entry['object_class'])
+            )[0];
     }
 
     $receivable = Receivable::create([
-        'receivables_queue_id' => $receivables_queue['id'],
-        'customer_id'          => $sale_entry['customer_id'],
-        'sale_entry_id'        => $sale_entry['id'],
-        'date'                 => time(),
-        'name'                 => $sale_entry['receivable_name'],
-        'description'          => "Reference $object_name entry product.",
-        'product_id'           => $sale_entry['product_id'],
-        'price_id'             => $sale_entry['price_id']['id'],
-        'unit_price'           => $sale_entry['unit_price'],
-        'vat_rate'             => $sale_entry['price_id']['vat_rate'],
-        'qty'                  => $sale_entry['qty'],
-        'free_qty'             => $sale_entry['free_qty'],
-        'discount'             => $sale_entry['discount']
-    ])
+            'receivables_queue_id' => $receivables_queue['id'],
+            'sale_entry_id'        => $sale_entry['id'],
+            'date'                 => $sale_entry['date']
+        ])
         ->first();
 
     SaleEntry::id($sale_entry['id'])

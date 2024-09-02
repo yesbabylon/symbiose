@@ -299,19 +299,6 @@
                 "description": "Receivables parent menu.",
                 "children": [
                     {
-                        "id": "receivables.receivables",
-                        "type": "entry",
-                        "label": "All",
-                        "icon": "list",
-                        "description": "Display all receivables.",
-                        "context": {
-                            "entity": "sale\\receivable\\Receivable",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
                         "id": "receivables.queues",
                         "type": "entry",
                         "label": "Queues",
@@ -319,6 +306,19 @@
                         "description": "Display all receivables queues.",
                         "context": {
                             "entity": "sale\\receivable\\ReceivablesQueue",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "receivables.receivables",
+                        "type": "entry",
+                        "label": "All",
+                        "icon": "list",
+                        "description": "Display all receivables.",
+                        "context": {
+                            "entity": "sale\\receivable\\Receivable",
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc"

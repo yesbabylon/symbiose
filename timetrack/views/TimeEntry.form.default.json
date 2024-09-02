@@ -8,7 +8,7 @@
             "controller": "model_transition",
             "params": {
                 "entity": "timetrack\\TimeEntry",
-                "transition": "request-validation",
+                "transition": "submit",
                 "ids": []
             },
             "visible": [

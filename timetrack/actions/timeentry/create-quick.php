@@ -43,6 +43,12 @@ list($params, $providers) = eQual::announce([
             'required'       => true
         ],
 
+        'date'        => [
+            'type'           => 'date',
+            'description'    => 'Date on which the task was performed.',
+            'default'        => function () { return time(); }
+        ],
+
         'duration'        => [
             'type'           => 'time',
             'description'    => 'Task duration.',
@@ -89,7 +95,8 @@ if(!is_null($time_zone)) {
     $tz_offset = $tz->getOffset(new DateTime());
 }
 
-$begin = time() - strtotime("today midnight") - $params['duration'] + $tz_offset;
+$date = $params['date'];
+$begin = time() - strtotime("midnight") - $params['duration'] + $tz_offset;
 $start = (int) (floor(floatval($begin) / 60 / 15) * 15 * 60);
 $end = $start + intval(ceil($params['duration'] / 60 / 15) * 15 * 60);
 
@@ -98,10 +105,11 @@ TimeEntry::create([
         'origin'      => $params['origin'],
         'reference'   => $params['reference'] ?? '',
         'description' => $params['description'],
+        'date'        => $date,
         'time_start'  => $start,
         'time_end'    => $end
     ])
-    ->transition('request-validation');
+    ->transition('submit');
 
 $context->httpResponse()
         ->status(201)

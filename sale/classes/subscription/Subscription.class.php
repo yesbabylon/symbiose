@@ -45,7 +45,7 @@ class Subscription extends Model  {
                 'type'              => 'date',
                 'required'          => true,
                 'description'       => 'Start date of subscription.',
-                'default'           => time(),
+                'default'           => function () { return time(); },
                 'dependencies'      => ['price_id']
             ],
 
@@ -53,7 +53,7 @@ class Subscription extends Model  {
                 'type'              => 'date',
                 'description'       => 'End date of subscription.',
                 'required'          => true,
-                'default'           => strtotime('+1 year'),
+                'default'           => function () { return strtotime('+1 year'); },
                 'dependencies'      => ['price_id', 'is_expired','has_upcoming_expiry']
             ],
 
@@ -157,10 +157,7 @@ class Subscription extends Model  {
     public static function onchange($event, $values): array {
         $result = [];
 
-        if(
-            isset($event['date_from'])
-            || isset($event['duration'])
-        ) {
+        if( isset($event['date_from']) || isset($event['duration']) ) {
             $now = time();
             $date_from =  $event['date_from'] ??  $values['date_from'];
             $duration = self::MAP_DURATION[$event['duration'] ?? $values['duration']];
@@ -173,11 +170,9 @@ class Subscription extends Model  {
             $result['has_upcoming_expiry'] = $days_until_expiry < 30;
         }
 
-        if(
-            isset($event['product_id'])
-            && isset($values['date_from'])
-            && isset($values['date_to'])
-        ) {
+        if( isset($event['product_id'])
+                && isset($values['date_from'])
+                && isset($values['date_to']) ) {
             $price = self::getProductPrice(
                 $event['product_id'],
                 $values['date_from'],
@@ -193,29 +188,29 @@ class Subscription extends Model  {
 
     public static function getPriceListsIds($date_from, $date_to) {
         return PriceList::search([
-            [
-                ['date_from', '<', $date_from],
-                ['date_to', '>=', $date_from],
-                ['date_to', '<=', $date_to],
-                ['status', '=', 'published'],
-            ],
-            [
-                ['date_from', '>=', $date_from],
-                ['date_to', '>=', $date_from],
-                ['date_to', '<=', $date_to],
-                ['status', '=', 'published'],
-            ],
-            [
-                ['date_from', '>=', $date_from],
-                ['date_to', '>', $date_to],
-                ['status', '=', 'published'],
-            ],
-            [
-                ['date_from', '<', $date_from],
-                ['date_to', '>', $date_to],
-                ['status', '=', 'published'],
-            ]
-        ])
+                [
+                    ['date_from', '<', $date_from],
+                    ['date_to', '>=', $date_from],
+                    ['date_to', '<=', $date_to],
+                    ['status', '=', 'published'],
+                ],
+                [
+                    ['date_from', '>=', $date_from],
+                    ['date_to', '>=', $date_from],
+                    ['date_to', '<=', $date_to],
+                    ['status', '=', 'published'],
+                ],
+                [
+                    ['date_from', '>=', $date_from],
+                    ['date_to', '>', $date_to],
+                    ['status', '=', 'published'],
+                ],
+                [
+                    ['date_from', '<', $date_from],
+                    ['date_to', '>', $date_to],
+                    ['status', '=', 'published'],
+                ]
+            ])
             ->ids();
     }
 
@@ -225,9 +220,9 @@ class Subscription extends Model  {
         $price_lists_ids = self::getPriceListsIds($date_from, $date_to);
         if(!empty($price_lists_ids)) {
             $price = Price::search([
-                ['product_id', '=', $product_id],
-                ['price_list_id', 'in', $price_lists_ids]
-            ])
+                    ['product_id', '=', $product_id],
+                    ['price_list_id', 'in', $price_lists_ids]
+                ])
                 ->read(['id', 'name', 'price'])
                 ->first();
         }
