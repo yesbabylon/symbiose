@@ -382,10 +382,10 @@
                                 {% endif %}
                             </td>
                             <td style="width: 8%; text-align: center;">
-                                {{ line.qty | format_number({ 'fraction_digits': 2 }) }}
+                                {{ line.qty | format_number({ 'fraction_digit': 2 }) }}
                             </td>
                             <td style="width: 8%; text-align: center;">
-                                {{ line.free_qty | format_number({ 'fraction_digits': 2 }) }}
+                                {{ line.free_qty | format_number({ 'fraction_digit': 2 }) }}
                             </td>
                             <td style="width: 10%; text-align: right;">
                                 {% if line.unit_price is not null %}
