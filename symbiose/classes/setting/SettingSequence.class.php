@@ -23,7 +23,7 @@ class SettingSequence extends \core\setting\SettingSequence {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Organisation',
                 'description'       => 'Organisation the setting is specific to (optional).',
-                'default'           => 0,
+                'default'           => 1,
                 'ondelete'          => 'cascade'
             ]
 
