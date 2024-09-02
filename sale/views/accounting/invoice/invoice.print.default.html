@@ -389,7 +389,7 @@
                             </td>
                             <td style="width: 10%; text-align: right;">
                                 {% if line.unit_price is not null %}
-                                    {{ line.unit_price | format_currency(currency, [], locale) }}
+                                    {{ line.unit_price | format_money() }}
                                 {% endif %}
                             </td>
                             <td style="width: 8%; text-align: right;">
@@ -404,7 +404,7 @@
                             </td>
                             <td style="width: 13%; text-align: right;">
                                 {% if line.total is not null %}
-                                    {{ line.total | format_currency(currency, [], locale) }}
+                                    {{ line.total | format_money() }}
                                 {% endif %}
                             </td>
                         </tr>
@@ -419,7 +419,7 @@
                             {{ labels.total_excl_vat }}
                         </td>
                         <td style="width: 13%; text-align: right; border-right: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black;">
-                            {{ invoice.total | format_currency(currency, [], locale) }}
+                            {{ invoice.total | format_money() }}
                         </td>
                     </tr>
                     {% for tax_label, tax_total in tax_lines %}
@@ -439,7 +439,7 @@
                             <b>{{ labels.total_incl_vat }}</b>
                         </td>
                         <td style="text-align: right; border-right: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black;">
-                            <b>{{ invoice.price | format_currency(currency, [], locale) }}</b>
+                            <b>{{ invoice.price | format_money() }}</b>
                         </td>
                     </tr>
                     </tbody>
@@ -452,7 +452,7 @@
         <!-- payment-qr-code start -->
             <div class="invoice-payment-info" style="height: 180px;">
                 <div style="padding-left: 15px; padding-top: 15px;">
-                    {% set price = '<b>' ~ invoice.price | format_currency(currency, [], locale) ~ '</b>' %}
+                    {% set price = '<b>' ~ invoice.price | format_money() ~ '</b>' %}
                     {% set due_date = '<b>' ~ invoice.due_date | date(date_format, timezone) ~ '</b>' %}
                     {{ labels.balance_of_must_be_paid_before | replace({ '%price%': price, '%due_date%': due_date }) | raw }}
                 </div>
