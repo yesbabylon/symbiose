@@ -36,6 +36,11 @@
             "label": "Facture d'acompte?",
             "description": "Marque la facture comme une facture d'acompte relative à un paiement anticipé",
             "help": ""
+        },
+        "price_billed": {
+            "label": "Total",
+            "description": "Montant final TTC utilisé pour l'affichage (inversé pour les notes de crédit).",
+            "help": ""
         }
 
     },
