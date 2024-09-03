@@ -4,6 +4,14 @@
     "access": {
         "groups": ["order.default.users"]
     },
+    "operations": {
+        "total": {
+            "price": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
     "layout": {
         "items": [
             {
@@ -39,13 +47,13 @@
             },
             {
                 "type": "field",
-                "value": "is_paid",
-                "width": "20%"
+                "value": "balance",
+                "width": "15%"
             },
             {
                 "type": "field",
-                "value": "price",
-                "width": "20%"
+                "value": "price_billed",
+                "width": "15%"
             }
         ]
     }

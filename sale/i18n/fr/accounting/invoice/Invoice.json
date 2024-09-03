@@ -31,7 +31,13 @@
             "label": "Conditions de paiement",
             "description": "Conditions de paiement d'application pour la facture.",
             "help": "Ces conditions sont communiquées au client pour la l'acquittement de la facture."
+        },
+        "is_downpayment": {
+            "label": "Facture d'acompte?",
+            "description": "Marque la facture comme une facture d'acompte relative à un paiement anticipé",
+            "help": ""
         }
+
     },
     "view": {
         "form.default": {

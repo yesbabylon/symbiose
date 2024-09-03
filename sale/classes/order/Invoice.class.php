@@ -28,6 +28,13 @@ class Invoice extends SaleInvoice {
                 'description'       => 'The funding the invoice originates from, if any.'
             ],
 
+            'fundings_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\order\Funding',
+                'foreign_field'     => 'invoice_id',
+                'description'       => 'List of fundings relating to the invoice.'
+            ],
+
             'customer_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
@@ -35,57 +42,49 @@ class Invoice extends SaleInvoice {
                 'required'          => true,
                 'onupdate'          => 'onupdateCustomer'
             ],
-            
 
             'balance' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'function'          => 'calcBalance',
                 'usage'             => 'amount/money:2',
-                'description'       => 'Amount left to be paid by customer.'
-            ],
-
-
+                'description'       => 'Amount left to be paid by customer.',
+                'instant'           => true
+            ]
         ];
     }
 
-    public static function calcBalance($om, $ids, $lang) {
+    public static function calcBalance($self) {
         $result = [];
-        $invoices = $om->read(self::getType(), $ids, ['order_id', 'invoice_type', 'status', 'is_downpayment', 'fundings_ids', 'price'], $lang);
-        
-        foreach($invoices as $id => $invoice) {
+        $self->read(['order_id', 'invoice_type', 'status', 'is_downpayment', 'fundings_ids', 'price']);
+        foreach($self as $id => $invoice) {
             if($invoice['status'] == 'cancelled') {
                 $result[$id] = 0;
             }
             else {
                 if($invoice['is_downpayment'] || $invoice['invoice_type'] == 'credit_note') {
-                    $fundings = $om->read(Funding::getType(), $invoice['fundings_ids'], ['paid_amount'], $lang);
-                    if($fundings > 0) {
-                        $result[$id] = $invoice['price'];
-                        if($invoice['invoice_type'] == 'credit_note') {
-                            $result[$id] = -$result[$id];
-                        }
-                        foreach($fundings as $fid => $funding) {
-                            $result[$id] -= $funding['paid_amount'];
+                    $fundings = Funding::ids($invoice['fundings_ids'])->read(['paid_amount'])->get();
+                    if (!empty($fundings)) {
+                        $result[$id] = $invoice['invoice_type'] == 'credit_note' ? -$invoice['price'] : $invoice['price'];
+                        if (!empty($fundings)) {
+                            $result[$id] -= array_sum(array_column($fundings, 'paid_amount'));
                         }
                         $result[$id] = round($result[$id], 2);
                     }
                 }
                 else {
-                    $fundings_ids = $om->search(Funding::getType(), [ ['order_id', '=', $invoice['order_id'] ],  ]);
-                    
-                    if($fundings_ids > 0) {
-                        $fundings = $om->read(Funding::getType(), $fundings_ids, ['funding_type', 'invoice_id', 'paid_amount'], $lang);
-                        if($fundings > 0) {
-                            $result[$id] = $invoice['price'];
-                            foreach($fundings as $fid => $funding) {
-                                if( $funding['invoice_id'] != $id) {
-                                    continue;
-                                }
-                                $result[$id] -= $funding['paid_amount'];
+                    $fundings = Funding::search(['order_id', '=', $invoice['order_id']])
+                                        ->read(['invoice_id', 'paid_amount'])
+                                        ->get(true);
+                    if (!empty($fundings)) {
+                        $result[$id] = $invoice['price'];
+                        foreach($fundings as $fid => $funding) {
+                            if( $funding['invoice_id'] != $id) {
+                                continue;
                             }
-                            $result[$id] = round($result[$id], 2);
+                            $result[$id] -= $funding['paid_amount'];
                         }
+                        $result[$id] = round($result[$id], 2);
                     }
                 }
             }

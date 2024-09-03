@@ -142,10 +142,30 @@ class Invoice extends \finance\accounting\Invoice {
                 'foreign_object'    => 'sale\pay\PaymentTerms',
                 'description'       => 'The payment terms to apply to the invoice.',
                 'default'           => 1
+            ],
+
+            'price_billed' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'function'          => 'calcPriceBilled',
+                'usage'             => 'amount/money:2',
+                'store'             => true,
+                'description'       => "Final tax-included amount used for display (inverted for credit notes)."
             ]
 
         ];
     }
+
+    public static function calcPriceBilled($self) {
+        $result = [];
+        $self->read(['invoice_type', 'price']);
+        foreach($self as $id => $invoice) {
+            $result[$id] = $invoice['invoice_type'] == 'invoice' ? $invoice['price'] : -$invoice['price'];
+        }
+
+        return $result;
+    }
+
 
     public static function getPolicies(): array {
         return [
