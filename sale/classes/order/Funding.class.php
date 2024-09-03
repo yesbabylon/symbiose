@@ -23,7 +23,7 @@ class Funding extends \sale\pay\Funding {
                 'usage'             => 'amount/money:2',
                 'description'       => 'Amount expected for the funding.',
                 'required'          => true,
-                'dependents'        => ['name', 'amount_share']
+                'dependencies'      => ['is_paid']
             ],
 
             'invoice_id' => [
@@ -68,7 +68,8 @@ class Funding extends \sale\pay\Funding {
                 'usage'             => 'amount/percent',
                 'function'          => 'calcAmountShare',
                 'store'             => true,
-                'description'       => "Share of the payment over the total due amount (order)."
+                'description'       => "Share of the payment over the total due amount (order).",
+                'dependencies'      => ['is_paid']
             ],
 
             'order_id' => [

@@ -71,7 +71,8 @@ Funding::id($funding['id'])
     ->update([
         'paid_amount'    => null,
         'is_paid'        => null
-    ]);
+    ])
+    ->read(['is_paid', 'paid_amount']);
 
 $context->httpResponse()
         ->status(205)
