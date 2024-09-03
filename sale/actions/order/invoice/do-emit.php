@@ -65,70 +65,63 @@ if(intval($year) != intval($fiscal_year)) {
     throw new Exception('fiscal_year_mismatch', EQ_ERROR_CONFLICT_OBJECT);
 }
 
-if(!is_null($invoice['order_id'])) {
-    $order = Order::id($invoice['order_id'])
-        ->read([
-                'id',
-                'name',
-                'status',
-                'price',
-                'reversed_invoice_id',
-                'invoices_ids' => [
-                    'id', 'emission_date', 'invoice_type', 'status', 'price'
-                ]
-            ])
-        ->first(true);
 
-    if(!$order) {
-        throw new Exception("unknown_order", QN_ERROR_UNKNOWN_OBJECT);
-    }
+$order = Order::id($invoice['order_id'])
+    ->read([
+            'id',
+            'name',
+            'status',
+            'price',
+            'reversed_invoice_id',
+            'invoices_ids' => [
+                'id', 'emission_date', 'invoice_type', 'status', 'price'
+            ]
+        ])
+    ->first(true);
 
-    if($invoice['invoice_type'] == 'invoice' && $order['status'] != 'invoiced' && !$invoice['is_downpayment']) {
-        throw new Exception("incompatible_order_status", QN_ERROR_INVALID_PARAM);
-    }
-
-    foreach($order['invoices_ids'] as $id => $order_invoice) {
-        if($order_invoice['id'] != $invoice['id'] &&
-           $order_invoice['status'] == 'proforma' &&
-           $order_invoice['invoice_type'] == $invoice['invoice_type'] &&
-           $order_invoice['date'] <= $invoice['date']) {
-
-            throw new Exception("existing_previous_invoice", QN_ERROR_INVALID_PARAM);
-        }
-    }
-
-    $sum_invoices = ($invoice['status'] == 'invoice' && $invoice['invoice_type'] == 'invoice')?$invoice['price']:0.0;
-    foreach($order['invoices_ids'] as $oid => $odata) {
-        if($odata['status'] == 'invoice' && $type == 'invoice') {
-            $sum_invoices += ($odata['invoice_type'] == 'invoice')? $odata['price'] : -($odata['price']);
-        }
-    }
-
-    if(round($sum_invoices, 2) > round($order['price'], 2)) {
-        throw new Exception("exceeding_order_price", QN_ERROR_INVALID_PARAM);
-    }
-
-    Invoice::generateNumberInvoice((array) $invoice['id']);
-
-    Invoice::id($invoice['id'])
-        ->update(['status' => 'invoice',
-                  'is_paid' => null])
-        ->read(['name','invoice_number']);
-
-    eQual::run('do', 'sale_order_invoice_do-funding', ['id' => $params['id']]);
-
-    if($invoice['invoice_type'] == 'invoice' && !$invoice['is_downpayment']) {
-        Order::id($order['id'])->update(['is_invoiced' => true]);
-    }
-    elseif($invoice['invoice_type'] == 'credit_note' && !$invoice['is_downpayment']) {
-        Order::id($order['id'])->update(['is_invoiced' => false]);
-    }
-
-    Order::updateStatusFromFundings((array) $order['id']);
+if(!$order) {
+    throw new Exception("unknown_order", QN_ERROR_UNKNOWN_OBJECT);
 }
-else {
-    throw new Exception('invalid_invoice', EQ_ERROR_UNKNOWN);
+
+if($invoice['invoice_type'] == 'invoice' && $invoice['status'] == 'invoice' && !$invoice['is_downpayment']) {
+    throw new Exception("incompatible_invoice_status", QN_ERROR_INVALID_PARAM);
 }
+
+foreach($order['invoices_ids'] as $id => $order_invoice) {
+    if($order_invoice['id'] != $invoice['id'] &&
+        $order_invoice['status'] == 'proforma' &&
+        $order_invoice['invoice_type'] == $invoice['invoice_type'] &&
+        $order_invoice['date'] <= $invoice['date']) {
+
+        throw new Exception("existing_previous_invoice", QN_ERROR_INVALID_PARAM);
+    }
+}
+
+$sum_invoices = ($invoice['status'] == 'invoice' && $invoice['invoice_type'] == 'invoice') ? $invoice['price'] : 0.0;
+foreach($order['invoices_ids'] as $oid => $odata) {
+    if($odata['status'] == 'invoice' && $type == 'invoice') {
+        $sum_invoices += ($odata['invoice_type'] == 'invoice')? $odata['price'] : -($odata['price']);
+    }
+}
+
+if(round($sum_invoices, 2) > round($order['price'], 2)) {
+    throw new Exception("exceeding_order_price", QN_ERROR_INVALID_PARAM);
+}
+
+Invoice::generateNumberInvoice((array) $invoice['id']);
+
+Invoice::id($invoice['id'])->update(['status' => 'invoice','is_paid' => null])->read(['name','invoice_number']);
+
+eQual::run('do', 'sale_order_invoice_do-funding', ['id' => $params['id']]);
+
+if($invoice['invoice_type'] == 'invoice' && !$invoice['is_downpayment']) {
+    Order::id($order['id'])->update(['is_invoiced' => true]);
+}
+elseif($invoice['invoice_type'] == 'credit_note' && !$invoice['is_downpayment']) {
+    Order::id($order['id'])->update(['is_invoiced' => false]);
+}
+
+Order::updateStatusFromFundings((array) $order['id']);
 
 $context->httpResponse()
         ->status(205)
