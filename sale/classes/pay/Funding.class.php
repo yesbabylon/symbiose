@@ -170,12 +170,12 @@ class Funding extends Model {
     }
 
     public static function candelete($self) {
-        $self->read(['is_paid', 'paid_amount', 'invoice_id' => ['status'], 'payments_ids']);
+        $self->read(['is_paid', 'paid_amount', 'invoice_id' => ['status', 'invoice_type'], 'payments_ids']);
         foreach($self as $funding) {
             if($funding['is_paid'] || $funding['paid_amount'] != 0 || count($funding['payments_ids']) > 0) {
                 return ['payments_ids' => ['non_removable_funding' => 'Funding paid or partially paid cannot be deleted.']];
             }
-            if(isset($funding['invoice_id']['status']) && $funding['invoice_id']['status'] == 'invoice') {
+            if(isset($funding['invoice_id']['status']) && $funding['invoice_id']['status'] == 'invoice' && $funding['invoice_id']['invoice_type'] == 'invoice') {
                 return ['invoice_id' => ['non_removable_funding' => 'Funding relating to an invoice cannot be deleted.']];
             }
         }

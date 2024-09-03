@@ -50,6 +50,7 @@ if($invoice['status'] != 'invoice') {
     throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
 }
 
+
 if(is_null($invoice['funding_id'])) {
     if($invoice['invoice_type'] == 'invoice') {
         $order = Order::id($invoice['order_id'])->read(['fundings_ids' => ['is_paid', 'invoice_id', 'due_amount',
@@ -84,13 +85,11 @@ if(is_null($invoice['funding_id'])) {
 
 
         $paid_amount = array_reduce($order['fundings_ids'], function($c, $funding) {
-                $result = $c;
-                if(!isset($funding['invoice_id']['is_downpayment']) || !$funding['invoice_id']['is_downpayment']) {
-                    $result += $funding['paid_amount'];
+                if (!isset($funding['invoice_id']['is_downpayment']) || !$funding['invoice_id']['is_downpayment']) {
+                    $c += $funding['paid_amount'];
                 }
-                return $result;
+                return $c;
             }, 0);
-
         if($paid_amount > 0) {
             $new_funding = Funding::create(
                     [
@@ -108,9 +107,6 @@ if(is_null($invoice['funding_id'])) {
                 ->first(true);
 
             Invoice::id($params['id'])->update(['funding_id' => $new_funding['id']]);
-        }
-        else {
-            Invoice::id($params['id'])->update(['is_paid' => true]);
         }
     }
 }
