@@ -6,6 +6,7 @@
 */
 use sale\order\Funding;
 use sale\order\Payment;
+use sale\order\Order;
 
 list($params, $providers) = eQual::announce([
     'description'   => "Create a manual payment to complete the payments of a funding and mark it as paid.",
@@ -73,6 +74,8 @@ Funding::id($funding['id'])
         'is_paid'        => null
     ])
     ->read(['is_paid', 'paid_amount']);
+
+Order::updateStatusFromFundings((array) $funding['order_id']['id']);
 
 $context->httpResponse()
         ->status(205)
