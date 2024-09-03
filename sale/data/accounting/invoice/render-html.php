@@ -7,6 +7,7 @@
 use core\setting\Setting;
 use equal\data\DataFormatter;
 use sale\accounting\invoice\Invoice;
+use Twig\TwigFilter;
 use Twig\Environment as TwigEnvironment;
 use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
 use Twig\Extra\Intl\IntlExtension;
@@ -219,8 +220,8 @@ $getLabels = function($lang) {
         'status_to_pay'                  => Setting::get_value('sale', 'locale', 'label_status-to-pay', 'To pay', [], $lang),
         'status_to_refund'               => Setting::get_value('sale', 'locale', 'label_status-to-refund', 'To refund', [], $lang),
         'proforma_notice'                => Setting::get_value('sale', 'locale', 'label_proforma-notice', 'This is a proforma and must not be paid.', [], $lang),
-        'total_ex_vat'                   => Setting::get_value('sale', 'locale', 'label_total-ex-vat', 'Total ex. VAT', [], $lang),
-        'total_inc_vat'                  => Setting::get_value('sale', 'locale', 'label_total-inc-vat', 'Total inc. VAT', [], $lang),
+        'total_excl_vat'                 => Setting::get_value('sale', 'locale', 'label_total-ex-vat', 'Total VAT excl.', [], $lang),
+        'total_incl_vat'                 => Setting::get_value('sale', 'locale', 'label_total-inc-vat', 'Total VAT incl.', [], $lang),
         'balance_of_must_be_paid_before' => Setting::get_value('sale', 'locale', 'label_balance-of-must-be-paid-before', 'Balance of %price% to be paid before %due_date%', [], $lang),
         'communication'                  => Setting::get_value('sale', 'locale', 'label_communication', 'Communication', [], $lang),
         'columns' => [
@@ -245,9 +246,8 @@ $getLabels = function($lang) {
     ];
 };
 
-/* #memo - empty 1x1 data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII= */
 $createInvoicePaymentQrCodeUri = function($invoice) {
-    // default to blank image
+    // default to blank image (empty 1x1)
     $result = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=';
     try {
         if(!isset($invoice['payment_reference'])) {
@@ -318,30 +318,53 @@ if(empty($invoice)) {
 // adapt specific properties to TXT output
 $formatInvoice($invoice);
 
-$loader = new TwigFilesystemLoader(EQ_BASEDIR.'/packages/sale/views/accounting/invoice');
-$twig = new TwigEnvironment($loader);
+$values = [
+    'invoice'             => $invoice,
+    'organisation'        => $invoice['organisation_id'],
+    'customer'            => $invoice['customer_id'],
+    'lines'               => $generateInvoiceLines($invoice, $params['mode']),
+    'organisation_logo'   => $getOrganisationLogo($invoice),
+    'payment_qr_code_uri' => $createInvoicePaymentQrCodeUri($invoice),
+    'timezone'            => constant('L10N_TIMEZONE'),
+    'locale'              => constant('L10N_LOCALE'),
+    'date_format'         => Setting::get_value('core', 'locale', 'date_format', 'm/d/Y'),
+    'currency'            => $getTwigCurrency(Setting::get_value('core', 'units', 'currency', '€')),
+    'labels'              => $getLabels($params['lang']),
+    'debug'               => $params['debug'],
+    'tax_lines'           => [],
+];
 
-/** @var ExtensionInterface $extension **/
-$extension  = new IntlExtension();
-$twig->addExtension($extension);
+
+// retrieve final VAT and group by rate
+foreach($invoice['invoice_lines_ids'] as $line) {
+    $vat_rate = $line['vat_rate'];
+    // #todo - use a translated label
+    $tax_label = 'TVA '.strval( intval($vat_rate * 100) ).'%';
+    $vat = round($line['price'] - $line['total'], 2);
+    if(!isset($values['tax_lines'][$tax_label])) {
+        $values['tax_lines'][$tax_label] = 0;
+    }
+    $values['tax_lines'][$tax_label] += $vat;
+}
 
 try {
-    $template = $twig->load('invoice.'.$params['view_id'].'.html');
+    // generate HTML
+    $loader = new TwigFilesystemLoader(EQ_BASEDIR.'/packages/sale/views/accounting/invoice');
+    $twig = new TwigEnvironment($loader);
 
-    $html = $template->render([
-            'invoice'             => $invoice,
-            'organisation'        => $invoice['organisation_id'],
-            'customer'            => $invoice['customer_id'],
-            'lines'               => $generateInvoiceLines($invoice, $params['mode']),
-            'organisation_logo'   => $getOrganisationLogo($invoice),
-            'payment_qr_code_uri' => $createInvoicePaymentQrCodeUri($invoice),
-            'timezone'            => constant('L10N_TIMEZONE'),
-            'locale'              => constant('L10N_LOCALE'),
-            'date_format'         => Setting::get_value('core', 'locale', 'date_format', 'm/d/Y'),
-            'currency'            => $getTwigCurrency(Setting::get_value('core', 'units', 'currency', '€')),
-            'labels'              => $getLabels($params['lang']),
-            'debug'               => $params['debug']
-        ]);
+    /** @var ExtensionInterface $extension **/
+    $extension  = new IntlExtension();
+    $twig->addExtension($extension);
+
+    // #todo - temp workaround against LOCALE mixups
+    $twig->addFilter(
+            new TwigFilter('format_money', function ($value) {
+                return number_format((float) $value, 2, ",", ".").' €';
+            })
+        );
+
+    $template = $twig->load('invoice.'.$params['view_id'].'.html');
+    $html = $template->render($values);
 }
 catch(Exception $e) {
     trigger_error('APP::Error while rendering template'.$e->getMessage(), EQ_ERROR_INVALID_CONFIG);

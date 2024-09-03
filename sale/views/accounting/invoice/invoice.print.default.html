@@ -170,12 +170,16 @@
         }
 
         main .invoice-lines table.inner tbody tr td {
-            border-bottom: 1px solid black;
+            border-bottom: 1px solid lightgrey;
             border-right: 1px solid black;
         }
 
         main .invoice-lines table.inner tbody tr td:first-child {
             border-left: 1px solid black;
+        }
+
+        main .invoice-lines table.inner tbody tr:last-child td {
+            border-bottom: 1px solid black;
         }
 
         footer {
@@ -366,26 +370,33 @@
                     <tbody>
                     {% for line in lines %}
                         <tr valign="top">
+                            {% if line.is_group %}
                             <td style="width: 45%;">
-                                {% if line.is_group %}
-                                    <b>{{ line.name }}</b>
+                                <b>{{ line.name }}</b>
+                                <br />{{ line.description }}
+                            </td>
+                            <td style="width: 8%; text-align: center;"></td>
+                            <td style="width: 8%; text-align: center;"></td>
+                            <td style="width: 10%; text-align: right;"></td>
+                            <td style="width: 8%; text-align: right;"></td>
+                            <td style="width: 8%; text-align: right;"></td>
+                            <td style="width: 13%; text-align: right;"></td>
+                            {% else %}
+                            <td style="width: 45%;">
+                                {{ line.name }}
+                                {% if ( line.description | length ) > 0 %}
                                     <br />{{ line.description }}
-                                {% else %}
-                                    {{ line.name }}
-                                    {% if ( line.description | length ) > 0 %}
-                                        <br />{{ line.description }}
-                                    {% endif %}
                                 {% endif %}
                             </td>
                             <td style="width: 8%; text-align: center;">
-                                {{ line.qty }}
+                                {{ line.qty | format_number({ 'fraction_digit': 2 }) }}
                             </td>
                             <td style="width: 8%; text-align: center;">
-                                {{ line.free_qty }}
+                                {{ line.free_qty | format_number({ 'fraction_digit': 2 }) }}
                             </td>
                             <td style="width: 10%; text-align: right;">
                                 {% if line.unit_price is not null %}
-                                    {{ line.unit_price | format_currency(currency, [], locale) }}
+                                    {{ line.unit_price | format_money() }}
                                 {% endif %}
                             </td>
                             <td style="width: 8%; text-align: right;">
@@ -400,9 +411,10 @@
                             </td>
                             <td style="width: 13%; text-align: right;">
                                 {% if line.total is not null %}
-                                    {{ line.total | format_currency(currency, [], locale) }}
+                                    {{ line.total | format_money() }}
                                 {% endif %}
                             </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -412,19 +424,30 @@
                     <tbody>
                     <tr valign="top">
                         <td style="width: 87%; text-align: right; padding-right: 10px;">
-                            {{ labels.total_ex_vat }}
+                            {{ labels.total_excl_vat }}
                         </td>
                         <td style="width: 13%; text-align: right; border-right: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black;">
-                            {{ invoice.total | format_currency(currency, [], locale) }}
+                            {{ invoice.total | format_money() }}
                         </td>
                     </tr>
-
+                    {% for tax_label, tax_total in tax_lines %}
+                    {% if (tax_total != 0.0) %}
                     <tr>
                         <td style="text-align: right; padding-right: 10px;">
-                            <b>{{ labels.total_inc_vat }}</b>
+                            {{ tax_label }}
+                        </td>
+                        <td style="text-align: right; border-right: 1px solid black; border-left: solid 1px black; border-bottom: solid 1px black;">
+                            {{ tax_total | format_money() }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <td style="text-align: right; padding-right: 10px;">
+                            <b>{{ labels.total_incl_vat }}</b>
                         </td>
                         <td style="text-align: right; border-right: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black;">
-                            <b>{{ invoice.price | format_currency(currency, [], locale) }}</b>
+                            <b>{{ invoice.price | format_money() }}</b>
                         </td>
                     </tr>
                     </tbody>
@@ -437,7 +460,7 @@
         <!-- payment-qr-code start -->
             <div class="invoice-payment-info" style="height: 180px;">
                 <div style="padding-left: 15px; padding-top: 15px;">
-                    {% set price = '<b>' ~ invoice.price | format_currency(currency, [], locale) ~ '</b>' %}
+                    {% set price = '<b>' ~ invoice.price | format_money() ~ '</b>' %}
                     {% set due_date = '<b>' ~ invoice.due_date | date(date_format, timezone) ~ '</b>' %}
                     {{ labels.balance_of_must_be_paid_before | replace({ '%price%': price, '%due_date%': due_date }) | raw }}
                 </div>
