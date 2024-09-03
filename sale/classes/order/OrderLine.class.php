@@ -326,16 +326,25 @@ class OrderLine extends Model {
 
 
     public static function canupdate($self, $values): array {
-        $self->read(['order_id', 'qty', 'free_qty']);
+        $self->read(['id','order_id','order_line_group_id', 'qty', 'free_qty']);
         foreach($self as $line) {
             if(isset($values['order_line_group_id'])) {
                 $group = OrderLineGroup::id($values['order_line_group_id'])
                     ->read(['order_id'])
-                    ->first();
+                    ->first(true);
 
-                if($group['order_id'] !== $line['order_id']['id']) {
+                if($group['order_id'] != $values['order_id']) {
                     return ['order_line_group_id' => ['invalid_param' => 'Group must be linked to same order.']];
                 }
+            }
+
+            if(isset($values['order_id'])) {
+                $order = Order::id($values['order_id'])->read(['status'])->first(true);
+
+                if (!in_array($order['status'], ['quote','checkedin', 'checkedout'])) {
+                    return ['order_line_group_id' => ['non_editable' => 'The order edition is limited.']];
+                }
+
             }
 
             if(isset($values['qty'])) {

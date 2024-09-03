@@ -292,7 +292,7 @@ class Order extends Model {
     public static function canupdate($self, $values) : array {
         $self->read(['status']);
 
-        $authorized_fields = ['description'];
+        $authorized_fields = ['description','is_invoiced'];
         $fields = array_keys($values);
         if (count($fields) === 1 && in_array($fields[0], $authorized_fields)) {
             return parent::canupdate($self, $values);

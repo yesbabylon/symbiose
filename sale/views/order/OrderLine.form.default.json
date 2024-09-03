@@ -28,7 +28,6 @@
                                                 "label": "Order",
                                                 "value": "order_id",
                                                 "width": "50%",
-                                                "readonly" :true,
                                                 "visible": ["state", "<>", "draft"]
                                             },
                                             {
@@ -41,6 +40,7 @@
                                                 "type": "field",
                                                 "label": "Price",
                                                 "value": "price_id",
+                                                "readonly" :true,
                                                 "width": "50%"
                                             },
                                             {

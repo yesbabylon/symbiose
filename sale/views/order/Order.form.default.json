@@ -8,31 +8,37 @@
     },
     "actions": [
         {
-            "id": "action.option-order",
+            "id": "action.quote",
+            "label": "Quote",
+            "controller": "sale_order_do-quote",
+            "visible": ["status" , "in", ["option","confirmed", "validated"]]
+        },
+        {
+            "id": "action.option",
             "label": "Option",
             "controller": "sale_order_do-option",
             "visible": ["status" , "=", "quote"]
         },
         {
-            "id": "action.confirm-order",
+            "id": "action.confirm",
             "label": "Confirm",
             "controller": "sale_order_do-confirm",
             "visible": ["status" , "=", "option"]
         },
         {
-            "id": "action.confirm-order",
+            "id": "action.option-confirm",
             "label": "Quote to Confirm",
             "controller": "sale_order_do-option-confirm",
             "visible": ["status" , "=", "quote"]
         },
         {
-            "id": "action.checked-order",
+            "id": "action.checkin",
             "label": "Check-in",
             "controller": "sale_order_do-checkin",
             "visible": ["status", "in", ["confirmed", "validated"]]
         },
         {
-            "id": "action.order.checkout",
+            "id": "action.checkout",
             "label": "Check Out",
             "controller": "sale_order_do-checkout",
             "visible": ["status", "=", "checkedin"]
@@ -52,6 +58,13 @@
             "controller": "sale_order_do-checkout",
             "confirm": true,
             "visible": [["is_invoiced", "=", false],["status", "in", ["invoiced", "debit_balance", "credit_balance", "balanced"]]]
+        },
+        {
+            "id": "action.update-status",
+            "label": "Update status",
+            "description": "The status of the order will be adapted according to the status of its fundings.",
+            "controller": "sale_order_update-status",
+            "visible": [ ["status", "in", ["invoiced", "debit_balance", "credit_balance"]] ]
         }
     ],
     "layout": {
@@ -88,7 +101,11 @@
                                             {
                                                 "type": "field",
                                                 "value": "is_invoiced",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "visible": ["is_noexpiry", "=", true],
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
@@ -98,12 +115,19 @@
                                             {
                                                 "type": "field",
                                                 "value": "is_noexpiry",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "visible": ["is_noexpiry", "=", true],
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "date_expiry",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             }
                                         ]
                                     },
@@ -210,7 +234,7 @@
                     {
                         "label": "Contracts",
                         "id": "section.order_contracts",
-                        "visible": ["state" , "<>" , "draft"],
+                        "visible": ["status", "not in", ["quote", "option"]],
                         "rows": [
                             {
                                 "columns": [
@@ -231,7 +255,7 @@
                     {
                         "label": "Fundings",
                         "id": "section.order_fundings",
-                        "visible": ["state" , "<>" , "draft"],
+                        "visible": [ [["status", "not in", ["quote", "option"]]], [["is_cancelled", "=", true]] ],
                         "rows": [
                             {
                                 "columns": [
@@ -252,7 +276,7 @@
                     {
                         "label": "Invoices",
                         "id": "section.order_invoices",
-                        "visible": ["state" , "<>" , "draft"],
+                        "visible": ["status", "not in", ["quote", "option"]],
                         "rows": [
                             {
                                 "columns": [

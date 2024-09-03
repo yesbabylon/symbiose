@@ -120,4 +120,20 @@ class OrderLineGroup extends Model {
         return parent::candelete($self, $values);
     }
 
+    public static function canupdate($self, $values): array {
+        $self->read(['order_id']);
+        foreach($self as $group) {
+            if(isset($values['order_id'])) {
+                $order = Order::id($values['order_id'])
+                    ->read(['status'])
+                    ->first(true);
+                if (!in_array($order['status'], ['quote','checkedin', 'checkedout'])) {
+                    return ['name' => ['non_editable' => 'The order edition is limited.']];
+                }
+            }
+        }
+        return parent::canupdate($self, $values);
+    }
+
+
 }

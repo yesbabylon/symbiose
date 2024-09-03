@@ -79,12 +79,59 @@
             "label": "Du",
             "description": "Premier jour du séjour.",
             "help": ""
+        },
+        "is_invoiced": {
+            "label": "Facturée",
+            "description": "Marque la commande ayant une facture de solde non annulée.",
+            "help": ""
         }
     },
     "view": {
         "form.default": {
             "name": "Commande",
             "description": "",
+            "actions": {
+                "action.quote": {
+                "label": "Repasser en devis",
+                "description": "Les lignes de commande liées à la commande pourront à nouveau être modifiées et le contrat sera annulé."
+                },
+                "action.option": {
+                    "label": "Placer une option",
+                    "description": "La commande sera prise en compte pendant la période sélectionnée. Aucun paiement ne sera demandé."
+                },
+                "action.option-confirm": {
+                    "label": "Confirmer",
+                    "description": "Un contrat sera créé et un échéancier de paiement sera généré."
+                },
+                "action.confirm": {
+                    "label": "Confirmer",
+                    "description": "Un contrat sera créé et un échéancier de paiement sera généré."
+                },
+                "action.checkin": {
+                    "label": "Check-in",
+                    "description": ""
+                },
+                "action.checkout": {
+                    "label": "Check-out",
+                    "description": ""
+                },
+                "action.invoice": {
+                    "label": "Facturer le solde",
+                    "description": "Une facture pro-forma sera créée. (Si une facture de solde pro-forma existe, elle sera réinitialisée.)"
+                },
+                "action.invoice-back": {
+                    "label": "Repasser en Terminée",
+                    "description": "Des adaptations sont encore nécessaires et la facture pro-forma devra être régénérée."
+                },
+                "action.cancel": {
+                    "label": "Annuler",
+                    "description": "La commande sera annulée."
+                },
+                "action.update-status": {
+                    "label": "Mettre à jour le statut",
+                    "description": "Le statut de la commande sera adapté selon les statuts de ses financements."
+                }
+            },
             "layout": {
                 "section.order_info": {
                     "label": "Infos générales"
