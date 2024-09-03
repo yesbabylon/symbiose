@@ -37,32 +37,6 @@
                                         ]
                                     }
                                 ]
-                            },
-                            {
-                                "height": "50%",
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "id": "item.sale3",
-                                                "label": "Financements",
-                                                "description": "",
-                                                "width": "50%",
-                                                "entity": "sale\\pay\\Funding",
-                                                "view": "chart.default"
-                                            },
-                                            {
-                                                "id": "item.sale4",
-                                                "label": "CA total Commandes",
-                                                "description": "",
-                                                "width": "50%",
-                                                "entity": "sale\\order\\Order",
-                                                "view": "chart.default"
-                                            }
-                                        ]
-                                    }
-                                ]
                             }
                         ]
                     }
