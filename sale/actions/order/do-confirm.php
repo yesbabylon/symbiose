@@ -132,16 +132,16 @@ foreach($order['order_lines_groups_ids'] as $group) {
     }
 }
 
-$fundings_handled_sum = 0.0;
-foreach($order['fundings_ids'] as $funding) {
-    if(round($funding['paid_amount'], 2) == 0 && !$funding['is_paid']) {
-        Funding::id($funding['id'])->delete(true);
-    }
-    else {
-        Funding::id($funding['id'])->update(['due_amount' => $funding['paid_amount']]);
-        $fundings_handled_sum += $funding['paid_amount'];
-    }
+if ($order['fundings_ids']){
+    eQual::run('do', 'sale_order_funding_update', ['ids' =>  array_values($order['fundings_ids'])]);
 }
+
+$fundings_handled_sum = 0.0;
+$fundings_paid = Funding::search([['order_id' , '=', $order['id']] , ['is_paid' , "=", true]])
+    ->read(['paid_amount'])
+    ->get();
+
+$fundings_handled_sum = array_sum(array_column($fundings_paid, 'paid_amount'));
 
 $remaining_amount = $order['price'] - $fundings_handled_sum;
 if($order['price'] > 0 && ($remaining_amount/$order['price']) > 0.1) {
