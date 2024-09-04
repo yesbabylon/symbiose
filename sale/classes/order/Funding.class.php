@@ -23,7 +23,16 @@ class Funding extends \sale\pay\Funding {
                 'usage'             => 'amount/money:2',
                 'description'       => 'Amount expected for the funding.',
                 'required'          => true,
-                'dependencies'      => ['is_paid']
+                'dependencies'      => ['is_paid' , 'name']
+            ],
+
+            'name' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => 'Display name of funding.',
+                'function'          => 'calcName',
+                'store'             => true,
+                'instant'           => true
             ],
 
             'invoice_id' => [
@@ -56,6 +65,12 @@ class Funding extends \sale\pay\Funding {
                 ],
                 'default'           => 'installment',
                 'description'       => "Deadlines are installment except for last one: final invoice."
+            ],
+
+            'due_date' => [
+                'type'              => 'date',
+                'description'       => "Deadline before which the funding is expected.",
+                'default'           => time()
             ],
 
             /**
@@ -98,11 +113,25 @@ class Funding extends \sale\pay\Funding {
     }
 
 
+    public static function onchange($event, $values) {
+        $result = [];
+        if(isset($event['due_amount'])) {
+            $name_funding =  Setting::format_number_currency($event['due_amount']);
+            if(isset($values['order_id'])) {
+                $order = Order::id($values['order_id'])->read(['name'])->first(true);
+                $name_funding .= '    '.$order['name'];
+            }
+            $result['name'] = $name_funding;
+        }
+
+        return $result;
+    }
+
     public static function calcName($self) {
         $result = [];
         $self->read(['order_id' => ['name'], 'due_amount']);
         foreach($self as $id => $funding) {
-            $result[$id] = Setting::format_number_currency($funding['due_amount']);
+            $result[$id] =  Setting::format_number_currency($funding['due_amount']);
             if(isset($funding['order_id']['name'])) {
                 $result[$id] .= '    '.$funding['order_id']['name'];
             }
