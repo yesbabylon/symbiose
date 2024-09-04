@@ -7,7 +7,7 @@
 namespace sale\order;
 use equal\orm\Model;
 use sale\customer\Customer;
-use identity\Identity;
+use sale\order\Contract;
 class Order extends Model {
 
     public static function getDescription() {
@@ -257,23 +257,63 @@ class Order extends Model {
 
     public static function updateStatusFromFundings($ids) {
         $orders = Order::ids($ids)->read(['status', 'fundings_ids'])->get();
-        foreach($orders as $bid => $order) {
-            $diff = 0.0;
-            $fundings = Funding::ids($order['fundings_ids'])->read(['due_amount', 'paid_amount'])->get(true);
-            foreach($fundings as $fid => $funding) {
-                $diff += $funding['due_amount'] - $funding['paid_amount'];
+        file_put_contents('/var/www/html/log/errores.log', 'here'. ".\n", FILE_APPEND | LOCK_EX);
+        foreach($orders as $id => $order) {
+            if($order['status'] == 'confirmed') {
+
+
+                file_put_contents('/var/www/html/log/errores.log', 'dentro del if de confime'. ".\n", FILE_APPEND | LOCK_EX);
+                $contracts_ids = Contract::search([
+                        ['order_id', '=', $id],
+                        ['status', '=', 'signed']
+                    ])->ids();
+
+                if(!$contracts_ids && count($contracts_ids) <= 0) {
+                    continue;
+                }
+
+                $today = time();
+                $fundings= Funding::search([
+                        ['order_id', '=', $id],
+                        ['due_date', '<', $today]
+                    ])->read(['is_paid'])->get(true);
+
+                if($fundings) {
+                    $is_paid_fundings = array_column($fundings, 'is_paid');
+                    if (!in_array(false, $is_paid_fundings, true)) {
+                        Order::id($id)->update(['status' => 'validated']);
+                    }
+                }
+                else {
+                    $fundings_ids = Funding::search([
+                        ['order_id', '=', $id],
+                        ['is_paid', '=', true]
+                    ])->ids();
+
+                    if(count($fundings_ids) > 0) {
+                        Order::id($id)->update(['status' => 'validated']);
+                    }
+                }
+
             }
-            if(!in_array($order['status'], ['invoiced', 'debit_balance', 'credit_balance'])) {
-                continue;
-            }
-            if($diff > 0.0001 ) {
-                Order::id($bid)->update(['status' => 'debit_balance']);
-            }
-            elseif($diff < 0) {
-                Order::id($bid)->update(['status' => 'credit_balance']);
-            }
-            else {
-                Order::id($bid)->update(['status' =>'balanced']);
+            elseif(in_array($order['status'], ['invoiced', 'balanced', 'debit_balance', 'credit_balance'])) {
+                $diff = 0.0;
+                $fundings = Funding::ids($order['fundings_ids'])->read(['due_amount', 'paid_amount'])->get(true);
+                foreach($fundings as $fid => $funding) {
+                    $diff += $funding['due_amount'] - $funding['paid_amount'];
+                }
+                if(!in_array($order['status'], ['invoiced', 'debit_balance', 'credit_balance'])) {
+                    continue;
+                }
+                if($diff > 0.0001 ) {
+                    Order::id($id)->update(['status' => 'debit_balance']);
+                }
+                elseif($diff < 0) {
+                    Order::id($id)->update(['status' => 'credit_balance']);
+                }
+                else {
+                    Order::id($id)->update(['status' =>'balanced']);
+                }
             }
         }
     }
