@@ -198,17 +198,19 @@
                                 ]
                             },
                             {
-                                "columns": {
-                                    "width": "100%",
-                                    "items": [
-                                        {
-                                            "type": "field",
-                                            "value": "detailed_description",
-                                            "label": "Description",
-                                            "width": "100%"
-                                        }
-                                    ]
-                                }
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "detailed_description",
+                                                "label": "Description",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
                         ]
                     },
