@@ -38,11 +38,6 @@
             "description": "Quantité d'articles gratuits (offerts en cadeau).",
             "help": ""
         },
-        "has_own_qty": {
-            "label": "Adaptateur de prix",
-            "description": "Des adaptateurs de prix détenant les remises de la ligne.",
-            "help": "Des adaptateurs de prix détenant les remises manuelles appliquées sur la ligne."
-        },
         "order": {
             "label": "Ordre",
             "description": "Ordre selon lequel la ligne doit être triée.",
@@ -63,6 +58,11 @@
             "description": "Adaptateurs de prix qui s'appliquent à la ligne.",
             "help": ""
         },
+        "total": {
+            "label": "Total HTC",
+            "description": "Prix total hors taxes.",
+            "help": ""
+        },
         "price": {
             "label": "Prix TTC",
             "description": "Prix final (TTC).",
@@ -71,6 +71,16 @@
         "vat_rate": {
             "label": "Taux de tva",
             "description": "Taux de TVA qui s'applique à cette ligne.",
+            "help": ""
+        },
+        "fare_benefit": {
+            "label": "Avantage tarifaire",
+            "description": "Montant total de l'avantage tarifaire TVA incluse.",
+            "help": ""
+        },
+        "discount": {
+            "label": "Remise",
+            "description": "Montant total de la remise à appliquer.",
             "help": ""
         }
     },

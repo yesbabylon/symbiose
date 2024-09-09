@@ -48,21 +48,16 @@ class Contract extends \sale\contract\Contract {
     }
 
 
-    /**
-     * Check wether an object can be updated, and perform some additional operations if necessary.
-     * This method can be overriden to define a more precise set of tests.
-     *
-     * @param  object   $om         ObjectManager instance.
-     * @param  array    $oids       List of objects identifiers.
-     * @param  array    $values     Associative array holding the new values to be assigned.
-     * @param  string   $lang       Language in which multilang fields are being updated.
-     * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
-     */
-    public static function canupdate($om, $oids, $values, $lang='en') {
-        // only status can be updated
-        if(count($values) > 1 || !isset($values['status'])) {
-            return ['status' => ['not_allowed' => 'Contract cannot be manually updated.']];
+
+    public static function canupdate($self,  $values) {
+        $self->read(['status']);
+        foreach($self as $contract) {
+            if(count($values) > 1 || !isset($contract['status'])) {
+                return ['status' => ['not_allowed' => 'Contract cannot be manually updated.']];
+            }
+
         }
-        return parent::canupdate($om, $oids, $values, $lang);
+
+        return parent::canupdate($self, $values);
     }
 }

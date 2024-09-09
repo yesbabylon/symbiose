@@ -3,9 +3,59 @@
     "description": "",
     "access": {
         "groups": ["order.default.users"]
-    },    
+    },
+    "actions": [
+        {
+            "id": "action.pay.append",
+            "label": "Add instant payment",
+            "controller": "sale_order_funding_do-pay-append",
+            "visible": ["is_paid", "=", false]
+        },
+        {
+            "id": "action.pay.remove",
+            "label": "Remove payment",
+            "controller": "sale_order_funding_do-pay-remove",
+            "visible": ["is_paid", "=", true]
+        },
+        {
+            "id": "action.invoice",
+            "label": "Create invoice",
+            "controller": "sale_order_funding_convert"
+        }
+    ],
     "layout": {
         "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true,
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
             {
                 "sections": [
                     {
@@ -21,12 +71,10 @@
                                                 "type": "field",
                                                 "label": "Order",
                                                 "value": "order_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "type",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
@@ -35,9 +83,19 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "due_amount",
+                                                "value": "paid_amount",
                                                 "width": "50%"
                                             },
+                                            {
+                                                "type": "field",
+                                                "value": "due_amount",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "due_date",
@@ -47,13 +105,21 @@
                                                 "type": "field",
                                                 "label": "Payment Deadline",
                                                 "value": "payment_deadline_id",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Invoice",
                                                 "value": "invoice_id",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "visible" : true
                                             },
                                             {
                                                 "type": "field",
@@ -79,7 +145,17 @@
                                             {
                                                 "type": "field",
                                                 "value": "payments_ids",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "domain": ["status", "=", "paid"],
+                                                    "view": "list.default",
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE" : false
+                                                        },
+                                                        "selection": false
+                                                    }
+                                                }
                                             }
                                         ]
                                     }

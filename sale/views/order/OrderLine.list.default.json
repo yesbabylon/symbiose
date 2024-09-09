@@ -6,6 +6,18 @@
      },
     "order": "order_line_group_id,order",
     "sort": "asc",
+    "operations": {
+        "total": {
+            "total": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            },
+            "price": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
     "layout": {
         "items": [
             {
@@ -16,8 +28,19 @@
             },
             {
                 "type": "field",
+                "label": "Order",
+                "value": "order_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
                 "label": "Product",
                 "value": "product_id",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "unit_price",
                 "width": "15%"
             },
             {
@@ -25,6 +48,11 @@
                 "label": "Quantity",
                 "value": "qty",
                 "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "total",
+                "width": "15%"
             },
             {
                 "type": "field",

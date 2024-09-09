@@ -43,6 +43,7 @@
                     {
                         "label": "Order Lines",
                         "id": "section.order.lines",
+                        "visible": ["state" , "<>" , "draft"],
                         "rows": [
                             {
                                 "columns": [

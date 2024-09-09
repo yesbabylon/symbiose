@@ -8,7 +8,7 @@
 namespace sale\pay;
 
 use equal\orm\Model;
-
+use finance\bank\BankStatementLine;
 class Payment extends Model {
 
     public static function getDescription() {

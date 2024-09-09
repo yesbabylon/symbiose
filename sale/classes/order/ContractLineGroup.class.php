@@ -26,14 +26,6 @@ class ContractLineGroup extends \sale\contract\ContractLineGroup {
                 'ondetach'          => 'delete'
             ],
 
-            /* #memo - a order can be split into several groups on which distinct rate classes apply, by default the rate_class of the customer is used */
-            'rate_class_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\customer\RateClass',
-                'description'       => "The rate class that applies to the group (from order).",
-                'required'          => true
-            ],
-
             'fare_benefit' => [
                 'type'              => 'float',
                 'usage'             => 'amount/money:2',

@@ -31,7 +31,18 @@
             "label": "Conditions de paiement",
             "description": "Conditions de paiement d'application pour la facture.",
             "help": "Ces conditions sont communiquées au client pour la l'acquittement de la facture."
+        },
+        "is_downpayment": {
+            "label": "Facture d'acompte?",
+            "description": "Marque la facture comme une facture d'acompte relative à un paiement anticipé",
+            "help": ""
+        },
+        "price_billed": {
+            "label": "Total",
+            "description": "Montant final TTC utilisé pour l'affichage (inversé pour les notes de crédit).",
+            "help": ""
         }
+
     },
     "view": {
         "form.default": {
