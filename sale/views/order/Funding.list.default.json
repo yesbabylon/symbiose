@@ -4,6 +4,14 @@
     "access": {
         "groups": ["order.default.users"]
     },
+    "operations": {
+        "total": {
+            "paid_amount": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
     "layout": {
         "items": [
             {
@@ -13,17 +21,7 @@
             },
             {
                 "type": "field",
-                "value": "issue_date",
-                "width": "15%"
-            },
-            {
-                "type": "field",
-                "value": "payment_deadline_id",
-                "width": "15%"
-            },
-            {
-                "type": "field",
-                "value": "type",
+                "value": "funding_type",
                 "width": "15%"
             },
             {
@@ -33,8 +31,18 @@
             },
             {
                 "type": "field",
+                "value": "is_paid",
+                "width": "10%"
+            },
+            {
+                "type": "field",
                 "value": "amount_share",
                 "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "payment_reference",
+                "width": "20%"
             },
             {
                 "type": "field",
@@ -45,16 +53,6 @@
                 "type": "field",
                 "value": "paid_amount",
                 "width": "10%"
-            },
-            {
-                "type": "field",
-                "value": "is_paid",
-                "width": "10%"
-            },
-            {
-                "type": "field",
-                "value": "payment_reference",
-                "width": "20%"
             }
         ]
     }

@@ -1,0 +1,37 @@
+{
+    "name": "Invoice Lines",
+    "description": "Displays invoice lines.",
+    "access": {
+        "groups": ["sale.default.users"]
+    },
+    "operations": {
+        "total": {
+            "price": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
+    "limit": 100,
+    "extends": {
+        "entity": "finance\\accounting\\InvoiceLine",
+        "view": "list.default"
+    },
+    "layout": {
+        "remove": [
+            "item.name"
+        ],
+        "update": {
+            "item.group": {
+                "after": [
+                    {
+                        "type": "field",
+                        "value": "product_id",
+                        "label": "Product",
+                        "width": "25%"
+                    }
+                ]
+            }
+        }
+    }
+}

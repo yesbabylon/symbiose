@@ -1,14 +1,13 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace sale\order;
 use equal\orm\Model;
 use sale\customer\Customer;
-use identity\Identity;
-
+use sale\order\Contract;
 class Order extends Model {
 
     public static function getDescription() {
@@ -48,8 +47,7 @@ class Order extends Model {
             'customer_identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'description'       => "The Customer identity.",
-                'onupdate'          => 'onupdateCustomerIdentityId'
+                'description'       => "The Customer identity."
             ],
 
             'total' => [
@@ -88,7 +86,8 @@ class Order extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\order\OrderLine',
                 'foreign_field'     => 'order_id',
-                'description'       => 'Detailed lines of the order.'
+                'description'       => 'Detailed lines of the order.',
+                'dependents'        => ['total', 'price']
             ],
 
             'order_lines_groups_ids' => [
@@ -97,7 +96,7 @@ class Order extends Model {
                 'foreign_field'     => 'order_id',
                 'description'       => 'Grouped lines of the order.',
                 'ondetach'          => 'delete',
-                'onupdate'          => 'onupdateOrderLinesGroupsIds'
+                'dependents'        => ['total', 'price']
             ],
 
             'status' => [
@@ -115,8 +114,13 @@ class Order extends Model {
                     'balanced'                  // order is over and balance is cleared
                 ],
                 'description'       => 'Status of the order.',
-                'default'           => 'quote',
-                'onupdate'          => 'onupdateStatus'
+                'default'           => 'quote'
+            ],
+
+            'is_invoiced' => [
+                "type"              => "boolean",
+                "description"       => "Marks the order has having a non-cancelled balance invoice.",
+                "default"           => false
             ],
 
             'is_cancelled' => [
@@ -130,6 +134,13 @@ class Order extends Model {
                 'description'       => "Flag marking an option as never expiring.",
                 'default'           => false,
                 'visible'           => ['status', '=', 'option']
+            ],
+
+            'date_expiry' => [
+                'type'              => 'date',
+                'description'       => 'Order expiration date in Option',
+                'visible'           => [["status", "=", "option"],["is_noexpiry", "=", false]],
+                'default'           => time()
             ],
 
             'cancellation_reason' => [
@@ -178,12 +189,16 @@ class Order extends Model {
         ];
     }
 
-    public static function onchange($event, $values) {
+    public static function onchange($event) {
         $result = [];
 
         if(isset($event['customer_id'])) {
             $customer = Customer::id($event['customer_id'])->read(['partner_identity_id' => ['id', 'name']])->first(true);
             $result['customer_identity_id'] = $customer['partner_identity_id'];
+        }
+
+        if(isset($event['status']) && ($event['status'] == 'confirmed')) {
+            $result['has_contract'] = true;
         }
 
         return $result;
@@ -209,187 +224,129 @@ class Order extends Model {
     /**
      * Payment status tells if a given order is in order regarding the expected payment up to now.
      */
-    public static function calcPaymentStatus($om, $oids, $lang) {
+    public static function calcPaymentStatus($self) {
         // #todo
         $result = [];
         return $result;
     }
 
-    public static function calcPrice($om, $oids, $lang) {
+    public static function calcPrice($self): array {
         $result = [];
-        $orders = $om->read(get_called_class(), $oids, ['order_lines_groups_ids.price']);
-        if($orders > 0) {
-            foreach($orders as $id => $order) {
-                $price = array_reduce($order['order_lines_groups_ids.price'], function ($c, $group) {
-                    return $c + $group['price'];
-                }, 0.0);
-                $result[$id] = round($price, 2);
-            }
+        $self->read(['order_lines_groups_ids' => ['price']]);
+        foreach($self as $id => $group) {
+            $result[$id] = array_reduce($group['order_lines_groups_ids']->get(true), function ($c, $a) {
+                return $c + $a['price'];
+            }, 0.0);
         }
+
         return $result;
     }
 
-    public static function calcTotal($om, $oids, $lang) {
+
+    public static function calcTotal($self): array {
         $result = [];
-        $orders = $om->read(get_called_class(), $oids, ['order_lines_groups_ids.total']);
-        if($orders > 0) {
-            foreach($orders as $id => $order) {
-                $total = array_reduce($order['order_lines_groups_ids.total'], function ($c, $a) {
-                    return $c + $a['total'];
-                }, 0.0);
-                $result[$id] = round($total, 4);
-            }
+        $self->read(['order_lines_groups_ids' => ['total']]);
+        foreach($self as $id => $group) {
+            $result[$id] = array_reduce($group['order_lines_groups_ids']->get(true), function ($c, $a) {
+                return $c + $a['total'];
+            }, 0.0);
         }
+
         return $result;
     }
 
-    /**
-     * #memo - fundings can be partially paid.
-     */
-    public static function _updateStatusFromFundings($om, $oids, $values, $lang) {
-        $orders = $om->read(self::getType(), $oids, ['status', 'fundings_ids'], $lang);
-        if($orders > 0) {
-            foreach($orders as $bid => $order) {
+    public static function updateStatusFromFundings($ids) {
+        $orders = Order::ids($ids)->read(['status', 'fundings_ids'])->get();
+        file_put_contents('/var/www/html/log/errores.log', 'here'. ".\n", FILE_APPEND | LOCK_EX);
+        foreach($orders as $id => $order) {
+            if($order['status'] == 'confirmed') {
+
+
+                file_put_contents('/var/www/html/log/errores.log', 'dentro del if de confime'. ".\n", FILE_APPEND | LOCK_EX);
+                $contracts_ids = Contract::search([
+                        ['order_id', '=', $id],
+                        ['status', '=', 'signed']
+                    ])->ids();
+
+                if(!$contracts_ids && count($contracts_ids) <= 0) {
+                    continue;
+                }
+
+                $today = time();
+                $fundings= Funding::search([
+                        ['order_id', '=', $id],
+                        ['due_date', '<', $today]
+                    ])->read(['is_paid'])->get(true);
+
+                if($fundings) {
+                    $is_paid_fundings = array_column($fundings, 'is_paid');
+                    if (!in_array(false, $is_paid_fundings, true)) {
+                        Order::id($id)->update(['status' => 'validated']);
+                    }
+                }
+                else {
+                    $fundings_ids = Funding::search([
+                        ['order_id', '=', $id],
+                        ['is_paid', '=', true]
+                    ])->ids();
+
+                    if(count($fundings_ids) > 0) {
+                        Order::id($id)->update(['status' => 'validated']);
+                    }
+                }
+
+            }
+            elseif(in_array($order['status'], ['invoiced', 'balanced', 'debit_balance', 'credit_balance'])) {
                 $diff = 0.0;
-                $fundings = $om->read(Funding::gettype(), $order['fundings_ids'], ['due_amount', 'paid_amount'], $lang);
+                $fundings = Funding::ids($order['fundings_ids'])->read(['due_amount', 'paid_amount'])->get(true);
                 foreach($fundings as $fid => $funding) {
                     $diff += $funding['due_amount'] - $funding['paid_amount'];
                 }
-
                 if(!in_array($order['status'], ['invoiced', 'debit_balance', 'credit_balance'])) {
                     continue;
                 }
                 if($diff > 0.0001 ) {
-                    // an unpaid amount remains
-                    $om->update(self::getType(), $bid, ['status' => 'debit_balance']);
+                    Order::id($id)->update(['status' => 'debit_balance']);
                 }
                 elseif($diff < 0) {
-                    // a reimbursement is due
-                    $om->update(self::getType(), $bid, ['status' => 'credit_balance']);
+                    Order::id($id)->update(['status' => 'credit_balance']);
                 }
                 else {
-                    // everything has been paid : order can be archived
-                    $om->update(self::getType(), $bid, ['status' => 'balanced']);
+                    Order::id($id)->update(['status' =>'balanced']);
                 }
             }
         }
     }
 
-    // #todo - this should be part of the onupdate() hook
-    public static function _resetPrices($om, $oids, $values, $lang) {
-        $om->update(__CLASS__, $oids, ['total' => null, 'price' => null]);
-    }
-
-    public static function onupdateOrderLinesGroupsIds($om, $oids, $values, $lang) {
-        $om->callonce(__CLASS__, '_resetPrices', $oids, [], $lang);
-    }
-
-    public static function onupdateStatus($om, $oids, $values, $lang) {
-        $orders = $om->read(get_called_class(), $oids, ['status'], $lang);
-        if($orders > 0) {
-            foreach($orders as $bid => $order) {
-                if($order['status'] == 'confirmed') {
-                    $om->update(get_called_class(), $bid, ['has_contract' => true], $lang);
-                }
+    public static function candelete($self, $values) {
+        $self->read(['status']);
+        foreach($self as $order) {
+            if($order['status'] != 'quote') {
+                return ['status' => ['non_editable' => 'Non-quote orders cannot be deleted manually.']];
             }
         }
+
+        return parent::candelete($self, $values);
     }
 
-    public static function onupdateCustomerIdentityId($om, $oids, $values, $lang) {
-        trigger_error("ORM::calling sale\order\Order:onupdateCustomerIdentityId", QN_REPORT_DEBUG);
-        // reset name
-        $om->write(__CLASS__, $oids, ['name' => null]);
-        $orders = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id']);
+    public static function canupdate($self, $values) : array {
+        $self->read(['status']);
 
-        if($orders > 0) {
-            foreach($orders as $oid => $order) {
-                if(!$order['customer_id']) {
-                    $partner_id = null;
-
-                    // find the partner that related to this identity, if any
-                    $partners_ids = $om->search('sale\customer\Customer', [
-                        ['relationship', '=', 'customer'],
-                        ['owner_identity_id', '=', 1],
-                        ['partner_identity_id', '=', $order['customer_identity_id']]
-                    ]);
-                    if(count($partners_ids)) {
-                        $partner_id = reset($partners_ids);
-                    }
-                    else {
-                        // read Identity [type_id]
-                        $identities = $om->read('identity\Identity', $order['customer_identity_id'], ['type_id']);
-                        if($identities > 0) {
-                            $identity = reset($identities);
-                            $partner_id = $om->create('sale\customer\Customer', [
-                                'partner_identity_id'   => $order['customer_identity_id'],
-                                'customer_type_id'      => $identity['type_id']
-                            ]);
-                        }
-                    }
-                    if($partner_id) {
-                        $om->update(__CLASS__, $oid, ['customer_id' => $partner_id]);
-                    }
-                }
-            }
+        $authorized_fields = ['description','is_invoiced'];
+        $fields = array_keys($values);
+        if (count($fields) === 1 && in_array($fields[0], $authorized_fields)) {
+            return parent::canupdate($self, $values);
         }
-    }
-
-    public static function candelete($om, $oids, $lang='en') {
-        $res = $om->read(get_called_class(), $oids, [ 'status' ]);
-
-        if($res > 0) {
-            foreach($res as $oids => $odata) {
-                if($odata['status'] != 'quote') {
-                    return ['status' => ['non_editable' => 'Non-quote orders cannot be deleted manually.']];
+        foreach($self as $order) {
+            if (in_array($order['status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])) {
+                if (array_diff($fields, ['status'])) {
+                    return ['status' => ['non_editable' => 'The order edition is limited.']];
                 }
-            }
-        }
-        return parent::candelete($om, $oids, $lang);
-    }
-
-    /**
-     * Check wether an object can be updated, and perform some additional operations if necessary.
-     * This method can be overridden to define a more precise set of tests.
-     *
-     * @param  object   $om         ObjectManager instance.
-     * @param  array    $oids       List of objects identifiers.
-     * @param  array    $values     Associative array holding the new values to be assigned.
-     * @param  string   $lang       Language in which multilang fields are being updated.
-     * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
-     */
-    public static function canupdate($om, $oids, $values, $lang) {
-        $res = $om->read(get_called_class(), $oids, [ 'status', 'customer_id', 'customer_identity_id' ]);
-
-        // fields that can always be updated
-        $authorized_fields = ['description'];
-
-        if($res > 0) {
-            $fields = array_keys($values);
-            if(count($values) == 1 && in_array($fields[0], $authorized_fields))  {
-                // allowed update
-            }
-            else {
-                // check for accepted changes based on status
-                foreach($res as $oids => $odata) {
-                    if(in_array($odata['status'], ['invoiced','debit_balance','credit_balance','balanced'])) {
-                        // fields that can be updated when the status has those values
-                        $authorized_fields = ['status'];
-                        foreach($values as $field => $value) {
-                            if(!in_array($field, $authorized_fields)) {
-                                return ['status' => ['non_editable' => 'Invoiced orders edition is limited.']];
-                            }
-                        }
-                    }
-                    if( !$odata['customer_id'] && !$odata['customer_identity_id'] && !isset($values['customer_id']) && !isset($values['customer_identity_id']) ) {
-                        return ['customer_id' => ['missing_mandatory' => 'Customer is mandatory.']];
-                    }
-                }
-
             }
 
         }
 
-        return parent::canupdate($om, $oids, $values, $lang);
+        return parent::canupdate($self, $values);
     }
 
 }

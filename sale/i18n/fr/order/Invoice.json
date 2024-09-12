@@ -17,6 +17,11 @@
             "label": "Conditions de paiement",
             "description": "Les conditions de paiement qui s'appliquent à la facture.",
             "help": ""
+        },
+        "balance": {
+            "label": "Solde",
+            "description": "Montant restant à payer par le client.",
+            "help": ""
         }
     },
     "view": {

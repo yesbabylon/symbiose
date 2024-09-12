@@ -5,32 +5,12 @@
     "model": {
         "name": {
             "label": "Nom du groupe",
-            "description": "Mnemo pour le groupe.",
+            "description": "Memo pour le groupe.",
             "help": ""
         },
         "order": {
             "label": "Ordre",
             "description": "Ordre du groupe dans la liste.",
-            "help": ""
-        },
-        "date_from": {
-            "label": "Date de",
-            "description": "Heure d'arrivée.",
-            "help": ""
-        },
-        "date_to": {
-            "label": "Date à",
-            "description": "Heure de départ.",
-            "help": ""
-        },
-        "nb_pers": {
-            "label": "Nombre de personne",
-            "description": "Le nombre de personnes qui composent ce groupe.",
-            "help": ""
-        },
-        "rate_class_id": {
-            "label": "Classe tarifaire",
-            "description": "La classe tarifaire qui s'applique au groupe.",
             "help": ""
         },
         "order_lines_ids": {
@@ -42,6 +22,16 @@
             "label": "Commande",
             "description": "La commande à laquelle la ligne se rapporte.",
             "help": "La commande de la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent)."
+        },
+        "total": {
+            "label": "Total HTC",
+            "description": "Prix total hors taxes.",
+            "help": ""
+        },
+        "price": {
+            "label": "Prix TTC",
+            "description": "Prix final (TTC).",
+            "help": ""
         }
     },
     "view": {

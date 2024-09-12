@@ -52,6 +52,26 @@
         "contracts.contracts": {
             "label": "Tous les contrats",
             "help": ""
+        },
+        "orders": {
+            "label": "Commandes",
+            "help": ""
+        },
+        "orders.new": {
+            "label": "Nouvelle",
+            "help": ""
+        },
+        "orders.all": {
+            "label": "Toutes",
+            "help": ""
+        },
+        "orders.group.all": {
+            "label": "Groupes",
+            "help": ""
+        },
+        "orders.group.line.all": {
+            "label": "Lignes",
+            "help": ""
         }
     }
 }

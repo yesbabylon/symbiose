@@ -1,0 +1,17 @@
+{
+    "name": "Confirmation de la commande",
+    "description": "Un contrat sera créé et un échéancier de paiements sera généré.",
+    "model": {
+        "id": {
+            "label": "Identifiant",
+            "description": "Identifiant unique de la commande.",
+            "help": ""
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_order": "La commande n'a pas été trouvée.",
+            "incompatible_status": "Action impossible pour ce statut de commande."
+        }
+    }
+}

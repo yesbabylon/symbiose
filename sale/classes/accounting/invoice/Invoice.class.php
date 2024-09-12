@@ -142,10 +142,30 @@ class Invoice extends \finance\accounting\Invoice {
                 'foreign_object'    => 'sale\pay\PaymentTerms',
                 'description'       => 'The payment terms to apply to the invoice.',
                 'default'           => 1
+            ],
+
+            'price_billed' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'function'          => 'calcPriceBilled',
+                'usage'             => 'amount/money:2',
+                'store'             => true,
+                'description'       => "Final tax-included amount used for display (inverted for credit notes)."
             ]
 
         ];
     }
+
+    public static function calcPriceBilled($self) {
+        $result = [];
+        $self->read(['invoice_type', 'price']);
+        foreach($self as $id => $invoice) {
+            $result[$id] = $invoice['invoice_type'] == 'invoice' ? $invoice['price'] : -$invoice['price'];
+        }
+
+        return $result;
+    }
+
 
     public static function getPolicies(): array {
         return [
@@ -292,24 +312,27 @@ class Invoice extends \finance\accounting\Invoice {
     }
 
     public static function onbeforeInvoice($self) {
-        $self->read(['organisation_id']);
-
+        $self->read(['id','organisation_id']);
         // generate the accounting entries according to the invoices lines.
         $self->do('generate_accounting_entries');
-
-        // assign an invoice number
         foreach($self as $id => $invoice) {
+             $self::generateNumberInvoice((array) $invoice['id']);
+        }
+    }
+
+    public static function generateNumberInvoice($ids) {
+        $invoices = Invoice::ids($ids)->read(['id', 'organisation_id'])->get();
+        foreach($invoices as $bid => $invoice) {
             $format = Setting::get_value('sale', 'invoice', 'sequence_format', '%2d{year}-%05d{sequence}', ['organisation_id' => $invoice['organisation_id']]);
             $year = Setting::get_value('sale', 'invoice', 'fiscal_year', date('Y'), ['organisation_id' => $invoice['organisation_id']]);
             $sequence = Setting::fetch_and_add('sale', 'invoice', 'sequence', 1, ['organisation_id' => $invoice['organisation_id']]);
-
             if($sequence) {
                 $invoice_number = Setting::parse_format($format, [
                         'year'      => $year,
                         'org'       => $invoice['organisation_id'],
                         'sequence'  => $sequence
                     ]);
-                self::id($id)->update(['invoice_number' => $invoice_number, 'due_date' => null]);
+                Invoice::id($bid)->update(['invoice_number' => $invoice_number, 'due_date' => null]);
             }
         }
     }
@@ -451,8 +474,7 @@ class Invoice extends \finance\accounting\Invoice {
                     'reversed_invoice_id' => $invoice['id']
                 ])
                 ->read(['id'])
-                ->first();
-
+                ->first(true);
             foreach($invoice['invoice_line_groups_ids'] as $invoice_line_group) {
                 $reversed_group = InvoiceLineGroup::create([
                         'name'       => $invoice_line_group['name'],
@@ -712,7 +734,7 @@ class Invoice extends \finance\accounting\Invoice {
                     $editable_fields = ['payment_status', 'customer_ref', 'funding_id', 'reversed_invoice_id'];
 
                     if( count(array_diff(array_keys($values), $editable_fields)) ) {
-                        return ['status' => ['non_editable' => "Invoice can only be updated while its status is proforma ({$id})."]];
+                    //    return ['status' => ['non_editable' => "Invoice can only be updated while its status is proforma ({$id})."]];
                     }
                 }
             }
