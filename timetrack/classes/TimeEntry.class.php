@@ -193,7 +193,7 @@ class TimeEntry extends SaleEntry {
             ],
 
             'billable_amount' => [
-                'computed'       => 'computed',
+                'type'           => 'computed',
                 'result_type'    => 'float',
                 'usage'          => 'amount/money',
                 'function'       => 'calcBillableAmount',
