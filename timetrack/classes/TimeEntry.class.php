@@ -111,7 +111,7 @@ class TimeEntry extends SaleEntry {
             'qty' => [
                 'type'           => 'computed',
                 'result_type'    => 'float',
-                'description'    => 'Quantity in hours based on duration.',
+                'description'    => 'Quantity, expressed in hours, rounded to the quarter hour and based on duration.',
                 'function'       => 'calcQty',
                 'store'          => true
             ],
@@ -190,6 +190,15 @@ class TimeEntry extends SaleEntry {
                 'type'           => 'string',
                 'dependents'     => ['name'],
                 'description'    => 'Reference completing the origin.'
+            ],
+
+            'billable_amount' => [
+                'computed'       => 'computed',
+                'result_type'    => 'float',
+                'usage'          => 'amount/money',
+                'function'       => 'calcBillableAmount',
+                'description'    => 'Reference completing the origin.',
+                'store'          => true
             ]
 
         ];
@@ -213,7 +222,7 @@ class TimeEntry extends SaleEntry {
         return $current_hour;
     }
 
-    public static function computeTicketLink($url, $ticket_id): string {
+    private static function computeTicketLink($url, $ticket_id): string {
         $result = $url ?? '';
         if(substr($result, -1) !== '/') {
             $result .= '/';
@@ -321,6 +330,15 @@ class TimeEntry extends SaleEntry {
         }
     }
 
+    public static function calcBillableAmount($self) {
+        $result = [];
+        $self->read(['qty', 'unit_price', 'is_billable']);
+        foreach($self as $id => $entry) {
+            $result[$id] = $entry['is_billable'] ? round($entry['qty'] * $entry['unit_price'], 2) : 0.0;
+        }
+        return $result;
+    }
+
     public static function calcName($self) {
         $result = [];
         $self->read(['project_id' => ['name'], 'origin', 'reference', 'description']);
@@ -389,7 +407,8 @@ class TimeEntry extends SaleEntry {
         $result = [];
         $self->read(['duration']);
         foreach($self as $id => $entry) {
-            $result[$id] = round(floatval($entry['duration']) / 3600, 2);
+            $hours = floatval($entry['duration']) / 3600;
+            $result[$id] = round($hours * 4) / 4;
         }
         return $result;
     }

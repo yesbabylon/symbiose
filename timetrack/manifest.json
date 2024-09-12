@@ -29,7 +29,7 @@
                 "context": {
                     "description": "Timetrack App root context.",
                     "entity": "timetrack\\TimeEntry",
-                    "view": "list.default"
+                    "view": "list.my"
                 }
             }
         }

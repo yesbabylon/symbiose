@@ -2,18 +2,10 @@
     "name": "Time entries",
     "description": "Default listing of all time entries.",
     "controller": "timetrack_timeentry-collect",
-    "domain": ["object_class", "=", "timetrack\\Project"],
+    "domain": [["object_class", "=", "timetrack\\Project"], ["creator", "=", "user.id"]],
     "order": "created",
     "sort": "desc",
     "limit": 100,
-    "operations": {
-        "total": {
-            "billable_amount": {
-                "operation": "SUM",
-                "usage": "amount/money:2"
-            }
-        }
-    },
     "header": {
         "selection": {
             "show_inline": ["action.transition.ready"],
@@ -152,15 +144,6 @@
                 "type": "field",
                 "label": "Status",
                 "value": "status",
-                "width": "10%",
-                "sortable": true,
-                "readonly": true
-            },
-            {
-                "id": "item.billable_amount",
-                "type": "field",
-                "label": "Amount",
-                "value": "billable_amount",
                 "width": "10%",
                 "sortable": true,
                 "readonly": true

@@ -10,31 +10,6 @@
                 "description": "Time entries.",
                 "children": [
                     {
-                        "id": "time_entries.new",
-                        "type": "entry",
-                        "label": "New",
-                        "icon": "add",
-                        "description": "Add new entry.",
-                        "context": {
-                            "entity": "timetrack\\TimeEntry",
-                            "view": "form.create",
-                            "purpose": "create"
-                        }
-                    },
-                    {
-                        "id": "time_entries.all",
-                        "type": "entry",
-                        "label": "All",
-                        "icon": "list",
-                        "description": "All time entries",
-                        "context": {
-                            "entity": "timetrack\\TimeEntry",
-                            "view": "list.default",
-                            "order": "created",
-                            "sort": "desc"
-                        }
-                    },
-                    {
                         "id": "time_entries.ready",
                         "type": "entry",
                         "label": "To validate",
@@ -62,17 +37,16 @@
                         }
                     },
                     {
-                        "id": "time_entries.billed",
+                        "id": "time_entries.all",
                         "type": "entry",
-                        "label": "Billed",
-                        "icon": "receipt_long",
-                        "description": "Billed entries",
+                        "label": "All",
+                        "icon": "list",
+                        "description": "All time entries",
                         "context": {
                             "entity": "timetrack\\TimeEntry",
                             "view": "list.default",
                             "order": "created",
-                            "sort": "desc",
-                            "domain": [ ["status", "=", "billed"] ]
+                            "sort": "desc"
                         }
                     },
                     {
