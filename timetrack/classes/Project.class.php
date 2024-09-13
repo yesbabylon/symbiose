@@ -46,7 +46,7 @@ class Project extends Model {
                 'type'            => 'many2one',
                 'foreign_object'  => 'inventory\Product',
                 'description'     => 'The product the the project refers to, if any.',
-                'dependents'      => ['time_entries_ids' => 'inventory_product_id']
+                'dependents'      => ['time_entries_ids' => ['inventory_product_id']]
             ],
 
             'time_entry_sale_model_id' => [
@@ -54,7 +54,8 @@ class Project extends Model {
                 'foreign_object'  => 'timetrack\TimeEntrySaleModel',
                 'foreign_field'   => 'projects_ids',
                 'description'     => 'The sale model to apply on project\'s time entries.',
-                'required'        => true
+                'required'        => true,
+                'dependents'     => ['time_entries_ids' => ['price_id', 'billable_amount']],
             ],
 
             'receivable_queue_id' => [
