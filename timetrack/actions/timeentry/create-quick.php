@@ -95,6 +95,7 @@ if(!is_null($time_zone)) {
     $tz_offset = $tz->getOffset(new DateTime());
 }
 
+// compute start and end times, based on timezone set in settings
 $date = $params['date'];
 $begin = time() - strtotime("midnight") - $params['duration'] + $tz_offset;
 $start = (int) (floor(floatval($begin) / 60 / 15) * 15 * 60);

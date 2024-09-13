@@ -293,7 +293,7 @@ class TimeEntry extends SaleEntry {
         }
 
         if( isset($event['time_start'], $values['time_end'])
-            || isset($event['time_end'], $values['time_start']) ) {
+                || isset($event['time_end'], $values['time_start']) ) {
             $time_start = $event['time_start'] ?? $values['time_start'];
             $time_end = $event['time_end'] ?? $values['time_end'];
 
@@ -301,7 +301,8 @@ class TimeEntry extends SaleEntry {
                 $result['time_end'] = $time_start + ($values['duration'] ?? 0);
             }
             else {
-                $result['duration'] = $time_end - $time_start;
+                $diff = $time_end - $time_start;
+                $result['duration'] = ( ceil($diff / 60 / 15) * 15 ) * 60;
             }
         }
         elseif(isset($event['duration'], $values['time_start'])) {
@@ -332,9 +333,10 @@ class TimeEntry extends SaleEntry {
 
     public static function calcBillableAmount($self) {
         $result = [];
-        $self->read(['qty', 'unit_price', 'is_billable']);
+        $self->read(['qty', 'unit_price', 'is_billable', 'inventory_product_id' => ['is_internal']]);
         foreach($self as $id => $entry) {
-            $result[$id] = $entry['is_billable'] ? round($entry['qty'] * $entry['unit_price'], 2) : 0.0;
+            $is_billable = ($entry['inventory_product_id']['is_internal']) ? false : $entry['is_billable'];
+            $result[$id] = $is_billable ? round($entry['qty'] * $entry['unit_price'], 2) : 0.0;
         }
         return $result;
     }
