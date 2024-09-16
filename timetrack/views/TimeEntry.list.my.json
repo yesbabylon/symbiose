@@ -115,6 +115,7 @@
                 "type": "field",
                 "label": "Date",
                 "value": "date",
+                "usage": "date/plain.short",
                 "width": "15%",
                 "sortable": true
             },
