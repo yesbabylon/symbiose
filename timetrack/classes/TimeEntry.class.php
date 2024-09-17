@@ -312,6 +312,7 @@ class TimeEntry extends SaleEntry {
             else {
                 $diff = $time_end - $time_start;
                 $result['duration'] = ( ceil($diff / 60 / 15) * 15 ) * 60;
+                $result['billable_duration'] = $result['duration'];
             }
         }
         elseif(isset($event['duration'], $values['time_start'])) {
