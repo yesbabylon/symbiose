@@ -422,7 +422,7 @@ class TimeEntry extends SaleEntry {
         $result = [];
         $self->read(['billable_duration']);
         foreach($self as $id => $entry) {
-            $hours = floatval($entry['duration']) / 3600;
+            $hours = floatval($entry['billable_duration']) / 3600;
             $result[$id] = round($hours * 4) / 4;
         }
         return $result;
