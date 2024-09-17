@@ -125,14 +125,14 @@ class TimeEntry extends SaleEntry {
                 'type'           => 'time',
                 'description'    => 'Start time of the entry.',
                 'default'        => function () { return self::getTimeZoneCurrentHour() * 3600; },
-                'dependents'     => ['duration', 'qty']
+                'dependents'     => ['duration', 'qty', 'billable_amount']
             ],
 
             'time_end' => [
                 'type'           => 'time',
                 'description'    => 'End time of the entry.',
                 'default'        => function () { return (self::getTimeZoneCurrentHour() + 1) * 3600; },
-                'dependents'     => ['duration', 'qty']
+                'dependents'     => ['duration', 'qty', 'billable_amount']
             ],
 
             'duration' => [
@@ -149,7 +149,7 @@ class TimeEntry extends SaleEntry {
                 'type'           => 'time',
                 'description'    => 'Duration that can be actually invoiced.',
                 'help'           => 'The duration (part of the entry) that can be billed to the Customer according to the related requested Task. By default has the same value as duration. Unlike duration, billable duration is meant to be set manually.',
-                'dependents'     => ['qty']
+                'dependents'     => ['qty', 'billable_amount']
             ],
 
             'user_id' => [
