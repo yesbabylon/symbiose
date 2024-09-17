@@ -144,7 +144,7 @@
             {
                 "type": "field",
                 "label": "Duration",
-                "value": "duration",
+                "value": "billable_duration",
                 "width": "10%",
                 "sortable": true
             },

@@ -15,22 +15,27 @@
         },
         "date": {
             "label": "Date",
-            "description": "Date de réalisation de l'entrée.",
+            "description": "Date de la prestation.",
             "help": ""
         },
         "time_start": {
             "label": "Début",
-            "description": "Temps de commencement de réalisation de l'entrée.",
+            "description": "Heure de début de la prestation.",
             "help": ""
         },
         "time_end": {
             "label": "Fin",
-            "description": "Temps de fin de réalisation de l'entrée.",
+            "description": "Heure de fin  de la prestation.",
             "help": ""
         },
         "duration": {
-            "label": "Durée",
-            "description": "Durée de réalisation de l'entrée.",
+            "label": "Durée prestée",
+            "description": "Durée de la prestation liée à l'entrée.",
+            "help": ""
+        },
+        "billable_duration": {
+            "label": "Durée facturable",
+            "description": "Durée à facturer au client.",
             "help": ""
         },
         "user_id": {

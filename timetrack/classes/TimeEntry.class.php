@@ -111,7 +111,8 @@ class TimeEntry extends SaleEntry {
             'qty' => [
                 'type'           => 'computed',
                 'result_type'    => 'float',
-                'description'    => 'Quantity, expressed in hours, rounded to the quarter hour and based on duration.',
+                'description'    => 'The final amount of time to invoice.',
+                'description'    => 'Quantity is expressed in hours, rounded to the quarter hour, and based on the billable duration.',
                 'function'       => 'calcQty',
                 'store'          => true
             ],
@@ -142,6 +143,13 @@ class TimeEntry extends SaleEntry {
                 'store'          => true,
                 'instant'        => true,
                 'onupdate'       => 'onupdateDuration'
+            ],
+
+            'billable_duration' => [
+                'type'           => 'time',
+                'description'    => 'Duration that can be actually invoiced.',
+                'help'           => 'The duration (part of the entry) that can be billed to the Customer according to the related requested Task. By default has the same value as duration. Unlike duration, billable duration is meant to be set manually.',
+                'dependents'     => ['qty']
             ],
 
             'user_id' => [
@@ -197,7 +205,8 @@ class TimeEntry extends SaleEntry {
                 'result_type'    => 'float',
                 'usage'          => 'amount/money',
                 'function'       => 'calcBillableAmount',
-                'description'    => 'Reference completing the origin.',
+                'description'    => 'Amount that will be invoiced to the Customer.',
+                'help'           => 'This field is just an indicator. The final value will be computed when creating the receivable.',
                 'store'          => true
             ]
 
@@ -403,13 +412,14 @@ class TimeEntry extends SaleEntry {
                 continue;
             }
             $result[$id] = $entry['time_end'] - $entry['time_start'];
+            self::id($id)->update(['billable_duration' => $result[$id]]);
         }
         return $result;
     }
 
     public static function calcQty($self): array {
         $result = [];
-        $self->read(['duration']);
+        $self->read(['billable_duration']);
         foreach($self as $id => $entry) {
             $hours = floatval($entry['duration']) / 3600;
             $result[$id] = round($hours * 4) / 4;
@@ -420,16 +430,17 @@ class TimeEntry extends SaleEntry {
     public static function onupdateDuration($self): void {
         $self->read(['time_start', 'time_end', 'duration', 'qty']);
         foreach($self as $id => $entry) {
-            $values = [
-                    'qty' => null
-                ];
+            $values = [];
 
-            if( isset($entry['duration'], $entry['time_start'], $entry['time_end'])
-                && $entry['duration'] !== ($entry['time_end'] - $entry['time_start'])) {
+            if(isset($entry['duration'], $entry['time_start'], $entry['time_end'])
+                    && $entry['duration'] !== ($entry['time_end'] - $entry['time_start'])) {
                 $values['time_end'] = $entry['time_start'] + $entry['duration'];
             }
+            else {
+                $values['billable_duration'] = $entry['duration'];
+            }
 
-            TimeEntry::id($id)->update($values);
+            self::id($id)->update($values);
         }
     }
 
