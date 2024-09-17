@@ -317,6 +317,7 @@ class TimeEntry extends SaleEntry {
         }
         elseif(isset($event['duration'], $values['time_start'])) {
             $result['time_end'] = $values['time_start'] + $event['duration'];
+            $result['billable_duration'] = $result['duration'];
         }
 
         return $result;
