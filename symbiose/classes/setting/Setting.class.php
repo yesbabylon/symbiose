@@ -88,8 +88,10 @@ class Setting extends \core\setting\Setting {
      *
      * @return  mixed       Returns the value of the target setting or null if the setting parameter is not found. The type of the returned var depends on the setting's `type` field.
      */
-    public static function get_value(string $package, string $section, string $code, $default=null, array $selector=[], string $lang='en') {
+    public static function get_value(string $package, string $section, string $code, $default=null, array $selector=[], string $lang=null) {
         $result = $default;
+
+        $lang = $lang ?? constant('DEFAULT_LANG');
 
         // #memo - we use a dedicated cache since several o2m fields are involved and we want to prevent loading the same value multiple times in a same thread
         $index = $package.'.'.$section.'.'.$code.'.'.implode('.', array_values($selector)).'.'.$lang;
