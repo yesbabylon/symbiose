@@ -11,6 +11,10 @@
     ],
     "operations": {
         "total": {
+            "billable_duration": {
+                "operation": "SUM",
+                "usage": "time/plain"
+            },
             "billable_amount": {
                 "operation": "SUM",
                 "usage": "amount/money:2"
