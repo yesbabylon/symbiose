@@ -26,19 +26,23 @@ class Document extends Model {
 
             'data' => [
                 'type'              => 'binary',
-                'onupdate'          => 'onupdateData',
-                'dependents'        => ['preview_image']
+                'dependents'        => ['size', 'readable_size', 'preview_image']
             ],
 
             'type' => [
-                'type'              => 'string',
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'function'          => 'calcType',
+                'store'             => true,
                 'description'       => 'Content type of the document (from data).'
             ],
 
             'size' => [
-                'type'              => 'integer',
-                'description'       => 'Size of the document, in octets (from data).',
-                'dependents'        => ['readable_size']
+                'type'              => 'computed',
+                'result_type'       => 'integer',
+                'function'          => 'calcSize',
+                'store'             => true,
+                'description'       => 'Size of the document, in octets (from data).'
             ],
 
             'readable_size' => [
@@ -160,6 +164,22 @@ class Document extends Model {
         return $result;
     }
 
+    public static function calcSize($self) {
+        $result = [];
+        $self->read(['data', 'hash']);
+
+        foreach($self as $id => $document) {
+            $content = $document['data'] ?? '';
+            $result[$id] = strlen($content);
+            // set hash if not assigned yet
+            if(!$document['hash'] || strlen($document['hash']) <= 0) {
+                self::id($id)->update(['hash' => md5($id . substr($content, 0, 128))]);
+            }
+        }
+
+        return $result;
+    }
+
     public static function calcReadableSize($self) {
         $result = [];
         $self->read(['size']);
@@ -183,18 +203,17 @@ class Document extends Model {
         return $result;
     }
 
-    public static function onupdateData($self) {
-        $self->read(['hash', 'data']);
+
+
+    public static function calcType($self) {
+        $result = [];
+        $self->read(['data']);
 
         foreach($self as $id => $document) {
-            $values = [];
-
-            $content = $document['data'];
-            $size = strlen($content);
-
-            $values['size'] = $size;
 
             try {
+                $content = $document['data'] ?? '';
+
                 // retrieve content_type from MIME
                 $finfo = new \finfo(FILEINFO_MIME);
 
@@ -210,20 +229,16 @@ class Document extends Model {
                     throw new \Exception('invalid_mime');
                 }
 
-                $values['type'] = $content_type;
+                $result[$id] = $content_type;
 
             }
             catch(\Exception $e) {
                 // failed retrieving content type from content: ignore
             }
 
-            // set hash if not assigned yet
-            if(!$document['hash'] || strlen($document['hash']) <= 0) {
-                $values['hash'] = md5($id.substr($content, 0, 128));
-            }
-
-            self::id($id)->update($values);
         }
+
+        return $result;
     }
 
     /**
