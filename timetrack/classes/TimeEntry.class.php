@@ -301,7 +301,7 @@ class TimeEntry extends SaleEntry {
             $result['customer_id'] = $project['customer_id'];
         }
 
-        if( isset($event['time_start'], $values['time_end'])
+        if(isset($event['time_start'], $values['time_end'])
                 || isset($event['time_end'], $values['time_start']) ) {
             $time_start = $event['time_start'] ?? $values['time_start'];
             $time_end = $event['time_end'] ?? $values['time_end'];
@@ -317,7 +317,7 @@ class TimeEntry extends SaleEntry {
         }
         elseif(isset($event['duration'], $values['time_start'])) {
             $result['time_end'] = $values['time_start'] + $event['duration'];
-            $result['billable_duration'] = $result['duration'];
+            $result['billable_duration'] = $event['duration'];
         }
 
         return $result;
