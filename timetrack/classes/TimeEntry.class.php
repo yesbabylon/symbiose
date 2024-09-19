@@ -443,16 +443,17 @@ class TimeEntry extends SaleEntry {
     }
 
     public static function onupdateDuration($self): void {
-        $self->read(['time_start', 'time_end', 'duration', 'qty']);
+        $self->read(['is_full_day', 'time_start', 'time_end', 'duration', 'qty']);
         foreach($self as $id => $entry) {
             $values = [];
-
-            if(isset($entry['duration'], $entry['time_start'], $entry['time_end'])
-                    && $entry['duration'] !== ($entry['time_end'] - $entry['time_start'])) {
-                $values['time_end'] = $entry['time_start'] + $entry['duration'];
-            }
-            else {
-                $values['billable_duration'] = $entry['duration'];
+            if(!$entry['is_full_day']) {
+                if(isset($entry['duration'], $entry['time_start'], $entry['time_end'])
+                        && $entry['duration'] !== ($entry['time_end'] - $entry['time_start'])) {
+                    $values['time_end'] = $entry['time_start'] + $entry['duration'];
+                }
+                else {
+                    $values['billable_duration'] = $entry['duration'];
+                }
             }
 
             self::id($id)->update($values);
