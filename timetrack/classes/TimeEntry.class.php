@@ -135,6 +135,12 @@ class TimeEntry extends SaleEntry {
                 'dependents'     => ['duration', 'qty', 'billable_amount']
             ],
 
+            'is_full_day' => [
+                'type'           => 'boolean',
+                'description'    => 'The task of the entry was performed for a whole day.',
+                'default'        => false
+            ],
+
             'duration' => [
                 'type'           => 'computed',
                 'result_type'    => 'time',
@@ -318,6 +324,13 @@ class TimeEntry extends SaleEntry {
         elseif(isset($event['duration'], $values['time_start'])) {
             $result['time_end'] = $values['time_start'] + $event['duration'];
             $result['billable_duration'] = $event['duration'];
+        }
+
+        if(isset($event['is_full_day']) && $event['is_full_day']) {
+            $result['time_start'] = 9 * 3600;
+            $result['time_end'] = 17 * 3600;
+            $result['duration'] = 7.5 * 3600;
+            $result['billable_duration'] = 7 * 3600;
         }
 
         return $result;

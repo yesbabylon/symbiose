@@ -163,15 +163,23 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Full day",
+                                                "value": "is_full_day",
+                                                "width": "22%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "label": "Start",
                                                 "value": "time_start",
-                                                "width": "25%"
+                                                "width": "22%",
+                                                "visible": ["is_full_day", "=", false]
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "End",
                                                 "value": "time_end",
-                                                "width": "25%"
+                                                "width": "22%",
+                                                "visible": ["is_full_day", "=", false]
                                             }
                                         ]
                                     },
