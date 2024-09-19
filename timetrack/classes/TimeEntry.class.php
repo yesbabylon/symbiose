@@ -421,13 +421,23 @@ class TimeEntry extends SaleEntry {
 
     public static function calcDuration($self): array {
         $result = [];
-        $self->read(['time_start', 'time_end']);
+        $self->read(['is_full_day', 'time_start', 'time_end', 'billable_duration']);
         foreach($self as $id => $entry) {
             if(!isset($entry['time_start'], $entry['time_end'])) {
                 continue;
             }
-            $result[$id] = $entry['time_end'] - $entry['time_start'];
-            self::id($id)->update(['billable_duration' => $result[$id]]);
+            if($entry['is_full_day']) {
+                $result[$id] = 7.5 * 3600;
+                if(!$entry['billable_duration']) {
+                    self::id($id)->update(['billable_duration' => 7 * 3600]);
+                }
+            }
+            else {
+                $result[$id] = $entry['time_end'] - $entry['time_start'];
+                if(!$entry['billable_duration']) {
+                    self::id($id)->update(['billable_duration' => $result[$id]]);
+                }
+            }
         }
         return $result;
     }
