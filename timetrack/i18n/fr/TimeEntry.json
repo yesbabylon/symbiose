@@ -28,6 +28,11 @@
             "description": "Heure de fin  de la prestation.",
             "help": ""
         },
+        "is_full_day": {
+            "label": "Jour entier",
+            "description": "La prestation a pris la journée entière.",
+            "help": ""
+        },
         "duration": {
             "label": "Durée prestée",
             "description": "Durée de la prestation liée à l'entrée.",
