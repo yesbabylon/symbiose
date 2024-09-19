@@ -163,12 +163,13 @@ class Document extends Model {
     public static function calcReadableSize($self) {
         $result = [];
         $self->read(['size']);
-        $precision = 1;
-        $suffixes = array('B', 'KB', 'MB', 'GB');
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
         foreach($self as $id => $document) {
-            $content = $document['size'];
-            $base = log($content, 1024);
-            $result[$id] = round(pow(1024, $base - floor($base)), $precision) . ' '. $suffixes[floor($base)];
+            $size = $document['size'];
+            if($size) {
+                $power = $size > 0 ? floor(log($size, 1024)) : 0;
+                $result[$id] = number_format($size / pow(1024, $power), 1, '.', '') . ' ' . $units[$power];
+            }
         }
         return $result;
     }
@@ -186,21 +187,42 @@ class Document extends Model {
         $self->read(['hash', 'data']);
 
         foreach($self as $id => $document) {
+            $values = [];
+
             $content = $document['data'];
             $size = strlen($content);
 
-            // retrieve content_type from MIME
-            $finfo = new \finfo(FILEINFO_MIME);
-            $content_type = explode(';', $finfo->buffer($content))[0];
-            self::id($id)->update([
-                    'size'  => $size,
-                    'type'	=> $content_type
-                ]);
+            $values['size'] = $size;
+
+            try {
+                // retrieve content_type from MIME
+                $finfo = new \finfo(FILEINFO_MIME);
+
+                $mime = $finfo->buffer($content);
+
+                if($mime === false) {
+                    throw new \Exception('missing_mime');
+                }
+
+                $content_type = explode(';', $mime)[0];
+
+                if(empty($content_type)) {
+                    throw new \Exception('invalid_mime');
+                }
+
+                $values['type'] = $content_type;
+
+            }
+            catch(\Exception $e) {
+                // failed retrieving content type from content: ignore
+            }
 
             // set hash if not assigned yet
             if(!$document['hash'] || strlen($document['hash']) <= 0) {
-                self::id($id)->update(['hash'=> md5($id.substr($content, 0, 128))]);
+                $values['hash'] = md5($id.substr($content, 0, 128));
             }
+
+            self::id($id)->update($values);
         }
     }
 
