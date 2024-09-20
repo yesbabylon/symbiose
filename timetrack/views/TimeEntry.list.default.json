@@ -126,10 +126,12 @@
             {
                 "type": "field",
                 "label": "Date",
-                "usage": "date/plain.short",
                 "value": "date",
                 "width": "15%",
-                "sortable": true
+                "sortable": true,
+                "widget": {
+                    "usage": "date/plain.short"
+                }
             },
             {
                 "type": "field",
