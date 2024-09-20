@@ -2,7 +2,7 @@
     "name": "Billable time entries",
     "description": "Default listing of all time entries.",
     "controller": "timetrack_timeentry-collect",
-    "order": "date",
+    "order": "date,time_start",
     "sort": "desc",
     "limit": 500,
     "domain": [

@@ -3,7 +3,7 @@
     "description": "Default listing of all time entries.",
     "controller": "timetrack_timeentry-collect",
     "domain": ["object_class", "=", "timetrack\\Project"],
-    "order": "date",
+    "order": "date,time_start",
     "sort": "desc",
     "limit": 100,
     "operations": {
@@ -126,7 +126,7 @@
             {
                 "type": "field",
                 "label": "Date",
-                "usage": "date/time.short",
+                "usage": "date/plain.short",
                 "value": "date",
                 "width": "15%",
                 "sortable": true
