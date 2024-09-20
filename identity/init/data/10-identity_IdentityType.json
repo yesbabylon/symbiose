@@ -6,27 +6,27 @@
             {
                 "id": 1,
                 "code": "IN",
-				"description": "Individual - Natural person."
+                "description": "Individual - Natural person."
             },
             {
                 "id": 2,
                 "code": "SE",
-				"description": "Self-Employed / Entrepreneur."
+                "description": "Self-Employed / Entrepreneur."
             },
             {
                 "id": 3,
                 "code": "CO",
-				"description": "Company - Privately help company (legal person)."
+                "description": "Company - Privately help company (legal person)."
             },
             {
                 "id": 4,
                 "code": "NP",
-				"description": "Non-Profit organization / Public School (legal person)."
+                "description": "Non-Profit organization / Public School (legal person)."
             },
             {
                 "id": 5,
                 "code": "PA",
-				"description": "Public Administration."
+                "description": "Public Administration."
             }
         ]
     },
@@ -36,23 +36,23 @@
         "data": [
             {
                 "id": 1,
-				"description": "Particulier - personne physique."
+                "description": "Particulier - personne physique."
             },
             {
                 "id": 2,
-				"description": "Travailleur Indépendant."
+                "description": "Travailleur Indépendant."
             },
             {
                 "id": 3,
-				"description": "Entreprise privée (personne morale)."
+                "description": "Entreprise privée (personne morale)."
             },
             {
                 "id": 4,
-				"description": "Association (ASBL) / école (personne morale)."
+                "description": "Association (ASBL) / école (personne morale)."
             },
             {
                 "id": 5,
-				"description": "Administration publique."
+                "description": "Administration publique."
             }
         ]
     }
