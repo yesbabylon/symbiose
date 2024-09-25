@@ -8,6 +8,7 @@
 namespace timetrack;
 
 use equal\orm\Model;
+use inventory\Product;
 use sale\receivable\ReceivablesQueue;
 
 class Project extends Model {
@@ -71,6 +72,13 @@ class Project extends Model {
                 'foreign_object' => 'timetrack\TimeEntry',
                 'foreign_field'  => 'project_id',
                 'description'    => 'List of time entries assigned to the project.'
+            ],
+
+            'is_internal' => [
+                'type'              => 'boolean',
+                'description'       => 'Tasks related to the project are not invoiced.',
+                'help'              => 'Project relates to tasks made for the own organisation. Information relating to external products are kept so that the company can work on those.',
+                'default'           => false
             ]
 
         ];
@@ -83,6 +91,11 @@ class Project extends Model {
                 $result['receivable_queue_id'] = null;
             }
         }
+        if(isset('product_id', $event)) {
+            $product = Product::id($event['product_id'])->read(['is_internal'])->first();
+            $result['is_internal'] = $product['is_internal'];
+        }
+
         return $result;
     }
 

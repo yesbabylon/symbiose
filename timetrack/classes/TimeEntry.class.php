@@ -357,9 +357,11 @@ class TimeEntry extends SaleEntry {
 
     public static function calcBillableAmount($self) {
         $result = [];
-        $self->read(['qty', 'unit_price', 'is_billable', 'inventory_product_id' => ['is_internal']]);
+        $self->read(['qty', 'unit_price', 'is_billable', 'project_id' => ['is_internal'], 'inventory_product_id' => ['is_internal']]);
         foreach($self as $id => $entry) {
-            $is_billable = ($entry['inventory_product_id']['is_internal']) ? false : $entry['is_billable'];
+            $is_billable = !($entry['project_id']['is_internal'] ?? false);
+            $is_billable = $is_billable && !($entry['inventory_product_id']['is_internal'] ?? false);
+            $is_billable = $is_billable && $entry['is_billable'];
             $result[$id] = $is_billable ? round($entry['qty'] * $entry['unit_price'], 2) : 0.0;
         }
         return $result;
