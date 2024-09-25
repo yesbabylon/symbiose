@@ -159,7 +159,10 @@
                                                 "type": "field",
                                                 "label": "Date",
                                                 "value": "date",
-                                                "width": "33%"
+                                                "width": "33%",
+                                                "widget": {
+                                                    "usage": "date/plain"
+                                                }
                                             },
                                             {
                                                 "type": "field",
