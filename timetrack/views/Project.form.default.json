@@ -58,6 +58,7 @@
                                                 "label": "Customer",
                                                 "value": "customer_id",
                                                 "width": "100%",
+                                                "visible": ["is_internal", "=", false],
                                                 "widget": {
                                                     "view": "form.inventory",
                                                     "header": {
