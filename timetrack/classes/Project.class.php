@@ -91,7 +91,7 @@ class Project extends Model {
                 $result['receivable_queue_id'] = null;
             }
         }
-        if(isset('product_id', $event)) {
+        if(isset($event['product_id'])) {
             $product = Product::id($event['product_id'])->read(['is_internal'])->first();
             $result['is_internal'] = $product['is_internal'];
         }
