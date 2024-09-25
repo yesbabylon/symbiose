@@ -318,22 +318,31 @@ class TimeEntry extends SaleEntry {
             else {
                 $diff = $time_end - $time_start;
                 $result['duration'] = ( ceil($diff / 60 / 15) * 15 ) * 60;
-                $result['billable_duration'] = $result['duration'];
+                $result['billable_duration'] = self::computeBillableDuration($values['id'], $result['duration']);
             }
         }
         elseif(isset($event['duration'], $values['time_start'])) {
             $result['time_end'] = $values['time_start'] + $event['duration'];
-            $result['billable_duration'] = $event['duration'];
+            $result['billable_duration'] = self::computeBillableDuration($values['id'], $event['duration']);
         }
 
         if(isset($event['is_full_day']) && $event['is_full_day']) {
             $result['time_start'] = 9 * 3600;
             $result['time_end'] = 17 * 3600;
             $result['duration'] = 7.5 * 3600;
-            $result['billable_duration'] = 7 * 3600;
+            // #todo - from settings
+            $result['billable_duration'] = self::computeBillableDuration($values['id'], 7 * 3600);
         }
 
         return $result;
+    }
+
+    private static function computeBillableDuration($id, $duration) {
+        $entry = self::id($id)->read(['is_billable', 'project_id' => ['is_internal'], 'inventory_product_id' => ['is_internal']])->first();
+        $is_billable = !($entry['project_id']['is_internal'] ?? false);
+        $is_billable = $is_billable && !($entry['inventory_product_id']['is_internal'] ?? false);
+        $is_billable = $is_billable && $entry['is_billable'];
+        return $is_billable ? $duration : 0.0;
     }
 
     public static function onupdateProjectId($self): void {
@@ -431,13 +440,14 @@ class TimeEntry extends SaleEntry {
             if($entry['is_full_day']) {
                 $result[$id] = 7.5 * 3600;
                 if(!$entry['billable_duration']) {
-                    self::id($id)->update(['billable_duration' => 7 * 3600]);
+                    // #todo - read from settings
+                    self::id($id)->update(['billable_duration' => self::computeBillableDuration($id, 7 * 3600)]);
                 }
             }
             else {
                 $result[$id] = $entry['time_end'] - $entry['time_start'];
                 if(!$entry['billable_duration']) {
-                    self::id($id)->update(['billable_duration' => $result[$id]]);
+                    self::id($id)->update(['billable_duration' => self::computeBillableDuration($id, $result[$id])]);
                 }
             }
         }
