@@ -71,7 +71,7 @@ class SaleEntry extends Model {
             'is_billable' => [
                 'type'              => 'boolean',
                 'description'       => 'Flag telling if the entry can be billed to the customer.',
-                'help'              => 'Under certain circumstances, a task relates to a customer but cannot be billed (from a commercial perspective). Most of the time this cannot be known in advance and this flag is intended to be set manually.',
+                'help'              => 'Under certain circumstances, a task is performed for the organisation itself, or relates to a customer but cannot be billed (from a commercial perspective). Most of the time this cannot be known in advance and this flag is intended to be set manually.',
                 'default'           => true
             ],
 
@@ -174,6 +174,15 @@ class SaleEntry extends Model {
                 ],
                 'description'       => 'Status of the sale entry.',
                 'default'           => 'pending'
+            ],
+
+            'total' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:4',
+                'function'          => 'calcTotal',
+                'store'             => true,
+                'description'       => 'Total tax-excluded price of the entry (computed).'
             ]
 
         ];
@@ -317,7 +326,7 @@ class SaleEntry extends Model {
                     ['product_id', '=', $event['product_id']],
                     ['price_list_id', 'in', $price_lists_ids]
                 ])
-                ->read(['id', 'name', 'price', 'vat_rate'])
+                ->read(['id', 'name', 'price'])
                 ->first();
 
             if(isset($result['price_id']['price'])) {
@@ -372,6 +381,18 @@ class SaleEntry extends Model {
         }
         return $result;
     }
+
+    public static function calcTotal($self) {
+        $result = [];
+        // #memo - qty is based on billable_duration
+        $self->read(['qty', 'unit_price', 'free_qty', 'discount']);
+        foreach($self as $id => $entry) {
+            // #todo - round to the sale price precision, from settings
+            $result[$id] = round($entry['unit_price'] * (1.0 - $entry['discount']) * ($entry['qty'] - $entry['free_qty']), 4);
+        }
+        return $result;
+    }
+
 
     public static function canupdate($self, $values) {
         $self->read(['has_receivable']);

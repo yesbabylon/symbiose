@@ -56,7 +56,7 @@ class Project extends Model {
                 'foreign_field'   => 'projects_ids',
                 'description'     => 'The sale model to apply on project\'s time entries.',
                 'required'        => true,
-                'dependents'     => ['time_entries_ids' => ['price_id', 'billable_amount']],
+                'dependents'     => ['time_entries_ids' => ['price_id', 'total']],
             ],
 
             'receivable_queue_id' => [
