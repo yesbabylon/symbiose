@@ -6,6 +6,18 @@
     "order": "date,time_start",
     "sort": "desc",
     "limit": 100,
+    "operations": {
+        "total": {
+            "billable_duration": {
+                "operation": "SUM",
+                "usage": "time/plain"
+            },
+            "total": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
     "header": {
         "selection": {
             "show_inline": ["action.transition.ready"],

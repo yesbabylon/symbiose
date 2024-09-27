@@ -12,7 +12,7 @@
                 "operation": "SUM",
                 "usage": "time/plain"
             },
-            "billable_amount": {
+            "total": {
                 "operation": "SUM",
                 "usage": "amount/money:2"
             }
@@ -164,10 +164,10 @@
                 "readonly": true
             },
             {
-                "id": "item.billable_amount",
+                "id": "item.total",
                 "type": "field",
                 "label": "Amount",
-                "value": "billable_amount",
+                "value": "total",
                 "width": "10%",
                 "sortable": true,
                 "readonly": true
