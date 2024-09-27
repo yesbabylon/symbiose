@@ -8,13 +8,13 @@
     "limit": 100,
     "operations": {
         "total": {
-            "billable_duration": {
+            "duration": {
                 "operation": "SUM",
                 "usage": "time/plain"
             },
-            "total": {
+            "billable_duration": {
                 "operation": "SUM",
-                "usage": "amount/money:2"
+                "usage": "time/plain"
             }
         }
     },
@@ -60,14 +60,6 @@
                 "type": "field",
                 "value": "name",
                 "width": "25%",
-                "sortable": true,
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "label": "Performed by",
-                "value": "user_id",
-                "width": "15%",
                 "sortable": true,
                 "readonly": true
             },
@@ -127,7 +119,7 @@
                 "type": "field",
                 "label": "Date",
                 "value": "date",
-                "width": "15%",
+                "width": "10%",
                 "sortable": true,
                 "widget": {
                     "usage": "date/plain.short"
@@ -150,6 +142,13 @@
             {
                 "type": "field",
                 "label": "Duration",
+                "value": "duration",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Billable",
                 "value": "billable_duration",
                 "width": "10%",
                 "sortable": true

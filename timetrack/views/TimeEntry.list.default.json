@@ -8,6 +8,10 @@
     "limit": 100,
     "operations": {
         "total": {
+            "duration": {
+                "operation": "SUM",
+                "usage": "time/plain"
+            },
             "billable_duration": {
                 "operation": "SUM",
                 "usage": "time/plain"
@@ -127,7 +131,7 @@
                 "type": "field",
                 "label": "Date",
                 "value": "date",
-                "width": "15%",
+                "width": "10%",
                 "sortable": true,
                 "widget": {
                     "usage": "date/plain.short"
@@ -150,6 +154,13 @@
             {
                 "type": "field",
                 "label": "Duration",
+                "value": "duration",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Billable",
                 "value": "billable_duration",
                 "width": "10%",
                 "sortable": true
