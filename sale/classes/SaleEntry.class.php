@@ -331,14 +331,9 @@ class SaleEntry extends Model {
                         ],
                         'status' => 'ready',
                     ],
-                    'bill' => [
-                        'description' => 'Create receivable, from sale entry, who will be invoiced to the customer.',
-                        'help' => 'Can only be applied if sale\\SaleEntry does not have a validation process.',
-                        'onafter' => 'doCreateReceivable',
-                        'policies' => [
-                            'billable',
-                        ],
-                        'status' => 'billed',
+                    'validate' => [
+                        'description' => 'Validate sale entry.',
+                        'status' => 'validated'
                     ],
                 ],
             ],
