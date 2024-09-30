@@ -78,6 +78,16 @@ class SaleEntry extends Model {
                 'default'           => true
             ],
 
+            'is_internal' => [
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => 'Flag telling if the entry relates to the organisation itself.',
+                'help'              => 'Under certain circumstances, a task is performed for the organisation itself and must be considered as internal (might not be invoiced).',
+                'store'             => true,
+                'function'          => 'calcIsInternal',
+                'default'           => true
+            ],
+
             'customer_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
@@ -269,11 +279,12 @@ class SaleEntry extends Model {
 
     public static function policyBillable($self): array {
         $result = [];
-        $self->read(['status', 'object_class', 'customer_id', 'product_id', 'price_id', 'unit_price', 'qty', 'is_billable']);
+        $self->read(['status', 'object_class', 'is_internal', 'customer_id', 'product_id', 'price_id', 'unit_price', 'qty', 'is_billable']);
         foreach($self as $id => $entry) {
             // #memo - a sale entry can be set to 'billed' status even if not billable (to mark the entry as processed, even if there is no invoicing)
             if( $entry['status'] !== 'validated'
-                    || !isset($entry['customer_id'], $entry['product_id'], $entry['price_id'], $entry['unit_price']) ) {
+                    || !isset($entry['product_id'], $entry['price_id'], $entry['unit_price'])
+                    || (!isset($entry['customer_id']) && !$entry['is_internal']) ) {
                 $result[$id] = false;
             }
         }
@@ -454,6 +465,14 @@ class SaleEntry extends Model {
         return $result;
     }
 
+    public static function calcIsInternal($self) {
+        $result = [];
+        $self->read(['project_id' => ['is_internal']]);
+        foreach($self as $id => $entry) {
+            $result[$id] = $entry['project_id']['is_internal'] ?? false;
+        }
+        return $result;
+    }
 
     public static function canupdate($self, $values) {
         $self->read(['has_receivable']);

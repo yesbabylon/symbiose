@@ -213,7 +213,18 @@ class TimeEntry extends SaleEntry {
                 'description'       => 'Tax-excluded amount that will be invoiced to the Customer.',
                 'function'          => 'calcTotal',
                 'store'             => true
-            ]
+            ],
+
+            'is_internal' => [
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => 'Flag telling if the entry can be billed to the customer.',
+                'help'              => 'Under certain circumstances, a task is performed for the organisation itself, or relates to a customer but cannot be billed (from a commercial perspective). Most of the time this cannot be known in advance and this flag is intended to be set manually.',
+                'store'             => true,
+                'function'          => 'calcIsInternal',
+                'default'           => true
+            ],
+
 
         ];
     }
@@ -242,6 +253,16 @@ class TimeEntry extends SaleEntry {
             $result .= '/';
         }
         $result .= 'support/#/ticket/'.$ticket_id;
+        return $result;
+    }
+
+    public static function calcIsInternal($self) {
+        $result = [];
+        $self->read(['project_id' => ['is_internal'], 'inventory_product_id' => ['is_internal']]);
+        foreach($self as $id => $entry) {
+            $result[$id] = $entry['project_id']['is_internal'] ?? false;
+            $result[$id] = $result[$id] || ($entry['inventory_product_id']['is_internal'] ?? false);
+        }
         return $result;
     }
 
@@ -337,9 +358,8 @@ class TimeEntry extends SaleEntry {
     }
 
     private static function computeBillableDuration($id, $duration) {
-        $entry = self::id($id)->read(['is_billable', 'project_id' => ['is_internal'], 'inventory_product_id' => ['is_internal']])->first();
-        $is_billable = !($entry['project_id']['is_internal'] ?? false);
-        $is_billable = $is_billable && !($entry['inventory_product_id']['is_internal'] ?? false);
+        $entry = self::id($id)->read(['is_billable', 'is_internal'])->first();
+        $is_billable = !$entry['is_internal'];
         $is_billable = $is_billable && $entry['is_billable'];
         return $is_billable ? $duration : 0.0;
     }
