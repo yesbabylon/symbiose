@@ -174,10 +174,10 @@ class Subscription extends Model  {
                 && isset($values['date_from'])
                 && isset($values['date_to']) ) {
             $price = self::getProductPrice(
-                $event['product_id'],
-                $values['date_from'],
-                $values['date_to']
-            );
+                    $event['product_id'],
+                    $values['date_from'],
+                    $values['date_to']
+                );
 
             $result['price_id'] = $price;
             $result['price'] = $price['price'];
@@ -186,7 +186,7 @@ class Subscription extends Model  {
         return $result;
     }
 
-    public static function getPriceListsIds($date_from, $date_to) {
+    private static function getPriceListsIds($date_from, $date_to) {
         return PriceList::search([
                 [
                     ['date_from', '<', $date_from],

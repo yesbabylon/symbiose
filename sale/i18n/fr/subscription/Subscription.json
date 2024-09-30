@@ -75,13 +75,13 @@
             "help": ""
         },
         "subscription_entries_ids": {
-            "label": "Entrées",
-            "description": "Les entrées qui détails les périodes d'abonnement.",
+            "label": "Ventes",
+            "description": "Les entrées de vente relatives à l'abonnement.",
             "help": ""
         },
         "is_auto_renew": {
             "label": "Renouvellement auto",
-            "description": "L'abonnement peut-il être auto-renouvelé.",
+            "description": "L'abonnement doit-il être renouvelé automatiquement ?",
             "help": ""
         }
     },
@@ -91,12 +91,12 @@
             "description": "",
             "actions": {
                 "action.shift-subscription": {
-                    "label": "Période de décalage",
+                    "label": "Période suivante",
                     "description": "Décaler les dates d'abonnement en fonction de la durée."
                 },
                 "action.add-subscription-entry": {
-                    "label": "Créer une entrée",
-                    "description": "Créer une entrée à partir d'un abonnement"
+                    "label": "Créer une vente",
+                    "description": "Créer une entrée de vente à partir de cet abonnement."
                 }
             },
             "layout": {
