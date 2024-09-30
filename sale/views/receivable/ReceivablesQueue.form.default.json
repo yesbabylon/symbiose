@@ -62,6 +62,7 @@
                                                 "width": "100%",
                                                 "widget": {
                                                     "view": "list.queue-selection",
+                                                    "limit": 500,
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.CREATE": false,
