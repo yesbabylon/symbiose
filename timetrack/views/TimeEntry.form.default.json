@@ -109,7 +109,14 @@
                                                 "label": "Customer",
                                                 "value": "customer_id",
                                                 "width": "50%",
-                                                "visible": ["project_id", "<>", null]
+                                                "visible": [["is_internal", "=", false], ["project_id", "<>", null]]
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Internal",
+                                                "value": "is_internal",
+                                                "width": "50%",
+                                                "visible": ["is_internal", "=", true]
                                             }
                                         ]
                                     }
