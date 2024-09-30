@@ -59,11 +59,6 @@
                                                 "type": "field",
                                                 "value": "ref_account",
                                                 "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "is_tour_operator",
-                                                "width": "50%"
                                             }
                                         ]
                                     }

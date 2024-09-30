@@ -38,11 +38,6 @@
             "description": "IBAN arbitraire associé au fournisseur.",
             "help": ""
         },
-        "is_tour_operator": {
-            "label": "Tour opérateur",
-            "description": "Le fournisseur est un Tour Opérateur ou une OTA.",
-            "help": ""
-        },
         "invoices_ids": {
             "label": "Factures",
             "description": "Liste des factures émises par le fournisseur.",

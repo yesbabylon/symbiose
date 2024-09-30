@@ -21,7 +21,7 @@
             "help": ""
         },
         "is_auto_renew": {
-            "label": "Est-il renouvelle ?",
+            "label": "Renouvelable",
             "description": "Le service se renouvelle automatiquement ?",
             "selection": {
                 "all": "Tous",

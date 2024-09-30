@@ -19,17 +19,17 @@
             "help": ""
         },
         "has_external_provider":{
-            "label": "Fournisseur externe?",
-            "description": "Le modèle de service  a un fournisseur externe?.",
+            "label": "Fournisseur externe",
+            "description": "Le modèle de service correspond-t-il a un fournisseur externe ?",
             "help": ""
         },
         "is_billable": {
-            "label": "Est-il facturable?",
-            "description": "Le modèle de service  est facturable?",
+            "label": "Facturable",
+            "description": "Le modèle de service  est-il facturable ?",
             "help": ""
         },
         "is_auto_renew": {
-            "label": "Est-il renouvelle?",
+            "label": "Renouvelable",
             "description": "Le modèle de service se renouvelle-t-il automatiquement ?",
             "help": ""
         },

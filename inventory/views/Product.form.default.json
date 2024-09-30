@@ -106,7 +106,6 @@
                                                 "value": "services_ids",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "view": "list.product-selection",
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.SELECT": false

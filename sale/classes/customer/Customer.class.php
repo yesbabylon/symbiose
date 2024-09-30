@@ -153,12 +153,6 @@ class Customer extends \identity\Partner {
                 'type'              => 'boolean',
                 'default'           => false,
                 'description'       => 'Mark the customer with a disturbances history.'
-            ],
-
-            'is_tour_operator' => [
-                'type'              => 'boolean',
-                'description'       => 'Mark the customer as a Tour Operator.',
-                'default'           => false
             ]
 
         ];

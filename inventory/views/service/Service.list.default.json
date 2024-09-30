@@ -67,17 +67,17 @@
             },
             {
                 "type": "field",
-                "value": "is_internal",
-                "label": "Is internal",
-                "width": "15%",
-                "sortable": true,
+                "value": "product_id",
+                "label": "Product",
+                "width": "25%",
                 "readonly": true
             },
             {
                 "type": "field",
-                "value": "product_id",
-                "label": "Product",
-                "width": "25%",
+                "value": "is_internal",
+                "label": "Is internal",
+                "width": "15%",
+                "sortable": true,
                 "readonly": true
             },
             {
@@ -100,16 +100,6 @@
                 "width": "20%",
                 "label": "Provider",
                 "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "accesses_ids",
-                "visible": false
-            },
-            {
-                "type": "field",
-                "value": "subscriptions_ids",
-                "visible": false
             }
         ]
     }

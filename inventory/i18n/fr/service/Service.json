@@ -29,18 +29,18 @@
             "help": ""
         },
         "is_internal": {
-            "label": "Est-il interne?",
-            "description": "Le service est interne?",
+            "label": "Interne",
+            "description": "Le service est-il interne ?",
             "help": ""
         },
         "is_billable": {
-            "label": "Est-il facturable?",
-            "description": "Le service est facturable?",
+            "label": "Facturable",
+            "description": "Le service est-il facturable ?",
             "help": ""
         },
         "is_auto_renew": {
-            "label": "Est-il renouvelle?",
-            "description": "Le service se renouvelle automatiquement?",
+            "label": "Renouvelable",
+            "description": "Le service se renouvelle-t-il automatiquement ?",
             "help": ""
         },
         "service_provider_id":{

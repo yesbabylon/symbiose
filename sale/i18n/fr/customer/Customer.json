@@ -63,11 +63,6 @@
             "description": "Référence du compte client dans un éventuel logiciel comptable externe.",
             "help": ""
         },
-        "is_tour_operator": {
-            "label": "Tour opérateur",
-            "description": "Le client est un Tour Opérateur ou une OTA.",
-            "help": ""
-        },
         "invoices_ids": {
             "label": "Factures",
             "description": "Liste des factures émises au nom du client.",
