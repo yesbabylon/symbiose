@@ -48,7 +48,7 @@ class TimeEntry extends SaleEntry {
                 'type'           => 'many2one',
                 'foreign_object' => 'timetrack\Project',
                 'description'    => 'Identifier of the Project the sale entry originates from.',
-                'dependents'     => ['name', 'ticket_link', 'product_id', 'price_id', 'unit_price'],
+                'dependents'     => ['name', 'ticket_link', 'customer_id', 'inventory_product_id', 'product_id', 'price_id', 'unit_price'],
                 'onupdate'       => 'onupdateProjectId'
             ],
 
@@ -57,7 +57,7 @@ class TimeEntry extends SaleEntry {
                 'result_type'     => 'many2one',
                 'foreign_object'  => 'inventory\Product',
                 'description'     => 'The product the the time entry refers to, if any.',
-                'function'        => 'calcInventoryProductId',
+                'relation'        => ['project_id' => ['product_id']],
                 'store'           => true
             ],
 
@@ -66,7 +66,7 @@ class TimeEntry extends SaleEntry {
                 'result_type'    => 'many2one',
                 'foreign_object' => 'sale\customer\Customer',
                 'description'    => 'Customer this time entry was created for.',
-                'function'       => 'calcCustomerId',
+                'relation'       => ['project_id' => ['customer_id']],
                 'store'          => true,
                 'instant'        => true,
                 'readonly'       => true
@@ -75,8 +75,7 @@ class TimeEntry extends SaleEntry {
             'object_class' => [
                 'type'           => 'string',
                 'description'    => 'Class of the object object_id points to.',
-                'default'        => 'timetrack\Project',
-                'dependents'     => ['project_id']
+                'default'        => 'timetrack\Project'
             ],
 
             'product_id' => [
@@ -85,7 +84,7 @@ class TimeEntry extends SaleEntry {
                 'foreign_object' => 'sale\catalog\Product',
                 'description'    => 'Product of the sale catalog.',
                 'help'           => 'This field references a Product from the catalog. This field is not to be mistaken with the Product (software) of the customer.',
-                'function'       => 'calcProductId',
+                'relation'       => ['project_id' => ['time_entry_sale_model_id' => 'product_id']],
                 'store'          => true
             ],
 
@@ -399,24 +398,6 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function calcProductId($self): array {
-        $result = [];
-        $self->read(['project_id' => ['time_entry_sale_model_id' => 'product_id']]);
-        foreach($self as $id => $entry) {
-            $result[$id] = $entry['project_id']['time_entry_sale_model_id']['product_id'] ?? null;
-        }
-        return $result;
-    }
-
-    public static function calcInventoryProductId($self) {
-        $result = [];
-        $self->read(['project_id' => ['product_id']]);
-        foreach($self as $id => $entry) {
-            $result[$id] = $entry['project_id']['product_id'] ?? null;
-        }
-        return $result;
-    }
-
     public static function calcPriceId($self): array {
         $result = [];
         $self->read(['project_id' => ['time_entry_sale_model_id' => 'price_id']]);
@@ -476,20 +457,6 @@ class TimeEntry extends SaleEntry {
 
             self::id($id)->update($values);
         }
-    }
-
-    public static function calcCustomerId($self): array {
-        $result = [];
-        $self->read(['project_id' => ['customer_id']]);
-        foreach($self as $id => $entry) {
-            if(!isset($entry['project_id']['customer_id'])) {
-                continue;
-            }
-
-            $result[$id] = $entry['project_id']['customer_id'];
-        }
-
-        return $result;
     }
 
     public static function calcTicketLink($self): array {
