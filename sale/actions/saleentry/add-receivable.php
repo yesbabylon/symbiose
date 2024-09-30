@@ -7,7 +7,6 @@
 use sale\receivable\Receivable;
 use sale\receivable\ReceivablesQueue;
 use sale\SaleEntry;
-use timetrack\Project;
 
 list($params, $providers) = eQual::announce([
     'description'   => 'Create a receivable from a sale entry.',
@@ -35,108 +34,31 @@ list($params, $providers) = eQual::announce([
 /** @var \equal\php\Context $context */
 ['context' => $context] = $providers;
 
-$getSaleEntry = function($id) {
-    $sale_entry = SaleEntry::id($id)
-        ->read([
-            'id',
-            'date',
-            'object_class',
-            'object_id',
-            'customer_id',
-            'product_id',
-            'price_id' => ['id', 'vat_rate'],
-        ])
-        ->first(true);
+$saleEntry = SaleEntry::id($params['id'])->read(['id', 'customer_id'])->first();
 
-    if(!$sale_entry) {
-        throw new Exception('unknown_sale_entry', QN_ERROR_UNKNOWN_OBJECT);
-    }
-
-    if(!isset($sale_entry['customer_id'], $sale_entry['product_id'], $sale_entry['price_id'])) {
-        throw new Exception('sale_entry_missing_params', QN_ERROR_INVALID_PARAM);
-    }
-
-    return $sale_entry;
-};
-
-$getReceivablesQueue = function($sale_entry, $receivable_queue_id) {
-    if(is_null($receivable_queue_id) && $sale_entry['object_class'] === 'timetrack\Project') {
-        $project = Project::id($sale_entry['object_id'])
-            ->read(['receivable_queue_id'])
-            ->first();
-
-        $receivable_queue_id = $project['receivable_queue_id'];
-    }
-
-    if(!is_null($receivable_queue_id)) {
-        $receivables_queue = ReceivablesQueue::search([
-                ['id', '=', $receivable_queue_id],
-                ['customer_id', '=', $sale_entry['customer_id']]
-            ])
-            ->read(['id'])
-            ->first();
-
-        if(!$receivables_queue) {
-            throw new Exception('unknown_receivables_queue', QN_ERROR_UNKNOWN_OBJECT);
-        }
-    }
-    else {
-        $receivables_queue = ReceivablesQueue::search(
-                ['customer_id', '=', $sale_entry['customer_id']]
-            )
-            ->read(['id'])
-            ->first();
-
-        if(!$receivables_queue) {
-            $receivables_queue = ReceivablesQueue::create([
-                    'customer_id' => $sale_entry['customer_id']
-                ])
-                ->first();
-        }
-    }
-
-    return $receivables_queue;
-};
-
-$sale_entry = $getSaleEntry($params['id']);
-
-$receivables_queue = $getReceivablesQueue(
-    $sale_entry,
-    $params['receivables_queue_id'] ?? null
-);
-
-$receivable = null;
-if($sale_entry['object_class'] !== Project::class) {
-    $receivable = Receivable::search([
-            ['customer_id', '=', $sale_entry['customer_id']],
-            ['product_id', '=', $sale_entry['product_id']],
-            ['price_id', '=', $sale_entry['price_id']['id']],
-            ['status', '=', 'pending']
-        ])
-        ->read(['id'])
-        ->first();
+if(!$saleEntry) {
+    throw new Exception('unknown_sale_entry', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
-if(is_null($receivable)) {
-    $object_name = 'Sale';
-    if(!is_null($sale_entry['object_class'])) {
-        $object_name = array_reverse(
-                explode('\\', $sale_entry['object_class'])
-            )[0];
-    }
-
-    $receivable = Receivable::create([
-            'receivables_queue_id' => $receivables_queue['id'],
-            'sale_entry_id'        => $sale_entry['id'],
-            'date'                 => $sale_entry['date']
-        ])
+if(isset($params['receivables_queue_id'])) {
+    $receivablesQueue = ReceivablesQueue::id($params['receivables_queue_id'])
+        ->read(['customer_id'])
         ->first();
 
-    SaleEntry::id($sale_entry['id'])
-        ->update([
-            'has_receivable' => true,
-            'receivable_id'  => $receivable['id']
-        ]);
+    if(!$receivablesQueue) {
+        throw new Exception('unknown_receivables_queue', EQ_ERROR_UNKNOWN_OBJECT);
+    }
+
+    if($receivablesQueue['customer_id'] != $saleEntry['customer_id']) {
+        throw new Exception('invalid_receivables_queue', EQ_ERROR_UNKNOWN_OBJECT);
+    }
+}
+
+SaleEntry::id($params['id'])->do('create_receivable');
+
+if(isset($params['receivables_queue_id'])) {
+    Receivable::search(['sale_entry_id', '=', $params['id']])
+        ->update(['receivables_queue_id' => $params['receivables_queue_id']]);
 }
 
 $context->httpResponse()

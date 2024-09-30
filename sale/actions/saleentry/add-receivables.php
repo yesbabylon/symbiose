@@ -4,10 +4,9 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 use sale\SaleEntry;
 
-list($params, $providers) = announce([
+list($params, $providers) = eQual::announce([
     'description'   => 'Create receivables from given sale entries.',
     'help'          => 'If specific queue given then all sale entries must be for the same customer.',
     'params'        => [

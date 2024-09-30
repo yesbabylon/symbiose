@@ -10,6 +10,9 @@ use eQual;
 use equal\orm\Model;
 use sale\price\Price;
 use sale\price\PriceList;
+use sale\receivable\Receivable;
+use sale\receivable\ReceivablesQueue;
+use timetrack\Project;
 
 class SaleEntry extends Model {
 
@@ -201,6 +204,54 @@ class SaleEntry extends Model {
         ];
     }
 
+    public static function getActions() {
+        return [
+            'create_receivable' => [
+                'description'   => "Sets the validated flag to true.",
+                'policies'      => [],
+                'function'      => 'doCreateReceivable'
+            ],
+        ];
+    }
+
+    /**
+     * Retrieves the first ReceivablesQueue associated with sale entry, or create a new one if there are none.
+    */
+    private static function computeReceivablesQueueId($id) {
+        $receivables_queue_id = 0;
+
+        $saleEntry = self::id($id)->read(['object_class', 'object_id', 'customer_id'])->first();
+
+        if($saleEntry['object_class'] === 'timetrack\Project') {
+            $project = Project::id($saleEntry['object_id'])
+                ->read(['receivable_queue_id'])
+                ->first();
+
+            if($project && isset($project['receivable_queue_id'])) {
+                $receivables_queue_id = $project['receivable_queue_id'];
+            }
+        }
+
+        if(!$receivables_queue_id) {
+            $receivablesQueue = ReceivablesQueue::search(['customer_id', '=', $saleEntry['customer_id']])
+                ->read(['id'])
+                ->first();
+
+            if(!$receivablesQueue) {
+                $receivablesQueue = ReceivablesQueue::create([
+                        'customer_id' => $saleEntry['customer_id']
+                    ])
+                    ->read(['id'])
+                    ->first();
+            }
+            if($receivablesQueue) {
+                $receivables_queue_id = $receivablesQueue['id'];
+            }
+        }
+
+        return $receivables_queue_id;
+    }
+
     /**
      * Method to override when extending class, by default no validation process for sale entry
      *
@@ -230,15 +281,27 @@ class SaleEntry extends Model {
         return $result;
     }
 
-    public static function addReceivable($self): void {
-        $self->read(['id']);
-        foreach($self as $entry) {
-            try {
-                eQual::run('do', 'sale_saleentry_add-receivable', ['id' => $entry['id']]);
-            }
-            catch(\Exception $e) {
-                trigger_error("PHP::Failed adding receivable for sale entry {$entry['id']}", EQ_REPORT_ERROR);
-            }
+    public static function doCreateReceivable($self) {
+        $self->read(['id', 'date']);
+        foreach($self as $id => $entry) {
+            // if a receivable has been previously created remove it
+            Receivable::search(['sale_entry_id', '=', $entry['id']])->delete(true);
+            // retrieve applicable receivablesQueue
+            $receivables_queue_id = self::computeReceivablesQueueId($id);
+            // create a new receivable assigned to this entry
+            $receivable = Receivable::create([
+                    'receivables_queue_id' => $receivables_queue_id,
+                    'sale_entry_id'        => $id,
+                    'date'                 => $entry['date']
+                ])
+                ->read(['id'])
+                ->first();
+
+            self::id($id)
+                ->update([
+                    'has_receivable' => true,
+                    'receivable_id'  => $receivable['id']
+                ]);
         }
     }
 
@@ -259,7 +322,7 @@ class SaleEntry extends Model {
                     'bill' => [
                         'description' => 'Create receivable, from sale entry, who will be invoiced to the customer.',
                         'help' => 'Can only be applied if sale\\SaleEntry does not have a validation process.',
-                        'onafter' => 'addReceivable',
+                        'onafter' => 'doCreateReceivable',
                         'policies' => [
                             'billable',
                         ],
@@ -289,7 +352,7 @@ class SaleEntry extends Model {
                 'transitions' => [
                     'bill' => [
                         'description' => 'Create receivable, from sale entry, who will be invoiced to the customer.',
-                        'onafter' => 'addReceivable',
+                        'onafter' => 'doCreateReceivable',
                         'policies' => [
                             'billable',
                         ],
