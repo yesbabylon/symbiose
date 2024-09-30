@@ -213,7 +213,6 @@ class SaleEntry extends Model {
         foreach($self as $id => $entry) {
             $result[$id] = false;
         }
-
         return $result;
     }
 
@@ -221,10 +220,10 @@ class SaleEntry extends Model {
         $result = [];
         $self->read(['status', 'object_class', 'customer_id', 'product_id', 'price_id', 'unit_price', 'qty', 'is_billable']);
         foreach($self as $id => $entry) {
+            // #memo - a sale entry can be set to 'billed' status even if not billable (to mark the entry as processed, even if there is no invoicing)
             if( ($entry['object_class'] === 'timetrack\Project' && $entry['status'] !== 'validated')
-                || !isset($entry['customer_id'], $entry['product_id'], $entry['price_id'], $entry['unit_price'])
-                || $entry['qty'] <= 0
-                || !$entry['is_billable'] ) {
+                    || !isset($entry['customer_id'], $entry['product_id'], $entry['price_id'], $entry['unit_price'])
+                    || $entry['qty'] <= 0 ) {
                 $result[$id] = false;
             }
         }
