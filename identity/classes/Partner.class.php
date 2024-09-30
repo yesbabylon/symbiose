@@ -26,7 +26,8 @@ class Partner extends Model {
                 'function'          => 'calcName',
                 'store'             => true,
                 'instant'           => true,
-                'description'       => 'The display name of the partner (related organisation name).'
+                'description'       => 'The display name of the partner (related organisation name).',
+                'generation'        => 'generateName'
             ],
 
             'organisation_id' => [
@@ -310,5 +311,9 @@ class Partner extends Model {
 
     public static function getConstraints() {
         return Identity::getConstraints();
+    }
+
+    public static function generateName() {
+        return null;
     }
 }
