@@ -84,8 +84,7 @@ class SaleEntry extends Model {
                 'description'       => 'Flag telling if the entry relates to the organisation itself.',
                 'help'              => 'Under certain circumstances, a task is performed for the organisation itself and must be considered as internal (might not be invoiced).',
                 'store'             => true,
-                'function'          => 'calcIsInternal',
-                'default'           => true
+                'function'          => 'calcIsInternal'
             ],
 
             'customer_id' => [

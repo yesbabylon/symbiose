@@ -221,8 +221,7 @@ class TimeEntry extends SaleEntry {
                 'description'       => 'Flag telling if the entry can be billed to the customer.',
                 'help'              => 'Under certain circumstances, a task is performed for the organisation itself, or relates to a customer but cannot be billed (from a commercial perspective). Most of the time this cannot be known in advance and this flag is intended to be set manually.',
                 'store'             => true,
-                'function'          => 'calcIsInternal',
-                'default'           => true
+                'function'          => 'calcIsInternal'
             ],
 
 
@@ -260,8 +259,7 @@ class TimeEntry extends SaleEntry {
         $result = [];
         $self->read(['project_id' => ['is_internal'], 'inventory_product_id' => ['is_internal']]);
         foreach($self as $id => $entry) {
-            $result[$id] = $entry['project_id']['is_internal'] ?? false;
-            $result[$id] = $result[$id] || ($entry['inventory_product_id']['is_internal'] ?? false);
+            $result[$id] = ($entry['project_id']['is_internal'] ?? false) || ($entry['inventory_product_id']['is_internal'] ?? false);
         }
         return $result;
     }
