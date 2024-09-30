@@ -282,8 +282,7 @@ class SaleEntry extends Model {
         foreach($self as $id => $entry) {
             // #memo - a sale entry can be set to 'billed' status even if not billable (to mark the entry as processed, even if there is no invoicing)
             if( $entry['status'] !== 'validated'
-                    || !isset($entry['product_id'], $entry['price_id'], $entry['unit_price'])
-                    || (!isset($entry['customer_id']) && !$entry['is_internal']) ) {
+                    || (!$entry['is_internal'] && !isset($entry['customer_id'], $entry['product_id'], $entry['price_id'], $entry['unit_price'])) ) {
                 $result[$id] = false;
             }
         }
