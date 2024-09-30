@@ -291,8 +291,11 @@ class SaleEntry extends Model {
     }
 
     public static function doCreateReceivable($self) {
-        $self->read(['id', 'date']);
+        $self->read(['id', 'is_internal', 'date']);
         foreach($self as $id => $entry) {
+            if($entry['is_internal']) {
+                continue;
+            }
             // if a receivable has been previously created remove it
             Receivable::search(['sale_entry_id', '=', $entry['id']])->delete(true);
             // retrieve applicable receivablesQueue
