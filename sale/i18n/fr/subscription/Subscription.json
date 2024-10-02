@@ -30,7 +30,7 @@
             "help": ""
         },
         "is_expired": {
-            "label": "Est expiré",
+            "label": "Expiré",
             "description": "L'abonnement est-il expiré.",
             "help": ""
         },
