@@ -6,13 +6,17 @@
     },
     "operations": {
         "total": {
+            "total": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            },
             "price": {
                 "operation": "SUM",
                 "usage": "amount/money:2"
             }
         }
     },
-    "limit": 100,
+    "limit": 500,
     "extends": {
         "entity": "finance\\accounting\\InvoiceLine",
         "view": "list.default"
