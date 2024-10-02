@@ -316,13 +316,6 @@ class Invoice extends \finance\accounting\Invoice {
         // generate the accounting entries according to the invoices lines.
         $self->do('generate_accounting_entries');
         foreach($self as $id => $invoice) {
-             $self::generateNumberInvoice((array) $invoice['id']);
-        }
-    }
-
-    public static function generateNumberInvoice($ids) {
-        $invoices = Invoice::ids($ids)->read(['id', 'organisation_id'])->get();
-        foreach($invoices as $bid => $invoice) {
             $format = Setting::get_value('sale', 'invoice', 'sequence_format', '%2d{year}-%05d{sequence}', ['organisation_id' => $invoice['organisation_id']]);
             $year = Setting::get_value('sale', 'invoice', 'fiscal_year', date('Y'), ['organisation_id' => $invoice['organisation_id']]);
             $sequence = Setting::fetch_and_add('sale', 'invoice', 'sequence', 1, ['organisation_id' => $invoice['organisation_id']]);
@@ -332,10 +325,11 @@ class Invoice extends \finance\accounting\Invoice {
                         'org'       => $invoice['organisation_id'],
                         'sequence'  => $sequence
                     ]);
-                Invoice::id($bid)->update(['invoice_number' => $invoice_number, 'due_date' => null]);
+                self::id($id)->update(['invoice_number' => $invoice_number, 'due_date' => null]);
             }
         }
     }
+
 
     /**
      * Generate the fundings for a collection of invoices that just transitioned to "invoiced".
@@ -375,10 +369,10 @@ class Invoice extends \finance\accounting\Invoice {
     public static function onafterCancel($self) {
         $self->read(['id']);
         foreach($self as $invoice) {
-            $receivables_ids = Receivable::search([
-                ['status', '=', 'invoiced'],
-                ['invoice_id', '=', $invoice['id']],
-            ])
+                $receivables_ids = Receivable::search([
+                    ['status', '=', 'invoiced'],
+                    ['invoice_id', '=', $invoice['id']],
+                ])
                 ->ids();
 
             Receivable::ids($receivables_ids)
@@ -392,9 +386,9 @@ class Invoice extends \finance\accounting\Invoice {
         $self->read(['id']);
         foreach($self as $invoice) {
             $receivables_ids = Receivable::search([
-                ['status', '=', 'invoiced'],
-                ['invoice_id', '=', $invoice['id']],
-            ])
+                    ['status', '=', 'invoiced'],
+                    ['invoice_id', '=', $invoice['id']],
+                ])
                 ->ids();
 
             Receivable::ids($receivables_ids)
