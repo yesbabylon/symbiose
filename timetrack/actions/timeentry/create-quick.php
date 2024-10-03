@@ -105,8 +105,9 @@ if(!is_null($time_zone)) {
 // compute start and end times, based on timezone set in settings
 $date = $params['date'];
 if($params['is_full_day']) {
-    $start = ( 9 * 3600) + $tz_offset;
-    $end = ( 17 * 3600) + $tz_offset;
+    // #todo - read schedule values from settings
+    $start = (9 * 3600);
+    $end = (17 * 3600);
 }
 else {
     $begin = $date - strtotime("midnight", $date) - $params['duration'] + $tz_offset;
