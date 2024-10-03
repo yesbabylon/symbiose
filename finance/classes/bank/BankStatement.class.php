@@ -133,7 +133,7 @@ class BankStatement extends Model {
         if($statements > 0) {
             foreach($statements as $sid => $statement) {
                 $is_reconciled = true;
-                foreach($statement['statement_lines_ids.status'] as $lid => $line) {
+                foreach((array) $statement['statement_lines_ids.status'] as $lid => $line) {
                     if( !in_array($line['status'], ['reconciled', 'ignored']) ) {
                         $is_reconciled = false;
                         break;

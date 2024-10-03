@@ -126,7 +126,7 @@ class BankStatementLine extends Model {
         if($lines > 0) {
             foreach($lines as $lid => $line) {
                 $sum = 0;
-                $payments = $line['payments_ids.amount'];
+                $payments = (array) $line['payments_ids.amount'];
                 foreach($payments as $pid => $payment) {
                     $sum += $payment['amount'];
                 }
@@ -149,7 +149,7 @@ class BankStatementLine extends Model {
                 $bank_statements_ids[] = $line['bank_statement_id'];
                 if($line['status'] == 'reconciled') {
                     // resolve customer_id: retrieve first payment
-                    if(isset($line['payments_ids.partner_id']) && count($line['payments_ids.partner_id'])) {
+                    if(count((array) $line['payments_ids.partner_id'])) {
                         $payment = reset($line['payments_ids.partner_id']);
                         $om->update(self::getType(), $lid, ['customer_id' => $payment['partner_id']]);
                     }

@@ -165,7 +165,7 @@ class CashdeskSession extends Model {
             if($sessions > 0) {
                 foreach($sessions as $sid => $session) {
                     $total_cash = 0.0;
-                    foreach($session['operations_ids.amount'] as $oid => $operation) {
+                    foreach((array) $session['operations_ids.amount'] as $oid => $operation) {
                         $total_cash += $operation['amount'];
                     }
                     // compute the difference (if any) between expected cash and actual cash in the cashdesk

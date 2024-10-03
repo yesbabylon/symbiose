@@ -240,7 +240,7 @@ class Order extends Model {
             foreach($orders as $oid => $order) {
                 $result[$oid] = 0.0;
                 if($order['order_lines_ids.total'] > 0) {
-                    foreach($order['order_lines_ids.total'] as $lid => $line) {
+                    foreach((array) $order['order_lines_ids.total'] as $lid => $line) {
                         $result[$oid] += $line['total'];
                     }
                     $result[$oid] = round($result[$oid], 4);
@@ -257,7 +257,7 @@ class Order extends Model {
             foreach($orders as $oid => $order) {
                 $result[$oid] = 0.0;
                 if($order['order_lines_ids.price'] > 0) {
-                    foreach($order['order_lines_ids.price'] as $lid => $line) {
+                    foreach((array) $order['order_lines_ids.price'] as $lid => $line) {
                         $result[$oid] += $line['price'];
                     }
                     $result[$oid] = round($result[$oid], 2);
@@ -274,7 +274,7 @@ class Order extends Model {
             foreach($orders as $oid => $order) {
                 $result[$oid] = 0.0;
                 if($order['order_payments_ids.total_paid'] > 0) {
-                    foreach($order['order_payments_ids.total_paid'] as $pid => $payment) {
+                    foreach((array) $order['order_payments_ids.total_paid'] as $pid => $payment) {
                         $result[$oid] += $payment['total_paid'];
                     }
                     $result[$oid] = round($result[$oid], 2);
