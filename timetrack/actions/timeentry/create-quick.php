@@ -49,10 +49,17 @@ list($params, $providers) = eQual::announce([
             'default'        => function () { return time(); }
         ],
 
+        'is_full_day' => [
+            'type'           => 'boolean',
+            'description'    => 'The task of the entry was performed for a whole day.',
+            'default'        => false
+        ],
+
         'duration'        => [
             'type'           => 'time',
             'description'    => 'Task duration.',
-            'default'        => 900
+            'default'        => 900,
+            'visible'        => ['is_full_day', '=', false]
         ]
 
     ],
