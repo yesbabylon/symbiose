@@ -104,9 +104,15 @@ if(!is_null($time_zone)) {
 
 // compute start and end times, based on timezone set in settings
 $date = $params['date'];
-$begin = time() - strtotime("midnight") - $params['duration'] + $tz_offset;
-$start = (int) (floor(floatval($begin) / 60 / 15) * 15 * 60);
-$end = $start + intval(ceil($params['duration'] / 60 / 15) * 15 * 60);
+if($params['is_full_day']) {
+    $start = ( 9 * 3600) + $tz_offset;
+    $end = ( 17 * 3600) + $tz_offset;
+}
+else {
+    $begin = $date - strtotime("midnight", $date) - $params['duration'] + $tz_offset;
+    $start = (int) (floor(floatval($begin) / 60 / 15) * 15 * 60);
+    $end = $start + intval(ceil($params['duration'] / 60 / 15) * 15 * 60);
+}
 
 TimeEntry::create([
         'project_id'  => $params['project_id'],
