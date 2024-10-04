@@ -2,7 +2,12 @@
     "name": "Time entries",
     "description": "Default listing of all time entries.",
     "controller": "timetrack_timeentry-collect",
-    "domain": [["object_class", "=", "timetrack\\Project"], ["creator", "=", "user.id"]],
+    "domain": [
+        ["object_class", "=", "timetrack\\Project"],
+        ["creator", "=", "user.id"],
+        ["date", ">=", "date.this.month.first()"],
+        ["date", "<=", "date.this.month.last()"]
+    ],
     "order": "date,time_start",
     "sort": "desc",
     "limit": 100,
