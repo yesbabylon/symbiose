@@ -415,9 +415,9 @@ class TimeEntry extends SaleEntry {
                 continue;
             }
             if($entry['is_full_day']) {
+                // #todo - read from settings
                 $result[$id] = 7.5 * 3600;
                 if(!$entry['billable_duration']) {
-                    // #todo - read from settings
                     self::id($id)->update(['billable_duration' => self::computeBillableDuration($id, 7 * 3600)]);
                 }
             }
