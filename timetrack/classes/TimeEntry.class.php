@@ -451,7 +451,7 @@ class TimeEntry extends SaleEntry {
                     $values['time_end'] = $entry['time_start'] + $entry['duration'];
                 }
                 else {
-                    $values['billable_duration'] = $entry['duration'];
+                    $values['billable_duration'] = self::computeBillableDuration($id, $entry['duration']);
                 }
             }
 
