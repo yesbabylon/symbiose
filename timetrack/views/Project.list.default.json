@@ -18,14 +18,6 @@
             },
             {
                 "type": "field",
-                "label": "Description",
-                "value": "description",
-                "width": "30%",
-                "sortable": true,
-                "readonly": true
-            },
-            {
-                "type": "field",
                 "label": "Internal",
                 "value": "is_internal",
                 "width": "10%",
@@ -45,6 +37,14 @@
                 "label": "Product",
                 "value": "product_id",
                 "width": "20%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "label": "Description",
+                "value": "description",
+                "width": "30%",
                 "sortable": true,
                 "readonly": true
             }
