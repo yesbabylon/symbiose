@@ -110,7 +110,8 @@ if($params['is_full_day']) {
     $end = (17 * 3600);
 }
 else {
-    $begin = $date - strtotime("midnight", $date) - $params['duration'] + $tz_offset;
+    // use current time to define start and end (that are not passed as param)
+    $begin = time() - strtotime("midnight") - $params['duration'] + $tz_offset;
     $start = (int) (floor(floatval($begin) / 60 / 15) * 15 * 60);
     $end = $start + intval(ceil($params['duration'] / 60 / 15) * 15 * 60);
 }
