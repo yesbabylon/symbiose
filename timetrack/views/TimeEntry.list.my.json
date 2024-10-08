@@ -5,6 +5,7 @@
     "domain": [
         ["object_class", "=", "timetrack\\Project"],
         ["creator", "=", "user.id"],
+        ["status", "<>", "billed"],
         ["date", ">=", "date.this.month.first()"],
         ["date", "<=", "date.this.month.last()"]
     ],
