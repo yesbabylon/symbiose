@@ -15,6 +15,63 @@
                     "order": "id",
                     "sort": "asc"
                 }
+            },
+            {
+                "id": "item.absence",
+                "type": "parent",
+                "label": "Absences",
+                "icon": "manage_accounts",
+                "description": "",
+                "children": [
+                    {
+                        "id": "item.absence.all",
+                        "type": "entry",
+                        "label": "All",
+                        "icon": "list",
+                        "description": "",
+                        "context": {
+                            "entity": "hr\\absence\\Absence",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "item.absence.code",
+                        "type": "entry",
+                        "label": "Codes",
+                        "icon": "qr_code",
+                        "description": "",
+                        "context": {
+                            "entity": "hr\\absence\\Absence",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "item.settings",
+                "type": "parent",
+                "label": "Settings",
+                "icon": "settings",
+                "description": "",
+                "children": [
+                    {
+                        "id": "item.holiday",
+                        "type": "entry",
+                        "label": "Holidays",
+                        "icon": "holiday_village",
+                        "description": "",
+                        "context": {
+                            "entity": "hr\\holiday\\Holiday",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    }
+                ]
             }
         ]
     }

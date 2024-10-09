@@ -21,17 +21,6 @@
                         }
                     },
                     {
-                        "id": "item.identity",
-                        "type": "entry",
-                        "label": "Identities",
-                        "icon": "manage",
-                        "description": "",
-                        "context": {
-                            "entity": "identity\\Identity",
-                            "view": "list.default"
-                        }
-                    },
-                    {
                         "id": "item.addresses",
                         "type": "entry",
                         "label": "Addresses",
@@ -53,6 +42,50 @@
                             "view": "list.default"
                         }
                     }
+                ]
+            },
+            {
+                "id": "item.identity",
+                "label": "Identities",
+                "icon": "manage",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.companies",
+                        "type": "entry",
+                        "label": "Companies",
+                        "icon": "business",
+                        "description": "",
+                        "context": {
+                            "entity": "identity\\Identity",
+                            "view": "list.default",
+                            "domain": ["type_id", "=", 3]
+                        }
+                    },
+                    {
+                        "id": "item.individuals",
+                        "type": "entry",
+                        "label": "Individuals",
+                        "icon": "people",
+                        "description": "",
+                        "context": {
+                            "entity": "identity\\Identity",
+                            "view": "list.default",
+                            "domain": ["type_id", "=", 1]
+                        }
+                    },
+                    {
+                        "id": "item.identities",
+                        "type": "entry",
+                        "label": "All",
+                        "icon": "face",
+                        "description": "",
+                        "context": {
+                            "entity": "identity\\Identity",
+                            "view": "list.default"
+                        }
+                    }
+
                 ]
             },
             {
