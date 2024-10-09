@@ -7,65 +7,6 @@
     "layout": {
         "items": [
             {
-                "id": "orders",
-                "type": "entry",
-                "label": "Orders",
-                "icon": "note",
-                "children": [
-                    {
-                        "id": "orders.new",
-                        "type": "entry",
-                        "label": "New",
-                        "icon": "add",
-                        "description": "Add new order.",
-                        "context": {
-                            "entity": "sale\\order\\Order",
-                            "view": "form.create",
-                            "purpose": "create"
-                        }
-                    },
-                    {
-                        "id": "orders.all",
-                        "type": "entry",
-                        "label": "Orders",
-                        "icon": "note",
-                        "description": "Display all orders.",
-                        "context": {
-                            "entity": "sale\\order\\Order",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
-                        "id": "orders.group.all",
-                        "type": "entry",
-                        "label": "Orders Groups",
-                        "icon": "description",
-                        "description": "Display all orders groups.",
-                        "context": {
-                            "entity": "sale\\order\\OrderLineGroup",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
-                        "id": "orders.group.line.all",
-                        "type": "entry",
-                        "label": "Orders Lines",
-                        "icon": "table",
-                        "description": "Display all orders lines.",
-                        "context": {
-                            "entity": "sale\\order\\OrderLine",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    }
-                ]
-            },
-            {
                 "id": "customers",
                 "type": "parent",
                 "label": "Customers",
@@ -268,17 +209,28 @@
                         ]
                     },
                     {
-                        "id": "sales.orders",
-                        "type": "parent",
+                        "id": "orders",
+                        "type": "entry",
                         "label": "Orders",
-                        "icon": "shop",
-                        "description": "Orders parent menu.",
+                        "icon": "note",
                         "children": [
                             {
-                                "id": "sales.order.all",
+                                "id": "orders.new",
                                 "type": "entry",
-                                "label": "All",
-                                "icon": "list",
+                                "label": "New",
+                                "icon": "add",
+                                "description": "Add new order.",
+                                "context": {
+                                    "entity": "sale\\order\\Order",
+                                    "view": "form.create",
+                                    "purpose": "create"
+                                }
+                            },
+                            {
+                                "id": "orders.all",
+                                "type": "entry",
+                                "label": "Orders",
+                                "icon": "note",
                                 "description": "Display all orders.",
                                 "context": {
                                     "entity": "sale\\order\\Order",
@@ -361,16 +313,59 @@
                 "description": "Invoices parent menu.",
                 "children": [
                     {
-                        "id": "invoices.all",
+                        "id": "invoices.proforma",
                         "type": "entry",
-                        "label": "All",
-                        "icon": "list",
-                        "description": "Display all invoices.",
+                        "label": "Proforma",
+                        "icon": "pending_actions",
+                        "description": "Display proformas.",
                         "context": {
                             "entity": "sale\\accounting\\invoice\\Invoice",
                             "view": "list.default",
                             "order": "id",
-                            "sort": "asc"
+                            "sort": "asc",
+                            "domain": ["status", "=", "proforma"]
+                        }
+                    },
+                    {
+                        "id": "invoices.unpaid",
+                        "type": "entry",
+                        "label": "Unpaid Invoice",
+                        "icon": "money_off",
+                        "description": "Display unpaid invoices.",
+                        "context": {
+                            "entity": "sale\\accounting\\invoice\\Invoice",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc",
+                            "domain": [["status", "=", "invoice"], ["is_paid", "=", false]]
+                        }
+                    },
+                    {
+                        "id": "invoices.paid",
+                        "type": "entry",
+                        "label": "Paid Invoice",
+                        "icon": "paid",
+                        "description": "Display paid invoices.",
+                        "context": {
+                            "entity": "sale\\accounting\\invoice\\Invoice",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc",
+                            "domain": [["status", "=", "invoice"], ["is_paid", "=", true]]
+                        }
+                    },
+                    {
+                        "id": "invoices.credit.note",
+                        "type": "entry",
+                        "label": "Note credit",
+                        "icon": "cancel",
+                        "description": "Display credit note.",
+                        "context": {
+                            "entity": "sale\\accounting\\invoice\\Invoice",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc",
+                            "domain": ["status", "=", "cancelled"]
                         }
                     }
                 ]
@@ -521,34 +516,25 @@
                         ]
                     },
                     {
-                        "id": "settings.time-entries",
-                        "type": "parent",
-                        "label": "Time entries",
-                        "icon": "timer",
-                        "description": "Settings time entries parent menu.",
-                        "children": [
-                            {
-                                "id": "settings.time-entries.sale-models",
-                                "type": "entry",
-                                "label": "Sale models",
-                                "icon": "calculate",
-                                "description": "Display all time entry sale models.",
-                                "context": {
-                                    "entity": "timetrack\\TimeEntrySaleModel",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            }
-                        ]
-                    },
-                    {
                         "id": "settings.payments",
                         "type": "parent",
                         "label": "Payment",
                         "icon": "paid",
                         "description": "Settings payments parent menu.",
                         "children": [
+                            {
+                                "id": "settings.payment.deadline",
+                                "type": "entry",
+                                "label": "Deadline",
+                                "icon": "schedule",
+                                "description": "Display all  deadline plan.",
+                                "context": {
+                                    "entity": "sale\\pay\\PaymentDeadline",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
                             {
                                 "id": "settings.payment.funding.plans",
                                 "type": "entry",

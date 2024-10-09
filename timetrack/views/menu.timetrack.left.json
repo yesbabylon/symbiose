@@ -10,6 +10,26 @@
                 "description": "Time entries.",
                 "children": [
                     {
+                        "id": "time_entries.pending",
+                        "type": "entry",
+                        "label": "Pending",
+                        "icon": "pending_actions",
+                        "description": "Entries pending.",
+                        "context": {
+                            "entity": "timetrack\\TimeEntry",
+                            "view": "list.default",
+                            "order": "created",
+                            "sort": "asc",
+                            "domain": [
+                                [
+                                    "status",
+                                    "=",
+                                    "pending"
+                                ]
+                            ]
+                        }
+                    },
+                    {
                         "id": "time_entries.ready",
                         "type": "entry",
                         "label": "To validate",
@@ -20,7 +40,13 @@
                             "view": "list.default",
                             "order": "created",
                             "sort": "asc",
-                            "domain": [ ["status", "=", "ready"] ]
+                            "domain": [
+                                [
+                                    "status",
+                                    "=",
+                                    "ready"
+                                ]
+                            ]
                         }
                     },
                     {
@@ -37,31 +63,66 @@
                         }
                     },
                     {
-                        "id": "time_entries.all",
+                        "id": "time_entries.advanced",
                         "type": "entry",
-                        "label": "All",
-                        "icon": "list",
-                        "description": "All time entries",
-                        "context": {
-                            "entity": "timetrack\\TimeEntry",
-                            "view": "list.default",
-                            "order": "created",
-                            "sort": "desc"
-                        }
-                    },
-                    {
-                        "id": "time_entries.archived",
-                        "type": "entry",
-                        "label": "Archived",
-                        "icon": "inventory",
-                        "description": "Archived entries",
-                        "context": {
-                            "entity": "timetrack\\TimeEntry",
-                            "view": "list.default",
-                            "order": "created",
-                            "sort": "desc",
-                            "domain": [ ["state", "=", "archive"] ]
-                        }
+                        "label": "Advanced",
+                        "icon": "tune",
+                        "description": "",
+                        "children": [
+                            {
+                                "id": "time_entries.all",
+                                "type": "entry",
+                                "label": "All",
+                                "icon": "list",
+                                "description": "All time entries",
+                                "context": {
+                                    "entity": "timetrack\\TimeEntry",
+                                    "view": "list.default",
+                                    "order": "created",
+                                    "sort": "desc"
+                                }
+                            },
+                            {
+                                "id": "time_entries.billed",
+                                "type": "entry",
+                                "label": "Billed",
+                                "icon": "price_check",
+                                "description": "Entries waiting to be validated.",
+                                "context": {
+                                    "entity": "timetrack\\TimeEntry",
+                                    "view": "list.default",
+                                    "order": "created",
+                                    "sort": "asc",
+                                    "domain": [
+                                        [
+                                            "status",
+                                            "=",
+                                            "billed"
+                                        ]
+                                    ]
+                                }
+                            },
+                            {
+                                "id": "time_entries.archived",
+                                "type": "entry",
+                                "label": "Archived",
+                                "icon": "inventory",
+                                "description": "Archived entries",
+                                "context": {
+                                    "entity": "timetrack\\TimeEntry",
+                                    "view": "list.default",
+                                    "order": "created",
+                                    "sort": "desc",
+                                    "domain": [
+                                        [
+                                            "state",
+                                            "=",
+                                            "archive"
+                                        ]
+                                    ]
+                                }
+                            }
+                        ]
                     }
                 ]
             },

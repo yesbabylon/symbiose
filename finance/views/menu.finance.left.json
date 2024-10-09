@@ -92,6 +92,16 @@
                 "icon": "person",
                 "children": [
                     {
+                        "id": "finance.accounting.accounting_journals",
+                        "type": "entry",
+                        "label": "Journals",
+                        "description": "",
+                        "context": {
+                            "entity": "finance\\accounting\\AccountingJournal",
+                            "view": "list.default"
+                        }
+                    },
+                    {
                         "id": "finance.accounting.account_chart",
                         "type": "entry",
                         "label": "Chart of accounts",
@@ -100,19 +110,18 @@
                             "entity": "finance\\accounting\\AccountChartLine",
                             "view": "list.default"
                         }
-                    },
+                    }
+                ]
+            },
+            {
+                "id": "settings",
+                "type": "parent",
+                "label": "Settings",
+                "icon": "settings",
+                "description": "Settings parent menu.",
+                "children": [
                     {
-                        "id": "finance.accounting.accounting_journals",
-                        "type": "entry",
-                        "label": "Accounting journals",
-                        "description": "",
-                        "context": {
-                            "entity": "finance\\accounting\\AccountingJournal",
-                            "view": "list.default"
-                        }
-                    },
-                    {
-                        "id": "finance.accounting.vat_rules",
+                        "id": "settings.accounting.vat_rules",
                         "type": "entry",
                         "label": "VAT rules",
                         "description": "",
@@ -122,7 +131,7 @@
                         }
                     },
                     {
-                        "id": "finance.accounting.accounting_rules",
+                        "id": "settings.accounting.accounting_rules",
                         "type": "entry",
                         "label": "Accounting rules",
                         "description": "",

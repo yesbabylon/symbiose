@@ -24,35 +24,24 @@
                         }
                     },
                     {
-                        "id": "templates.categories",
-                        "type": "entry",
-                        "label": "Categories",
-                        "icon": "category",
-                        "description": "",
-                        "context": {
-                            "entity": "communication\\template\\TemplateCategory",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
                         "id": "templates.parts",
                         "type": "entry",
-                        "label": "All template parts",
+                        "label": "Parts",
+                        "icon": "folder",
                         "description": "",
                         "context": {
-                            "entity": "communication\\TemplatePart",
+                            "entity": "communication\\template\\TemplatePart",
                             "view": "list.default"
                         }
                     },
                     {
                         "id": "templates.attachments",
                         "type": "entry",
-                        "label": "All attachments",
+                        "label": "Attachments",
+                        "icon": "attachment",
                         "description": "",
                         "context": {
-                            "entity": "communication\\TemplateAttachment",
+                            "entity": "communication\\template\\TemplateAttachment",
                             "view": "list.default"
                         }
                     }
@@ -62,26 +51,17 @@
                 "id": "alerts",
                 "label": "Alerts",
                 "description": "",
-                "icon": "chrome_reader_mode",
+                "icon": "report",
                 "type": "parent",
                 "children": [
                     {
                         "id": "alert.messages",
                         "type": "entry",
-                        "label": "All messages",
+                        "label": "All",
+                        "icon": "list",
                         "description": "",
                         "context": {
                             "entity": "core\\alert\\Message",
-                            "view": "list.default"
-                        }
-                    },
-                    {
-                        "id": "alert.message_models",
-                        "type": "entry",
-                        "label": "Message models",
-                        "description": "",
-                        "context": {
-                            "entity": "core\\alert\\MessageModel",
                             "view": "list.default"
                         }
                     }
@@ -91,17 +71,51 @@
                 "id": "emails",
                 "label": "Emails",
                 "description": "",
-                "icon": "alternate_email",
+                "icon": "email",
                 "type": "parent",
                 "children": [
                     {
                         "id": "emails.all",
                         "type": "entry",
-                        "label": "All emails",
+                        "label": "All",
+                        "icon": "list",
                         "description": "",
                         "context": {
                             "entity": "core\\Mail",
                             "view": "list.default"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "item.settings",
+                "type": "parent",
+                "label": "Settings",
+                "icon": "settings",
+                "description": "",
+                "children": [
+                    {
+                        "id": "alert.message_models",
+                        "type": "entry",
+                        "label": "Alerts models",
+                        "icon": "warning",
+                        "description": "",
+                        "context": {
+                            "entity": "core\\alert\\MessageModel",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "settings.templates.categories",
+                        "type": "entry",
+                        "label": "Categories",
+                        "icon": "category",
+                        "description": "",
+                        "context": {
+                            "entity": "communication\\template\\TemplateCategory",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
                         }
                     }
                 ]

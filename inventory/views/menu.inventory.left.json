@@ -17,53 +17,6 @@
                 }
             },
             {
-                "id": "item.customer",
-                "type": "parent",
-                "label": "Customers",
-                "icon": "face",
-                "description": "Customers",
-                "children": [
-                    {
-                        "id": "item.customer-new",
-                        "type": "entry",
-                        "label": "New",
-                        "icon": "add",
-                        "description": "Add new customer",
-                        "context": {
-                            "entity": "sale\\customer\\Customer",
-                            "view": "form.inventory-create",
-                            "purpose": "create"
-                        }
-                    },
-                    {
-                        "id": "item.customers-all",
-                        "type": "entry",
-                        "label": "All",
-                        "icon": "list",
-                        "description": "All customers",
-                        "context": {
-                            "entity": "sale\\customer\\Customer",
-                            "view": "list.inventory",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
-                        "id": "item.customers-archived",
-                        "type": "entry",
-                        "label": "Archived",
-                        "icon": "inventory",
-                        "description": "Archived customers",
-                        "context": {
-                            "entity": "sale\\customer\\Customer",
-                            "view": "list.inventory-archived",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    }
-                ]
-            },
-            {
                 "id": "item.sale",
                 "type": "parent",
                 "label": "Sale",
@@ -253,54 +206,6 @@
                 "icon": "settings",
                 "description": "",
                 "children": [
-                    {
-                        "id": "item.prices",
-                        "type": "parent",
-                        "label": "All Prices",
-                        "icon": "price_check",
-                        "description": "",
-                        "children": [
-                            {
-                                "id": "item.product.catalog",
-                                "type": "entry",
-                                "label": "Products (Catalog)",
-                                "icon": "book",
-                                "description": "",
-                                "context": {
-                                    "entity": "sale\\catalog\\Product",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            },
-                            {
-                                "id": "item.price",
-                                "type": "entry",
-                                "label": "Prices",
-                                "icon": "attach_money",
-                                "description": "",
-                                "context": {
-                                    "entity": "sale\\price\\Price",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            },
-                            {
-                                "id": "item.price.list",
-                                "type": "entry",
-                                "label": "Price Lists",
-                                "icon": "list",
-                                "description": "",
-                                "context": {
-                                    "entity": "sale\\price\\PriceList",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            }
-                        ]
-                    },
                     {
                         "id": "item.settings.service.model",
                         "type": "parent",
