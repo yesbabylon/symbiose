@@ -17,7 +17,8 @@ class CashdeskSession extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'string',
                 'function'          => 'calcName',
-                'store'             => true
+                'store'             => true,
+                'generation'        => 'generateName'
             ],
 
             'amount' => [
@@ -201,5 +202,9 @@ class CashdeskSession extends Model {
         }
 
         return $result;
+    }
+
+    public static function generateName() {
+        return null;
     }
 }
