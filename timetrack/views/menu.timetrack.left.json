@@ -10,22 +10,19 @@
                 "description": "Time entries.",
                 "children": [
                     {
-                        "id": "time_entries.pending",
+                        "id": "time_entries.month_overview",
                         "type": "entry",
-                        "label": "Pending",
-                        "icon": "pending_actions",
-                        "description": "Entries pending.",
+                        "label": "Month overview",
+                        "icon": "task_alt",
+                        "description": "All entries for current month.",
                         "context": {
                             "entity": "timetrack\\TimeEntry",
                             "view": "list.default",
                             "order": "created",
-                            "sort": "asc",
+                            "sort": "desc",
                             "domain": [
-                                [
-                                    "status",
-                                    "=",
-                                    "pending"
-                                ]
+                                ["date", ">=", "date.this.month.first()"],
+                                ["date", "<=", "date.this.month.last()"]
                             ]
                         }
                     },
