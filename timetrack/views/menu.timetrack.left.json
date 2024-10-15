@@ -13,7 +13,7 @@
                         "id": "time_entries.month_overview",
                         "type": "entry",
                         "label": "Month overview",
-                        "icon": "task_alt",
+                        "icon": "hourglass_top",
                         "description": "All entries for current month.",
                         "context": {
                             "entity": "timetrack\\TimeEntry",
@@ -21,6 +21,7 @@
                             "order": "created",
                             "sort": "desc",
                             "domain": [
+                                ["status", "<>", "billed"],
                                 ["date", ">=", "date.this.month.first()"],
                                 ["date", "<=", "date.this.month.last()"]
                             ]
