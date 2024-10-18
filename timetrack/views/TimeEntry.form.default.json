@@ -207,6 +207,13 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Product",
+                                                "value": "inventory_product_id",
+                                                "width": "100%",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
                                                 "label": "Total duration",
                                                 "value": "duration",
                                                 "width": "50%"

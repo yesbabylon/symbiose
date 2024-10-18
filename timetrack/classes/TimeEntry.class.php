@@ -318,10 +318,10 @@ class TimeEntry extends SaleEntry {
 
         if(isset($event['project_id'])) {
             $project = Project::id($event['project_id'])
-                ->read(['customer_id' => ['name']])
+                ->read(['product_id', 'customer_id' => ['name']])
                 ->first();
-
             $result['customer_id'] = $project['customer_id'];
+            $result['inventory_product_id'] = $project['product_id'];
         }
 
         if(isset($event['time_start'], $values['time_end'])
