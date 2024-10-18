@@ -40,16 +40,16 @@
         "items": [
             {
                 "type": "field",
-                "value": "id",
-                "width": "5%",
-                "sortable": true,
-                "readonly": true
-            },
-            {
-                "type": "field",
                 "value": "name",
                 "width": "40%",
                 "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "date_from",
+                "width": "20%",
+                "sortable": true,
+                "readonly": true
             },
             {
                 "type": "field",
@@ -61,14 +61,14 @@
             {
                 "type": "field",
                 "value": "is_auto_renew",
-                "width": "20%",
+                "width": "15%",
                 "sortable": true
             },
             {
                 "type": "field",
                 "value": "is_expired",
                 "label": "Expired",
-                "width": "20%",
+                "width": "15%",
                 "readonly": true
             },
             {
@@ -90,14 +90,14 @@
                 "type": "field",
                 "value": "is_billable",
                 "label": "Billable",
-                "width": "20%",
+                "width": "15%",
                 "sortable": true,
                 "readonly": true
             },
             {
                 "type": "field",
                 "value": "price",
-                "width": "10%",
+                "width": "15%",
                 "sortable": true
             }
         ]
