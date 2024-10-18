@@ -382,7 +382,7 @@ class TimeEntry extends SaleEntry {
 
     public static function calcName($self) {
         $result = [];
-        $self->read(['project_id' => ['name'], 'origin', 'reference', 'description']);
+        $self->read(['state', 'project_id' => ['name'], 'origin', 'reference', 'description']);
         foreach($self as $id => $entry) {
             $result[$id] = $entry['project_id']['name'];
             if(isset($entry['reference']) && strlen($entry['reference']) > 0) {
@@ -407,7 +407,7 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function calcDuration($self): array {
+    public static function calcDuration($self, $orm): array {
         $result = [];
         $self->read(['is_full_day', 'time_start', 'time_end', 'billable_duration']);
         foreach($self as $id => $entry) {
@@ -418,13 +418,15 @@ class TimeEntry extends SaleEntry {
                 // #todo - read from settings
                 $result[$id] = 7.5 * 3600;
                 if(!$entry['billable_duration']) {
-                    self::id($id)->update(['billable_duration' => self::computeBillableDuration($id, 7 * 3600)]);
+                    // #memo - prevent change of the 'state' field
+                    $orm->update(self::getType(), $id, ['billable_duration' => self::computeBillableDuration($id, 7 * 3600)]);
                 }
             }
             else {
                 $result[$id] = $entry['time_end'] - $entry['time_start'];
                 if(!$entry['billable_duration']) {
-                    self::id($id)->update(['billable_duration' => self::computeBillableDuration($id, $result[$id])]);
+                    // #memo - prevent change of the 'state' field
+                    $orm->update(self::getType(), $id, ['billable_duration' => self::computeBillableDuration($id, $result[$id])]);
                 }
             }
         }
