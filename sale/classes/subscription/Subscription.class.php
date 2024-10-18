@@ -138,9 +138,10 @@ class Subscription extends Model  {
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
-                'description'       => 'Price of the subscription.',
+                'function'          => 'calcPrice',
                 'store'             => true,
-                'function'          => 'calcPrice'
+                'description'       => 'Price of the subscription.',
+                'help'              => 'This is a computed price and not stored, since it depends on the price list that relate to the subsequent sales.',
             ],
 
             'subscription_entries_ids' => [
