@@ -13,7 +13,7 @@ use inventory\Product;
 class Service extends Model {
 
     public static function getDescription() {
-        return 'This class manages services comprehensively, handling billing, renewal, product-client association, provider linkage, documentation, and access/software management.';
+        return 'Inventory Services are designed to facilitate the management of billing, renewals, product-client associations, provider integration, documentation, and software or access management.';
     }
 
     public static function getColumns()
@@ -147,30 +147,33 @@ class Service extends Model {
         ];
     }
 
-    public static function onchange($event,$values) {
+    public static function onchange($event, $values) {
         $result = [];
 
         if(isset($event['service_model_id']) && $event['service_model_id'] > 0){
-            $service_model = ServiceModel::search(['id', '=', $event['service_model_id']])
-                ->read(['has_external_provider', 'service_provider_id' => ['id','name']])
+            $service_model = ServiceModel::id($event['service_model_id'])
+                ->read([
+                        'has_external_provider',
+                        'service_provider_id' => ['id','name'],
+                        'has_subscription',
+                        'is_billable',
+                        'is_auto_renew'
+                    ])
                 ->first();
 
-            $result = [
-                'has_external_provider'     => $service_model['has_external_provider'],
-                'service_provider_id'       => $service_model['service_provider_id']
-            ];
-
+            $result['has_external_provider'] = $service_model['has_external_provider'];
+            $result['service_provider_id'] = $service_model['service_provider_id'];
+            $result['has_subscription'] = $service_model['has_subscription'];
+            $result['is_billable'] = $service_model['is_billable'];
+            $result['is_auto_renew'] = $service_model['is_auto_renew'];
         }
 
         if(isset($event['service_model_id']) || isset($event['product_id'])) {
-            $result['name'] = self::createName([
-                'service_model_id'        => $event['service_model_id'] ?? $values['service_model_id'],
-                'product_id'              => $event['product_id'] ?? $values['product_id'],
-            ]);
+            $result['name'] = self::computeName($event['service_model_id'] ?? $values['service_model_id'], $event['product_id'] ?? $values['product_id']);
         }
 
         if(isset($event['product_id']) && $event['product_id'] > 0){
-            $product = Product::search(['id', '=', $event['product_id']])
+            $product = Product::id($event['product_id'])
                 ->read(['is_internal', 'customer_id' => ['id', 'name']])
                 ->first();
 
@@ -198,7 +201,6 @@ class Service extends Model {
                 $result[$id] = $service['service_model_id'][$column];
             }
         }
-
         return $result;
     }
 
@@ -206,20 +208,30 @@ class Service extends Model {
         $result = [];
         $self->read(['service_model_id', 'product_id']);
         foreach($self as $id => $service) {
-            $result[$id]  = self::createName($service);
+            $result[$id] = self::computeName($service['service_model_id'], $service['product_id']);
         }
         return $result;
     }
 
-    private static function createName($service) {
+    private static function computeName($service_model_id, $service_product_id) {
         $name = '';
 
-        $service_model = ServiceModel::id($service['service_model_id'])->read(['id','name'])->first(true);
-        $product = Product::id($service['product_id'])->read(['id','name'])->first(true);
+        $service_model = ServiceModel::id($service_model_id)->read(['id', 'name'])->first();
+        $product = Product::id($service_product_id)->read(['id', 'name'])->first();
 
-        if(isset($service_model)  &&  strlen($service_model['id']) > 0 && isset($product) &&  strlen($product['id']) > 0){
-            $name = '['.$service_model['name']. ' - '. $product['name'] .']';
+        if(isset($service_model)) {
+            $name = '['.$service_model['name'];
         }
+        if(isset($product)) {
+            if(strlen($name)) {
+                $name .= ' - ';
+            }
+            $name .= $product['name'] . ']';
+        }
+        else {
+            $name .= ']';
+        }
+
         return $name;
     }
 
