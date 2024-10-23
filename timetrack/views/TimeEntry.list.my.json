@@ -11,7 +11,7 @@
     ],
     "order": "date,time_start",
     "sort": "desc",
-    "limit": 100,
+    "limit": 500,
     "operations": {
         "total": {
             "duration": {

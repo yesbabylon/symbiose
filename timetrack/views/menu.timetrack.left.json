@@ -20,6 +20,7 @@
                             "view": "list.default",
                             "order": "created",
                             "sort": "desc",
+                            "limit": 500,
                             "domain": [
                                 ["status", "<>", "billed"],
                                 ["date", ">=", "date.this.month.first()"],
