@@ -75,7 +75,8 @@ class SaleEntry extends Model {
                 'type'              => 'boolean',
                 'description'       => 'Flag telling if the entry can be billed to the customer.',
                 'help'              => 'Under certain circumstances, a task is performed for the organisation itself, or relates to a customer but cannot be billed (from a commercial perspective). Most of the time this cannot be known in advance and this flag is intended to be set manually.',
-                'default'           => true
+                'default'           => true,
+                'dependents'        => ['total']
             ],
 
             'is_internal' => [
@@ -453,8 +454,12 @@ class SaleEntry extends Model {
     public static function calcTotal($self) {
         $result = [];
         // #memo - qty is based on billable_duration
-        $self->read(['qty', 'unit_price', 'free_qty', 'discount']);
+        $self->read(['is_billable', 'qty', 'unit_price', 'free_qty', 'discount']);
         foreach($self as $id => $entry) {
+            if(!$entry['is_billable']) {
+                $result[$id] = 0;
+                continue;
+            }
             // #todo - round to the sale price precision, from settings
             $result[$id] = round($entry['unit_price'] * (1.0 - $entry['discount']) * ($entry['qty'] - $entry['free_qty']), 4);
         }
