@@ -328,9 +328,9 @@ class Invoice extends \finance\accounting\Invoice {
         // generate the accounting entries according to the invoices lines.
         $self->do('generate_accounting_entries');
         foreach($self as $id => $invoice) {
-            $format = Setting::get_value('sale', 'invoice', 'sequence_format', '%2d{year}-%05d{sequence}', ['organisation_id' => $invoice['organisation_id']]);
-            $year = Setting::get_value('sale', 'invoice', 'fiscal_year', date('Y'), ['organisation_id' => $invoice['organisation_id']]);
-            $sequence = Setting::fetch_and_add('sale', 'invoice', 'sequence', 1, ['organisation_id' => $invoice['organisation_id']]);
+            $format = Setting::get_value('sale', 'accounting', 'invoice.sequence_format', '%2d{year}-%05d{sequence}', ['organisation_id' => $invoice['organisation_id']]);
+            $year = Setting::get_value('finance', 'accounting', 'fiscal_year', date('Y'), ['organisation_id' => $invoice['organisation_id']]);
+            $sequence = Setting::fetch_and_add('sale', 'accounting', 'invoice.sequence', 1, ['organisation_id' => $invoice['organisation_id']]);
             if($sequence) {
                 $invoice_number = Setting::parse_format($format, [
                         'year'      => $year,
@@ -584,10 +584,10 @@ class Invoice extends \finance\accounting\Invoice {
         $result = [];
 
         // retrieve specific accounts numbers
-        $account_sales = Setting::get_value('sale', 'invoice', 'account_sales', 'not_found');
-        $account_sales_taxes = Setting::get_value('sale', 'invoice', 'account_sales-taxes', 'not_found');
-        $account_trade_debtors = Setting::get_value('sale', 'invoice', 'account_trade-debtors', 'not_found');
-        // $account_downpayments = Setting::get_value('sale', 'invoice', 'account_downpayment', 'not_found');
+        $account_sales = Setting::get_value('sale', 'accounting', 'account_sales', 'not_found');
+        $account_sales_taxes = Setting::get_value('sale', 'accounting', 'account_sales-taxes', 'not_found');
+        $account_trade_debtors = Setting::get_value('sale', 'accounting', 'account_trade-debtors', 'not_found');
+        // $account_downpayments = Setting::get_value('sale', 'accounting', 'account_downpayment', 'not_found');
 
         $accountSales = AccountChartLine::search(['code', '=', $account_sales])->read(['id', 'description'])->first();
         $accountSalesTaxes = AccountChartLine::search(['code', '=', $account_sales_taxes])->read(['id', 'description'])->first();

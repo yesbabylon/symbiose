@@ -5,9 +5,9 @@
         "data": [
             {
                 "id": 6,
-                "code": "invoice",
-                "name": "Invoices",
-                "description": "Settings related to invoicing."
+                "code": "accounting",
+                "name": "Accounting",
+                "description": "Settings related to accounting & invoicing."
             },
             {
                 "id": 7,
@@ -23,8 +23,8 @@
         "data": [
             {
                 "id": 6,
-                "name": "Factures",
-                "description": "Paramètres pour la facturation."
+                "name": "Comptabilité",
+                "description": "Paramètres pour la comptabilité et la facturation."
             },
             {
                 "id": 7,

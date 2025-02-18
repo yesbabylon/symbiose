@@ -64,7 +64,7 @@ if(count($invoice['invoice_lines_ids']) <= 0) {
     throw new Exception("empty_invoice", EQ_ERROR_INVALID_PARAM);
 }
 
-$fiscal_year = Setting::get_value('sale', 'invoice', 'fiscal_year');
+$fiscal_year = Setting::get_value('finance', 'accounting', 'fiscal_year');
 if(!$fiscal_year) {
     throw new Exception('missing_fiscal_year', EQ_ERROR_INVALID_CONFIG);
 }

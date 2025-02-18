@@ -13,7 +13,7 @@
             {
                 "id": 1016,
                 "setting_id": 1016,
-                "name": "sale.invoice.sequence",
+                "name": "sale.accounting.invoice_sequence",
                 "organisation_id": 1,
                 "value": 1
             }

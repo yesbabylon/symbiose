@@ -18,45 +18,65 @@
             {
                 "id": 1014,
                 "setting_id": 1014,
-                "name": "sale.invoice.sequence_format",
+                "name": "sale.accounting.invoice.sequence_format",
                 "value": "%2d{year}-%05d{sequence}"
             },
             {
                 "id": 1015,
                 "setting_id": 1015,
-                "name": "sale.invoice.fiscal_year",
+                "name": "finance.accounting.fiscal_year",
                 "value": 2024
+            },
+            {
+                "id": 1016,
+                "setting_id": 1016,
+                "name": "sale.accounting.invoice.sequence",
+                "value": 1
             },
             {
                 "id": 1017,
                 "setting_id": 1017,
-                "name": "sale.invoice.account_sales",
+                "name": "sale.accounting.account_sales",
                 "value": "700"
             },
             {
                 "id": 1018,
                 "setting_id": 1018,
-                "name": "sale.invoice.account_sales-taxes",
+                "name": "sale.accounting.account_sales-taxes",
                 "value": "451"
             },
             {
                 "id": 1019,
                 "setting_id": 1019,
-                "name": "sale.invoice.account_trade-debtors",
+                "name": "sale.accounting.account_trade-debtors",
                 "value": "400"
             },
             {
                 "id": 1020,
                 "setting_id": 1020,
-                "name": "sale.invoice.downpayment_sku",
+                "name": "sale.accounting.downpayment_sku",
                 "value": "DOWNPAYMENT"
             },
             {
                 "id": 1021,
                 "setting_id": 1021,
                 "organisation_id": 1,
-                "name": "sale.invoice.account_downpayment",
+                "name": "sale.accounting.account_downpayment",
                 "value": "460"
+            },
+            {
+                "id": 1022,
+                "setting_id": 1022,
+                "organisation_id": 1,
+                "name": "finance.accounting.accounting_entry.sequence_format",
+                "value": "%s{journal}/%02d{year}/%05d{sequence}"
+            },
+            {
+                "id": 1023,
+                "setting_id": 1023,
+                "organisation_id": 1,
+                "name": "accounting_entry.sequence_format",
+                "value": 1
             },
             {
                 "id": 1050,

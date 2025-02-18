@@ -52,7 +52,7 @@ if($funding['type'] == 'invoice') {
     throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
 }
 
-$downpayment_sku = Setting::get_value('sale', 'invoice', 'downpayment_sku');
+$downpayment_sku = Setting::get_value('sale', 'accounting', 'downpayment_sku');
 if (!$downpayment_sku) {
     throw new Exception("missing_setting_downpayment", QN_ERROR_UNKNOWN_OBJECT);
 }

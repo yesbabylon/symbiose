@@ -37,7 +37,7 @@
             },
             {
                 "id": 1014,
-                "code": "sequence_format",
+                "code": "invoice.sequence_format",
                 "title": "Invoices sequence format",
                 "package": "sale",
                 "form_control": "input",
@@ -50,7 +50,7 @@
                 "id": 1015,
                 "code": "fiscal_year",
                 "title": "Invoices fiscal year",
-                "package": "sale",
+                "package": "finance",
                 "form_control": "input",
                 "section_id": 6,
                 "description": "Fiscal year for the invoice.",
@@ -59,13 +59,13 @@
             },
             {
                 "id": 1016,
-                "code": "sequence",
+                "code": "invoice.sequence",
                 "title": "Invoices sequence",
                 "package": "sale",
                 "section_id": 6,
                 "is_sequence": true,
-                "description": "Sequence for the invoice.",
-                "help": "Sequence for the invoice."
+                "description": "Sequence for the sale invoices.",
+                "help": "Sequence for the sale invoices."
             },
             {
                 "id": 1017,
@@ -121,6 +121,27 @@
                 "type": "string",
                 "description": "Accounting account for downpayments (code).",
                 "help": "Account for invoiced downpayments (advances)."
+            },
+            {
+                "id": 1022,
+                "code": "accounting_entry.sequence_format",
+                "title": "Invoices sequence format",
+                "package": "finance",
+                "form_control": "input",
+                "section_id": 6,
+                "description": "Format for invoices number (sequence).",
+                "help": "Format for producing the number of the invoices (according to sequence accounting conventions).",
+                "type": "string"
+            },
+            {
+                "id": 1023,
+                "code": "accounting_entry.sequence",
+                "title": "Accounting entry sequence",
+                "package": "finance",
+                "section_id": 6,
+                "is_sequence": true,
+                "description": "Sequence for the accounting entries.",
+                "help": "Sequence for the accounting entries."
             },
             {
                 "id": 1050,
