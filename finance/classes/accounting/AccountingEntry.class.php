@@ -5,7 +5,9 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace finance\accounting;
+
 use equal\orm\Model;
+use symbiose\setting\Setting;
 
 class AccountingEntry extends Model {
 
@@ -20,68 +22,56 @@ class AccountingEntry extends Model {
     public static function getColumns() {
         return [
 
-            'name' => [
-                'type'              => 'string',
-                'description'       => 'Label for identifying the entry.',
-            ],
-
-            'has_invoice' => [
-                'type'              => 'boolean',
-                'description'       => 'Signals that the entry relates to an invoice.',
-                'default'           => false
-            ],
-
-            'invoice_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => Invoice::getType(),
-                'description'       => 'Invoice that the line relates to.',
-                'ondelete'          => 'cascade',
-                'visible'           => ['has_invoice', '=', true]
-            ],
-
-            'has_order' => [
-                'type'              => 'boolean',
-                'description'       => 'Signals that the entry relates to an order.',
-                'default'           => false
-            ],
-
-            'order_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => \sale\pos\Order::getType(),
-                'description'       => 'Order that the line relates to.',
-                'ondelete'          => 'cascade',
-                'visible'           => ['has_order', '=', true]
-            ],
-
-            'account_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => AccountChartLine::getType(),
-                'description'       => "Accounting account the entry relates to.",
-                'required'          => true,
-                'ondelete'          => 'null'
-            ],
-
             'journal_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => AccountingJournal::getType(),
+                'foreign_object'    => 'finance\accounting\AccountingJournal',
                 'description'       => "Accounting journal the entry relates to.",
                 'required'          => true
             ],
 
-            'debit' => [
-                'type'              => 'float',
-                'usage'             => 'amount/money:4',
-                'description'       => 'Amount to be received.',
-                'default'           => 0.0
+            'entry_number' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'function'          => 'calcEntryNumber',
+                'store'             => true
             ],
 
-            'credit' => [
-                'type'              => 'float',
-                'usage'             => 'amount/money:4',
-                'description'       => 'Amount to be disbursed.',
-                'default'           => 0.0
+            'origin_object_class' => [
+                'type'              => 'string',
+                'description'       => 'Entity class that the entry originates from.',
+            ],
+
+            'origin_object_id' => [
+                'type'              => 'integer',
+                'description'       => 'Object identifier, of `origin_object_class`, he entry originates from.'
             ]
+
         ];
     }
 
+    public static function calcEntryNumber($self) {
+        $result = [];
+        $self->read(['journal_id' => ['code', 'organisation_id']]);
+
+        foreach($self as $id => $entry) {
+            if(!isset($entry['journal_id'], $entry['journal_id']['code'], $entry['journal_id']['organisation_id'])) {
+                continue;
+            }
+
+            $format = Setting::get_value('finance', 'accounting', 'accounting_entry.number_format', '%s{journal}/%02d{year}/%05d{sequence}', ['organisation_id' => $entry['journal_id']['organisation_id']]);
+            $year = Setting::get_value('finance', 'accounting', 'fiscal_year', date('Y'), ['organisation_id' => $entry['journal_id']['organisation_id']]);
+            $sequence = Setting::fetch_and_add('finance', 'accounting', 'accounting_entry.sequence', 1, ['organisation_id' => $entry['journal_id']['organisation_id']]);
+
+            if($sequence) {
+                $result[$id] = Setting::parse_format($format, [
+                        'year'      => $year,
+                        'journal'   => $entry['journal_id']['code'],
+                        'org'       => $entry['journal_id']['organisation_id'],
+                        'sequence'  => $sequence
+                    ]);
+            }
+
+        }
+        return $result;
+    }
 }

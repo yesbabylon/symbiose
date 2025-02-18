@@ -38,9 +38,10 @@ class AccountingJournal extends Model {
 
             'code' => [
                 'type'              => 'string',
-                'description'       => 'Unique code (optional).',
-                'help'              => 'Additional code to match journal in an external tool.',
+                'description'       => 'Unique code.',
+                'help'              => 'This can also be used to match journal in an external tool.',
                 'unique'            => true,
+                'required'          => true,
                 'dependents'        => ['name']
             ],
 
@@ -77,6 +78,8 @@ class AccountingJournal extends Model {
                 'sort'              => 'desc'
             ]
 
+            // #todo - add 'default_account_id'
+
         ];
     }
 
@@ -84,10 +87,11 @@ class AccountingJournal extends Model {
         $result = [];
         $self->read(['journal_type', 'code', 'description']);
         foreach($self as $id => $journal) {
-            $name = $journal['description'].' ['.$journal['journal_type'].']';
-            if($journal['journal_type'] && strlen($journal['journal_type'])) {
-                $name .= ' ('.$journal['code'].')';
+            $name = $journal['code'];
+            if($journal['description'] && strlen($journal['description'])) {
+                $name .= ' - '.$journal['description'];
             }
+            $name .= ' ('.$journal['journal_type'].')';
             $result[$id] = $name;
         }
         return $result;
