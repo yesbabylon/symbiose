@@ -16,6 +16,10 @@ use sale\receivable\Receivable;
 
 class Invoice extends \finance\accounting\invoice\Invoice {
 
+    public function getTable() {
+        return 'sale_accounting_invoice_invoice';
+    }
+
     public static function getName() {
         return 'Sale invoice';
     }
@@ -160,6 +164,15 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                 'usage'             => 'amount/money:2',
                 'store'             => true,
                 'description'       => "Final tax-included amount used for display (inverted for credit notes)."
+            ],
+
+            'accounting_entries_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'finance\accounting\AccountingEntry',
+                'foreign_field'     => 'origin_object_id',
+                'domain'            => ['origin_object_class', '=', 'sale\accounting\invoice\Invoice'],
+                'description'       => 'Accounting entries relating to the lines of the invoice.',
+                'ondetach'          => 'delete'
             ]
 
         ];

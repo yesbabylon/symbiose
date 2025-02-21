@@ -11,6 +11,10 @@ use finance\accounting\invoice\InvoiceLineGroup as FinanceInvoiceLineGroup;
 
 class InvoiceLineGroup extends FinanceInvoiceLineGroup {
 
+    public function getTable() {
+        return 'purchase_accounting_invoice_invoicelinegroup';
+    }
+
     public static function getColumns() {
         return [
 

@@ -9,6 +9,10 @@ namespace sale\accounting\invoice;
 
 class InvoiceLineGroup extends \finance\accounting\invoice\InvoiceLineGroup {
 
+    public function getTable() {
+        return 'sale_accounting_invoice_invoicelinegroup';
+    }
+
     public static function getColumns() {
         return [
 

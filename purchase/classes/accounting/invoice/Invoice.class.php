@@ -11,6 +11,10 @@ use finance\accounting\invoice\Invoice as FinanceInvoice;
 
 class Invoice extends FinanceInvoice {
 
+    public function getTable() {
+        return 'purchase_accounting_invoice_invoice';
+    }
+
     public static function getName() {
         return 'Purchase invoice';
     }
