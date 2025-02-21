@@ -7,14 +7,14 @@
 namespace finance\accounting;
 use equal\orm\Model;
 
-class AccountChartLine extends Model {
+class Account extends Model {
 
     public static function getName() {
-        return "Chart of Accounts";
+        return "Accounting Account";
     }
 
     public static function getDescription() {
-        return "A chart of accounts line holds information related to a specific account.";
+        return "An account holds information related to a specific accounting account, including its code, type, nature, and hierarchical position within the chart of accounts.";
     }
 
     public static function getColumns() {
@@ -36,11 +36,18 @@ class AccountChartLine extends Model {
                 'dependents'        => ['level']
             ],
 
-            'line_class' => [
+            'is_group_account' => [
+                'type'              => 'boolean',
+                'description'       => "Flag telling if the account is a group/collector account.",
+                'help'              => "Accounting entries can only be made on non-group accounts.",
+                'default'           => false
+            ],
+
+            'account_class' => [
                 'type'              => 'string',
                 'usage'             => 'text/plain:2',
                 'description'       => "The accounting class of the account.",
-                // #memo - we need a string value because PHp doesnt make a distinction between string and numbers for array keys (therefore map is ignored)
+                // #memo - we need string keys because PHP doesnt make a distinction between string and numbers for array keys (therefore map is ignored)
                 'selection'         => [
                     '00' => 'Linking and closing accounts',
                     '01' => 'Equity',
@@ -70,13 +77,14 @@ class AccountChartLine extends Model {
 
             'parent_account_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\AccountChartLine',
-                'description'       => "The parent account (line) the account is part of."
+                'foreign_object'    => 'finance\accounting\Account',
+                'description'       => "The parent account (line) the account is part of.",
+                'dependents'        => ['level']
             ],
 
             'children_accounts_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'finance\accounting\AccountChartLine',
+                'foreign_object'    => 'finance\accounting\Account',
                 'foreign_field'     => 'parent_account_id',
                 'description'       => "The children accounts linked to the account (next level)."
             ],
@@ -105,7 +113,7 @@ class AccountChartLine extends Model {
                 'required'   => true
             ],
 
-            'line_type' => [
+            'account_type' => [
                 'type'      => 'string',
                 'selection' => [
                     'debt'              => 'Balance Sheet>Fixed assets>Debtor',

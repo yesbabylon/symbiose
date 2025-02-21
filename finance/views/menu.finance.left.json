@@ -107,7 +107,7 @@
                         "label": "Chart of accounts",
                         "description": "",
                         "context": {
-                            "entity": "finance\\accounting\\AccountChartLine",
+                            "entity": "finance\\accounting\\Account",
                             "view": "list.default"
                         }
                     }

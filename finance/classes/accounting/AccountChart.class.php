@@ -33,9 +33,9 @@ class AccountChart extends Model {
                 'required'          => true
             ],
 
-            'account_chart_lines_ids' => [
+            'accounts_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'finance\accounting\AccountChartLine',
+                'foreign_object'    => 'finance\accounting\Account',
                 'foreign_field'     => 'account_chart_id',
                 'description'       => 'Account lines that belong to the chart.',
                 'ondetach'          => 'delete'

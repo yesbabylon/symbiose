@@ -108,12 +108,12 @@ class Setting extends \core\setting\Setting {
 
         // #memo - we use a dedicated cache since several o2m fields are involved and we want to prevent loading the same value multiple times in a same thread
         $index = $package.'.'.$section.'.'.$code.'.'.implode('.', array_values($selector)).'.'.$lang;
-        if(!isset($GLOBALS['_symbiose_setting_cache'])) {
-            $GLOBALS['_symbiose_setting_cache'] = [];
+        if(!isset($GLOBALS['_equal_core_setting_cache'])) {
+            $GLOBALS['_equal_core_setting_cache'] = [];
         }
 
-        if(isset($GLOBALS['_symbiose_setting_cache'][$index])) {
-            return $GLOBALS['_symbiose_setting_cache'][$index];
+        if(isset($GLOBALS['_equal_core_setting_cache'][$index])) {
+            return $GLOBALS['_equal_core_setting_cache'][$index];
         }
 
         $providers = \eQual::inject(['orm']);
@@ -160,7 +160,7 @@ class Setting extends \core\setting\Setting {
             }
         }
 
-        $GLOBALS['_symbiose_setting_cache'][$index] = $result;
+        $GLOBALS['_equal_core_setting_cache'][$index] = $result;
         return $result;
     }
 
@@ -230,10 +230,10 @@ class Setting extends \core\setting\Setting {
 
         // #memo - we use a dedicated cache since several o2m fields are involved and we want to prevent loading the same value multiple times in a same thread
         $index = $package.'.'.$section.'.'.$code.'.'.implode('.', array_values($selector)).'.'.$lang;
-        if(!isset($GLOBALS['_symbiose_setting_cache'])) {
-            $GLOBALS['_symbiose_setting_cache'] = [];
+        if(!isset($GLOBALS['_equal_core_setting_cache'])) {
+            $GLOBALS['_equal_core_setting_cache'] = [];
         }
-        $GLOBALS['_symbiose_setting_cache'][$index] = $value;
+        $GLOBALS['_equal_core_setting_cache'][$index] = $value;
     }
 
 }

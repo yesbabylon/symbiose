@@ -19,6 +19,14 @@ class SettingValue extends \core\setting\SettingValue {
                 'required'          => true
             ],
 
+            'user_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\User',
+                'description'       => 'User the setting is specific to (optional).',
+                'default'           => 0,
+                'ondelete'          => 'cascade'
+            ],
+
             'organisation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Organisation',

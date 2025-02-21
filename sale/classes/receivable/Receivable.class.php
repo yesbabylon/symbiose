@@ -210,7 +210,7 @@ class Receivable extends Model {
 
             'invoice_line_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\InvoiceLine',
+                'foreign_object'    => 'sale\accounting\invoice\InvoiceLine',
                 'description'       => 'The invoice line that has been generated based on the item.',
                 'ondelete'          => 'null'
             ]

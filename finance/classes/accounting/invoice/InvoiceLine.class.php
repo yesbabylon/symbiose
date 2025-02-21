@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-namespace finance\accounting;
+namespace finance\accounting\invoice;
 
 use equal\orm\Model;
 
@@ -34,7 +34,7 @@ class InvoiceLine extends Model {
 
             'invoice_line_group_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\InvoiceLineGroup',
+                'foreign_object'    => 'finance\accounting\invoice\InvoiceLineGroup',
                 'description'       => 'Group related (to their invoice) for lines.',
                 'ondelete'          => 'cascade',
                 'domain'            => ['invoice_id', '=', 'object.invoice_id']
@@ -42,7 +42,7 @@ class InvoiceLine extends Model {
 
             'invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\Invoice',
+                'foreign_object'    => 'finance\accounting\invoice\Invoice',
                 'description'       => 'Invoice the line is related to.',
                 'required'          => true,
                 'onupdate'          => 'onupdateInvoiceId',
@@ -105,7 +105,7 @@ class InvoiceLine extends Model {
 
             'downpayment_invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\Invoice',
+                'foreign_object'    => 'finance\accounting\invoice\Invoice',
                 'description'       => 'Downpayment invoice (for invoiced downpayment).'
             ]
 

@@ -150,7 +150,7 @@ $result = eQual::run('get', 'model_collect', [
         'sort'      => $params['sort'],
         'start'     => $params['start'],
         'limit'     => $params['limit']
-    ]);
+    ], true);
 
 $context->httpResponse()
         ->body($result)

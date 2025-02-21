@@ -5,7 +5,22 @@
     "authors": ["Yesbabylon"],
     "license": "LGPL-3",
     "depends_on": [
-        "core"
+        "core",
+        "calendar",
+        "communication",
+        "documents",
+        "finance",
+        "hr",
+        "identity",
+        "inventory",
+        "learn",
+        "purchase",
+        "realestate",
+        "stats",
+        "sale",
+        "support",
+        "talentlead",
+        "timetrack"
     ],
     "config": {
         "ORG_NAME": "Yesbabylon",

@@ -7,7 +7,7 @@
 
 namespace purchase\accounting\invoice;
 
-use finance\accounting\InvoiceLineGroup as FinanceInvoiceLineGroup;
+use finance\accounting\invoice\InvoiceLineGroup as FinanceInvoiceLineGroup;
 
 class InvoiceLineGroup extends FinanceInvoiceLineGroup {
 

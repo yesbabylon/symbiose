@@ -16,7 +16,7 @@ list($params, $providers) = eQual::announce([
         'entity' =>  [
             'description'       => 'name',
             'type'              => 'string',
-            'default'           => 'finance\accounting\Invoice'
+            'default'           => 'finance\accounting\invoice\Invoice'
         ],
 
         'price_min' => [

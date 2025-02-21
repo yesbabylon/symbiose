@@ -7,7 +7,7 @@
 
 namespace purchase\accounting\invoice;
 
-use finance\accounting\InvoiceLine as FinanceInvoiceLine;
+use finance\accounting\invoice\InvoiceLine as FinanceInvoiceLine;
 
 class InvoiceLine extends FinanceInvoiceLine {
 

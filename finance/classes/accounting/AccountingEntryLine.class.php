@@ -25,7 +25,7 @@ class AccountingEntryLine extends Model {
                 'description'       => 'Label for identifying the entry.',
             ],
 
-            'account_entry_id' => [
+            'accounting_entry_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\AccountingEntry',
                 'description'       => "Accounting entry the line relates to.",
@@ -35,7 +35,7 @@ class AccountingEntryLine extends Model {
 
             'account_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\AccountChartLine',
+                'foreign_object'    => 'finance\accounting\Account',
                 'description'       => "Accounting account the entry relates to.",
                 'required'          => true,
                 'ondelete'          => 'null'
@@ -53,14 +53,16 @@ class AccountingEntryLine extends Model {
                 'type'              => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Amount to be debited on the account.',
-                'default'           => 0.0
+                'default'           => 0.0,
+                'dependents'        => ['accounting_entry_id' => 'debit']
             ],
 
             'credit' => [
                 'type'              => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Amount to be credited on the account.',
-                'default'           => 0.0
+                'default'           => 0.0,
+                'dependents'        => ['accounting_entry_id' => 'credit']
             ]
         ];
     }

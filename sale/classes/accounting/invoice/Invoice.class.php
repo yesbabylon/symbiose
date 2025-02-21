@@ -7,14 +7,14 @@
 namespace sale\accounting\invoice;
 
 use symbiose\setting\Setting;
-use finance\accounting\AccountChartLine;
+use finance\accounting\Account;
 use finance\accounting\AccountingEntry;
 use finance\accounting\AccountingJournal;
 use sale\customer\Customer;
 use sale\pay\Funding;
 use sale\receivable\Receivable;
 
-class Invoice extends \finance\accounting\Invoice {
+class Invoice extends \finance\accounting\invoice\Invoice {
 
     public static function getName() {
         return 'Sale invoice';
@@ -589,10 +589,10 @@ class Invoice extends \finance\accounting\Invoice {
         $account_trade_debtors = Setting::get_value('sale', 'accounting', 'account_trade-debtors', 'not_found');
         // $account_downpayments = Setting::get_value('sale', 'accounting', 'account_downpayment', 'not_found');
 
-        $accountSales = AccountChartLine::search(['code', '=', $account_sales])->read(['id', 'description'])->first();
-        $accountSalesTaxes = AccountChartLine::search(['code', '=', $account_sales_taxes])->read(['id', 'description'])->first();
-        $accountTradeDebtors = AccountChartLine::search(['code', '=', $account_trade_debtors])->read(['id', 'description'])->first();
-        // $accountDownpayments = AccountChartLine::search(['code', '=', $account_downpayments])->first();
+        $accountSales = Account::search(['code', '=', $account_sales])->read(['id', 'description'])->first();
+        $accountSalesTaxes = Account::search(['code', '=', $account_sales_taxes])->read(['id', 'description'])->first();
+        $accountTradeDebtors = Account::search(['code', '=', $account_trade_debtors])->read(['id', 'description'])->first();
+        // $accountDownpayments = Account::search(['code', '=', $account_downpayments])->first();
 
         try {
             if(!$accountSales) {
@@ -687,7 +687,7 @@ class Invoice extends \finance\accounting\Invoice {
 
             // create credit lines on sales & taxes accounts
             foreach($map_accounting_entries as $account_id => $amount) {
-                $account = AccountChartLine::id($account_id)->read(['description'])->first();
+                $account = Account::id($account_id)->read(['description'])->first();
                 $result[] = [
                         'name'          => $account['description'],
                         'has_invoice'   => true,

@@ -4,20 +4,35 @@
     "access": {
         "groups": ["finance.default.users"]
     },
-    "order": "name",
+    "group_by": ["account_class"],
+    "limit": 1000,
+    "order": "name,level",
     "sort": "asc",
+    "domain": ["is_visible", "=", true],
     "layout": {
         "items": [
             {
                 "type": "field",
+                "value": "code",
+                "width": "10%",
+                "align": "left"
+            },
+            {
+                "type": "field",
                 "value": "name",
-                "width": "15%",
-                "align": "right"
+                "width": "10%",
+                "visible": false
             },
             {
                 "type": "field",
                 "value": "description",
-                "width": "35%"
+                "width": "30%"
+            },
+            {
+                "type": "field",
+                "label": "Analytic Section",
+                "value": "analytic_section_id",
+                "width": "20%"
             },
             {
                 "type": "field",
@@ -33,19 +48,13 @@
             },
             {
                 "type": "field",
-                "value": "line_class",
+                "value": "account_class",
                 "width": "25%"
             },
             {
                 "type": "field",
-                "value": "line_type",
+                "value": "account_type",
                 "width": "25%"
-            },
-            {
-                "type": "field",
-                "label": "Visible",
-                "value": "is_visible",
-                "width": "10%"
             }
         ]
     }

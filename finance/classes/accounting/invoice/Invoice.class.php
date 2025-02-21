@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace finance\accounting;
+namespace finance\accounting\invoice;
 
 use core\setting\Setting;
 use equal\orm\Model;
@@ -83,7 +83,7 @@ class Invoice extends Model {
 
             'reversed_invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\Invoice',
+                'foreign_object'    => 'finance\accounting\invoice\Invoice',
                 'description'       => 'Credit note that was created for cancelling the invoice, if any.',
                 'visible'           => ['status', '=', 'cancelled']
             ],
@@ -137,7 +137,7 @@ class Invoice extends Model {
 
             'invoice_lines_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'finance\accounting\InvoiceLine',
+                'foreign_object'    => 'finance\accounting\invoice\InvoiceLine',
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Detailed lines of the invoice.',
                 'ondetach'          => 'delete',
@@ -146,7 +146,7 @@ class Invoice extends Model {
 
             'invoice_line_groups_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'finance\accounting\InvoiceLineGroup',
+                'foreign_object'    => 'finance\accounting\invoice\InvoiceLineGroup',
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Groups of lines of the invoice.',
                 'ondetach'          => 'delete',

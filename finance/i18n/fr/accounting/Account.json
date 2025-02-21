@@ -27,7 +27,7 @@
             "description": "Type d'opération auquel cette règle se rapporte.",
             "help": ""
         },
-        "line_class": {
+        "account_class": {
             "label": "Classe",
             "description": "La classe du compte.",
             "selection": {
@@ -41,7 +41,7 @@
                 "07": "Produits"
             }
         },
-        "line_type": {
+        "account_type": {
             "label": "Type",
             "description": "Type d'opération auquel cette règle se rapporte.",
             "selection": {

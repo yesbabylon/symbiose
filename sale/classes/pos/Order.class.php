@@ -6,7 +6,7 @@
 */
 namespace sale\pos;
 use equal\orm\Model;
-use finance\accounting\Invoice;
+use finance\accounting\invoice\Invoice;
 use core\setting\Setting;
 
 class Order extends Model {
@@ -339,13 +339,13 @@ class Order extends Model {
             $account_sales_taxes = Setting::get_value('finance', 'invoice', 'account.sales_taxes', 'not_found');
             $account_trade_debtors = Setting::get_value('finance', 'invoice', 'account.trade_debtors', 'not_found');
 
-            $res = $om->search(\finance\accounting\AccountChartLine::getType(), ['code', '=', $account_sales]);
+            $res = $om->search(\finance\accounting\Account::getType(), ['code', '=', $account_sales]);
             $account_sales_id = reset($res);
 
-            $res = $om->search(\finance\accounting\AccountChartLine::getType(), ['code', '=', $account_sales_taxes]);
+            $res = $om->search(\finance\accounting\Account::getType(), ['code', '=', $account_sales_taxes]);
             $account_sales_taxes_id = reset($res);
 
-            $res = $om->search(\finance\accounting\AccountChartLine::getType(), ['code', '=', $account_trade_debtors]);
+            $res = $om->search(\finance\accounting\Account::getType(), ['code', '=', $account_trade_debtors]);
             $account_trade_debtors_id = reset($res);
 
             if(!$account_sales_id || !$account_sales_taxes_id || !$account_trade_debtors_id) {

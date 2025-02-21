@@ -7,7 +7,7 @@
 
 namespace sale\accounting\invoice;
 
-class InvoiceLineGroup extends \finance\accounting\InvoiceLineGroup {
+class InvoiceLineGroup extends \finance\accounting\invoice\InvoiceLineGroup {
 
     public static function getColumns() {
         return [
