@@ -13,26 +13,16 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "25%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "50%",
+                                                "width": "100%",
                                                 "widget": {
                                                     "heading": true,
                                                     "readonly": true
                                                 }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "invoice_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "account_id",
-                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
@@ -43,16 +33,40 @@
                                     },
                                     {
                                         "width": "50%",
+                                        "items": []
+                                    },
+                                    {
+                                        "width": "25%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "debit",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "credit",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "entry_lines_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }
