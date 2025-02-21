@@ -79,7 +79,7 @@ class Employee extends Partner {
 
         $self->read(['partner_identity_id' => ['id', 'employee_id']]);
         foreach($self as $id => $employee) {
-            if(is_null($employee['partner_identity_id']['employee_id'])) {
+            if(isset($employee['partner_identity_id']['id']) && is_null($employee['partner_identity_id']['employee_id'])) {
                 Identity::id($employee['partner_identity_id']['id'])->update(['employee_id' => $id]);
             }
         }
