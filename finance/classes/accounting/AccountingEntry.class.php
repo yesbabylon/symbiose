@@ -51,7 +51,7 @@ class AccountingEntry extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Total debited amount from all lines.',
-                'default'           => 'calcDebit',
+                'function'          => 'calcDebit',
                 'store'             => true
             ],
 
@@ -78,7 +78,6 @@ class AccountingEntry extends Model {
                 'description'       => "Lines of the accounting entry.",
                 'dependents'        => ['debit', 'credit']
             ],
-
 
             'status' => [
                 'type'              => 'string',

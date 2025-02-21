@@ -14,7 +14,7 @@ class Account extends Model {
     }
 
     public static function getDescription() {
-        return "An account holds information related to a specific accounting account, including its code, type, nature, and hierarchical position within the chart of accounts.";
+        return "An account holds information related to a specific financial account, including its code, type, nature, and hierarchical position within the chart of accounts.";
     }
 
     public static function getColumns() {

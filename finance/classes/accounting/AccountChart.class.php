@@ -8,7 +8,7 @@ namespace finance\accounting;
 use equal\orm\Model;
 
 class AccountChart extends Model {
-    
+
     public static function getName() {
         return "Chart of Accounts";
     }
