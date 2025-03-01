@@ -46,7 +46,7 @@ class Subscription extends Model  {
                 'required'          => true,
                 'description'       => 'Start date of subscription.',
                 'default'           => function () { return time(); },
-                'dependencies'      => ['price_id']
+                'dependents'        => ['price_id']
             ],
 
             'date_to' => [
@@ -54,7 +54,7 @@ class Subscription extends Model  {
                 'description'       => 'End date of subscription.',
                 'required'          => true,
                 'default'           => function () { return strtotime('+1 year'); },
-                'dependencies'      => ['price_id', 'is_expired','has_upcoming_expiry']
+                'dependents'        => ['price_id', 'is_expired','has_upcoming_expiry']
             ],
 
             'duration' => [
@@ -120,7 +120,7 @@ class Subscription extends Model  {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => 'Product of the catalog sale.',
-                'dependencies'      => ['price_id']
+                'dependents'        => ['price_id']
             ],
 
             'price_id' => [
@@ -128,10 +128,9 @@ class Subscription extends Model  {
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'sale\price\Price',
                 'description'       => 'Price of the sale.',
-                'dependencies'      => ['price'],
+                'dependents'        => ['price'],
                 'store'             => true,
                 'function'          => 'calcPriceId'
-
             ],
 
             'price' => [
