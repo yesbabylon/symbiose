@@ -338,20 +338,21 @@ class Invoice extends \finance\accounting\invoice\Invoice {
 
     public static function onbeforeInvoice($self) {
         $self->read(['organisation_id']);
-        // generate the accounting entries according to the invoices lines.
+        // Try to generate the accounting entries according to the invoices lines.
         $self->do('generate_accounting_entries');
         foreach($self as $id => $invoice) {
             $format = Setting::get_value('sale', 'accounting', 'invoice.sequence_format', '%2d{year}-%05d{sequence}', ['organisation_id' => $invoice['organisation_id']]);
             $year = Setting::get_value('finance', 'accounting', 'fiscal_year', date('Y'), ['organisation_id' => $invoice['organisation_id']]);
             $sequence = Setting::fetch_and_add('sale', 'accounting', 'invoice.sequence', 1, ['organisation_id' => $invoice['organisation_id']]);
-            if($sequence) {
-                $invoice_number = Setting::parse_format($format, [
-                        'year'      => $year,
-                        'org'       => $invoice['organisation_id'],
-                        'sequence'  => $sequence
-                    ]);
-                self::id($id)->update(['invoice_number' => $invoice_number, 'due_date' => null]);
+            if(!$sequence) {
+                throw new \Exception('APP::unable to retrieve sequence for invoice', EQ_ERROR_INVALID_CONFIG);
             }
+            $invoice_number = Setting::parse_format($format, [
+                    'year'      => $year,
+                    'org'       => $invoice['organisation_id'],
+                    'sequence'  => $sequence
+                ]);
+            self::id($id)->update(['invoice_number' => $invoice_number, 'due_date' => null]);
         }
     }
 
@@ -565,31 +566,27 @@ class Invoice extends \finance\accounting\invoice\Invoice {
     public static function doGenerateAccountingEntries($self) {
         $self->read(['id', 'organisation_id', 'accounting_entries_ids']);
         foreach($self as $id => $invoice) {
-            try {
-                // remove previously created entries, if any (there should be none)
-                AccountingEntry::ids($invoice['accounting_entries_ids'])->delete(true);
-                // generate accounting entries
-                $accounting_entries = self::computeAccountingEntries($id);
+            // remove previously created entries, if any (there should be none)
+            AccountingEntry::ids($invoice['accounting_entries_ids'])->delete(true);
+            // generate accounting entries
+            $accounting_entries = self::computeAccountingEntries($id);
 
-                if(empty($accounting_entries)) {
-                    throw new \Exception('invalid_invoice', EQ_ERROR_UNKNOWN);
-                }
-
-                $journal = AccountingJournal::search([['organisation_id', '=', $invoice['organisation_id']], ['journal_type', '=', 'SALE']])->read(['id'])->first();
-
-                if(!$journal) {
-                    throw new \Exception('missing_mandatory_journal', EQ_ERROR_INVALID_CONFIG);
-                }
-
-                // create new entries objects and assign to the sale journal
-                foreach($accounting_entries as $entry) {
-                    $entry['journal_id'] = $journal['id'];
-                    AccountingEntry::create($entry);
-                }
+            if(empty($accounting_entries)) {
+                throw new \Exception('invalid_invoice', EQ_ERROR_UNKNOWN);
             }
-            catch(\Exception $e) {
-                trigger_error($e->getMessage(), EQ_REPORT_ERROR);
+
+            $journal = AccountingJournal::search([['organisation_id', '=', $invoice['organisation_id']], ['journal_type', '=', 'SALE']])->read(['id'])->first();
+
+            if(!$journal) {
+                throw new \Exception('missing_mandatory_journal', EQ_ERROR_INVALID_CONFIG);
             }
+
+            // create new entries objects and assign to the sale journal
+            foreach($accounting_entries as $entry) {
+                $entry['journal_id'] = $journal['id'];
+                AccountingEntry::create($entry);
+            }
+
         }
     }
 
@@ -607,127 +604,119 @@ class Invoice extends \finance\accounting\invoice\Invoice {
         $accountTradeDebtors = Account::search(['code', '=', $account_trade_debtors])->read(['id', 'description'])->first();
         // $accountDownpayments = Account::search(['code', '=', $account_downpayments])->first();
 
-        try {
-            if(!$accountSales) {
-                throw new \Exception('APP::missing mandatory account sales', EQ_ERROR_INVALID_CONFIG);
-            }
 
-            if(!$accountSalesTaxes) {
-                throw new \Exception('APP::missing mandatory account sales taxes', EQ_ERROR_INVALID_CONFIG);
-            }
+        if(!$accountSales) {
+            throw new \Exception('APP::missing mandatory account sales', EQ_ERROR_INVALID_CONFIG);
+        }
 
-            if(!$accountTradeDebtors) {
-                throw new \Exception('APP::missing mandatory account trade debtors', EQ_ERROR_INVALID_CONFIG);
-            }
+        if(!$accountSalesTaxes) {
+            throw new \Exception('APP::missing mandatory account sales taxes', EQ_ERROR_INVALID_CONFIG);
+        }
 
-            $invoice = self::id($invoice_id)->read(['id', 'price', 'invoice_type', 'invoice_lines_ids'])->first();
+        if(!$accountTradeDebtors) {
+            throw new \Exception('APP::missing mandatory account trade debtors', EQ_ERROR_INVALID_CONFIG);
+        }
 
-            if(!$invoice) {
-                throw new \Exception('ORM::unknown invoice ['.$invoice_id.']', EQ_ERROR_INVALID_PARAM);
-            }
+        $invoice = self::id($invoice_id)->read(['id', 'price', 'invoice_type', 'invoice_lines_ids'])->first();
 
-            $map_accounting_entries = [];
+        if(!$invoice) {
+            throw new \Exception('ORM::unknown invoice ['.$invoice_id.']', EQ_ERROR_INVALID_PARAM);
+        }
 
-            // fetch invoice lines
-            $lines = InvoiceLine::ids($invoice['invoice_lines_ids'])
-                ->read([
-                    'total', 'price',
-                    'price_id' => [
-                        'accounting_rule_id' => [
-                            'vat_rule_id' => ['account_id'],
-                            'accounting_rule_line_ids' => ['share', 'account_id']
-                        ]
+        $map_accounting_entries = [];
+
+        // fetch invoice lines
+        $lines = InvoiceLine::ids($invoice['invoice_lines_ids'])
+            ->read([
+                'total', 'price',
+                'price_id' => [
+                    'accounting_rule_id' => [
+                        'vat_rule_id' => ['account_id'],
+                        'accounting_rule_line_ids' => ['share', 'account_id']
                     ]
-                ]);
+                ]
+            ]);
 
-            foreach($lines as $lid => $line) {
+        foreach($lines as $lid => $line) {
 
-                if(!isset($line['price_id'])) {
-                    throw new \Exception("APP::invoice line [{$lid}] without price for invoice [{$invoice_id}]", EQ_ERROR_UNKNOWN);
-                }
-
-                if(!isset($line['price_id']['accounting_rule_id'])) {
-                    throw new \Exception("APP::invoice line [{$lid}] without accounting rule for invoice [{$invoice_id}]", EQ_ERROR_UNKNOWN);
-                }
-
-                if(!isset($line['price_id']['accounting_rule_id']['accounting_rule_line_ids'])
-                    || !count($line['price_id']['accounting_rule_id']['accounting_rule_line_ids'])) {
-                    throw new \Exception("APP::invoice line [{$lid}] without accounting rule lines for invoice [{$invoice_id}]", EQ_ERROR_UNKNOWN);
-                }
-
-                if(!isset($line['price_id']['accounting_rule_id']['vat_rule_id'])) {
-                    throw new \Exception("APP::invoice line [{$lid}] without VAT rule for invoice [{$invoice_id}]", EQ_ERROR_UNKNOWN);
-                }
-
-                // #memo - Only one VAT rate can be applied per line: we should only retrieve the associated account.
-                $vat_account_id = $line['price_id']['accounting_rule_id']['vat_rule_id']['account_id'];
-
-                if(!isset($map_accounting_entries[$vat_account_id])) {
-                    $map_accounting_entries[$vat_account_id] = 0.0;
-                }
-
-                $vat_amount = ($line['price'] < 0 ? -1.0 : 1.0) * (abs($line['price']) - abs($line['total']));
-                $map_accounting_entries[$vat_account_id] += $vat_amount;
-
-                $remaining_amount = $line['total'];
-
-                $count_rules = count($line['price_id']['accounting_rule_id']['accounting_rule_line_ids']);
-                $i = 1;
-
-                foreach($line['price_id']['accounting_rule_id']['accounting_rule_line_ids'] as $rule_line_id => $ruleLine) {
-                    if(!isset($ruleLine['account_id'], $ruleLine['share']) || $ruleLine['account_id'] <= 0 || $ruleLine['share'] <= 0) {
-                        throw new \Exception("APP::invalid accounting rule line [{$rule_line_id}] (missing account_id or share) for invoice line [{$lid}] of invoice [{$invoice_id}]", EQ_ERROR_UNKNOWN);
-                    }
-
-                    // last line
-                    if($i == $count_rules) {
-                        $amount = $remaining_amount;
-                    }
-                    else {
-                        $amount = round($line['total'] * $ruleLine['share'], 2);
-                        $remaining_amount -= $amount;
-                    }
-
-                    if(!isset($map_accounting_entries[$ruleLine['account_id']])) {
-                        $map_accounting_entries[$ruleLine['account_id']] = 0.0;
-                    }
-
-                    $map_accounting_entries[$ruleLine['account_id']] += $amount;
-
-                    ++$i;
-                }
+            if(!isset($line['price_id'])) {
+                throw new \Exception("APP::invoice line [{$lid}] without price for invoice [{$invoice_id}]", EQ_ERROR_UNKNOWN);
             }
 
-            // create credit lines on sales & taxes accounts
-            foreach($map_accounting_entries as $account_id => $amount) {
-                $account = Account::id($account_id)->read(['description'])->first();
-                $result[] = [
-                        'name'          => $account['description'],
-                        'has_invoice'   => true,
-                        'invoice_id'    => $invoice_id,
-                        'account_id'    => $account_id,
-                        'debit'         => ($invoice['invoice_type'] == 'credit_note')?$amount:0.0,
-                        'credit'        => ($invoice['invoice_type'] == 'invoice')?$amount:0.0
-                    ];
+            if(!isset($line['price_id']['accounting_rule_id'])) {
+                throw new \Exception("APP::invoice line [{$lid}] without accounting rule for invoice [{$invoice_id}]", EQ_ERROR_UNKNOWN);
             }
 
-            // create a debit line on account "trade debtors"
+            if(!isset($line['price_id']['accounting_rule_id']['accounting_rule_line_ids'])
+                || !count($line['price_id']['accounting_rule_id']['accounting_rule_line_ids'])) {
+                throw new \Exception("APP::invoice line [{$lid}] without accounting rule lines for invoice [{$invoice_id}]", EQ_ERROR_UNKNOWN);
+            }
+
+            if(!isset($line['price_id']['accounting_rule_id']['vat_rule_id'])) {
+                throw new \Exception("APP::invoice line [{$lid}] without VAT rule for invoice [{$invoice_id}]", EQ_ERROR_UNKNOWN);
+            }
+
+            // #memo - Only one VAT rate can be applied per line: we should only retrieve the associated account.
+            $vat_account_id = $line['price_id']['accounting_rule_id']['vat_rule_id']['account_id'];
+
+            if(!isset($map_accounting_entries[$vat_account_id])) {
+                $map_accounting_entries[$vat_account_id] = 0.0;
+            }
+
+            $vat_amount = ($line['price'] < 0 ? -1.0 : 1.0) * (abs($line['price']) - abs($line['total']));
+            $map_accounting_entries[$vat_account_id] += $vat_amount;
+
+            $remaining_amount = $line['total'];
+
+            $count_rules = count($line['price_id']['accounting_rule_id']['accounting_rule_line_ids']);
+            $i = 1;
+
+            foreach($line['price_id']['accounting_rule_id']['accounting_rule_line_ids'] as $rule_line_id => $ruleLine) {
+                if(!isset($ruleLine['account_id'], $ruleLine['share']) || $ruleLine['account_id'] <= 0 || $ruleLine['share'] <= 0) {
+                    throw new \Exception("APP::invalid accounting rule line [{$rule_line_id}] (missing account_id or share) for invoice line [{$lid}] of invoice [{$invoice_id}]", EQ_ERROR_UNKNOWN);
+                }
+
+                // last line
+                if($i == $count_rules) {
+                    $amount = $remaining_amount;
+                }
+                else {
+                    $amount = round($line['total'] * $ruleLine['share'], 2);
+                    $remaining_amount -= $amount;
+                }
+
+                if(!isset($map_accounting_entries[$ruleLine['account_id']])) {
+                    $map_accounting_entries[$ruleLine['account_id']] = 0.0;
+                }
+
+                $map_accounting_entries[$ruleLine['account_id']] += $amount;
+
+                ++$i;
+            }
+        }
+
+        // create credit lines on sales & taxes accounts
+        foreach($map_accounting_entries as $account_id => $amount) {
+            $account = Account::id($account_id)->read(['description'])->first();
             $result[] = [
-                    'name'          => $accountTradeDebtors['description'],
+                    'name'          => $account['description'],
                     'has_invoice'   => true,
                     'invoice_id'    => $invoice_id,
-                    'account_id'    => $accountTradeDebtors['id'],
-                    'debit'         => ($invoice['invoice_type'] == 'invoice')?$invoice['price']:0.0,
-                    'credit'        => ($invoice['invoice_type'] == 'credit_note')?$invoice['price']:0.0
+                    'account_id'    => $account_id,
+                    'debit'         => ($invoice['invoice_type'] == 'credit_note')?$amount:0.0,
+                    'credit'        => ($invoice['invoice_type'] == 'invoice')?$amount:0.0
                 ];
+        }
 
-        }
-        catch(\Exception $e) {
-            // log error
-            trigger_error($e->getMessage(), EQ_REPORT_ERROR);
-            // force returning an empty array
-            $result = [];
-        }
+        // create a debit line on account "trade debtors"
+        $result[] = [
+                'name'          => $accountTradeDebtors['description'],
+                'has_invoice'   => true,
+                'invoice_id'    => $invoice_id,
+                'account_id'    => $accountTradeDebtors['id'],
+                'debit'         => ($invoice['invoice_type'] == 'invoice')?$invoice['price']:0.0,
+                'credit'        => ($invoice['invoice_type'] == 'credit_note')?$invoice['price']:0.0
+            ];
 
         return $result;
     }
