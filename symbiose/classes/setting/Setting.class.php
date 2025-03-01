@@ -33,7 +33,7 @@ class Setting extends \core\setting\Setting {
         ];
     }
 
-    public static function fetch_and_add(string $package, string $section, string $code, $increment=null, array $selector=[], string $lang='en') {
+    public static function fetch_and_add(string $package, string $section, string $code, $increment=null, array $selector=[]) {
         $result = null;
 
         $providers = \eQual::inject(['orm']);
@@ -134,10 +134,7 @@ class Setting extends \core\setting\Setting {
                 // #memo - there should be exactly one setting matching the criterias
                 $setting = array_pop($settings);
 
-                $values_lang = constant('DEFAULT_LANG');
-                if($setting['is_multilang']) {
-                    $values_lang = $lang;
-                }
+                $values_lang = ($setting['is_multilang']) ? $lang : constant('DEFAULT_LANG');
 
                 $setting_values = $om->read(SettingValue::getType(), $setting['setting_values_ids'], ['user_id', 'value'], $values_lang);
                 if($setting_values > 0) {
