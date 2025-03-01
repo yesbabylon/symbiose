@@ -47,7 +47,7 @@ class Service extends Model {
                 'type'              => 'boolean',
                 'description'       => 'The service has a subscription.',
                 'default'           => false,
-                'dependencies'      => ['is_billable','is_internal'],
+                'dependents'        => ['is_billable','is_internal'],
             ],
 
             'is_billable' => [
@@ -91,7 +91,7 @@ class Service extends Model {
                 'foreign_object'    => 'inventory\Product',
                 'ondelete'          => 'cascade',
                 'description'       => 'The product to which the service belongs.',
-                'dependencies'      => ['is_internal', 'customer_id'],
+                'dependents'        => ['is_internal', 'customer_id'],
                 'required'          => true
             ],
 

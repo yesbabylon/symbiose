@@ -73,7 +73,7 @@ class Software extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\service\Service',
                 'description'       => 'Service used by the software.',
-                'dependencies'      => ['product_id'],
+                'dependents'        => ['product_id'],
             ],
 
             'customer_id'=> [
