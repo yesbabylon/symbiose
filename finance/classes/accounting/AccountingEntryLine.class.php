@@ -38,7 +38,8 @@ class AccountingEntryLine extends Model {
                 'foreign_object'    => 'finance\accounting\Account',
                 'description'       => "Accounting account the entry relates to.",
                 'required'          => true,
-                'ondelete'          => 'null'
+                'ondelete'          => 'null',
+                'dependents'       => ['journal_id']
             ],
 
             'journal_id' => [
@@ -46,7 +47,8 @@ class AccountingEntryLine extends Model {
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'finance\accounting\AccountingJournal',
                 'description'       => "Accounting journal the entry relates to.",
-                'relation'          => ['accounting_entry_id' => 'journal_id']
+                'relation'          => ['accounting_entry_id' => 'journal_id'],
+                'store'             => true
             ],
 
             'debit' => [

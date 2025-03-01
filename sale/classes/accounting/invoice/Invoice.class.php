@@ -9,6 +9,7 @@ namespace sale\accounting\invoice;
 use symbiose\setting\Setting;
 use finance\accounting\Account;
 use finance\accounting\AccountingEntry;
+use finance\accounting\AccountingEntryLine;
 use finance\accounting\AccountingJournal;
 use sale\customer\Customer;
 use sale\pay\Funding;
@@ -564,33 +565,44 @@ class Invoice extends \finance\accounting\invoice\Invoice {
      * Create the accounting entries according tp invoices lines.
      */
     public static function doGenerateAccountingEntries($self) {
-        $self->read(['id', 'organisation_id', 'accounting_entries_ids']);
+        $self->read(['id', 'organisation_id', 'accounting_entries_ids' => ['id', 'entry_lines_ids']]);
+
         foreach($self as $id => $invoice) {
-            // remove previously created entries, if any (there should be none)
-            AccountingEntry::ids($invoice['accounting_entries_ids'])->delete(true);
-            // generate accounting entries
-            $accounting_entries = self::computeAccountingEntries($id);
-
-            if(empty($accounting_entries)) {
-                throw new \Exception('invalid_invoice', EQ_ERROR_UNKNOWN);
-            }
-
             $journal = AccountingJournal::search([['organisation_id', '=', $invoice['organisation_id']], ['journal_type', '=', 'SALE']])->read(['id'])->first();
 
             if(!$journal) {
                 throw new \Exception('missing_mandatory_journal', EQ_ERROR_INVALID_CONFIG);
             }
 
+            // remove previously created entries, if any (there should be none)
+            $accounting_entries_ids = array_map(function ($a) { return $a['id']; }, $invoice['accounting_entries_ids']);
+            AccountingEntry::ids($accounting_entries_ids)->delete(true);
+            AccountingEntryLine::ids($invoice['accounting_entries_ids']['entry_lines_ids'])->delete(true);
+
+            // generate accounting entries
+            $accounting_entry_lines = self::computeAccountingEntryLines($id);
+
+            if(empty($accounting_entry_lines)) {
+                throw new \Exception('invalid_invoice', EQ_ERROR_UNKNOWN);
+            }
+
+            $entry = AccountingEntry::create([
+                    'journal_id'            => $journal['id'],
+                    'origin_object_class'   => self::getType(),
+                    'origin_object_id'      => $id,
+                    'status'                => 'validated'
+                ]);
+
             // create new entries objects and assign to the sale journal
-            foreach($accounting_entries as $entry) {
-                $entry['journal_id'] = $journal['id'];
-                AccountingEntry::create($entry);
+            foreach($accounting_entry_lines as $line) {
+                $entry['accounting_entry_id'] = $entry['id'];
+                AccountingEntryLine::create($line);
             }
 
         }
     }
 
-    private static function computeAccountingEntries($invoice_id) {
+    private static function computeAccountingEntryLines($invoice_id) {
         $result = [];
 
         // retrieve specific accounts numbers
@@ -700,8 +712,6 @@ class Invoice extends \finance\accounting\invoice\Invoice {
             $account = Account::id($account_id)->read(['description'])->first();
             $result[] = [
                     'name'          => $account['description'],
-                    'has_invoice'   => true,
-                    'invoice_id'    => $invoice_id,
                     'account_id'    => $account_id,
                     'debit'         => ($invoice['invoice_type'] == 'credit_note')?$amount:0.0,
                     'credit'        => ($invoice['invoice_type'] == 'invoice')?$amount:0.0
@@ -711,8 +721,6 @@ class Invoice extends \finance\accounting\invoice\Invoice {
         // create a debit line on account "trade debtors"
         $result[] = [
                 'name'          => $accountTradeDebtors['description'],
-                'has_invoice'   => true,
-                'invoice_id'    => $invoice_id,
                 'account_id'    => $accountTradeDebtors['id'],
                 'debit'         => ($invoice['invoice_type'] == 'invoice')?$invoice['price']:0.0,
                 'credit'        => ($invoice['invoice_type'] == 'credit_note')?$invoice['price']:0.0

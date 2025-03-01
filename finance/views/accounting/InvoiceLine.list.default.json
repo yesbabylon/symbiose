@@ -18,7 +18,6 @@
             }
         }
     },
-    "order": "invoice_line_group_id.order",
     "sort": "asc",
     "limit": 100,
     "layout": {

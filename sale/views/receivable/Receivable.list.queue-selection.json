@@ -50,7 +50,7 @@
             {
                 "type": "field",
                 "value": "total",
-                "label": "Price Ex VAT",
+                "label": "Excl. tax",
                 "width": "10%"
             },
             {
@@ -61,7 +61,7 @@
             },
             {
                 "type": "field",
-                "label": "Price total",
+                "label": "Price",
                 "value": "price",
                 "width": "10%"
             },
