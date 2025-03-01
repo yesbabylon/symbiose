@@ -590,11 +590,12 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                     'origin_object_class'   => self::getType(),
                     'origin_object_id'      => $id,
                     'status'                => 'validated'
-                ]);
+                ])
+                ->first();
 
             // create new entries objects and assign to the sale journal
             foreach($accounting_entry_lines as $line) {
-                $entry['accounting_entry_id'] = $entry['id'];
+                $line['accounting_entry_id'] = $entry['id'];
                 AccountingEntryLine::create($line);
             }
 
