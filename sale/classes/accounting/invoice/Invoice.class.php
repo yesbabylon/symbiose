@@ -577,7 +577,6 @@ class Invoice extends \finance\accounting\invoice\Invoice {
             // remove previously created entries, if any (there should be none)
             $accounting_entries_ids = array_map(function ($a) { return $a['id']; }, $invoice['accounting_entries_ids']->get(true));
             AccountingEntry::ids($accounting_entries_ids)->delete(true);
-            AccountingEntryLine::ids($invoice['accounting_entries_ids']['entry_lines_ids'])->delete(true);
 
             // generate accounting entries
             $accounting_entry_lines = self::computeAccountingEntryLines($id);
