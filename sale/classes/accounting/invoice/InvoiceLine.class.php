@@ -4,7 +4,6 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 namespace sale\accounting\invoice;
 
 use sale\catalog\Product;
@@ -38,7 +37,8 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
                 'foreign_object'    => 'sale\accounting\invoice\InvoiceLineGroup',
                 'description'       => 'Group the line relates to (in turn, groups relate to their invoice).',
                 'ondelete'          => 'cascade',
-                'domain'            => ['invoice_id', '=', 'object.invoice_id']
+                'domain'            => ['invoice_id', '=', 'object.invoice_id'],
+                'dependents'        => ['invoice_line_group_id' => ['total', 'price']]
             ],
 
             'invoice_id' => [
@@ -46,8 +46,8 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
                 'foreign_object'    => 'sale\accounting\invoice\Invoice',
                 'description'       => 'Invoice the line is related to.',
                 'required'          => true,
-                'onupdate'          => 'onupdateInvoiceId',
-                'ondelete'          => 'cascade'
+                'ondelete'          => 'cascade',
+                'dependents'        => ['invoice_id' => ['total', 'price']]
             ],
 
             'unit_price' => [

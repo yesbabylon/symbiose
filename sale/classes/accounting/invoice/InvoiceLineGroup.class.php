@@ -4,7 +4,6 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 namespace sale\accounting\invoice;
 
 class InvoiceLineGroup extends \finance\accounting\invoice\InvoiceLineGroup {
@@ -30,7 +29,7 @@ class InvoiceLineGroup extends \finance\accounting\invoice\InvoiceLineGroup {
                 'foreign_field'     => 'invoice_line_group_id',
                 'description'       => 'Detailed lines of the group.',
                 'ondetach'          => 'delete',
-                'onupdate'          => 'onupdateInvoiceLinesIds'
+                'dependents'        => ['total', 'price', 'invoice_id' => ['total', 'price']]
             ]
 
         ];

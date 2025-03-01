@@ -52,8 +52,7 @@ class InvoiceLineGroup extends Model {
                 'foreign_object'    => 'finance\accounting\invoice\InvoiceLine',
                 'foreign_field'     => 'invoice_line_group_id',
                 'description'       => 'Detailed lines of the group.',
-                'ondetach'          => 'delete',
-                'onupdate'          => 'onupdateInvoiceLinesIds'
+                'ondetach'          => 'delete'
             ],
 
             'total' => [
@@ -99,13 +98,6 @@ class InvoiceLineGroup extends Model {
             $result[$id] = array_reduce($group['invoice_lines_ids']->toArray(), function($c, $line) { return $c + $line['price'];}, 0);
         }
         return $result;
-    }
-
-    public static function onupdateInvoiceLinesIds($self) {
-        $self->read(['invoice_id']);
-        foreach($self as $id => $group) {
-            Invoice::id($group['invoice_id'])->update(['price' => null, 'total' => null]);
-        }
     }
 
 }

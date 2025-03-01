@@ -45,7 +45,6 @@ class InvoiceLine extends Model {
                 'foreign_object'    => 'finance\accounting\invoice\Invoice',
                 'description'       => 'Invoice the line is related to.',
                 'required'          => true,
-                'onupdate'          => 'onupdateInvoiceId',
                 'ondelete'          => 'cascade'
             ],
 
@@ -59,30 +58,26 @@ class InvoiceLine extends Model {
                 'type'              => 'float',
                 'usage'             => 'amount/rate',
                 'description'       => 'VAT rate to be applied.',
-                'default'           => 0.0,
-                'onupdate'          => 'onupdateVatRate'
+                'default'           => 0.0
             ],
 
             'qty' => [
                 'type'              => 'float',
                 'description'       => 'Quantity of product.',
-                'default'           => 0,
-                'onupdate'          => 'onupdateQty'
+                'default'           => 0
             ],
 
             'free_qty' => [
                 'type'              => 'integer',
                 'description'       => 'Free quantity.',
-                'default'           => 0,
-                'onupdate'          => 'onupdateFreeQty'
+                'default'           => 0
             ],
 
             'discount' => [
                 'type'              => 'float',
                 'usage'             => 'amount/rate',
                 'description'       => 'Total amount of discount to apply, if any.',
-                'default'           => 0.0,
-                'onupdate'          => 'onupdateDiscount'
+                'default'           => 0.0
             ],
 
             'total' => [
@@ -130,60 +125,6 @@ class InvoiceLine extends Model {
             $result[$id] = round($total * (1.0 + $vat), 2);
         }
         return $result;
-    }
-
-    public static function onupdateInvoiceId($self) {
-        $self->do('reset_invoice_prices');
-    }
-
-    public static function onupdateVatRate($self) {
-        $self->do('reset_prices');
-    }
-
-    public static function onupdateQty($self) {
-        $self->do('reset_prices');
-    }
-
-    public static function onupdateFreeQty($self) {
-        $self->do('reset_prices');
-    }
-
-    public static function onupdateDiscount($self) {
-        $self->do('reset_prices');
-    }
-
-    public static function getActions() {
-        return [
-            'reset_prices' => [
-                'description'   => 'Resets price and total computed fields of the invoice line and the invoice.',
-                'policies'      => [],
-                'function'      => 'doResetPrices'
-            ],
-            'reset_invoice_prices' => [
-                'description'   => 'Resets price and total computed fields of the invoice.',
-                'policies'      => [],
-                'function'      => 'doResetInvoicePrices'
-            ]
-        ];
-    }
-
-    public static function doResetPrices($self) {
-        $self->update([
-            'price' => null,
-            'total' => null
-        ]);
-
-        $self->do('reset_invoice_prices');
-    }
-
-    public static function doResetInvoicePrices($self) {
-        $self->read(['invoice_id']);
-
-        Invoice::ids(array_column($self->get(true), 'invoice_id'))
-            ->update([
-                'price' => null,
-                'total' => null
-            ]);
     }
 
     public static function canupdate($self, $values): array {

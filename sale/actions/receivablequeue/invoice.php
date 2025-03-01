@@ -120,8 +120,6 @@ foreach($receivables_queues as $receivables_queue) {
         $invoice_line = InvoiceLine::create([
                 // #memo - name is computed & based on product
                 'description'           => $receivable['name'],
-                'invoice_line_group_id' => $invoice_line_group['id'],
-                'invoice_id'            => $invoice['id'],
                 'product_id'            => $receivable['product_id'],
                 'price_id'              => $receivable['price_id'],
                 'unit_price'            => $receivable['unit_price'],
@@ -131,7 +129,10 @@ foreach($receivables_queues as $receivables_queue) {
                 'discount'              => $receivable['discount'],
                 'receivable_id'         => $receivable['id']
             ])
-            ->do('reset_invoice_prices')
+            ->update([
+                'invoice_line_group_id' => $invoice_line_group['id'],
+                'invoice_id'            => $invoice['id']
+            ])
             ->first();
 
         Receivable::id($receivable['id'])
