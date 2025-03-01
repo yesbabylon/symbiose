@@ -41,7 +41,7 @@ class Supplier extends Partner {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\IdentityType',
                 'default'           => 3,
-                'dependencies'      => ['type', 'name'],
+                'dependents'        => ['type', 'name'],
                 'description'       => 'Type of identity.',
                 'help'              => 'Default value is Company.'
             ],

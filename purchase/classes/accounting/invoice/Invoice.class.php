@@ -42,7 +42,7 @@ class Invoice extends FinanceInvoice {
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Detailed lines of the invoice.',
                 'ondetach'          => 'delete',
-                'dependencies'      => ['total', 'price']
+                'dependents'        => ['total', 'price']
             ],
 
             'invoice_line_groups_ids' => [
@@ -51,7 +51,7 @@ class Invoice extends FinanceInvoice {
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Groups of lines of the invoice.',
                 'ondetach'          => 'delete',
-                'dependencies'      => ['total', 'price']
+                'dependents'        => ['total', 'price']
             ],
 
             /**
