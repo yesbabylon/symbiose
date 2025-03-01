@@ -134,7 +134,8 @@ class SaleEntry extends Model {
                 'usage'             => 'amount/money:4',
                 'description'       => 'Unit price of the product related to the entry.',
                 'relation'          => ['price_id' => ['price']],
-                'store'             => true
+                'store'             => true,
+                'onupdate'          => 'onupdateUnitPrice'
             ],
 
             'vat_rate' => [
@@ -361,6 +362,10 @@ class SaleEntry extends Model {
                 ],
             ],
         ];
+    }
+
+    public static function onupdateUnitPrice($self) {
+        $self->update(['total' => null]);
     }
 
     public static function onchange($event, $values) {
