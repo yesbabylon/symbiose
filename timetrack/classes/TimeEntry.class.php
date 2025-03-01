@@ -59,8 +59,9 @@ class TimeEntry extends SaleEntry {
                 'type'            => 'computed',
                 'result_type'     => 'many2one',
                 'foreign_object'  => 'inventory\Product',
-                'description'     => 'The product the the time entry refers to, if any.',
+                'description'     => 'The inventory product (infra) the the time entry refers to, if any.',
                 'relation'        => ['project_id' => ['product_id']],
+                'instant'         => true,
                 'store'           => true
             ],
 
@@ -82,7 +83,9 @@ class TimeEntry extends SaleEntry {
                 'description'    => 'Product of the sale catalog.',
                 'help'           => 'This field references a Product from the catalog. This field is not to be mistaken with the Product (software) of the customer.',
                 'relation'       => ['project_id' => ['time_entry_sale_model_id' => 'product_id']],
-                'store'          => true
+                'instant'        => true,
+                'store'          => true,
+                'readonly'       => true
             ],
 
             'price_id' => [
@@ -91,7 +94,9 @@ class TimeEntry extends SaleEntry {
                 'foreign_object' => 'sale\price\Price',
                 'description'    => 'Price of the sale.',
                 'function'       => 'calcPriceId',
-                'store'          => true
+                'instant'        => true,
+                'store'          => true,
+                'readonly'       => true
             ],
 
             'unit_price' => [
@@ -100,7 +105,9 @@ class TimeEntry extends SaleEntry {
                 'usage'          => 'amount/money:4',
                 'description'    => 'Unit price of the product related to the entry.',
                 'relation'       => ['project_id' => ['time_entry_sale_model_id' => 'unit_price']],
-                'store'          => true
+                'instant'        => true,
+                'store'          => true,
+                'readonly'       => true
             ],
 
             'qty' => [
@@ -226,21 +233,21 @@ class TimeEntry extends SaleEntry {
     }
 
     private static function getTimeZoneCurrentHour(): int {
-        $current_hour = (int) date('H');
+        $result = (int) date('H');
 
         $time_zone = Setting::get_value('core', 'locale', 'time_zone');
         if(!is_null($time_zone)) {
             try {
                 $timezone = new \DateTimeZone($time_zone);
                 $dateTime = new \DateTime('now', $timezone);
-                $current_hour = (int) $dateTime->format('H');
+                $result = (int) $dateTime->format('H');
             }
             catch(\Exception $e) {
                 trigger_error('PHP::error getting time zone current hour', EQ_REPORT_WARNING);
             }
         }
 
-        return $current_hour;
+        return $result;
     }
 
     private static function computeTicketLink($url, $ticket_id): string {
