@@ -20,7 +20,7 @@ class User extends \core\User {
                 'foreign_object'    => 'identity\Identity',
                 'domain'            => ['type', '=', 'IN'],
                 'description'       => 'The contact related to the user.',
-                'dependencies'      => ['name']
+                'dependents'        => ['name']
             ],
 
             'setting_values_ids' => [
