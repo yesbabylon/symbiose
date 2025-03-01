@@ -149,6 +149,7 @@ class Invoice extends Model {
                 'foreign_object'    => 'finance\accounting\invoice\InvoiceLineGroup',
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Groups of lines of the invoice.',
+                'order'             => 'order',
                 'ondetach'          => 'delete',
                 'dependents'        => ['total', 'price']
             ],
