@@ -1,0 +1,44 @@
+{
+    "name": "Accounting entriy lines",
+    "description": "Accounting entries lines.",
+    "access": {
+        "groups": ["finance.default.users"]
+    },
+    "operations": {
+        "total": {
+            "debit": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            },
+            "credit": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Journal",
+                "value": "journal_id",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "account_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "debit",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "credit",
+                "width": "15%"
+            }
+        ]
+    }
+}
