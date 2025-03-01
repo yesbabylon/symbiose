@@ -21,18 +21,25 @@
         "items": [
             {
                 "type": "field",
-                "value": "account_id",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "value": "name",
+                "value": "entry_number",
                 "width": "35%"
             },
             {
                 "type": "field",
                 "label": "Journal",
                 "value": "journal_id",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "Balanced",
+                "value": "is_balanced",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Status",
+                "value": "status",
                 "width": "15%"
             },
             {
