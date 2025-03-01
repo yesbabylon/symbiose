@@ -38,7 +38,6 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
                 'description'       => 'Group the line relates to (in turn, groups relate to their invoice).',
                 'ondelete'          => 'cascade',
                 'domain'            => ['invoice_id', '=', 'object.invoice_id'],
-                'dependents'        => ['invoice_line_group_id' => ['total', 'price']]
             ],
 
             'invoice_id' => [
@@ -46,8 +45,7 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
                 'foreign_object'    => 'sale\accounting\invoice\Invoice',
                 'description'       => 'Invoice the line is related to.',
                 'required'          => true,
-                'ondelete'          => 'cascade',
-                'dependents'        => ['invoice_id' => ['total', 'price']]
+                'ondelete'          => 'cascade'
             ],
 
             'unit_price' => [
@@ -56,7 +54,8 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
                 'usage'             => 'amount/money:4',
                 'description'       => 'Unit price of the product related to the line.',
                 'function'          => 'calcUnitPrice',
-                'store'             => true
+                'store'             => true,
+                'dependents'        => ['total', 'price', 'invoice_id' => ['total', 'price'], 'invoice_line_group_id' => ['total', 'price']]
             ],
 
             'vat_rate' => [
@@ -67,7 +66,29 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
                 'function'          => 'calcVatRate',
                 'store'             => true,
                 'default'           => 0.0,
-                'onupdate'          => 'onupdateVatRate'
+                'dependents'        => ['price']
+            ],
+
+            'qty' => [
+                'type'              => 'float',
+                'description'       => 'Quantity of product.',
+                'default'           => 0,
+                'dependents'        => ['price', 'total']
+            ],
+
+            'free_qty' => [
+                'type'              => 'integer',
+                'description'       => 'Free quantity.',
+                'default'           => 0,
+                'dependents'        => ['price', 'total']
+            ],
+
+            'discount' => [
+                'type'              => 'float',
+                'usage'             => 'amount/rate',
+                'description'       => 'Total amount of discount to apply, if any.',
+                'default'           => 0.0,
+                'dependents'        => ['price', 'total']
             ],
 
             /**
@@ -86,7 +107,7 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\price\Price',
                 'description'       => 'The price the line relates to (assigned at line creation).',
-                'onupdate'          => 'onupdatePriceId'
+                'dependents'        => ['vat_rate', 'price', 'total']
             ],
 
             'receivable_id' => [
@@ -175,17 +196,6 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
         }
 
         return $result;
-    }
-
-    public static function onupdatePriceId($self) {
-        $self->update([
-            'vat_rate'   => null,
-            'unit_price' => null,
-            'total'      => null,
-            'price'      => null
-        ]);
-
-        $self->do('reset_invoice_prices');
     }
 
     public static function canupdate($self, $values): array {

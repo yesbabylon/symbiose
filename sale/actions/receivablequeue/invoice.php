@@ -122,16 +122,16 @@ foreach($receivables_queues as $receivables_queue) {
                 'description'           => $receivable['name'],
                 'product_id'            => $receivable['product_id'],
                 'price_id'              => $receivable['price_id'],
+                'receivable_id'         => $receivable['id'],
+                'invoice_line_group_id' => $invoice_line_group['id'],
+                'invoice_id'            => $invoice['id']
+            ])
+            ->update([
                 'unit_price'            => $receivable['unit_price'],
                 'vat_rate'              => $receivable['vat_rate'],
                 'qty'                   => $receivable['qty'],
                 'free_qty'              => $receivable['free_qty'],
-                'discount'              => $receivable['discount'],
-                'receivable_id'         => $receivable['id']
-            ])
-            ->update([
-                'invoice_line_group_id' => $invoice_line_group['id'],
-                'invoice_id'            => $invoice['id']
+                'discount'              => $receivable['discount']
             ])
             ->first();
 
