@@ -54,14 +54,14 @@ class RentalUnit extends Model {
 
             'category' => [
                 'type'              => 'string',
-                'selection'         => ['hostel', 'lodge'],         // hostel is GA, lodge is GG
-                'description'       => 'Type of rental unit (that usually comes with extra accomodations, ie meals; or rented as is).',
+                'selection'         => ['hostel', 'lodge'],
+                'description'       => 'Type of rental unit (that usually comes with extra accommodations, ie meals; or rented as is).',
                 'default'           => 'hostel'
             ],
 
-            'is_accomodation' => [
+            'is_accommodation' => [
                 'type'              => 'boolean',
-                'description'       => 'The rental unit is an accomodation (having at least one bed).',
+                'description'       => 'The rental unit is an accommodation (having at least one bed).',
                 'default'           => true
             ],
 
@@ -109,7 +109,7 @@ class RentalUnit extends Model {
                 'type'              => 'many2one',
                 'description'       => "Rental Unit which current unit belongs to, if any.",
                 'foreign_object'    => 'realestate\RentalUnit',
-                'dependencies'      => ['has_parent']
+                'dependents'        => ['has_parent']
             ],
 
             // Status relates to current status (NOW) of a rental unit. For availability, refer to related Consumptions
