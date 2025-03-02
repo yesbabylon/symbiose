@@ -109,10 +109,12 @@ $getInvoiceLines = function($invoice) {
         // index of the current "group" line
         $pos = count($lines) - 1;
 
-        if(!$group['is_aggregate']) {
+        //if(!$group['is_aggregate']) {
             $lines[$pos]['count_lines'] = count($group_lines);
             $lines = array_merge($lines, $group_lines);
-        }
+        //}
+        // #memo - grouping lines this way has a drawback: it may result in erroneous vat due to rounding errors
+        /*
         else {
             $group_lines_taxes = [];
             $group_lines_prices = [];
@@ -155,6 +157,7 @@ $getInvoiceLines = function($invoice) {
                 }
             }
         }
+        */
     }
 
     foreach($invoice['invoice_lines_ids'] as $line) {
@@ -288,35 +291,35 @@ if(!$lang) {
 
 $invoice = Invoice::id($params['id'])
     ->read([
-        'invoice_number', 'emission_date', 'due_date', 'status', 'invoice_type', 'payment_reference', 'total', 'price', 'payment_status',
-        'organisation_id' => [
-            'name', 'address_street', 'address_dispatch', 'address_zip',
-            'address_city', 'address_country', 'has_vat', 'vat_number',
-            'legal_name', 'registration_number', 'bank_account_iban', 'bank_account_bic',
-            'website', 'email', 'phone', 'fax', 'has_vat', 'vat_number',
-            'image_document_id' => [
-                'type', 'data'
-            ]
-        ],
-        'customer_id' => [
-            'name', 'address_street', 'address_dispatch', 'address_zip',
-            'address_city', 'address_country', 'has_vat', 'vat_number'
-        ],
-        'invoice_lines_ids' => [
-            'name', 'product_id', 'description', 'qty', 'unit_price',
-            'discount', 'free_qty', 'vat_rate', 'total', 'price'
-        ],
-        'invoice_line_groups_ids' => [
-            'name',
-            'total',
-            'price',
-            'is_aggregate',
+            'invoice_number', 'emission_date', 'due_date', 'status', 'invoice_type', 'payment_reference', 'total', 'price', 'payment_status',
+            'organisation_id' => [
+                'name', 'address_street', 'address_dispatch', 'address_zip',
+                'address_city', 'address_country', 'has_vat', 'vat_number',
+                'legal_name', 'registration_number', 'bank_account_iban', 'bank_account_bic',
+                'website', 'email', 'phone', 'fax', 'has_vat', 'vat_number',
+                'image_document_id' => [
+                    'type', 'data'
+                ]
+            ],
+            'customer_id' => [
+                'name', 'address_street', 'address_dispatch', 'address_zip',
+                'address_city', 'address_country', 'has_vat', 'vat_number'
+            ],
             'invoice_lines_ids' => [
                 'name', 'product_id', 'description', 'qty', 'unit_price',
                 'discount', 'free_qty', 'vat_rate', 'total', 'price'
+            ],
+            'invoice_line_groups_ids' => [
+                'name',
+                'total',
+                'price',
+                'is_aggregate',
+                'invoice_lines_ids' => [
+                    'name', 'product_id', 'description', 'qty', 'unit_price',
+                    'discount', 'free_qty', 'vat_rate', 'total', 'price'
+                ]
             ]
-        ]
-    ], $lang)
+        ], $lang)
     ->first(true);
 
 

@@ -26,7 +26,7 @@ list($params, $providers) = eQual::announce([
 $context = $providers['context'];
 
 if(!isset($params['id']) || $params['id'] <= 0) {
-    throw new Exception('invoice_invalid_id', QN_ERROR_INVALID_PARAM);
+    throw new Exception('invoice_invalid_id', EQ_ERROR_INVALID_PARAM);
 }
 
 $invoice = Invoice::id($params['id'])
@@ -34,7 +34,7 @@ $invoice = Invoice::id($params['id'])
     ->first(true);
 
 if($invoice['status'] != 'proforma') {
-    throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
+    throw new Exception("incompatible_status", EQ_ERROR_INVALID_PARAM);
 }
 
 Funding::ids($invoice['fundings_ids'])->update(['invoice_id' => null]);

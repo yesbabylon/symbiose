@@ -51,7 +51,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "is_aggregate",
+                                                "value": "is_visible",
                                                 "width": "50%"
                                             }
                                         ]

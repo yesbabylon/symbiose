@@ -55,7 +55,7 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
                 'description'       => 'Unit price of the product related to the line.',
                 'function'          => 'calcUnitPrice',
                 'store'             => true,
-                'dependents'        => ['total', 'price', 'invoice_id' => ['total', 'price'], 'invoice_line_group_id' => ['total', 'price']]
+                'dependents'        => ['total', 'price', 'invoice_id' => ['total', 'price']]
             ],
 
             'vat_rate' => [
@@ -66,21 +66,21 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
                 'function'          => 'calcVatRate',
                 'store'             => true,
                 'default'           => 0.0,
-                'dependents'        => ['price']
+                'dependents'        => ['price', 'invoice_id' => ['price']]
             ],
 
             'qty' => [
                 'type'              => 'float',
                 'description'       => 'Quantity of product.',
                 'default'           => 0,
-                'dependents'        => ['price', 'total']
+                'dependents'        => ['price', 'total', 'invoice_id' => ['total', 'price']]
             ],
 
             'free_qty' => [
                 'type'              => 'integer',
                 'description'       => 'Free quantity.',
                 'default'           => 0,
-                'dependents'        => ['price', 'total']
+                'dependents'        => ['price', 'total', 'invoice_id' => ['total', 'price']]
             ],
 
             'discount' => [
@@ -88,7 +88,7 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
                 'usage'             => 'amount/rate',
                 'description'       => 'Total amount of discount to apply, if any.',
                 'default'           => 0.0,
-                'dependents'        => ['price', 'total']
+                'dependents'        => ['price', 'total', 'invoice_id' => ['total', 'price']]
             ],
 
             /**

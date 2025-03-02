@@ -353,7 +353,12 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                     'org'       => $invoice['organisation_id'],
                     'sequence'  => $sequence
                 ]);
-            self::id($id)->update(['invoice_number' => $invoice_number, 'due_date' => null]);
+            self::id($id)->update([
+                    'invoice_number' => $invoice_number,
+                    'due_date'       => null,
+                    'price'          => null,
+                    'total'          => null
+                ]);
         }
     }
 
@@ -374,10 +379,10 @@ class Invoice extends \finance\accounting\invoice\Invoice {
 
     public static function onafterCancelProforma($self) {
         $self->read(['id']);
-        foreach($self as $invoice) {
+        foreach($self as $id => $invoice) {
             $receivables_ids = Receivable::search([
                     ['status', '=', 'invoiced'],
-                    ['invoice_id', '=', $invoice['id']],
+                    ['invoice_id', '=', $id],
                 ])
                 ->ids();
 
@@ -388,8 +393,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                     'invoice_line_id' => null
                 ]);
 
-            Invoice::id($invoice['id'])
-                ->delete();
+            Invoice::id($id)->delete(true);
         }
     }
 
