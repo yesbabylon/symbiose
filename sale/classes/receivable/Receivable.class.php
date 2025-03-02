@@ -84,6 +84,7 @@ class Receivable extends Model {
                 'readonly'          => true
             ],
 
+            // #todo - generalize this for all kind of sale entries or remove is non necessary
             'time_entry_id' => [
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
