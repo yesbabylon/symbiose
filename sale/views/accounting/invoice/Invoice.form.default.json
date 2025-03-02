@@ -154,13 +154,7 @@
                                                 "value": "invoice_lines_ids",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "view": "list.default",
-                                                    "header": {
-                                                        "actions": {
-                                                            "ACTION.SELECT": false,
-                                                            "ACTION.CREATE": false
-                                                        }
-                                                    }
+                                                    "view": "list.default"
                                                 }
                                             }
                                         ]
