@@ -32,11 +32,6 @@
         "items": [
             {
                 "type": "field",
-                "value": "id",
-                "width": "10%"
-            },
-            {
-                "type": "field",
                 "value": "name",
                 "width": "50%"
             },
