@@ -81,16 +81,16 @@
             },
             {
                 "type": "field",
-                "value": "total",
-                "label": "VAT excl.",
-                "width": "15%",
-                "readonly": true
-            },
-            {
-                "type": "field",
                 "value": "vat_rate",
                 "label": "VAT",
                 "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "total",
+                "label": "Excl. tax",
+                "width": "15%",
+                "readonly": true
             },
             {
                 "type": "field",
