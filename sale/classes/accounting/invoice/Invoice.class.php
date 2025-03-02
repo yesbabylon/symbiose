@@ -378,7 +378,6 @@ class Invoice extends \finance\accounting\invoice\Invoice {
     }
 
     public static function onafterCancelProforma($self) {
-        $self->read(['id']);
         foreach($self as $id => $invoice) {
             $receivables_ids = Receivable::search([
                     ['status', '=', 'invoiced'],
@@ -392,9 +391,8 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                     'invoice_id'      => null,
                     'invoice_line_id' => null
                 ]);
-
-            Invoice::id($id)->delete(true);
         }
+        $self->delete(true);
     }
 
     public static function onafterCancel($self) {
