@@ -128,16 +128,16 @@ class InvoiceLine extends Model {
     }
 
     public static function canupdate($self, $values): array {
-        $self->read(['invoice_id' => ['status'], 'qty', 'free_qty']);
-        foreach($self as $invoice_line) {
+        $self->read(['invoice_id' => ['id', 'status'], 'qty', 'free_qty']);
+        foreach($self as $id => $invoiceLine) {
             if(
-                isset($invoice_line['invoice_id']['id'], $values['invoice_id'])
-                && $invoice_line['invoice_id']['id'] !== $values['invoice_id']
+                isset($invoiceLine['invoice_id']['id'], $values['invoice_id'])
+                && $invoiceLine['invoice_id']['id'] !== $values['invoice_id']
             ) {
                 return ['invoice_id' => ['non_editable' => 'Line cannot be linked to another invoice after creation.']];
             }
 
-            if($invoice_line['invoice_id']['status'] !== 'proforma') {
+            if($invoiceLine['invoice_id']['status'] !== 'proforma') {
                 return ['status' => ['non_editable' => 'Invoice Line can only be updated while its invoice\'s status is proforma.']];
             }
 
@@ -146,7 +146,7 @@ class InvoiceLine extends Model {
                     ->read(['invoice_id'])
                     ->first();
 
-                if($group['invoice_id'] !== $invoice_line['invoice_id']['id']) {
+                if($group && $group['invoice_id'] !== $invoiceLine['invoice_id']['id']) {
                     return ['invoice_line_group_id' => ['invalid_param' => 'Group must be linked to same invoice.']];
                 }
             }
@@ -156,7 +156,7 @@ class InvoiceLine extends Model {
                     return ['qty' => ['must_be_greater_than_zero' => 'Quantity must be greater than 0.']];
                 }
 
-                $free_qty = $values['free_qty'] ?? $invoice_line['free_qty'];
+                $free_qty = $values['free_qty'] ?? $invoiceLine['free_qty'];
                 if($values['qty'] <= $free_qty) {
                     return ['qty' => ['must_be_greater_than_free_qty' => 'Quantity must be greater than free quantity.']];
                 }
@@ -167,7 +167,7 @@ class InvoiceLine extends Model {
                     return ['free_qty' => ['must_be_greater_than_or_equal_to_zero' => 'Free quantity must be greater than or equal to 0.']];
                 }
 
-                $qty = $values['qty'] ?? $invoice_line['qty'];
+                $qty = $values['qty'] ?? $invoiceLine['qty'];
                 if($values['free_qty'] >= $qty) {
                     return ['free_qty' => ['must_be_lower_than_qty' => 'Free quantity must be lower than quantity.']];
                 }
