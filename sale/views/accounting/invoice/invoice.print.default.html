@@ -372,7 +372,7 @@
                         <tr valign="top">
                             <!-- group line -->
                             {% if line.is_group %}
-                            <td style="width: 45%;">
+                            <td style="width: 43%;">
                                 <b>{{ line.name }}</b>
                                 <br />{{ line.description }}
                             </td>
@@ -384,7 +384,7 @@
                                 {% endif %}
                             </td>
                             <td style="width: 8%; text-align: center;"></td>
-                            <td style="width: 10%; text-align: right;">
+                            <td style="width: 12%; text-align: right;">
                                 {% if line.count_lines == 1 %}
                                     {% if line.unit_price is not null %}
                                         {{ line.unit_price | format_money() }}
