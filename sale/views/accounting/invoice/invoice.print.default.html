@@ -408,7 +408,7 @@
                             </td>
                             <!-- regular line -->
                             {% else %}
-                            <td style="width: 45%;">
+                            <td style="width: 43%;">
                                 {% if ( line.name | length ) > 0 %}
                                     {{ line.name }}<br />
                                     <small>{{ line.description }}</small>
@@ -422,7 +422,7 @@
                             <td style="width: 8%; text-align: center;">
                                 {{ line.free_qty | format_number({ 'fraction_digit': 2 }) }}
                             </td>
-                            <td style="width: 10%; text-align: right;">
+                            <td style="width: 12%; text-align: right;">
                                 {% if line.unit_price is not null %}
                                     {{ line.unit_price | format_money() }}
                                 {% endif %}
