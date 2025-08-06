@@ -1,9 +1,6 @@
 {
-    "name": "Accounting Chart Line",
-    "description": "Detail of an accounting chart line with all fields.",
-    "access": {
-        "groups": ["finance.default.users"]
-    },
+    "name": "Accounting Account",
+    "description": "Detail of an accounting account with all fields.",
     "layout": {
         "groups": [
             {
@@ -37,7 +34,13 @@
                                             {
                                                 "type": "field",
                                                 "label": "Analytic Section",
-                                                "value": "analytic_section_id",
+                                                "value": "account_class",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Analytic Section",
+                                                "value": "account_nature",
                                                 "width": "50%"
                                             }
                                         ]

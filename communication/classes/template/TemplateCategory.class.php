@@ -1,8 +1,8 @@
 <?php
 /*
-    This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2024
-    Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
+    Developed by Yesbabylon – https://yesbabylon.com
+    (c) 2025–2026 Yesbabylon SA
+    Licensed under the GNU AGPL v3 License – https://www.gnu.org/licenses/agpl-3.0.html
 */
 
 namespace communication\template;
@@ -18,6 +18,13 @@ class TemplateCategory extends Model {
                 'type'              => 'string',
                 'description'       => "Short label to ease identification of the category.",
                 'dependents'        => ['templates_ids' => ['name']],
+                'required'          => true,
+                'multilang'         => true
+            ],
+
+            'code' => [
+                'type'              => 'string',
+                'description'       => "Unique code for identifying the category.",
                 'required'          => true,
                 'unique'            => true
             ],

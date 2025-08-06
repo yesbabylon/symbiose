@@ -13,7 +13,7 @@
                 "id": 7,
                 "code": "order",
                 "name": "Order",
-                "description": "Settings related to order."
+                "description": "Settings related to purchase & orders."
             }
        ]
     },
@@ -29,7 +29,7 @@
             {
                 "id": 7,
                 "name": "Commandes",
-                "description": "Paramètres pour les commandes."
+                "description": "Paramètres pour les achats & commandes."
             }
        ]
     }

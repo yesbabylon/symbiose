@@ -93,7 +93,7 @@
                     "help": ""
                 },
                 "action.transition.bill": {
-                    "label": "Facturer",
+                    "label": "Comptabiliser",
                     "help": ""
                 }
             },

@@ -82,7 +82,7 @@ class BankStatementLine extends Model {
 
             'account_iban' => [
                 'type'              => 'string',
-                'usage'             => 'uri/urn:iban',
+                'usage'             => 'uri/urn.iban',
                 'description'       => 'IBAN which the payment originates from.',
                 'readonly'          => true
             ],

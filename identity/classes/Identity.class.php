@@ -76,7 +76,7 @@ class Identity extends Model {
 
             'bank_account_iban' => [
                 'type'              => 'string',
-                'usage'             => 'uri/urn:iban',
+                'usage'             => 'uri/urn.iban',
                 'description'       => "Number of the bank account of the Identity, if any.",
                 'visible'           => [ ['has_parent', '=', false] ]
             ],
@@ -385,7 +385,7 @@ class Identity extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\User',
                 'description'       => 'User associated to this identity, if any.',
-                'visible'           => [['type', '=', 'IN'], ['is_organisation', '=', false]],
+                'visible'           => [['type', '=', 'IN']],
                 'onupdate'          => 'onupdateUserId'
             ],
 
@@ -394,7 +394,6 @@ class Identity extends Model {
                 'foreign_object'    => 'sale\customer\Customer',
                 'foreign_field'     => 'partner_identity_id',
                 'description'       => 'Customer associated to this identity, if any.',
-                'visible'           => [['is_organisation', '=', false]],
                 'onupdate'          => 'onupdateCustomerId'
             ],
 
@@ -403,7 +402,6 @@ class Identity extends Model {
                 'foreign_object'    => 'purchase\supplier\Supplier',
                 'foreign_field'     => 'partner_identity_id',
                 'description'       => 'Supplier associated to this identity, if any.',
-                'visible'           => [['is_organisation', '=', false]],
                 'onupdate'          => 'onupdateSupplierId'
             ],
 
@@ -412,7 +410,6 @@ class Identity extends Model {
                 'foreign_object'    => 'identity\Contact',
                 'foreign_field'     => 'partner_identity_id',
                 'description'       => 'Contact associated to this identity, if any.',
-                'visible'           => [['is_organisation', '=', false]],
                 'onupdate'          => 'onupdateContactId'
             ],
 
@@ -421,7 +418,6 @@ class Identity extends Model {
                 'foreign_object'    => 'sale\customer\Contact',
                 'foreign_field'     => 'partner_identity_id',
                 'description'       => 'Customer contact associated to this identity, if any.',
-                'visible'           => [['is_organisation', '=', false]],
                 'onupdate'          => 'onupdateCustomerContactId'
             ],
 
@@ -430,7 +426,6 @@ class Identity extends Model {
                 'foreign_object'    => 'hr\employee\Employee',
                 'foreign_field'     => 'partner_identity_id',
                 'description'       => 'Employee associated to this identity, if any.',
-                'visible'           => [['is_organisation', '=', false]],
                 'onupdate'          => 'onupdateEmployeeId'
             ],
 
@@ -441,18 +436,18 @@ class Identity extends Model {
                 'help'           => 'Company logo for organizations or profile image for natural person.'
             ],
 
-            'is_organisation' => [
-                'type'           => 'boolean',
-                'default'        => false,
-                'description'    => 'The identity is an organisation.',
-                'onupdate'       => 'onupdateIsOrganisation'
-            ],
-
             'organisation_id' => [
                 'type'           => 'many2one',
                 'foreign_object' => 'identity\Organisation',
                 'description'    => 'The organisation the identity refers to.',
-                'visible'        => ['is_organisation', '=', true]
+                'onupdate'       => 'onupdateOrganisationId'
+            ],
+
+            'is_active' => [
+                'type'              => 'boolean',
+                'description'       => "Is the identity active?",
+                'help'              => "When an identity is not marked as active, it is no longer displayed amongst the selection choices. However, it is still visible in the list of identities, and its related informations and documents remain available.",
+                'default'           => true
             ]
 
         ];
@@ -489,7 +484,7 @@ class Identity extends Model {
     }
 
     private static function updateField($self, $field) {
-        $self->read(['user_id', 'contact_id', 'customer_contact_id', 'employee_id', 'customer_id', 'supplier_id', $field]);
+        $self->read(['user_id', 'contact_id', 'customer_contact_id', 'employee_id', 'customer_id', 'supplier_id', 'organisation_id', $field]);
         foreach($self as $id => $identity) {
             if($identity['user_id']) {
                 User::id($identity['user_id'])->update([$field => $identity[$field]]);
@@ -508,6 +503,9 @@ class Identity extends Model {
             }
             if($identity['supplier_id']) {
                 Supplier::id($identity['supplier_id'])->update([$field => $identity[$field]]);
+            }
+            if($identity['organisation_id']) {
+                Organisation::id($identity['organisation_id'])->update([$field => $identity[$field]]);
             }
         }
     }
@@ -615,6 +613,13 @@ class Identity extends Model {
         $self->read(['customer_id']);
         foreach($self as $id => $identity) {
             Customer::id($identity['customer_id'])->update(['partner_identity_id' => $id]);
+        }
+    }
+
+    public static function onupdateOrganisationId($self) {
+        $self->read(['organisation_id']);
+        foreach($self as $id => $identity) {
+            Organisation::id($identity['organisation_id'])->update(['identity_id' => $id]);
         }
     }
 
@@ -764,9 +769,9 @@ class Identity extends Model {
                     }
                 ],
                 'too_long' => [
-                    'message'       => 'Legal name must be maximum 70 chars long.',
+                    'message'       => 'Legal name must be maximum 80 chars long.',
                     'function'      => function ($legal_name, $values) {
-                        return !( strlen($legal_name) > 70 && isset($values['type_id']) && $values['type_id'] != 1 );
+                        return !( strlen($legal_name) > 80 && isset($values['type_id']) && $values['type_id'] != 1 );
                     }
                 ],
                 'invalid_chars' => [

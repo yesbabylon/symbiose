@@ -36,6 +36,13 @@
             "controller": "sale_accounting_invoice_cancel",
             "confirm": true,
             "visible": ["status", "=", "invoice"]
+        },
+        {
+            "id": "action.mark_paid",
+            "label": "Mark as paid",
+            "description": "Mark the invoice as paid (payment received).",
+            "confirm": true,
+            "visible": ["status", "=", "invoice"]
         }
     ],
     "routes": [

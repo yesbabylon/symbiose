@@ -52,7 +52,7 @@ class BankAccount extends Model {
 
             'bank_account_iban' => [
                 'type'              => 'string',
-                'usage'             => 'uri/urn:iban',
+                'usage'             => 'uri/urn.iban',
                 'description'       => 'The IBAN number of the organization’s bank account.',
                 'dependents'        => ['name','bank_country'],
                 'required'          => true,

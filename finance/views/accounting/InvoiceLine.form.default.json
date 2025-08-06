@@ -18,7 +18,7 @@
                             {
                                 "columns": [
                                     {
-                                        "id": "column.invoice-and-line-group",
+                                        "id": "column.invoice_and_line_group",
                                         "width": "100%",
                                         "items": [
                                             {

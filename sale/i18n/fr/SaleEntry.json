@@ -96,7 +96,7 @@
             "description": "Formulaire de modification par défaut d'une entrée de vente.",
             "actions": {
                 "action.transition.bill": {
-                    "label": "Facturer",
+                    "label": "Comptabiliser",
                     "help": ""
                 }
             },

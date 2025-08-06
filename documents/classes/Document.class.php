@@ -26,7 +26,7 @@ class Document extends Model {
 
             'data' => [
                 'type'              => 'binary',
-                'dependents'        => ['uuid', 'hash', 'size', 'readable_size', 'preview_image']
+                'dependents'        => ['uuid', 'hash', 'type', 'size', 'readable_size', 'preview_image']
             ],
 
             'type' => [
@@ -68,7 +68,9 @@ class Document extends Model {
                 'result_type'       => 'string',
                 'unique'            => true,
                 'store'             => true,
-                'function'          => 'calcUuid'
+                'function'          => 'calcUuid',
+                'description'       => 'Universally Unique Identifier for the document on the instance.',
+                'help'              => 'This identifier can be used to identify the document across several instances when a specific instance is used as central database.'
             ],
 
             'link' => [
@@ -498,6 +500,9 @@ class Document extends Model {
         $target_height = 150;
         $self->read(['name', 'type', 'data']);
         foreach($self as $id => $document) {
+            if(!$document['data']) {
+                continue;
+            }
             try {
                 if(substr($document['type'], 0, 5) != 'image') {
                     throw new Exception('not_an_image');

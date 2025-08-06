@@ -7,7 +7,8 @@
     "depends_on": ["core"],
     "requires": {
         "endroid/qr-code": "~4.3.0",
-        "smhg/sepa-qr-data": "~1.1.0"
+        "smhg/sepa-qr-data": "~1.1.0",
+        "codelicious/php-coda-parser": "^2.0"
     },
     "apps":[
         {

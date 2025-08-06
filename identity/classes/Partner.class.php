@@ -33,7 +33,7 @@ class Partner extends Model {
             'organisation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Organisation',
-                'description'       => 'Organisation of the current installation the partner belongs to (defaults to current).',
+                'description'       => 'Organisation (of the current installation) the partner belongs to (defaults to current).',
                 'default'           => 1
             ],
 

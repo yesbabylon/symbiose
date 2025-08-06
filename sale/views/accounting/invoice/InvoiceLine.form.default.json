@@ -10,7 +10,7 @@
     },
     "layout": {
         "update": {
-            "column.invoice-and-line-group": {
+            "column.invoice_and_line_group": {
                 "after": [
                     {
                         "width": "50%",
