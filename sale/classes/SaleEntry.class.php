@@ -281,7 +281,7 @@ class SaleEntry extends Model {
             if($entry['is_internal']) {
                 continue;
             }
-            if($entry['is_billable']) {
+            if(!$entry['is_billable']) {
                 continue;
             }
             // if a receivable has been previously created remove it
