@@ -304,6 +304,7 @@
                             {{ labels.date }}: <b>{{ invoice.emission_date | date(date_format, timezone) }}</b>
                         </div>
 
+                        {% if invoice.invoice_type == 'invoice' %}
                         <div style="margin-bottom: 5px; text-transform: uppercase;">
                             {{ labels.status }}:
                             <b>
@@ -318,6 +319,7 @@
                                 {% endif %}
                             </b>
                         </div>
+                        {% endif %}
                     </div>
                 <!-- invoice-info start -->
             </div>
