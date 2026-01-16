@@ -152,9 +152,12 @@ class InvoiceLine extends Model {
             }
 
             if(isset($values['qty'])) {
+                /*
+                // #memo - credit notes allow negative quantities
                 if($values['qty'] <= 0) {
                     return ['qty' => ['must_be_greater_than_zero' => 'Quantity must be greater than 0.']];
                 }
+                */
 
                 $free_qty = $values['free_qty'] ?? $invoiceLine['free_qty'];
                 if($values['qty'] <= $free_qty) {
