@@ -160,7 +160,7 @@ class InvoiceLine extends Model {
                 */
 
                 $free_qty = $values['free_qty'] ?? $invoiceLine['free_qty'];
-                if($values['qty'] <= $free_qty) {
+                if($free_qty && $values['qty'] <= $free_qty) {
                     return ['qty' => ['must_be_greater_than_free_qty' => 'Quantity must be greater than free quantity.']];
                 }
             }
@@ -171,7 +171,7 @@ class InvoiceLine extends Model {
                 }
 
                 $qty = $values['qty'] ?? $invoiceLine['qty'];
-                if($values['free_qty'] >= $qty) {
+                if($values['free_qty'] && $values['free_qty'] >= $qty) {
                     return ['free_qty' => ['must_be_lower_than_qty' => 'Free quantity must be lower than quantity.']];
                 }
             }
