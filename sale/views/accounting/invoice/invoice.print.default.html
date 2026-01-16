@@ -289,7 +289,11 @@
                 <!-- invoice-info start -->
                     <div class="invoice-info {{ debug ? 'debug' : '' }}">
                         <h2 style="text-transform: capitalize;">
-                            {{ labels.invoice }}
+                            {% if invoice.invoice_type == 'invoice' %}
+                                {{ labels.invoice }}
+                            {% else %}
+                                {{ labels.credit_note }}
+                            {% endif %}
                         </h2>
 
                         <div style="margin-bottom: 5px; margin-top: 5px; text-transform: uppercase;">
@@ -483,7 +487,7 @@
             </div>
         <!-- invoice-lines end -->
 
-        {% if invoice.status != 'proforma' and invoice.payment_status != 'balanced' %}
+        {% if invoice.invoice_type == 'invoice' and invoice.status != 'proforma' and invoice.payment_status != 'balanced' %}
         <!-- payment-qr-code start -->
             <div class="invoice-payment-info" style="height: 180px;">
                 <div style="padding-left: 15px; padding-top: 15px;">
