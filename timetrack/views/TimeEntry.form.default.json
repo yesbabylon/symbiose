@@ -64,7 +64,8 @@
         "actions": {
             "ACTION.SAVE": [
                 { "id": "SAVE_AND_VIEW" }
-            ]
+            ],
+            "ACTION.CREATE": false
         }
     },
     "layout": {
