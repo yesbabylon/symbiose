@@ -44,7 +44,9 @@ class TimeEntry extends SaleEntry {
             'description' => [
                 'type'              => 'string',
                 'description'       => 'Short description of the task performed.',
-                'dependents'        => ['name']
+                'help'              => 'This field is meant to explain what has actually been done, and serves for invoicing justification and followups.',
+                'dependents'        => ['name'],
+                'required'          => true
             ],
 
             'project_id' => [

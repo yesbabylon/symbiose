@@ -34,7 +34,8 @@ list($params, $providers) = eQual::announce([
 
         'reference'     => [
             'type'           => 'string',
-            'description'    => 'Reference completing the origin.'
+            'description'    => 'Reference completing the origin.',
+            'required'       => true
         ],
 
         'description'     => [
