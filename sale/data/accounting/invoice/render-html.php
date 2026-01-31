@@ -94,8 +94,8 @@ $getInvoiceLines = function($invoice) {
             $group_lines[] = [
                 'name'        => $line['name'],
                 'description' => $line['description'],
-                'price'       => round(($invoice['invoice_type'] == 'credit_note') ? (-$line['price']) : $line['price'], 2),
-                'total'       => round(($invoice['invoice_type'] == 'credit_note') ? (-$line['total']) : $line['total'], 2),
+                'price'       => round($line['price'], 2),
+                'total'       => round($line['total'], 2),
                 'unit_price'  => $line['unit_price'],
                 'vat_rate'    => $line['vat_rate'],
                 'qty'         => $line['qty'],
@@ -166,8 +166,8 @@ $getInvoiceLines = function($invoice) {
         }
         $lines[] = [
             'name'       => (strlen($line['description']) > 0) ? $line['description'] : $line['name'],
-            'price'      => round(($invoice['invoice_type'] == 'credit_note') ? (-$line['price']) : $line['price'], 2),
-            'total'      => round(($invoice['invoice_type'] == 'credit_note') ? (-$line['total']) : $line['total'], 2),
+            'price'      => round($line['price'], 2),
+            'total'      => round($line['total'], 2),
             'unit_price' => $line['unit_price'],
             'vat_rate'   => $line['vat_rate'],
             'qty'        => $line['qty'],
