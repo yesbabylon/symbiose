@@ -319,6 +319,11 @@
                                 {% endif %}
                             </b>
                         </div>
+                        <!-- credit note -->
+                        {% else %}
+                            <div style="margin-bottom: 5px; margin-top: 5px; text-transform: uppercase;">
+                                REF: <b>{{ invoice.reversed_invoice_id.invoice_number }}</b>
+                            </div>
                         {% endif %}
                     </div>
                 <!-- invoice-info start -->

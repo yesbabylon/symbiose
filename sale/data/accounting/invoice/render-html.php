@@ -292,6 +292,7 @@ if(!$lang) {
 $invoice = Invoice::id($params['id'])
     ->read([
             'invoice_number', 'emission_date', 'due_date', 'status', 'invoice_type', 'payment_reference', 'total', 'price', 'payment_status',
+            'reversed_invoice_id' => ['invoice_number'],
             'organisation_id' => [
                 'name', 'address_street', 'address_dispatch', 'address_zip',
                 'address_city', 'address_country', 'has_vat', 'vat_number',
