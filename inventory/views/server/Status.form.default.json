@@ -19,14 +19,53 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "created",
-                                                "width": "33%",
+                                                "value": "server_id",
+                                                "width": "25%",
                                                 "readonly": true
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "up",
-                                                "width": "33%",
+                                                "value": "instance_id",
+                                                "width": "25%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "created",
+                                                "width": "25%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "dsk_use",
+                                                "width": "25%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "cpu_use",
+                                                "width": "25%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "ram_use",
+                                                "width": "25%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "total_proc",
+                                                "width": "25%",
                                                 "readonly": true
                                             }
                                         ]
@@ -44,7 +83,7 @@
                                                 "width": "100%",
                                                 "readonly": true,
                                                 "widget": {
-                                                    "usage": "string/text"
+                                                    "usage": "text/json"
                                                 }
                                             }
                                         ]

@@ -10,26 +10,47 @@
                 "value": "id",
                 "width": "10%",
                 "sortable": true,
-                "readonly": true
+                "visible": false
             },
             {
                 "type": "field",
                 "value": "created",
-                "with": "33%",
+                "with": "15%",
                 "sortable": true,
                 "readonly": true
             },
             {
                 "type": "field",
-                "value": "up",
-                "width": "10%",
+                "value": "server_id",
+                "with": "20%",
                 "sortable": true,
                 "readonly": true
             },
             {
                 "type": "field",
-                "value": "status_data",
-                "width": "66%",
+                "value": "instance_id",
+                "with": "20%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "cpu_use",
+                "width": "15%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "ram_use",
+                "width": "15%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "dsk_use",
+                "width": "15%",
                 "sortable": true,
                 "readonly": true
             }

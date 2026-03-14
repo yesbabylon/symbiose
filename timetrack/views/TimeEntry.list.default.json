@@ -172,15 +172,6 @@
                 "width": "10%",
                 "sortable": true,
                 "readonly": true
-            },
-            {
-                "id": "item.total",
-                "type": "field",
-                "label": "Amount",
-                "value": "total",
-                "width": "10%",
-                "sortable": true,
-                "readonly": true
             }
         ]
     }

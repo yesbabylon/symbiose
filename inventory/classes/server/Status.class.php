@@ -34,6 +34,31 @@ class Status extends Model {
                 'type'              => 'string',
                 'usage'             => 'text/json',
                 'description'       => "JSON representation of server/instance statuses and statistics."
+            ],
+
+            // instant values
+
+            'dsk_use' => [
+                'type'              => 'float',
+                'usage'             => 'amount/percent',
+                'description'       => "Instant percentage of storage drive being used."
+            ],
+
+            'cpu_use' => [
+                'type'              => 'float',
+                'usage'             => 'amount/percent',
+                'description'       => "Instant percentage of CPU being used."
+            ],
+
+            'ram_use' => [
+                'type'              => 'float',
+                'usage'             => 'amount/percent',
+                'description'       => "Instant percentage of Memory being used."
+            ],
+
+            'total_proc' => [
+                'type'              => 'integer',
+                'description'       => "Amount of currently runnin processes."
             ]
 
         ];
