@@ -31,13 +31,15 @@ class PriceList extends Model {
             'date_from' => [
                 'type'              => 'date',
                 'description'       => "Start of validity period.",
-                'required'          => true
+                'required'          => true,
+                'dependents'        => ['duration']
             ],
 
             'date_to' => [
                 'type'              => 'date',
                 'description'       => "End of validity period.",
-                'required'          => true
+                'required'          => true,
+                'dependents'        => ['duration']
             ],
 
             'duration' => [
@@ -45,6 +47,7 @@ class PriceList extends Model {
                 'result_type'       => 'integer',
                 'function'          => 'calcDuration',
                 'store'             => true,
+                'instant'           => true,
                 'description'       => "Pricelist validity duration, in days."
             ],
 

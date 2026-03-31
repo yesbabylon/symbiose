@@ -18,7 +18,7 @@ class Subscription extends Model  {
             .' An internal subscription is used by your business, so it can\'t be invoiced to customers.';
     }
 
-    const MAP_DURATION = [
+    const MAP_DURATION_OFFSETS = [
         'monthly'      => '+1 month',
         'quarterly'    => '+3 month',
         'half-yearly'  => '+6 month',
@@ -65,7 +65,8 @@ class Subscription extends Model  {
                     'half-yearly' => 'Half-yearly',
                     'yearly'      => 'Yearly'
                 ],
-                'description'       => 'Type of the duration.',
+                'description'       => 'Duration of the subscription.',
+                'help'              => 'If not auto renewable, no sale entries will be generated after `date_to`.',
                 'default'           => 'yearly'
             ],
 
@@ -157,36 +158,42 @@ class Subscription extends Model  {
     public static function onchange($event, $values): array {
         $result = [];
 
+        $duration = $event['duration'] ?? $values['duration'] ?? 'yearly';
+        $date_from =  $event['date_from'] ?? $values['date_from'] ?? null;
+        $date_to = $date_from ? strtotime(self::MAP_DURATION_OFFSETS[$duration], $date_from) : null;
+
         if( isset($event['date_from']) || isset($event['duration']) ) {
             $now = time();
-            $date_from =  $event['date_from'] ??  $values['date_from'];
-            $duration = self::MAP_DURATION[$event['duration'] ?? $values['duration']];
-            $date_to = strtotime($duration, $date_from);
-            $seconds_in_a_day = 60 * 60 * 24;
-            $days_until_expiry = ($date_to - $now) / $seconds_in_a_day;
+
+            $days_until_expiry = ($date_to - $now) / 86400;
 
             $result['date_to'] = $date_to;
             $result['is_expired'] = $now > $date_to;
             $result['has_upcoming_expiry'] = $days_until_expiry < 30;
         }
 
-        if( isset($event['product_id'])
-                && isset($values['date_from'])
-                && isset($values['date_to']) ) {
-            $price = self::getProductPrice(
+        if( isset($event['product_id'], $date_from, $date_to) ) {
+
+            $price_id = self::computePriceId(
                     $event['product_id'],
-                    $values['date_from'],
-                    $values['date_to']
+                    $date_from,
+                    $date_to
                 );
 
-            $result['price_id'] = $price;
-            $result['price'] = $price['price'];
+            $price = Price::id($price_id)->read(['id', 'name'])->first();
+            if($price) {
+                $result['price_id'] = [
+                    'id'    => $price['id'],
+                    'name'  => $price['name']
+                ];
+                $result['price'] = self::computePrice($price_id, $duration);
+            }
         }
 
         return $result;
     }
 
-    private static function getPriceListsIds($date_from, $date_to) {
+    private static function computePriceListsIds($date_from, $date_to) {
         return PriceList::search([
                 [
                     ['date_from', '<', $date_from],
@@ -210,24 +217,27 @@ class Subscription extends Model  {
                     ['date_to', '>', $date_to],
                     ['status', '=', 'published'],
                 ]
-            ])
+            ], ['sort' => ['duration' => 'desc']])
             ->ids();
     }
 
-    public static function getProductPrice($product_id, $date_from, $date_to) {
-        $price = null;
+    private static function computePriceId($product_id, $date_from, $date_to) {
+        $result = null;
 
-        $price_lists_ids = self::getPriceListsIds($date_from, $date_to);
+        $price_lists_ids = self::computePriceListsIds($date_from, $date_to);
         if(!empty($price_lists_ids)) {
             $price = Price::search([
                     ['product_id', '=', $product_id],
                     ['price_list_id', 'in', $price_lists_ids]
                 ])
-                ->read(['id', 'name', 'price'])
                 ->first();
+
+            if($price) {
+                $result = $price['id'];
+            }
         }
 
-        return $price;
+        return $result;
     }
 
     public static function calcPriceId($self): array {
@@ -235,25 +245,54 @@ class Subscription extends Model  {
         $self->read(['product_id', 'date_from', 'date_to']);
         foreach($self as $id => $subscription) {
             if(isset($subscription['product_id'], $subscription['date_from'], $subscription['date_to'])) {
-                $price = self::getProductPrice(
+                $price_id = self::computePriceId(
                     $subscription['product_id'],
                     $subscription['date_from'],
                     $subscription['date_to']
                 );
 
-                $result[$id] = $price['id'];
+                $result[$id] = $price_id;
             }
         }
 
         return $result;
     }
 
-    public static function calcPrice($self): array {
+    private static function computePrice($price_id, $duration) {
+        $result = null;
+        static $map_period_months = [
+                'monthly'     => 1,
+                'quarterly'   => 3,
+                'half-yearly' => 6,
+                'yearly'      => 12
+            ];
+
+        $price = Price::id($price_id)->read(['price', 'has_period', 'period'])->first();
+        if(isset($price['price'])) {
+            $result = $price['price'];
+            if($price['has_period']) {
+                $price_months = $map_period_months[$price['period']] ?? 1;
+                $subscription_months = $map_period_months[$duration] ?? 1;
+                $factor = $subscription_months / $price_months;
+                $result = round($result * $factor, 2);
+            }
+        }
+
+        return $result;
+    }
+
+    protected static function calcPrice($self): array {
         $result = [];
-        $self->read(['price_id' => ['price']]);
+        $self->read(['duration', 'price_id' => ['price', 'has_period', 'period']]);
+
         foreach($self as $id => $subscription) {
-            if(isset($subscription['price_id']['price'])) {
-                $result[$id] = $subscription['price_id']['price'];
+            if(isset($subscription['price_id']['id'], $subscription['duration'])) {
+                $price = self::computePrice(
+                    $subscription['price_id']['id'],
+                    $subscription['duration']
+                );
+
+                $result[$id] = $price;
             }
         }
 
@@ -277,8 +316,7 @@ class Subscription extends Model  {
         $self->read(['date_to']);
         foreach($self as $id => $subscription) {
             if(isset($subscription['date_to'])) {
-                $seconds_in_a_day = 60 * 60 * 24;
-                $days_until_expiry = ($subscription['date_to'] - time()) / $seconds_in_a_day;
+                $days_until_expiry = ($subscription['date_to'] - time()) / 86400;
                 $result[$id] = $days_until_expiry < 30;
             }
         }
