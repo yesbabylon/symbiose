@@ -6,7 +6,6 @@
 */
 
 use core\setting\Setting;
-use core\User;
 use timetrack\Project;
 use timetrack\TimeEntry;
 
@@ -93,16 +92,6 @@ if(!isset($project)) {
     throw new Exception('unknown_project', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
-// compute start time according to received duration and timezone set in config
-$tz_offset = 0;
-
-$time_zone = Setting::get_value('core', 'locale', 'time_zone');
-if(!is_null($time_zone)) {
-    $tz = new DateTimeZone($time_zone);
-    // timezone offset in seconds to apply, depending on the date of the time entry
-    $tz_offset = $tz->getOffset(new DateTime());
-}
-
 // compute start and end times, based on timezone set in settings
 $date = $params['date'];
 if($params['is_full_day']) {
@@ -110,8 +99,18 @@ if($params['is_full_day']) {
     $start = (9 * 3600);
     $end = (17 * 3600);
 }
+// use current time to define start and end (that are not passed as param)
 else {
-    // use current time to define start and end (that are not passed as param)
+    // compute start time according to received duration and timezone set in config
+    $tz_offset = 0;
+
+    $time_zone = Setting::get_value('core', 'locale', 'time_zone');
+    if(!is_null($time_zone)) {
+        $tz = new DateTimeZone($time_zone);
+        // timezone offset in seconds to apply, depending on the date of the time entry
+        $tz_offset = $tz->getOffset(new DateTime());
+    }
+
     $begin = time() - strtotime("midnight") - $params['duration'] + $tz_offset;
     $start = (int) (floor(floatval($begin) / 60 / 15) * 15 * 60);
     $end = $start + intval(ceil($params['duration'] / 60 / 15) * 15 * 60);
