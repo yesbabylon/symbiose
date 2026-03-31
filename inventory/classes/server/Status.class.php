@@ -29,7 +29,17 @@ class Status extends Model {
                 'description'       => "Instance concerned by the status.",
                 'help'              => "A status can either concern an instance or a server."
             ],
-
+            /*
+            // #todo - define possible values with related metric units
+                units
+                -----
+                percent
+                amount/unit
+                amount/G
+                kbs
+                bool
+                string
+             */
             'status_data' => [
                 'type'              => 'string',
                 'usage'             => 'text/json',
