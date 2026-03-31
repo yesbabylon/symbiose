@@ -101,6 +101,26 @@ class Price extends Model {
                 'store'             => true,
                 'readonly'          => true,
                 'visible'           => ['price_type', '=', 'direct']
+            ],
+
+            'has_period' => [
+                'type'              => 'boolean',
+                'description'       => 'Mark price as not punctual with recurring period (handled in Subpcription).',
+                'default'           => false
+            ],
+
+            'period' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'none'        => 'None',
+                    'monthly'     => 'Monthly',
+                    'quarterly'   => 'Quarterly',
+                    'half-yearly' => 'Half-yearly',
+                    'yearly'      => 'Yearly'
+                ],
+                'visible'           => ['has_period', '=', true],
+                'description'       => 'Type of the duration.',
+                'default'           => 'none'
             ]
 
         ];

@@ -27,7 +27,23 @@
                                                 "type": "field",
                                                 "label": "Type",
                                                 "value": "price_type",
-                                                "width": "50%"
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_period",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "period",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "value": "",
+                                                "width": "25%",
+                                                "visible": ["has_period", "=", false]
                                             },
                                             {
                                                 "type": "field",
