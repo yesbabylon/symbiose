@@ -24,6 +24,9 @@
                     "icon": "update",
                     "controller": "sale_subscription_bulk-expirations",
                     "confirm": true
+                },
+                {
+                    "id": "ACTION.ARCHIVE"
                 }
             ]
         },
