@@ -46,7 +46,8 @@ class Subscription extends Model  {
                 'required'          => true,
                 'description'       => 'Start date of subscription.',
                 'default'           => function () { return time(); },
-                'dependents'        => ['price_id']
+                'dependents'        => ['price_id'],
+                'onupdate'          => 'onupdateDateFrom'
             ],
 
             'date_to' => [
@@ -155,6 +156,14 @@ class Subscription extends Model  {
         ];
     }
 
+    protected static function onupdateDateFrom($self) {
+        $self->read(['date_from', 'duration']);
+        foreach($self as $id => $subscription) {
+            $date_to = $subscription['date_from'] ? strtotime(self::MAP_DURATION_OFFSETS[$subscription['duration']], $subscription['date_from']) : null;
+            self::id($id)->update(['date_to' => $date_to]);
+        }
+    }
+
     public static function onchange($event, $values): array {
         $result = [];
 
@@ -193,31 +202,22 @@ class Subscription extends Model  {
         return $result;
     }
 
+    /**
+     * Retrieves all published PriceLists that are active at the given date,
+     * i.e. whose validity period includes the provided $date_from.
+     *
+     * Among the matching PriceLists, the results are sorted by duration
+     * (shortest first) so that the most specific PriceList can be selected.
+     */
     private static function computePriceListsIds($date_from, $date_to) {
-        return PriceList::search([
+        return PriceList::search(
                 [
-                    ['date_from', '<', $date_from],
+                    ['date_from', '<=', $date_from],
                     ['date_to', '>=', $date_from],
-                    ['date_to', '<=', $date_to],
                     ['status', '=', 'published'],
                 ],
-                [
-                    ['date_from', '>=', $date_from],
-                    ['date_to', '>=', $date_from],
-                    ['date_to', '<=', $date_to],
-                    ['status', '=', 'published'],
-                ],
-                [
-                    ['date_from', '>=', $date_from],
-                    ['date_to', '>', $date_to],
-                    ['status', '=', 'published'],
-                ],
-                [
-                    ['date_from', '<', $date_from],
-                    ['date_to', '>', $date_to],
-                    ['status', '=', 'published'],
-                ]
-            ], ['sort' => ['duration' => 'desc']])
+                ['sort' => ['duration' => 'desc']]
+            )
             ->ids();
     }
 
