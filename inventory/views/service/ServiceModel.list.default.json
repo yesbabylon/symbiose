@@ -1,7 +1,7 @@
 {
     "name": "Services Models",
     "description": "Default listing of all services models.",
-    "order": "id",
+    "order": "name",
     "sort": "asc",
     "operations": {
         "total": {
@@ -29,7 +29,7 @@
                 "value": "id",
                 "width": "10%",
                 "sortable": true,
-                "readonly": true
+                "visible": false
             },
             {
                 "type": "field",
