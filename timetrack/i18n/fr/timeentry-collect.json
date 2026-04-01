@@ -28,10 +28,10 @@
             }
         },
         "has_receivable": {
-            "label": "A une créance"
+            "label": "Créance ?"
         },
         "is_billable": {
-            "label": "Est facturée"
+            "label": "Facturable ?"
         },
         "status": {
             "label": "Status",

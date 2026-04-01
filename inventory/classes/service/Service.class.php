@@ -16,8 +16,7 @@ class Service extends Model {
         return 'Inventory Services are designed to facilitate the management of billing, renewals, product-client associations, provider integration, documentation, and software or access management.';
     }
 
-    public static function getColumns()
-    {
+    public static function getColumns() {
         return [
             'name' => [
                 'type'              => 'computed',
@@ -47,7 +46,7 @@ class Service extends Model {
                 'type'              => 'boolean',
                 'description'       => 'The service has a subscription.',
                 'default'           => false,
-                'dependents'        => ['is_billable','is_internal'],
+                'dependents'        => ['is_billable', 'is_internal'],
             ],
 
             'is_billable' => [
@@ -67,8 +66,8 @@ class Service extends Model {
             'has_external_provider' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'description'       => 'The service has external provider (computed by Service Model)..',
-                'function'          => 'calcHasExternalProvider',
+                'description'       => 'The service has external provider (from Service Model).',
+                'relation'          => ['service_model_id' => 'has_external_provider'],
                 'readonly'          => true,
                 'store'             => true,
                 'instant'           => true
@@ -78,9 +77,9 @@ class Service extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'inventory\service\ServiceProvider',
-                'description'       => 'The service provider to which the service belongs (computed by Service Model)..',
+                'description'       => 'The service provider to which the service belongs (from Service Model).',
                 'visible'           => ['has_external_provider', '=', true],
-                'function'          => 'calcServiceProvider',
+                'relation'          => ['service_model_id' => 'service_provider_id'],
                 'readonly'          => true,
                 'store'             => true,
                 'instant'           => true
@@ -185,29 +184,13 @@ class Service extends Model {
 
     }
 
-    public static function calcServiceProvider($self) {
-        return self::calcFromServiceModel($self, 'service_provider_id');
-    }
-
-    public static function calcHasExternalProvider($self) {
-        return self::calcFromServiceModel($self, 'has_external_provider');
-    }
-
-    private static function calcFromServiceModel($self, $column): array {
-        $result = [];
-        $self->read(['service_model_id' => [$column]]);
-        foreach($self as $id => $service) {
-            if(isset($service['service_model_id'][$column])) {
-                $result[$id] = $service['service_model_id'][$column];
-            }
-        }
-        return $result;
-    }
-
     public static function calcName($self) {
         $result = [];
         $self->read(['service_model_id', 'product_id']);
         foreach($self as $id => $service) {
+            if(!isset($service['service_model_id'], $service['product_id'])) {
+                continue;
+            }
             $result[$id] = self::computeName($service['service_model_id'], $service['product_id']);
         }
         return $result;
@@ -220,7 +203,7 @@ class Service extends Model {
         $product = Product::id($service_product_id)->read(['id', 'name'])->first();
 
         if(isset($service_model)) {
-            $name = '['.$service_model['name'];
+            $name = '[' . $service_model['name'];
         }
         if(isset($product)) {
             if(strlen($name)) {

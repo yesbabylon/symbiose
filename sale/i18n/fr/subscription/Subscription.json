@@ -55,7 +55,7 @@
             "help": ""
         },
         "is_billable": {
-            "label": "Est facturable",
+            "label": "Facturable ?",
             "description": "L'abonnement peut-il être facturé au client.",
             "help": ""
         },

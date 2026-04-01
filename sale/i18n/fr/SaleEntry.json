@@ -19,7 +19,7 @@
             "help": ""
         },
         "has_receivable": {
-            "label": "A une Créance",
+            "label": "Créance ?",
             "description": "L'entrée de vente est liée à un créance.",
             "help": ""
         },
@@ -29,7 +29,7 @@
             "help": ""
         },
         "is_billable": {
-            "label": "Est facturable",
+            "label": "Facturable ?",
             "description": "Est-ce que l'entrée peut-être facturé au client.",
             "help": ""
         },

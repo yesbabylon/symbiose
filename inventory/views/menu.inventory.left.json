@@ -7,7 +7,7 @@
                 "id": "item.product",
                 "type": "entry",
                 "label": "Products",
-                "icon": "shopping_cart",
+                "icon": "web_asset",
                 "description": "",
                 "context": {
                     "entity": "inventory\\Product",
@@ -15,77 +15,6 @@
                     "order": "id",
                     "sort": "asc"
                 }
-            },
-            {
-                "id": "item.sale",
-                "type": "parent",
-                "label": "Sale",
-                "icon": "calculate",
-                "description": "",
-                "children": [
-                    {
-                        "id": "item.all.receivables",
-                        "type": "parent",
-                        "label": "Receivables",
-                        "icon": "note",
-                        "description": "",
-                        "children": [
-                            {
-                                "id": "item.receivablesqueue",
-                                "type": "entry",
-                                "label": "Receivable Queues",
-                                "icon": "queue",
-                                "description": "",
-                                "context": {
-                                    "entity": "sale\\receivable\\ReceivablesQueue",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            },
-                            {
-                                "id": "item.receivable",
-                                "type": "entry",
-                                "label": "All Receivables",
-                                "icon": "list",
-                                "description": "",
-                                "context": {
-                                    "entity": "sale\\receivable\\Receivable",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            },
-                            {
-                                "id": "item.receivable.pending",
-                                "type": "entry",
-                                "label": "Pending Receivables",
-                                "icon": "pending_actions",
-                                "description": "",
-                                "context": {
-                                    "entity": "sale\\receivable\\Receivable",
-                                    "view": "list.pending",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "id": "item.sale.entry",
-                        "type": "entry",
-                        "label": "Sale Entries",
-                        "icon": "label",
-                        "description": "",
-                        "context": {
-                            "entity": "sale\\SaleEntry",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    }
-
-                ]
             },
             {
                 "id": "item.advanced",
