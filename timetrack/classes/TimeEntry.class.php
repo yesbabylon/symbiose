@@ -10,6 +10,7 @@ use sale\SaleEntry;
 use sale\price\Price;
 use sale\price\PriceList;
 use core\setting\Setting;
+use equal\orm\Model;
 
 class TimeEntry extends SaleEntry {
 
@@ -306,7 +307,7 @@ class TimeEntry extends SaleEntry {
         return (float) (ceil($duration / 60 / 15) * 15 * 60);
     }
 
-    private static function searchApplicablePrice($product_id, $date): ?array {
+    private static function searchApplicablePrice($product_id, $date): ?Model {
         $price_lists_ids = PriceList::search(
                 [
                     ['date_from', '<=', $date],
