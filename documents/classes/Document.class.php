@@ -57,6 +57,7 @@ class Document extends Model {
             'hash' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
+                'usage'             => 'text/plain:32',
                 'store'             => true,
                 'dependents'        => ['link'],
                 'function'          => 'calcHash',
