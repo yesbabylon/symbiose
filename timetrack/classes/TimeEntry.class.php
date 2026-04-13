@@ -333,6 +333,22 @@ class TimeEntry extends SaleEntry {
         return self::computeQuarterHourDuration($duration);
     }
 
+    private static function computeWorkedDurationValue(bool $is_full_day, $time_start = null, $time_end = null, $duration = null): float {
+        if($is_full_day) {
+            return 7.5 * 3600;
+        }
+
+        if($duration !== null) {
+            return max(0, (float) $duration);
+        }
+
+        if($time_start !== null && $time_end !== null) {
+            return max(0, (float) ($time_end - $time_start));
+        }
+
+        return 0.0;
+    }
+
     private static function searchApplicablePrice($product_id, $date): ?Model {
         $price_lists_ids = PriceList::search(
                 [
@@ -369,27 +385,76 @@ class TimeEntry extends SaleEntry {
     }
 
     public static function canupdate($self, $values): array {
-        $self->read(['status']);
+        $self->read(['status', 'project_id' => ['is_internal'], 'is_billable', 'is_full_day', 'time_start', 'time_end', 'duration', 'billable_duration', 'billed_duration']);
 
         foreach($self as $id => $entry) {
             if(in_array($entry['status'], ['pending', 'ready'])) {
-                continue;
+                // allowed statuses, keep checking business constraints below
             }
+            else {
+                $editable_fields = ['description', 'detailed_description', 'status'];
 
-            $editable_fields = ['description', 'detailed_description', 'status'];
-
-            if($entry['status'] === 'validated') {
-                $editable_fields = array_merge($editable_fields, ['product_id', 'price_id', 'unit_price', 'is_billable', 'billed_duration', 'has_receivable', 'receivable_id']);
-            }
-
-            foreach($values as $field => $value) {
-                if(!in_array($field, $editable_fields)) {
-                    return [
-                            $field => [
-                                'non_editable' => "Field '$field' cannot be updated Time entry at '{$entry['status']}'."
-                            ]
-                        ];
+                if($entry['status'] === 'validated') {
+                    $editable_fields = array_merge($editable_fields, ['product_id', 'price_id', 'unit_price', 'is_billable', 'billed_duration', 'has_receivable', 'receivable_id']);
                 }
+
+                foreach($values as $field => $value) {
+                    if(!in_array($field, $editable_fields)) {
+                        return [
+                                $field => [
+                                    'non_editable' => "Field '$field' cannot be updated Time entry at '{$entry['status']}'."
+                                ]
+                            ];
+                    }
+                }
+            }
+
+            $project_is_internal = (bool) ($entry['project_id']['is_internal'] ?? false);
+            if(array_key_exists('project_id', $values)) {
+                if($values['project_id']) {
+                    $project = Project::id($values['project_id'])->read(['is_internal'])->first();
+                    $project_is_internal = (bool) ($project['is_internal'] ?? false);
+                }
+                else {
+                    $project_is_internal = false;
+                }
+            }
+
+            $is_internal = $project_is_internal;
+            $is_billable = array_key_exists('is_billable', $values) ? (bool) $values['is_billable'] : (bool) ($entry['is_billable'] ?? true);
+            $is_full_day = array_key_exists('is_full_day', $values) ? (bool) $values['is_full_day'] : (bool) ($entry['is_full_day'] ?? false);
+            $time_start = array_key_exists('time_start', $values) ? $values['time_start'] : ($entry['time_start'] ?? null);
+            $time_end = array_key_exists('time_end', $values) ? $values['time_end'] : ($entry['time_end'] ?? null);
+            $duration = array_key_exists('duration', $values) ? $values['duration'] : ($entry['duration'] ?? null);
+
+            if(!$is_full_day && $time_start !== null && $time_end !== null) {
+                $duration = $time_end - $time_start;
+            }
+
+            $target_billable_duration = self::computeBillableDurationValue(
+                self::computeWorkedDurationValue($is_full_day, $time_start, $time_end, $duration),
+                $is_billable,
+                $is_internal
+            );
+
+            $recomputes_billed_duration =
+                array_key_exists('project_id', $values)
+                || array_key_exists('is_billable', $values)
+                || array_key_exists('is_full_day', $values)
+                || array_key_exists('time_start', $values)
+                || array_key_exists('time_end', $values)
+                || array_key_exists('duration', $values);
+
+            $target_billed_duration = array_key_exists('billed_duration', $values)
+                ? (float) $values['billed_duration']
+                : ($recomputes_billed_duration ? $target_billable_duration : (float) ($entry['billed_duration'] ?? 0));
+
+            if($target_billed_duration > $target_billable_duration) {
+                return [
+                    'billed_duration' => [
+                        'invalid' => 'Billed duration cannot be greater than billable duration.'
+                    ]
+                ];
             }
         }
 
