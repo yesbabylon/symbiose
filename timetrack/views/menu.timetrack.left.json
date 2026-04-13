@@ -168,12 +168,12 @@
                 "description": "Timetrack settings.",
                 "children": [
                     {
-                        "id": "settings.time_entry_sale_model",
+                        "id": "settings.sale_model",
                         "type": "entry",
                         "label": "Sale Models",
                         "icon": "calculate",
                         "context": {
-                            "entity": "timetrack\\TimeEntrySaleModel",
+                            "entity": "sale\\SaleModel",
                             "view": "list.default"
                         }
                     }

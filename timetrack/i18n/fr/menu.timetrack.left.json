@@ -37,7 +37,7 @@
         "settings": {
             "label": "Paramètres"
         },
-        "settings.time_entry_sale_model": {
+        "settings.sale_model": {
             "label": "Modèles de vente"
         }
     }

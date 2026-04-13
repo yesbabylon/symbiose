@@ -50,13 +50,20 @@ class Project extends Model {
                 'dependents'      => ['time_entries_ids' => ['inventory_product_id']]
             ],
 
-            'time_entry_sale_model_id' => [
+            'has_sale_model' => [
+                'type'            => 'boolean',
+                'description'     => 'Flag telling if a fixed sale model applies to the project.',
+                'default'         => false,
+                'dependents'      => ['time_entries_ids' => ['has_sale_model', 'product_id', 'price_id', 'unit_price', 'total']]
+            ],
+
+            'sale_model_id' => [
                 'type'            => 'many2one',
-                'foreign_object'  => 'timetrack\TimeEntrySaleModel',
+                'foreign_object'  => 'sale\SaleModel',
                 'foreign_field'   => 'projects_ids',
                 'description'     => 'The sale model to apply on project\'s time entries.',
-                'required'        => true,
-                'dependents'     => ['time_entries_ids' => ['price_id', 'total']],
+                'visible'         => ['has_sale_model', '=', true],
+                'dependents'      => ['time_entries_ids' => ['has_sale_model', 'product_id', 'price_id', 'unit_price', 'total']],
             ],
 
             'receivable_queue_id' => [
@@ -91,6 +98,12 @@ class Project extends Model {
                 $result['receivable_queue_id'] = null;
             }
         }
+        if(isset($event['has_sale_model']) && !$event['has_sale_model']) {
+            $result['sale_model_id'] = null;
+        }
+        if(isset($event['sale_model_id']) && !is_null($event['sale_model_id'])) {
+            $result['has_sale_model'] = true;
+        }
         if(isset($event['product_id'])) {
             $product = Product::id($event['product_id'])->read(['is_internal'])->first();
             $result['is_internal'] = $product['is_internal'];
@@ -99,10 +112,25 @@ class Project extends Model {
         return $result;
     }
 
+    public static function cancreate($self, $values) {
+        if(($values['has_sale_model'] ?? false) && empty($values['sale_model_id'])) {
+            return ['sale_model_id' => ['missing' => 'Sale model must be set when fixed sale model is enabled.']];
+        }
+
+        return parent::cancreate($self, $values);
+    }
+
     public static function canupdate($self, $values) {
-        $self->read(['customer_id', 'receivable_queue_id']);
+        $self->read(['customer_id', 'receivable_queue_id', 'has_sale_model', 'sale_model_id']);
         foreach($self as $project) {
             if(!isset($values['customer_id']) && !isset($values['receivable_queue_id'])) {
+                $has_sale_model = $values['has_sale_model'] ?? $project['has_sale_model'];
+                $sale_model_id = $values['sale_model_id'] ?? $project['sale_model_id'];
+
+                if($has_sale_model && !$sale_model_id) {
+                    return ['sale_model_id' => ['missing' => 'Sale model must be set when fixed sale model is enabled.']];
+                }
+
                 continue;
             }
 
@@ -120,6 +148,13 @@ class Project extends Model {
                 if($customer_id !== $queue['customer_id']) {
                     return ['receivable_queue_id' => ['invalid' => 'Receivable queue not matching customer.']];
                 }
+            }
+
+            $has_sale_model = $values['has_sale_model'] ?? $project['has_sale_model'];
+            $sale_model_id = $values['sale_model_id'] ?? $project['sale_model_id'];
+
+            if($has_sale_model && !$sale_model_id) {
+                return ['sale_model_id' => ['missing' => 'Sale model must be set when fixed sale model is enabled.']];
             }
         }
 

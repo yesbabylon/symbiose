@@ -1,0 +1,49 @@
+{
+    "name": "Modele de vente",
+    "plural": "Modeles de vente",
+    "description": "Un modele de vente permet de definir quel produit, prix et prix unitaire fixes doivent etre appliques aux ventes concernees.",
+    "model": {
+        "product_id": {
+            "label": "Produit",
+            "description": "Produit a assigner aux ventes.",
+            "help": ""
+        },
+        "price_id": {
+            "label": "Prix",
+            "description": "Prix a assigner aux ventes.",
+            "help": ""
+        },
+        "unit_price": {
+            "label": "Prix unitaire",
+            "description": "Prix unitaire a assigner aux ventes.",
+            "help": ""
+        },
+        "projects_ids": {
+            "label": "Projets",
+            "description": "Projets appliquant le modele de vente.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Modele de vente",
+            "description": "Formulaire de modification par defaut d'un modele de vente.",
+            "layout": {
+                "section.projects": {
+                    "label": "Projets",
+                    "help": ""
+                },
+                "section.details": {
+                    "label": "Details",
+                    "help": ""
+                }
+            }
+        },
+        "list.default": {
+            "name": "Modeles de vente",
+            "description": "Liste des modeles de vente.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

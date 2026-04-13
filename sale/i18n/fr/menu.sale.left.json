@@ -72,6 +72,10 @@
         "orders.group.line.all": {
             "label": "Lignes",
             "help": ""
+        },
+        "sales.sale_models": {
+            "label": "Modeles de vente",
+            "help": ""
         }
     }
 }

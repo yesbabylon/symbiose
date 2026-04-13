@@ -1,7 +1,7 @@
 {
     "name": "Project",
     "plural": "Projects",
-    "description": "Un projet organise les saisies de temps et permet de configurer un modèle de vente pour appliquer automatiquement les champs liés à la vente d'une entrée de temps.",
+    "description": "Un projet organise les saisies de temps et permet de configurer un modele de vente pour appliquer automatiquement les champs lies a la vente d'une entree de temps.",
     "model": {
         "description": {
             "label": "Description",
@@ -10,7 +10,7 @@
         },
         "customer_id": {
             "label": "Client",
-            "description": "Client à qui le projet est destiné.",
+            "description": "Client a qui le projet est destine.",
             "help": ""
         },
         "product_id": {
@@ -18,21 +18,26 @@
             "description": "Le produit (logiciel) auquel se rapporte le projet.",
             "help": ""
         },
-        "time_entry_sale_model_id": {
-            "label": "Modèle de vente",
-            "description": "Le modèle de vente à appliquer sur les saisies de temps du projet.",
+        "has_sale_model": {
+            "label": "Utiliser un modele de vente",
+            "description": "Indique si un modele de vente fixe doit etre applique au projet.",
+            "help": ""
+        },
+        "sale_model_id": {
+            "label": "Modele de vente",
+            "description": "Le modele de vente a appliquer sur les saisies de temps du projet.",
             "help": ""
         },
         "receivable_queue_id": {
-            "label": "File d'attente des créances",
-            "description": "La file d'attente des créances à utiliser pour les créances générés par les saisies de temps du projet.",
+            "label": "File d'attente des creances",
+            "description": "La file d'attente des creances a utiliser pour les creances generees par les saisies de temps du projet.",
             "help": ""
         }
     },
     "view": {
         "form.default": {
             "name": "Projet",
-            "description": "Formulaire de modification par défaut d'un projet.",
+            "description": "Formulaire de modification par defaut d'un projet.",
             "layout": {
                 "section.time_entries": {
                     "label": "Prestations"

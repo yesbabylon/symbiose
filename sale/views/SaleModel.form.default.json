@@ -1,0 +1,113 @@
+{
+    "name": "Sale models",
+    "description": "Default form for sale model",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "id": "section.main",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Name",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "align": "left",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.details",
+                        "label": "Details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Product (Catalog)",
+                                                "value": "product_id",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": []
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Price",
+                                                "value": "price_id",
+                                                "width": "100%",
+                                                "visible": ["product_id", "<>", null]
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Unit price",
+                                                "value": "unit_price",
+                                                "width": "100%",
+                                                "visible": ["price_id", "<>", null]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.projects",
+                        "label": "Projects",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Projects",
+                                                "value": "projects_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

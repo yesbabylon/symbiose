@@ -93,6 +93,12 @@
                                                 "value": "status",
                                                 "width": "0%",
                                                 "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_sale_model",
+                                                "width": "0%",
+                                                "visible": false
                                             }
                                         ]
                                     },
@@ -267,6 +273,14 @@
                                                 "value": "product_id",
                                                 "label": "Product (Catalog)",
                                                 "width": "75%",
+                                                "visible": ["has_sale_model", "=", false]
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "product_id",
+                                                "label": "Product (Catalog)",
+                                                "width": "75%",
+                                                "visible": ["has_sale_model", "=", true],
                                                 "widget": {
                                                     "readonly": true
                                                 }
@@ -293,7 +307,18 @@
                                                 "type": "field",
                                                 "value": "unit_price",
                                                 "label": "Unit price",
-                                                "width": "25%"
+                                                "width": "25%",
+                                                "visible": ["has_sale_model", "=", false]
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "unit_price",
+                                                "label": "Unit price",
+                                                "width": "25%",
+                                                "visible": ["has_sale_model", "=", true],
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",

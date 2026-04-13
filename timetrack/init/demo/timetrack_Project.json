@@ -57,7 +57,8 @@
                 "description": "Wordpress website with domain name hestoria.com",
                 "customer_id": 1200,
                 "product_id": null,
-                "time_entry_sale_model_id": 1,
+                "has_sale_model": true,
+                "sale_model_id": 1,
                 "receivable_queue_id": null
             }
         ]

@@ -1,10 +1,10 @@
 <?php
 
 use core\User;
+use sale\SaleModel;
 use sale\catalog\Product;
 use sale\price\Price;
 use timetrack\Project;
-use timetrack\TimeEntrySaleModel;
 use timetrack\TimeEntry;
 
 $tests = [
@@ -136,9 +136,9 @@ $tests = [
     ],
 
     '0104' => [
-        'description' => 'Tests that action create-quick creates with model matching only origin',
+        'description' => 'Tests that action create-quick creates with sale model configured on project',
         'arrange'     => function() {
-            // Create user and time entry sale model
+            // Create user and project sale model
 
             $user = User::create([
                 'name'     => 'Test user',
@@ -173,12 +173,18 @@ $tests = [
 
             $unit_price = 44.0;
 
-            TimeEntrySaleModel::create([
+            $sale_model = SaleModel::create([
                 'name'       => 'Test sale model',
-                'origin'     => 'email',
                 'product_id' => $product['id'],
                 'price_id'   => $price['id'],
                 'unit_price' => $unit_price
+            ])
+                ->read(['id'])
+                ->first();
+
+            Project::id($project['id'])->update([
+                'has_sale_model' => true,
+                'sale_model_id'  => $sale_model['id']
             ]);
 
             return [
@@ -220,7 +226,7 @@ $tests = [
                 && $time_entry['is_billable'];
         },
         'rollback'    => function() {
-            // Remove user, time entry sale model, time entry, product and price
+            // Remove user, sale model, time entry, product and price
 
             $user = User::search(['name', '=', 'Test user'])
                 ->read(['id'])
@@ -228,7 +234,7 @@ $tests = [
 
             User::id($user['id'])->delete(true);
             Project::search(['name', '=', 'Test project'])->delete(true);
-            TimeEntrySaleModel::search(['name', '=', 'Test sale model'])->delete(true);
+            SaleModel::search(['name', '=', 'Test sale model'])->delete(true);
             TimeEntry::search(['user_id', '=', $user['id']])->delete(true);
 
             $product = Product::search(['label', '=', 'Test product'])
@@ -241,9 +247,9 @@ $tests = [
     ],
 
     '0105' => [
-        'description' => 'Tests that action create-quick creates with model matching origin and project',
+        'description' => 'Tests that action create-quick creates with sale model linked through projects_ids',
         'arrange'     => function() {
-            // Create user, a time entry sale model not linked to any project and time entry sale model link to a project
+            // Create user, a sale model not linked to any project and a sale model linked to a project
 
             $user = User::create([
                 'name'     => 'Test user',
@@ -274,9 +280,8 @@ $tests = [
 
             $unit_price_one = 44.0;
 
-            TimeEntrySaleModel::create([
+            SaleModel::create([
                 'name'        => 'Test sale model 1',
-                'origin'      => 'email',
                 'product_id'  => $product_one['id'],
                 'price_id'    => $price_one['id'],
                 'unit_price'  => $unit_price_one
@@ -309,9 +314,8 @@ $tests = [
 
             $unit_price_two = 44.0;
 
-            TimeEntrySaleModel::create([
+            SaleModel::create([
                 'name'        => 'Test sale model 2',
-                'origin'      => 'email',
                 'product_id'  => $product_two['id'],
                 'price_id'    => $price_two['id'],
                 'unit_price'  => $unit_price_two,
@@ -319,6 +323,10 @@ $tests = [
             ])
                 ->read(['id'])
                 ->first();
+
+            Project::id($project['id'])->update([
+                'has_sale_model' => true
+            ]);
 
             return [
                 $user['id'],
@@ -359,7 +367,7 @@ $tests = [
                 && $time_entry['is_billable'];
         },
         'rollback'    => function() {
-            // Remove user, time entry, project, time entry sale models, products and prices
+            // Remove user, time entry, project, sale models, products and prices
 
             $user = User::search(['name', '=', 'Test user'])
                 ->read(['id'])
@@ -370,12 +378,12 @@ $tests = [
 
             Product::search(['label', '=', 'Test product 1'])->delete(true);
             Price::search(['name', '=', 'Test price 1'])->delete(true);
-            TimeEntrySaleModel::search(['name', '=', 'Test sale model 1'])->delete(true);
+            SaleModel::search(['name', '=', 'Test sale model 1'])->delete(true);
 
             Project::search(['name', '=', 'Test project'])->delete(true);
             Product::search(['label', '=', 'Test product 2'])->delete(true);
             Price::search(['name', '=', 'Test price 2'])->delete(true);
-            TimeEntrySaleModel::search(['name', '=', 'Test sale model 2'])->delete(true);
+            SaleModel::search(['name', '=', 'Test sale model 2'])->delete(true);
         },
     ]
 ];

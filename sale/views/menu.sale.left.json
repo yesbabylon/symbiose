@@ -113,6 +113,19 @@
                             "sort": "desc",
                             "domain": [ ["state", "=", "archive"] ]
                         }
+                    },
+                    {
+                        "id": "sales.sale_models",
+                        "type": "entry",
+                        "label": "Sale Models",
+                        "icon": "calculate",
+                        "description": "Display all sale models.",
+                        "context": {
+                            "entity": "sale\\SaleModel",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
                     }
                 ]
             },

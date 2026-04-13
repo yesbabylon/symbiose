@@ -7,6 +7,8 @@
 namespace timetrack;
 
 use sale\SaleEntry;
+use sale\price\Price;
+use sale\price\PriceList;
 use core\setting\Setting;
 
 class TimeEntry extends SaleEntry {
@@ -53,7 +55,7 @@ class TimeEntry extends SaleEntry {
                 'type'           => 'many2one',
                 'foreign_object' => 'timetrack\Project',
                 'description'    => 'Identifier of the Project the sale entry originates from.',
-                'dependents'     => ['name', 'ticket_link', 'customer_id', 'inventory_product_id', 'product_id', 'price_id', 'unit_price', 'is_internal', 'billable_duration', 'billed_duration', 'qty', 'total'],
+                'dependents'     => ['name', 'ticket_link', 'customer_id', 'inventory_product_id', 'has_sale_model', 'product_id', 'price_id', 'unit_price', 'is_internal', 'billable_duration', 'billed_duration', 'qty', 'total'],
                 'onupdate'       => 'onupdateProjectId'
             ],
 
@@ -78,16 +80,26 @@ class TimeEntry extends SaleEntry {
                 'readonly'       => true
             ],
 
+            'has_sale_model' => [
+                'type'           => 'computed',
+                'result_type'    => 'boolean',
+                'description'    => 'Flag telling if a fixed sale model applies to the project.',
+                'relation'       => ['project_id' => ['has_sale_model']],
+                'store'          => true,
+                'instant'        => true,
+                'readonly'       => true
+            ],
+
             'product_id' => [
                 'type'           => 'computed',
                 'result_type'    => 'many2one',
                 'foreign_object' => 'sale\catalog\Product',
                 'description'    => 'Product of the sale catalog.',
                 'help'           => 'This field references a Product from the catalog. This field is not to be mistaken with the Product (software) of the customer.',
-                'relation'       => ['project_id' => ['time_entry_sale_model_id' => 'product_id']],
+                'relation'       => ['project_id' => ['sale_model_id' => 'product_id']],
                 'instant'        => true,
                 'store'          => true,
-                'readonly'       => true
+                'dependents'     => ['price_id', 'unit_price', 'total']
             ],
 
             'price_id' => [
@@ -98,7 +110,7 @@ class TimeEntry extends SaleEntry {
                 'function'       => 'calcPriceId',
                 'instant'        => true,
                 'store'          => true,
-                'readonly'       => true
+                'dependents'     => ['unit_price', 'total']
             ],
 
             'unit_price' => [
@@ -106,10 +118,10 @@ class TimeEntry extends SaleEntry {
                 'result_type'    => 'float',
                 'usage'          => 'amount/money:4',
                 'description'    => 'Unit price of the product related to the entry.',
-                'relation'       => ['project_id' => ['time_entry_sale_model_id' => 'unit_price']],
+                'function'       => 'calcUnitPrice',
                 'instant'        => true,
                 'store'          => true,
-                'readonly'       => true
+                'onupdate'       => 'onupdateUnitPrice'
             ],
 
             'is_billable' => [
@@ -131,6 +143,13 @@ class TimeEntry extends SaleEntry {
             /**
              * Specific TimeEntry columns
              */
+
+            'date' => [
+                'type'           => 'datetime',
+                'description'    => 'Date of the entry.',
+                'default'        => function() { return time(); },
+                'dependents'     => ['price_id', 'unit_price']
+            ],
 
             'time_start' => [
                 'type'           => 'time',
@@ -287,6 +306,37 @@ class TimeEntry extends SaleEntry {
         return (float) (ceil($duration / 60 / 15) * 15 * 60);
     }
 
+    private static function searchApplicablePrice($product_id, $date): ?array {
+        $price_lists_ids = PriceList::search(
+                [
+                    ['date_from', '<=', $date],
+                    ['date_to', '>=', $date],
+                    ['status', '=', 'published'],
+                ],
+                ['sort' => ['duration' => 'asc']]
+            )
+            ->ids();
+
+        if(empty($price_lists_ids)) {
+            return null;
+        }
+
+        foreach($price_lists_ids as $price_list_id) {
+            $price = Price::search([
+                    ['price_list_id', '=', $price_list_id],
+                    ['product_id', '=', $product_id]
+                ])
+                ->read(['id', 'price'])
+                ->first();
+
+            if($price) {
+                return $price;
+            }
+        }
+
+        return null;
+    }
+
     public static function defaultUserId($auth) {
         return $auth->userId();
     }
@@ -336,11 +386,45 @@ class TimeEntry extends SaleEntry {
 
         if(isset($event['project_id'])) {
             $project = Project::id($event['project_id'])
-                ->read(['product_id', 'is_internal', 'customer_id' => ['name']])
+                ->read(['product_id', 'is_internal', 'has_sale_model', 'sale_model_id' => ['product_id', 'price_id', 'unit_price'], 'customer_id' => ['name']])
                 ->first();
             $result['is_internal'] = $project['is_internal'];
             $result['customer_id'] = $project['customer_id'];
             $result['inventory_product_id'] = $project['product_id'];
+            $result['has_sale_model'] = $project['has_sale_model'] ?? false;
+
+            if($project['has_sale_model'] ?? false) {
+                $result['product_id'] = $project['sale_model_id']['product_id'] ?? null;
+                $result['price_id'] = $project['sale_model_id']['price_id'] ?? null;
+                $result['unit_price'] = $project['sale_model_id']['unit_price'] ?? null;
+            }
+            else {
+                $result['product_id'] = null;
+                $result['price_id'] = null;
+                $result['unit_price'] = null;
+            }
+        }
+
+        $has_sale_model = $result['has_sale_model'] ?? $values['has_sale_model'] ?? false;
+
+        if((isset($event['product_id']) || isset($event['date'])) && !$has_sale_model) {
+            $product_id = $event['product_id'] ?? $values['product_id'] ?? null;
+            $date = $event['date'] ?? $values['date'] ?? time();
+
+            if($product_id) {
+                $price = self::searchApplicablePrice($product_id, $date);
+                $result['price_id'] = $price['id'] ?? null;
+                $result['unit_price'] = $price['price'] ?? null;
+            }
+            else {
+                $result['price_id'] = null;
+                $result['unit_price'] = null;
+            }
+        }
+
+        if(isset($event['price_id']) && !$has_sale_model) {
+            $price = Price::id($event['price_id'])->read(['price'])->first();
+            $result['unit_price'] = $price['price'] ?? null;
         }
 
         if(isset($event['time_start'], $values['time_end'])
@@ -462,18 +546,44 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function calcPriceId($self): array {
+    protected static function calcPriceId($self): array {
         $result = [];
-        $self->read(['project_id' => ['time_entry_sale_model_id' => 'price_id']]);
+        $self->read(['has_sale_model', 'project_id' => ['sale_model_id' => ['price_id']], 'product_id', 'date']);
         foreach($self as $id => $entry) {
-            if(isset($entry['project_id']['time_entry_sale_model_id']['price_id'])) {
-                $result[$id] = $entry['project_id']['time_entry_sale_model_id']['price_id'];
+            if($entry['has_sale_model'] ?? false) {
+                $result[$id] = $entry['project_id']['sale_model_id']['price_id'] ?? null;
+                continue;
+            }
+
+            if(!isset($entry['product_id'], $entry['date'])) {
+                continue;
+            }
+
+            $price = self::searchApplicablePrice($entry['product_id'], $entry['date']);
+            if($price) {
+                $result[$id] = $price['id'];
             }
         }
         return $result;
     }
 
-    public static function calcBillableDuration($self): array {
+    protected static function calcUnitPrice($self): array {
+        $result = [];
+        $self->read(['has_sale_model', 'project_id' => ['sale_model_id' => ['unit_price']], 'price_id' => ['price']]);
+        foreach($self as $id => $entry) {
+            if($entry['has_sale_model'] ?? false) {
+                $result[$id] = $entry['project_id']['sale_model_id']['unit_price'] ?? ($entry['price_id']['price'] ?? null);
+                continue;
+            }
+
+            if(isset($entry['price_id']['price'])) {
+                $result[$id] = $entry['price_id']['price'];
+            }
+        }
+        return $result;
+    }
+
+    protected static function calcBillableDuration($self): array {
         $result = [];
         $self->read(['is_full_day', 'time_start', 'time_end']);
         foreach($self as $id => $entry) {
