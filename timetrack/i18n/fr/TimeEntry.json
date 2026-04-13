@@ -43,6 +43,11 @@
             "description": "Durée à facturer au client.",
             "help": ""
         },
+        "billed_duration": {
+            "label": "Duree facturee",
+            "description": "Duree finalement facturee au client.",
+            "help": ""
+        },
         "user_id": {
             "label": "Utilisateur",
             "description": "Utilisateur qui a réalisé l'entrée.",

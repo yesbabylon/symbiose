@@ -38,6 +38,10 @@
             "billable_duration": {
                 "operation": "SUM",
                 "usage": "time/plain"
+            },
+            "billed_duration": {
+                "operation": "SUM",
+                "usage": "time/plain"
             }
         }
     },
@@ -173,6 +177,13 @@
                 "type": "field",
                 "label": "Billable",
                 "value": "billable_duration",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Billed",
+                "value": "billed_duration",
                 "width": "10%",
                 "sortable": true
             },

@@ -113,7 +113,7 @@ else {
 
     $begin = time() - strtotime("midnight") - $params['duration'] + $tz_offset;
     $start = (int) (floor(floatval($begin) / 60 / 15) * 15 * 60);
-    $end = $start + intval(ceil($params['duration'] / 60 / 15) * 15 * 60);
+    $end = $start + intval($params['duration']);
 }
 
 TimeEntry::create([

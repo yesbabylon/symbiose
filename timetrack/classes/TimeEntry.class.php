@@ -53,7 +53,7 @@ class TimeEntry extends SaleEntry {
                 'type'           => 'many2one',
                 'foreign_object' => 'timetrack\Project',
                 'description'    => 'Identifier of the Project the sale entry originates from.',
-                'dependents'     => ['name', 'ticket_link', 'customer_id', 'inventory_product_id', 'product_id', 'price_id', 'unit_price'],
+                'dependents'     => ['name', 'ticket_link', 'customer_id', 'inventory_product_id', 'product_id', 'price_id', 'unit_price', 'is_internal', 'billable_duration', 'billed_duration', 'qty', 'total'],
                 'onupdate'       => 'onupdateProjectId'
             ],
 
@@ -112,11 +112,18 @@ class TimeEntry extends SaleEntry {
                 'readonly'       => true
             ],
 
+            'is_billable' => [
+                'type'              => 'boolean',
+                'description'       => 'Flag telling if the entry can be billed to the customer.',
+                'help'              => 'Under certain circumstances, a task is performed for the organisation itself, or relates to a customer but cannot be billed (from a commercial perspective). Most of the time this cannot be known in advance and this flag is intended to be set manually.',
+                'default'           => true,
+                'dependents'        => ['billable_duration', 'billed_duration', 'qty', 'total']
+            ],
+
             'qty' => [
                 'type'           => 'computed',
                 'result_type'    => 'float',
-                'description'    => 'The final amount of time to invoice.',
-                'description'    => 'Quantity is expressed in hours, rounded to the quarter hour, and based on the billable duration.',
+                'description'    => 'Quantity is expressed in hours, rounded to the quarter hour, and based on the billed duration.',
                 'function'       => 'calcQty',
                 'store'          => true
             ],
@@ -129,31 +136,31 @@ class TimeEntry extends SaleEntry {
                 'type'           => 'time',
                 'description'    => 'Start time of the entry.',
                 'default'        => function () { return self::getTimeZoneCurrentHour() * 3600; },
-                'dependents'     => ['billable_duration', 'duration', 'qty', 'total']
+                'dependents'     => ['duration', 'billable_duration', 'billed_duration', 'qty', 'total']
             ],
 
             'time_end' => [
                 'type'           => 'time',
                 'description'    => 'End time of the entry.',
                 'default'        => function () { return (self::getTimeZoneCurrentHour() + 1) * 3600; },
-                'dependents'     => ['billable_duration', 'duration', 'qty', 'total']
+                'dependents'     => ['duration', 'billable_duration', 'billed_duration', 'qty', 'total']
             ],
 
             'is_full_day' => [
                 'type'           => 'boolean',
                 'description'    => 'The task of the entry was performed for a whole day.',
                 'default'        => false,
-                'dependents'     => ['billable_duration']
+                'dependents'     => ['duration', 'billable_duration', 'billed_duration', 'qty', 'total']
             ],
 
             'duration' => [
                 'type'           => 'computed',
                 'result_type'    => 'time',
-                'description'    => 'Duration of the entry.',
+                'description'    => 'Duration actually worked for the entry.',
                 'function'       => 'calcDuration',
                 'store'          => true,
                 'instant'        => true,
-                'onupdate'       => 'onupdateDuration'
+                'readonly'       => true
             ],
 
             'billable_duration' => [
@@ -161,8 +168,18 @@ class TimeEntry extends SaleEntry {
                 'result_type'    => 'time',
                 'store'          => true,
                 'function'       => 'calcBillableDuration',
-                'description'    => 'Duration that can be actually invoiced.',
-                'help'           => 'The duration (part of the entry) that can be billed to the Customer according to the related requested Task. By default has the same value as duration. Unlike duration, billable duration is meant to be set manually.'
+                'description'    => 'Duration that can theoretically be invoiced.',
+                'help'           => 'The duration that can be billed to the Customer according to the related requested Task. This value is based on the actual duration and rounded up to the started quarter hour.'
+            ],
+
+            'billed_duration' => [
+                'type'           => 'computed',
+                'result_type'    => 'time',
+                'store'          => true,
+                'function'       => 'calcBilledDuration',
+                'description'    => 'Duration that is eventually invoiced.',
+                'help'           => 'The duration that is eventually invoiced. By default it matches billable duration, but it can be adjusted manually on a case-by-case basis.',
+                'dependents'     => ['qty', 'total']
             ],
 
             'user_id' => [
@@ -228,7 +245,8 @@ class TimeEntry extends SaleEntry {
                 'description'       => 'Flag telling if the entry can be billed to the customer.',
                 'help'              => 'Under certain circumstances, a task is performed for the organisation itself, or relates to a customer but cannot be billed (from a commercial perspective). Most of the time this cannot be known in advance and this flag is intended to be set manually.',
                 'store'             => true,
-                'function'          => 'calcIsInternal'
+                'function'          => 'calcIsInternal',
+                'dependents'        => ['billable_duration', 'billed_duration', 'qty', 'total']
             ],
 
         ];
@@ -261,6 +279,14 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
+    private static function computeQuarterHourDuration($duration): float {
+        if($duration <= 0) {
+            return 0.0;
+        }
+
+        return (float) (ceil($duration / 60 / 15) * 15 * 60);
+    }
+
     public static function defaultUserId($auth) {
         return $auth->userId();
     }
@@ -276,7 +302,7 @@ class TimeEntry extends SaleEntry {
             $editable_fields = ['description', 'detailed_description', 'status'];
 
             if($entry['status'] === 'validated') {
-                $editable_fields = array_merge($editable_fields, ['product_id', 'price_id', 'unit_price', 'is_billable', 'has_receivable', 'receivable_id']);
+                $editable_fields = array_merge($editable_fields, ['product_id', 'price_id', 'unit_price', 'is_billable', 'billed_duration', 'has_receivable', 'receivable_id']);
             }
 
             foreach($values as $field => $value) {
@@ -327,21 +353,55 @@ class TimeEntry extends SaleEntry {
             }
             else {
                 $diff = $time_end - $time_start;
-                $result['duration'] = ( ceil($diff / 60 / 15) * 15 ) * 60;
-                $result['billable_duration'] = self::computeBillableDuration($values['id'], $result['duration']);
+                $billable_duration = self::computeBillableDuration($values['id'], $diff);
+                $result['duration'] = $diff;
+                $result['billable_duration'] = $billable_duration;
+                $result['billed_duration'] = $billable_duration;
             }
         }
         elseif(isset($event['duration'], $values['time_start'])) {
+            $billable_duration = self::computeBillableDuration($values['id'], $event['duration']);
             $result['time_end'] = $values['time_start'] + $event['duration'];
-            $result['billable_duration'] = self::computeBillableDuration($values['id'], $event['duration']);
+            $result['billable_duration'] = $billable_duration;
+            $result['billed_duration'] = $billable_duration;
         }
 
         if(isset($event['is_full_day']) && $event['is_full_day']) {
+            // #todo - read from settings
+            $billable_duration = self::computeBillableDuration($values['id'], 7 * 3600);
             $result['time_start'] = 9 * 3600;
             $result['time_end'] = 17 * 3600;
             $result['duration'] = 7.5 * 3600;
-            // #todo - from settings
-            $result['billable_duration'] = self::computeBillableDuration($values['id'], 7 * 3600);
+            $result['billable_duration'] = $billable_duration;
+            $result['billed_duration'] = $billable_duration;
+        }
+        elseif(
+            isset($event['project_id'])
+            || isset($event['is_billable'])
+            || isset($event['is_full_day'])
+            || isset($result['is_internal'])
+        ) {
+            $is_full_day = $event['is_full_day'] ?? $values['is_full_day'] ?? false;
+
+            if($is_full_day) {
+                // #todo - read from settings
+                $billable_duration = self::computeBillableDuration($values['id'], 7 * 3600);
+                $result['billable_duration'] = $billable_duration;
+                $result['billed_duration'] = $billable_duration;
+            }
+            else {
+                $duration = $values['duration'] ?? null;
+
+                if(!isset($duration) && isset($values['time_start'], $values['time_end'])) {
+                    $duration = $values['time_end'] - $values['time_start'];
+                }
+
+                if(isset($duration)) {
+                    $billable_duration = self::computeBillableDuration($values['id'], $duration);
+                    $result['billable_duration'] = $billable_duration;
+                    $result['billed_duration'] = $billable_duration;
+                }
+            }
         }
 
         return $result;
@@ -351,7 +411,7 @@ class TimeEntry extends SaleEntry {
         $entry = self::id($id)->read(['is_billable', 'is_internal'])->first();
         $is_billable = !$entry['is_internal'];
         $is_billable = $is_billable && $entry['is_billable'];
-        return $is_billable ? $duration : 0.0;
+        return $is_billable ? self::computeQuarterHourDuration($duration) : 0.0;
     }
 
     public static function onupdateProjectId($self): void {
@@ -418,12 +478,21 @@ class TimeEntry extends SaleEntry {
         $self->read(['is_full_day', 'time_start', 'time_end']);
         foreach($self as $id => $entry) {
             if($entry['is_full_day']) {
-                // #todo - read from settings
-                $result[$id] = self::computeBillableDuration($id, 7 * 3600);
+                // #todo - read billable_hours_in_day from settings
+                $result[$id] = self::computeBillableDuration($id, 7.5 * 3600);
             }
             elseif(isset($entry['time_start'], $entry['time_end'])) {
                 $result[$id] =  self::computeBillableDuration($id, $entry['time_end'] - $entry['time_start']);
             }
+        }
+        return $result;
+    }
+
+    public static function calcBilledDuration($self): array {
+        $result = [];
+        $self->read(['billable_duration']);
+        foreach($self as $id => $entry) {
+            $result[$id] = $entry['billable_duration'] ?? 0.0;
         }
         return $result;
     }
@@ -448,30 +517,12 @@ class TimeEntry extends SaleEntry {
 
     public static function calcQty($self): array {
         $result = [];
-        $self->read(['billable_duration']);
+        $self->read(['billed_duration']);
         foreach($self as $id => $entry) {
-            $hours = floatval($entry['billable_duration']) / 3600;
+            $hours = floatval($entry['billed_duration']) / 3600;
             $result[$id] = round($hours * 4) / 4;
         }
         return $result;
-    }
-
-    public static function onupdateDuration($self): void {
-        $self->read(['is_full_day', 'time_start', 'time_end', 'duration', 'qty']);
-        foreach($self as $id => $entry) {
-            $values = [];
-            if(!$entry['is_full_day']) {
-                if(isset($entry['duration'], $entry['time_start'], $entry['time_end'])
-                        && $entry['duration'] !== ($entry['time_end'] - $entry['time_start'])) {
-                    $values['time_end'] = $entry['time_start'] + $entry['duration'];
-                }
-                else {
-                    $values['billable_duration'] = self::computeBillableDuration($id, $entry['duration']);
-                }
-            }
-
-            self::id($id)->update($values);
-        }
     }
 
     public static function calcTicketLink($self): array {

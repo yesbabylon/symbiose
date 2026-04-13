@@ -18,6 +18,10 @@
                 "operation": "SUM",
                 "usage": "time/plain"
             },
+            "billed_duration": {
+                "operation": "SUM",
+                "usage": "time/plain"
+            },
             "total": {
                 "operation": "SUM",
                 "usage": "amount/money:2"

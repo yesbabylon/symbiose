@@ -215,15 +215,21 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Total duration",
+                                                "label": "Worked duration",
                                                 "value": "duration",
-                                                "width": "50%"
+                                                "width": "34%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Total duration",
+                                                "label": "Billable duration",
                                                 "value": "billable_duration",
-                                                "width": "50%"
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Billed duration",
+                                                "value": "billed_duration",
+                                                "width": "33%"
                                             }
                                         ]
                                     }
