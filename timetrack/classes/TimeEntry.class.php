@@ -186,10 +186,12 @@ class TimeEntry extends SaleEntry {
             'billable_duration' => [
                 'type'           => 'computed',
                 'result_type'    => 'time',
-                'store'          => true,
                 'function'       => 'calcBillableDuration',
                 'description'    => 'Duration that can theoretically be invoiced.',
-                'help'           => 'The duration that can be billed to the Customer according to the related requested Task. This value is based on the actual duration and rounded up to the started quarter hour.'
+                'help'           => 'The duration that can be billed to the Customer according to the related requested Task. This value is based on the actual duration and rounded up to the started quarter hour.',
+                'store'          => true,
+                'instant'        => true,
+                'readonly'       => true
             ],
 
             'billed_duration' => [
@@ -327,7 +329,7 @@ class TimeEntry extends SaleEntry {
                     ['price_list_id', '=', $price_list_id],
                     ['product_id', '=', $product_id]
                 ])
-                ->read(['id', 'price'])
+                ->read(['id', 'name', 'price'])
                 ->first();
 
             if($price) {
@@ -389,6 +391,7 @@ class TimeEntry extends SaleEntry {
             $project = Project::id($event['project_id'])
                 ->read(['product_id', 'is_internal', 'has_sale_model', 'sale_model_id' => ['product_id', 'price_id', 'unit_price'], 'customer_id' => ['name']])
                 ->first();
+
             $result['is_internal'] = $project['is_internal'];
             $result['customer_id'] = $project['customer_id'];
             $result['inventory_product_id'] = $project['product_id'];
@@ -396,13 +399,9 @@ class TimeEntry extends SaleEntry {
 
             if($project['has_sale_model'] ?? false) {
                 $result['product_id'] = $project['sale_model_id']['product_id'] ?? null;
-                $result['price_id'] = $project['sale_model_id']['price_id'] ?? null;
-                $result['unit_price'] = $project['sale_model_id']['unit_price'] ?? null;
             }
             else {
                 $result['product_id'] = null;
-                $result['price_id'] = null;
-                $result['unit_price'] = null;
             }
         }
 
@@ -414,18 +413,14 @@ class TimeEntry extends SaleEntry {
 
             if($product_id) {
                 $price = self::searchApplicablePrice($product_id, $date);
-                $result['price_id'] = $price['id'] ?? null;
-                $result['unit_price'] = $price['price'] ?? null;
+                $result['price_id'] = [
+                    'id'    => $price['id'],
+                    'name'  => $price['name'],
+                ];
             }
             else {
                 $result['price_id'] = null;
-                $result['unit_price'] = null;
             }
-        }
-
-        if(isset($event['price_id']) && !$has_sale_model) {
-            $price = Price::id($event['price_id'])->read(['price'])->first();
-            $result['unit_price'] = $price['price'] ?? null;
         }
 
         if(isset($event['time_start'], $values['time_end'])
@@ -487,6 +482,11 @@ class TimeEntry extends SaleEntry {
                     $result['billed_duration'] = $billable_duration;
                 }
             }
+        }
+
+        if(isset($event['is_billable']) && !$event['is_billable']) {
+            $result['billable_duration'] = 0;
+            $result['billed_duration'] = 0;
         }
 
         return $result;
