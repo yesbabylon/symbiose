@@ -461,32 +461,35 @@ class TimeEntry extends SaleEntry {
             || isset($event['is_full_day'])
             || isset($result['is_internal'])
         ) {
-            $is_full_day = $event['is_full_day'] ?? $values['is_full_day'] ?? false;
+            $is_full_day = $values['is_full_day'] ?? false;
+            $is_internal = $event['is_internal'] ?? $values['is_internal'] ?? false;
+            $is_billable = $event['is_billable'] ?? $values['is_billable'] ?? false;
 
-            if($is_full_day) {
-                // #todo - read from settings
-                $billable_duration = self::computeBillableDuration($values['id'], 7 * 3600);
-                $result['billable_duration'] = $billable_duration;
-                $result['billed_duration'] = $billable_duration;
+            if($is_internal || !$is_billable) {
+                $result['billable_duration'] = 0;
+                $result['billed_duration'] = 0;
             }
             else {
-                $duration = $values['duration'] ?? null;
-
-                if(!isset($duration) && isset($values['time_start'], $values['time_end'])) {
-                    $duration = $values['time_end'] - $values['time_start'];
-                }
-
-                if(isset($duration)) {
-                    $billable_duration = self::computeBillableDuration($values['id'], $duration);
+                if($is_full_day) {
+                    // #todo - read from settings
+                    $billable_duration = self::computeBillableDuration($values['id'], 7 * 3600);
                     $result['billable_duration'] = $billable_duration;
                     $result['billed_duration'] = $billable_duration;
                 }
-            }
-        }
+                else {
+                    $duration = $values['duration'] ?? null;
 
-        if(isset($event['is_billable']) && !$event['is_billable']) {
-            $result['billable_duration'] = 0;
-            $result['billed_duration'] = 0;
+                    if(!isset($duration) && isset($values['time_start'], $values['time_end'])) {
+                        $duration = $values['time_end'] - $values['time_start'];
+                    }
+
+                    if(isset($duration)) {
+                        $billable_duration = self::computeBillableDuration($values['id'], $duration);
+                        $result['billable_duration'] = $billable_duration;
+                        $result['billed_duration'] = $billable_duration;
+                    }
+                }
+            }
         }
 
         return $result;
