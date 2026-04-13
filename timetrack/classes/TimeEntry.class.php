@@ -462,8 +462,14 @@ class TimeEntry extends SaleEntry {
             || isset($result['is_internal'])
         ) {
             $is_full_day = $values['is_full_day'] ?? false;
-            $is_internal = $values['is_internal'] ?? $event['is_internal'] ?? false;
-            $is_billable = $values['is_billable'] ?? $event['is_billable'] ?? false;
+            $is_internal = $values['is_internal'] ?? false;
+            if(array_key_exists('is_internal', $event)) {
+                $is_internal = $event['is_internal'];
+            }
+            $is_billable = $values['is_billable'] ?? false;
+            if(array_key_exists('is_billable', $event)) {
+                $is_internal = $event['is_billable'];
+            }
 
             if($is_internal || !$is_billable) {
                 $result['billable_duration'] = 0;
