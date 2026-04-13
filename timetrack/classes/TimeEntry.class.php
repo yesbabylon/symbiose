@@ -309,6 +309,30 @@ class TimeEntry extends SaleEntry {
         return (float) (ceil($duration / 60 / 15) * 15 * 60);
     }
 
+    private static function getOnchangeValue(string $field, array $event, array $values, array $result, $default = null) {
+        if(array_key_exists($field, $result)) {
+            return $result[$field];
+        }
+
+        if(array_key_exists($field, $event)) {
+            return $event[$field];
+        }
+
+        if(array_key_exists($field, $values)) {
+            return $values[$field];
+        }
+
+        return $default;
+    }
+
+    private static function computeBillableDurationValue($duration, bool $is_billable, bool $is_internal): float {
+        if($is_internal || !$is_billable) {
+            return 0.0;
+        }
+
+        return self::computeQuarterHourDuration($duration);
+    }
+
     private static function searchApplicablePrice($product_id, $date): ?Model {
         $price_lists_ids = PriceList::search(
                 [
@@ -374,127 +398,134 @@ class TimeEntry extends SaleEntry {
 
     public static function onchange($event, $values): array {
         $result = [];
+        $refresh_durations = false;
 
-        if(isset($event['origin'])) {
+        if(array_key_exists('origin', $event)) {
             if($event['origin'] != 'support') {
                 $result['ticket_id'] = null;
                 $result['ticket_link'] = null;
             }
         }
 
-        if(isset($event['ticket_id'])) {
+        if(array_key_exists('ticket_id', $event) && !empty($values['project_id'])) {
             $project = Project::id($values['project_id'])->read(['product_id' => 'url'])->first();
             $result['ticket_link'] = self::computeTicketLink($project['product_id']['url'], $event['ticket_id']);
         }
 
-        if(isset($event['project_id'])) {
-            $project = Project::id($event['project_id'])
-                ->read(['product_id', 'is_internal', 'has_sale_model', 'sale_model_id' => ['product_id', 'price_id', 'unit_price'], 'customer_id' => ['name']])
-                ->first();
+        if(array_key_exists('project_id', $event)) {
+            if($event['project_id']) {
+                $project = Project::id($event['project_id'])
+                    ->read(['product_id', 'is_internal', 'has_sale_model', 'sale_model_id' => ['product_id', 'price_id', 'unit_price'], 'customer_id' => ['name']])
+                    ->first();
 
-            $result['is_internal'] = $project['is_internal'];
-            $result['customer_id'] = $project['customer_id'];
-            $result['inventory_product_id'] = $project['product_id'];
-            $result['has_sale_model'] = $project['has_sale_model'] ?? false;
+                $result['is_internal'] = $project['is_internal'];
+                $result['customer_id'] = $project['customer_id'];
+                $result['inventory_product_id'] = $project['product_id'];
+                $result['has_sale_model'] = $project['has_sale_model'] ?? false;
 
-            if($project['has_sale_model'] ?? false) {
-                $result['product_id'] = $project['sale_model_id']['product_id'] ?? null;
+                if($project['has_sale_model'] ?? false) {
+                    $result['product_id'] = $project['sale_model_id']['product_id'] ?? null;
+                    $result['price_id'] = $project['sale_model_id']['price_id'] ?? null;
+                    $result['unit_price'] = $project['sale_model_id']['unit_price'] ?? null;
+                }
+                else {
+                    $result['product_id'] = null;
+                    $result['price_id'] = null;
+                    $result['unit_price'] = null;
+                }
             }
             else {
+                $result['is_internal'] = false;
+                $result['customer_id'] = null;
+                $result['inventory_product_id'] = null;
+                $result['has_sale_model'] = false;
                 $result['product_id'] = null;
+                $result['price_id'] = null;
+                $result['unit_price'] = null;
             }
+
+            $refresh_durations = true;
         }
 
-        $has_sale_model = $result['has_sale_model'] ?? $values['has_sale_model'] ?? false;
+        $has_sale_model = (bool) self::getOnchangeValue('has_sale_model', $event, $values, $result, false);
 
-        if((isset($event['product_id']) || isset($event['date'])) && !$has_sale_model) {
-            $product_id = $event['product_id'] ?? $values['product_id'] ?? null;
-            $date = $event['date'] ?? $values['date'] ?? time();
+        if(
+            (
+                array_key_exists('project_id', $event)
+                || array_key_exists('product_id', $event)
+                || array_key_exists('date', $event)
+            )
+            && !$has_sale_model
+        ) {
+            $product_id = self::getOnchangeValue('product_id', $event, $values, $result);
+            $date = self::getOnchangeValue('date', $event, $values, $result, time());
 
             if($product_id) {
                 $price = self::searchApplicablePrice($product_id, $date);
-                $result['price_id'] = [
-                    'id'    => $price['id'],
-                    'name'  => $price['name'],
-                ];
+
+                if($price) {
+                    $result['price_id'] = [
+                        'id'    => $price['id'],
+                        'name'  => $price['name'],
+                    ];
+                    $result['unit_price'] = $price['price'];
+                }
+                else {
+                    $result['price_id'] = null;
+                    $result['unit_price'] = null;
+                }
             }
             else {
                 $result['price_id'] = null;
+                $result['unit_price'] = null;
             }
         }
 
-        if(isset($event['time_start'], $values['time_end'])
-                || isset($event['time_end'], $values['time_start']) ) {
-            $time_start = $event['time_start'] ?? $values['time_start'];
-            $time_end = $event['time_end'] ?? $values['time_end'];
-
-            if($time_end < $time_start) {
-                $result['time_end'] = $time_start + ($values['duration'] ?? 0);
-            }
-            else {
-                $diff = $time_end - $time_start;
-                $billable_duration = self::computeBillableDuration($values['id'], $diff);
-                $result['duration'] = $diff;
-                $result['billable_duration'] = $billable_duration;
-                $result['billed_duration'] = $billable_duration;
-            }
-        }
-        elseif(isset($event['duration'], $values['time_start'])) {
-            $billable_duration = self::computeBillableDuration($values['id'], $event['duration']);
-            $result['time_end'] = $values['time_start'] + $event['duration'];
-            $result['billable_duration'] = $billable_duration;
-            $result['billed_duration'] = $billable_duration;
+        if(
+            array_key_exists('time_start', $event)
+            || array_key_exists('time_end', $event)
+            || array_key_exists('duration', $event)
+            || array_key_exists('is_full_day', $event)
+            || array_key_exists('is_billable', $event)
+        ) {
+            $refresh_durations = true;
         }
 
-        if(isset($event['is_full_day']) && $event['is_full_day']) {
-            // #todo - read from settings
-            $billable_duration = self::computeBillableDuration($values['id'], 7 * 3600);
+        $is_full_day = (bool) self::getOnchangeValue('is_full_day', $event, $values, $result, false);
+        if($is_full_day && array_key_exists('is_full_day', $event)) {
             $result['time_start'] = 9 * 3600;
             $result['time_end'] = 17 * 3600;
             $result['duration'] = 7.5 * 3600;
+        }
+
+        if($refresh_durations) {
+            if(!$is_full_day) {
+                $time_start = self::getOnchangeValue('time_start', $event, $values, $result);
+                $time_end = self::getOnchangeValue('time_end', $event, $values, $result);
+
+                if(isset($time_start, $time_end) && $time_end < $time_start) {
+                    $base_duration = self::getOnchangeValue('duration', $event, $values, $result, 0);
+                    $result['time_end'] = $time_start + $base_duration;
+                    $time_end = $result['time_end'];
+                }
+
+                if(array_key_exists('duration', $event) && isset($time_start)) {
+                    $result['time_end'] = $time_start + $event['duration'];
+                    $time_end = $result['time_end'];
+                }
+
+                if(isset($time_start, $time_end)) {
+                    $result['duration'] = $time_end - $time_start;
+                }
+            }
+
+            $duration = self::getOnchangeValue('duration', $event, $values, $result, 0);
+            $is_internal = (bool) self::getOnchangeValue('is_internal', $event, $values, $result, false);
+            $is_billable = (bool) self::getOnchangeValue('is_billable', $event, $values, $result, true);
+
+            $billable_duration = self::computeBillableDurationValue($duration, $is_billable, $is_internal);
             $result['billable_duration'] = $billable_duration;
             $result['billed_duration'] = $billable_duration;
-        }
-        elseif(
-            isset($event['project_id'])
-            || isset($event['is_billable'])
-            || isset($event['is_full_day'])
-            || isset($result['is_internal'])
-        ) {
-            $is_full_day = $values['is_full_day'] ?? false;
-            $is_internal = $values['is_internal'] ?? false;
-            if(array_key_exists('is_internal', $event)) {
-                $is_internal = $event['is_internal'];
-            }
-            $is_billable = $values['is_billable'] ?? false;
-            if(array_key_exists('is_billable', $event)) {
-                $is_internal = $event['is_billable'];
-            }
-
-            if($is_internal || !$is_billable) {
-                $result['billable_duration'] = 0;
-                $result['billed_duration'] = 0;
-            }
-            else {
-                if($is_full_day) {
-                    // #todo - read from settings
-                    $duration = 7.5 * 3600;
-                    $result['billable_duration'] = $duration;
-                    $result['billed_duration'] = $duration;
-                }
-                else {
-                    $duration = $values['duration'] ?? $event['duration'] ?? 0;
-
-                    if(!$duration && isset($values['time_start'], $values['time_end'])) {
-                        $duration = $values['time_end'] - $values['time_start'];
-                    }
-
-                    if($duration) {
-                        $result['billable_duration'] = $duration;
-                        $result['billed_duration'] = $duration;
-                    }
-                }
-            }
         }
 
         return $result;
@@ -502,9 +533,11 @@ class TimeEntry extends SaleEntry {
 
     private static function computeBillableDuration($id, $duration) {
         $entry = self::id($id)->read(['is_billable', 'is_internal'])->first();
-        $is_billable = !$entry['is_internal'];
-        $is_billable = $is_billable && $entry['is_billable'];
-        return $is_billable ? self::computeQuarterHourDuration($duration) : 0.0;
+        return self::computeBillableDurationValue(
+            $duration,
+            (bool) ($entry['is_billable'] ?? true),
+            (bool) ($entry['is_internal'] ?? false)
+        );
     }
 
     public static function onupdateProjectId($self): void {
