@@ -462,8 +462,8 @@ class TimeEntry extends SaleEntry {
             || isset($result['is_internal'])
         ) {
             $is_full_day = $values['is_full_day'] ?? false;
-            $is_internal = $event['is_internal'] ?? $values['is_internal'] ?? false;
-            $is_billable = $event['is_billable'] ?? $values['is_billable'] ?? false;
+            $is_internal = $values['is_internal'] ?? $event['is_internal'] ?? false;
+            $is_billable = $values['is_billable'] ?? $event['is_billable'] ?? false;
 
             if($is_internal || !$is_billable) {
                 $result['billable_duration'] = 0;
@@ -472,21 +472,20 @@ class TimeEntry extends SaleEntry {
             else {
                 if($is_full_day) {
                     // #todo - read from settings
-                    $billable_duration = self::computeBillableDuration($values['id'], 7 * 3600);
-                    $result['billable_duration'] = $billable_duration;
-                    $result['billed_duration'] = $billable_duration;
+                    $duration = 7.5 * 3600;
+                    $result['billable_duration'] = $duration;
+                    $result['billed_duration'] = $duration;
                 }
                 else {
-                    $duration = $values['duration'] ?? null;
+                    $duration = $values['duration'] ?? $event['duration'] ?? 0;
 
-                    if(!isset($duration) && isset($values['time_start'], $values['time_end'])) {
+                    if(!$duration && isset($values['time_start'], $values['time_end'])) {
                         $duration = $values['time_end'] - $values['time_start'];
                     }
 
-                    if(isset($duration)) {
-                        $billable_duration = self::computeBillableDuration($values['id'], $duration);
-                        $result['billable_duration'] = $billable_duration;
-                        $result['billed_duration'] = $billable_duration;
+                    if($duration) {
+                        $result['billable_duration'] = $duration;
+                        $result['billed_duration'] = $duration;
                     }
                 }
             }
