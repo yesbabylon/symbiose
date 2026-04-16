@@ -321,7 +321,7 @@
                         "type": "entry",
                         "label": "Proforma",
                         "icon": "pending_actions",
-                        "description": "Display proformas.",
+                        "description": "Display proformas (non-invoiced).",
                         "context": {
                             "entity": "sale\\accounting\\invoice\\Invoice",
                             "view": "list.default",
@@ -333,7 +333,7 @@
                     {
                         "id": "invoices.unpaid",
                         "type": "entry",
-                        "label": "Unpaid Invoice",
+                        "label": "Unpaid invoices",
                         "icon": "money_off",
                         "description": "Display unpaid invoices.",
                         "context": {
@@ -347,7 +347,7 @@
                     {
                         "id": "invoices.paid",
                         "type": "entry",
-                        "label": "Paid Invoice",
+                        "label": "Paid invoices",
                         "icon": "paid",
                         "description": "Display paid invoices.",
                         "context": {
@@ -359,9 +359,9 @@
                         }
                     },
                     {
-                        "id": "invoices.credit.note",
+                        "id": "invoices.credit_note",
                         "type": "entry",
-                        "label": "Note credit",
+                        "label": "Credit notes",
                         "icon": "cancel",
                         "description": "Display credit note.",
                         "context": {
@@ -370,6 +370,19 @@
                             "order": "id",
                             "sort": "asc",
                             "domain": ["status", "=", "cancelled"]
+                        }
+                    },
+                    {
+                        "id": "invoices.all",
+                        "type": "entry",
+                        "label": "All invoices",
+                        "icon": "receipt",
+                        "description": "Display all invoices.",
+                        "context": {
+                            "entity": "sale\\accounting\\invoice\\Invoice",
+                            "view": "list.default",
+                            "order": "created",
+                            "sort": "asc"
                         }
                     }
                 ]
