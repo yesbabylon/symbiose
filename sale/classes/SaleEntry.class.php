@@ -268,7 +268,7 @@ class SaleEntry extends Model {
                 (!$entry['is_internal'] && (!isset($entry['customer_id']) || !isset($entry['product_id']) || !isset($entry['price_id'])))
             ) {
                 $result[$id] = [
-                    'sale_entry_not_billable' => 'Sale entry is not billable.'
+                    'sale_entry_not_billable' => "Sale entry is not billable [{$id}]."
                 ];
                 continue;
             }
