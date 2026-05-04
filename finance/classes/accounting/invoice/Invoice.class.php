@@ -218,15 +218,15 @@ class Invoice extends Model {
         return $result;
     }
 
+    /**
+     * #todo - this is incorrect, workaround based on 21% tax
+     */
     public static function calcPrice($self): array {
         $result = [];
-        $self->read(['invoice_lines_ids' => ['price']]);
+        $self->read(['total']);
         $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision', 2);
         foreach($self as $id => $invoice) {
-            $price = array_reduce($invoice['invoice_lines_ids']->get(true), function ($c, $a) use($currency_decimal_precision) {
-                return $c + round($a['price'], $currency_decimal_precision);
-            }, 0.0);
-
+            $price = $invoice['total'] * 1.21;
             $result[$id] = round($price, $currency_decimal_precision);
         }
 
