@@ -246,7 +246,7 @@ class SaleEntry extends Model {
     }
 
     /**
-     * Method to override when extending class, by default no validation process for sale entry
+     * Method to be overridden in extending classes, by default there is no validation process for sale entry
      *
      * @param $self
      * @return array
@@ -255,7 +255,6 @@ class SaleEntry extends Model {
         $result = [];
         $self->read(['id']);
         foreach($self as $id => $entry) {
-            $result[$id] = false;
         }
         return $result;
     }
@@ -268,7 +267,10 @@ class SaleEntry extends Model {
             if( $entry['status'] !== 'validated' ||
                 (!$entry['is_internal'] && (!isset($entry['customer_id']) || !isset($entry['product_id']) || !isset($entry['price_id'])))
             ) {
-                $result[$id] = false;
+                $result[$id] = [
+                    'sale_entry_not_billable' => 'Sale entry is not billable.'
+                ];
+                continue;
             }
         }
 
