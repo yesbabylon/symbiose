@@ -1,6 +1,7 @@
 {
     "name": "Subscription Entries",
     "description": "Default listing of all subscription entries.",
+    "order": "date_to",
     "sort": "desc",
     "layout": {
         "items": [
@@ -9,6 +10,7 @@
                 "value": "id",
                 "width": "10%",
                 "sortable": true,
+                "visible": false,
                 "readonly": true
             },
             {

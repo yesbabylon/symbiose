@@ -207,10 +207,12 @@ class Invoice extends Model {
     public static function calcTotal($self): array {
         $result = [];
         $self->read(['invoice_lines_ids' => ['total']]);
+        $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision', 2);
         foreach($self as $id => $invoice) {
-            $result[$id] = array_reduce($invoice['invoice_lines_ids']->get(true), function ($c, $a) {
-                return $c + $a['total'];
+            $total = array_reduce($invoice['invoice_lines_ids']->get(true), function ($c, $a) use($currency_decimal_precision) {
+                return $c + round($a['total'], $currency_decimal_precision);
             }, 0.0);
+            $result[$id] = round($total, $currency_decimal_precision);
         }
 
         return $result;
@@ -221,8 +223,8 @@ class Invoice extends Model {
         $self->read(['invoice_lines_ids' => ['price']]);
         $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision', 2);
         foreach($self as $id => $invoice) {
-            $price = array_reduce($invoice['invoice_lines_ids']->get(true), function ($c, $a) {
-                return $c + $a['price'];
+            $price = array_reduce($invoice['invoice_lines_ids']->get(true), function ($c, $a) use($currency_decimal_precision) {
+                return $c + round($a['price'], $currency_decimal_precision);
             }, 0.0);
 
             $result[$id] = round($price, $currency_decimal_precision);
