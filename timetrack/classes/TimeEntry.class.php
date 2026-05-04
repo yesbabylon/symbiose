@@ -349,7 +349,7 @@ class TimeEntry extends SaleEntry {
         return 0.0;
     }
 
-    private static function searchApplicablePrice($product_id, $date): ?Model {
+    private static function computeApplicablePrice($product_id, $date): ?Model {
         $price_lists_ids = PriceList::search(
                 [
                     ['date_from', '<=', $date],
@@ -526,7 +526,7 @@ class TimeEntry extends SaleEntry {
             $date = self::getOnchangeValue('date', $event, $values, $result, time());
 
             if($product_id) {
-                $price = self::searchApplicablePrice($product_id, $date);
+                $price = self::computeApplicablePrice($product_id, $date);
 
                 if($price) {
                     $result['price_id'] = [
@@ -655,21 +655,24 @@ class TimeEntry extends SaleEntry {
 
     protected static function calcPriceId($self): array {
         $result = [];
-        $self->read(['has_sale_model', 'project_id' => ['sale_model_id' => ['price_id']], 'product_id', 'date']);
+        $self->read(['product_id', 'date', 'has_sale_model', 'project_id' => ['sale_model_id' => ['has_price', 'price_id']]]);
         foreach($self as $id => $entry) {
-            if($entry['has_sale_model'] ?? false) {
-                $result[$id] = $entry['project_id']['sale_model_id']['price_id'] ?? null;
-                continue;
+            $price_id = null;
+
+            if($entry['has_sale_model']) {
+                if($entry['project_id']['sale_model_id']['has_price']) {
+                    $price_id = $entry['project_id']['sale_model_id']['price_id'];
+                }
             }
 
-            if(!isset($entry['product_id'], $entry['date'])) {
-                continue;
+            if(!$price_id && isset($entry['product_id'], $entry['date'])) {
+                $price = self::computeApplicablePrice($entry['product_id'], $entry['date']);
+                if($price) {
+                    $price_id = $price['id'];
+                }
             }
 
-            $price = self::searchApplicablePrice($entry['product_id'], $entry['date']);
-            if($price) {
-                $result[$id] = $price['id'];
-            }
+            $result[$id] = $price_id;
         }
         return $result;
     }

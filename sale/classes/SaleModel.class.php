@@ -37,6 +37,13 @@ class SaleModel extends Model {
                 'description'       => 'The product to assign to sale entries.'
             ],
 
+            'has_price' => [
+                'type'           => 'boolean',
+                'description'    => 'Flag telling if a fixed sale model applies to the project.',
+                'instant'        => true,
+                'default'        => false
+            ],
+
             'price_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\price\Price',
