@@ -215,6 +215,54 @@
                 ]
             },
             {
+                "id": "contracts",
+                "type": "parent",
+                "label": "Contracts",
+                "icon": "description",
+                "description": "Contracts parent menu.",
+                "children": [
+                    {
+                        "id": "contracts.contracts",
+                        "type": "entry",
+                        "label": "Contracts",
+                        "icon": "list",
+                        "description": "Display all contracts.",
+                        "context": {
+                            "entity": "sale\\contract\\Contract",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "contracts.serviceaccounts",
+                        "type": "entry",
+                        "label": "Service Accounts",
+                        "icon": "account_balance_wallet",
+                        "description": "Display all service accounts.",
+                        "context": {
+                            "entity": "sale\\contract\\ServiceAccount",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "contracts.reports",
+                        "type": "entry",
+                        "label": "Reports",
+                        "icon": "summarize",
+                        "description": "Display all service account reports.",
+                        "context": {
+                            "entity": "sale\\contract\\Report",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    }
+                ]
+            },
+            {
                 "id": "orders",
                 "type": "entry",
                 "label": "Orders",
