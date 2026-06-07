@@ -1,5 +1,5 @@
 {
-    "name": "Contracts",
+    "name": "Contract",
     "description": "Contracts are formal agreement regarding the delivery of products or services concluded between two parties.",
     "access": {
         "groups": ["sale.default.users"]
@@ -18,20 +18,23 @@
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "50%",
+                                                "width": "100%",
+                                                "readonly": true,
                                                 "widget": {
                                                     "heading": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "status",
+                                                "value": "customer_id",
+                                                "label": "Customer",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "description",
-                                                "width": "100%"                                                
+                                                "value": "contract_type_id",
+                                                "label": "Contract type",
+                                                "width": "50%"
                                             }
                                         ]
                                     },
@@ -40,13 +43,130 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "date",
+                                                "value": "status",
+                                                "label": "Status",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "valid_until",
+                                                "value": "is_active",
+                                                "label": "Active",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date_from",
+                                                "label": "From",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date_to",
+                                                "label": "To",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.details",
+                        "label": "Details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "proposal_valid_until",
+                                                "label": "Proposal valid until",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "sent_at",
+                                                "label": "Sent at",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "accepted_at",
+                                                "label": "Accepted at",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "rejected_at",
+                                                "label": "Rejected at",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "rejection_reason",
+                                                "label": "Rejection reason",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "total",
+                                                "label": "Total",
+                                                "width": "50%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price",
+                                                "label": "Price",
+                                                "width": "50%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "label": "Description",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.lines",
+                        "label": "Contract Lines",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "contract_lines_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }
