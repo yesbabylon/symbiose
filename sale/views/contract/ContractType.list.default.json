@@ -1,0 +1,32 @@
+{
+    "name": "Contract Types",
+    "description": "This view is intended for displaying the list of contract types.",
+    "access": {
+        "groups": ["sale.default.users"]
+    },
+    "order": "name",
+    "sort": "asc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "30%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "code",
+                "label": "Code",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "label": "Description",
+                "width": "50%"
+            }
+        ]
+    }
+}
