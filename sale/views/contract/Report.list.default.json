@@ -1,0 +1,98 @@
+{
+    "name": "Reports",
+    "description": "This view is intended for displaying the list of service account reports.",
+    "access": {
+        "groups": ["sale.default.users"]
+    },
+    "order": "date",
+    "sort": "desc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "label": "Report",
+                "width": "8%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "date_from",
+                "label": "From",
+                "width": "12%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "date",
+                "label": "To",
+                "width": "12%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "service_account_id",
+                "label": "Service account",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "customer_id",
+                "label": "Customer",
+                "width": "20%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "label": "Status",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "total_points",
+                "label": "Points",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "total_credits",
+                "label": "Credits",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "balance_new",
+                "label": "Balance",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "has_non_posted",
+                "label": "Non posted",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "is_sendable",
+                "label": "Sendable",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            }
+        ]
+    }
+}

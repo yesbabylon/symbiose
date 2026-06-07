@@ -149,7 +149,7 @@ class TimeEntry extends SaleEntry {
                 'type'           => 'datetime',
                 'description'    => 'Date of the entry.',
                 'default'        => function() { return time(); },
-                'dependents'     => ['price_id', 'unit_price']
+                'dependents'     => ['price_id', 'unit_price', 'creation_delta']
             ],
 
             'time_start' => [
@@ -164,6 +164,25 @@ class TimeEntry extends SaleEntry {
                 'description'    => 'End time of the entry.',
                 'default'        => function () { return (self::getTimeZoneCurrentHour() + 1) * 3600; },
                 'dependents'     => ['duration', 'billable_duration', 'billed_duration', 'qty', 'total']
+            ],
+
+            'pause_time' => [
+                'type'              => 'integer',
+                'usage'             => 'time',
+                'description'       => 'Pause time to subtract from total time.',
+            ],
+
+            // #todo - add a Customer establishment and base time on related address
+            'travel_time' => [
+                'type'              => 'integer',
+                'usage'             => 'time',
+                'description'       => 'Computed travel duration: based on settings and customer.',
+            ],
+
+            'on_site' => [
+                'type'              => 'boolean',
+                'default'           => false,
+                'description'       => 'Does the entry imply some travel? Value retrieved from the related Ticket.'
             ],
 
             'is_full_day' => [
@@ -181,6 +200,18 @@ class TimeEntry extends SaleEntry {
                 'store'          => true,
                 'instant'        => true,
                 'readonly'       => true
+            ],
+
+            'priority' => [
+                'type'              => 'integer',
+                'selection'         => [
+                    1       => 'Low',
+                    2       => 'Medium',
+                    3       => 'High',
+                    4       => 'Critical'
+                ],
+                'default'           => 1,
+                'description'       => 'Priority level retrieved from the related Ticket (1 = low, 4 = critical).'
             ],
 
             'billable_duration' => [
@@ -209,6 +240,14 @@ class TimeEntry extends SaleEntry {
                 'foreign_object' => 'core\User',
                 'description'    => 'User the time entry was performed by.',
                 'default'        => 'defaultUserId'
+            ],
+
+            'creation_delta' => [
+                'type'              => 'computed',
+                'result_type'       => 'time',
+                'description'       => 'Computed delay between the time of recording of the entry and the actual time the work took place.',
+                'function'          => 'calcCreationDelta',
+                'store'             => true
             ],
 
             'origin' => [
@@ -624,6 +663,18 @@ class TimeEntry extends SaleEntry {
         foreach($self as $id => $entry) {
             self::id($id)->update(['reference' => 'ticket '.$entry['ticket_id']]);
         }
+    }
+
+    protected static function calcCreationDelta($self) {
+        $result = [];
+        $self->read(['date', 'created']);
+        foreach($self as $id => $entry) {
+            if(!$entry['created'] || !$entry['end']) {
+                continue;
+            }
+            $result[$id] = $entry['created'] - $entry['end'];
+        }
+        return $result;
     }
 
     public static function calcIsInternal($self) {

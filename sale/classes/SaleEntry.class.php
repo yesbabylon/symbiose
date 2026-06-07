@@ -293,10 +293,10 @@ class SaleEntry extends Model {
             // create a new receivable assigned to this entry
             $receivable = Receivable::create([
                     'receivables_queue_id' => $receivables_queue_id,
-                    'sale_entry_id'        => $id,
+                    'origin_object_class'  => $entry['object_class'],
+                    'origin_object_id'     => $id,
                     'date'                 => $entry['date'],
-                    'invoice_group'        => $entry['invoice_group'],
-                    'sale_entry_class'     => $entry['object_class']
+                    'invoice_group'        => $entry['invoice_group']
                 ])
                 ->read(['id'])
                 ->first();

@@ -59,6 +59,12 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Has Price",
+                                                "value": "has_price",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "label": "Price",
                                                 "value": "price_id",
                                                 "width": "100%",

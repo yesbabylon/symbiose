@@ -35,39 +35,55 @@ class Contract extends Model {
                 'description'       => 'Short description about the reason of the contract (i.e. the object of the agreement).'
             ],
 
-            'status' => [
-                'type'              => 'string',
-                'selection'         => [
-                    'pending',
-                    'sent',                 // sent to customer for signature
-                    'signed',               // signed by customer (valid)
-                    'cancelled'             // outdated or rejected
-                ],
-                'description'       => 'Status of the contract.',
-                'default'           => 'pending'
-            ],
-
             'is_active' => [
                 'type'              => 'boolean',
                 'description'       => 'Mark the contract as being active or not.',
                 'default'           => true
             ],
 
-            'date' => [
+            'date_from' => [
                 'type'              => 'date',
                 'description'       => 'Date at which the contract has been officially released.'
             ],
 
-            'valid_until' => [
+            'date_to' => [
+                'type'              => 'date',
+                'description'       => 'Date at which the contract ends or has to be renewed.'
+            ],
+
+            'proposal_valid_until' => [
                 'type'              => 'date',
                 'description'       => 'Date after which the contract lapses if it has not been approved.',
                 'visible'           => [ 'status', 'in', ['pending', 'sent'] ]
+            ],
+
+            'sent_at' => [
+                'type'              => 'datetime',
+                'description'       => 'Date and time at which the contract was sent to the customer.'
+            ],
+
+            'accepted_at' => [
+                'type'              => 'datetime',
+                'description'       => 'Date and time at which the contract was accepted by the customer.'
+            ],
+
+            'rejected_at' => [
+                'type'              => 'datetime',
+                'description'       => 'Date and time at which the contract was rejected by the customer.'
+            ],
+
+            'rejection_reason' => [
+                'type'              => 'string',
+                'usage'             => 'text/plain',
+                'description'       => 'Reason provided when the contract is rejected.',
+                'visible'           => [ 'status', '=', 'rejected' ]
             ],
 
             'customer_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => 'The customer the contract relates to.',
+                'dependents'        => ['name']
             ],
 
             'contract_lines_ids' => [
@@ -94,8 +110,22 @@ class Contract extends Model {
                 'usage'             => 'amount/money:2',
                 'store'             => true,
                 'description'       => "Final tax-included contract amount (computed)."
-            ]
+            ],
 
+            'status' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'pending',
+                    'ready',                // proposal ready to be sent
+                    'sent',                 // sent to customer for signature
+                    'signed',               // signed by customer (valid)
+                    'rejected',
+                    'expired',
+                    'cancelled'             // outdated or rejected
+                ],
+                'description'       => 'Status of the contract.',
+                'default'           => 'pending'
+            ]
         ];
     }
 
@@ -103,7 +133,7 @@ class Contract extends Model {
         $result = [];
         $self->read(['customer_id' => ['name']]);
         foreach($self as $id => $contract) {
-            $result[$id] = "{$contract['customer_id']['name']} - {$contract['id']}";
+            $result[$id] = sprintf("{$contract['customer_id']['name']} - %05d", $contract['id']);
         }
 
         return $result;

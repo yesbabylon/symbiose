@@ -49,6 +49,7 @@ class SaleModel extends Model {
                 'foreign_object'    => 'sale\price\Price',
                 'description'       => 'The price to assign to sale entries.',
                 'onupdate'          => 'onupdatePriceId',
+                'visible'           => ['has_price', '=', true],
                 'domain'            => ['product_id', '=', 'object.product_id']
             ],
 
@@ -56,7 +57,8 @@ class SaleModel extends Model {
                 'type'              => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'The unit price to assign to sale entries.',
-                'help'              => 'Change to assign a custom unit price.'
+                'help'              => 'Change to assign a custom unit price.',
+                'visible'           => ['has_price', '=', true]
             ],
 
             'projects_ids' => [

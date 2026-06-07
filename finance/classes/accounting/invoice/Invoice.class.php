@@ -220,6 +220,8 @@ class Invoice extends Model {
 
     /**
      * #todo - this is incorrect, workaround based on 21% tax
+     *
+     * #memo - VAT is computed by rate, on sums of lines grouped by rate
      */
     public static function calcPrice($self): array {
         $result = [];

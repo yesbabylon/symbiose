@@ -63,9 +63,9 @@ class Receivable extends Model {
                 'default'           => 'pending'
             ],
 
-            'sale_entry_class' => [
+            'origin_object_class' => [
                 'type'              => 'string',
-                'description'       => 'Children class of the Sale Entry the Receivable originates from.',
+                'description'       => 'Entity class that the Receivable originates from.',
                 'help'              => 'Sale entries can to extended by other classes to enrich logic behavior. This field is used to store the class name of the object. Selection is provided as a memo but is non-exhaustive.',
                 'default'           => 'sale\SaleEntry',
                 'selection'         => [
@@ -75,28 +75,40 @@ class Receivable extends Model {
                 ]
             ],
 
-            'sale_entry_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\SaleEntry',
-                'description'       => 'The sale entry the receivable originates from.',
+            'origin_object_id' => [
+                'type'              => 'integer',
+                'description'       => 'Object identifier, as a complement to `origin_object_class`.',
+                'help'              => 'Together origin_object_class and origin_object_id reference the accounting document the entry is linked to.',
                 'dependents'        => ['name', 'description', 'product_id', 'price_id', 'unit_price', 'vat_rate', 'qty', 'free_qty', 'discount', 'total', 'price'],
                 'required'          => true,
                 'readonly'          => true
             ],
 
-            // #todo - generalize this for all kind of sale entries or remove is non necessary
+            'sale_entry_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'sale\SaleEntry',
+                'relation'          => ['origin_object_id'],
+                'readonly'          => true,
+                'visible'           => ['origin_object_class', '=', 'sale\SaleEntry']
+            ],
+
             'time_entry_id' => [
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'timetrack\TimeEntry',
-                'relation'          => ['sale_entry_id']
+                'relation'          => ['origin_object_id'],
+                'readonly'          => true,
+                'visible'           => ['origin_object_class', '=', 'timetrack\TimeEntry']
             ],
 
             'subscription_entry_id' => [
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'sale\subscription\SubscriptionEntry',
-                'relation'          => ['sale_entry_id']
+                'relation'          => ['sale_entry_id'],
+                'readonly'          => true,
+                'visible'           => ['origin_object_class', '=', 'sale\subscription\SubscriptionEntry']
             ],
 
             'invoice_group' => [
@@ -209,10 +221,19 @@ class Receivable extends Model {
                 'ondelete'          => 'null'
             ],
 
+            // receivable is either linked to an invoice line or to a service account entry
+
             'invoice_line_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\accounting\invoice\InvoiceLine',
                 'description'       => 'The invoice line that has been generated based on the item.',
+                'ondelete'          => 'null'
+            ],
+
+            'service_account_entry_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\contract\ServiceAccountEntry',
+                'description'       => 'The SA entry that has been generated based on the item.',
                 'ondelete'          => 'null'
             ]
 

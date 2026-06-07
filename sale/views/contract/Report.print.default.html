@@ -1,0 +1,341 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+<title>Service Account Report</title>
+<style type="text/css">
+@page {
+    margin: 1cm;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    margin-top: 130px;
+    margin-bottom: 35px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.7em;
+    text-align: justify;
+    width: 100%;
+}
+
+h2 {
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-size: 21px;
+}
+
+h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 15px;
+}
+
+div,
+table,
+table tr td {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+table thead th {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+div.header,
+div.footer {
+    box-sizing: border-box;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
+}
+
+div.inner {
+    height: auto;
+    box-sizing: border-box;
+    border: none;
+}
+
+div.inner p {
+    margin: 0;
+}
+
+div.inner .wrapper {
+    margin: 0;
+    margin-top: 20px;
+    padding: 0;
+    border: none;
+}
+
+div.inner .wrapper > table,
+div.inner .wrapper > table tr,
+div.inner .wrapper > table tr td {
+    page-break-inside: auto;
+}
+
+table.ticket-line {
+    page-break-inside: avoid !important;
+}
+
+td.ticket {
+    page-break-inside: avoid !important;
+}
+
+div.section-title {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+div.inner .wrapper.trailer {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow: visible;
+    border-top: solid 1px black;
+    padding-top: 10px;
+}
+
+div.header {
+    top: 0;
+    left: 0;
+    height: 120px;
+}
+
+div.header .summary-row {
+    font-size: 14px;
+}
+
+div.header > table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: separate;
+    border: solid 1px black;
+}
+
+div.footer {
+    bottom: 0;
+    left: 0;
+    height: 30px;
+    overflow: visible;
+    z-index: 200;
+    font-size: 0.8em !important;
+}
+
+hr {
+    page-break-after: always;
+    border: 0;
+    height: 0;
+    visibility: hidden;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+    <table cellpadding="0" cellspacing="0">
+        <tr valign="middle">
+            <td colspan="2" style="font-size: 20px; border-bottom: solid 1px black; height: 20px; padding: 0 20px;">Service Account Report</td>
+        </tr>
+        <tr valign="top">
+            <td style="width: 74%; padding: 10px 25px;">
+                <div class="summary-row" style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 80px;"><b>Contract:</b></div>
+                    <div style="display: inline-block;">{{customer}} - {{service_account}}</div>
+                </div>
+                <!--
+                <div class="summary-row" style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 80px;"><b>Category:</b></div>
+                    <div style="display: inline-block;">{{account_type}}</div>
+                </div>
+                -->
+                <div class="summary-row" style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 80px;"><b>Report:</b></div>
+                    <div style="display: inline-block;">{{period}} ({{period_dates}})</div>
+                </div>
+            </td>
+            <td style="width: 26%; padding: 10px 25px;">
+                <div class="summary-row" style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 120px;"><b>Created on:</b></div>
+                    <div style="display: inline-block; width: 90px; text-align: right;">{{emission_date}}</div>
+                </div>
+                <div class="summary-row" style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 120px;"><b>Previous balance:</b></div>
+                    <div style="display: inline-block; width: 90px; text-align: right;">{{balance_old}}</div>
+                </div>
+                <div class="summary-row" style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 120px;"><b>New balance:</b></div>
+                    <div style="display: inline-block; width: 90px; text-align: right;">{{balance_new}}</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="footer">
+    <p style="text-align: center;">
+        NETiKA IT Services
+        <br />
+        2 rue Belliard, 1040 Brussels &middot; 27 avenue Z&eacute;nobe Gramme, 1300 Wavre &middot; T +32 2 880 81 94
+    </p>
+    <div style="position: absolute; bottom: 20px; right: 10px;">
+        <img src="{{img_url}}" style="width: 100px; height: 59px;" />
+    </div>
+</div>
+
+<div class="inner">
+    <div class="wrapper">
+        <div class="section-title">Services details</div>
+        <table width="100%" cellpadding="4" cellspacing="0">
+            <thead style="border-bottom: solid 1px black; border-left: 0; border-right: 0;">
+                <tr>
+                    <th width="10%" style="padding-left: 7px; text-align: left;">Ticket</th>
+                    <th width="25%" style="padding-left: 7px; text-align: left;">Day</th>
+                    <th width="7%" style="text-align: center; padding-right: 7px;">Start</th>
+                    <th width="7%" style="text-align: center; padding-right: 7px;">Stop</th>
+                    <th width="7%" style="text-align: right; padding-right: 7px;">Pause</th>
+                    <th width="6%" style="text-align: right; padding-right: 7px;">Onsite</th>
+                    <th width="10%" style="text-align: right; padding-right: 7px;">Who</th>
+                    <th width="10%" style="text-align: right; padding-right: 7px;">Role</th>
+                    <th width="20%" style="text-align: right; padding-right: 7px;">Type</th>
+                    <th width="8%" style="text-align: right; padding-right: 7px;">#</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                <tr valign="top">
+                    <td class="ticket" colspan="10">
+                        <table width="100%" cellpadding="0" cellspacing="0">
+                            <tr valign="top">
+                                <td>
+                                    <b>{{ticket.description}}{% if ticket.contact|length %} - {{ticket.contact}}{% endif %}</b>
+                                </td>
+                            </tr>
+                            {% for line in ticket.lines %}
+                            <tr valign="top">
+                                <td>
+                                    <table class="ticket-line" width="100%" cellpadding="0" cellspacing="0">
+                                        <tr valign="top">
+                                            <td width="10%"><!-- ticket column --></td>
+                                            <td width="25%"><b>{{line.date}}</b></td>
+                                            <td width="7%" style="text-align: center;">{{line.start}}</td>
+                                            <td width="7%" style="text-align: center; padding-right: 7px;">{{line.end}}</td>
+                                            <td width="7%" style="text-align: right; padding-right: 7px;">{{line.pause}}</td>
+                                            <td width="6%" style="text-align: right; padding-right: 7px;">{{line.on_site}}</td>
+                                            <td width="10%" style="text-align: right; padding-right: 7px;">{{line.who}}</td>
+                                            <td width="10%" style="text-align: right; padding-right: 7px;">{{line.role}}</td>
+                                            <td width="20%" style="text-align: right; padding-right: 7px;">{{line.type}}</td>
+                                            <td width="8%" style="text-align: right; padding-right: 7px;">{{line.points}}</td>
+                                        </tr>
+                                        {% if show_details %}
+                                        <tr valign="top">
+                                            <td><!-- ticket column --></td>
+                                            <td colspan="9">{{line.description}}</td>
+                                        </tr>
+                                        {% endif %}
+                                        {% if show_logs %}
+                                        <tr valign="top">
+                                            <td><!-- ticket column --></td>
+                                            <td colspan="9"><i>{{line.log}}</i></td>
+                                        </tr>
+                                        {% endif %}
+                                    </table>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+                {% else %}
+                <tr valign="top">
+                    <td colspan="10" style="padding: 8px 7px;">No services for this period.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="wrapper trailer" style="margin-top: -1px;">
+        <table width="100%" style="border: 0;" cellpadding="4" cellspacing="0">
+            <tr valign="top">
+                <td width="92%" style="text-align: right; padding-right: 10px;">Total services for period</td>
+                <td width="8%" style="text-align: right;">{{total_tickets}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<hr />
+
+<div class="inner">
+    <div class="wrapper">
+        <div class="section-title">Miscellaneous</div>
+        <table width="100%" cellpadding="4" cellspacing="0">
+            <thead style="border-bottom: solid 1px black; border-left: 0; border-right: 0;">
+                <tr>
+                    <th width="10%" style="padding-left: 7px; text-align: left;">Date</th>
+                    <!--
+                    <th width="20%" style="padding-left: 7px; text-align: left;">Who</th>
+                    -->
+                    <th width="80%" style="padding-right: 7px; text-align: left;">Description</th>
+                    <th width="10%" style="padding-right: 7px; text-align: right;">#</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for credit_line in credits %}
+                <tr valign="top">
+                    <td>{{credit_line.date}}</td>
+                    <!--
+                    <td style="text-align: left;">{{credit_line.who}}</td>
+                    -->
+                    <td style="text-align: left;">{{credit_line.description}}</td>
+                    <td style="text-align: right;">{{credit_line.points}}</td>
+                </tr>
+                {% else %}
+                <tr valign="top">
+                    <td colspan="3" style="padding: 8px 7px;">No credits or corrections for this period.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="wrapper trailer" style="margin-top: -1px;">
+        <table width="100%" style="border: 0;" cellpadding="4" cellspacing="0">
+            <tr valign="top">
+                <td width="92%" style="text-align: right; padding-right: 10px;">Total credit &amp; corrections for period</td>
+                <td width="8%" style="text-align: right;">{{total_credits}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="inner">
+    <div class="wrapper">
+        <div class="section-title" style="width: 100%; border-bottom: solid 1px black;">Service Account Balance</div>
+        <div style="margin-top: 20px;">
+            <div style="width: 100%; height: 18px;">
+                <div style="display: inline-block; width: 80%;">Initial Balance</div>
+                <div style="display: inline-block; width: 20%; text-align: right; font-weight: bold;">{{balance_old}}</div>
+            </div>
+            <div style="width: 100%; height: 18px;">
+                <div style="display: inline-block; width: 80%;">Total Services for period (details on previous pages)</div>
+                <div style="display: inline-block; width: 20%; text-align: right; font-weight: bold;">{{total_tickets}}</div>
+            </div>
+            <div style="width: 100%; height: 18px;">
+                <div style="display: inline-block; width: 80%;">Total Credits &amp; Corrections for period</div>
+                <div style="display: inline-block; width: 20%; text-align: right; font-weight: bold;">{{total_credits}}</div>
+            </div>
+            <div style="width: 100%; height: 18px;">
+                <div style="display: inline-block; width: 80%;">New balance</div>
+                <div style="display: inline-block; width: 20%; text-align: right; font-weight: bold;">{{balance_new}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
