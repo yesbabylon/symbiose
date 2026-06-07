@@ -36,6 +36,13 @@ class Contract extends Model {
                 'description'       => 'Short description or comments about the contract (e.g. the object of the agreement).'
             ],
 
+            'contract_type_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\contract\ContractType',
+                'description'       => 'Type of service account.',
+                'ondelete'          => 'null'
+            ],
+
             'is_active' => [
                 'type'              => 'boolean',
                 'description'       => 'Mark the contract as being active or not.',

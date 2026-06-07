@@ -77,11 +77,11 @@ class ServiceAccount extends \sale\contract\Contract {
                 'type'              => 'string',
                 'description'       => 'Mode for reporting to the customer about the contract.',
                 'help'              => 'Indicates how the Reports must be communicated to the customer: no sending, sending, sending + archive.',
-                'default'           => 'None',
+                'default'           => 'send',
                 'selection'         => [
-                    'None',
-                    'Send',
-                    'Archive'
+                    'none',
+                    'send',
+                    'archive'
                 ]
             ],
 
