@@ -2,7 +2,7 @@
     "name": "Report",
     "description": "This form displays a service account report.",
     "access": {
-        "groups": ["order.default.users"]
+        "groups": ["sale.default.users"]
     },
     "layout": {
         "groups": [

@@ -74,12 +74,6 @@ class ServiceAccount extends \sale\contract\Contract {
                 'description'       => 'The most recent line relating to the the account.'
             ],
 
-            'is_bonus' => [
-                'type'              => 'boolean',
-                'description'       => 'The contract is candidate for bonus calculation.',
-                'default'           => false
-            ],
-
             'is_invoiceable' => [
                 'type'              => 'boolean',
                 'description'       => 'The contract as implies CutOff (will be listed in Cut-Off Reports).',
@@ -88,7 +82,8 @@ class ServiceAccount extends \sale\contract\Contract {
 
             'm_reporting' => [
                 'type'              => 'string',
-                'description'       => 'Reporting mode for the contract.',
+                'description'       => 'Mode for reporting to the customer about the contract.',
+                'help'              => 'Indicates how the Reports must be communicated to the customer: no sending, sending, sending + archive.',
                 'default'           => 'None',
                 'selection'         => [
                     'None',
