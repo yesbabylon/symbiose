@@ -40,12 +40,14 @@ class Contract extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\contract\ContractType',
                 'description'       => 'Type of service account.',
-                'ondelete'          => 'null'
+                'ondelete'          => 'null',
+                'required'          => true
             ],
 
             'is_active' => [
                 'type'              => 'boolean',
-                'description'       => 'Mark the contract as being active or not.',
+                'description'       => 'Mark the contract as being active.',
+                'help'              => 'A contract might be temporarily inactive.',
                 'default'           => true
             ],
 

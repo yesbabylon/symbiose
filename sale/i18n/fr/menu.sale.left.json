@@ -53,6 +53,14 @@
             "label": "Tous les contrats",
             "help": ""
         },
+        "contracts.serviceaccounts": {
+            "label": "Comptes de service",
+            "help": ""
+        },
+        "contracts.reports": {
+            "label": "Rapports",
+            "help": ""
+        },
         "orders": {
             "label": "Commandes",
             "help": ""
