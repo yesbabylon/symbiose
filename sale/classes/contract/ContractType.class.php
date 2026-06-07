@@ -18,13 +18,14 @@ class ContractType extends Model {
                 'required'          => true
             ],
 
-            'description' => [
-                'type'              => 'string'
+            'code' => [
+                'type'              => 'string',
+                'usage'             => 'text/plain:50',
+                'description'       => 'Mnemo code for identifying the contract type'
             ],
 
-            'is_active' => [
-                'type'              => 'boolean',
-                'default'           => true
+            'description' => [
+                'type'              => 'string'
             ]
 
         ];

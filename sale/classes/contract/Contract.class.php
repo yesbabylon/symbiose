@@ -32,7 +32,8 @@ class Contract extends Model {
 
             'description' => [
                 'type'              => 'string',
-                'description'       => 'Short description about the reason of the contract (i.e. the object of the agreement).'
+                'usage'             => 'text/plain:small',
+                'description'       => 'Short description or comments about the contract (e.g. the object of the agreement).'
             ],
 
             'is_active' => [
@@ -133,6 +134,9 @@ class Contract extends Model {
         $result = [];
         $self->read(['customer_id' => ['name']]);
         foreach($self as $id => $contract) {
+            if(!$contract['customer_id']) {
+                continue;
+            }
             $result[$id] = sprintf("{$contract['customer_id']['name']} - %05d", $contract['id']);
         }
 

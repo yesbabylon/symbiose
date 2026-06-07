@@ -25,13 +25,6 @@ class ServiceAccount extends \sale\contract\Contract {
     public static function getColumns() {
         return [
 
-            'service_account_type_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\contract\ContractType',
-                'description'       => 'Type of service account.',
-                'ondelete'          => 'null'
-            ],
-
             'reporting_from' => [
                 'type'              => 'date',
                 'description'       => 'First date to use when no previous report exists.'
