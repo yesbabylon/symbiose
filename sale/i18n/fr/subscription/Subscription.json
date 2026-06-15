@@ -29,6 +29,15 @@
             "description": "Type de durée.",
             "help": ""
         },
+        "pricing_mode": {
+            "label": "Mode de tarification",
+            "description": "Mode utilisé pour calculer le prix de l'abonnement.",
+            "help": "Le mode fixe utilise une liste de prix. Le mode consommation est complété sur chaque entrée lorsque la consommation est connue.",
+            "selection": {
+                "fixed": "Prix fixe",
+                "consumption": "Consommation"
+            }
+        },
         "is_expired": {
             "label": "Expiré",
             "description": "L'abonnement est-il expiré.",

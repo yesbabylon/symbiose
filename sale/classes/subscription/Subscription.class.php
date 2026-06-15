@@ -71,6 +71,18 @@ class Subscription extends Model  {
                 'default'           => 'yearly'
             ],
 
+            'pricing_mode' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'fixed'       => 'Fixed',
+                    'consumption' => 'Consumption'
+                ],
+                'description'       => 'Pricing mode of the subscription.',
+                'help'              => 'Fixed subscriptions use a price list. Consumption subscriptions are completed on each generated entry once usage is known.',
+                'default'           => 'fixed',
+                'dependents'        => ['price_id', 'price']
+            ],
+
             'is_auto_renew' => [
                 'type'              => 'boolean',
                 'description'       => 'The subscription is auto renew.',
@@ -181,21 +193,36 @@ class Subscription extends Model  {
             $result['has_upcoming_expiry'] = $days_until_expiry < 30;
         }
 
-        if( isset($event['product_id'], $date_from, $date_to) ) {
+        $pricing_mode = $event['pricing_mode'] ?? $values['pricing_mode'] ?? 'fixed';
 
-            $price_id = self::computePriceId(
-                    $event['product_id'],
+        if($pricing_mode === 'consumption') {
+            $result['price_id'] = null;
+            $result['price'] = null;
+        }
+        elseif( (isset($event['product_id']) || isset($event['pricing_mode'])) && isset($date_from, $date_to) ) {
+            $product_id = $event['product_id'] ?? $values['product_id'] ?? null;
+
+            if($product_id) {
+                $price_id = self::computePriceId(
+                    $product_id,
                     $date_from,
                     $date_to
                 );
 
-            $price = Price::id($price_id)->read(['id', 'name'])->first();
-            if($price) {
-                $result['price_id'] = [
-                    'id'    => $price['id'],
-                    'name'  => $price['name']
-                ];
-                $result['price'] = self::computePrice($price_id, $duration);
+                if($price_id) {
+                    $price = Price::id($price_id)->read(['id', 'name'])->first();
+                    if($price) {
+                        $result['price_id'] = [
+                            'id'    => $price['id'],
+                            'name'  => $price['name']
+                        ];
+                        $result['price'] = self::computePrice($price_id, $duration);
+                    }
+                }
+                else {
+                    $result['price_id'] = null;
+                    $result['price'] = null;
+                }
             }
         }
 
@@ -242,8 +269,13 @@ class Subscription extends Model  {
 
     public static function calcPriceId($self): array {
         $result = [];
-        $self->read(['product_id', 'date_from', 'date_to']);
+        $self->read(['pricing_mode', 'product_id', 'date_from', 'date_to']);
         foreach($self as $id => $subscription) {
+            if(($subscription['pricing_mode'] ?? 'fixed') === 'consumption') {
+                $result[$id] = null;
+                continue;
+            }
+
             if(isset($subscription['product_id'], $subscription['date_from'], $subscription['date_to'])) {
                 $price_id = self::computePriceId(
                     $subscription['product_id'],
@@ -283,9 +315,14 @@ class Subscription extends Model  {
 
     protected static function calcPrice($self): array {
         $result = [];
-        $self->read(['duration', 'price_id' => ['price', 'has_period', 'period']]);
+        $self->read(['pricing_mode', 'duration', 'price_id' => ['price', 'has_period', 'period']]);
 
         foreach($self as $id => $subscription) {
+            if(($subscription['pricing_mode'] ?? 'fixed') === 'consumption') {
+                $result[$id] = null;
+                continue;
+            }
+
             if(isset($subscription['price_id']['id'], $subscription['duration'])) {
                 $price = self::computePrice(
                     $subscription['price_id']['id'],

@@ -38,11 +38,24 @@
             },
             {
                 "type": "field",
+                "value": "pricing_mode",
+                "label": "Pricing mode",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
                 "value": "is_billable",
                 "label": "Billable",
                 "width": "15%",
                 "sortable": true,
                 "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "qty",
+                "label": "Quantity",
+                "width": "15%"
             },
             {
                 "type": "field",

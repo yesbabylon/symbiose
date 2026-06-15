@@ -53,6 +53,13 @@
                                     "label": "Subscription",
                                     "width": "66%",
                                     "readonly": true
+                                },
+                                {
+                                    "type": "field",
+                                    "value": "pricing_mode",
+                                    "label": "Pricing mode",
+                                    "width": "33%",
+                                    "readonly": true
                                 }
                             ]
                         },
@@ -83,6 +90,22 @@
             "item.customer_id": {
                 "attributes": {
                     "readonly": true
+                }
+            },
+            "item.price_id": {
+                "attributes": {
+                    "readonly": false
+                }
+            },
+            "item.unit_price": {
+                "attributes": {
+                    "readonly": false
+                }
+            },
+            "item.qty": {
+                "attributes": {
+                    "visible": ["pricing_mode", "=", "consumption"],
+                    "readonly": false
                 }
             }
         }

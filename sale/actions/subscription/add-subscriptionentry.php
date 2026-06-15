@@ -37,6 +37,7 @@ $subscription = Subscription::id($params['id'])
         'product_id',
         'date_from',
         'date_to',
+        'pricing_mode',
         'price_id',
         'price'
     ])
@@ -50,7 +51,12 @@ if($subscription['is_internal'] || empty($subscription['customer_id'])) {
     throw new Exception('internal_subscription_cannot_generate_sale_entry', QN_ERROR_NOT_ALLOWED);
 }
 
-if(!isset($subscription['product_id'], $subscription['price_id'], $subscription['price'])) {
+if(!isset($subscription['product_id'])) {
+    throw new Exception('sale_information_missing_from_subscription', QN_ERROR_INVALID_PARAM);
+}
+
+$pricing_mode = $subscription['pricing_mode'] ?? 'fixed';
+if($pricing_mode === 'fixed' && !isset($subscription['price_id'], $subscription['price'])) {
     throw new Exception('sale_information_missing_from_subscription', QN_ERROR_INVALID_PARAM);
 }
 
@@ -63,21 +69,34 @@ $subscription_entry = SubscriptionEntry::search([
     ->first();
 
 if(!$subscription_entry) {
-    $subscription_entry = SubscriptionEntry::create([
+    $values = [
             'object_id'       => $subscription['id'],
             'is_billable'     => $subscription['is_billable'],
             'customer_id'     => $subscription['customer_id'],
             'product_id'      => $subscription['product_id'],
             'date_from'       => $subscription['date_from'],
             'date_to'         => $subscription['date_to'],
-            'price_id'        => $subscription['price_id']
-        ])
+            'qty'             => 1.0
+        ];
+
+    if($pricing_mode === 'fixed') {
+        $values['price_id'] = $subscription['price_id'];
+    }
+
+    $subscription_entry = SubscriptionEntry::create($values)
         ->update([
-            'subscription_id' => $subscription['id'],
-            'unit_price'      => $subscription['price']
-        ])
-        ->transition('validate')
-        ->first();
+            'subscription_id' => $subscription['id']
+        ]);
+
+    if($pricing_mode === 'fixed') {
+        $subscription_entry = $subscription_entry
+            ->update([
+                'unit_price' => $subscription['price']
+            ])
+            ->transition('validate');
+    }
+
+    $subscription_entry = $subscription_entry->first();
 }
 
 $context->httpResponse()

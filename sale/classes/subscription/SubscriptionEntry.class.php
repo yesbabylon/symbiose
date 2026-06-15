@@ -26,7 +26,7 @@ class SubscriptionEntry extends SaleEntry {
                 'type'           => 'float',
                 'description'    => 'Quantity of product.',
                 'default'        => 1,
-                'visible'        => false
+                'visible'        => ['pricing_mode', '=', 'consumption']
             ],
 
             'object_class' => [
@@ -47,7 +47,20 @@ class SubscriptionEntry extends SaleEntry {
                 'type'           => 'many2one',
                 'foreign_object' => 'sale\subscription\Subscription',
                 'description'    => 'Identifier of the Subscription the sale entry originates from.',
-                'dependents'     => ['product_id', 'customer_id', 'is_billable']
+                'dependents'     => ['pricing_mode', 'product_id', 'customer_id', 'is_billable']
+            ],
+
+            'pricing_mode' => [
+                'type'           => 'computed',
+                'result_type'    => 'string',
+                'selection'      => [
+                    'fixed'       => 'Fixed',
+                    'consumption' => 'Consumption'
+                ],
+                'description'    => 'Pricing mode inherited from the subscription.',
+                'store'          => true,
+                'instant'        => true,
+                'relation'       => ['subscription_id' => 'pricing_mode']
             ],
 
             'product_id' => [

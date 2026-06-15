@@ -245,6 +245,12 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "pricing_mode",
+                                                "label": "Pricing mode",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "product_id",
                                                 "label": "Product (Catalog)",
                                                 "width": "50%"
@@ -262,12 +268,14 @@
                                                 "type": "field",
                                                 "value": "price_id",
                                                 "label": "Price",
-                                                "width": "33%"
+                                                "width": "33%",
+                                                "visible": ["pricing_mode", "=", "fixed"]
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "price",
-                                                "width": "15%"
+                                                "width": "15%",
+                                                "visible": ["pricing_mode", "=", "fixed"]
                                             }
                                         ]
                                     }

@@ -33,6 +33,13 @@
             },
             {
                 "type": "field",
+                "value": "pricing_mode",
+                "label": "Pricing mode",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
                 "value": "date_from",
                 "width": "10%",
                 "sortable": true,
@@ -49,6 +56,17 @@
                 "type": "field",
                 "value": "price_id",
                 "label": "Price",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "qty",
+                "label": "Quantity",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "unit_price",
                 "width": "10%"
             },
             {
