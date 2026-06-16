@@ -245,7 +245,7 @@ class Receivable extends Model {
         ];
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['origin_object_id']);
 
@@ -259,13 +259,13 @@ class Receivable extends Model {
         return $result;
     }
 
-    public static function calcDescription($self): array {
+    protected static function calcDescription($self): array {
         $result = [];
         $self->read(['origin_object_id']);
 
         foreach($self as $id => $receivable) {
             $saleEntry = SaleEntry::id($receivable['origin_object_id'])->read(['description'])->first();
-            if($saleEntry && array_key_exists('description', $saleEntry)) {
+            if($saleEntry) {
                 $result[$id] = $saleEntry['description'];
             }
         }
@@ -273,7 +273,7 @@ class Receivable extends Model {
         return $result;
     }
 
-    public static function calcCustomerId($self): array {
+    protected static function calcCustomerId($self): array {
         $result = [];
         $self->read(['origin_object_id']);
 
@@ -287,7 +287,7 @@ class Receivable extends Model {
         return $result;
     }
 
-    public static function calcProductId($self): array {
+    protected static function calcProductId($self): array {
         $result = [];
         $self->read(['origin_object_id']);
 
@@ -301,7 +301,7 @@ class Receivable extends Model {
         return $result;
     }
 
-    public static function calcPriceId($self): array {
+    protected static function calcPriceId($self): array {
         $result = [];
         $self->read(['origin_object_id']);
 
@@ -315,13 +315,13 @@ class Receivable extends Model {
         return $result;
     }
 
-    public static function calcUnitPrice($self): array {
+    protected static function calcUnitPrice($self): array {
         $result = [];
         $self->read(['origin_object_id']);
 
         foreach($self as $id => $receivable) {
             $saleEntry = SaleEntry::id($receivable['origin_object_id'])->read(['unit_price'])->first();
-            if($saleEntry && array_key_exists('unit_price', $saleEntry)) {
+            if($saleEntry) {
                 $result[$id] = $saleEntry['unit_price'];
             }
         }
@@ -329,13 +329,13 @@ class Receivable extends Model {
         return $result;
     }
 
-    public static function calcVatRate($self): array {
+    protected static function calcVatRate($self): array {
         $result = [];
         $self->read(['origin_object_id']);
 
         foreach($self as $id => $receivable) {
             $saleEntry = SaleEntry::id($receivable['origin_object_id'])->read(['vat_rate'])->first();
-            if($saleEntry && array_key_exists('vat_rate', $saleEntry)) {
+            if($saleEntry) {
                 $result[$id] = $saleEntry['vat_rate'];
             }
         }
@@ -343,13 +343,13 @@ class Receivable extends Model {
         return $result;
     }
 
-    public static function calcQty($self): array {
+    protected static function calcQty($self): array {
         $result = [];
         $self->read(['origin_object_id']);
 
         foreach($self as $id => $receivable) {
             $saleEntry = SaleEntry::id($receivable['origin_object_id'])->read(['qty'])->first();
-            if($saleEntry && array_key_exists('qty', $saleEntry)) {
+            if($saleEntry) {
                 $result[$id] = $saleEntry['qty'];
             }
         }
@@ -357,13 +357,13 @@ class Receivable extends Model {
         return $result;
     }
 
-    public static function calcFreeQty($self): array {
+    protected static function calcFreeQty($self): array {
         $result = [];
         $self->read(['origin_object_id']);
 
         foreach($self as $id => $receivable) {
             $saleEntry = SaleEntry::id($receivable['origin_object_id'])->read(['free_qty'])->first();
-            if($saleEntry && array_key_exists('free_qty', $saleEntry)) {
+            if($saleEntry) {
                 $result[$id] = $saleEntry['free_qty'];
             }
         }
@@ -371,13 +371,13 @@ class Receivable extends Model {
         return $result;
     }
 
-    public static function calcDiscount($self): array {
+    protected static function calcDiscount($self): array {
         $result = [];
         $self->read(['origin_object_id']);
 
         foreach($self as $id => $receivable) {
             $saleEntry = SaleEntry::id($receivable['origin_object_id'])->read(['discount'])->first();
-            if($saleEntry && array_key_exists('discount', $saleEntry)) {
+            if($saleEntry) {
                 $result[$id] = $saleEntry['discount'];
             }
         }
@@ -385,17 +385,16 @@ class Receivable extends Model {
         return $result;
     }
 
-    public static function calcTotal($self) {
+    protected static function calcTotal($self) {
         $result = [];
         $self->read(['qty', 'unit_price', 'free_qty', 'discount']);
         foreach($self as $id => $receivable) {
             $result[$id] = $receivable['unit_price'] * (1.0 - $receivable['discount']) * ($receivable['qty'] - $receivable['free_qty']);
         }
-
         return $result;
     }
 
-    public static function calcPrice($self) {
+    protected static function calcPrice($self) {
         $result = [];
         $self->read(['total', 'vat_rate']);
         $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision', 2);
@@ -408,7 +407,7 @@ class Receivable extends Model {
         return $result;
     }
 
-    public static function canupdate($self, $values) {
+    protected static function canupdate($self, $values) {
         $self->read(['status']);
         foreach($self as $receivable) {
             if(array_key_exists('receivables_queue_id', $values)) {
