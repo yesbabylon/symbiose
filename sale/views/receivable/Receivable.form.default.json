@@ -184,7 +184,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "sale_entry_class",
+                                                "value": "origin_object_class",
                                                 "visible": false
                                             },
                                             {
@@ -192,21 +192,21 @@
                                                 "label": "Sale entry",
                                                 "value": "sale_entry_id",
                                                 "width": "25%",
-                                                "visible": ["sale_entry_class", "=", "sale\\SaleEntry"]
+                                                "visible": ["origin_object_class", "=", "sale\\SaleEntry"]
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Sale entry",
                                                 "value": "time_entry_id",
                                                 "width": "25%",
-                                                "visible": ["sale_entry_class", "=", "timetrack\\TimeEntry"]
+                                                "visible": ["origin_object_class", "=", "timetrack\\TimeEntry"]
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Sale entry",
                                                 "value": "subscription_entry_id",
                                                 "width": "25%",
-                                                "visible": ["sale_entry_class", "=", "sale\\subscription\\SubscriptionEntry"]
+                                                "visible": ["origin_object_class", "=", "sale\\subscription\\SubscriptionEntry"]
                                             }
                                         ]
                                     }

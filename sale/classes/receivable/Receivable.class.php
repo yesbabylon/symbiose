@@ -32,7 +32,7 @@ class Receivable extends Model {
                 'result_type'       => 'string',
                 'usage'             => 'text/plain',
                 'description'       => 'Description of the receivable.',
-                'relation'          => ['sale_entry_id' => ['description']],
+                'function'          => 'calcDescription',
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -68,6 +68,7 @@ class Receivable extends Model {
                 'description'       => 'Entity class that the Receivable originates from.',
                 'help'              => 'Sale entries can to extended by other classes to enrich logic behavior. This field is used to store the class name of the object. Selection is provided as a memo but is non-exhaustive.',
                 'default'           => 'sale\SaleEntry',
+                'dependents'        => ['name', 'description', 'sale_entry_id', 'time_entry_id', 'subscription_entry_id', 'customer_id', 'product_id', 'price_id', 'unit_price', 'vat_rate', 'qty', 'free_qty', 'discount', 'total', 'price'],
                 'selection'         => [
                     'sale\SaleEntry',
                     'timetrack\TimeEntry',
@@ -79,7 +80,7 @@ class Receivable extends Model {
                 'type'              => 'integer',
                 'description'       => 'Object identifier, as a complement to `origin_object_class`.',
                 'help'              => 'Together origin_object_class and origin_object_id reference the accounting document the entry is linked to.',
-                'dependents'        => ['name', 'description', 'product_id', 'price_id', 'unit_price', 'vat_rate', 'qty', 'free_qty', 'discount', 'total', 'price'],
+                'dependents'        => ['name', 'description', 'sale_entry_id', 'time_entry_id', 'subscription_entry_id', 'product_id', 'price_id', 'unit_price', 'vat_rate', 'qty', 'free_qty', 'discount', 'total', 'price'],
                 'required'          => true,
                 'readonly'          => true
             ],
@@ -106,7 +107,7 @@ class Receivable extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'sale\subscription\SubscriptionEntry',
-                'relation'          => ['sale_entry_id'],
+                'relation'          => ['origin_object_id'],
                 'readonly'          => true,
                 'visible'           => ['origin_object_class', '=', 'sale\subscription\SubscriptionEntry']
             ],
@@ -120,8 +121,8 @@ class Receivable extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
-                'relation'          => ['sale_entry_id' => ['customer_id']],
                 'description'       => 'The Customer to who refers the item.',
+                'function'          => 'calcCustomerId',
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -131,7 +132,7 @@ class Receivable extends Model {
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => 'The product (SKU) the receivable relates to.',
-                'relation'          => ['sale_entry_id' => ['product_id']],
+                'function'          => 'calcProductId',
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -141,7 +142,7 @@ class Receivable extends Model {
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'sale\price\Price',
                 'description'       => 'The price the receivable relates to.',
-                'relation'          => ['sale_entry_id' => ['price_id']],
+                'function'          => 'calcPriceId',
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -151,7 +152,7 @@ class Receivable extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Unit price of the product related to the receivable.',
-                'relation'          => ['sale_entry_id' => ['unit_price']],
+                'function'          => 'calcUnitPrice',
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -161,7 +162,7 @@ class Receivable extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/rate',
                 'description'       => 'VAT rate to be applied.',
-                'relation'          => ['sale_entry_id' => ['vat_rate']],
+                'function'          => 'calcVatRate',
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -170,7 +171,7 @@ class Receivable extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'description'       => 'Quantity of product.',
-                'relation'          => ['sale_entry_id' => ['qty']],
+                'function'          => 'calcQty',
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -179,7 +180,7 @@ class Receivable extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'integer',
                 'description'       => 'Free quantity of product, if any.',
-                'relation'          => ['sale_entry_id' => ['free_qty']],
+                'function'          => 'calcFreeQty',
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -189,7 +190,7 @@ class Receivable extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/rate',
                 'description'       => 'Total amount of discount to apply, if any.',
-                'relation'          => ['sale_entry_id' => ['discount']],
+                'function'          => 'calcDiscount',
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -242,16 +243,296 @@ class Receivable extends Model {
 
     public static function calcName($self) {
         $result = [];
-        $self->read(['sale_entry_id' => ['name', 'date', 'object_class'], 'product_id' => ['name']]);
-        $date_format = Setting::get_value('core', 'locale', 'date_format', 'm/d/Y');
+        $self->read([
+            'origin_object_class',
+            'sale_entry_id'          => ['name'],
+            'time_entry_id'          => ['name'],
+            'subscription_entry_id'  => ['name']
+        ]);
+
         foreach($self as $id => $receivable) {
-            if(($receivable['sale_entry_id']['object_class'] ?? '') == 'timetrack\TimeEntry') {
-                $result[$id] = date($date_format, $receivable['sale_entry_id']['date']).' - '.$receivable['sale_entry_id']['name'];
+            if(($receivable['origin_object_class'] ?? '') === 'timetrack\TimeEntry') {
+                $saleEntry = $receivable['time_entry_id'] ?? [];
+            }
+            elseif(($receivable['origin_object_class'] ?? '') === 'sale\subscription\SubscriptionEntry') {
+                $saleEntry = $receivable['subscription_entry_id'] ?? [];
             }
             else {
-                $result[$id] = $receivable['sale_entry_id']['name'] ?? '';
+                $saleEntry = $receivable['sale_entry_id'] ?? [];
+            }
+            $result[$id] = $saleEntry['name'] ?? '';
+        }
+
+        return $result;
+    }
+
+    public static function calcDescription($self): array {
+        $result = [];
+        $self->read([
+            'origin_object_class',
+            'sale_entry_id'          => ['description'],
+            'time_entry_id'          => ['description'],
+            'subscription_entry_id'  => ['description']
+        ]);
+
+        foreach($self as $id => $receivable) {
+            if(($receivable['origin_object_class'] ?? '') === 'timetrack\TimeEntry') {
+                if(isset($receivable['time_entry_id']) && is_array($receivable['time_entry_id']) && array_key_exists('description', $receivable['time_entry_id'])) {
+                    $result[$id] = $receivable['time_entry_id']['description'];
+                }
+            }
+            elseif(($receivable['origin_object_class'] ?? '') === 'sale\subscription\SubscriptionEntry') {
+                if(isset($receivable['subscription_entry_id']) && is_array($receivable['subscription_entry_id']) && array_key_exists('description', $receivable['subscription_entry_id'])) {
+                    $result[$id] = $receivable['subscription_entry_id']['description'];
+                }
+            }
+            else {
+                if(isset($receivable['sale_entry_id']) && is_array($receivable['sale_entry_id']) && array_key_exists('description', $receivable['sale_entry_id'])) {
+                    $result[$id] = $receivable['sale_entry_id']['description'];
+                }
             }
         }
+
+        return $result;
+    }
+
+    public static function calcCustomerId($self): array {
+        $result = [];
+        $self->read([
+            'origin_object_class',
+            'sale_entry_id'          => ['customer_id'],
+            'time_entry_id'          => ['customer_id'],
+            'subscription_entry_id'  => ['customer_id']
+        ]);
+
+        foreach($self as $id => $receivable) {
+            if(($receivable['origin_object_class'] ?? '') === 'timetrack\TimeEntry') {
+                if(isset($receivable['time_entry_id']) && is_array($receivable['time_entry_id']) && array_key_exists('customer_id', $receivable['time_entry_id'])) {
+                    $result[$id] = $receivable['time_entry_id']['customer_id'];
+                }
+            }
+            elseif(($receivable['origin_object_class'] ?? '') === 'sale\subscription\SubscriptionEntry') {
+                if(isset($receivable['subscription_entry_id']) && is_array($receivable['subscription_entry_id']) && array_key_exists('customer_id', $receivable['subscription_entry_id'])) {
+                    $result[$id] = $receivable['subscription_entry_id']['customer_id'];
+                }
+            }
+            else {
+                if(isset($receivable['sale_entry_id']) && is_array($receivable['sale_entry_id']) && array_key_exists('customer_id', $receivable['sale_entry_id'])) {
+                    $result[$id] = $receivable['sale_entry_id']['customer_id'];
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    public static function calcProductId($self): array {
+        $result = [];
+        $self->read([
+            'origin_object_class',
+            'sale_entry_id'          => ['product_id'],
+            'time_entry_id'          => ['product_id'],
+            'subscription_entry_id'  => ['product_id']
+        ]);
+
+        foreach($self as $id => $receivable) {
+            if(($receivable['origin_object_class'] ?? '') === 'timetrack\TimeEntry') {
+                if(isset($receivable['time_entry_id']) && is_array($receivable['time_entry_id']) && array_key_exists('product_id', $receivable['time_entry_id'])) {
+                    $result[$id] = $receivable['time_entry_id']['product_id'];
+                }
+            }
+            elseif(($receivable['origin_object_class'] ?? '') === 'sale\subscription\SubscriptionEntry') {
+                if(isset($receivable['subscription_entry_id']) && is_array($receivable['subscription_entry_id']) && array_key_exists('product_id', $receivable['subscription_entry_id'])) {
+                    $result[$id] = $receivable['subscription_entry_id']['product_id'];
+                }
+            }
+            else {
+                if(isset($receivable['sale_entry_id']) && is_array($receivable['sale_entry_id']) && array_key_exists('product_id', $receivable['sale_entry_id'])) {
+                    $result[$id] = $receivable['sale_entry_id']['product_id'];
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    public static function calcPriceId($self): array {
+        $result = [];
+        $self->read([
+            'origin_object_class',
+            'sale_entry_id'          => ['price_id'],
+            'time_entry_id'          => ['price_id'],
+            'subscription_entry_id'  => ['price_id']
+        ]);
+
+        foreach($self as $id => $receivable) {
+            if(($receivable['origin_object_class'] ?? '') === 'timetrack\TimeEntry') {
+                if(isset($receivable['time_entry_id']) && is_array($receivable['time_entry_id']) && array_key_exists('price_id', $receivable['time_entry_id'])) {
+                    $result[$id] = $receivable['time_entry_id']['price_id'];
+                }
+            }
+            elseif(($receivable['origin_object_class'] ?? '') === 'sale\subscription\SubscriptionEntry') {
+                if(isset($receivable['subscription_entry_id']) && is_array($receivable['subscription_entry_id']) && array_key_exists('price_id', $receivable['subscription_entry_id'])) {
+                    $result[$id] = $receivable['subscription_entry_id']['price_id'];
+                }
+            }
+            else {
+                if(isset($receivable['sale_entry_id']) && is_array($receivable['sale_entry_id']) && array_key_exists('price_id', $receivable['sale_entry_id'])) {
+                    $result[$id] = $receivable['sale_entry_id']['price_id'];
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    public static function calcUnitPrice($self): array {
+        $result = [];
+        $self->read([
+            'origin_object_class',
+            'sale_entry_id'          => ['unit_price'],
+            'time_entry_id'          => ['unit_price'],
+            'subscription_entry_id'  => ['unit_price']
+        ]);
+
+        foreach($self as $id => $receivable) {
+            if(($receivable['origin_object_class'] ?? '') === 'timetrack\TimeEntry') {
+                if(isset($receivable['time_entry_id']) && is_array($receivable['time_entry_id']) && array_key_exists('unit_price', $receivable['time_entry_id'])) {
+                    $result[$id] = $receivable['time_entry_id']['unit_price'];
+                }
+            }
+            elseif(($receivable['origin_object_class'] ?? '') === 'sale\subscription\SubscriptionEntry') {
+                if(isset($receivable['subscription_entry_id']) && is_array($receivable['subscription_entry_id']) && array_key_exists('unit_price', $receivable['subscription_entry_id'])) {
+                    $result[$id] = $receivable['subscription_entry_id']['unit_price'];
+                }
+            }
+            else {
+                if(isset($receivable['sale_entry_id']) && is_array($receivable['sale_entry_id']) && array_key_exists('unit_price', $receivable['sale_entry_id'])) {
+                    $result[$id] = $receivable['sale_entry_id']['unit_price'];
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    public static function calcVatRate($self): array {
+        $result = [];
+        $self->read([
+            'origin_object_class',
+            'sale_entry_id'          => ['vat_rate'],
+            'time_entry_id'          => ['vat_rate'],
+            'subscription_entry_id'  => ['vat_rate']
+        ]);
+
+        foreach($self as $id => $receivable) {
+            if(($receivable['origin_object_class'] ?? '') === 'timetrack\TimeEntry') {
+                if(isset($receivable['time_entry_id']) && is_array($receivable['time_entry_id']) && array_key_exists('vat_rate', $receivable['time_entry_id'])) {
+                    $result[$id] = $receivable['time_entry_id']['vat_rate'];
+                }
+            }
+            elseif(($receivable['origin_object_class'] ?? '') === 'sale\subscription\SubscriptionEntry') {
+                if(isset($receivable['subscription_entry_id']) && is_array($receivable['subscription_entry_id']) && array_key_exists('vat_rate', $receivable['subscription_entry_id'])) {
+                    $result[$id] = $receivable['subscription_entry_id']['vat_rate'];
+                }
+            }
+            else {
+                if(isset($receivable['sale_entry_id']) && is_array($receivable['sale_entry_id']) && array_key_exists('vat_rate', $receivable['sale_entry_id'])) {
+                    $result[$id] = $receivable['sale_entry_id']['vat_rate'];
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    public static function calcQty($self): array {
+        $result = [];
+        $self->read([
+            'origin_object_class',
+            'sale_entry_id'          => ['qty'],
+            'time_entry_id'          => ['qty'],
+            'subscription_entry_id'  => ['qty']
+        ]);
+
+        foreach($self as $id => $receivable) {
+            if(($receivable['origin_object_class'] ?? '') === 'timetrack\TimeEntry') {
+                if(isset($receivable['time_entry_id']) && is_array($receivable['time_entry_id']) && array_key_exists('qty', $receivable['time_entry_id'])) {
+                    $result[$id] = $receivable['time_entry_id']['qty'];
+                }
+            }
+            elseif(($receivable['origin_object_class'] ?? '') === 'sale\subscription\SubscriptionEntry') {
+                if(isset($receivable['subscription_entry_id']) && is_array($receivable['subscription_entry_id']) && array_key_exists('qty', $receivable['subscription_entry_id'])) {
+                    $result[$id] = $receivable['subscription_entry_id']['qty'];
+                }
+            }
+            else {
+                if(isset($receivable['sale_entry_id']) && is_array($receivable['sale_entry_id']) && array_key_exists('qty', $receivable['sale_entry_id'])) {
+                    $result[$id] = $receivable['sale_entry_id']['qty'];
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    public static function calcFreeQty($self): array {
+        $result = [];
+        $self->read([
+            'origin_object_class',
+            'sale_entry_id'          => ['free_qty'],
+            'time_entry_id'          => ['free_qty'],
+            'subscription_entry_id'  => ['free_qty']
+        ]);
+
+        foreach($self as $id => $receivable) {
+            if(($receivable['origin_object_class'] ?? '') === 'timetrack\TimeEntry') {
+                if(isset($receivable['time_entry_id']) && is_array($receivable['time_entry_id']) && array_key_exists('free_qty', $receivable['time_entry_id'])) {
+                    $result[$id] = $receivable['time_entry_id']['free_qty'];
+                }
+            }
+            elseif(($receivable['origin_object_class'] ?? '') === 'sale\subscription\SubscriptionEntry') {
+                if(isset($receivable['subscription_entry_id']) && is_array($receivable['subscription_entry_id']) && array_key_exists('free_qty', $receivable['subscription_entry_id'])) {
+                    $result[$id] = $receivable['subscription_entry_id']['free_qty'];
+                }
+            }
+            else {
+                if(isset($receivable['sale_entry_id']) && is_array($receivable['sale_entry_id']) && array_key_exists('free_qty', $receivable['sale_entry_id'])) {
+                    $result[$id] = $receivable['sale_entry_id']['free_qty'];
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    public static function calcDiscount($self): array {
+        $result = [];
+        $self->read([
+            'origin_object_class',
+            'sale_entry_id'          => ['discount'],
+            'time_entry_id'          => ['discount'],
+            'subscription_entry_id'  => ['discount']
+        ]);
+
+        foreach($self as $id => $receivable) {
+            if(($receivable['origin_object_class'] ?? '') === 'timetrack\TimeEntry') {
+                if(isset($receivable['time_entry_id']) && is_array($receivable['time_entry_id']) && array_key_exists('discount', $receivable['time_entry_id'])) {
+                    $result[$id] = $receivable['time_entry_id']['discount'];
+                }
+            }
+            elseif(($receivable['origin_object_class'] ?? '') === 'sale\subscription\SubscriptionEntry') {
+                if(isset($receivable['subscription_entry_id']) && is_array($receivable['subscription_entry_id']) && array_key_exists('discount', $receivable['subscription_entry_id'])) {
+                    $result[$id] = $receivable['subscription_entry_id']['discount'];
+                }
+            }
+            else {
+                if(isset($receivable['sale_entry_id']) && is_array($receivable['sale_entry_id']) && array_key_exists('discount', $receivable['sale_entry_id'])) {
+                    $result[$id] = $receivable['sale_entry_id']['discount'];
+                }
+            }
+        }
+
         return $result;
     }
 

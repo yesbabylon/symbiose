@@ -221,24 +221,26 @@ class SaleEntry extends Model {
 
         $saleEntry = self::id($id)->read(['receivable_queue_id', 'customer_id'])->first();
 
-        if($saleEntry['receivable_queue_id']) {
-            $receivables_queue_id = $saleEntry['receivable_queue_id'];
-        }
-        else {
-            $receivablesQueue = ReceivablesQueue::search(['customer_id', '=', $saleEntry['customer_id']])
-                ->read(['id'])
-                ->first();
-
-            if(!$receivablesQueue) {
-                $receivablesQueue = ReceivablesQueue::create([
-                        'customer_id' => $saleEntry['customer_id']
-                    ])
+        if($saleEntry) {
+            if($saleEntry['receivable_queue_id']) {
+                $receivables_queue_id = $saleEntry['receivable_queue_id'];
+            }
+            else {
+                $receivablesQueue = ReceivablesQueue::search(['customer_id', '=', $saleEntry['customer_id']])
                     ->read(['id'])
                     ->first();
-            }
 
-            if($receivablesQueue) {
-                $receivables_queue_id = $receivablesQueue['id'];
+                if(!$receivablesQueue) {
+                    $receivablesQueue = ReceivablesQueue::create([
+                            'customer_id' => $saleEntry['customer_id']
+                        ])
+                        ->read(['id'])
+                        ->first();
+                }
+
+                if($receivablesQueue) {
+                    $receivables_queue_id = $receivablesQueue['id'];
+                }
             }
         }
 
@@ -278,25 +280,29 @@ class SaleEntry extends Model {
     }
 
     public static function doCreateReceivable($self) {
-        $self->read(['id', 'is_internal', 'is_billable', 'date', 'invoice_group', 'object_class']);
-        foreach($self as $id => $entry) {
-            if($entry['is_internal']) {
+        $self->read(['id', 'is_internal', 'is_billable', 'date', 'invoice_group', 'object_class', 'receivable_queue_id', 'customer_id']);
+        foreach($self as $id => $saleEntry) {
+            if($saleEntry['is_internal']) {
                 continue;
             }
-            if(!$entry['is_billable']) {
+            if(!$saleEntry['is_billable']) {
                 continue;
             }
-            // if a receivable has been previously created remove it
-            Receivable::search(['sale_entry_id', '=', $entry['id']])->delete(true);
+            // if a receivable has been previously created, remove it
+            Receivable::search([
+                    ['origin_object_class', '=', $saleEntry['object_class']],
+                    ['origin_object_id', '=', $saleEntry['id']]
+                ])
+                ->delete(true);
             // retrieve applicable receivablesQueue
             $receivables_queue_id = self::computeReceivablesQueueId($id);
             // create a new receivable assigned to this entry
             $receivable = Receivable::create([
                     'receivables_queue_id' => $receivables_queue_id,
-                    'origin_object_class'  => $entry['object_class'],
+                    'origin_object_class'  => $saleEntry['object_class'],
                     'origin_object_id'     => $id,
-                    'date'                 => $entry['date'],
-                    'invoice_group'        => $entry['invoice_group']
+                    'date'                 => $saleEntry['date'],
+                    'invoice_group'        => $saleEntry['invoice_group']
                 ])
                 ->read(['id'])
                 ->first();
