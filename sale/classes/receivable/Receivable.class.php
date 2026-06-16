@@ -69,7 +69,6 @@ class Receivable extends Model {
                 'description'       => 'Entity class that the Receivable originates from.',
                 'help'              => 'Sale entries can to extended by other classes to enrich logic behavior. This field is used to store the class name of the object. Selection is provided as a memo but is non-exhaustive.',
                 'default'           => 'sale\SaleEntry',
-                'dependents'        => ['name', 'description', 'sale_entry_id', 'time_entry_id', 'subscription_entry_id', 'customer_id', 'product_id', 'price_id', 'unit_price', 'vat_rate', 'qty', 'free_qty', 'discount', 'total', 'price'],
                 'selection'         => [
                     'sale\SaleEntry',
                     'timetrack\TimeEntry',
