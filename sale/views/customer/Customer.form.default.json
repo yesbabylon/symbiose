@@ -61,6 +61,11 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "annual_revenue_target",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "ref_account",
                                                 "width": "50%"
                                             }

@@ -23,6 +23,11 @@
             "description": "Identifiant du client via référence externe.",
             "help": "Identifiant du client via référence externe (fournisseur ou autre)."
         },
+        "annual_revenue_target": {
+            "label": "Objectif annuel de CA",
+            "description": "Chiffre d'affaires annuel attendu pour ce client.",
+            "help": "Utilise ce montant pour comparer le chiffre d'affaires déjà facturé sur l'année en cours avec l'objectif annuel."
+        },
         "partner_organisation_id": {
             "label": "Organisation",
             "description": "Entreprise au sein de laquelle travaille le contact.",

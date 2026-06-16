@@ -138,6 +138,12 @@ class Customer extends \identity\Partner {
                 'description'       => 'External reference for the customer, if any.'
             ],
 
+            'annual_revenue_target' => [
+                'type'              => 'float',
+                'usage'             => 'amount/money:2',
+                'description'       => 'Expected annual revenue target for the customer.'
+            ],
+
             'flag_latepayer' => [
                 'type'              => 'boolean',
                 'default'           => false,
