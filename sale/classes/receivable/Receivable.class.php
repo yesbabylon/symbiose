@@ -389,6 +389,9 @@ class Receivable extends Model {
         $result = [];
         $self->read(['qty', 'unit_price', 'free_qty', 'discount']);
         foreach($self as $id => $receivable) {
+            if(!isset($receivable['qty'], $receivable['unit_price'], $receivable['free_qty'], $receivable['discount'])) {
+                continue;
+            }
             $result[$id] = $receivable['unit_price'] * (1.0 - $receivable['discount'] ?? 0.0) * ($receivable['qty'] - $receivable['free_qty'] ?? 0);
         }
         return $result;
@@ -399,6 +402,9 @@ class Receivable extends Model {
         $self->read(['total', 'vat_rate']);
         $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision', 2);
         foreach($self as $id => $receivable) {
+            if(!isset($receivable['total'], $receivable['vat_rate'])) {
+                continue;
+            }
             $total = (float) $receivable['total'];
             $vat = (float) $receivable['vat_rate'];
             $result[$id] = round($total * (1.0 + $vat), $currency_decimal_precision);

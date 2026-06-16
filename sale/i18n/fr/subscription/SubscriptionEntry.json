@@ -1,0 +1,62 @@
+{
+    "name": "Entrée d'abonnement",
+    "plural": "Entrées d'abonnement",
+    "description": "Entrée de vente générée depuis un abonnement.",
+    "model": {
+        "pricing_mode": {
+            "label": "Mode de tarification",
+            "description": "Mode de tarification hérité de l'abonnement.",
+            "help": "",
+            "selection": {
+                "fixed": "Prix fixe",
+                "consumption": "Consommation"
+            }
+        },
+        "qty": {
+            "label": "Quantité",
+            "description": "Quantité consommée ou vendue pour cette entrée.",
+            "help": ""
+        },
+        "unit_price": {
+            "label": "Prix unitaire",
+            "description": "Prix unitaire appliqué à cette entrée.",
+            "help": ""
+        },
+        "price_id": {
+            "label": "Prix",
+            "description": "Prix utilisé pour la facturation et la TVA.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Entrée d'abonnement",
+            "description": "Formulaire de modification d'une entrée d'abonnement.",
+            "actions": {
+                "action.transition.validate": {
+                    "label": "Valider",
+                    "description": "Valider cette entrée d'abonnement."
+                },
+                "action.transition.bill": {
+                    "label": "Facturer",
+                    "description": "Créer une créance pour cette entrée d'abonnement."
+                }
+            }
+        },
+        "list.default": {
+            "name": "Entrées d'abonnement",
+            "description": "Liste des entrées d'abonnement.",
+            "layout": {}
+        },
+        "list.selection": {
+            "name": "Entrées d'abonnement sélectionnées",
+            "description": "Liste des entrées d'abonnement sélectionnées.",
+            "layout": {}
+        },
+        "list.billable": {
+            "name": "Entrées d'abonnement à facturer",
+            "description": "Liste des entrées d'abonnement facturables sans créance générée.",
+            "layout": {}
+        }
+    }
+}
