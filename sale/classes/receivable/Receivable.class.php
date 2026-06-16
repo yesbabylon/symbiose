@@ -158,6 +158,7 @@ class Receivable extends Model {
                 'description'       => 'Unit price of the product related to the receivable.',
                 'function'          => 'calcUnitPrice',
                 'store'             => true,
+                'dependents'        => ['total', 'price'],
                 'readonly'          => true
             ],
 
@@ -168,6 +169,7 @@ class Receivable extends Model {
                 'description'       => 'VAT rate to be applied.',
                 'function'          => 'calcVatRate',
                 'store'             => true,
+                'dependents'        => ['price'],
                 'readonly'          => true
             ],
 
@@ -177,6 +179,7 @@ class Receivable extends Model {
                 'description'       => 'Quantity of product.',
                 'function'          => 'calcQty',
                 'store'             => true,
+                'dependents'        => ['total', 'price'],
                 'readonly'          => true
             ],
 
@@ -186,6 +189,7 @@ class Receivable extends Model {
                 'description'       => 'Free quantity of product, if any.',
                 'function'          => 'calcFreeQty',
                 'store'             => true,
+                'dependents'        => ['total', 'price'],
                 'readonly'          => true
             ],
 
@@ -196,6 +200,7 @@ class Receivable extends Model {
                 'description'       => 'Total amount of discount to apply, if any.',
                 'function'          => 'calcDiscount',
                 'store'             => true,
+                'dependents'        => ['total', 'price'],
                 'readonly'          => true
             ],
 
@@ -387,15 +392,20 @@ class Receivable extends Model {
 
     protected static function calcTotal($self) {
         $result = [];
-        $self->read(['qty', 'unit_price', 'free_qty', 'discount']);
+        $self->read(['unit_price', 'discount', 'qty', 'free_qty']);
         foreach($self as $id => $receivable) {
-            if(!isset($receivable['qty'], $receivable['unit_price'])) {
+            if(!isset($receivable['unit_price'], $receivable['qty'])) {
                 continue;
             }
-            $free_qty = $receivable['free_qty'] ?? 0;
-            $discount = $receivable['discount'] ?? 0.0;
-            $result[$id] = $receivable['unit_price'] * (1.0 - $discount * ($receivable['qty'] - $free_qty));
+
+            $unit_price = (float) $receivable['unit_price'];
+            $discount = (float) ($receivable['discount'] ?? 0.0);
+            $qty = (float) $receivable['qty'];
+            $free_qty = (float) ($receivable['free_qty'] ?? 0.0);
+
+            $result[$id] = $unit_price * (1.0 - $discount) * ($qty - $free_qty);
         }
+
         return $result;
     }
 
@@ -403,12 +413,15 @@ class Receivable extends Model {
         $result = [];
         $self->read(['total', 'vat_rate']);
         $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision', 2);
+
         foreach($self as $id => $receivable) {
-            if(!isset($receivable['total'], $receivable['vat_rate'])) {
+            if(!isset($receivable['total'])) {
                 continue;
             }
+
             $total = (float) $receivable['total'];
-            $vat = (float) $receivable['vat_rate'];
+            $vat = (float) ($receivable['vat_rate'] ?? 0.0);
+
             $result[$id] = round($total * (1.0 + $vat), $currency_decimal_precision);
         }
 
