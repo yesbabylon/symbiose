@@ -141,7 +141,8 @@ class Customer extends \identity\Partner {
             'annual_revenue_target' => [
                 'type'              => 'float',
                 'usage'             => 'amount/money:2',
-                'description'       => 'Expected annual revenue target for the customer.'
+                'description'       => 'Expected annual revenue target for the customer.',
+                'default'           => 0.0
             ],
 
             'flag_latepayer' => [

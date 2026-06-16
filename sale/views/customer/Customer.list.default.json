@@ -5,6 +5,14 @@
     "access": {
         "groups": ["sale.default.users"]
     },
+    "operations": {
+        "total": {
+            "annual_revenue_target": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
     "header": {
         "actions": {
             "ACTION.CREATE" : [
@@ -32,7 +40,8 @@
                 "type": "field",
                 "label": "Nature",
                 "value": "customer_nature_id",
-                "width": "15%"
+                "width": "15%",
+                "visible": false
             },
             {
                 "type": "field",
@@ -48,9 +57,16 @@
             },
             {
                 "type": "field",
+                "value": "annual_revenue_target",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
                 "label": "Lang",
                 "value": "lang_id",
-                "width": "10%"
+                "width": "10%",
+                "visible": false
             }
         ]
     }
