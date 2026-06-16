@@ -389,10 +389,12 @@ class Receivable extends Model {
         $result = [];
         $self->read(['qty', 'unit_price', 'free_qty', 'discount']);
         foreach($self as $id => $receivable) {
-            if(!isset($receivable['qty'], $receivable['unit_price'], $receivable['free_qty'], $receivable['discount'])) {
+            if(!isset($receivable['qty'], $receivable['unit_price'])) {
                 continue;
             }
-            $result[$id] = $receivable['unit_price'] * (1.0 - $receivable['discount'] ?? 0.0) * ($receivable['qty'] - $receivable['free_qty'] ?? 0);
+            $free_qty = $receivable['free_qty'] ?? 0;
+            $discount = $receivable['discount'] ?? 0.0;
+            $result[$id] = $receivable['unit_price'] * (1.0 - $discount * ($receivable['qty'] - $free_qty));
         }
         return $result;
     }
