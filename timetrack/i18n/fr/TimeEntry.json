@@ -121,6 +121,11 @@
             "name": "Saisies de temps",
             "description": "Liste des saisies de temps.",
             "layout": {}
+        },
+        "list.grouped": {
+            "name": "Saisies de temps par jour et utilisateur",
+            "description": "Liste des saisies de temps regroupées par jour et par utilisateur.",
+            "layout": {}
         }
     },
     "error": {}

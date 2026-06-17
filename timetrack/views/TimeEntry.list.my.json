@@ -1,7 +1,7 @@
 {
     "name": "Time entries",
     "description": "Time entries created by current user during month in progress.",
-    "controller": "timetrack_timeentry-collect",
+    "controller": "timetrack_TimeEntry_collect",
     "domain": [
         ["creator", "=", "user.id"],
         ["status", "<>", "billed"]

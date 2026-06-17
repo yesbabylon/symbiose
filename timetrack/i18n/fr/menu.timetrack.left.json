@@ -10,6 +10,9 @@
         "time_entries.all": {
             "label": "Toutes"
         },
+        "time_entries.by_day_user": {
+            "label": "Par jour et utilisateur"
+        },
         "time_entries.ready": {
             "label": "À valider"
         },

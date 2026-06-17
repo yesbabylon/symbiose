@@ -82,6 +82,20 @@
                                 }
                             },
                             {
+                                "id": "time_entries.by_day_user",
+                                "type": "entry",
+                                "label": "By day and user",
+                                "icon": "view_day",
+                                "description": "Time entries grouped by day and performed user.",
+                                "context": {
+                                    "entity": "timetrack\\TimeEntry",
+                                    "view": "list.grouped",
+                                    "order": "date,user_id,time_start",
+                                    "sort": "desc",
+                                    "limit": 500
+                                }
+                            },
+                            {
                                 "id": "time_entries.billed",
                                 "type": "entry",
                                 "label": "Billed",
