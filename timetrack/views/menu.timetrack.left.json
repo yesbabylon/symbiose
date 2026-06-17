@@ -92,7 +92,11 @@
                                     "view": "list.grouped",
                                     "order": "date,user_id,time_start",
                                     "sort": "desc",
-                                    "limit": 500
+                                    "limit": 500,
+                                    "domain": [
+                                        ["date", ">=", "date.this.month.first()"],
+                                        ["date", "<=", "date.this.month.last()"]
+                                    ]
                                 }
                             },
                             {
