@@ -172,7 +172,10 @@
                 "label": "Total",
                 "value": "total",
                 "width": "10%",
-                "sortable": true
+                "sortable": true,
+                "widget": {
+                    "usage": "amount/money:2"
+                }
             },
             {
                 "type": "field",
