@@ -149,13 +149,22 @@ $parse_setting_path = static function(string $path): ?array {
     ];
 };
 
-$get_languages = static function() use ($orm): array {
+$model_to_array = static function($model): array {
+    if(is_object($model) && method_exists($model, 'toArray')) {
+        return $model->toArray();
+    }
+
+    return is_array($model) ? $model : [];
+};
+
+$get_languages = static function() use ($orm, $model_to_array): array {
     $languages = [constant('DEFAULT_LANG')];
     $lang_ids = $orm->search(Lang::getType(), []);
 
     if(is_array($lang_ids) && count($lang_ids)) {
         $langs = $orm->read(Lang::getType(), $lang_ids, ['code']);
-        foreach($langs as $lang) {
+        foreach($langs as $lang_model) {
+            $lang = $model_to_array($lang_model);
             if(isset($lang['code']) && $lang['code'] !== '') {
                 $languages[] = $lang['code'];
             }
@@ -252,7 +261,7 @@ $get_target_item_id = static function(string $class, int $target_setting_id, arr
     return (int) current($ids);
 };
 
-$copy_setting_values = static function(int $source_setting_id, int $target_setting_id, bool $is_multilang) use ($orm, $setting_value_classes, $get_languages, $get_selector_fields, $get_target_item_id): void {
+$copy_setting_values = static function(int $source_setting_id, int $target_setting_id, bool $is_multilang) use ($orm, $setting_value_classes, $get_languages, $get_selector_fields, $get_target_item_id, $model_to_array): void {
     $languages = $is_multilang ? $get_languages() : [constant('DEFAULT_LANG')];
 
     foreach($setting_value_classes as $class) {
@@ -265,7 +274,8 @@ $copy_setting_values = static function(int $source_setting_id, int $target_setti
         }
 
         $source_values = $orm->read($class, $source_value_ids, $fields);
-        foreach($source_values as $source_value_id => $source_value) {
+        foreach($source_values as $source_value_id => $source_value_model) {
+            $source_value = $model_to_array($source_value_model);
             $selector = [];
 
             foreach($selector_fields as $field) {
@@ -295,15 +305,16 @@ $copy_setting_values = static function(int $source_setting_id, int $target_setti
 
             foreach($languages as $lang) {
                 $localized_source_values = $orm->read($class, (array) $source_value_id, ['value'], $lang);
-                if(isset($localized_source_values[$source_value_id]['value'])) {
-                    $orm->update($class, (array) $target_value_id, ['value' => $localized_source_values[$source_value_id]['value']], $lang);
+                $localized_source_value = $model_to_array($localized_source_values[$source_value_id] ?? []);
+                if(isset($localized_source_value['value'])) {
+                    $orm->update($class, (array) $target_value_id, ['value' => $localized_source_value['value']], $lang);
                 }
             }
         }
     }
 };
 
-$copy_setting_sequences = static function(int $source_setting_id, int $target_setting_id) use ($orm, $setting_sequence_classes, $get_selector_fields, $get_target_item_id): void {
+$copy_setting_sequences = static function(int $source_setting_id, int $target_setting_id) use ($orm, $setting_sequence_classes, $get_selector_fields, $get_target_item_id, $model_to_array): void {
     foreach($setting_sequence_classes as $class) {
         $selector_fields = $get_selector_fields($class);
         $fields = array_merge($selector_fields, ['value']);
@@ -314,7 +325,8 @@ $copy_setting_sequences = static function(int $source_setting_id, int $target_se
         }
 
         $source_sequences = $orm->read($class, $source_sequence_ids, $fields);
-        foreach($source_sequences as $source_sequence) {
+        foreach($source_sequences as $source_sequence_model) {
+            $source_sequence = $model_to_array($source_sequence_model);
             $selector = [];
 
             foreach($selector_fields as $field) {
@@ -339,7 +351,7 @@ $copy_setting_sequences = static function(int $source_setting_id, int $target_se
     }
 };
 
-$copy_setting = static function(string $source_path, string $target_path) use ($orm, $parse_setting_path, $get_setting_id, $ensure_setting, $copy_setting_values, $copy_setting_sequences): void {
+$copy_setting = static function(string $source_path, string $target_path) use ($orm, $parse_setting_path, $get_setting_id, $ensure_setting, $copy_setting_values, $copy_setting_sequences, $model_to_array): void {
     $source = $parse_setting_path($source_path);
     $target = $parse_setting_path($target_path);
 
@@ -369,7 +381,7 @@ $copy_setting = static function(string $source_path, string $target_path) use ($
         return;
     }
 
-    $source_setting = $source_settings[$source_setting_id];
+    $source_setting = $model_to_array($source_settings[$source_setting_id]);
     $target_setting_id = $ensure_setting($source_setting, $target);
 
     if(!$target_setting_id) {
@@ -406,7 +418,7 @@ $guess_currency_code = static function($value): string {
     return $symbol !== '' ? $symbol : 'EUR';
 };
 
-$copy_currency_code = static function(string $source_path) use ($orm, $parse_setting_path, $get_setting_id, $ensure_setting, $setting_value_classes, $get_selector_fields, $get_target_item_id, $guess_currency_code): void {
+$copy_currency_code = static function(string $source_path) use ($orm, $parse_setting_path, $get_setting_id, $ensure_setting, $setting_value_classes, $get_selector_fields, $get_target_item_id, $guess_currency_code, $model_to_array): void {
     $source = $parse_setting_path($source_path);
     $target = $parse_setting_path('core.locale.currency.code');
 
@@ -432,7 +444,8 @@ $copy_currency_code = static function(string $source_path) use ($orm, $parse_set
         return;
     }
 
-    $target_setting_id = $ensure_setting(array_merge($source_settings[$source_setting_id], [
+    $source_setting = $model_to_array($source_settings[$source_setting_id]);
+    $target_setting_id = $ensure_setting(array_merge($source_setting, [
         'type'         => 'string',
         'is_sequence'  => false,
         'is_multilang' => false
@@ -452,7 +465,8 @@ $copy_currency_code = static function(string $source_path) use ($orm, $parse_set
         }
 
         $source_values = $orm->read($class, $source_value_ids, $fields);
-        foreach($source_values as $source_value) {
+        foreach($source_values as $source_value_model) {
+            $source_value = $model_to_array($source_value_model);
             $selector = [];
 
             foreach($selector_fields as $field) {
