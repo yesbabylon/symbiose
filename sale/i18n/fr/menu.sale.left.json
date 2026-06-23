@@ -73,6 +73,26 @@
             "label": "Toutes",
             "help": ""
         },
+        "receivables": {
+            "label": "Créances",
+            "help": ""
+        },
+        "receivables.queues": {
+            "label": "Files",
+            "help": ""
+        },
+        "receivables.receivables": {
+            "label": "Toutes",
+            "help": ""
+        },
+        "item.receivable.pending": {
+            "label": "En attente",
+            "help": ""
+        },
+        "item.receivable.posted": {
+            "label": "Comptabilisées",
+            "help": ""
+        },
         "orders.group.all": {
             "label": "Groupes",
             "help": ""

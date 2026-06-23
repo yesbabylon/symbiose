@@ -139,7 +139,7 @@ foreach($receivables_queues as $receivables_queue) {
             ->update([
                 'invoice_id'      => $invoice['id'],
                 'invoice_line_id' => $invoice_line['id'],
-                'status'          => 'invoiced'
+                'status'          => 'posted'
             ]);
     }
 }

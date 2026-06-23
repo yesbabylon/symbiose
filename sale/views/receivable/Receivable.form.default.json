@@ -3,10 +3,17 @@
     "description": "Default form for Receivable.",
     "actions": [
         {
-            "id": "action.invoice",
+            "id": "action.post-invoice",
             "label": "Invoice",
             "description": "Create a new invoice line from the receivable.",
-            "controller": "sale_receivable_invoice",
+            "controller": "sale_receivable_Receivable_post-invoice",
+            "visible": ["status", "=", "pending"]
+        },
+        {
+            "id": "action.post-service-account",
+            "label": "Charge Service Account",
+            "description": "Create a new invoice line from the receivable.",
+            "controller": "sale_receivable_Receivable_post-service-account",
             "visible": ["status", "=", "pending"]
         }
     ],
@@ -78,7 +85,7 @@
                                                 "value": "invoice_id",
                                                 "label": "Invoice",
                                                 "width": "50%",
-                                                "visible": ["status", "=", "invoiced"],
+                                                "visible": ["status", "=", "posted"],
                                                 "widget": {
                                                     "readonly": true
                                                 }

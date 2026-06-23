@@ -44,8 +44,8 @@
             "help": ""
         },
         "billed_duration": {
-            "label": "Duree facturee",
-            "description": "Duree finalement facturee au client.",
+            "label": "Durée facturée",
+            "description": "Durée effectivement facturée au client.",
             "help": ""
         },
         "user_id": {

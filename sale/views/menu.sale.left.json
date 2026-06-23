@@ -342,17 +342,17 @@
                         }
                     },
                     {
-                        "id": "item.receivable.invoiced",
+                        "id": "item.receivable.posted",
                         "type": "entry",
-                        "label": "Invoiced",
+                        "label": "Posted",
                         "icon": "receipt_long",
-                        "description": "Invoiced receivables.",
+                        "description": "Posted receivables.",
                         "context": {
                             "entity": "sale\\receivable\\Receivable",
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc",
-                            "domain": ["status", "=", "invoiced"]
+                            "domain": ["status", "=", "posted"]
                         }
                     }
                 ]

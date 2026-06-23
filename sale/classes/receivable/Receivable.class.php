@@ -8,6 +8,11 @@ namespace sale\receivable;
 
 use core\setting\Setting;
 use equal\orm\Model;
+use sale\accounting\invoice\Invoice;
+use sale\accounting\invoice\InvoiceLine;
+use sale\accounting\invoice\InvoiceLineGroup;
+use sale\contract\ServiceAccount;
+use sale\contract\ServiceAccountEntry;
 use sale\SaleEntry;
 
 class Receivable extends Model {
@@ -55,10 +60,10 @@ class Receivable extends Model {
 
             'status' => [
                 'type'              => 'string',
-                'description'       => 'Status of the receivable (pending, invoiced or cancelled).',
+                'description'       => 'Status of the receivable (pending, posted or cancelled).',
                 'selection'         => [
                     'pending',
-                    'invoiced',
+                    'posted',
                     'cancelled'
                 ],
                 'default'           => 'pending'
@@ -226,7 +231,7 @@ class Receivable extends Model {
             'invoice_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\accounting\invoice\Invoice',
-                'description'       => 'Invoice the receivable is related to.',
+                'description'       => 'Invoice on which the receivable has been accounted.',
                 'ondelete'          => 'null'
             ],
 
@@ -239,6 +244,13 @@ class Receivable extends Model {
                 'ondelete'          => 'null'
             ],
 
+            'service_account_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\contract\ServiceAccount',
+                'description'       => 'Service Account on which the receivable has been accounted.',
+                'ondelete'          => 'null'
+            ],
+
             'service_account_entry_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\contract\ServiceAccountEntry',
@@ -247,6 +259,209 @@ class Receivable extends Model {
             ]
 
         ];
+    }
+
+    public static function getActions() {
+        return array_merge(parent::getActions(), [
+            'post_invoice' => [
+                'description' => 'Create invoice lines from pending receivables.',
+                'help'        => 'Uses the provided proforma invoice when possible, otherwise creates or reuses a customer proforma.',
+                'policies'    => [],
+                'function'    => 'doPostInvoice'
+            ],
+            'post_service_account' => [
+                'description' => 'Create service account entries from pending receivables.',
+                'help'        => 'Uses the provided service account when possible, otherwise uses the unique active service account of the customer.',
+                'policies'    => [],
+                'function'    => 'doPostServiceAccount'
+            ]
+
+        ]);
+    }
+
+    protected static function doPostInvoice($self, $values) {
+
+        if(isset($values['invoice_id']) && $values['invoice_id'] > 0) {
+            $defaultInvoice = Invoice::id($values['invoice_id'])
+                ->read(['id', 'customer_id'])
+                ->first();
+            if(!$defaultInvoice) {
+                throw new \Exception('unknown_invoice', EQ_ERROR_UNKNOWN_OBJECT);
+            }
+        }
+
+        $self->read([
+                'id',
+                'name',
+                'description',
+                'invoice_group',
+                'customer_id',
+                'product_id' => ['id', 'name', 'description'],
+                'price_id',
+                'unit_price',
+                'vat_rate',
+                'qty',
+                'free_qty',
+                'discount'
+            ]);
+
+        foreach($self as $id => $receivable) {
+            $invoice = null;
+            if(isset($defaultInvoice) && $receivable['customer_id'] === $defaultInvoice['customer_id']) {
+                $invoice = $defaultInvoice;
+            }
+            else {
+                $invoice = Invoice::search([
+                        ['customer_id', '=', $receivable['customer_id']],
+                        ['status', '=', 'proforma']
+                    ])
+                    ->first();
+
+                if(!isset($invoice)) {
+                    $invoice = Invoice::create([
+                            'customer_id' => $receivable['customer_id']
+                        ])
+                        ->first();
+                }
+            }
+
+            $invoice_line_group_name = 'Additional Services (' . date('Y-m-d') . ')';
+
+            if(isset($receivable['invoice_group'])) {
+                $invoice_line_group_name = $receivable['invoice_group'];
+            }
+
+            if(!empty($values['invoice_line_group_name'])) {
+                $invoice_line_group_name = $values['invoice_line_group_name'];
+            }
+
+            $invoiceLineGroup = InvoiceLineGroup::search([
+                    ['invoice_id', '=', $invoice['id']],
+                    ['name', '=', $invoice_line_group_name]
+                ])
+                ->read(['id'])
+                ->first();
+
+            if(!isset($invoice_line_group)) {
+                $invoiceLineGroup = InvoiceLineGroup::create([
+                        'invoice_id' => $invoice['id'],
+                        'name'       => $invoice_line_group_name
+                    ])
+                    ->first();
+            }
+
+            $invoiceLine = InvoiceLine::create([
+                    // #memo - force name to receivable name instead of computed value (receivable name holds its own description when applicable)
+                    'name'                  => $receivable['name'],
+                    'description'           => implode(' - ', array_filter([$receivable['product_id']['name'], $receivable['product_id']['description']])),
+                    'invoice_line_group_id' => $invoiceLineGroup['id'],
+                    'invoice_id'            => $invoice['id'],
+                    'product_id'            => $receivable['product_id']['id'],
+                    'price_id'              => $receivable['price_id'],
+                    'unit_price'            => $receivable['unit_price'],
+                    'vat_rate'              => $receivable['vat_rate'],
+                    'qty'                   => $receivable['qty'],
+                    'free_qty'              => $receivable['free_qty'],
+                    'discount'              => $receivable['discount'],
+                    'has_receivable'        => true,
+                    'receivable_id'         => $receivable['id']
+                ])
+                ->do('reset_invoice_prices')
+                ->first();
+
+            self::id($id)
+                ->update([
+                    'invoice_id'      => $invoice['id'],
+                    'invoice_line_id' => $invoiceLine['id'],
+                    'status'          => 'posted'
+                ]);
+        }
+    }
+
+    protected static function doPostServiceAccount($self, $values) {
+
+        $self->read([
+                'id',
+                'name',
+                'description',
+                'date',
+                'customer_id',
+                'product_id' => ['id', 'name', 'description'],
+                'qty',
+                'free_qty'
+            ]);
+
+        $defaultServiceAccount = null;
+        if(isset($values['service_account_id']) && $values['service_account_id'] > 0) {
+            $default_service_account = ServiceAccount::id($values['service_account_id'])
+                ->read(['id', 'customer_id', 'is_active'])
+                ->first();
+
+            if(!isset($defaultServiceAccount)) {
+                throw new \Exception('unknown_service_account', QN_ERROR_UNKNOWN_OBJECT);
+            }
+        }
+
+        foreach($self as $id => $receivable) {
+            if(!$receivable['customer_id']) {
+                throw new \Exception('missing_customer', QN_ERROR_INVALID_PARAM);
+            }
+
+            $serviceAccount = $defaultServiceAccount;
+
+            if(isset($serviceAccount)) {
+                if($serviceAccount['customer_id'] !== $receivable['customer_id']) {
+                    throw new \Exception('service_account_customer_mismatch', QN_ERROR_INVALID_PARAM);
+                }
+            }
+            else {
+                $serviceAccount = ServiceAccount::search([
+                        ['customer_id', '=', $receivable['customer_id']],
+                        ['is_active', '=', true]
+                    ])
+                    ->read(['id'])
+                    ->first();
+
+                if(count($serviceAccount) <= 0) {
+                    throw new \Exception('missing_service_account', QN_ERROR_INVALID_PARAM);
+                }
+            }
+
+            $qty = max(0.0, (float) $receivable['qty'] - (float) ($receivable['free_qty'] ?? 0.0));
+            if($qty <= 0.0) {
+                throw new \Exception('receivable_has_no_billable_quantity', QN_ERROR_INVALID_PARAM);
+            }
+
+            $product_description = implode(' - ', array_filter([
+                $receivable['product_id']['name'] ?? '',
+                $receivable['product_id']['description'] ?? ''
+            ]));
+
+            $serviceAccountEntry = ServiceAccountEntry::create([
+                    'name'                => $receivable['name'],
+                    'origin_object_class' => self::getType(),
+                    'origin_object_id'    => $receivable['id'],
+                    'service_account_id'  => $serviceAccount['id'],
+                    'description'         => implode("\n", array_filter([
+                        $product_description,
+                        $receivable['description'] ?? ''
+                    ])),
+                    'date'                => $receivable['date'] ?? time(),
+                    // Time receivables express qty in hours while service account entries count quarter-hour points.
+                    'points'              => round($qty * 4, 2),
+                    'is_posted'           => true,
+                    'posting_date'        => time()
+                ])
+                ->read(['id'])
+                ->first();
+
+            self::id($receivable['id'])
+                ->update([
+                    'service_account_id'        => $serviceAccount['id'] ,
+                    'service_account_entry_id'  => $serviceAccountEntry['id'],
+                    'status'                    => 'posted'
+                ]);
+        }
     }
 
     protected static function calcName($self) {

@@ -7,7 +7,7 @@
 
 use sale\receivable\Receivable;
 
-list($params, $providers) = eQual::announce([
+[$params, $providers] = eQual::announce([
     'description'   => 'Invoice all pending receivables.',
     'params'        => [],
     'response'      => [
@@ -23,7 +23,9 @@ list($params, $providers) = eQual::announce([
 
 $pending_receivables_ids = Receivable::search(['status', '=', 'pending'])->ids();
 
-eQual::run('do', 'sale_receivable_invoice', ['ids' => $pending_receivables_ids]);
+foreach($pending_receivables_ids as $receivable_id) {
+    eQual::run('do', 'sale_receivable_Receivable_invoice', ['ids' => $receivable_id]);
+}
 
 $context->httpResponse()
         ->status(204)

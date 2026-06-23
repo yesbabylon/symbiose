@@ -78,8 +78,8 @@
                         ]
                     },
                     {
-                        "label": "Invoiced receivables",
-                        "id": "section.invoiced_receivables_ids",
+                        "label": "Posted receivables",
+                        "id": "section.posted_receivables_ids",
                         "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
@@ -90,7 +90,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "invoiced_receivables_ids",
+                                                "value": "posted_receivables_ids",
                                                 "width": "100%",
                                                 "widget": {
                                                     "view": "list.queue-selection",
