@@ -1,0 +1,56 @@
+{
+    "name": "Créance",
+    "plural": "Créances",
+    "description": "Une créance représente un bien ou un service vendu à un client et dont le montant doit être reçu.",
+    "model": {
+        "status": {
+            "label": "Statut",
+            "description": "Statut actuel de la créance.",
+            "selection": {
+                "pending": "En attente",
+                "posted": "Comptabilisée",
+                "cancelled": "Annulée"
+            },
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Créance",
+            "description": "Formulaire par défaut d'une créance.",
+            "actions": {
+                "action.invoice": {
+                    "label": "Facturer",
+                    "description": "Créer une ligne de facture à partir de la créance.",
+                    "help": ""
+                }
+            },
+            "layout": {
+                "section.sale": {
+                    "label": "Vente",
+                    "help": ""
+                },
+                "section.description": {
+                    "label": "Description",
+                    "help": ""
+                }
+            }
+        },
+        "list.default": {
+            "name": "Créances",
+            "description": "Liste des créances.",
+            "layout": {}
+        },
+        "list.pending": {
+            "name": "Créances en attente",
+            "description": "Liste des créances en attente.",
+            "layout": {}
+        },
+        "list.queue-selection": {
+            "name": "Sélection de créances",
+            "description": "Liste de sélection des créances.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

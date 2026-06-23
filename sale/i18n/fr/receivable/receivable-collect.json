@@ -1,0 +1,17 @@
+{
+    "model": {
+        "status": {
+            "label": "Statut",
+            "description": "Statut des créances à afficher.",
+            "selection": {
+                "all": "Toutes",
+                "pending": "En attente",
+                "posted": "Comptabilisées",
+                "cancelled": "Annulées"
+            },
+            "help": ""
+        }
+    },
+    "view": {},
+    "error": {}
+}

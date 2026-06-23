@@ -1,0 +1,41 @@
+{
+    "name": "File de créances",
+    "plural": "Files de créances",
+    "description": "Une file de créances regroupe les éléments d'un client en attente de facturation ou déjà comptabilisés.",
+    "model": {
+        "posted_receivables_ids": {
+            "label": "Créances comptabilisées",
+            "description": "Liste des créances comptabilisées rattachées à la file.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "File de créances",
+            "description": "Formulaire par défaut d'une file de créances.",
+            "actions": {
+                "action.invoice": {
+                    "label": "Facturer",
+                    "description": "Facturer toutes les créances en attente de la file.",
+                    "help": ""
+                }
+            },
+            "layout": {
+                "section.pending_receivables_ids": {
+                    "label": "Créances en attente",
+                    "help": ""
+                },
+                "section.posted_receivables_ids": {
+                    "label": "Créances comptabilisées",
+                    "help": ""
+                }
+            }
+        },
+        "list.default": {
+            "name": "Files de créances",
+            "description": "Liste des files de créances.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}
