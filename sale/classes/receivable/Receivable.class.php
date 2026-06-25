@@ -414,7 +414,7 @@ class Receivable extends Model {
                         ['customer_id', '=', $receivable['customer_id']],
                         ['is_active', '=', true]
                     ])
-                    ->read(['id'])
+                    ->read(['id', 'customer_id', 'is_active'])
                     ->first();
 
                 if(!$serviceAccount) {
@@ -424,6 +424,10 @@ class Receivable extends Model {
 
             if(!isset($serviceAccount['customer_id']) || $serviceAccount['customer_id'] !== $receivable['customer_id']) {
                 throw new \Exception('service_account_customer_mismatch', EQ_ERROR_INVALID_PARAM);
+            }
+
+            if(!isset($serviceAccount['is_active']) || !$serviceAccount['is_active']) {
+                throw new \Exception('inactive_service_account', EQ_ERROR_INVALID_PARAM);
             }
 
             $qty = max(0.0, (float) $receivable['qty'] - (float) ($receivable['free_qty'] ?? 0.0));
