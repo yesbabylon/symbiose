@@ -92,8 +92,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
 
             'pause_time' => [
                 'type'              => 'computed',
-                'result_type'       => 'integer',
-                'usage'             => 'time',
+                'result_type'       => 'time',
                 'description'       => 'Pause or offset converted to seconds.',
                 'function'          => 'calcPauseTime',
                 'store'             => true,
@@ -102,8 +101,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
 
             'delta_time' => [
                 'type'              => 'computed',
-                'result_type'       => 'integer',
-                'usage'             => 'time',
+                'result_type'       => 'time',
                 'description'       => 'Raw duration between end and start, before pause handling.',
                 'function'          => 'calcDeltaTime',
                 'store'             => true
@@ -111,8 +109,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
 
             'duration' => [
                 'type'              => 'computed',
-                'result_type'       => 'integer',
-                'usage'             => 'time',
+                'result_type'       => 'time',
                 'description'       => 'Duration rounded up to the next quarter hour.',
                 'function'          => 'calcDuration',
                 'store'             => true,
@@ -120,8 +117,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
             ],
 
             'travel_time' => [
-                'type'              => 'integer',
-                'usage'             => 'time',
+                'type'              => 'time',
                 'description'       => 'Travel time to add for on-site work.',
                 'default'           => 0,
                 'dependents'        => ['points']
