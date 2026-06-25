@@ -393,26 +393,24 @@ class Receivable extends Model {
 
         $defaultServiceAccount = null;
         if(isset($values['service_account_id']) && $values['service_account_id'] > 0) {
-            $default_service_account = ServiceAccount::id($values['service_account_id'])
+            $defaultServiceAccount = ServiceAccount::id($values['service_account_id'])
                 ->read(['id', 'customer_id', 'is_active'])
                 ->first();
 
             if(!isset($defaultServiceAccount)) {
-                throw new \Exception('unknown_service_account', QN_ERROR_UNKNOWN_OBJECT);
+                throw new \Exception('unknown_service_account', EQ_ERROR_UNKNOWN_OBJECT);
             }
         }
 
         foreach($self as $id => $receivable) {
             if(!$receivable['customer_id']) {
-                throw new \Exception('missing_customer', QN_ERROR_INVALID_PARAM);
+                throw new \Exception('missing_customer', EQ_ERROR_INVALID_PARAM);
             }
 
             $serviceAccount = $defaultServiceAccount;
 
-            if(isset($serviceAccount)) {
-                if($serviceAccount['customer_id'] !== $receivable['customer_id']) {
-                    throw new \Exception('service_account_customer_mismatch', QN_ERROR_INVALID_PARAM);
-                }
+            if(!isset($serviceAccount['customer_id']) || $serviceAccount['customer_id'] !== $receivable['customer_id']) {
+                throw new \Exception('service_account_customer_mismatch', EQ_ERROR_INVALID_PARAM);
             }
             else {
                 $serviceAccount = ServiceAccount::search([
@@ -422,14 +420,14 @@ class Receivable extends Model {
                     ->read(['id'])
                     ->first();
 
-                if(count($serviceAccount) <= 0) {
-                    throw new \Exception('missing_service_account', QN_ERROR_INVALID_PARAM);
+                if(!$serviceAccount) {
+                    throw new \Exception('missing_service_account', EQ_ERROR_INVALID_PARAM);
                 }
             }
 
             $qty = max(0.0, (float) $receivable['qty'] - (float) ($receivable['free_qty'] ?? 0.0));
             if($qty <= 0.0) {
-                throw new \Exception('receivable_has_no_billable_quantity', QN_ERROR_INVALID_PARAM);
+                throw new \Exception('receivable_has_no_billable_quantity', EQ_ERROR_INVALID_PARAM);
             }
 
             $product_description = implode(' - ', array_filter([
