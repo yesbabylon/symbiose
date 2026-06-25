@@ -384,6 +384,8 @@ class Receivable extends Model {
                 'id',
                 'name',
                 'description',
+                'origin_object_class',
+                'origin_object_id',
                 'date',
                 'customer_id',
                 'product_id' => ['id', 'name', 'description'],
@@ -442,17 +444,13 @@ class Receivable extends Model {
 
             $serviceAccountEntry = ServiceAccountEntry::create([
                     'name'                => $receivable['name'],
-                    'origin_object_class' => self::getType(),
-                    'origin_object_id'    => $receivable['id'],
+                    'origin_object_class' => $receivable['origin_object_class'],
+                    'origin_object_id'    => $receivable['origin_object_id'],
                     'service_account_id'  => $serviceAccount['id'],
-                    'description'         => implode("\n", array_filter([
-                        $product_description,
-                        $receivable['description'] ?? ''
-                    ])),
+                    'description'         => $receivable['description'] ?? '',
                     'date'                => $receivable['date'] ?? time(),
                     // Time receivables express qty in hours while service account entries count quarter-hour points.
                     'points'              => round($qty * 4, 2),
-                    'is_posted'           => true,
                     'posting_date'        => time()
                 ])
                 ->read(['id'])

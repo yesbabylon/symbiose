@@ -23,8 +23,8 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'description'       => 'Entity class that the service account entry originates from.',
                 'default'           => 'timetrack\TimeEntry',
                 'selection'         => [
-                    'timetrack\TimeEntry',
-                    'sale\contract\ServiceAccountEntry'
+                    'sale\SaleEntry',
+                    'timetrack\TimeEntry'
                 ]
             ],
 
@@ -189,15 +189,14 @@ class ServiceAccountEntry extends \equal\orm\Model {
 
             'posting_date' => [
                 'type'              => 'datetime',
-                'description'       => 'Date at which the line as been approved in external PSA software.'
+                'description'       => 'Date at which the line as been approved.'
             ],
 
             'is_posted' => [
+                'deprecated'        => true,
                 'type'              => 'boolean',
-                'description'       => 'Flag marking the line as posted (has been approved in AT).',
-                'help'              => "This field should only be updated through a dedicated process based on Billing Items from AutoTask.",
+                'description'       => 'Flag marking the line as posted (has been approved).',
                 'default'           => false,
-                'onupdate'          => 'onupdateIsPosted'
             ],
 
             'has_report' => [
@@ -299,21 +298,6 @@ class ServiceAccountEntry extends \equal\orm\Model {
         }
         else {
             $self->update(['has_report' => false]);
-        }
-    }
-
-    public static function onupdateIsPosted($self) {
-        $self->read(['has_report', 'report_id']);
-        $map_reports_ids= [];
-        foreach($self as $line) {
-            if($line['has_report']) {
-                $map_reports_ids[$line['report_id']] = true;
-            }
-        }
-        if(count($map_reports_ids)) {
-            Report::ids(array_keys($map_reports_ids))
-                ->update(['has_non_posted' => null])
-                ->read(['has_non_posted']);
         }
     }
 
@@ -838,15 +822,13 @@ class ServiceAccountEntry extends \equal\orm\Model {
     }
 
     /**
-     * There is no sync from AT for Credit & Correction lines, so for those lines (classes 3 and 4), when `points` is updated, `is_posted` is set to true.
+     *
      */
     public static function onupdatePoints($self) {
         $self->read(['service_account_id']);
         foreach($self as $id => $line) {
 
-            // #memo - will trigger update of parent report `has_non_posted`, if any
-            // #todo - do this elsewhere
-            self::id($id)->update(['is_posted' => true]);
+
             // if line is a credit, reset the `alert_sent` flag of the related service account
 
             // ServiceAccount::id($line['service_account_id'])->update(['has_renew_alert_sent' => false]);
@@ -874,14 +856,14 @@ class ServiceAccountEntry extends \equal\orm\Model {
         $self->read(['is_locked', 'has_report', 'report_id' => ['id', 'status']]);
         foreach($self as $id => $line) {
             if($line['is_locked']) {
-                $allowed = ['is_locked', 'locked_date', 'is_posted', 'posting_date'];
+                $allowed = ['is_locked', 'locked_date', 'posting_date'];
                 if(count(array_diff(array_keys($values), $allowed)) > 0) {
                     return ['is_locked' => ['non_editable' => "Locked SA line [$id] cannot be updated (linked to released Report)."]];
                 }
             }
             else {
                 // #memo - allow arbitrary change of report-related fields for non locked lines
-                $allowed = ['report_id', 'has_report', 'is_posted', 'posting_date', 'is_locked', 'locked_date'];
+                $allowed = ['report_id', 'has_report', 'posting_date', 'is_locked', 'locked_date'];
                 // #memo - at this stage a linked pending report might have been removed resulting in a NULL report_id
                 if($line['report_id']) {
                     $current_report_id = $line['report_id']['id'] ?? null;
