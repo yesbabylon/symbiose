@@ -1,7 +1,12 @@
 {
     "name": "Receivables Selection",
     "description": "This view is intended for displaying the Receivables.",
-    "access": {
+    "header": {
+        "actions": {
+            "ACTION.SELECT": {
+                "view": false
+            }
+        }
     },
     "operations": {
         "total": {
