@@ -46,7 +46,7 @@ class Service extends Model {
                 'type'              => 'boolean',
                 'description'       => 'The service has a subscription.',
                 'default'           => false,
-                'dependents'        => ['is_billable', 'is_internal'],
+                'dependents'        => ['is_billable', 'is_internal', 'subscription_id'],
             ],
 
             'is_billable' => [
@@ -122,11 +122,11 @@ class Service extends Model {
                 'description'       => 'List of details about the service.'
             ],
 
-            'subscriptions_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'inventory\service\Subscription',
-                'foreign_field'     => 'service_id',
-                'description'       => 'The subscriptions about the service belongs.'
+            'subscription_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\subscription\Subscription',
+                'description'       => 'The subscription linked to the service.',
+                'visible'           => ['has_subscription', '=', true]
             ],
 
             'accesses_ids' => [

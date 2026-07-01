@@ -1,19 +1,7 @@
 {
-    "name": "Documents menu",
+    "name": "Inventory menu",
     "layout": {
         "items": [
-            {
-                "id": "item.customer",
-                "type": "entry",
-                "label": "Customers",
-                "description": "",
-                "context": {
-                    "entity": "sale\\customer\\Customer",
-                    "view": "list.default",
-                    "order": "id",
-                    "sort": "asc"
-                }
-            },
             {
                 "id": "item.product",
                 "type": "entry",
@@ -27,44 +15,36 @@
                 }
             },
             {
-                "id": "item.services.services",
+                "id": "item.software",
                 "type": "entry",
-                "label": "Services",
+                "label": "Softwares",
                 "description": "",
                 "context": {
-                    "entity": "inventory\\service\\Service",
-                    "view": "list.default"
-                }
-            },
-            {
-                "id": "item.services.subscription",
-                "type": "entry",
-                "label": "Subscription",
-                "description": "",
-                "context": {
-                    "entity": "inventory\\service\\Subscription",
-                    "view": "list.default"
-                }
-            },
-            {
-                "id": "item.sale.receivables",
-                "type": "entry",
-                "label": "Receivables",
-                "description": "",
-                "context": {
-                    "entity": "sale\\receivable\\Receivable",
+                    "entity": "inventory\\Software",
                     "view": "list.default",
                     "order": "id",
                     "sort": "asc"
                 }
             },
             {
-                "id": "item.finance.accounting.invoice",
+                "id": "item.service",
                 "type": "entry",
-                "label": "Invoices",
+                "label": "Services",
                 "description": "",
                 "context": {
-                    "entity": "sale\\accounting\\invoice\\Invoice",
+                    "entity": "inventory\\service\\Service",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item.access",
+                "type": "entry",
+                "label": "Accesses",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\Access",
                     "view": "list.default",
                     "order": "id",
                     "sort": "asc"

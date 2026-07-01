@@ -17,7 +17,7 @@
         "actions": {
             "ACTION.CREATE": [
                 {
-                    "view": "form.create",
+                    "view_id": "form.create",
                     "description": "Overload form to use for service creation."
                 }
             ]
@@ -49,6 +49,13 @@
                 "value": "has_subscription",
                 "label": "Subscription",
                 "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "subscription_id",
+                "label": "Linked subscription",
+                "width": "20%",
                 "sortable": true
             },
             {

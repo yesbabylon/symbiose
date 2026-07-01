@@ -1,6 +1,6 @@
 {
     "name": "inventory",
-    "description": "Manage your IT inventory, including products, services, software, and servers, while billing customers subscription-based.",
+    "description": "Manage inventory products, services, software, software models, providers, details, and access information.",
     "version": "1.0",
     "authors": ["Yesbabylon"],
     "license": "LGPL-3",
@@ -14,7 +14,7 @@
             "id": "inventory",
             "name": "Inventory",
             "extends": "app",
-            "description": "Application inventory",
+            "description": "Inventory application",
             "icon": "analytics",
             "color": "#6C3483",
             "access": {

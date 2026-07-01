@@ -1,0 +1,34 @@
+{
+    "name": "infra",
+    "description": "Manage your IT infrastructure, including products, services, software, and servers, while billing customers subscription-based.",
+    "version": "1.0",
+    "authors": ["Yesbabylon"],
+    "license": "LGPL-3",
+    "depends_on": [
+        "core",
+        "sale",
+        "purchase",
+        "inventory"
+    ],
+    "apps": [
+        {
+            "id": "infra",
+            "name": "Infrastructure",
+            "extends": "app",
+            "description": "Infrastructure application",
+            "icon": "analytics",
+            "color": "#6C3483",
+            "access": {
+                "groups": [
+                    "users"
+                ]
+            },
+            "params": {
+                "menus": {
+                    "left": "infra.left",
+                    "top": "infra.top"
+                }
+            }
+        }
+    ]
+}

@@ -7,7 +7,7 @@ cd ..
 ./equal.run --do=init_package --package=finance
 ./equal.run --do=init_package --package=hr
 ./equal.run --do=init_package --package=identity
-./equal.run --do=init_package --package=inventory
+./equal.run --do=init_package --package=infra
 ./equal.run --do=init_package --package=learn
 ./equal.run --do=init_package --package=purchase
 ./equal.run --do=init_package --package=realestate

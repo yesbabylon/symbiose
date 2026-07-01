@@ -68,7 +68,7 @@
                                                 "width": "100%",
                                                 "visible": ["is_internal", "=", false],
                                                 "widget": {
-                                                    "view": "form.inventory",
+                                                    "view": "form.infra",
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.CREATE": [

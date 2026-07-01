@@ -2,7 +2,7 @@
     "name": "Customer",
     "description": "Form for creating a new customer.",
     "access": {
-        "groups": ["sale.default.users", "inventory.default.users"]
+        "groups": ["sale.default.users", "infra.default.users"]
     },
     "header": {
         "actions": {

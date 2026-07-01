@@ -1,0 +1,74 @@
+{
+    "name": "Relevé de consommation",
+    "plural": "Relevés de consommation",
+    "description": "Représente une session de relevé des consommations pour une instance client.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom d'affichage du relevé.",
+            "help": "Construit à partir de l'instance et de la date de mesure."
+        },
+        "instance_id": {
+            "label": "Instance",
+            "description": "Instance client concernée par le relevé.",
+            "help": "Sélectionnez l'instance dont les consommations sont mesurées."
+        },
+        "instance_name": {
+            "label": "Nom de l'instance",
+            "description": "Nom lisible de l'instance mesurée.",
+            "help": "Copié depuis l'instance pour faciliter l'affichage et l'export."
+        },
+        "measured_at": {
+            "label": "Mesuré le",
+            "description": "Date et heure auxquelles le relevé a été généré.",
+            "help": "Cette date représente l'instant de référence du relevé."
+        },
+        "period_start": {
+            "label": "Début de période",
+            "description": "Début optionnel de la période mesurée.",
+            "help": "Utile pour les consommations calculées sur une période, comme les e-mails envoyés."
+        },
+        "period_end": {
+            "label": "Fin de période",
+            "description": "Fin optionnelle de la période mesurée.",
+            "help": "Utile pour les consommations calculées sur une période, comme les appels à des services externes."
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut courant de la génération du relevé.",
+            "help": "Indique si le relevé est prêt, en cours ou en erreur.",
+            "selection": {
+                "pending": "En attente",
+                "running": "En cours",
+                "done": "Terminé",
+                "failed": "Échoué"
+            }
+        },
+        "metering_reading_lines_ids": {
+            "label": "Lignes",
+            "description": "Lignes générées pour ce relevé.",
+            "help": "Chaque ligne contient la valeur d'une métrique collectée."
+        },
+        "logs": {
+            "label": "Journaux",
+            "description": "Détails techniques ou erreurs de génération au format JSON.",
+            "help": "Utilisé pour diagnostiquer les erreurs de collecte."
+        }
+    },
+    "view": {
+        "list.default": {
+            "name": "Relevés de consommation",
+            "description": "Affiche la liste des relevés de consommation."
+        },
+        "form.default": {
+            "name": "Relevé de consommation",
+            "description": "Affiche le formulaire d'un relevé de consommation.",
+            "layout": {
+                "section.metering_reading_lines_ids": {
+                    "label": "Lignes",
+                    "description": "Valeurs mesurées pour chaque métrique active."
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,45 @@
+<?php
+/*
+    This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
+    Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
+*/
+
+namespace infra;
+
+use equal\orm\Model;
+
+class SoftwareModel extends Model {
+
+    public static function getDescription() {
+        return 'The software model encompasses its name, description, edition, and version, providing a comprehensive overview of the general software.';
+    }
+
+    public static function getColumns() {
+        return [
+
+            'name' => [
+                'type'              => 'string',
+                'description'       => "Name of the software model.",
+                'required'          => true
+            ],
+
+            'description' => [
+                'type'              => 'string',
+                'usage'             => 'text/plain',
+                'description'       => 'Information about a software model.'
+            ],
+
+            'edition' => [
+                'type'              => 'string',
+                'description'       => "Type of edition (CE/EE/Pro/...)."
+            ],
+
+            'version' => [
+                'type'              => 'string',
+                'description'       => "Installed version of the software model."
+            ]
+
+        ];
+    }
+}

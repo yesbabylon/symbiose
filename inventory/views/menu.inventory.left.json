@@ -17,242 +17,95 @@
                 }
             },
             {
-                "id": "item.advanced",
-                "type": "parent",
-                "label": "Advanced",
-                "icon": "tune",
+                "id": "item.software",
+                "type": "entry",
+                "label": "Softwares",
+                "icon": "apps",
                 "description": "",
-                "children": [
-                    {
-                        "id": "item.advanced.services",
-                        "type": "parent",
-                        "label": "Services",
-                        "icon": "work",
-                        "description": "",
-                        "children": [
-                            {
-                                "id": "item.advanced.services.all-services",
-                                "type": "entry",
-                                "label": "All Services",
-                                "icon": "support_agent",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\service\\Service",
-                                    "view": "list.default"
-                                }
-                            },
-                            {
-                                "id": "item.advanced.services.subscription",
-                                "type": "entry",
-                                "label": "Subscriptions",
-                                "icon": "subscriptions",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\service\\Subscription",
-                                    "view": "list.default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "id": "item.advanced.servers",
-                        "type": "parent",
-                        "label": "All Servers",
-                        "icon": "lan",
-                        "description": "",
-                        "children": [
-                            {
-                                "id": "item.advanced.servers.all-servers",
-                                "type": "entry",
-                                "label": "All Servers",
-                                "icon": "storage",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\server\\Server",
-                                    "view": "list.default"
-                                }
-                            },
-                            {
-                                "id": "item.advanced.servers.instances",
-                                "type": "entry",
-                                "label": "Instances",
-                                "icon": "article",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\server\\Instance",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            },
-                            {
-                                "id": "item.advanced.servers.ip-addresses",
-                                "type": "entry",
-                                "label": "IP addresses",
-                                "icon": "location_on",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\server\\IpAddress",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            },
-                            {
-                                "id": "item.advanced.servers.alerts",
-                                "type": "parent",
-                                "label": "Alerts",
-                                "icon": "notification_important",
-                                "description": "",
-                                "children": [
-                                    {
-                                        "id": "item.advanced.servers.alerts.alerts",
-                                        "type": "entry",
-                                        "label": "Alerts",
-                                        "icon": "notifications",
-                                        "description": "",
-                                        "context": {
-                                            "entity": "inventory\\server\\AlertPolicy",
-                                            "view": "list.default",
-                                            "order": "id",
-                                            "sort": "asc"
-                                        }
-                                    },
-                                    {
-                                        "id": "item.advanced.servers.alerts.alert-triggers",
-                                        "type": "entry",
-                                        "label": "Alert Triggers",
-                                        "icon": "list",
-                                        "description": "",
-                                        "context": {
-                                            "entity": "inventory\\server\\AlertTrigger",
-                                            "view": "list.default",
-                                            "order": "id",
-                                            "sort": "asc"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "id": "item.advanced.softwares",
-                        "type": "entry",
-                        "label": "Softwares",
-                        "icon": "apps",
-                        "description": "",
-                        "context": {
-                            "entity": "inventory\\Software",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
-                        "id": "item.advanced.accesses",
-                        "type": "entry",
-                        "label": "Accesses",
-                        "icon": "key",
-                        "description": "",
-                        "context": {
-                            "entity": "inventory\\Access",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    }
-                ]
+                "context": {
+                    "entity": "inventory\\Software",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
             },
             {
-                "id": "item.settings",
-                "type": "parent",
-                "label": "Settings",
-                "icon": "settings",
+                "id": "item.software_model",
+                "type": "entry",
+                "label": "Software Models",
+                "icon": "widgets",
                 "description": "",
-                "children": [
-                    {
-                        "id": "item.settings.service.model",
-                        "type": "parent",
-                        "label": "Services Model",
-                        "icon": "settings_applications",
-                        "description": "",
-                        "children": [
-                            {
-                                "id": "inventory.settings.services.models.all",
-                                "type": "entry",
-                                "label": "All",
-                                "icon": "list",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\service\\ServiceModel",
-                                    "view": "list.default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "id": "item.settings.providers",
-                        "type": "parent",
-                        "label": "Providers",
-                        "icon": "wifi",
-                        "description": "",
-                        "children": [
-                            {
-                                "id": "item.settings.providers.all",
-                                "type": "entry",
-                                "label": "All",
-                                "icon": "list",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\service\\ServiceProvider",
-                                    "view": "list.default"
-                                }
-                            },
-                            {
-                                "id": "inventory.services.providers.category",
-                                "type": "entry",
-                                "label": "Categories",
-                                "icon": "settings_remote",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\service\\ServiceProviderCategory",
-                                    "view": "list.default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "id": "item.settings.detail",
-                        "type": "parent",
-                        "label": "Details",
-                        "icon": "book",
-                        "description": "",
-                        "children": [
-                            {
-                                "id": "inventory.settings.detail.all",
-                                "type": "entry",
-                                "label": "All",
-                                "icon": "list",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\service\\Detail",
-                                    "view": "list.default"
-                                }
-                            },
-                            {
-                                "id": "inventory.settings.detail.category",
-                                "type": "entry",
-                                "label": "Categories",
-                                "icon": "library_books",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\service\\DetailCategory",
-                                    "view": "list.default"
-                                }
-                            }
-                        ]
-                    }
-                ]
+                "context": {
+                    "entity": "inventory\\SoftwareModel",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item.service",
+                "type": "entry",
+                "label": "Services",
+                "icon": "work",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\service\\Service",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item.service_model",
+                "type": "entry",
+                "label": "Service Models",
+                "icon": "settings_applications",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\service\\ServiceModel",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item.service_provider",
+                "type": "entry",
+                "label": "Service Providers",
+                "icon": "wifi",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\service\\ServiceProvider",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item.detail",
+                "type": "entry",
+                "label": "Details",
+                "icon": "book",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\service\\Detail",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item.access",
+                "type": "entry",
+                "label": "Accesses",
+                "icon": "key",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\Access",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
             }
         ]
     }

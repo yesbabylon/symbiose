@@ -9,7 +9,7 @@
         "actions": {
             "ACTION.CREATE" : [
                 {
-                    "view": "form.create",
+                    "view_id": "form.create",
                     "description": "Simplified form to ease creation."
                 }
             ]

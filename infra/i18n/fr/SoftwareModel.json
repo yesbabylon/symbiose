@@ -1,0 +1,46 @@
+{
+    "name": "Modèle de Logiciel",
+    "plural": "Modèles de Logiciels",
+    "description": "Template / modèle de logiciel (permet d'appliquer des valeurs par défaut lors de la création d'un logiciel pour un produit).",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom du logiciel.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Description du logiciel.",
+            "help": ""
+        },
+        "edition": {
+            "label": "Édition",
+            "description": "Édition du logiciel.",
+            "help": ""
+        },
+        "version": {
+            "label": "Version",
+            "description": "Version du logiciel.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Logiciel",
+            "description": "Formulaire de modification d'un logiciel.",
+            "layout": {
+                "section.description": {
+                    "label": "Description"
+                }
+            }
+        },
+        "list.default": {
+            "description": "Liste de Modèles de logiciels.",
+            "layout": {}
+        },
+        "list.selection": {
+            "description": "Liste de Modèles de logiciels.",
+            "layout": {}
+        }
+    }
+}

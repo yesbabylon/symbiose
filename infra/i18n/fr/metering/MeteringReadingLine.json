@@ -1,0 +1,72 @@
+{
+    "name": "Ligne de relevé de consommation",
+    "plural": "Lignes de relevé de consommation",
+    "description": "Contient la valeur mesurée pour une métrique donnée lors d'un relevé.",
+    "model": {
+        "metering_reading_id": {
+            "label": "Relevé",
+            "description": "Relevé de consommation parent.",
+            "help": "Associe la ligne à une session de relevé."
+        },
+        "metric_definition_id": {
+            "label": "Métrique",
+            "description": "Définition de métrique mesurée par cette ligne.",
+            "help": "Sélectionne la métrique dont la valeur a été collectée."
+        },
+        "name": {
+            "label": "Nom",
+            "description": "Nom d'affichage de la ligne.",
+            "help": "Copié depuis la définition de métrique."
+        },
+        "metric_code": {
+            "label": "Code métrique",
+            "description": "Code technique copié depuis la définition de métrique.",
+            "help": "Utilisé pour simplifier les exports."
+        },
+        "metric_name": {
+            "label": "Nom métrique",
+            "description": "Libellé copié depuis la définition de métrique.",
+            "help": "Utilisé pour simplifier les exports."
+        },
+        "value": {
+            "label": "Valeur",
+            "description": "Valeur mesurée.",
+            "help": "La valeur est stockée en texte pour supporter les entiers, décimaux et grandes valeurs."
+        },
+        "unit": {
+            "label": "Unité",
+            "description": "Unité copiée depuis la définition de métrique.",
+            "help": "Permet d'interpréter la valeur mesurée."
+        },
+        "details": {
+            "label": "Détails",
+            "description": "Détails bruts retournés par le collecteur au format JSON.",
+            "help": "Peut contenir des informations techniques complémentaires."
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut de collecte de cette métrique.",
+            "help": "Indique si la collecte a abouti, échoué ou été ignorée.",
+            "selection": {
+                "done": "Terminé",
+                "failed": "Échoué",
+                "skipped": "Ignoré"
+            }
+        },
+        "error": {
+            "label": "Erreur",
+            "description": "Message d'erreur si la collecte a échoué.",
+            "help": "Renseigne la cause technique de l'échec."
+        }
+    },
+    "view": {
+        "list.default": {
+            "name": "Lignes de relevé de consommation",
+            "description": "Affiche la liste des valeurs mesurées."
+        },
+        "form.default": {
+            "name": "Ligne de relevé de consommation",
+            "description": "Affiche le formulaire d'une valeur mesurée."
+        }
+    }
+}

@@ -56,18 +56,17 @@ class Product extends Model {
 
             'servers_ids' => [
                 'type'              => 'many2many',
-                'foreign_object'    => 'inventory\server\Server',
+                'foreign_object'    => 'infra\server\Server',
                 'foreign_field'     => 'products_ids',
                 'rel_table'         => 'inventory_rel_product_server',
                 'rel_foreign_key'   => 'server_id',
                 'rel_local_key'     => 'product_id',
-                'ondelete'          => 'cascade',
                 'description'       => 'List of server that are used by the product.'
             ],
 
             'instances_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'inventory\server\Instance',
+                'foreign_object'    => 'infra\server\Instance',
                 'foreign_field'     => 'product_id',
                 'description'       => 'Instances used by product.'
             ],

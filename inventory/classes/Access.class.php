@@ -93,7 +93,7 @@ class Access extends Model {
 
             'server_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'inventory\server\Server',
+                'foreign_object'    => 'infra\server\Server',
                 'description'       => 'Server to which the access belongs.',
                 'readonly'          => true,
                 'visible'           => ['server_id', '<>', null]
@@ -109,8 +109,8 @@ class Access extends Model {
 
             'instance_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'inventory\server\Instance',
-                'description'       => '    .',
+                'foreign_object'    => 'infra\server\Instance',
+                'description'       => 'Instance to which the access belongs.',
                 'readonly'          => true,
                 'visible'           => ['instance_id', '<>', null]
             ],

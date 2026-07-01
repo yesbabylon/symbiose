@@ -10,7 +10,7 @@
         "actions": {
             "ACTION.CREATE" : [
                 {
-                    "view": "form.create",
+                    "view_id": "form.create",
                     "description": "overload form to use for product creation"
                 }
             ]

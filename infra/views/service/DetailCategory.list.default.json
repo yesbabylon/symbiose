@@ -1,0 +1,16 @@
+{
+    "name": "Detail categories",
+    "description": "Default listing of all detail categories.",
+    "order": "name",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "50%",
+                "sortable": true,
+                "readonly": true
+            }
+        ]
+    }
+}

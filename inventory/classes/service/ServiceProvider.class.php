@@ -7,6 +7,7 @@
 
 namespace inventory\service;
 
+use identity\Identity;
 use purchase\supplier\Supplier;
 
 class ServiceProvider extends Supplier {
@@ -38,5 +39,21 @@ class ServiceProvider extends Supplier {
             ],
 
         ];
+    }
+
+    public static function onupdateLangId($self) {
+        Identity::onupdateLangId($self);
+    }
+
+    public static function onupdateEmail($self) {
+        Identity::onupdateEmail($self);
+    }
+
+    public static function onupdatePhone($self) {
+        Identity::onupdatePhone($self);
+    }
+
+    public static function onupdateMobile($self) {
+        Identity::onupdateMobile($self);
     }
 }

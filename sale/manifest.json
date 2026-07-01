@@ -8,6 +8,7 @@
         "core",
         "identity",
         "finance",
+        "infra",
         "inventory"
     ],
     "requires": {

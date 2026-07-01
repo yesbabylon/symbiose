@@ -1,0 +1,52 @@
+[
+    {
+        "name": "identity\\Identity",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1101,
+                "legal_name": "Google Analytics",
+                "organisation_id": 1,
+                "type_id": 3,
+                "has_vat": false,
+                "address_country": "BE",
+                "supplier_id": 1101
+            },
+            {
+                "id": 1102,
+                "legal_name": "Microsoft 365",
+                "organisation_id": 1,
+                "type_id": 3,
+                "has_vat": false,
+                "address_country": "BE",
+                "supplier_id": 1102
+            }
+        ]
+    },
+    {
+        "name": "infra\\service\\ServiceProvider",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1101,
+                "is_internal": true,
+                "owner_identity_id": 1,
+                "partner_identity_id": 1101,
+                "relationship": "supplier",
+                "legal_name": "Google Analytics",
+                "login_url": "https://analytics.google.com",
+                "service_provider_category_id": 1
+            },
+            {
+                "id": 1102,
+                "is_internal": true,
+                "owner_identity_id": 1,
+                "partner_identity_id": 1102,
+                "relationship": "supplier",
+                "legal_name": "Microsoft 365",
+                "login_url": "https://admin.microsoft.com",
+                "service_provider_category_id": 1
+            }
+        ]
+    }
+]

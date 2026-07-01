@@ -95,12 +95,12 @@
                 "route": "/settings/purchase"
             },
             {
-                "id": "inventory",
-                "label": "Inventory",
+                "id": "infra",
+                "label": "Infrastructure",
                 "description": "",
                 "icon": "analytics",
                 "type": "parent",
-                "route": "/settings/inventory"
+                "route": "/settings/infra"
             },
             {
                 "id": "settings",

@@ -11,7 +11,7 @@
             "ACTION.CREATE": false,
             "ACTION.OPEN": [
                 {
-                    "view": "form.history"
+                    "view_id": "form.history"
                 }
             ]
         }

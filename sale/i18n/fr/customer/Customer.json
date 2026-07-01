@@ -93,7 +93,7 @@
                 }
             }
         },
-        "form.inventory": {
+        "form.infra": {
             "name": "Client",
             "description": "Formulaire de base pour afficher un client (Partenaire).",
             "layout": {

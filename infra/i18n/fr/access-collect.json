@@ -1,0 +1,65 @@
+{
+    "model": {
+        "access_type": {
+            "label": "Type",
+            "description": "Type de connexion, selon le protocole.",
+            "selection": {
+                "www": "www",
+                "ssh": "ssh",
+                "ftp": "ftp",
+                "sftp": "sftp",
+                "pop": "pop",
+                "smtp": "smtp",
+                "git": "git",
+                "docker": "docker",
+                "http": "http",
+                "https": "https"
+            },
+            "help": "Le protocole permet d'identifier le port par défaut à utiliser pour la connexion."
+        },
+        "host": {
+            "label": "Hôte",
+            "description": "Hôte de l'accès.",
+            "help": "Hôte de l'accès."
+        },
+        "port": {
+            "label": "Port",
+            "description": "Port de l'accès.",
+            "help": "Port de l'accès."
+        },
+        "username": {
+            "label": "Utilisateur",
+            "description": "Nom d'utilisateur pour identification.",
+            "help": "Le nom d'utilisateur ou l'identifiant de l'accès."
+        },
+        "password": {
+            "label": "Mot de passe",
+            "description": "Mot de passe pour sécurisation.",
+            "help": "Mot de passe correspondant à l'identifiant de l'accès."
+        },
+        "server_id": {
+            "label": "Serveur",
+            "description": "Serveur de l'accès.",
+            "help": ""
+        },
+        "instance_id": {
+            "label": "Instance",
+            "description": "Instance de l'accès.",
+            "help": ""
+        },
+        "software_id": {
+            "label": "Logiciel",
+            "description": "Logiciel de l'accès.",
+            "help": ""
+        },
+        "service_id": {
+            "label": "Service",
+            "description": "Service.",
+            "help": "Service de l'accès."
+        }
+    },
+    "view": {
+    },
+    "error": {
+    }
+}

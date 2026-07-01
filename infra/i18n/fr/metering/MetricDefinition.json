@@ -1,0 +1,77 @@
+{
+    "name": "Définition de métrique",
+    "plural": "Définitions de métrique",
+    "description": "Décrit une consommation mesurable et le collecteur technique associé.",
+    "model": {
+        "code": {
+            "label": "Code",
+            "description": "Code technique unique de la métrique.",
+            "help": "Utilisé pour identifier la métrique dans les exports et les traitements."
+        },
+        "name": {
+            "label": "Nom",
+            "description": "Libellé lisible de la métrique.",
+            "help": "Affiché dans les écrans de suivi et les exports."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Description fonctionnelle de ce qui est mesuré.",
+            "help": "Explique le périmètre de la mesure."
+        },
+        "category": {
+            "label": "Catégorie",
+            "description": "Catégorie fonctionnelle de la métrique.",
+            "help": "Permet de regrouper les métriques par domaine.",
+            "selection": {
+                "fmt": "FMT",
+                "edms": "EDMS",
+                "google_doc_ai": "Google Document AI",
+                "auth": "Authentification",
+                "mail": "E-mail",
+                "database": "Base de données"
+            }
+        },
+        "unit": {
+            "label": "Unité",
+            "description": "Unité de mesure utilisée par la métrique.",
+            "help": "Doit correspondre à l'unité retournée par le collecteur.",
+            "selection": {
+                "count": "Nombre",
+                "bytes": "Octets",
+                "calls": "Appels",
+                "users": "Utilisateurs",
+                "emails": "E-mails"
+            }
+        },
+        "value_type": {
+            "label": "Type de valeur",
+            "description": "Type de valeur attendu en retour du collecteur.",
+            "help": "Permet d'interpréter correctement la valeur collectée.",
+            "selection": {
+                "integer": "Entier",
+                "decimal": "Décimal",
+                "string": "Texte"
+            }
+        },
+        "collector": {
+            "label": "Collecteur",
+            "description": "Contrôleur appelé pour récupérer la valeur de la métrique.",
+            "help": "Le collecteur doit retourner une structure normalisée avec au moins une valeur."
+        },
+        "is_active": {
+            "label": "Active",
+            "description": "Indique si la métrique doit être collectée.",
+            "help": "Désactivez ce champ pour exclure la métrique des relevés."
+        }
+    },
+    "view": {
+        "list.default": {
+            "name": "Définitions de métrique",
+            "description": "Affiche la liste des métriques mesurables."
+        },
+        "form.default": {
+            "name": "Définition de métrique",
+            "description": "Affiche le formulaire d'une métrique mesurable."
+        }
+    }
+}

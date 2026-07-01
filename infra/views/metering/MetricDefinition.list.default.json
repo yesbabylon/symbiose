@@ -1,0 +1,44 @@
+{
+    "name": "Metric Definitions",
+    "description": "Default list for metric definitions.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "code",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "category",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "unit",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "value_type",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "is_active",
+                "width": "10%",
+                "sortable": true
+            }
+        ]
+    }
+}

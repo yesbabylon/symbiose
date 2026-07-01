@@ -91,6 +91,7 @@
                                         "items": [
                                             {
                                                 "type": "label",
+                                                "value": "",
                                                 "width": "100%"
                                             }
                                         ]
@@ -107,6 +108,13 @@
                                                 "value": "has_subscription",
                                                 "label": "Subscription",
                                                 "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "subscription_id",
+                                                "label": "Linked subscription",
+                                                "width": "50%",
+                                                "visible": ["has_subscription", "=", true]
                                             },
                                             {
                                                 "type": "field",
@@ -131,6 +139,7 @@
                                         "items": [
                                             {
                                                 "type": "label",
+                                                "value": "",
                                                 "width": "100%"
                                             }
                                         ]

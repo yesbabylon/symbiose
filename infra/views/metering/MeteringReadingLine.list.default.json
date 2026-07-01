@@ -1,0 +1,44 @@
+{
+    "name": "Metering Reading Lines",
+    "description": "Default list for metering reading lines.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "metering_reading_id",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "metric_code",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "metric_name",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "value",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "unit",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "10%",
+                "sortable": true
+            }
+        ]
+    }
+}

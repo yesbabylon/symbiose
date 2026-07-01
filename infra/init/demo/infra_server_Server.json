@@ -1,0 +1,25 @@
+[
+    {
+        "name": "infra\\server\\Server",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "state": "instance",
+                "name": "vps593447.ovh.net",
+                "server_type": "front",
+                "products_ids": [
+                    "1"
+                ]
+            },
+            {
+                "id": 2,
+                "name": "vpn123.123",
+                "server_type": "storage",
+                "products_ids": [
+                    "2"
+                ]
+            }
+        ]
+    }
+]

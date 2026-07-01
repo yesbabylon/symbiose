@@ -196,6 +196,22 @@ class Customer extends \identity\Partner {
         }
     }
 
+    public static function onupdateLangId($self) {
+        Identity::onupdateLangId($self);
+    }
+
+    public static function onupdateEmail($self) {
+        Identity::onupdateEmail($self);
+    }
+
+    public static function onupdatePhone($self) {
+        Identity::onupdatePhone($self);
+    }
+
+    public static function onupdateMobile($self) {
+        Identity::onupdateMobile($self);
+    }
+
     public static function onafterupdate($self, $values) {
         // this must be done after general sync (which creates an Identity if necessary, and prevents updating the `customer_id` of the target Identity)
         parent::onafterupdate($self, $values);

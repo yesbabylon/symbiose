@@ -1,0 +1,37 @@
+{
+    "name": "Softwares selected",
+    "description": "Default listing of all softwares.",
+    "order": "name",
+    "operations": {
+        "total": {
+            "name": {
+                "usage": "numeric/integer",
+                "operation": "COUNT",
+                "suffix": " total"
+            }
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "version",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "edition",
+                "width": "20%",
+                "sortable": true
+            }
+        ]
+    }
+}

@@ -58,13 +58,13 @@ class Software extends Model {
 
             'instance_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'inventory\server\Instance',
+                'foreign_object'    => 'infra\server\Instance',
                 'description'       => 'Instance contains the software.'
             ],
 
             'server_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'inventory\server\Server',
+                'foreign_object'    => 'infra\server\Server',
                 'ondelete'          => 'cascade',
                 'description'       => 'Server hosting the software.'
             ],

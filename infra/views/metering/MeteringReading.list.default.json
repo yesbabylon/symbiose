@@ -1,0 +1,44 @@
+{
+    "name": "Metering Readings",
+    "description": "Default list for metering readings.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "30%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "instance_id",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "measured_at",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "period_start",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "period_end",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "10%",
+                "sortable": true
+            }
+        ]
+    }
+}

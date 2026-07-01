@@ -1,0 +1,132 @@
+{
+    "name": "Subscription Entry",
+    "description": "Subscription entry.",
+    "actions": [
+        {
+            "id": "action.transition.bill",
+            "label": "Bill",
+            "controller": "model_transition",
+            "params": {
+                "entity": "infra\\service\\SubscriptionEntry",
+                "transition": "bill",
+                "ids": []
+            },
+            "visible": [
+                ["state", "<>", "draft"],
+                ["status", "=", "pending"],
+                ["is_billable", "=", true]
+            ]
+        }
+    ],
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "subscription_id",
+                                                "readonly": true,
+                                                "label": "Subscription",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date_from",
+                                                "label": "From",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date_to",
+                                                "label": "To",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "customer_id",
+                                                "label": "Customer",
+                                                "readonly": true,
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "product_id",
+                                                "label": "Product (Catalog)",
+                                                "readonly": true,
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price_id",
+                                                "label": "Price",
+                                                "width": "30%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "unit_price",
+                                                "label": "Price amount",
+                                                "width": "20%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_billable",
+                                                "label": "is Billable",
+                                                "width": "50%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_billable",
+                                                "label": "is Billable",
+                                                "width": "50%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_external_provider",
+                                                "label": "Has external provider",
+                                                "readonly": true,
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "service_provider_id",
+                                                "label": "Provider",
+                                                "readonly": true,
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_receivable",
+                                                "label": "Has Receivable",
+                                                "readonly": true,
+                                                "width": "50%",
+                                                "visible": ["state", "<>", "draft"]
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "receivable_id",
+                                                "label": "Receivable",
+                                                "readonly": true,
+                                                "width": "50%",
+                                                "visible": ["state", "<>", "draft"]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

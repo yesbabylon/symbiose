@@ -1,28 +1,20 @@
 {
     "description": "",
     "view": {
-        "item.home": {
-            "label": "Home",
-            "help": ""
-        },
-        "item.customer": {
-            "label": "Clients",
-            "help": ""
-        },
         "item.product": {
             "label": "Produits",
             "help": ""
         },
-        "item.services.subscription": {
-            "label": "Abonnements",
+        "item.software": {
+            "label": "Logiciels",
             "help": ""
         },
-        "item.sale.receivables": {
-            "label": "Créances",
+        "item.service": {
+            "label": "Services",
             "help": ""
         },
-        "item.finance.accounting.invoice": {
-            "label": "Factures",
+        "item.access": {
+            "label": "Accès",
             "help": ""
         }
     }

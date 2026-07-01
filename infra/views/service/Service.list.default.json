@@ -1,0 +1,113 @@
+{
+    "name": "Services",
+    "description": "Default listing of all services.",
+    "order": "id",
+    "sort": "asc",
+    "controller": "infra_service_service-collect",
+    "operations": {
+        "total": {
+            "name": {
+                "usage": "numeric/integer",
+                "operation": "COUNT",
+                "suffix": " total"
+            }
+        }
+    },
+    "header": {
+        "actions": {
+            "ACTION.CREATE": [
+                {
+                    "view_id": "form.create",
+                    "description": "Overload form to use for service creation."
+                }
+            ]
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "service_model_id",
+                "label": "Service Model",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "has_subscription",
+                "label": "Subscription",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "subscription_id",
+                "label": "Linked subscription",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "is_auto_renew",
+                "label": "Auto renew",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "is_billable",
+                "label": "Billable",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "product_id",
+                "label": "Product",
+                "width": "25%",
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "is_internal",
+                "label": "Is internal",
+                "width": "15%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "customer_id",
+                "label": "Customer",
+                "width": "20%",
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "has_external_provider",
+                "label": "External provider",
+                "width": "20%",
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "service_provider_id",
+                "width": "20%",
+                "label": "Provider",
+                "readonly": true
+            }
+        ]
+    }
+}

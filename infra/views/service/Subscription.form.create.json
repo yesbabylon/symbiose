@@ -1,0 +1,14 @@
+{
+    "name": "Subscription",
+    "description": "This form holds the fields for creating a new Subscription.",
+    "extends": {
+        "entity": "infra\\service\\Subscription",
+        "view": "form.default"
+    },
+    "layout": {
+        "remove": [
+            "row.expirations",
+            "section.entries"
+        ]
+    }
+}

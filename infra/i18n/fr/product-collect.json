@@ -1,0 +1,33 @@
+{
+    "model": {
+        "is_internal": {
+            "label": "Est-il interne?",
+            "description": "Le produit est-il interne ?.",
+            "selection": {
+                "all": "Tous",
+                "yes": "Oui",
+                "no": "Non"
+            },
+            "help": ""
+        },
+        "customer_id":{
+            "label": "Client",
+            "description": "Client associé au produit.",
+            "help": ""
+        },
+        "server_id":{
+            "label": "Serveur",
+            "description": "Serveur utilisé pour proposer le produit.",
+            "help": ""
+        },
+        "service_id":{
+            "label": "Service",
+            "description": "Service qui compose le produit.",
+            "help": ""
+        }
+    },
+    "view": {
+    },
+    "error": {
+    }
+}
