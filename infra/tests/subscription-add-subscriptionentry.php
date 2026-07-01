@@ -1,6 +1,6 @@
 <?php
 
-use infra\Product;
+use inventory\Product;
 use infra\service\Service;
 use infra\service\Subscription;
 use infra\service\SubscriptionEntry;

@@ -8,7 +8,7 @@
 namespace infra\service;
 
 use equal\orm\Model;
-use infra\Product;
+use inventory\Product;
 
 class Service extends Model {
 
@@ -87,7 +87,7 @@ class Service extends Model {
 
             'product_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'infra\Product',
+                'foreign_object'    => 'inventory\Product',
                 'ondelete'          => 'cascade',
                 'description'       => 'The product to which the service belongs.',
                 'dependents'        => ['is_internal', 'customer_id'],
@@ -131,14 +131,14 @@ class Service extends Model {
 
             'accesses_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'infra\Access',
+                'foreign_object'    => 'inventory\Access',
                 'foreign_field'     => 'service_id',
                 'description'       => 'Access to connect to the service.'
             ],
 
             'softwares_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'infra\Software',
+                'foreign_object'    => 'inventory\Software',
                 'foreign_field'     => 'service_id',
                 'description'       => 'Software associated with the service.'
             ],

@@ -1,0 +1,20 @@
+{
+    "name": "Customer",
+    "description": "Creation form holding the infrastructure details of a given customer.",
+    "access": {
+        "groups": ["infra.default.users"]
+    },
+    "header": {
+        "actions": {
+            "ACTION.SAVE": [
+                { "id": "SAVE_AND_VIEW" }
+            ]
+        }
+    },
+    "extends": {
+        "entity": "sale\\customer\\Customer",
+        "view": "form.create"
+    },
+    "layout": {
+    }
+}

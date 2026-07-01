@@ -63,8 +63,8 @@ class TimeEntry extends SaleEntry {
             'inventory_product_id' => [
                 'type'            => 'computed',
                 'result_type'     => 'many2one',
-                'foreign_object'  => 'infra\Product',
-                'description'     => 'The infrastructure product the time entry refers to, if any.',
+                'foreign_object'  => 'inventory\Product',
+                'description'     => 'The inventory product the time entry refers to, if any.',
                 'relation'        => ['project_id' => ['product_id']],
                 'instant'         => true,
                 'store'           => true

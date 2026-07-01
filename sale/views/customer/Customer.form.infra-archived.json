@@ -1,0 +1,18 @@
+{
+    "name": "Customer",
+    "description": "Form holding the infrastructure details of a given archived customer.",
+    "access": {
+        "groups": ["infra.default.users"]
+    },
+    "header": {
+        "actions": {
+            "ACTION.EDIT": false
+        }
+    },
+    "extends": {
+        "entity": "sale\\customer\\Customer",
+        "view": "form.infra"
+    },
+    "layout": {
+    }
+}

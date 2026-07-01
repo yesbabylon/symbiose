@@ -8,7 +8,7 @@
 namespace timetrack;
 
 use equal\orm\Model;
-use infra\Product;
+use inventory\Product;
 use sale\receivable\ReceivablesQueue;
 
 class Project extends Model {
@@ -45,7 +45,7 @@ class Project extends Model {
 
             'product_id' => [
                 'type'            => 'many2one',
-                'foreign_object'  => 'infra\Product',
+                'foreign_object'  => 'inventory\Product',
                 'description'     => 'The product the the project refers to, if any.',
                 'dependents'      => ['time_entries_ids' => ['inventory_product_id']]
             ],
