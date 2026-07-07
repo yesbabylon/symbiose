@@ -489,7 +489,7 @@ class TimeEntry extends SaleEntry {
         $refresh_durations = false;
         $refresh_sale_amounts = false;
 
-        $get_onchange_value = function(string $field, $default = null) use ($event, $values, &$result) {
+        $get_changed_value = function(string $field, $default = null) use ($event, &$result) {
             if(array_key_exists($field, $result)) {
                 return $result[$field];
             }
@@ -498,6 +498,10 @@ class TimeEntry extends SaleEntry {
                 return $event[$field];
             }
 
+            return $default;
+        };
+
+        $get_assigned_value = function(string $field, $default = null) use ($values) {
             if(array_key_exists($field, $values)) {
                 return $values[$field];
             }
@@ -555,7 +559,7 @@ class TimeEntry extends SaleEntry {
             $refresh_durations = true;
         }
 
-        $has_sale_model = (bool) $get_onchange_value('has_sale_model', false);
+        $has_sale_model = (bool) $get_changed_value('has_sale_model', $get_assigned_value('has_sale_model', false));
 
         if(
             (
@@ -565,8 +569,8 @@ class TimeEntry extends SaleEntry {
             )
             && !$has_sale_model
         ) {
-            $product_id = $get_onchange_value('product_id');
-            $date = $get_onchange_value('date', time());
+            $product_id = $get_changed_value('product_id', $get_assigned_value('product_id'));
+            $date = $get_changed_value('date', $get_assigned_value('date', time()));
 
             if($product_id) {
                 $price = self::computeApplicablePrice($product_id, $date);
@@ -602,7 +606,7 @@ class TimeEntry extends SaleEntry {
             $refresh_durations = true;
         }
 
-        $is_full_day = (bool) $get_onchange_value('is_full_day', false);
+        $is_full_day = (bool) $get_changed_value('is_full_day', $get_assigned_value('is_full_day', false));
         if($is_full_day && array_key_exists('is_full_day', $event)) {
             $result['time_start'] = 9 * 3600;
             $result['time_end'] = 17 * 3600;
@@ -611,11 +615,34 @@ class TimeEntry extends SaleEntry {
 
         if($refresh_durations) {
             if(!$is_full_day) {
-                $time_start = $get_onchange_value('time_start');
-                $time_end = $get_onchange_value('time_end');
+                $time_start = $get_changed_value('time_start');
+                $time_end = $get_changed_value('time_end');
+                $assigned_time_start = $get_assigned_value('time_start');
+                $assigned_time_end = $get_assigned_value('time_end');
+                $assigned_duration = $get_assigned_value('duration');
+
+                if($time_start === null) {
+                    $time_start = $assigned_time_start;
+                }
+
+                if($time_end === null) {
+                    $time_end = $assigned_time_end;
+                }
+
+                if(
+                    isset($assigned_time_start, $assigned_time_end, $assigned_duration)
+                    && $assigned_duration != max(0, $assigned_time_end - $assigned_time_start)
+                ) {
+                    if(array_key_exists('time_end', $event) && !array_key_exists('time_start', $event)) {
+                        $time_start = $assigned_time_end - $assigned_duration;
+                    }
+                    elseif(array_key_exists('time_start', $event) && !array_key_exists('time_end', $event)) {
+                        $time_end = $assigned_time_start + $assigned_duration;
+                    }
+                }
 
                 if(isset($time_start, $time_end) && $time_end < $time_start) {
-                    $base_duration = $get_onchange_value('duration', 0);
+                    $base_duration = $get_changed_value('duration', $get_assigned_value('duration', 0));
                     $result['time_end'] = $time_start + $base_duration;
                     $time_end = $result['time_end'];
                 }
@@ -630,9 +657,9 @@ class TimeEntry extends SaleEntry {
                 }
             }
 
-            $duration = $get_onchange_value('duration', 0);
-            $is_internal = (bool) $get_onchange_value('is_internal', false);
-            $is_billable = (bool) $get_onchange_value('is_billable', true);
+            $duration = $get_changed_value('duration', $get_assigned_value('duration', 0));
+            $is_internal = (bool) $get_changed_value('is_internal', $get_assigned_value('is_internal', false));
+            $is_billable = (bool) $get_changed_value('is_billable', $get_assigned_value('is_billable', true));
 
             $billable_duration = self::computeBillableDurationValue($duration, $is_billable, $is_internal);
             $result['billable_duration'] = $billable_duration;
@@ -651,12 +678,12 @@ class TimeEntry extends SaleEntry {
         }
 
         if($refresh_sale_amounts) {
-            $billed_duration = $get_onchange_value('billed_duration', 0);
+            $billed_duration = $get_changed_value('billed_duration', $get_assigned_value('billed_duration', 0));
             $qty = round((floatval($billed_duration) / 3600) * 4) / 4;
-            $is_billable = (bool) $get_onchange_value('is_billable', true);
-            $unit_price = $get_onchange_value('unit_price', 0);
-            $free_qty = $get_onchange_value('free_qty', 0);
-            $discount = $get_onchange_value('discount', 0);
+            $is_billable = (bool) $get_changed_value('is_billable', $get_assigned_value('is_billable', true));
+            $unit_price = $get_changed_value('unit_price', $get_assigned_value('unit_price', 0));
+            $free_qty = $get_changed_value('free_qty', $get_assigned_value('free_qty', 0));
+            $discount = $get_changed_value('discount', $get_assigned_value('discount', 0));
 
             $result['qty'] = $qty;
             $result['total'] = $is_billable
