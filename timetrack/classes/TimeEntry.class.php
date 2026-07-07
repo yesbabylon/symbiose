@@ -619,7 +619,6 @@ class TimeEntry extends SaleEntry {
                 $time_end = $get_changed_value('time_end');
                 $assigned_time_start = $get_assigned_value('time_start');
                 $assigned_time_end = $get_assigned_value('time_end');
-                $assigned_duration = $get_assigned_value('duration');
 
                 if($time_start === null) {
                     $time_start = $assigned_time_start;
@@ -627,18 +626,6 @@ class TimeEntry extends SaleEntry {
 
                 if($time_end === null) {
                     $time_end = $assigned_time_end;
-                }
-
-                if(
-                    isset($assigned_time_start, $assigned_time_end, $assigned_duration)
-                    && $assigned_duration != max(0, $assigned_time_end - $assigned_time_start)
-                ) {
-                    if(array_key_exists('time_end', $event) && !array_key_exists('time_start', $event)) {
-                        $time_start = $assigned_time_end - $assigned_duration;
-                    }
-                    elseif(array_key_exists('time_start', $event) && !array_key_exists('time_end', $event)) {
-                        $time_end = $assigned_time_start + $assigned_duration;
-                    }
                 }
 
                 if(isset($time_start, $time_end) && $time_end < $time_start) {
