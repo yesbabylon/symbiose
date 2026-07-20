@@ -32,9 +32,9 @@
             "help": ""
         },
         "customer_id": {
-            "label": "Destinataire",
-            "description": "Organisation responsable de payer la facture.",
-            "help": "Client ou organisation responsable de payer les biens et services liés à la vente."
+            "label": "Client",
+            "description": "Destinataire de la facture.",
+            "help": "Client ou organisation responsable d'acquitter les biens et services liés à la vente."
         }
     },
     "view": {

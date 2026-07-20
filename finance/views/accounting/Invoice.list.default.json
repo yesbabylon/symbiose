@@ -10,6 +10,8 @@
             "ACTION.CREATE": false
         }
     },
+    "order": "emission_date",
+    "sort": "desc",
     "operations": {
         "total": {
             "total": {
@@ -37,6 +39,7 @@
                 "value": "emission_date",
                 "width": "20%",
                 "widget": {
+                    "sortable": true,
                     "usage": "date/plain.short"
                 }
             },
@@ -54,12 +57,14 @@
             {
                 "type": "field",
                 "value": "total",
-                "width": "15%"
+                "width": "15%",
+                "sortable": true
             },
             {
                 "type": "field",
                 "value": "price",
-                "width": "15%"
+                "width": "15%",
+                "sortable": true
             }
         ]
     }
