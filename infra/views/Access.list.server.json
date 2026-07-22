@@ -1,0 +1,49 @@
+{
+    "name": "Accessed Selected",
+    "description": "Default listing of accesses selected.",
+    "order": "name",
+    "operations": {
+        "total": {
+          "name": {
+            "usage": "numeric/integer",
+            "operation": "COUNT",
+            "suffix": " total"
+          }
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "username",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "password",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "host",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "url",
+                "width": "30%",
+                "sortable": true,
+                "readonly": true
+            }
+        ]
+    }
+}

@@ -155,7 +155,7 @@
                         "icon": "key",
                         "description": "",
                         "context": {
-                            "entity": "inventory\\Access",
+                            "entity": "infra\\Access",
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc"

@@ -107,7 +107,7 @@ class Instance extends Model {
 
             'accesses_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'inventory\Access',
+                'foreign_object'    => 'infra\Access',
                 'foreign_field'     => 'instance_id',
                 'description'       => 'Information about how to access the instance.'
             ],

@@ -73,7 +73,7 @@ list($params, $providers) = eQual::announce([
 
         'access_id' => [
             'type'              => 'many2one',
-            'foreign_object'    => 'inventory\Access',
+            'foreign_object'    => 'infra\Access',
             'description'       => 'Access to which the service belongs.'
         ],
 

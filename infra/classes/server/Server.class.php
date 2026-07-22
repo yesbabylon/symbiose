@@ -8,7 +8,7 @@
 namespace infra\server;
 
 use equal\orm\Model;
-use inventory\Access;
+use infra\Access;
 
 class Server extends Model {
 
@@ -64,7 +64,7 @@ class Server extends Model {
 
             'accesses_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'inventory\Access',
+                'foreign_object'    => 'infra\Access',
                 'foreign_field'     => 'server_id',
                 'description'       => 'Access information to the server.'
             ],

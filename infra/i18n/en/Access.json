@@ -1,0 +1,97 @@
+{
+    "name": "Access",
+    "plural": "Accesses",
+    "description": "Access details for a service, server, instance, or software.",
+    "model": {
+        "name": {
+            "label": "Name",
+            "description": "Access name.",
+            "help": "See field description."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Short access description.",
+            "help": "See field description."
+        },
+        "access_type": {
+            "label": "Type",
+            "description": "Connection type based on the protocol.",
+            "selection": {
+                "ssh": "SSH",
+                "ftp": "FTP",
+                "sftp": "SFTP",
+                "pop": "POP",
+                "smtp": "SMTP",
+                "git": "Git",
+                "docker": "Docker",
+                "http": "HTTP",
+                "https": "HTTPS"
+            },
+            "help": "The protocol is used to determine the default connection port."
+        },
+        "url": {
+            "label": "URL",
+            "description": "Access URL.",
+            "help": "See field description."
+        },
+        "host": {
+            "label": "Host",
+            "description": "Access host.",
+            "help": "Host name or IP address used by the access."
+        },
+        "port": {
+            "label": "Port",
+            "description": "Access port.",
+            "help": "Port used by the connection."
+        },
+        "username": {
+            "label": "Username",
+            "description": "Username used for authentication.",
+            "help": "Login or identifier used by the access."
+        },
+        "password": {
+            "label": "Password",
+            "description": "Password used for authentication.",
+            "help": "Password associated with the access credentials."
+        },
+        "server_id": {
+            "label": "Server",
+            "description": "Access server.",
+            "help": "See field description."
+        },
+        "instance_id": {
+            "label": "Instance",
+            "description": "Access instance.",
+            "help": "See field description."
+        },
+        "software_id": {
+            "label": "Software",
+            "description": "Access software.",
+            "help": "See field description."
+        },
+        "service_id": {
+            "label": "Service",
+            "description": "Access service.",
+            "help": "Service linked to the access."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Access",
+            "description": "Access edit form.",
+            "layout": {
+                "section.details": {
+                    "label": "Details"
+                },
+                "section.description": {
+                    "label": "Description"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Accesses",
+            "description": "Access list.",
+            "layout": {}
+        }
+    }
+}
