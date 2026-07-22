@@ -7,6 +7,8 @@
 
 namespace infra\service;
 
+use inventory\service\Service;
+use inventory\service\ServiceProvider;
 use sale\customer\Customer;
 use sale\subscription\Subscription as SaleSubscription;
 
@@ -52,7 +54,7 @@ class Subscription extends SaleSubscription  {
 
             'service_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'infra\service\Service',
+                'foreign_object'    => 'inventory\service\Service',
                 'description'       => 'Service attached to a subscription.',
                 'required'          => true,
                 'onupdate'          => 'onupdateServiceId',
@@ -83,7 +85,7 @@ class Subscription extends SaleSubscription  {
             'service_provider_id' => [
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
-                'foreign_object'    => 'infra\service\ServiceProvider',
+                'foreign_object'    => 'inventory\service\ServiceProvider',
                 'description'       => 'The service provider to which the service belongs.',
                 'visible'           => ['has_external_provider', '=', true],
                 'store'             => true,

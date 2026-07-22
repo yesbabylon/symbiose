@@ -1,7 +1,8 @@
 <?php
 
 use inventory\Product;
-use infra\service\Service;
+use inventory\service\Service;
+use inventory\service\ServiceModel;
 use infra\service\Subscription;
 use infra\service\SubscriptionEntry;
 use sale\customer\Customer;
@@ -28,11 +29,23 @@ $tests = [
         'description' => 'Tests that action add-subscriptionentry throws if subscription is internal',
         'arrange'     => function() {
             // Create service and subscription
+            $service_model = ServiceModel::create([
+                'name' => 'Test service model internal'
+            ])
+                ->read(['id'])
+                ->first();
+
+            $product = Product::create([
+                'name'        => 'Test product internal',
+                'is_internal' => true
+            ])
+                ->read(['id'])
+                ->first();
+
             $service = Service::create([
-                'name'        => 'Test service',
-                'product_id'  => 0,
-                'customer_id' => 0,
-                'is_internal' => true,
+                'name'             => 'Test service',
+                'service_model_id' => $service_model['id'],
+                'product_id'       => $product['id']
             ])
                 ->read(['id'])
                 ->first();
@@ -72,6 +85,12 @@ $tests = [
             Service::search(['name', '=', 'Test service'])
                 ->delete(true);
 
+            ServiceModel::search(['name', '=', 'Test service model internal'])
+                ->delete(true);
+
+            Product::search(['name', '=', 'Test product internal'])
+                ->delete(true);
+
             Subscription::search(['name', '=', 'Test subscription'])
                 ->delete(true);
         }
@@ -81,6 +100,12 @@ $tests = [
         'description' => 'Tests that action add-subscriptionentry throws if subscription is not linked to a customer',
         'arrange'     => function() {
             // Create product, service and subscription
+            $service_model = ServiceModel::create([
+                'name' => 'Test service model customer'
+            ])
+                ->read(['id'])
+                ->first();
+
             $product = Product::create([
                 'name'        => 'Test product',
                 'is_internal' => false
@@ -89,9 +114,10 @@ $tests = [
                 ->first();
 
             $service = Service::create([
-                'name'        => 'Test service',
-                'product_id'  => $product['id'],
-                'is_internal' => false
+                'name'             => 'Test service',
+                'service_model_id' => $service_model['id'],
+                'product_id'       => $product['id'],
+                'is_internal'      => false
             ])
                 ->read(['id'])
                 ->first();
@@ -101,7 +127,7 @@ $tests = [
                 'date_from'   => strtotime('-1 month -1 day'),
                 'date_to'     => strtotime('-1 day'),
                 'is_internal' => false,
-                'service_id'  => $service
+                'service_id'  => $service['id']
             ])
                 ->read(['id'])
                 ->first();
@@ -132,6 +158,9 @@ $tests = [
                 ->delete(true);
 
             Service::search(['name', '=', 'Test service'])
+                ->delete(true);
+
+            ServiceModel::search(['name', '=', 'Test service model customer'])
                 ->delete(true);
 
             Subscription::search(['name', '=', 'Test subscription'])

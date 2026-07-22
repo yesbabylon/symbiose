@@ -56,7 +56,7 @@ class SubscriptionEntry extends SaleSubscriptionEntry {
             'service_provider_id' => [
                 'type'           => 'computed',
                 'result_type'    => 'many2one',
-                'foreign_object' => 'infra\service\ServiceProvider',
+                'foreign_object' => 'inventory\service\ServiceProvider',
                 'description'    => 'The service provider to which the subscription belongs.',
                 'store'          => true,
                 'instance'       => true,

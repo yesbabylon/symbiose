@@ -14,7 +14,7 @@
                 "qty": 1,
                 "free_qty": 0,
                 "discount": 0,
-                "object_class": "sale\\subscription\\Subscription",
+                "object_class": "infra\\service\\Subscription",
                 "object_id": 4,
                 "status": "billed"
             },
@@ -28,7 +28,7 @@
                 "qty": 1,
                 "free_qty": 0,
                 "discount": 0,
-                "object_class": "sale\\subscription\\Subscription",
+                "object_class": "infra\\service\\Subscription",
                 "object_id": 5,
                 "status": "pending"
             }
@@ -47,7 +47,7 @@
                 "qty": 1,
                 "free_qty": 0,
                 "discount": 0,
-                "object_class": "sale\\subscription\\Subscription",
+                "object_class": "infra\\service\\Subscription",
                 "object_id": 4,
                 "status": "billed",
                 "date_from": "2024-04-01T00:00:00+00:00",
@@ -60,7 +60,7 @@
                 "qty": 1,
                 "free_qty": 0,
                 "discount": 0,
-                "object_class": "sale\\subscription\\Subscription",
+                "object_class": "infra\\service\\Subscription",
                 "object_id": 5,
                 "status": "pending",
                 "date_from": "2024-03-01T00:00:00+00:00",

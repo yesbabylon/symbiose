@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use sale\subscription\Subscription;
+use infra\service\Subscription;
 
 list($params, $providers) = eQual::announce([
     'description' => 'Verify the columns expiration of the subscription.',
@@ -44,11 +44,11 @@ $httpResponse = $context->httpResponse()->status(200);
 if ($subscription){
     if($subscription['is_expired'] || $subscription['has_upcoming_expiry']) {
         $result = $subscription['id'];
-        $dispatch->dispatch('infra.subscription.check.expiration', 'sale\subscription\Subscription', $subscription['id'], 'important', 'infra_service_check-expiration', ['id' => $params['id']], [], null, null);
+        $dispatch->dispatch('infra.subscription.check.expiration', 'infra\service\Subscription', $subscription['id'], 'important', 'infra_service_check-expiration', ['id' => $params['id']], [], null, null);
         $httpResponse->status(qn_error_http(QN_ERROR_NOT_ALLOWED));
     }
     else {
-        $dispatch->cancel('infra.subscription.check.expiration', 'sale\subscription\Subscription', $subscription['id']);
+        $dispatch->cancel('infra.subscription.check.expiration', 'infra\service\Subscription', $subscription['id']);
     }
 }
 

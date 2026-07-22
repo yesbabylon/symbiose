@@ -16,7 +16,7 @@ list($params, $providers) = eQual::announce([
         'entity' =>  [
             'type'              => 'string',
             'description'       => 'Full name (with namespace) of requested entity.',
-            'default'           => 'sale\subscription\Subscription'
+            'default'           => 'infra\service\Subscription'
         ],
 
         'service_id' => [

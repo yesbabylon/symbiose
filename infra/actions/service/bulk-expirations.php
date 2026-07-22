@@ -6,7 +6,7 @@
 */
 
 
-use sale\subscription\Subscription;
+use infra\service\Subscription;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
@@ -47,14 +47,37 @@ $should_be_updated_ids = array_merge(
     Subscription::search($upcoming_expiry_conditions)->ids()
 );
 
-eQual::run('do', 'sale_subscription_update-expirations', ['ids' => $should_be_updated_ids] );
+if(!empty($should_be_updated_ids)) {
+    $should_be_expired_ids = Subscription::search([
+            ['id', 'in', $should_be_updated_ids],
+            ['date_to', '<', date('Y-m-d', time())],
+            ['is_expired', '=', false]
+        ])
+        ->ids();
 
-$should_have_alert_ids = Subscription::ids($should_be_updated_ids)->get(true);
+    $should_be_upcoming_expiry_ids = Subscription::search([
+            ['id', 'in', $should_be_updated_ids],
+            ['date_to', '<', date('Y-m-d', strtotime('+30 days'))],
+            ['has_upcoming_expiry', '=', false]
+        ])
+        ->ids();
 
-foreach($should_have_alert_ids as $subscription_id) {
-    eQual::run('do', 'infra_service_check-expiration', ['id' => $subscription_id]);
+    if(!empty($should_be_expired_ids)) {
+        Subscription::ids($should_be_expired_ids)
+            ->update(['is_expired' => null]);
+    }
+
+    if(!empty($should_be_upcoming_expiry_ids)) {
+        Subscription::ids($should_be_upcoming_expiry_ids)
+            ->update(['has_upcoming_expiry' => null]);
+    }
+
+    $should_have_alert_ids = Subscription::ids($should_be_updated_ids)->get(true);
+
+    foreach($should_have_alert_ids as $subscription_id) {
+        eQual::run('do', 'infra_service_check-expiration', ['id' => $subscription_id]);
+    }
 }
-
 $context->httpResponse()
         ->status(204)
         ->send();

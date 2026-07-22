@@ -6,12 +6,12 @@
         {
             "id": "action.shift-subscription",
             "label": "Shift Period",
-            "controller": "sale_subscription_shift-period"
+            "controller": "infra_service_subscription_shift-period"
         },
         {
             "id": "action.add-subscription-entry",
             "label": "Create Entry",
-            "controller": "sale_subscription_add-subscriptionentry"
+            "controller": "infra_service_subscription_add-subscriptionentry"
         }
     ],
     "extends": {

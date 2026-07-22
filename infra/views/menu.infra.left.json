@@ -48,7 +48,7 @@
                                 "icon": "subscriptions",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\subscription\\Subscription",
+                                    "entity": "infra\\service\\Subscription",
                                     "view": "list.default"
                                 }
                             }
