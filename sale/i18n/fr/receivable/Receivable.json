@@ -19,9 +19,14 @@
             "name": "Créance",
             "description": "Formulaire par défaut d'une créance.",
             "actions": {
-                "action.invoice": {
+                "action.post-invoice": {
                     "label": "Facturer",
                     "description": "Créer une ligne de facture à partir de la créance.",
+                    "help": ""
+                },
+                "action.post-service-account": {
+                    "label": "Débiter le compte de service",
+                    "description": "Créer une ligne de compte de service à partir d'une prestation de temps.",
                     "help": ""
                 }
             },
@@ -52,5 +57,18 @@
             "layout": {}
         }
     },
-    "error": {}
+    "error": {
+        "errors": {
+            "receivable_invalid_id": "Aucune créance valide n'a été sélectionnée.",
+            "receivable_not_pending": "La créance doit être en attente pour être imputée à un compte de service.",
+            "receivable_not_time_entry": "Seules les créances issues d'une prestation de temps peuvent être imputées à un compte de service.",
+            "unknown_origin_time_entry": "La prestation de temps liée à la créance est introuvable.",
+            "receivable_has_no_billable_duration": "La prestation de temps ne contient aucune durée facturable.",
+            "unknown_service_account": "Le compte de service sélectionné est introuvable.",
+            "missing_customer": "La créance n'est liée à aucun client.",
+            "missing_service_account": "Aucun compte de service actif n'a été trouvé pour ce client.",
+            "service_account_customer_mismatch": "Le compte de service sélectionné ne correspond pas au client de la créance.",
+            "inactive_service_account": "Le compte de service sélectionné n'est pas actif."
+        }
+    }
 }

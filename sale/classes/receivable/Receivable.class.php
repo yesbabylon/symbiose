@@ -384,13 +384,20 @@ class Receivable extends Model {
                 'id',
                 'name',
                 'description',
+                'status',
                 'origin_object_class',
                 'origin_object_id',
                 'date',
                 'customer_id',
-                'product_id' => ['id', 'name', 'description'],
-                'qty',
-                'free_qty'
+                'time_entry_id' => [
+                    'id',
+                    'description',
+                    'billed_duration',
+                    'travel_time',
+                    'on_site',
+                    'origin',
+                    'priority'
+                ]
             ]);
 
         $defaultServiceAccount = null;
@@ -405,6 +412,18 @@ class Receivable extends Model {
         }
 
         foreach($self as $id => $receivable) {
+            if($receivable['status'] !== 'pending') {
+                throw new \Exception('receivable_not_pending', EQ_ERROR_INVALID_PARAM);
+            }
+
+            if($receivable['origin_object_class'] !== 'timetrack\\TimeEntry') {
+                throw new \Exception('receivable_not_time_entry', EQ_ERROR_INVALID_PARAM);
+            }
+
+            if(!isset($receivable['time_entry_id']['id'])) {
+                throw new \Exception('unknown_origin_time_entry', EQ_ERROR_UNKNOWN_OBJECT);
+            }
+
             if(!$receivable['customer_id']) {
                 throw new \Exception('missing_customer', EQ_ERROR_INVALID_PARAM);
             }
@@ -432,15 +451,11 @@ class Receivable extends Model {
                 throw new \Exception('inactive_service_account', EQ_ERROR_INVALID_PARAM);
             }
 
-            $qty = max(0.0, (float) $receivable['qty'] - (float) ($receivable['free_qty'] ?? 0.0));
-            if($qty <= 0.0) {
-                throw new \Exception('receivable_has_no_billable_quantity', EQ_ERROR_INVALID_PARAM);
-            }
+            $timeEntry = $receivable['time_entry_id'];
 
-            $product_description = implode(' - ', array_filter([
-                $receivable['product_id']['name'] ?? '',
-                $receivable['product_id']['description'] ?? ''
-            ]));
+            if(!isset($timeEntry['billed_duration']) || (float) $timeEntry['billed_duration'] <= 0.0) {
+                throw new \Exception('receivable_has_no_billable_duration', EQ_ERROR_INVALID_PARAM);
+            }
 
             $serviceAccountEntry = ServiceAccountEntry::create([
                     'name'                => $receivable['name'],
@@ -449,11 +464,13 @@ class Receivable extends Model {
                     'service_account_id'  => $serviceAccount['id'],
                     'description'         => $receivable['description'] ?? '',
                     'date'                => $receivable['date'] ?? time(),
-                    // Time receivables express qty in hours while service account entries count quarter-hour points.
-                    'points'              => round($qty * 4, 2),
+                    'travel_time'         => (int) ($timeEntry['travel_time'] ?? 0),
+                    'on_site'             => (bool) ($timeEntry['on_site'] ?? false),
+                    'helpdesk'            => (($timeEntry['origin'] ?? null) === 'support'),
+                    'priority'            => (int) ($timeEntry['priority'] ?? 2),
                     'posting_date'        => time()
                 ])
-                ->read(['id'])
+                ->read(['id', 'points'])
                 ->first();
 
             self::id($receivable['id'])

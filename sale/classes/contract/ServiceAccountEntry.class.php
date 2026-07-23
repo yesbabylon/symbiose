@@ -31,7 +31,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
             'origin_object_id' => [
                 'type'              => 'integer',
                 'description'       => 'Object identifier, as a complement to origin_object_class.',
-                'dependents'        => ['time_entry_id', 'date', 'start', 'end', 'pause_time', 'delta_time', 'duration', 'points']
+                'dependents'        => ['time_entry_id', 'date', 'start', 'end', 'pause_time', 'delta_time', 'duration']
             ],
 
             'service_account_id' => [
@@ -39,7 +39,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'foreign_object'    => 'sale\contract\ServiceAccount',
                 'description'       => 'The service account the line belongs to.',
                 'onupdate'          => 'onupdateServiceAccountId',
-                'dependents'        => ['customer_id', 'points']
+                'dependents'        => ['customer_id']
             ],
 
             'customer_id' => [
@@ -62,7 +62,6 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'relation'          => ['time_entry_id' => 'date'],
                 'description'       => 'Date of the time entry (at which the service was performed).',
                 'store'             => true,
-                'dependents'        => ['points']
             ],
 
             'start' => [
@@ -71,7 +70,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'function'          => 'calcStart',
                 'description'       => 'Start time of the time entry (should be the same as date).',
                 'store'             => true,
-                'dependents'        => ['delta_time', 'duration', 'points']
+                'dependents'        => ['delta_time', 'duration']
             ],
 
             'end' => [
@@ -80,14 +79,14 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'function'          => 'calcEnd',
                 'description'       => 'End time of the time entry.',
                 'store'             => true,
-                'dependents'        => ['delta_time', 'duration', 'points']
+                'dependents'        => ['delta_time', 'duration']
             ],
 
             'pause' => [
                 'type'              => 'float',
                 'description'       => 'Pause or time offset expressed in hours. Negative values subtract time, positive values add time.',
                 'default'           => 0.0,
-                'dependents'        => ['pause_time', 'duration', 'points']
+                'dependents'        => ['pause_time', 'duration']
             ],
 
             'pause_time' => [
@@ -96,7 +95,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'description'       => 'Pause or offset converted to seconds.',
                 'function'          => 'calcPauseTime',
                 'store'             => true,
-                'dependents'        => ['duration', 'points']
+                'dependents'        => ['duration']
             ],
 
             'delta_time' => [
@@ -113,35 +112,30 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'description'       => 'Duration rounded up to the next quarter hour.',
                 'function'          => 'calcDuration',
                 'store'             => true,
-                'dependents'        => ['points']
             ],
 
             'travel_time' => [
                 'type'              => 'time',
                 'description'       => 'Travel time to add for on-site work.',
                 'default'           => 0,
-                'dependents'        => ['points']
             ],
 
             'on_site' => [
                 'type'              => 'boolean',
                 'description'       => 'Flag telling if the job was performed on site.',
                 'default'           => false,
-                'dependents'        => ['points']
             ],
 
             'helpdesk' => [
                 'type'              => 'boolean',
                 'description'       => 'Flag telling if the job relates to helpdesk work.',
                 'default'           => false,
-                'dependents'        => ['points']
             ],
 
             'standby' => [
                 'type'              => 'boolean',
                 'description'       => 'Flag telling if the job relates to standby work.',
                 'default'           => false,
-                'dependents'        => ['points']
             ],
 
             'priority' => [
@@ -154,21 +148,18 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 ],
                 'default'           => 2,
                 'description'       => 'Priority level retrieved from the related ticket.',
-                'dependents'        => ['points']
             ],
 
             'role_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'hr\employee\Role',
                 'description'       => 'Role used to adapt points calculation, if configured.',
-                'dependents'        => ['points']
             ],
 
             'role_hourly_factor' => [
                 'type'              => 'float',
                 'description'       => 'Role multiplier to apply during points calculation.',
                 'default'           => 1.0,
-                'dependents'        => ['points']
             ],
 
             'employee_id' => [
@@ -239,12 +230,10 @@ class ServiceAccountEntry extends \equal\orm\Model {
             ],
 
             'points' => [
-                'type'              => 'computed',
-                'result_type'       => 'float',
+                'type'              => 'float',
                 'description'       => 'Number of points the line corresponds to (can be computed or set manually).',
                 'help'              => 'Points count is always a positive number. Points from Ticket and Task lines are used to decrement the related Report balance, and Credit and Correction lines are used to increment it.',
-                'store'             => true,
-                'function'          => 'calcPoints',
+                'default'           => 0.0,
                 'onupdate'          => 'onupdatePoints'
             ],
 
@@ -262,134 +251,25 @@ class ServiceAccountEntry extends \equal\orm\Model {
         ];
     }
 
-    /**
-     * Synchronize customer_id with the customer_id from parent Service Account.
-     * SALine CC are created from Service Account, so we need to sync with related customer.
-     */
-    public static function onupdateServiceAccountId($self, $values) {
-        $self->read(['service_account_id']);
-        foreach($self as $id => $line) {
-            if($line['service_account_id']) {
-                ServiceAccount::id($line['service_account_id'])
-                    ->update(['balance_current' => null, 'has_balance_changed' => true]);
-            }
-        }
+    public static function getActions() {
+        return array_merge(parent::getActions(), [
+            'compute_points' => [
+                'description' => 'Compute and store points according to service account entry details.',
+                'policies'    => [],
+                'function'    => 'doComputePoints'
+            ]
+        ]);
     }
 
-    /**
-     * Changes the locked_date value according to the is_locked status.
-     */
-    public static function onupdateIsLocked($self, $values) {
-        if(isset($values['is_locked']) && $values['is_locked']) {
-            $self->update(['locked_date' => time()]);
-        }
-        elseif(isset($values['is_locked']) && !$values['is_locked']) {
-            $self->update(['locked_date' => null]);
-        }
+    protected static function onafterinstantiate($self) {
+        $self->do('compute_points');
     }
 
-    public static function onupdateReportId($self, $values) {
-        if(isset($values['report_id']) && $values['report_id'] > 0) {
-            $self->update(['has_report' => true]);
-        }
-        else {
-            $self->update(['has_report' => false]);
-        }
-    }
+    protected static function doComputePoints($self) {
+        $updates = [];
+        $service_accounts_ids = [];
 
-    public static function calcStart($self) {
-        $result = [];
-        $self->read(['date', 'time_entry_id' => ['time_start']]);
-        foreach($self as $id => $line) {
-            if(!$line['date'] || !isset($line['time_entry_id']['time_start'])) {
-                continue;
-            }
-            $result[$id] = strtotime('midnight', $line['date']) + (int) $line['time_entry_id']['time_start'];
-        }
-        return $result;
-    }
-
-    public static function calcEnd($self) {
-        $result = [];
-        $self->read(['date', 'time_entry_id' => ['time_start', 'time_end']]);
-        foreach($self as $id => $line) {
-            if(!$line['date'] || !isset($line['time_entry_id']['time_end'])) {
-                continue;
-            }
-
-            $start = (int) ($line['time_entry_id']['time_start'] ?? 0);
-            $end = (int) $line['time_entry_id']['time_end'];
-            $result[$id] = strtotime('midnight', $line['date']) + $end;
-
-            if($end < $start) {
-                $result[$id] = strtotime('+1 day', $result[$id]);
-            }
-        }
-        return $result;
-    }
-
-
-    /**
-     * Converts pause to an amount of seconds.
-     * Sign is inverted (original offset is negative). By default, pause is subtracted from time entry (but the other way around is possible).
-     */
-    public static function calcPauseTime($om, $oids, $lang) {
-        $result = [];
-        $lines = self::ids($oids)->read(['pause', 'time_entry_id' => ['pause_time']]);
-        foreach($lines as $oid => $line) {
-            if(isset($line['pause']) && (float) $line['pause'] != 0.0) {
-                $result[$oid] = round(abs((float) $line['pause']) * 60 * 60);
-            }
-            else {
-                $result[$oid] = (int) ($line['time_entry_id']['pause_time'] ?? 0);
-            }
-        }
-        return $result;
-    }
-
-    /**
-     * Computes the difference between end time and start time.
-     */
-    public static function calcDeltaTime($om, $oids, $lang) {
-        $result = [];
-        $lines = self::ids($oids)->read(['start', 'end']);
-        foreach($lines as $oid => $line) {
-            if(!isset($line['start'], $line['end'])) {
-                continue;
-            }
-            $result[$oid] = max(0, $line['end'] - $line['start']);
-        }
-        return $result;
-    }
-
-    /**
-     * Computes the duration of the time entry.
-     * Duration is the time spent working, minus the pause, rounded to the quarter and expressed in seconds.
-     */
-    public static function calcDuration($om, $oids, $lang) {
-        $result = [];
-        $lines = self::ids($oids)->read(['start', 'end', 'pause', 'pause_time']);
-        foreach($lines as $oid => $line) {
-            if(!isset($line['start'], $line['end'])) {
-                continue;
-            }
-            // #memo - pause_time is always positive; pause is negative if time has to be subtracted, and positive if time has to be added
-            $sign = ($line['pause'] > 0)?-1:1;
-            $duration = $line['end'] - $line['start'] - ($sign * (int) $line['pause_time']);
-            $result[$oid] = max(0, ceil($duration /  (15 * 60)) * (15 * 60));
-        }
-        return $result;
-    }
-
-
-    /**
-     * Compute the points of the line, according to configuration and line specifics.
-     *
-     */
-    public static function calcPoints($om, $oids, $lang) {
-        $result = [];
-
-        $lines = self::ids($oids)->read([
+        $self->read([
                 'is_locked',
                 'date',
                 'start',
@@ -410,9 +290,9 @@ class ServiceAccountEntry extends \equal\orm\Model {
                         'id'
                     ]
                 ]
-            ], $lang);
+            ]);
 
-        foreach($lines as $oid => $line) {
+        foreach($self as $id => $line) {
 
             // prevent processing invoiced lines
             if($line['is_locked']) {
@@ -801,21 +681,173 @@ class ServiceAccountEntry extends \equal\orm\Model {
             if(!is_numeric($points) || is_nan($points)) {
                 // should not occur
                 $logs[] = "ERROR - result is not a number";
+                $updates[$id] = [
+                    'calculation_time' => time(),
+                    'calculation_log'  => implode('<br />', $logs)
+                ];
             }
             else {
-                $result[$oid] = $points;
-                $logs[] = "Resulting final points: ".$result[$oid];
+                $logs[] = "Resulting final points: ".$points;
+                $updates[$id] = [
+                    'points'           => $points,
+                    'calculation_time' => time(),
+                    'calculation_log'  => implode('<br />', $logs)
+                ];
             }
 
-            // store logs
-            $om->update(self::getType(), $oid, ['calculation_time' => time(),'calculation_log' => implode('<br />', $logs)]);
+
             // reset current balance of parent Service Account
             if(isset($line['service_account_id']['id']) && $line['service_account_id']['id']) {
-                $om->update(ServiceAccount::getType(), $line['service_account_id']['id'], ['balance_current' => null, 'has_balance_changed' => true]);
+                $service_accounts_ids[] = $line['service_account_id']['id'];
+            }
+
+        }
+
+        foreach($updates as $id => $values) {
+            $self->id($id)->update($values);
+        }
+
+        foreach(array_unique($service_accounts_ids) as $service_account_id) {
+            ServiceAccount::id($service_account_id)
+                ->update(['balance_current' => null, 'has_balance_changed' => true]);
+        }
+    }
+
+    /**
+     * Synchronize customer_id with the customer_id from parent Service Account.
+     * SALine CC are created from Service Account, so we need to sync with related customer.
+     */
+    public static function onupdateServiceAccountId($self, $values) {
+        $self->read(['service_account_id']);
+        foreach($self as $id => $line) {
+            if($line['service_account_id']) {
+                ServiceAccount::id($line['service_account_id'])
+                    ->update(['balance_current' => null, 'has_balance_changed' => true]);
+            }
+        }
+    }
+
+    /**
+     * Changes the locked_date value according to the is_locked status.
+     */
+    public static function onupdateIsLocked($self, $values) {
+        if(isset($values['is_locked']) && $values['is_locked']) {
+            $self->update(['locked_date' => time()]);
+        }
+        elseif(isset($values['is_locked']) && !$values['is_locked']) {
+            $self->update(['locked_date' => null]);
+        }
+    }
+
+    public static function onupdateReportId($self, $values) {
+        if(isset($values['report_id']) && $values['report_id'] > 0) {
+            $self->update(['has_report' => true]);
+        }
+        else {
+            $self->update(['has_report' => false]);
+        }
+    }
+
+    public static function calcStart($self) {
+        $result = [];
+        $self->read(['date', 'time_entry_id' => ['time_start']]);
+        foreach($self as $id => $line) {
+            if(!$line['date'] || !isset($line['time_entry_id']['time_start'])) {
+                continue;
+            }
+            $result[$id] = strtotime('midnight', $line['date']) + (int) $line['time_entry_id']['time_start'];
+        }
+        return $result;
+    }
+
+    public static function calcEnd($self) {
+        $result = [];
+        $self->read(['date', 'time_entry_id' => ['time_start', 'time_end']]);
+        foreach($self as $id => $line) {
+            if(!$line['date'] || !isset($line['time_entry_id']['time_end'])) {
+                continue;
+            }
+
+            $start = (int) ($line['time_entry_id']['time_start'] ?? 0);
+            $end = (int) $line['time_entry_id']['time_end'];
+            $result[$id] = strtotime('midnight', $line['date']) + $end;
+
+            if($end < $start) {
+                $result[$id] = strtotime('+1 day', $result[$id]);
             }
         }
         return $result;
     }
+
+
+    /**
+     * Converts pause to an amount of seconds.
+     * Sign is inverted (original offset is negative). By default, pause is subtracted from time entry (but the other way around is possible).
+     */
+    public static function calcPauseTime($om, $oids, $lang) {
+        $result = [];
+        $lines = self::ids($oids)->read(['pause', 'time_entry_id' => ['pause_time']]);
+        foreach($lines as $oid => $line) {
+            if(isset($line['pause']) && (float) $line['pause'] != 0.0) {
+                $result[$oid] = round(abs((float) $line['pause']) * 60 * 60);
+            }
+            else {
+                $result[$oid] = (int) ($line['time_entry_id']['pause_time'] ?? 0);
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * Computes the difference between end time and start time.
+     */
+    public static function calcDeltaTime($om, $oids, $lang) {
+        $result = [];
+        $lines = self::ids($oids)->read(['start', 'end']);
+        foreach($lines as $oid => $line) {
+            if(!isset($line['start'], $line['end'])) {
+                continue;
+            }
+            $result[$oid] = max(0, $line['end'] - $line['start']);
+        }
+        return $result;
+    }
+
+    /**
+     * Computes the duration of the time entry.
+     * Duration is the time spent working, minus the pause, rounded to the quarter and expressed in seconds.
+     */
+    public static function calcDuration($om, $oids, $lang) {
+        $result = [];
+        $lines = self::ids($oids)->read([
+                'origin_object_class',
+                'start',
+                'end',
+                'pause',
+                'pause_time',
+                'time_entry_id' => ['billed_duration']
+            ]);
+
+        foreach($lines as $oid => $line) {
+            if(
+                $line['origin_object_class'] === 'timetrack\TimeEntry'
+                && isset($line['time_entry_id']['billed_duration'])
+            ) {
+                $result[$oid] = max(0, (int) $line['time_entry_id']['billed_duration']);
+                continue;
+            }
+
+            if(!isset($line['start'], $line['end'])) {
+                continue;
+            }
+            // #memo - pause_time is always positive; pause is negative if time has to be subtracted, and positive if time has to be added
+            $sign = ($line['pause'] > 0)?-1:1;
+            $duration = $line['end'] - $line['start'] - ($sign * (int) $line['pause_time']);
+            $result[$oid] = max(0, ceil($duration /  (15 * 60)) * (15 * 60));
+        }
+        return $result;
+    }
+
 
     /**
      *
