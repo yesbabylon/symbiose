@@ -9,7 +9,7 @@ use core\setting\Setting;
 use timetrack\Project;
 use timetrack\TimeEntry;
 
-list($params, $providers) = eQual::announce([
+[$params, $providers] = eQual::announce([
     'description'    => 'Quick create a time entry with minimal information.',
     'params'         => [
         'project_id' => [
@@ -19,7 +19,7 @@ list($params, $providers) = eQual::announce([
             'required'       => true
         ],
 
-        'origin'     => [
+        'origin' => [
             'type'           => 'string',
             'selection'      => [
                 'project',
@@ -31,19 +31,19 @@ list($params, $providers) = eQual::announce([
             'required'       => true
         ],
 
-        'reference'     => [
+        'reference' => [
             'type'           => 'string',
             'description'    => 'Reference completing the origin.',
             'required'       => true
         ],
 
-        'description'     => [
+        'description' => [
             'type'           => 'string',
             'description'    => 'Short description.',
             'required'       => true
         ],
 
-        'date'        => [
+        'date' => [
             'type'           => 'date',
             'description'    => 'Date on which the task was performed.',
             'default'        => function () { return time(); }
@@ -55,7 +55,7 @@ list($params, $providers) = eQual::announce([
             'default'        => false
         ],
 
-        'duration'        => [
+        'duration' => [
             'type'           => 'time',
             'description'    => 'Task duration.',
             'default'        => 900,
@@ -78,7 +78,7 @@ list($params, $providers) = eQual::announce([
  * @var \equal\php\Context $context
  * @var \equal\auth\AuthenticationManager $auth
  */
-list($context, $auth) = [ $providers['context'], $providers['auth'] ];
+['context' => $context, 'auth' => $auth] = $providers;
 
 $user_id = $auth->userId();
 
@@ -94,6 +94,7 @@ if(!isset($project)) {
 
 // compute start and end times, based on timezone set in settings
 $date = $params['date'];
+
 if($params['is_full_day']) {
     // #todo - read schedule values from settings
     $start = (9 * 3600);
