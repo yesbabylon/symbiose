@@ -6,7 +6,7 @@
     },
     "controller": "core_model_chart",
     "layout": {
-        "entity": "sale\\order\\Funding",
+        "entity": "sale\\pay\\Funding",
         "group_by": "range",
         "range_interval": "year",
         "range_from": "date.this.year.first",
@@ -15,7 +15,7 @@
             {
                 "label": "Total paiements",
                 "operation": ["COUNT", "object.due_amount"],
-                "domain": [[["created", ">=", "date.this.month.first"], ["center_office_id", "in", "user.center_offices_ids"]], [["created", "<=", "date.this.month.last"], ["center_office_id", "in", "user.center_offices_ids"]]]
+                "domain": [["created", ">=", "date.this.month.first"], ["created", "<=", "date.this.month.last"]]
             }
         ]
     }

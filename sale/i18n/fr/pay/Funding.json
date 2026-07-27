@@ -85,6 +85,11 @@
             "name": "Financements",
             "description": "Liste des financements.",
             "layout": {}
+        },
+        "chart.default": {
+            "name": "Financements",
+            "description": "Total des financements sur la période.",
+            "layout": {}
         }
     },
     "error": {
