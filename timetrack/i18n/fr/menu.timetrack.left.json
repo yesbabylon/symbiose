@@ -1,6 +1,9 @@
 {
     "name": "Timetrack menu de gauche",
     "view": {
+        "dashboard": {
+            "label": "Tableau de bord"
+        },
         "time_entries": {
             "label": "Saisies de temps"
         },

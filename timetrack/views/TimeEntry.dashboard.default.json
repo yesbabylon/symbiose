@@ -1,0 +1,71 @@
+{
+    "name": "Timetrack dashboard",
+    "description": "Default dashboard for monitoring current time entries, validation and billing queues.",
+    "icon": "dashboard",
+    "layout": {
+        "groups": [
+            {
+                "id": "group.main",
+                "height": "100%",
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "height": "50%",
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "id": "item.month_overview",
+                                                "label": "Month overview",
+                                                "description": "All non-billed time entries for the current month.",
+                                                "width": "100%",
+                                                "entity": "timetrack\\TimeEntry",
+                                                "view": "list.default",
+                                                "domain": [
+                                                    ["status", "<>", "billed"],
+                                                    ["date", ">=", "date.this.month.first()"],
+                                                    ["date", "<=", "date.this.month.last()"]
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "height": "50%",
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "id": "item.to_validate",
+                                                "label": "To validate",
+                                                "description": "Time entries waiting to be validated.",
+                                                "width": "50%",
+                                                "entity": "timetrack\\TimeEntry",
+                                                "view": "list.default",
+                                                "domain": [
+                                                    ["status", "=", "ready"]
+                                                ]
+                                            },
+                                            {
+                                                "id": "item.to_bill",
+                                                "label": "To bill",
+                                                "description": "Validated time entries waiting to be invoiced.",
+                                                "width": "50%",
+                                                "entity": "timetrack\\TimeEntry",
+                                                "view": "list.billable"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

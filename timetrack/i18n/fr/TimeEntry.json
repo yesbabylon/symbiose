@@ -126,6 +126,11 @@
             "name": "Saisies de temps par jour et utilisateur",
             "description": "Liste des saisies de temps regroupées par jour et par utilisateur.",
             "layout": {}
+        },
+        "dashboard.default": {
+            "name": "Tableau de bord Timetrack",
+            "description": "Tableau de bord par défaut pour suivre les saisies de temps du mois, les validations et la facturation.",
+            "layout": {}
         }
     },
     "error": {}

@@ -30,7 +30,7 @@
                 "context": {
                     "description": "Timetrack App root context.",
                     "entity": "timetrack\\TimeEntry",
-                    "view": "list.my"
+                    "view": "dashboard.default"
                 }
             }
         }

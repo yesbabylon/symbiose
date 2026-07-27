@@ -3,6 +3,17 @@
     "layout": {
         "items": [
             {
+                "id": "dashboard",
+                "type": "entry",
+                "label": "Dashboard",
+                "icon": "dashboard",
+                "description": "Timetrack dashboard.",
+                "context": {
+                    "entity": "timetrack\\TimeEntry",
+                    "view": "dashboard.default"
+                }
+            },
+            {
                 "id": "time_entries",
                 "type": "entry",
                 "label": "Time entries",
