@@ -11,39 +11,17 @@
                     {
                         "rows": [
                             {
-                                "height": "50%",
+                                "height": "100%",
                                 "columns": [
                                     {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "id": "item.month_overview",
-                                                "label": "Month overview",
-                                                "description": "All non-billed time entries for the current month.",
-                                                "width": "100%",
-                                                "entity": "timetrack\\TimeEntry",
-                                                "view": "list.default",
-                                                "domain": [
-                                                    ["status", "<>", "billed"],
-                                                    ["date", ">=", "date.this.month.first()"],
-                                                    ["date", "<=", "date.this.month.last()"]
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "height": "50%",
-                                "columns": [
-                                    {
-                                        "width": "100%",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "id": "item.to_validate",
                                                 "label": "To validate",
                                                 "description": "Time entries waiting to be validated.",
-                                                "width": "50%",
+                                                "height": "50%",
+                                                "width": "100%",
                                                 "entity": "timetrack\\TimeEntry",
                                                 "view": "list.default",
                                                 "domain": [
@@ -54,9 +32,29 @@
                                                 "id": "item.to_bill",
                                                 "label": "To bill",
                                                 "description": "Validated time entries waiting to be invoiced.",
-                                                "width": "50%",
+                                                "height": "50%",
+                                                "width": "100%",
                                                 "entity": "timetrack\\TimeEntry",
                                                 "view": "list.billable"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "id": "item.month_overview",
+                                                "label": "Month overview",
+                                                "description": "All non-billed time entries for the current month.",
+                                                "height": "100%",
+                                                "width": "100%",
+                                                "entity": "timetrack\\TimeEntry",
+                                                "view": "list.default",
+                                                "domain": [
+                                                    ["status", "<>", "billed"],
+                                                    ["date", ">=", "date.this.month.first()"],
+                                                    ["date", "<=", "date.this.month.last()"]
+                                                ]
                                             }
                                         ]
                                     }
