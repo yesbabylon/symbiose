@@ -92,16 +92,16 @@ $context = $providers['context'];
 
 $domain = [ ['object_class', '=', 'timetrack\TimeEntry'] ];
 
-if(isset($params['description']) && strlen($params['description']) > 0) {
-    $domain[] = ['description', 'ilike', '%'.$params['description'].'%'];
-}
-
 if(isset($params['user_id']) && $params['user_id'] > 0) {
     $domain[] = ['user_id', '=', $params['user_id']];
 }
 
 if(isset($params['customer_id']) && $params['customer_id'] > 0) {
     $domain[] = ['customer_id', '=', $params['customer_id']];
+}
+
+if(isset($params['project_id']) && $params['project_id'] > 0) {
+    $domain[] = ['project_id', '=', $params['project_id']];
 }
 
 if(isset($params['date_from']) && $params['date_from'] > 0) {
@@ -112,10 +112,6 @@ if(isset($params['date_from']) && $params['date_from'] > 0) {
     else {
         $domain[] = ['date', '=', $params['date_from']];
     }
-}
-
-if(isset($params['project_id']) && $params['project_id'] > 0) {
-    $domain[] = ['project_id', '=', $params['project_id']];
 }
 
 if(isset($params['origin']) && $params['origin'] != 'all') {
@@ -133,6 +129,11 @@ if(isset($params['is_billable'])) {
 if(isset($params['status']) && $params['status'] != 'all') {
     $domain[] = ['status', '=', $params['status']];
 }
+
+if(isset($params['description']) && strlen($params['description']) > 0) {
+    $domain[] = ['description', 'ilike', '%'.$params['description'].'%'];
+}
+
 
 if(isset($params['domain']) && count($params['domain'])) {
     $domain = (new Domain($params['domain']))

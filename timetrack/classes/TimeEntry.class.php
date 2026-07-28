@@ -48,8 +48,7 @@ class TimeEntry extends SaleEntry {
                 'type'              => 'string',
                 'description'       => 'Short description of the task performed.',
                 'help'              => 'This field is meant to explain what has actually been done, and serves for invoicing justification and followups.',
-                'dependents'        => ['name'],
-                'required'          => true
+                'dependents'        => ['name']
             ],
 
             'project_id' => [
@@ -855,15 +854,22 @@ class TimeEntry extends SaleEntry {
 
     public static function policyReadyForValidation($self): array {
         $result = [];
-        $self->read(['project_id', 'user_id', 'origin', 'duration']);
+        $self->read(['description', 'project_id', 'user_id', 'origin', 'duration']);
         foreach($self as $id => $entry) {
-            if( !isset($entry['project_id'], $entry['user_id'], $entry['origin'], $entry['duration'])
+            if( !isset($entry['description'], $entry['project_id'], $entry['user_id'], $entry['origin'], $entry['duration'])
+                    || !strlen(trim($entry['description']))
                     || $entry['duration'] <= 0 ) {
                 $result[$id] = false;
             }
         }
 
         return $result;
+    }
+
+    public function getIndexes(): array {
+        return [
+            ['object_class', 'user_id', 'customer_id', 'project_id']
+        ];
     }
 
     public static function getWorkflow() {
