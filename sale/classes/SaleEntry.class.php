@@ -190,6 +190,13 @@ class SaleEntry extends Model {
         ];
     }
 
+    public function getIndexes(): array {
+        return [
+            ['object_class', 'customer_id']
+        ];
+    }
+
+
     public static function getPolicies(): array {
         return [
             'ready-for-validation' => [
