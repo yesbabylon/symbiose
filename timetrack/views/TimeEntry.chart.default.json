@@ -11,8 +11,8 @@
         "range_to": "date.this.year.last",
         "datasets": [
             {
-                "label": "DSK",
-                "operation": ["SUM", "billed_duration"]
+                "label": "Billed duration",
+                "operation": ["SUM", "object.billed_duration"]
             }
         ]
     }
