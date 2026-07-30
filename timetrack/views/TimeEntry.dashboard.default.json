@@ -24,7 +24,7 @@
                                                 "width": "100%",
                                                 "entity": "timetrack\\TimeEntry",
                                                 "view": "chart.default",
-                                                "domain": [ 
+                                                "domain": [
                                                     ["user_id", "<>", null],
                                                     ["is_internal", "=", false],
                                                     ["is_billable", "=", true]
