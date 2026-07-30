@@ -51,9 +51,8 @@
                                                 "height": "100%",
                                                 "width": "100%",
                                                 "entity": "timetrack\\TimeEntry",
-                                                "view": "list.default",
+                                                "view": "list.dashboard",
                                                 "domain": [
-                                                    ["status", "<>", "billed"],
                                                     ["date", ">=", "date.this.month.first()"],
                                                     ["date", "<=", "date.this.month.last()"]
                                                 ]
