@@ -17,16 +17,13 @@
                                         "width": "50%",
                                         "items": [
                                             {
-                                                "id": "item.to_validate",
-                                                "label": "To validate",
-                                                "description": "Time entries waiting to be validated.",
+                                                "id": "item.chart",
+                                                "label": "Time entries by month",
+                                                "description": "Total billed durations by month, for current year.",
                                                 "height": "50%",
                                                 "width": "100%",
                                                 "entity": "timetrack\\TimeEntry",
-                                                "view": "list.default",
-                                                "domain": [
-                                                    ["status", "=", "ready"]
-                                                ]
+                                                "view": "chart.default"
                                             },
                                             {
                                                 "id": "item.to_bill",

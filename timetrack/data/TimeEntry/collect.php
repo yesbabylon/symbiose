@@ -7,7 +7,7 @@
 
 use equal\orm\Domain;
 
-list($params, $providers) = eQual::announce([
+[$params, $providers] = eQual::announce([
     'description' => 'Advanced search for Time Entries: returns a collection of Reports according to extra parameters.',
     'extends'     => 'core_model_collect',
     'params'      => [
@@ -58,11 +58,11 @@ list($params, $providers) = eQual::announce([
         ],
         'has_receivable' => [
             'description'    => 'Filter entries on has receivable',
-            'type'           => 'boolean',
+            'type'           => 'boolean'
         ],
         'is_billable' => [
             'description'    => 'Filter entries on is billable',
-            'type'           => 'boolean',
+            'type'           => 'boolean'
         ],
         'status' => [
             'description'    => 'Filter entries on status',
@@ -88,7 +88,7 @@ list($params, $providers) = eQual::announce([
 /**
  * @var \equal\php\Context $context
  */
-$context = $providers['context'];
+['context' => $context] = $providers;
 
 $domain = [ ['object_class', '=', 'timetrack\TimeEntry'] ];
 
@@ -131,7 +131,7 @@ if(isset($params['status']) && $params['status'] != 'all') {
 }
 
 if(isset($params['description']) && strlen($params['description']) > 0) {
-    $domain[] = ['description', 'ilike', '%'.$params['description'].'%'];
+    $domain[] = ['description', 'ilike', '%' . $params['description'] . '%'];
 }
 
 
