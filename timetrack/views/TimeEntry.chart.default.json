@@ -4,8 +4,8 @@
     "layout": {
         "entity": "timetrack\\TimeEntry",
         "stacked": false,
-        "group_by": "field",
-        "field": "user_id",
+        "group_by": "range",
+        "range_interval": "month",
         "range_field": "created",
         "range_from": "date.this.year.first",
         "range_to": "date.this.year.last",
