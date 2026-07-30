@@ -1,0 +1,19 @@
+{
+    "name": "Time entries",
+    "controller": "core_model_chart",
+    "layout": {
+        "entity": "timetrack\\TimeEntry",
+        "stacked": true,
+        "group_by": "field",
+        "field": "user_id",
+        "range_field": "created",
+        "range_from": "date.this.day",
+        "range_to": "date.this.day",
+        "datasets": [
+            {
+                "label": "DSK",
+                "operation": ["SUM", "billed_duration"]
+            }
+        ]
+    }
+}
