@@ -7,10 +7,6 @@
     "limit": 25,
     "operations": {
         "total": {
-            "duration": {
-                "operation": "SUM",
-                "usage": "time/plain"
-            },
             "billed_duration": {
                 "operation": "SUM",
                 "usage": "time/plain"
@@ -120,7 +116,8 @@
                 "label": "Duration",
                 "value": "duration",
                 "width": "10%",
-                "sortable": true
+                "sortable": true,
+                "visible": false
             },
             {
                 "type": "field",
