@@ -14,7 +14,6 @@
         }
     },
     "header": {
-        "layout": "inline",
         "selection": false
     },
     "layout": {
@@ -120,20 +119,21 @@
                 "visible": false
             },
             {
-                "type": "field",
-                "label": "Billed",
-                "value": "billed_duration",
-                "width": "10%",
-                "sortable": true
-            },
-            {
                 "id": "item.status",
                 "type": "field",
                 "label": "Status",
                 "value": "status",
                 "width": "10%",
                 "sortable": true,
-                "readonly": true
+                "readonly": true,
+                "visible": false
+            },
+            {
+                "type": "field",
+                "label": "Billed",
+                "value": "billed_duration",
+                "width": "10%",
+                "sortable": true
             }
         ]
     }
