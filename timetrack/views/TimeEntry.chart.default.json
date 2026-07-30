@@ -3,7 +3,7 @@
     "controller": "core_model_chart",
     "layout": {
         "entity": "timetrack\\TimeEntry",
-        "stacked": true,
+        "stacked": false,
         "group_by": "field",
         "field": "user_id",
         "range_field": "created",
