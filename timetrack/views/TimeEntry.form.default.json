@@ -273,7 +273,6 @@
                                                 "value": "product_id",
                                                 "label": "Product (Catalog)",
                                                 "width": "75%",
-                                                "visible": ["has_sale_model", "=", true],
                                                 "widget": {
                                                     "readonly": true
                                                 }
