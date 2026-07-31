@@ -16,6 +16,25 @@
     "header": {
         "selection": false
     },
+    "group_by": [
+        {
+            "open": true,
+            "colspan": 4,
+            "field": "status"
+        },
+        {
+            "open": true,
+            "colspan": 4,
+            "field": "user_id",
+            "order": "name",
+            "operations": {
+                "billed_duration": {
+                    "operation": "SUM",
+                    "usage": "time/plain"
+                }
+            }
+        }
+    ],
     "layout": {
         "items": [
             {
@@ -52,42 +71,6 @@
             },
             {
                 "type": "field",
-                "label": "Origin",
-                "value": "origin",
-                "width": "5%",
-                "sortable": true,
-                "readonly": true,
-                "visible": false
-            },
-            {
-                "type": "field",
-                "label": "Ticket link",
-                "value": "ticket_link",
-                "width": "5%",
-                "sortable": true,
-                "readonly": true,
-                "visible": false
-            },
-            {
-                "type": "field",
-                "label": "Is billable",
-                "value": "is_billable",
-                "width": "10%",
-                "sortable": true,
-                "readonly": true,
-                "visible": false
-            },
-            {
-                "type": "field",
-                "label": "Has receivable",
-                "value": "has_receivable",
-                "width": "10%",
-                "sortable": true,
-                "readonly": true,
-                "visible": false
-            },
-            {
-                "type": "field",
                 "label": "Date",
                 "value": "date",
                 "width": "10%",
@@ -109,14 +92,6 @@
                 "value": "time_end",
                 "width": "10%",
                 "sortable": true
-            },
-            {
-                "type": "field",
-                "label": "Duration",
-                "value": "duration",
-                "width": "10%",
-                "sortable": true,
-                "visible": false
             },
             {
                 "id": "item.status",

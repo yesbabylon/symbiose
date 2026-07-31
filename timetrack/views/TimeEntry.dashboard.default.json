@@ -38,10 +38,10 @@
                                                 "width": "100%",
                                                 "entity": "timetrack\\TimeEntry",
                                                 "view": "list.default",
+                                                "limit": 25,
                                                 "domain": [
-                                                    ["user_id", "<>", null],
-                                                    ["is_internal", "=", false],
-                                                    ["status", "not in", ["validated", "billed"]]
+                                                    ["date", ">=", "date.this.month.first()"],
+                                                    ["date", "<=", "date.this.month.last()"]
                                                 ]
                                             }
                                         ]
@@ -58,8 +58,7 @@
                                                 "entity": "timetrack\\TimeEntry",
                                                 "view": "list.dashboard",
                                                 "domain": [
-                                                    ["date", ">=", "date.this.month.first()"],
-                                                    ["date", "<=", "date.this.month.last()"]
+                                                    ["status", "<>", "billed"]
                                                 ]
                                             }
                                         ]
