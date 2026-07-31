@@ -273,27 +273,11 @@
                                                 "value": "product_id",
                                                 "label": "Product (Catalog)",
                                                 "width": "75%",
-                                                "visible": ["has_sale_model", "=", false]
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "product_id",
-                                                "label": "Product (Catalog)",
-                                                "width": "75%",
                                                 "visible": ["has_sale_model", "=", true],
                                                 "widget": {
                                                     "readonly": true
                                                 }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "50%",
-                                        "items": [
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "price_id",
