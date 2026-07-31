@@ -1,0 +1,96 @@
+{
+    "name": "Time entries",
+    "description": "Default listing of all time entries.",
+    "controller": "timetrack_TimeEntry_collect",
+    "order": "date,time_start",
+    "sort": "desc",
+    "limit": 25,
+    "header": {
+        "selection": false
+    },
+    "actions": [
+        {
+            "id": "action.create-empty",
+            "label": "Quick create",
+            "description": "Quickly create a time entry to be modified afterward.",
+            "controller": "timetrack_timeentry_create-quick",
+            "confirm": true
+        }
+    ],
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "label": "Performed by",
+                "value": "user_id",
+                "width": "15%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "label": "Customer",
+                "value": "customer_id",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true,
+                "visible": false
+            },
+            {
+                "type": "field",
+                "label": "Project",
+                "value": "project_id",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "label": "Date",
+                "value": "date",
+                "width": "10%",
+                "sortable": true,
+                "widget": {
+                    "usage": "date/plain.short"
+                }
+            },
+            {
+                "type": "field",
+                "label": "Start",
+                "value": "time_start",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "End",
+                "value": "time_end",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Billed",
+                "value": "billed_duration",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "id": "item.status",
+                "type": "field",
+                "label": "Status",
+                "value": "status",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            }
+        ]
+    }
+}
