@@ -4,7 +4,7 @@
     "controller": "timetrack_TimeEntry_collect",
     "order": "date,time_start",
     "sort": "desc",
-    "limit": 25,
+    "limit": 100,
     "operations": {
         "total": {
             "billed_duration": {
@@ -23,7 +23,7 @@
             "field": "status"
         },
         {
-            "open": true,
+            "open": false,
             "colspan": 4,
             "field": "user_id",
             "order": "name",
