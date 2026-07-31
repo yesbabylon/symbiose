@@ -67,9 +67,10 @@
                         "description": "Entries waiting to be invoiced.",
                         "context": {
                             "entity": "timetrack\\TimeEntry",
-                            "view": "list.billable",
+                            "view": "list.default",
                             "order": "created",
-                            "sort": "asc"
+                            "sort": "asc",
+                            "domain": ["status", "=", "validated"]
                         }
                     },
                     {
