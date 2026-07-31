@@ -78,6 +78,7 @@
                 "value": "id",
                 "width": "10%",
                 "sortable": true,
+                "visible": false,
                 "readonly": true
             },
             {
