@@ -276,6 +276,7 @@ class SaleEntry extends Model {
             if( $entry['status'] !== 'validated' ||
                 (!$entry['is_internal'] && (!isset($entry['customer_id']) || !isset($entry['product_id']) || !isset($entry['price_id'])))
             ) {
+                trigger_error("APP::Sale entry [{$id}] is not billable ({$entry['status']}) : [{$entry['customer_id']}]; product [{$entry['product_id']}]; price [{$entry['price_id']}]", EQ_REPORT_WARNING);
                 $result[$id] = [
                     'sale_entry_not_billable' => "Sale entry is not billable [{$id}]."
                 ];
