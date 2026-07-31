@@ -56,7 +56,7 @@
             }
         },
         {
-            "open": true,
+            "open": false,
             "colspan": 4,
             "field": "user_id",
             "order": "name",
