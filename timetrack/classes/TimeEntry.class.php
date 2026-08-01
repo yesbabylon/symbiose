@@ -11,6 +11,7 @@ use sale\price\Price;
 use sale\price\PriceList;
 use core\setting\Setting;
 use equal\orm\Model;
+use sale\SaleModel;
 
 class TimeEntry extends SaleEntry {
 
@@ -96,7 +97,7 @@ class TimeEntry extends SaleEntry {
                 'foreign_object' => 'sale\catalog\Product',
                 'description'    => 'Product of the sale catalog.',
                 'help'           => 'This field references a Product from the catalog. This field is not to be mistaken with the Product (software) of the customer.',
-                'relation'       => ['project_id' => ['sale_model_id' => 'product_id']],
+                'function'       => 'calcProductId',
                 'instant'        => true,
                 'store'          => true,
                 'dependents'     => ['price_id', 'unit_price', 'total']
@@ -695,11 +696,14 @@ class TimeEntry extends SaleEntry {
             if(!$entry['project_id']) {
                 continue;
             }
+            $values = [
+                // #memo - by convention we group sales from a same project when invoicing
+                'invoice_group' => $entry['project_id']['name']
+            ];
             if($entry['project_id']['receivable_queue_id']) {
-                self::id($id)->update(['receivable_queue_id' => $entry['project_id']['receivable_queue_id']]);
+                $values['receivable_queue_id'] = $entry['project_id']['receivable_queue_id'];
             }
-            // #memo - by convention we group sales from a same project when invoicing
-            self::id($id)->update(['invoice_group' => $entry['project_id']['name']]);
+            self::id($id)->update($values);
         }
     }
 
@@ -708,6 +712,20 @@ class TimeEntry extends SaleEntry {
         foreach($self as $id => $entry) {
             self::id($id)->update(['reference' => 'ticket '.$entry['ticket_id']]);
         }
+    }
+    protected static function calcProductId($self) {
+        $saleModel = SaleModel::id(1)->read(['product_id'])->first();
+        $self->read(['project_id' => ['sale_model_id' => ['product_id']]]);
+        foreach($self as $id => $timeEntry) {
+            if($timeEntry['project_id']['sale_model_id']['product_id'] ?? null) {
+                $result[$id] = $timeEntry['project_id']['sale_model_id']['product_id'];
+            }
+            else {
+                // fallback to default product (from default sale model)
+                $result[$id] = $saleModel['product_id'];
+            }
+        }
+        return $result;
     }
 
     protected static function calcCreationDelta($self) {
