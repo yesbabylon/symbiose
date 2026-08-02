@@ -50,10 +50,24 @@
                                                 "type": "field",
                                                 "value": "description",
                                                 "label": "Description",
-                                                "width": "50%",
+                                                "width": "100%",
                                                 "widget": {
                                                     "heading": true
                                                 }
+                                            },
+                                            {
+                                                "id": "item.customer_id",
+                                                "type": "field",
+                                                "value": "customer_id",
+                                                "label": "Customer",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "id": "item.customer_id",
+                                                "type": "field",
+                                                "value": "date",
+                                                "label": "Customer",
+                                                "width": "25%"
                                             }
                                         ]
                                     }
@@ -62,14 +76,25 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "25%",
+                                        "items": []
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "25%",
                                         "items": [
                                             {
-                                                "id": "item.customer_id",
                                                 "type": "field",
-                                                "value": "customer_id",
-                                                "label": "Customer",
-                                                "width": "50%"
+                                                "value": "creator",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "created",
+                                                "width": "25%"
                                             }
                                         ]
                                     }
@@ -128,13 +153,17 @@
                                         "items": [
                                             {
                                                 "type": "label",
-                                                "width": "33%"
+                                                "width": "66%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Free Quantity",
                                                 "value": "free_qty",
                                                 "width": "33%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "66%"
                                             },
                                             {
                                                 "type": "field",

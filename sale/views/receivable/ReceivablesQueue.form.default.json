@@ -3,10 +3,16 @@
     "description": "Default form for Receivables Queue",
     "actions" : [
         {
-            "id": "action.invoice",
+            "id": "action.post-invoice",
             "label": "Invoice",
             "description": "Invoice all pending receivables of the queue.",
-            "controller": "sale_receivablequeue_invoice"
+            "controller": "sale_receivablequeue_post-invoice"
+        },
+        {
+            "id": "action.post-service-account",
+            "label": "Charge Service Account",
+            "description": "Post all pending time receivables of the queue to a service account.",
+            "controller": "sale_receivablequeue_post-service-account"
         }
     ],
     "layout": {

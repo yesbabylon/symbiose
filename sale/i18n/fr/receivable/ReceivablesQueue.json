@@ -14,9 +14,14 @@
             "name": "File de créances",
             "description": "Formulaire par défaut d'une file de créances.",
             "actions": {
-                "action.invoice": {
+                "action.post-invoice": {
                     "label": "Facturer",
                     "description": "Facturer toutes les créances en attente de la file.",
+                    "help": ""
+                },
+                "action.post-service-account": {
+                    "label": "Débiter le compte de service",
+                    "description": "Imputer toutes les créances de temps en attente de la file à un compte de service.",
                     "help": ""
                 }
             },
@@ -34,8 +39,34 @@
         "list.default": {
             "name": "Files de créances",
             "description": "Liste des files de créances.",
+            "actions": {
+                "header.selection.actions.receivablequeue.post-invoice": {
+                    "label": "Facturer",
+                    "description": "Imputer les créances sélectionnées à une facture de vente.",
+                    "help": ""
+                },
+                "header.selection.actions.receivablequeue.post-service-account": {
+                    "label": "Débiter le compte de service",
+                    "description": "Imputer les créances sélectionnées à un compte de service.",
+                    "help": ""
+                }
+            },
             "layout": {}
         }
     },
-    "error": {}
+    "error": {
+        "errors": {
+            "object_invalid_id": "Aucune file de créances valide n'a été sélectionnée.",
+            "unknown_receivables_queue": "La file de créances sélectionnée est introuvable.",
+            "unknown_service_account": "Le compte de service sélectionné est introuvable.",
+            "inactive_service_account": "Le compte de service sélectionné n'est pas actif.",
+            "receivable_not_pending": "La créance doit être en attente pour être imputée à un compte de service.",
+            "receivable_not_time_entry": "Seules les créances issues d'une prestation de temps peuvent être imputées à un compte de service.",
+            "unknown_origin_time_entry": "La prestation de temps liée à la créance est introuvable.",
+            "receivable_has_no_billable_duration": "La prestation de temps ne contient aucune durée facturable.",
+            "missing_customer": "La créance n'est liée à aucun client.",
+            "missing_service_account": "Aucun compte de service actif n'a été trouvé pour ce client.",
+            "service_account_customer_mismatch": "Le compte de service sélectionné ne correspond pas au client de la créance."
+        }
+    }
 }

@@ -342,7 +342,7 @@ class Receivable extends Model {
                 ->read(['id'])
                 ->first();
 
-            if(!isset($invoice_line_group)) {
+            if(!$invoiceLineGroup) {
                 $invoiceLineGroup = InvoiceLineGroup::create([
                         'invoice_id' => $invoice['id'],
                         'name'       => $invoice_line_group_name

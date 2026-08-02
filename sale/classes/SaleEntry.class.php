@@ -56,7 +56,7 @@ class SaleEntry extends Model {
                 'store'             => true
             ],
 
-            'date'       => [
+            'date' => [
                 'type'           => 'datetime',
                 'description'    => 'Date of the entry.',
                 'default'        => function() { return time(); },

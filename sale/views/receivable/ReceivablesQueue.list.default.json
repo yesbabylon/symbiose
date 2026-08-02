@@ -9,10 +9,17 @@
             "default" : false,
             "actions" : [
                 {
-                    "id": "header.selection.actions.receivablequeue.invoice",
+                    "id": "header.selection.actions.receivablequeue.post-invoice",
                     "label": "Invoice",
                     "icon": "receipt_long",
-                    "controller": "sale_receivablequeue_invoice",
+                    "controller": "sale_receivablequeue_post-invoice",
+                    "confirm": true
+                },
+                {
+                    "id": "header.selection.actions.receivablequeue.post-service-account",
+                    "label": "Charge Service Account",
+                    "icon": "account_balance_wallet",
+                    "controller": "sale_receivablequeue_post-service-account",
                     "confirm": true
                 }
             ]
