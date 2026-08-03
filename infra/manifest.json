@@ -16,8 +16,8 @@
             "name": "Infrastructure",
             "extends": "app",
             "description": "Infrastructure application",
-            "icon": "analytics",
-            "color": "#6C3483",
+            "icon": "cloud_done",
+            "color": "#fb2727",
             "access": {
                 "groups": [
                     "users"

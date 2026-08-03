@@ -216,32 +216,6 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "label",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "label",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
                                         "width": "66%",
                                         "items": [
                                             {
@@ -279,6 +253,25 @@
                                         ]
                                     }
                                 ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price",
+                                                "width": "15%"
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -304,26 +297,6 @@
                                                         }
                                                     }
                                                 }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "id": "section.description",
-                        "label": "description",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "50%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "description",
-                                                "width": "100%"
                                             }
                                         ]
                                     }
