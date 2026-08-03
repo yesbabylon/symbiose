@@ -61,6 +61,12 @@
                 "value": "accounting_rule_id",
                 "width": "10%",
                 "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "price_type",
+                "width": "10%",
+                "visible": false
             }
         ]
     }

@@ -3,7 +3,7 @@
     "description": "This view is intended for displaying the list of price lists.",
     "access": {
         "groups": ["sale.default.users"]
-     },
+    },
     "layout": {
         "items": [
             {
@@ -22,7 +22,7 @@
                 "type": "field",
                 "value": "status",
                 "width": "10%",
-                "sortable": true                
+                "sortable": true
             },
             {
                 "type": "field",
