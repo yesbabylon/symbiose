@@ -7,6 +7,7 @@
 
 use sale\subscription\Subscription;
 use sale\subscription\SubscriptionEntry;
+use sale\price\Price;
 
 list($params, $providers) = eQual::announce([
     'description' => 'Create an entry from a subscription.',
@@ -56,7 +57,7 @@ if(!isset($subscription['product_id'])) {
 }
 
 $pricing_mode = $subscription['pricing_mode'] ?? 'fixed';
-if($pricing_mode === 'fixed' && !isset($subscription['price_id'], $subscription['price'])) {
+if(!isset($subscription['price_id']) || ($pricing_mode === 'fixed' && !isset($subscription['price']))) {
     throw new Exception('sale_information_missing_from_subscription', QN_ERROR_INVALID_PARAM);
 }
 
@@ -76,11 +77,24 @@ if(!$subscription_entry) {
             'product_id'      => $subscription['product_id'],
             'date_from'       => $subscription['date_from'],
             'date_to'         => $subscription['date_to'],
+            'price_id'        => $subscription['price_id'],
             'qty'             => 1.0
         ];
 
+    $unit_price = null;
     if($pricing_mode === 'fixed') {
-        $values['price_id'] = $subscription['price_id'];
+        $unit_price = $subscription['price'];
+    }
+    else {
+        $price = Price::id($subscription['price_id'])
+            ->read(['price'])
+            ->first();
+
+        if(!isset($price['price'])) {
+            throw new Exception('sale_information_missing_from_subscription', QN_ERROR_INVALID_PARAM);
+        }
+
+        $unit_price = $price['price'];
     }
 
     $subscription_entry = SubscriptionEntry::create($values)
@@ -88,11 +102,13 @@ if(!$subscription_entry) {
             'subscription_id' => $subscription['id']
         ]);
 
+    $subscription_entry = $subscription_entry
+        ->update([
+            'unit_price' => $unit_price
+        ]);
+
     if($pricing_mode === 'fixed') {
         $subscription_entry = $subscription_entry
-            ->update([
-                'unit_price' => $subscription['price']
-            ])
             ->transition('validate');
     }
 

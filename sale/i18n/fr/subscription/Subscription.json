@@ -32,10 +32,10 @@
         "pricing_mode": {
             "label": "Mode de tarification",
             "description": "Mode utilisé pour calculer le prix de l'abonnement.",
-            "help": "Le mode fixe utilise une liste de prix. Le mode consommation est complété sur chaque entrée lorsque la consommation est connue.",
+            "help": "Le mode forfait calcule le prix de la période. Le mode quantité prestée utilise le prix sélectionné comme prix unitaire et demande la quantité sur chaque vente générée.",
             "selection": {
-                "fixed": "Prix fixe",
-                "consumption": "Consommation"
+                "fixed": "Forfait",
+                "consumption": "Quantité prestée"
             }
         },
         "is_expired": {

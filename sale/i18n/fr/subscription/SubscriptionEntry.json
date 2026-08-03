@@ -8,8 +8,8 @@
             "description": "Mode de tarification hérité de l'abonnement.",
             "help": "",
             "selection": {
-                "fixed": "Prix fixe",
-                "consumption": "Consommation"
+                "fixed": "Forfait",
+                "consumption": "Quantité prestée"
             }
         },
         "qty": {

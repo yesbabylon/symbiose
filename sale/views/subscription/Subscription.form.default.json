@@ -268,8 +268,7 @@
                                                 "type": "field",
                                                 "value": "price_id",
                                                 "label": "Price",
-                                                "width": "33%",
-                                                "visible": ["pricing_mode", "=", "fixed"]
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",

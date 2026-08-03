@@ -78,7 +78,7 @@ class Subscription extends Model  {
                     'consumption' => 'Consumption'
                 ],
                 'description'       => 'Pricing mode of the subscription.',
-                'help'              => 'Fixed subscriptions use a price list. Consumption subscriptions are completed on each generated entry once usage is known.',
+                'help'              => 'Fixed subscriptions compute the period price. Consumption subscriptions use the selected price as unit price and require quantity entry on each generated sale entry.',
                 'default'           => 'fixed',
                 'dependents'        => ['price_id', 'price']
             ],
@@ -195,11 +195,7 @@ class Subscription extends Model  {
 
         $pricing_mode = $event['pricing_mode'] ?? $values['pricing_mode'] ?? 'fixed';
 
-        if($pricing_mode === 'consumption') {
-            $result['price_id'] = null;
-            $result['price'] = null;
-        }
-        elseif( (isset($event['product_id']) || isset($event['pricing_mode'])) && isset($date_from, $date_to) ) {
+        if( (isset($event['product_id']) || isset($event['pricing_mode']) || isset($event['date_from']) || isset($event['duration'])) && isset($date_from, $date_to) ) {
             $product_id = $event['product_id'] ?? $values['product_id'] ?? null;
 
             if($product_id) {
@@ -216,7 +212,7 @@ class Subscription extends Model  {
                             'id'    => $price['id'],
                             'name'  => $price['name']
                         ];
-                        $result['price'] = self::computePrice($price_id, $duration);
+                        $result['price'] = ($pricing_mode === 'fixed') ? self::computePrice($price_id, $duration) : null;
                     }
                 }
                 else {
@@ -269,13 +265,8 @@ class Subscription extends Model  {
 
     public static function calcPriceId($self): array {
         $result = [];
-        $self->read(['pricing_mode', 'product_id', 'date_from', 'date_to']);
+        $self->read(['product_id', 'date_from', 'date_to']);
         foreach($self as $id => $subscription) {
-            if(($subscription['pricing_mode'] ?? 'fixed') === 'consumption') {
-                $result[$id] = null;
-                continue;
-            }
-
             if(isset($subscription['product_id'], $subscription['date_from'], $subscription['date_to'])) {
                 $price_id = self::computePriceId(
                     $subscription['product_id'],
