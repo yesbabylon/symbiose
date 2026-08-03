@@ -12,6 +12,10 @@
     ],
     "operations": {
         "total": {
+            "total": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            },
             "price": {
                 "operation": "SUM",
                 "usage": "amount/money:2"
@@ -78,7 +82,8 @@
             {
                 "type": "field",
                 "value": "price",
-                "width": "15%"
+                "width": "15%",
+                "visible": false
             }
         ]
     }
