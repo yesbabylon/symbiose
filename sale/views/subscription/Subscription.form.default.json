@@ -5,7 +5,8 @@
         {
             "id": "action.shift-subscription",
             "label": "Shift Period",
-            "controller": "sale_subscription_shift-period"
+            "controller": "sale_subscription_shift-period",
+            "visible": ["is_auto_renew", "=", false]
         },
         {
             "id": "action.add-subscription-entry",
@@ -273,8 +274,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "price",
-                                                "width": "15%",
-                                                "visible": ["pricing_mode", "=", "fixed"]
+                                                "width": "15%"
                                             }
                                         ]
                                     }

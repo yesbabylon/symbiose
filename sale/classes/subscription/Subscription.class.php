@@ -154,7 +154,7 @@ class Subscription extends Model  {
                 'function'          => 'calcPrice',
                 'store'             => true,
                 'description'       => 'Price of the subscription.',
-                'help'              => 'This is a computed price and not stored, since it depends on the price list that relate to the subsequent sales.',
+                'help'              => 'This is a computed price and not stored, since it depends on the price list that relate to the subsequent sales.'
             ],
 
             'subscription_entries_ids' => [
@@ -171,7 +171,16 @@ class Subscription extends Model  {
     protected static function onupdateDateFrom($self) {
         $self->read(['date_from', 'duration']);
         foreach($self as $id => $subscription) {
-            $date_to = $subscription['date_from'] ? strtotime(self::MAP_DURATION_OFFSETS[$subscription['duration']], $subscription['date_from']) : null;
+            $date_to = null;
+            if($subscription['date_from']) {
+                $date_to = strtotime(
+                    '-1 day',
+                    strtotime(
+                        self::MAP_DURATION_OFFSETS[$subscription['duration']],
+                        $subscription['date_from']
+                    )
+                );
+            }
             self::id($id)->update(['date_to' => $date_to]);
         }
     }

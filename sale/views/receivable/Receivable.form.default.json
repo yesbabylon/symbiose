@@ -7,14 +7,14 @@
             "label": "Invoice",
             "description": "Create a new invoice line from the receivable.",
             "controller": "sale_receivable_Receivable_post-invoice",
-            "visible": ["status", "=", "pending"]
+            "visible": [["status", "=", "pending"]]
         },
         {
             "id": "action.post-service-account",
             "label": "Charge Service Account",
             "description": "Create a service account entry from a time receivable.",
             "controller": "sale_receivable_Receivable_post-service-account",
-            "visible": ["&", ["status", "=", "pending"], ["origin_object_class", "=", "timetrack\\TimeEntry"]]
+            "visible": [["status", "=", "pending"], ["origin_object_class", "=", "timetrack\\TimeEntry"]]
         }
     ],
     "layout": {
