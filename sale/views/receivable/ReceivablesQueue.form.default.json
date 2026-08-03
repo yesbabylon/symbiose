@@ -72,7 +72,7 @@
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.CREATE": false,
-                                                            "ACTION.SELECT": true
+                                                            "ACTION.SELECT": false
                                                         }
                                                     }
                                                 }
