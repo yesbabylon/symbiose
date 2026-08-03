@@ -49,10 +49,34 @@ $should_be_updated_ids = array_merge(
 
 eQual::run('do', 'sale_subscription_update-expirations', ['ids' => $should_be_updated_ids] );
 
-$should_have_alert_ids = Subscription::ids($should_be_updated_ids)->read(['id','has_upcoming_expiry','is_expired'])->get(true);
+$auto_renew_conditions = [
+    ['date_to', '<', date('Y-m-d', time())],
+    ['is_auto_renew', '=', true]
+];
 
-foreach($should_have_alert_ids as $subscription_id) {
-    eQual::run('do', 'sale_subscription_check-expiration', ['id' => $subscription_id]);
+if (!empty($params['ids'])) {
+    $auto_renew_conditions[] = ['id', 'in', $params['ids']];
+}
+
+$should_be_renewed_ids = Subscription::search($auto_renew_conditions)->ids();
+
+foreach($should_be_renewed_ids as $subscription_id) {
+    try {
+        eQual::run('do', 'sale_subscription_renew', ['id' => $subscription_id]);
+    }
+    catch(Exception $e) {
+        trigger_error("APP::Failed automatic renewal for subscription {$subscription_id}: ".$e->getMessage(), EQ_REPORT_WARNING);
+    }
+}
+
+$should_have_alert_ids = array_unique(array_merge($should_be_updated_ids, $should_be_renewed_ids));
+
+if(!empty($should_have_alert_ids)) {
+    $should_have_alert_ids = Subscription::ids($should_have_alert_ids)->read(['id','has_upcoming_expiry','is_expired'])->get(true);
+
+    foreach($should_have_alert_ids as $subscription_id) {
+        eQual::run('do', 'sale_subscription_check-expiration', ['id' => $subscription_id]);
+    }
 }
 
 $context->httpResponse()

@@ -263,11 +263,6 @@
                                                 "type": "field",
                                                 "value": "description",
                                                 "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "price",
-                                                "width": "15%"
                                             }
                                         ]
                                     }

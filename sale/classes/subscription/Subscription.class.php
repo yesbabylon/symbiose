@@ -221,12 +221,18 @@ class Subscription extends Model  {
                             'id'    => $price['id'],
                             'name'  => $price['name']
                         ];
-                        $result['price'] = ($pricing_mode === 'fixed') ? self::computePrice($price_id, $duration) : null;
+                        if($pricing_mode === 'fixed') {
+                            $computed_price = self::computePrice($price_id, $duration);
+                            $result['price'] = ($computed_price > 0) ? $computed_price : ($values['price'] ?? null);
+                        }
+                        else {
+                            $result['price'] = null;
+                        }
                     }
                 }
                 else {
                     $result['price_id'] = null;
-                    $result['price'] = null;
+                    $result['price'] = $values['price'] ?? null;
                 }
             }
         }
@@ -315,7 +321,7 @@ class Subscription extends Model  {
 
     protected static function calcPrice($self): array {
         $result = [];
-        $self->read(['pricing_mode', 'duration', 'price_id' => ['price', 'has_period', 'period']]);
+        $self->read(['pricing_mode', 'duration', 'price', 'price_id' => ['price', 'has_period', 'period']]);
 
         foreach($self as $id => $subscription) {
             if(($subscription['pricing_mode'] ?? 'fixed') === 'consumption') {
@@ -329,8 +335,11 @@ class Subscription extends Model  {
                     $subscription['duration']
                 );
 
-                $result[$id] = $price;
+                $result[$id] = ($price > 0) ? $price : ($subscription['price'] ?? null);
+                continue;
             }
+
+            $result[$id] = $subscription['price'] ?? null;
         }
 
         return $result;
@@ -372,11 +381,14 @@ class Subscription extends Model  {
         $cron = $om->getContainer()->get('cron');
 
         foreach($subscriptions as $id => $subscription) {
+            $cron->cancel("subscription.{$id}.renew");
+            $cron->cancel("subscription.{$id}.create.subscriptionEntry");
+
             if($subscription['is_auto_renew']) {
                 $cron->schedule(
-                    "subscription.{$id}.create.subscriptionEntry",
-                     $subscription['date_to'],
-                    'sale_subscription_add-subscriptionentry',
+                    "subscription.{$id}.renew",
+                    $subscription['date_to'],
+                    'sale_subscription_renew',
                     [ 'id' => $id ]
                 );
             }
