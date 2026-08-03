@@ -353,7 +353,7 @@ class Receivable extends Model {
             $invoiceLine = InvoiceLine::create([
                     // #memo - force name to receivable name instead of computed value (receivable name holds its own description when applicable)
                     'name'                  => $receivable['name'],
-                    'description'           => implode(' - ', array_filter([$receivable['product_id']['name'], $receivable['product_id']['description']])),
+                    'description'           => implode(' - ', array_filter([$receivable['product_id']['name'], strip_tags($receivable['product_id']['description'])])),
                     'invoice_line_group_id' => $invoiceLineGroup['id'],
                     'invoice_id'            => $invoice['id'],
                     'product_id'            => $receivable['product_id']['id'],
