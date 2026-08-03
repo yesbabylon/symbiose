@@ -31,7 +31,7 @@
         "actions": {
             "ACTION.CREATE": [
                 {
-                    "view": "form.create",
+                    "view_id": "form.create",
                     "description": "Overload form to use for subscription creation."
                 }
             ]

@@ -87,7 +87,7 @@
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.CREATE": [ {
-                                                                "view": "form.statement",
+                                                                "view_id": "form.statement",
                                                                 "domain": [ ["amount", "=", "object.amount"], ["receipt_date", "=", "object.date"] ]
                                                             } ]
                                                         }

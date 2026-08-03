@@ -9,7 +9,7 @@
     "header": {
         "actions": {
             "ACTION.CREATE": [ {
-                "view": "form.create"
+                "view_id": "form.create"
             } ]
         }
     },
