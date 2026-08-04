@@ -45,7 +45,7 @@ if(!$subscription) {
 Subscription::id($subscription['id'])
     ->update([
         // #memo - this triggers an update of `date_to` based on `duration`
-        'date_from' => $subscription['date_to']
+        'date_from' => strtotime('+1day', $subscription['date_to'])
     ]);
 
 $context->httpResponse()
