@@ -9,13 +9,14 @@ use sale\subscription\Subscription;
 use sale\subscription\SubscriptionEntry;
 use sale\price\Price;
 
-list($params, $providers) = eQual::announce([
+[$params, $providers] = eQual::announce([
     'description' => 'Create an entry from a subscription.',
     'params'      => [
         'id' =>  [
-            'description' => 'ID of the subscription.',
-            'type'        => 'integer',
-            'required'    => true
+            'description'       => 'ID of the subscription.',
+            'type'              => 'many2one',
+            'foreign_object'    => 'sale\subscription\Subscription',
+            'required'          => true
         ]
     ],
     'response'    => [
@@ -57,11 +58,11 @@ if(!isset($subscription['product_id'])) {
 }
 
 $pricing_mode = $subscription['pricing_mode'] ?? 'fixed';
-if(!isset($subscription['price_id']) || ($pricing_mode === 'fixed' && !isset($subscription['price']))) {
-    throw new Exception('pricing_mode_missing_from_subscription', EQ_ERROR_INVALID_PARAM);
+if(!isset($subscription['price_id'])) {
+    throw new Exception('price_id_missing_from_subscription', EQ_ERROR_INVALID_PARAM);
 }
 
-$subscription_entry = SubscriptionEntry::search([
+$subscriptionEntry = SubscriptionEntry::search([
         ['subscription_id', '=', $subscription['id']],
         ['date_from', '=', $subscription['date_from']],
         ['date_to', '=', $subscription['date_to']]
@@ -69,7 +70,7 @@ $subscription_entry = SubscriptionEntry::search([
     ->read(['id'])
     ->first();
 
-if(!$subscription_entry) {
+if(!$subscriptionEntry) {
     $values = [
             'object_id'       => $subscription['id'],
             'is_billable'     => $subscription['is_billable'],
@@ -82,8 +83,9 @@ if(!$subscription_entry) {
         ];
 
     $unit_price = null;
+
     if($pricing_mode === 'fixed') {
-        $unit_price = $subscription['price'];
+        $unit_price = $subscription['price'] ?? 0.0;
     }
     else {
         $price = Price::id($subscription['price_id'])
@@ -97,22 +99,22 @@ if(!$subscription_entry) {
         $unit_price = $price['price'];
     }
 
-    $subscription_entry = SubscriptionEntry::create($values)
+    $subscriptionEntry = SubscriptionEntry::create($values)
         ->update([
             'subscription_id' => $subscription['id']
         ]);
 
-    $subscription_entry = $subscription_entry
+    $subscriptionEntry = $subscriptionEntry
         ->update([
             'unit_price' => $unit_price
         ]);
 
     if($pricing_mode === 'fixed') {
-        $subscription_entry = $subscription_entry
+        $subscriptionEntry = $subscriptionEntry
             ->transition('validate');
     }
 
-    $subscription_entry = $subscription_entry->first();
+    $subscriptionEntry = $subscriptionEntry->first();
 }
 
 $context->httpResponse()
