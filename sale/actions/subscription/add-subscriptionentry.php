@@ -49,16 +49,16 @@ if(!$subscription) {
 }
 
 if($subscription['is_internal'] || empty($subscription['customer_id'])) {
-    throw new Exception('internal_subscription_cannot_generate_sale_entry', QN_ERROR_NOT_ALLOWED);
+    throw new Exception('internal_subscription_cannot_generate_sale_entry', EQ_ERROR_NOT_ALLOWED);
 }
 
 if(!isset($subscription['product_id'])) {
-    throw new Exception('sale_information_missing_from_subscription', QN_ERROR_INVALID_PARAM);
+    throw new Exception('product_id_missing_from_subscription', EQ_ERROR_INVALID_PARAM);
 }
 
 $pricing_mode = $subscription['pricing_mode'] ?? 'fixed';
 if(!isset($subscription['price_id']) || ($pricing_mode === 'fixed' && !isset($subscription['price']))) {
-    throw new Exception('sale_information_missing_from_subscription', QN_ERROR_INVALID_PARAM);
+    throw new Exception('pricing_mode_missing_from_subscription', EQ_ERROR_INVALID_PARAM);
 }
 
 $subscription_entry = SubscriptionEntry::search([
@@ -91,7 +91,7 @@ if(!$subscription_entry) {
             ->first();
 
         if(!isset($price['price'])) {
-            throw new Exception('sale_information_missing_from_subscription', QN_ERROR_INVALID_PARAM);
+            throw new Exception('price_missing_from_subscription', QN_ERROR_INVALID_PARAM);
         }
 
         $unit_price = $price['price'];
