@@ -91,13 +91,13 @@ A receivable is generated form a sale entry.
 
 ### Receivable
 
-A receivable refers to the amount of money owed to your business by customers for products or services that have been provided.
-A receivable can be invoiced, it adds a line to an invoice.
+A receivable represents a billable commercial amount generated from a sale entry.
+It is not an accounting receivable by itself: while pending, it waits in a queue until it is posted either to an invoice line or, when supported, to a Service Account entry.
 
 ### Receivable Queue
 
 A receivable queue is a list of pending receivables from a specific customer.
-A customer can have multiple queues, that allows to easily invoice the receivables separately.
+A customer can have multiple queues, which allows receivables to be processed separately.
 
 ## Invoice
 

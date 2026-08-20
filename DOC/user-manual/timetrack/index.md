@@ -1,7 +1,7 @@
 # Timetrack package
 
 The package proposes a simple way to record the time entries of the employees.
-These entries can generate sale receivables who can be invoiced to customers.
+These entries can generate sale receivables that can be posted to invoices or, when supported, to Service Accounts.
 
 ## Time entry
 

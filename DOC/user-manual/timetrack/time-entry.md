@@ -1,7 +1,7 @@
 # Time entry
 
 A time entry records the duration of time an employee spent working on a task.
-It is an extension of a sale entry, so you can generate a receivable from it that can be used to invoice a customer.
+It is an extension of a sale entry, so you can generate a receivable from it that can be posted to an invoice or, when supported, to a Service Account.
 
 ## Details
 
@@ -21,7 +21,7 @@ It is an extension of a sale entry, so you can generate a receivable from it tha
 | product     | Catalog product                                           |                                          |
 | price       | Price                                                     |                                          |
 | unit price  | Per hour price                                            |                                          |
-| receivable  | Generated receivable to invoice customer                  |                                          |
+| receivable  | Generated receivable to process for the customer          |                                          |
 
 A time entry information can be divided in 2 parts:
 

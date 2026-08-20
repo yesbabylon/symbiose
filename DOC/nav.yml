@@ -4,6 +4,8 @@
 - 'Getting Started': 'developer-manual/install-symbiose.md'
 - 'User ':
     - 'Account': 'user-manual/user-account.md'
+    - 'Sale':
+        - 'Receivables': 'user-manual/sale/receivables.md'
     - 'Timetrack':
         - 'Summary': 'user-manual/timetrack/index.md'
         - 'Time entry': 'user-manual/timetrack/time-entry.md'

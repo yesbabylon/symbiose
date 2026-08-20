@@ -7,28 +7,28 @@
 A sale entry represents the sale of a product or service from the catalog to a customer. It can encompass various entities such as subscriptions, support tickets, or project tasks.
 
 ### 2. Receivables
-For a sale to be invoiced, it needs to be associated with a "receivable." A receivable represents an amount that is yet to be received, with information identifying the sale linked to it.
+For a sale to be financially processed, it needs to be associated with a "receivable." A receivable represents a billable commercial amount, with information identifying the sale linked to it.
 
-In Symbiose, receivables are not quite understood from an accounting perspective, but rather as a service that has been provided and validated, for which the corresponding amount is due by the client but has not yet been invoiced.
+In Symbiose, receivables are not quite understood from an accounting perspective, but rather as a service that has been provided and validated, for which the corresponding amount is due by the client but has not yet been posted to an invoice or Service Account.
 
 When a service is considered a receivable, the corresponding sale entry (of any type) can no longer be modified.
 
 It is possible to list these receivables and group them within Receivable Queues. There is always at least one receivable queue per client, but a client can have multiple receivable queues.
 
-At any time, it is possible to select either a Receivable Queue or a particular receivable and add it to an invoice being created.
+At any time, it is possible to select either a Receivable Queue or a particular receivable and post it to an invoice being created. Supported time-entry receivables can also be posted to a Service Account.
 
 **Receivable States:**
 - **Pending:** Receivables in this state are in draft form, awaiting further processing.
-- **Invoiced:** Once invoiced, the receivable moves to this state, indicating that it has been processed for billing.
+- **Posted:** Once posted to an invoice line or Service Account entry, the receivable moves to this state, indicating that it has been financially processed.
 - **Cancelled:** Receivables can be cancelled, typically if the associated sale is voided or cancelled.
 
 
 
 ### 3. Receivable Queues
-To initiate the invoicing process, receivables are queued in a receivable queue. This queue ensures orderly processing of receivables for invoicing.
+To initiate financial processing, receivables are queued in a receivable queue. This queue ensures orderly processing of receivables for invoicing or Service Account posting.
 
 ### 4. Invoicing
-Once a receivable is invoiced, it corresponds to a line item on a specific invoice.
+Once a receivable is posted to an invoice, it corresponds to a line item on a specific invoice.
 
 
 **Example Workflow:**
@@ -36,8 +36,8 @@ Once a receivable is invoiced, it corresponds to a line item on a specific invoi
 1. A sale entry is recorded in the system, indicating the sale of a product or service.
 2. The sale entry is associated with a receivable, representing the amount to be received.
 3. The receivable is queued in the receivable queue.
-4. Receivables are processed from the queue, moving from pending to invoiced state upon successful invoicing.
-5. Invoiced receivables are reflected as line items on invoices generated for customers.
+4. Receivables are processed from the queue, moving from pending to posted state upon successful invoice or Service Account posting.
+5. Posted receivables are reflected as invoice lines or Service Account entries.
 
 This workflow ensures efficient management of sales and invoicing processes within the system, providing clarity and accountability at each stage of the transaction lifecycle.
 
