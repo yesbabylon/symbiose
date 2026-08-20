@@ -1,0 +1,28 @@
+body {
+	font-weight: 300;
+}
+
+article table {
+	font-size: 0.95em !important;
+	border-radius: 10px !important;
+}
+
+article table th {
+	/* text-transform: uppercase; */
+	padding: 0.4rem 0.8rem !important;
+	background-color: #3f51b5 !important;
+	white-space: nowrap;
+}
+article table th strong {
+	color: white;
+	font-weight: 500;
+}
+
+article .admonition {
+	font-size: 0.95em !important;
+}
+
+.md-grid {
+	/* allow use of max available space in the center area */
+	max-width: 100%;
+}

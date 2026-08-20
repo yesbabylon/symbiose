@@ -1,0 +1,53 @@
+<mxfile host="Electron" modified="2024-05-15T07:31:56.497Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.0.4 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="D-aRjUhs9ZL_AVJt8zOK" version="24.0.4" type="device">
+  <diagram name="Page-1" id="cKxTgMYql4TF4bc5MLS_">
+    <mxGraphModel dx="1034" dy="511" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c_aikRqwK7-L0WYF9IQl-37" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;/p&gt;&lt;p style=&quot;text-wrap: wrap; margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;Pipeline&lt;/b&gt;&lt;/p&gt;&lt;hr style=&quot;text-wrap: wrap; border-style: solid;&quot; size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ id: int&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;&lt;span style=&quot;text-wrap: wrap; background-color: initial;&quot;&gt;+ name: string&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;text-wrap: wrap;&quot;&gt;+ nodes_ids: Node&lt;/span&gt;&lt;/p&gt;&lt;div&gt;&lt;span style=&quot;text-wrap: wrap;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1" parent="1" vertex="1">
+          <mxGeometry x="40" y="210" width="210" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c_aikRqwK7-L0WYF9IQl-38" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;/p&gt;&lt;p style=&quot;text-wrap: wrap; margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;Node&lt;/b&gt;&lt;/p&gt;&lt;hr style=&quot;text-wrap: wrap; border-style: solid;&quot; size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ id: int&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;&lt;span style=&quot;text-wrap: wrap;&quot;&gt;+ pipeline_id: Pipeline&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;&lt;span style=&quot;text-wrap: wrap;&quot;&gt;+ name: string&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;&lt;span style=&quot;text-wrap: wrap;&quot;&gt;+ description: string&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;text-wrap: wrap;&quot;&gt;+ operation_controller: string&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;text-wrap: wrap; background-color: initial;&quot;&gt;+ operation_type: string&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;text-wrap: wrap;&quot;&gt;+ out_links_ids:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;text-wrap: wrap; background-color: initial;&quot;&gt;NodeLink&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;text-wrap: wrap;&quot;&gt;+ in_links_ids: NodeLink&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;text-wrap: wrap;&quot;&gt;+ params_ids: Argument&lt;/span&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1" parent="1" vertex="1">
+          <mxGeometry x="340" y="230" width="160" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="c_aikRqwK7-L0WYF9IQl-39" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;/p&gt;&lt;p style=&quot;text-wrap: wrap; margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;NodeLink&lt;/b&gt;&lt;/p&gt;&lt;hr style=&quot;text-wrap: wrap; border-style: solid;&quot; size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ id: int&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;&lt;span style=&quot;text-wrap: wrap;&quot;&gt;+ reference_node_id : int&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;text-wrap: wrap;&quot;&gt;+ source_node_id: Node&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;text-wrap: wrap;&quot;&gt;+&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;text-wrap: wrap;&quot;&gt;target_node_id&lt;/span&gt;&lt;span style=&quot;text-wrap: wrap;&quot;&gt;:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;text-wrap: wrap; background-color: initial;&quot;&gt;Node&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;text-wrap: wrap;&quot;&gt;+ target_param : string&lt;/span&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1" parent="1" vertex="1">
+          <mxGeometry x="600" y="250" width="210" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c_aikRqwK7-L0WYF9IQl-41" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="c_aikRqwK7-L0WYF9IQl-38" target="c_aikRqwK7-L0WYF9IQl-39" edge="1">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="360" y="200" as="sourcePoint" />
+            <mxPoint x="460" y="100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sKAt64bo3id6dF_bcRKU-16" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;/p&gt;&lt;p style=&quot;text-wrap: wrap; margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;Parameter&lt;/b&gt;&lt;/p&gt;&lt;hr style=&quot;text-wrap: wrap; border-style: solid;&quot; size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ id: int&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+ node_id: Node&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;+ value: string (json)&lt;/p&gt;&lt;p style=&quot;margin: 0px ; margin-left: 4px&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+ param : string&lt;/span&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1" parent="1" vertex="1">
+          <mxGeometry x="40" y="380" width="220" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="Jw5XRf5HujTxCrcpL5Kf-7" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;rounded=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="c_aikRqwK7-L0WYF9IQl-37" target="c_aikRqwK7-L0WYF9IQl-38" edge="1">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="370" y="240" as="sourcePoint" />
+            <mxPoint x="470" y="140" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="270" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-bYF_WKeTs8WpOxiQ_8u-5" value="" style="edgeStyle=orthogonalEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;rounded=0;exitX=0.008;exitY=0.825;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="c_aikRqwK7-L0WYF9IQl-38" edge="1" target="sKAt64bo3id6dF_bcRKU-16">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="340" y="350" as="sourcePoint" />
+            <mxPoint x="250" y="460" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="320" y="387" />
+              <mxPoint x="320" y="407" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-bYF_WKeTs8WpOxiQ_8u-7" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;rounded=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="c_aikRqwK7-L0WYF9IQl-38" target="c_aikRqwK7-L0WYF9IQl-39" edge="1">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="510" y="280" as="sourcePoint" />
+            <mxPoint x="600" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

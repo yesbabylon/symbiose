@@ -1,0 +1,52 @@
+- 'Welcome':
+    - 'Symbiose': 'index.md'
+    - 'Contribution Guide': 'welcome/contribution-guide.md'
+- 'Getting Started': 'developer-manual/install-symbiose.md'
+- 'User ':
+    - 'Account': 'user-manual/user-account.md'
+    - 'Timetrack':
+        - 'Summary': 'user-manual/timetrack/index.md'
+        - 'Time entry': 'user-manual/timetrack/time-entry.md'
+        - 'Project': 'user-manual/timetrack/project.md'
+        - 'Sale Model': 'user-manual/timetrack/time-entry-sale-model.md'
+- 'Developer':
+    - 'Packages': 'developer-manual/package-description.md'
+    - 'Finance':
+        - 'Summary': 'developer-manual/finance/index.md'
+        - 'Classes':
+            - 'Accounting': 'developer-manual/finance/classes/accounting.md'
+            - 'Tax ': 'developer-manual/finance/classes/tax.md'
+            - 'Statistics ': 'developer-manual/finance/classes/stats.md'
+        - 'Uml': 'developer-manual/finance/uml.md'
+    - 'Sale':
+        - 'Summary': 'developer-manual/sale/index.md'
+        - 'Classes':
+            - 'Catalog': 'developer-manual/sale/classes/catalog.md'
+            - 'Price': 'developer-manual/sale/classes/price.md'
+            - 'Customer': 'developer-manual/sale/classes/customer.md'
+            - 'Sale Entry': 'developer-manual/sale/classes/sale-entry.md'
+            - 'Receivable': 'developer-manual/sale/classes/receivable.md'
+            - 'Invoice': 'developer-manual/sale/classes/invoice.md'
+            - 'Subscription': 'developer-manual/sale/classes/subscription.md'
+            - 'Pay': 'developer-manual/sale/classes/pay.md'
+        - 'Actions':
+            - 'Sale Entry': 'developer-manual/sale/actions/sale-entry.md'
+            - 'Receivable': 'developer-manual/sale/actions/receivable.md'
+            - 'Receivable Queue': 'developer-manual/sale/actions/receivable-queue.md'
+            - 'Invoice': 'developer-manual/sale/actions/invoice.md'
+            - 'Subscription': 'developer-manual/sale/actions/subscription.md'
+        - 'Uml': 'developer-manual/sale/uml.md'
+    - 'Inventory':
+        - 'Summary': 'developer-manual/inventory/index.md'
+        - 'Classes':
+            - 'Inventory': 'developer-manual/inventory/classes/classes.md'
+            - 'Service': 'developer-manual/inventory/classes/service.md'
+            - 'Server': 'developer-manual/inventory/classes/server.md'
+        - 'Actions':
+          - 'Subscription' : 'developer-manual/inventory/actions/subscription.md'
+        - 'Uml': 'developer-manual/inventory/uml.md'
+    - 'Timetrack':
+        - 'Summary': 'developer-manual/timetrack/index.md'
+        - 'Classes': 'developer-manual/timetrack/classes.md'
+        - 'Actions': 'developer-manual/timetrack/subscription.md'
+        - 'Uml': 'developer-manual/timetrack/uml.md'
