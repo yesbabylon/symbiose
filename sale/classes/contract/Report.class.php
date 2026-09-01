@@ -212,7 +212,11 @@ class Report extends \equal\orm\Model {
      */
     public static function calcDateFrom($self) {
         $result = [];
-        $self->read(['date', 'service_account_id' => ['id', 'reporting_from']]);
+        $self->read([
+            'date',
+            'service_account_id' => ['id', 'reporting_from', 'date_from'],
+            'service_account_entries_ids' => ['date']
+        ]);
 
         foreach($self as $id => $report) {
             $previous = self::search([
@@ -225,8 +229,22 @@ class Report extends \equal\orm\Model {
                 ])
                 ->read(['date'])
                 ->first();
-            // #memo - by convention, there is no time entry before 01/01/2023 is present in Contractika
-            $fallback_date = ($report['service_account_id']['reporting_from'])?$report['service_account_id']['reporting_from']:strtotime("2023-01-01");
+            $fallback_date = $report['service_account_id']['reporting_from']
+                ?? $report['service_account_id']['date_from']
+                ?? null;
+
+            if(!$fallback_date) {
+                foreach($report['service_account_entries_ids'] as $entry) {
+                    if($entry['date'] && (!$fallback_date || $entry['date'] < $fallback_date)) {
+                        $fallback_date = $entry['date'];
+                    }
+                }
+            }
+
+            if(!$fallback_date) {
+                $fallback_date = $report['date'];
+            }
+
             $result[$id] = ($previous)?(strtotime('+1 day', $previous['date'])):$fallback_date;
         }
         return $result;
@@ -244,12 +262,12 @@ class Report extends \equal\orm\Model {
 
     public static function calcTotalPoints($self) {
         $result = [];
-        $self->read(['service_account_entries_ids' => ['sa_line_class_id', 'points']]);
+        $self->read(['service_account_entries_ids' => ['origin_object_class', 'points']]);
         foreach($self as $id => $report) {
             $total_points = 0.0;
             foreach($report['service_account_entries_ids'] as $line) {
-                // #memo - ticket & task points are always handled as negative value (but encoded as positive)
-                if(in_array($line['sa_line_class_id'], [1, 2])) {
+                // Time entries consume service account points, which are stored as positive values on entries.
+                if($line['origin_object_class'] === 'timetrack\TimeEntry') {
                     $total_points -= $line['points'];
                 }
             }
@@ -261,12 +279,12 @@ class Report extends \equal\orm\Model {
 
     public static function calcTotalCredits($self) {
         $result = [];
-        $self->read(['service_account_entries_ids' => ['sa_line_class_id', 'points']]);
+        $self->read(['service_account_entries_ids' => ['origin_object_class', 'points']]);
         foreach($self as $id => $report) {
             $total_credits = 0.0;
             foreach($report['service_account_entries_ids'] as $line) {
-                if(in_array($line['sa_line_class_id'], [3, 4])) {
-                    // #memo - credit & correction points can be either positive or negative
+                if($line['origin_object_class'] !== 'timetrack\TimeEntry') {
+                    // Credits and corrections increment the service account balance.
                     $total_credits += $line['points'];
                 }
             }
@@ -330,12 +348,12 @@ class Report extends \equal\orm\Model {
 
     public static function calcHasNonPosted($self) {
         $result = [];
-        $self->read(['service_account_entries_ids' => ['sa_line_class_id', 'is_posted']]);
+        $self->read(['service_account_entries_ids' => ['origin_object_class', 'posting_date']]);
         foreach($self as $id => $report) {
             $result[$id] = false;
             foreach($report['service_account_entries_ids'] as $line) {
-                //  consider only TT lines (CC are always posted)
-                if(!in_array($line['sa_line_class_id'], [3, 4]) && !$line['is_posted']) {
+                // Only time entries require an explicit posting date; credits and corrections are immediately usable.
+                if($line['origin_object_class'] === 'timetrack\TimeEntry' && !$line['posting_date']) {
                     $result[$id] = true;
                     break;
                 }
@@ -368,7 +386,7 @@ class Report extends \equal\orm\Model {
         $self->read(['service_account_id' => ['m_reporting']]);
         foreach($self as $id => $report) {
             $result[$id] = true;
-            if(!isset($report['service_account_id']['m_reporting']) || $report['service_account_id']['m_reporting'] != 'Send') {
+            if(!isset($report['service_account_id']['m_reporting']) || $report['service_account_id']['m_reporting'] != 'send') {
                 $result[$id] = false;
             }
         }

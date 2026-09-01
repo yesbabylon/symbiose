@@ -127,6 +127,165 @@ class ServiceAccount extends \sale\contract\Contract {
         ];
     }
 
+    public static function getActions() {
+        return array_merge(parent::getActions(), [
+            'generate_report' => [
+                'description' => 'Create or update a draft report with all unreported entries of the service account.',
+                'help'        => 'The report end date is the date of the most recent entry being attached.',
+                'policies'    => [],
+                'function'    => 'doGenerateReport'
+            ]
+        ]);
+    }
+
+    protected static function doGenerateReport($self) {
+        $self->read(['is_active']);
+
+        $plans = [];
+        foreach($self as $id => $serviceAccount) {
+            if(!$serviceAccount['is_active']) {
+                throw new \Exception('inactive_service_account', EQ_ERROR_INVALID_PARAM);
+            }
+
+            $entries = ServiceAccountEntry::search([
+                    ['service_account_id', '=', $id],
+                    ['is_locked', '=', false],
+                    ['has_report', '=', false]
+                ], [
+                    'sort' => ['date' => 'asc']
+                ])
+                ->read(['id', 'date'])
+                ->get();
+
+            if(!count($entries)) {
+                throw new \Exception('no_eligible_entries', EQ_ERROR_INVALID_PARAM);
+            }
+
+            $entries_ids = [];
+            $date_to = 0;
+            foreach($entries as $entry_id => $entry) {
+                $entries_ids[] = $entry_id;
+                $date_to = max($date_to, (int) ($entry['date'] ?? 0));
+            }
+            if(!$date_to) {
+                $date_to = time();
+            }
+
+            $pending_reports_ids = Report::search([
+                    ['service_account_id', '=', $id],
+                    ['status', '=', 'pending']
+                ], [
+                    'sort'  => ['date' => 'desc'],
+                    'limit' => 2
+                ])
+                ->ids();
+
+            if(count($pending_reports_ids) > 1) {
+                throw new \Exception('multiple_pending_reports', EQ_ERROR_INVALID_PARAM);
+            }
+
+            $pending_report = null;
+            if(count($pending_reports_ids)) {
+                $pending_report = Report::id(reset($pending_reports_ids))
+                    ->read(['id', 'date'])
+                    ->first();
+                $date_to = max($date_to, (int) ($pending_report['date'] ?? 0));
+            }
+
+            $plans[] = [
+                'service_account_id' => $id,
+                'entries_ids'        => $entries_ids,
+                'date_to'            => $date_to,
+                'pending_report'     => $pending_report
+            ];
+        }
+
+        $computed_fields = [
+            'date_from'       => null,
+            'has_lines'       => null,
+            'is_empty'        => null,
+            'has_non_posted'  => null,
+            'total_points'    => null,
+            'total_credits'   => null,
+            'balance_old'     => null,
+            'balance_new'     => null,
+            'is_sendable'     => null,
+            'pdf_data'        => null
+        ];
+
+        foreach($plans as $plan) {
+            $report_id = null;
+            $created_report = false;
+            $entries_attached = false;
+
+            try {
+                if($plan['pending_report']) {
+                    $report_id = $plan['pending_report']['id'];
+                    Report::id($report_id)->update(['date' => $plan['date_to']]);
+                }
+                else {
+                    $report = Report::create([
+                            'date'               => $plan['date_to'],
+                            'service_account_id' => $plan['service_account_id'],
+                            'status'             => 'pending'
+                        ])
+                        ->read(['id'])
+                        ->first();
+
+                    if(!$report) {
+                        throw new \Exception('report_creation_failed', EQ_ERROR_INVALID_PARAM);
+                    }
+
+                    $report_id = $report['id'];
+                    $created_report = true;
+                }
+
+                ServiceAccountEntry::ids($plan['entries_ids'])
+                    ->update(['report_id' => $report_id]);
+                $entries_attached = true;
+
+                Report::id($report_id)
+                    ->update($computed_fields)
+                    ->read([
+                        'date_from',
+                        'has_lines',
+                        'is_empty',
+                        'has_non_posted',
+                        'total_points',
+                        'total_credits',
+                        'balance_old',
+                        'balance_new',
+                        'is_sendable'
+                    ]);
+            }
+            catch(\Exception $exception) {
+                try {
+                    if($created_report && $report_id) {
+                        Report::id($report_id)->delete(true);
+                    }
+                    elseif($report_id) {
+                        if($entries_attached) {
+                            ServiceAccountEntry::ids($plan['entries_ids'])
+                                ->update(['report_id' => null]);
+                        }
+                        Report::id($report_id)
+                            ->update(array_merge(
+                                ['date' => $plan['pending_report']['date']],
+                                $computed_fields
+                            ));
+                    }
+                }
+                catch(\Exception $rollback_exception) {
+                    trigger_error(
+                        'ORM::error while rolling back report generation - '.$rollback_exception->getMessage(),
+                        QN_REPORT_ERROR
+                    );
+                }
+                throw $exception;
+            }
+        }
+    }
+
 
     public static function calcBalanceCurrent($self) {
         $result = [];
