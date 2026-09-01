@@ -1,0 +1,43 @@
+{
+    "name": "Accounting operation lines",
+    "description": "Lines used to generate accounting entries.",
+    "access": {
+        "groups": ["finance.default.users"]
+    },
+    "order": "id",
+    "sort": "asc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "description",
+                "width": "30%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "account_code",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "account_id",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "debit",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "credit",
+                "width": "15%",
+                "sortable": true
+            }
+        ]
+    }
+}

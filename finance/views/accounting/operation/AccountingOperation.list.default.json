@@ -1,0 +1,48 @@
+{
+    "name": "Accounting operations",
+    "description": "Accounting operations awaiting processing or already posted.",
+    "access": {
+        "groups": ["finance.default.users"]
+    },
+    "order": "posting_date",
+    "sort": "desc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "30%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "operation_type",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "journal_id",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "posting_date",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "is_balanced",
+                "width": "10%"
+            }
+        ]
+    }
+}

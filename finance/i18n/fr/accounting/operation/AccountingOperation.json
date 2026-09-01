@@ -1,0 +1,159 @@
+{
+    "name": "Pièce comptable",
+    "plural": "Pièces comptables",
+    "description": "Pièce comptable logique à l'origine d'une ou plusieurs écritures comptables.",
+    "model": {
+        "description": {
+            "label": "Description",
+            "description": "Description de la pièce comptable.",
+            "help": "Décrivez brièvement l'origine ou l'objet de la pièce."
+        },
+        "operation_type": {
+            "label": "Type de pièce",
+            "description": "Type métier de la pièce comptable.",
+            "help": "Ce type permet aux modèles spécialisés de partager la même infrastructure comptable.",
+            "selection": {
+                "misc": "opération diverse",
+                "sale_invoice": "facture de vente",
+                "purchase_invoice": "facture d'achat"
+            }
+        },
+        "posting_date": {
+            "label": "Date comptable",
+            "description": "Date à laquelle la pièce est comptabilisée.",
+            "help": "Cette date détermine l'exercice comptable de rattachement."
+        },
+        "operation_number": {
+            "label": "Numéro de pièce",
+            "description": "Numéro définitif attribué lors de la comptabilisation.",
+            "help": "Le numéro est attribué automatiquement lors de la comptabilisation."
+        },
+        "status": {
+            "label": "Statut",
+            "description": "État courant de la pièce comptable.",
+            "help": "Le statut suit le traitement de la pièce jusqu'à sa comptabilisation ou son annulation.",
+            "selection": {
+                "pending": "en attente",
+                "proforma": "prête à comptabiliser",
+                "posted": "comptabilisée",
+                "cancelled": "annulée"
+            }
+        },
+        "posted_at": {
+            "label": "Comptabilisée le",
+            "description": "Date et heure de comptabilisation de la pièce.",
+            "help": "Cette valeur est renseignée automatiquement."
+        },
+        "cancelled_at": {
+            "label": "Annulée le",
+            "description": "Date et heure d'annulation de la pièce.",
+            "help": "Cette valeur est renseignée automatiquement."
+        },
+        "org_id": {
+            "label": "Organisation",
+            "description": "Organisation à laquelle appartient la pièce comptable.",
+            "help": "Sélectionnez l'organisation propriétaire de la comptabilité concernée."
+        },
+        "journal_id": {
+            "label": "Journal",
+            "description": "Journal utilisé pour comptabiliser la pièce.",
+            "help": "Seuls les journaux de l'organisation sélectionnée sont proposés."
+        },
+        "reversal_of_id": {
+            "label": "Extourne de",
+            "description": "Pièce comptabilisée qui est extournée par cette pièce.",
+            "help": "Renseigné automatiquement sur une pièce d'extourne."
+        },
+        "reversal_operations_ids": {
+            "label": "Extournes",
+            "description": "Pièces créées pour extourner cette pièce.",
+            "help": "Ces pièces neutralisent comptablement la pièce courante."
+        },
+        "operation_lines_ids": {
+            "label": "Lignes de la pièce",
+            "description": "Lignes utilisées pour produire les écritures comptables.",
+            "help": "Le total des débits doit être égal au total des crédits avant la comptabilisation."
+        },
+        "accounting_entries_ids": {
+            "label": "Écritures comptables",
+            "description": "Écritures comptables générées à partir de la pièce.",
+            "help": "Les écritures doivent être présentes et équilibrées avant la comptabilisation."
+        },
+        "fiscal_year": {
+            "label": "Exercice comptable",
+            "description": "Exercice dans lequel la pièce est comptabilisée.",
+            "help": "L'exercice est déterminé à partir de la configuration comptable de l'organisation."
+        },
+        "name": {
+            "label": "Nom",
+            "description": "Identifiant lisible de la pièce comptable.",
+            "help": "Le numéro définitif est utilisé lorsqu'il a été attribué."
+        },
+        "is_balanced": {
+            "label": "Équilibrée",
+            "description": "Indique si les lignes de la pièce sont équilibrées.",
+            "help": "Une pièce est équilibrée lorsque le total des débits correspond au total des crédits."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Pièce comptable",
+            "description": "Détail de la pièce comptable.",
+            "actions": {
+                "action.submit": {
+                    "label": "Soumettre"
+                },
+                "action.revert": {
+                    "label": "Rouvrir"
+                },
+                "action.post": {
+                    "label": "Comptabiliser"
+                },
+                "action.cancel": {
+                    "label": "Annuler"
+                }
+            },
+            "layout": {
+                "section.general": {
+                    "label": "Informations générales"
+                },
+                "section.operation_lines": {
+                    "label": "Lignes de la pièce"
+                },
+                "section.accounting_entries": {
+                    "label": "Écritures comptables"
+                },
+                "section.audit": {
+                    "label": "Audit"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Pièces comptables",
+            "description": "Liste des pièces comptables.",
+            "layout": {}
+        }
+    },
+    "error": {
+        "status": {
+            "non_editable": "La pièce comptable ne peut être modifiée que lorsqu'elle est en attente.",
+            "non_removable": "Seule une pièce comptable en attente peut être supprimée."
+        },
+        "errors": {
+            "missing_description": "La description de la pièce est obligatoire.",
+            "missing_organisation": "L'organisation de la pièce est obligatoire.",
+            "missing_posting_date": "La date comptable est obligatoire.",
+            "missing_journal": "Le journal comptable est obligatoire.",
+            "invalid_journal": "Le journal comptable appartient à une autre organisation.",
+            "missing_operation_lines": "La pièce doit contenir au moins une ligne comptable.",
+            "missing_account": "Chaque ligne de la pièce doit utiliser un compte comptable.",
+            "unbalanced_operation": "Le total des débits doit correspondre au total des crédits.",
+            "invalid_status": "Le statut de la pièce ne permet pas cette opération.",
+            "already_reversed": "La pièce comptable a déjà été extournée.",
+            "missing_accounting_entries": "Aucune écriture comptable n'est associée à la pièce.",
+            "unbalanced_accounting_entry": "Une écriture comptable de la pièce n'est pas équilibrée.",
+            "cancelled_accounting_entry": "Une écriture comptable annulée ne peut pas être validée.",
+            "unable_to_assign_operation_number": "Impossible d'attribuer un numéro à la pièce comptable."
+        }
+    }
+}

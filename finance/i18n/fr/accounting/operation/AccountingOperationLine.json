@@ -1,0 +1,94 @@
+{
+    "name": "Ligne de pièce comptable",
+    "plural": "Lignes de pièce comptable",
+    "description": "Ligne utilisée pour produire une ligne d'écriture comptable.",
+    "model": {
+        "description": {
+            "label": "Description",
+            "description": "Description courte de la ligne.",
+            "help": "La description de la pièce est reprise lorsque ce champ est vide."
+        },
+        "debit": {
+            "label": "Débit",
+            "description": "Montant débité du compte.",
+            "help": "Renseignez soit un débit, soit un crédit positif."
+        },
+        "credit": {
+            "label": "Crédit",
+            "description": "Montant crédité sur le compte.",
+            "help": "Renseignez soit un débit, soit un crédit positif."
+        },
+        "vat_rate": {
+            "label": "Taux de TVA",
+            "description": "Taux de TVA associé à la ligne.",
+            "help": "Une valeur saisie en pourcentage est automatiquement convertie en taux."
+        },
+        "operation_id": {
+            "label": "Pièce comptable",
+            "description": "Pièce comptable à laquelle appartient la ligne.",
+            "help": "Les lignes ne sont modifiables que lorsque la pièce est en attente."
+        },
+        "account_id": {
+            "label": "Compte",
+            "description": "Compte comptable affecté par la ligne.",
+            "help": "Les comptes collectifs ne peuvent pas recevoir d'écriture."
+        },
+        "name": {
+            "label": "Nom",
+            "description": "Nom lisible de la ligne comptable.",
+            "help": "Le nom reprend la description de la ligne."
+        },
+        "organisation_id": {
+            "label": "Organisation",
+            "description": "Organisation héritée de la pièce comptable.",
+            "help": "Cette valeur est renseignée automatiquement."
+        },
+        "journal_id": {
+            "label": "Journal",
+            "description": "Journal hérité de la pièce comptable.",
+            "help": "Cette valeur est renseignée automatiquement."
+        },
+        "account_code": {
+            "label": "Code du compte",
+            "description": "Code du compte comptable sélectionné.",
+            "help": "Cette valeur est renseignée automatiquement."
+        },
+        "is_expense": {
+            "label": "Charge",
+            "description": "Indique si le compte appartient à la classe des charges.",
+            "help": "Les comptes de classe 6 sont considérés comme des charges."
+        },
+        "is_income": {
+            "label": "Produit",
+            "description": "Indique si le compte appartient à la classe des produits.",
+            "help": "Les comptes de classe 7 sont considérés comme des produits."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Ligne de pièce comptable",
+            "description": "Détail d'une ligne de pièce comptable.",
+            "layout": {
+                "section.details": {
+                    "label": "Détail de la ligne"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Lignes de pièce comptable",
+            "description": "Liste des lignes de la pièce comptable.",
+            "layout": {}
+        }
+    },
+    "error": {
+        "operation_id": {
+            "missing": "La pièce comptable est obligatoire.",
+            "non_editable": "Les lignes ne sont modifiables que lorsque la pièce est en attente.",
+            "non_removable": "Les lignes ne peuvent être supprimées que lorsque la pièce est en attente."
+        },
+        "debit": {
+            "negative_amount": "Les montants ne peuvent pas être négatifs.",
+            "invalid_amount": "Renseignez exactement un montant positif au débit ou au crédit."
+        }
+    }
+}
