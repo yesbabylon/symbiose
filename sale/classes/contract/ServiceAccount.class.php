@@ -149,7 +149,6 @@ class ServiceAccount extends \sale\contract\Contract {
 
             $entries = ServiceAccountEntry::search([
                     ['service_account_id', '=', $id],
-                    ['is_locked', '=', false],
                     ['has_report', '=', false]
                 ], [
                     'sort' => ['date' => 'asc']

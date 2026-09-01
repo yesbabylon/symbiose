@@ -179,13 +179,6 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'description'       => 'Date at which the line as been approved.'
             ],
 
-            'is_posted' => [
-                'deprecated'        => true,
-                'type'              => 'boolean',
-                'description'       => 'Flag marking the line as posted (has been approved).',
-                'default'           => false,
-            ],
-
             'has_report' => [
                 'type'              => 'boolean',
                 'description'       => 'Flag marking the line as attached to a report.',
@@ -199,13 +192,6 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'onupdate'          => 'onupdateReportId',
                 'description'       => 'Report to which the line is assigned, if any.',
                 'visible'           => ['has_report', '=', true]
-            ],
-
-            'is_locked' => [
-                'type'              => 'boolean',
-                'description'       => 'Marks the line as locked/invoiced (equivalent to has_report with a report in `released` status).',
-                'default'           => false,
-                'onupdate'          => 'onupdateIsLocked'
             ],
 
             'locked_date' => [
@@ -270,7 +256,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
         $service_accounts_ids = [];
 
         $self->read([
-                'is_locked',
+                'report_id'             => ['status'],
                 'date',
                 'start',
                 'end',
@@ -294,8 +280,8 @@ class ServiceAccountEntry extends \equal\orm\Model {
 
         foreach($self as $id => $line) {
 
-            // prevent processing invoiced lines
-            if($line['is_locked']) {
+            // prevent processing lines attached to a finalized report
+            if(isset($line['report_id']['status']) && $line['report_id']['status'] !== 'pending') {
                 continue;
             }
 
@@ -727,18 +713,6 @@ class ServiceAccountEntry extends \equal\orm\Model {
         }
     }
 
-    /**
-     * Changes the locked_date value according to the is_locked status.
-     */
-    public static function onupdateIsLocked($self, $values) {
-        if(isset($values['is_locked']) && $values['is_locked']) {
-            $self->update(['locked_date' => time()]);
-        }
-        elseif(isset($values['is_locked']) && !$values['is_locked']) {
-            $self->update(['locked_date' => null]);
-        }
-    }
-
     public static function onupdateReportId($self, $values) {
         if(isset($values['report_id']) && $values['report_id'] > 0) {
             $self->update(['has_report' => true]);
@@ -881,26 +855,24 @@ class ServiceAccountEntry extends \equal\orm\Model {
         /** @var \equal\dispatch\Dispatcher $dispatch */
         $dispatch = $providers['dispatch'];
 
-        $self->read(['is_locked', 'has_report', 'report_id' => ['id', 'status']]);
+        $self->read(['has_report', 'report_id' => ['id', 'status']]);
         foreach($self as $id => $line) {
-            if($line['is_locked']) {
-                $allowed = ['is_locked', 'locked_date', 'posting_date'];
+            $is_finalized = isset($line['report_id']['status']) && $line['report_id']['status'] !== 'pending';
+            if($is_finalized) {
+                $allowed = ['locked_date', 'posting_date'];
                 if(count(array_diff(array_keys($values), $allowed)) > 0) {
-                    return ['is_locked' => ['non_editable' => "Locked SA line [$id] cannot be updated (linked to released Report)."]];
+                    return ['report_id' => ['non_editable' => "Locked SA line [$id] cannot be updated (linked to finalized Report)."]];
                 }
             }
             else {
-                // #memo - allow arbitrary change of report-related fields for non locked lines
-                $allowed = ['report_id', 'has_report', 'posting_date', 'is_locked', 'locked_date'];
+                // #memo - allow arbitrary change of report-related fields for lines not attached to a finalized report
+                $allowed = ['report_id', 'has_report', 'posting_date', 'locked_date'];
                 // #memo - at this stage a linked pending report might have been removed resulting in a NULL report_id
                 if($line['report_id']) {
                     $current_report_id = $line['report_id']['id'] ?? null;
                     if(isset($values['report_id']) && $values['report_id'] > 0 && $current_report_id != $values['report_id']) {
-                        // prevent change unless made only on is_locked
-                        if(count($values) > 1 || array_keys($values)[0] != 'is_locked') {
-                            $dispatch->dispatch('contractika.sa_line.already_sent', self::getType(), $id, 'warning');
-                            return ['has_report' => ['non_editable' => "SA line [$id] cannot be linked to a new Report while already linked to a Report."]];
-                        }
+                        $dispatch->dispatch('contractika.sa_line.already_sent', self::getType(), $id, 'warning');
+                        return ['has_report' => ['non_editable' => "SA line [$id] cannot be linked to a new Report while already linked to a Report."]];
                     }
                     elseif(count(array_diff(array_keys($values), $allowed)) > 0 ) {
                         return ['has_report' => ['non_editable' => "SA line [$id] is linked to a pending Report and cannot be updated."]];
@@ -912,10 +884,10 @@ class ServiceAccountEntry extends \equal\orm\Model {
     }
 
     public static function candelete($self) {
-        $self->read(['is_locked']);
+        $self->read(['report_id' => ['status']]);
         foreach($self as $id => $line) {
-            if($line['is_locked']) {
-                return ['is_locked' => ['not_allowed' => "Locked SA line [$id] cannot be deleted (linked to released Report)."]];
+            if(isset($line['report_id']['status']) && $line['report_id']['status'] !== 'pending') {
+                return ['report_id' => ['not_allowed' => "Locked SA line [$id] cannot be deleted (linked to finalized Report)."]];
             }
         }
         return parent::candelete($self);

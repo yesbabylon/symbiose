@@ -259,7 +259,7 @@ class Report extends \equal\orm\Model {
 
                     // update all lines attached to the report
                     if(count($entries_ids)) {
-                        ServiceAccountEntry::ids($entries_ids)->update(['is_locked' => true]);
+                        ServiceAccountEntry::ids($entries_ids)->update(['locked_date' => time()]);
                     }
                     // update parent service account balance
                     if($report['service_account_id']) {
