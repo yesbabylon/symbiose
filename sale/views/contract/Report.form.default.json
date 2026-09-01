@@ -4,6 +4,21 @@
     "access": {
         "groups": ["sale.default.users"]
     },
+    "actions": [
+        {
+            "id": "action.release",
+            "label": "Release",
+            "description": "Release the report and update its service account. This action cannot be undone.",
+            "controller": "core_model_do",
+            "params": {
+                "entity": "sale\\contract\\Report",
+                "action": "release",
+                "ids": []
+            },
+            "confirm": true,
+            "visible": ["status", "=", "pending"]
+        }
+    ],
     "layout": {
         "groups": [
             {

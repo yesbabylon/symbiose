@@ -171,6 +171,47 @@ class Report extends \equal\orm\Model {
         ];
     }
 
+    public static function getActions() {
+        return array_merge(parent::getActions(), [
+            'release' => [
+                'description' => 'Release the report and update its service account.',
+                'help'        => 'Only pending reports without non-posted time entries can be released.',
+                'policies'    => [],
+                'function'    => 'doRelease'
+            ]
+        ]);
+    }
+
+    protected static function doRelease($self) {
+        $self->read([
+            'status',
+            'is_empty',
+            'has_non_posted',
+            'service_account_id' => ['m_reporting']
+        ]);
+
+        foreach($self as $report) {
+            if($report['status'] !== 'pending') {
+                throw new \Exception('already_released_report', EQ_ERROR_NOT_ALLOWED);
+            }
+
+            if($report['has_non_posted']) {
+                throw new \Exception('has_non_posted', EQ_ERROR_INVALID_PARAM);
+            }
+        }
+
+        foreach($self as $id => $report) {
+            $status = (
+                    ($report['service_account_id']['m_reporting'] ?? null) === 'archive'
+                    || $report['is_empty']
+                )
+                ? 'archived'
+                : 'released';
+
+            self::id($id)->update(['status' => $status]);
+        }
+    }
+
     /**
      * Hook invoked upon status change.
      * When a report is released, all SA lines that are attached to it are locked; and the current balance of the related service account is updated.

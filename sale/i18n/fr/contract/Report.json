@@ -1,0 +1,46 @@
+{
+    "name": "Rapport",
+    "plural": "Rapports",
+    "description": "Rapport d'activité d'un compte de service.",
+    "model": {},
+    "view": {
+        "form.default": {
+            "name": "Rapport",
+            "description": "Fiche d'un rapport de compte de service.",
+            "actions": {
+                "action.release": {
+                    "label": "Valider le rapport",
+                    "description": "Valider définitivement le rapport et mettre à jour son compte de service. Cette action est irréversible."
+                }
+            },
+            "layout": {
+                "section.period": {
+                    "label": "Période"
+                },
+                "section.balance": {
+                    "label": "Solde"
+                },
+                "section.output": {
+                    "label": "Document"
+                },
+                "section.entries": {
+                    "label": "Lignes"
+                },
+                "section.mails": {
+                    "label": "E-mails"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Rapports",
+            "description": "Liste des rapports de comptes de service.",
+            "layout": {}
+        }
+    },
+    "error": {
+        "errors": {
+            "already_released_report": "Seul un rapport en attente peut être validé.",
+            "has_non_posted": "Le rapport contient des prestations qui ne sont pas encore comptabilisées et ne peut pas être validé."
+        }
+    }
+}
