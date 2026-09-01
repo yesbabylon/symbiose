@@ -105,21 +105,14 @@
                                                 "type": "field",
                                                 "value": "has_lines",
                                                 "label": "Has lines",
-                                                "width": "33%",
-                                                "readonly": true
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "has_non_posted",
-                                                "label": "Has non posted entries",
-                                                "width": "33%",
+                                                "width": "50%",
                                                 "readonly": true
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "is_sendable",
                                                 "label": "Sendable",
-                                                "width": "33%",
+                                                "width": "50%",
                                                 "readonly": true
                                             }
                                         ]

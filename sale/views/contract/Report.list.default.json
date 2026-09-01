@@ -79,14 +79,6 @@
             },
             {
                 "type": "field",
-                "value": "has_non_posted",
-                "label": "Non posted",
-                "width": "10%",
-                "sortable": true,
-                "readonly": true
-            },
-            {
-                "type": "field",
                 "value": "is_sendable",
                 "label": "Sendable",
                 "width": "10%",

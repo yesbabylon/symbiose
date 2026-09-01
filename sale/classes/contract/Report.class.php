@@ -41,14 +41,15 @@ class Report extends \equal\orm\Model {
                 'description'       => 'Day after the previous published report last date.',
                 'help'              => 'There might be some remaining time entries included in report whose date precedes the report\'s date_from.',
                 'function'          => 'calcDateFrom',
-                'store'             => true
+                'store'             => true,
+                'dependents'        => ['is_sendable']
             ],
 
             'service_account_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\contract\ServiceAccount',
                 'description'       => 'The service account the line belongs to.',
-                'dependencies'      => ['customer_id', 'balance_old', 'has_lines']
+                'dependents'        => ['customer_id', 'balance_old', 'has_lines', 'is_sendable']
             ],
 
             'customer_id' => [
@@ -100,8 +101,8 @@ class Report extends \equal\orm\Model {
             'is_sendable' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'description'       => 'Flag telling if the Report can be sent according to the app logic.',
-                'help'              => 'The value depends on the reporting mode set at the Service Account level, in the field `m_reporting`.',
+                'description'       => 'Flag telling if the Report is ready to be sent according to the app logic.',
+                'help'              => 'The Report must be released, use the `send` reporting mode, and not start before `reporting_from`.',
                 'function'          => 'calcIsSendable',
                 'store'             => true
             ],
@@ -144,14 +145,6 @@ class Report extends \equal\orm\Model {
                                         For pending reports, this value might differ from the relating ServiceAccount's balance."
             ],
 
-            'has_non_posted' => [
-                'type'              => 'computed',
-                'result_type'       => 'boolean',
-                'store'             => true,
-                'function'          => 'calcHasNonPosted',
-                'description'       => 'Report contains non posted time entries (cannot be released).'
-            ],
-
             'is_empty' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
@@ -178,7 +171,7 @@ class Report extends \equal\orm\Model {
                 'description'       => 'Status of the report.',
                 'default'           => 'pending',
                 'onupdate'          => 'onupdateStatus',
-                'dependents'        => ['name']
+                'dependents'        => ['name', 'is_sendable']
             ]
         ];
     }
@@ -202,7 +195,7 @@ class Report extends \equal\orm\Model {
         return array_merge(parent::getActions(), [
             'release' => [
                 'description' => 'Release the report and update its service account.',
-                'help'        => 'Only pending reports without non-posted time entries can be released.',
+                'help'        => 'Only pending reports can be released.',
                 'policies'    => [],
                 'function'    => 'doRelease'
             ]
@@ -213,17 +206,12 @@ class Report extends \equal\orm\Model {
         $self->read([
             'status',
             'is_empty',
-            'has_non_posted',
             'service_account_id' => ['m_reporting']
         ]);
 
         foreach($self as $report) {
             if($report['status'] !== 'pending') {
                 throw new \Exception('already_released_report', EQ_ERROR_NOT_ALLOWED);
-            }
-
-            if($report['has_non_posted']) {
-                throw new \Exception('has_non_posted', EQ_ERROR_INVALID_PARAM);
             }
         }
 
@@ -414,22 +402,6 @@ class Report extends \equal\orm\Model {
         return $result;
     }
 
-    public static function calcHasNonPosted($self) {
-        $result = [];
-        $self->read(['service_account_entries_ids' => ['origin_object_class', 'posting_date']]);
-        foreach($self as $id => $report) {
-            $result[$id] = false;
-            foreach($report['service_account_entries_ids'] as $line) {
-                // Only time entries require an explicit posting date; credits and corrections are immediately usable.
-                if($line['origin_object_class'] === 'timetrack\TimeEntry' && !$line['posting_date']) {
-                    $result[$id] = true;
-                    break;
-                }
-            }
-        }
-        return $result;
-    }
-
     public static function calcIsEmpty($self) {
         $result = [];
         $self->read(['service_account_entries_ids']);
@@ -451,12 +423,18 @@ class Report extends \equal\orm\Model {
 
     public static function calcIsSendable($self) {
         $result = [];
-        $self->read(['service_account_id' => ['m_reporting']]);
+        $self->read([
+            'status',
+            'date_from',
+            'service_account_id' => ['m_reporting', 'reporting_from']
+        ]);
         foreach($self as $id => $report) {
-            $result[$id] = true;
-            if(!isset($report['service_account_id']['m_reporting']) || $report['service_account_id']['m_reporting'] != 'send') {
-                $result[$id] = false;
-            }
+            $service_account = $report['service_account_id'] ?? [];
+            $reporting_from = $service_account['reporting_from'] ?? null;
+
+            $result[$id] = $report['status'] === 'released'
+                && ($service_account['m_reporting'] ?? null) === 'send'
+                && (!$reporting_from || $report['date_from'] >= $reporting_from);
         }
         return $result;
     }
@@ -471,7 +449,8 @@ class Report extends \equal\orm\Model {
     public static function canupdate($self, $values) {
         $self->read(['status']);
         // #memo - pdf data is generated asynchronously
-        $allowed = ['status', 'pdf_data'];
+        // is_sendable can be invalidated from the service account
+        $allowed = ['status', 'pdf_data', 'is_sendable'];
         foreach($self as $report) {
             if($report['status'] != 'pending' && count(array_diff(array_keys($values), $allowed)) > 0 ) {
                 return ['status' => ['not_allowed' => 'Released Reports cannot be changed.']];

@@ -27,7 +27,8 @@ class ServiceAccount extends \sale\contract\Contract {
 
             'reporting_from' => [
                 'type'              => 'date',
-                'description'       => 'First date to use when no previous report exists.'
+                'description'       => 'First report date and earliest report start date allowed for sending.',
+                'dependents'        => ['reports_ids' => ['is_sendable']]
             ],
 
             'service_account_entries_ids' => [
@@ -82,7 +83,8 @@ class ServiceAccount extends \sale\contract\Contract {
                     'none',
                     'send',
                     'archive'
-                ]
+                ],
+                'dependents'        => ['reports_ids' => ['is_sendable']]
             ],
 
             'has_monthly_target' => [
@@ -203,7 +205,6 @@ class ServiceAccount extends \sale\contract\Contract {
             'date_from'       => null,
             'has_lines'       => null,
             'is_empty'        => null,
-            'has_non_posted'  => null,
             'total_points'    => null,
             'total_credits'   => null,
             'balance_old'     => null,
@@ -249,7 +250,6 @@ class ServiceAccount extends \sale\contract\Contract {
                         'date_from',
                         'has_lines',
                         'is_empty',
-                        'has_non_posted',
                         'total_points',
                         'total_credits',
                         'balance_old',

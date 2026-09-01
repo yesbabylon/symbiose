@@ -7,6 +7,11 @@
             "label": "Rapport",
             "description": "Identifiant lisible du rapport.",
             "help": "Identifiant généré automatiquement à partir de l'année et du numéro du rapport."
+        },
+        "is_sendable": {
+            "label": "Envoyable",
+            "description": "Indique si le rapport est prêt à être envoyé au client.",
+            "help": "Le rapport doit être validé, utiliser le mode de reporting « envoi » et ne pas commencer avant la date de début du reporting."
         }
     },
     "view": {
@@ -45,8 +50,7 @@
     },
     "error": {
         "errors": {
-            "already_released_report": "Seul un rapport en attente peut être validé.",
-            "has_non_posted": "Le rapport contient des prestations qui ne sont pas encore comptabilisées et ne peut pas être validé."
+            "already_released_report": "Seul un rapport en attente peut être validé."
         }
     }
 }
