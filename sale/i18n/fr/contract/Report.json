@@ -2,7 +2,13 @@
     "name": "Rapport",
     "plural": "Rapports",
     "description": "Rapport d'activité d'un compte de service.",
-    "model": {},
+    "model": {
+        "name": {
+            "label": "Rapport",
+            "description": "Identifiant lisible du rapport.",
+            "help": "Identifiant généré automatiquement à partir de l'année et du numéro du rapport."
+        }
+    },
     "view": {
         "form.default": {
             "name": "Rapport",

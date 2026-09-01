@@ -17,11 +17,22 @@ class Report extends \equal\orm\Model {
 
         return [
 
+            'name' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => 'Short readable identifier of the report.',
+                'function'          => 'calcName',
+                'store'             => true,
+                'instant'           => true,
+                'readonly'          => true
+            ],
+
             'date' => [
                 'type'              => 'date',
                 'description'       => 'Date of the most recent line on the report (equivalent to date_to).',
                 'help'              => 'Should be the last day included in the report date-range @ 23:59:59.',
-                'default'           => time()
+                'default'           => time(),
+                'dependents'        => ['name']
             ],
 
             'date_from' => [
@@ -166,9 +177,25 @@ class Report extends \equal\orm\Model {
                 ],
                 'description'       => 'Status of the report.',
                 'default'           => 'pending',
-                'onupdate'          => 'onupdateStatus'
+                'onupdate'          => 'onupdateStatus',
+                'dependents'        => ['name']
             ]
         ];
+    }
+
+    public static function calcName($self) {
+        $result = [];
+        $self->read(['date', 'status']);
+        foreach($self as $id => $report) {
+            $result[$id] = sprintf(
+                '%d-%04d %s',
+                date('Ymd', $report['date']),
+                $id,
+                $report['status'] === 'pending' ? ' (DRAFT)' : ''
+            );
+        }
+
+        return $result;
     }
 
     public static function getActions() {
@@ -240,7 +267,7 @@ class Report extends \equal\orm\Model {
                     }
                 }
                 catch(\Exception $e) {
-                    trigger_error("ORM::error in onupdateStatus - ".$e->getMessage(), QN_REPORT_ERROR);
+                    trigger_error("ORM::error in onupdateStatus - ".$e->getMessage(), EQ_REPORT_ERROR);
                 }
             }
         }
@@ -520,7 +547,7 @@ class Report extends \equal\orm\Model {
         // retrieve target timezone : printed dates are intended to use local time)
         $tz = new \DateTimeZone("Europe/Brussels");
         // load image to embed to PDF reports
-        $img_path = QN_BASEDIR.'/packages/sale/views/contract/logo_netika_sm.png';
+        $img_path = EQ_BASEDIR.'/packages/sale/views/contract/logo_netika_sm.png';
         // fallback to empty image
         $img_url = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=';
 
@@ -610,7 +637,7 @@ class Report extends \equal\orm\Model {
             $customer_label = $customer_name.(strlen($customer_ref) ? ' ['.$customer_ref.']' : '');
 
             $values = [
-                'name'              => sprintf("%d%04d", date('y', $report['date']), $report['id']).( ($report['status'] == 'pending')?' (DRAFT)':'' ),
+                'name'              => $report['name'],
                 'service_account'   => $service_account_label,
                 'balance_old'       => (($report['balance_old'] >= 0)?'+':'').number_format((float) round($report['balance_old'], 2), 2, '.', ''),
                 'balance_new'       => (($report['balance_new'] >= 0)?'+':'').number_format((float) round($report['balance_new'], 2), 2, '.', ''),
@@ -633,14 +660,14 @@ class Report extends \equal\orm\Model {
             */
 
             try {
-                $loader = new TwigFilesystemLoader(QN_BASEDIR."/packages/sale/views/contract/");
+                $loader = new TwigFilesystemLoader(EQ_BASEDIR."/packages/sale/views/contract/");
                 $twig = new TwigEnvironment($loader);
                 $template = $twig->load("Report.print.default.html");
                 $html = $template->render($values);
             }
             catch(\Exception $e) {
-                trigger_error("ORM::error while parsing template - ".$e->getMessage(), QN_REPORT_DEBUG);
-                throw new \Exception("template_parsing_issue", QN_ERROR_INVALID_CONFIG);
+                trigger_error("ORM::error while parsing template - ".$e->getMessage(), EQ_REPORT_DEBUG);
+                throw new \Exception("template_parsing_issue", EQ_ERROR_INVALID_CONFIG);
             }
 
             /*
@@ -664,7 +691,7 @@ class Report extends \equal\orm\Model {
             $result = $dompdf->output();
         }
         catch(\Exception $e) {
-            trigger_error("ORM::unable to generate PDF Report - ".$e->getMessage(), QN_REPORT_ERROR);
+            trigger_error("ORM::unable to generate PDF Report - ".$e->getMessage(), EQ_REPORT_ERROR);
         }
 
         return $result;

@@ -10,7 +10,7 @@
         "items": [
             {
                 "type": "field",
-                "value": "id",
+                "value": "name",
                 "label": "Report",
                 "width": "8%",
                 "sortable": true,
