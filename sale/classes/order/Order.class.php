@@ -173,7 +173,7 @@ class Order extends Model {
 
             'fundings_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\order\Funding',
+                'foreign_object'    => 'sale\pay\Funding',
                 'foreign_field'     => 'order_id',
                 'description'       => 'Fundings that relate to the order.',
                 'ondetach'          => 'delete'

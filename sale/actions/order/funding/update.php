@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use sale\order\Funding;
+use sale\pay\Funding;
 
 list($params, $providers) = eQual::announce([
     'description' => 'Remove funding not paid and update the partially paid amount for the order.',
@@ -17,7 +17,7 @@ list($params, $providers) = eQual::announce([
         'ids' =>  [
             'description'       => 'Identifiers of the targeted invoices.',
             'type'              => 'one2many',
-            'foreign_object'    => 'sale\order\Funding',
+            'foreign_object'    => 'sale\pay\Funding',
             'default'           => []
         ],
     ],

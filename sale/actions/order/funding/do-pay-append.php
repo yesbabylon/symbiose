@@ -4,8 +4,8 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-use sale\order\Funding;
-use sale\order\Payment;
+use sale\pay\Funding;
+use sale\pay\Payment;
 use sale\order\Order;
 
 list($params, $providers) = eQual::announce([

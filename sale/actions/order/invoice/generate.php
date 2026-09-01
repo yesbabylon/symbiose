@@ -9,7 +9,7 @@ use sale\order\Invoice;
 use sale\accounting\invoice\InvoiceLine;
 use sale\accounting\invoice\InvoiceLineGroup;
 use sale\order\Order;
-use sale\order\Funding;
+use sale\pay\Funding;
 use sale\catalog\Product;
 use core\setting\Setting;
 

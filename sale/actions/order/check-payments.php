@@ -6,7 +6,7 @@
 */
 
 use sale\order\Order;
-use sale\order\Funding;
+use sale\pay\Funding;
 
 list($params, $providers) = announce([
     'description'   => "Checks if all due payments have been received for a given order.",

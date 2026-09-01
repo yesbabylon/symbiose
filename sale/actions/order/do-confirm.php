@@ -9,7 +9,7 @@ use sale\order\Order;
 use sale\order\Contract;
 use sale\order\ContractLine;
 use sale\order\ContractLineGroup;
-use sale\order\Funding;
+use sale\pay\Funding;
 
 
 list($params, $providers) = announce([

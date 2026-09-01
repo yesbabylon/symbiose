@@ -8,7 +8,7 @@
 use core\setting\Setting;
 use sale\order\Invoice;
 use sale\order\Order;
-use sale\order\Funding;
+use sale\pay\Funding;
 
 list($params, $providers) = eQual::announce([
     'description'   => "Emit a new invoice from an existing proforma and update related order, if necessary.",

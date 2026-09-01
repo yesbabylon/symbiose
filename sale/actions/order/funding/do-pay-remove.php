@@ -5,8 +5,8 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 use sale\order\Order;
-use sale\order\Funding;
-use sale\order\Payment;
+use sale\pay\Funding;
+use sale\pay\Payment;
 
 list($params, $providers) = eQual::announce([
     'description'   => "Remove the manual payment attached to the funding, if any, and unmark funding as paid.",

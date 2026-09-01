@@ -6,7 +6,7 @@
 */
 
 use sale\accounting\invoice\Invoice;
-use sale\order\Funding;
+use sale\pay\Funding;
 list($params, $providers) = eQual::announce([
     'description'   => 'Cancel given invoices, can keep or cancel linked receivables.',
     'params'        => [

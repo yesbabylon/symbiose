@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-use sale\order\Funding;
+use sale\pay\Funding;
 use sale\order\Invoice;
 use sale\accounting\invoice\InvoiceLine;
 use sale\accounting\invoice\InvoiceLineGroup;

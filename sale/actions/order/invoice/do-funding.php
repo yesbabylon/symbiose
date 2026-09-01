@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use sale\order\Funding;
+use sale\pay\Funding;
 use sale\order\Invoice;
 use sale\order\Order;
 

@@ -6,7 +6,7 @@
 */
 namespace sale\pos;
 
-class OrderPaymentPart extends \sale\order\Payment {
+class OrderPaymentPart extends \sale\pay\Payment {
 
     public static function getColumns() {
         return [
