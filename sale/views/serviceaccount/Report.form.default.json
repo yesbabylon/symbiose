@@ -19,6 +19,17 @@
             "visible": ["status", "=", "pending"]
         }
     ],
+    "routes": [
+        {
+            "id": "route.print.pdf",
+            "label": "Print report",
+            "description": "Display the report in PDF format.",
+            "icon": "print",
+            "route": "/?get=sale_serviceaccount_Report_render-pdf&id=object.id",
+            "target": "_blank",
+            "absolute": true
+        }
+    ],
     "layout": {
         "groups": [
             {

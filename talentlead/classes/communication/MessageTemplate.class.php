@@ -31,14 +31,14 @@ class MessageTemplate extends Model{
 
             'conversation_flow_actions_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'talentLead\communication\ConversationFlowAction',
+                'foreign_object'    => 'talentlead\communication\ConversationFlowAction',
                 'foreign_field'     => 'message_template_id',
                 'description'       => 'Message Templates associated to a conversation flow action.'
             ],
 
             'messages_id' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'talentLead\communication\Message',
+                'foreign_object'    => 'talentlead\communication\Message',
                 'foreign_field'     => 'message_template_id',
                 'description'       => '.'
             ]

@@ -8,7 +8,7 @@ namespace talentlead\communication;
 
 use equal\orm\Model;
 
-class ConversationFlow extends \communication\Template {
+class ConversationFlow extends \communication\template\Template {
 
     public static function getColumns() {
         return [
@@ -27,7 +27,7 @@ class ConversationFlow extends \communication\Template {
 
             'conversation_flow_actions_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'talentLead\communication\ConversationFlowAction',
+                'foreign_object'    => 'talentlead\communication\ConversationFlowAction',
                 'foreign_field'     => 'conversation_flow_id',
                 'description'       => 'Messages associated to a conversation.'
             ]

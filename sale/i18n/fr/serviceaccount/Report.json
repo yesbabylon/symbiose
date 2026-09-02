@@ -24,6 +24,12 @@
                     "description": "Valider définitivement le rapport et mettre à jour son compte de service. Cette action est irréversible."
                 }
             },
+            "routes": {
+                "route.print.pdf": {
+                    "label": "Afficher le rapport",
+                    "description": "Afficher le rapport au format PDF."
+                }
+            },
             "layout": {
                 "section.period": {
                     "label": "Période"
