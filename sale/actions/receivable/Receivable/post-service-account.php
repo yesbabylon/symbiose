@@ -27,7 +27,7 @@ use sale\receivable\Receivable;
 
         'service_account_id' => [
             'type'              => 'many2one',
-            'foreign_object'    => 'sale\contract\ServiceAccount',
+            'foreign_object'    => 'sale\serviceaccount\ServiceAccount',
             'description'       => 'Service Account on which the receivable has been accounted.',
             'ondelete'          => 'null'
         ]

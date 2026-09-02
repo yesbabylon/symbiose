@@ -11,7 +11,7 @@
             "description": "Release the report and update its service account. This action cannot be undone.",
             "controller": "core_model_do",
             "params": {
-                "entity": "sale\\contract\\Report",
+                "entity": "sale\\serviceaccount\\Report",
                 "action": "release",
                 "ids": []
             },

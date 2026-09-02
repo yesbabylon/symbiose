@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace sale\contract;
+namespace sale\serviceaccount;
 
 use sale\customer\Customer;
 
@@ -33,14 +33,14 @@ class ServiceAccount extends \sale\contract\Contract {
 
             'service_account_entries_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\contract\ServiceAccountEntry',
+                'foreign_object'    => 'sale\serviceaccount\ServiceAccountEntry',
                 'foreign_field'     => 'service_account_id',
                 'description'       => 'List of all lines referring to the service account.',
             ],
 
             'reports_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\contract\Report',
+                'foreign_object'    => 'sale\serviceaccount\Report',
                 'foreign_field'     => 'service_account_id',
                 'description'       => 'List of reports of the service account.',
                 'ondetach'          => 'delete'
@@ -63,7 +63,7 @@ class ServiceAccount extends \sale\contract\Contract {
             'last_entry_id' => [
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
-                'foreign_object'    => 'sale\contract\ServiceAccountEntry',
+                'foreign_object'    => 'sale\serviceaccount\ServiceAccountEntry',
                 'function'          => 'calcLastEntryId',
                 'description'       => 'The most recent line relating to the the account.'
             ],

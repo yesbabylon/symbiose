@@ -50,7 +50,10 @@
     },
     "error": {
         "errors": {
-            "already_released_report": "Seul un rapport en attente peut être validé."
+            "already_released_report": "Seul un rapport en attente peut être validé.",
+            "unknown_report": "Le rapport demandé est introuvable.",
+            "report_rendering_failed": "Le rapport HTML n’a pas pu être généré.",
+            "report_generation_failed": "Le rapport PDF n’a pas pu être généré."
         }
     }
 }

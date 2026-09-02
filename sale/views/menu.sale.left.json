@@ -241,7 +241,7 @@
                         "icon": "account_balance_wallet",
                         "description": "Display all service accounts.",
                         "context": {
-                            "entity": "sale\\contract\\ServiceAccount",
+                            "entity": "sale\\serviceaccount\\ServiceAccount",
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc"
@@ -254,7 +254,7 @@
                         "icon": "summarize",
                         "description": "Display all service account reports.",
                         "context": {
-                            "entity": "sale\\contract\\Report",
+                            "entity": "sale\\serviceaccount\\Report",
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc"

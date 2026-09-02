@@ -4,10 +4,8 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace sale\contract;
+namespace sale\serviceaccount;
 
-use Dompdf\Dompdf;
-use Dompdf\Options as DompdfOptions;
 use Twig\Environment as TwigEnvironment;
 use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
 
@@ -47,7 +45,7 @@ class Report extends \equal\orm\Model {
 
             'service_account_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\contract\ServiceAccount',
+                'foreign_object'    => 'sale\serviceaccount\ServiceAccount',
                 'description'       => 'The service account the line belongs to.',
                 'dependents'        => ['customer_id', 'balance_old', 'has_lines', 'is_sendable']
             ],
@@ -73,7 +71,7 @@ class Report extends \equal\orm\Model {
 
             'service_account_entries_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\contract\ServiceAccountEntry',
+                'foreign_object'    => 'sale\serviceaccount\ServiceAccountEntry',
                 'foreign_field'     => 'report_id',
                 'order'             => 'date',
                 'description'       => 'SA Lines assigned to the report.',
@@ -397,7 +395,7 @@ class Report extends \equal\orm\Model {
     public static function calcLink($self) {
         $result = [];
         foreach($self as $id => $report) {
-            $result[$id] = '/?get=sale_serviceaccount_Report_print-report&id='.$id;
+            $result[$id] = '/?get=sale_serviceaccount_Report_render-pdf&id='.$id;
         }
         return $result;
     }
@@ -471,11 +469,26 @@ class Report extends \equal\orm\Model {
 
     /**
      * Generate a PDF version of a Report, intended for printing.
-     * @param int   $id         Identifier of the report to print.
-     * @param array $params     Accepted params are: show_details: print time entries details (description); show_logs: print point calculation logs.
      *
+     * @param int   $id     Identifier of the report to print.
+     * @param array $params Accepted params are: show_details, show_logs and view_id.
      */
     public static function generatePdf($id, $params=[]) {
+        return \eQual::run('get', 'sale_serviceaccount_Report_render-pdf', [
+            'id'      => $id,
+            'details' => $params['show_details'] ?? true,
+            'logs'    => $params['show_logs'] ?? false,
+            'view_id' => $params['view_id'] ?? 'print.default'
+        ]);
+    }
+
+    /**
+     * Generate an HTML version of a Report, intended for printing.
+     *
+     * @param int   $id     Identifier of the report to print.
+     * @param array $params Accepted params are: show_details, show_logs and view_id.
+     */
+    public static function generateHtml($id, $params=[]) {
         $result = null;
 
         $report = self::id($id)
@@ -526,7 +539,7 @@ class Report extends \equal\orm\Model {
         // retrieve target timezone : printed dates are intended to use local time)
         $tz = new \DateTimeZone("Europe/Brussels");
         // load image to embed to PDF reports
-        $img_path = EQ_BASEDIR.'/packages/sale/views/contract/logo_netika_sm.png';
+        $img_path = EQ_BASEDIR.'/packages/sale/views/serviceaccount/logo_netika_sm.png';
         // fallback to empty image
         $img_url = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=';
 
@@ -639,9 +652,9 @@ class Report extends \equal\orm\Model {
             */
 
             try {
-                $loader = new TwigFilesystemLoader(EQ_BASEDIR."/packages/sale/views/contract/");
+                $loader = new TwigFilesystemLoader(EQ_BASEDIR."/packages/sale/views/serviceaccount/");
                 $twig = new TwigEnvironment($loader);
-                $template = $twig->load("Report.print.default.html");
+                $template = $twig->load('Report.'.($params['view_id'] ?? 'print.default').'.html');
                 $html = $template->render($values);
             }
             catch(\Exception $e) {
@@ -649,28 +662,10 @@ class Report extends \equal\orm\Model {
                 throw new \Exception("template_parsing_issue", EQ_ERROR_INVALID_CONFIG);
             }
 
-            /*
-                Convert HTML to PDF
-            */
-
-            // instantiate and use the dompdf class
-            $options = new DompdfOptions();
-            $options->set('isRemoteEnabled', true);
-            $dompdf = new Dompdf($options);
-
-            $dompdf->setPaper('A4', 'landscape');
-            $dompdf->loadHtml((string) $html);
-            $dompdf->render();
-
-            $canvas = $dompdf->getCanvas();
-            $font = $dompdf->getFontMetrics()->getFont("helvetica", "regular");
-            $canvas->page_text(750, 32, "page {PAGE_NUM} / {PAGE_COUNT}", $font, 10, array(0,0,0));
-
-            // get generated PDF raw binary
-            $result = $dompdf->output();
+            $result = $html;
         }
         catch(\Exception $e) {
-            trigger_error("ORM::unable to generate PDF Report - ".$e->getMessage(), EQ_REPORT_ERROR);
+            trigger_error("ORM::unable to generate HTML Report - ".$e->getMessage(), EQ_REPORT_ERROR);
         }
 
         return $result;

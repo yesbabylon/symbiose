@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace sale\contract;
+namespace sale\serviceaccount;
 use core\setting\Setting;
 use hr\holiday\Holiday;
 
@@ -36,7 +36,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
 
             'service_account_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\contract\ServiceAccount',
+                'foreign_object'    => 'sale\serviceaccount\ServiceAccount',
                 'description'       => 'The service account the line belongs to.',
                 'onupdate'          => 'onupdateServiceAccountId',
                 'dependents'        => ['customer_id']
@@ -187,7 +187,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
 
             'report_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\contract\Report',
+                'foreign_object'    => 'sale\serviceaccount\Report',
                 'ondelete'          => 'null',
                 'onupdate'          => 'onupdateReportId',
                 'description'       => 'Report to which the line is assigned, if any.',

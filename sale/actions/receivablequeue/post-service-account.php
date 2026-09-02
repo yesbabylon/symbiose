@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-use sale\contract\ServiceAccount;
+use sale\serviceaccount\ServiceAccount;
 use sale\receivable\Receivable;
 use sale\receivable\ReceivablesQueue;
 
@@ -25,7 +25,7 @@ list($params, $providers) = eQual::announce([
         ],
         'service_account_id' => [
             'type'           => 'many2one',
-            'foreign_object' => 'sale\contract\ServiceAccount',
+            'foreign_object' => 'sale\serviceaccount\ServiceAccount',
             'description'    => 'If left empty, the active Service Account of each customer will be used.',
             'domain'         => ['is_active', '=', true]
         ]

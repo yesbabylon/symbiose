@@ -11,8 +11,8 @@ use equal\orm\Model;
 use sale\accounting\invoice\Invoice;
 use sale\accounting\invoice\InvoiceLine;
 use sale\accounting\invoice\InvoiceLineGroup;
-use sale\contract\ServiceAccount;
-use sale\contract\ServiceAccountEntry;
+use sale\serviceaccount\ServiceAccount;
+use sale\serviceaccount\ServiceAccountEntry;
 use sale\SaleEntry;
 
 class Receivable extends Model {
@@ -246,14 +246,14 @@ class Receivable extends Model {
 
             'service_account_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\contract\ServiceAccount',
+                'foreign_object'    => 'sale\serviceaccount\ServiceAccount',
                 'description'       => 'Service Account on which the receivable has been accounted.',
                 'ondelete'          => 'null'
             ],
 
             'service_account_entry_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\contract\ServiceAccountEntry',
+                'foreign_object'    => 'sale\serviceaccount\ServiceAccountEntry',
                 'description'       => 'The SA entry that has been generated based on the item.',
                 'ondelete'          => 'null'
             ]
