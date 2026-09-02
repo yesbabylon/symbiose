@@ -1,0 +1,55 @@
+{
+    "name": "Candidat",
+    "plural": "Candidats",
+    "description": "",
+    "model": {
+        "is_active": {
+            "label": "Actif",
+            "description": "Indique si le candidat est actif.",
+            "help": "Désactivez cette option lorsque le candidat ne doit plus apparaître parmi les candidats actifs."
+        },
+        "linkedin_url": {
+            "label": "LinkedIn",
+            "description": "URL de la page LinkedIn.",
+            "help": "Renseignez l’URL complète du profil LinkedIn du candidat."
+        },
+        "origin": {
+            "label": "Origine",
+            "description": "Origine du candidat.",
+            "help": "Indiquez comment le candidat a été identifié."
+        },
+        "last_contact": {
+            "label": "Dernier contact",
+            "description": "Date du dernier contact avec le candidat.",
+            "help": "Indiquez la date de la dernière prise de contact."
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut actuel du candidat.",
+            "help": "Sélectionnez la disponibilité actuelle du candidat.",
+            "selection": {
+                "open_to_work": "Ouvert au travail",
+                "open_to_strong_opportunity": "Ouvert aux opportunités sérieuses",
+                "not_now": "Pas maintenant",
+                "not_interested": "Pas intéressé"
+            }
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Candidat",
+            "description": "",
+            "layout": {
+                "section.talent.details": {
+                    "label": "Détails"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Candidats",
+            "description": "",
+            "layout": {}
+        }
+    },
+    "error": {}
+}
