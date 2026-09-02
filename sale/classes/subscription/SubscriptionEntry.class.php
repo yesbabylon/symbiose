@@ -47,7 +47,7 @@ class SubscriptionEntry extends SaleEntry {
                 'type'           => 'many2one',
                 'foreign_object' => 'sale\subscription\Subscription',
                 'description'    => 'Identifier of the Subscription the sale entry originates from.',
-                'dependents'     => ['pricing_mode', 'product_id', 'customer_id', 'is_billable']
+                'dependents'     => ['name', 'pricing_mode', 'product_id', 'customer_id', 'is_billable']
             ],
 
             'pricing_mode' => [
@@ -99,24 +99,41 @@ class SubscriptionEntry extends SaleEntry {
             'date_from' => [
                 'type'           => 'date',
                 'description'    => 'Start date of the subscription period this entry covers.',
-                'required'       => true
+                'required'       => true,
+                'dependents'     => ['name']
             ],
 
             'date_to' => [
                 'type'           => 'date',
                 'description'    => 'End date of the subscription period this entry covers.',
-                'required'       => true
+                'required'       => true,
+                'dependents'     => ['name']
             ]
 
         ];
     }
 
-    public static function calcName($self) {
+    public static function calcName($self): array {
         $result = [];
         $self->read(['subscription_id' => ['name'], 'date_from', 'date_to']);
         foreach($self as $id => $entry) {
-            $result[$id] = $entry['subscription_id']['name'] . ' - ' . date('Y-m-d', $entry['date_from']) . '-' . date('Y-m-d', $entry['date_to']);
+            $name_parts = [];
+
+            if(!empty($entry['subscription_id']['name'])) {
+                $name_parts[] = $entry['subscription_id']['name'];
+            }
+
+            if(isset($entry['date_from'], $entry['date_to'])) {
+                $name_parts[] = sprintf(
+                    '[%s - %s]',
+                    date('Y-m-d', $entry['date_from']),
+                    date('Y-m-d', $entry['date_to'])
+                );
+            }
+
+            $result[$id] = implode(' ', $name_parts);
         }
+
         return $result;
     }
 

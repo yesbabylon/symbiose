@@ -32,7 +32,8 @@ class Subscription extends Model  {
                 'type'              => 'string',
                 'unique'            => true,
                 'required'          => true,
-                'description'       => 'Name of the subscription.'
+                'description'       => 'Name of the subscription.',
+                'dependents'        => ['subscription_entries_ids' => ['name']]
             ],
 
             'description' => [

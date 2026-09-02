@@ -62,6 +62,12 @@
                 "value": "unit_price",
                 "width": "15%",
                 "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "15%",
+                "sortable": true
             }
         ]
     }
