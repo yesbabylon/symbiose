@@ -14,5 +14,4 @@ cd ..
 ./equal.run --do=init_package --package=stats
 ./equal.run --do=init_package --package=sale
 ./equal.run --do=init_package --package=support
-./equal.run --do=init_package --package=talentlead
 ./equal.run --do=init_package --package=timetrack
