@@ -13,6 +13,8 @@ use sale\accounting\invoice\InvoiceLine;
 use sale\accounting\invoice\InvoiceLineGroup;
 use sale\serviceaccount\ServiceAccount;
 use sale\serviceaccount\ServiceAccountEntry;
+use sale\subscription\Subscription;
+use sale\subscription\SubscriptionEntry;
 use sale\SaleEntry;
 
 class Receivable extends Model {
@@ -74,6 +76,7 @@ class Receivable extends Model {
                 'description'       => 'Entity class that the Receivable originates from.',
                 'help'              => 'Sale entries can to extended by other classes to enrich logic behavior. This field is used to store the class name of the object. Selection is provided as a memo but is non-exhaustive.',
                 'default'           => 'sale\SaleEntry',
+                'dependents'        => ['name'],
                 'selection'         => [
                     'sale\SaleEntry',
                     'timetrack\TimeEntry',
@@ -482,12 +485,17 @@ class Receivable extends Model {
         }
     }
 
-    protected static function calcName($self) {
+    protected static function calcName($self): array {
         $result = [];
-        $self->read(['origin_object_id']);
+        $self->read(['origin_object_class', 'origin_object_id']);
 
         foreach($self as $id => $receivable) {
-            $saleEntry = SaleEntry::id($receivable['origin_object_id'])->read(['name'])->first();
+            $origin_object_class = $receivable['origin_object_class'] ?? SaleEntry::class;
+
+            $saleEntry = $origin_object_class::id($receivable['origin_object_id'])
+                ->read(['name'])
+                ->first();
+
             if($saleEntry) {
                 $result[$id] = $saleEntry['name'];
             }
