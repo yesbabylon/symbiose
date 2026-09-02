@@ -25,9 +25,8 @@ class SubscriptionEntry extends SaleSubscriptionEntry {
 
             'object_class' => [
                 'type'           => 'string',
-                'description'    => 'Class of the object object_id points to.',
-                'default'        => 'infra\service\Subscription',
-                'dependents'     => ['subscription_id']
+                'description'    => 'Concrete SaleEntry class represented by this object.',
+                'default'        => 'infra\service\SubscriptionEntry'
             ],
 
             'subscription_id' => [
