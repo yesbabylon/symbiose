@@ -64,8 +64,7 @@
                 "type": "field",
                 "value": "price",
                 "width": "15%",
-                "sortable": true,
-                "visible": false
+                "sortable": true
             }
         ]
     }
