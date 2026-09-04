@@ -14,10 +14,6 @@ class ServiceAccount extends \sale\contract\Contract {
         return 'sale_contract_serviceaccount';
     }
 
-    public static function getFlags(): int {
-        return EQ_FLAG_OWN_TABLE;
-    }
-
     public static function getDescription() {
         return "Service Accounts relate to Customers and are equivalent to Contracts. These entities are Read-Only and synced from AutoTask.";
     }

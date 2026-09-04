@@ -36,7 +36,8 @@
                 "value": "date",
                 "width": "10%",
                 "widget": {
-                    "usage": "date"
+                    "usage": "date",
+                    "sortable": true
                 }
             },
             {
@@ -66,13 +67,15 @@
                 "type": "field",
                 "value": "total",
                 "label": "Excl. tax",
-                "width": "10%"
+                "width": "10%",
+                "sortable": true
             },
             {
                 "type": "field",
                 "label": "Price",
                 "value": "price",
-                "width": "10%"
+                "width": "10%",
+                "sortable": true
             }
         ]
     }
