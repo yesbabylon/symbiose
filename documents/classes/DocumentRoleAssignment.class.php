@@ -19,7 +19,11 @@ class DocumentRoleAssignment extends \core\Assignment {
 
             'role' => [
                 'type' 	            => 'string',
-                'usage'             => 'orm/role.documents_Document',
+                'selection'         => [
+                    'owner',
+                    'editor',
+                    'viewer'
+                ],
                 'description'       => "Role that is assigned to the user.",
                 'help'              => "The assigned Role should match one of the roles defined at the entity level and returned by the `getRole()` method."
             ]

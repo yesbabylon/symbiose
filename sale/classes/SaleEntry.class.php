@@ -125,7 +125,7 @@ class SaleEntry extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\price\Price',
                 'description'       => 'Price of the sale.',
-                'dependents'        => ['unit_price', 'vat_rate']
+                'dependents'        => ['unit_price', 'vat_rate', 'total']
             ],
 
             'unit_price' => [
@@ -150,7 +150,8 @@ class SaleEntry extends Model {
             'qty' => [
                 'type'              => 'float',
                 'description'       => 'Quantity of product.',
-                'default'           => 1.0
+                'default'           => 1.0,
+                'dependents'        => ['total']
             ],
 
             'free_qty' => [
