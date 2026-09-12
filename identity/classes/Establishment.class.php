@@ -38,11 +38,11 @@ class Establishment extends Model {
                 'description'       => 'Details about the property for inner communications.'
             ],
 
-            /* parent organisation */
-            'organisation_id' => [
+            /* parent organization */
+            'organization_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Organisation',
-                'description'       => "The organisation the establishment belongs to.",
+                'foreign_object'    => 'identity\Organization',
+                'description'       => "The organization the establishment belongs to.",
                 'required'          => true
             ],
 

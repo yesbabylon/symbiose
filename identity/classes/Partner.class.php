@@ -26,14 +26,14 @@ class Partner extends Model {
                 'relation'          => ['partner_identity_id' => 'name'],
                 'store'             => true,
                 'instant'           => true,
-                'description'       => 'The display name of the partner (related organisation name).',
+                'description'       => 'The display name of the partner (related organization name).',
                 'generation'        => 'generateName'
             ],
 
-            'organisation_id' => [
+            'organization_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Organisation',
-                'description'       => 'Organisation (of the current installation) the partner belongs to (defaults to current).',
+                'foreign_object'    => 'identity\Organization',
+                'description'       => 'Organization (of the current installation) the partner belongs to (defaults to current).',
                 'default'           => 1
             ],
 

@@ -37,10 +37,10 @@ class User extends \core\User {
                 'default'           => 1
             ],
 
-            'organisation_id' => [
+            'organization_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Organisation',
-                'description'       => 'The organisation the user belongs to.',
+                'foreign_object'    => 'identity\Organization',
+                'description'       => 'The organization the user belongs to.',
                 'default'           => 1
             ]
 

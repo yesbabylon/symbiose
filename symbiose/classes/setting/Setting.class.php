@@ -33,7 +33,7 @@ class Setting extends \core\setting\Setting {
     }
 
     protected static function getSelectorKeys() {
-        return ['user_id', 'organisation_id'];
+        return ['user_id', 'organization_id'];
     }
 
     protected static function getSettingValueClass(): string {

@@ -23,9 +23,9 @@ class Terms extends Model {
                 'description'       => 'Name of the terms.',
             ],
 
-            'organisation_id' => [
+            'organization_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Organisation',
+                'foreign_object'    => 'identity\Organization',
                 'description'       => 'Entity that sets the conditions of the sale.',
                 'default'           => 1,
                 'required'          => true

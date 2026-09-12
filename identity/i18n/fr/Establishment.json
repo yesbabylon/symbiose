@@ -9,7 +9,7 @@
             "description": "Nom de l'établissement.",
             "help": ""
         },
-        "organisation_id": {
+        "organization_id": {
             "label": "Organisation",
             "description": "L'organisation à laquelle appartient l'établissement.",
             "help": ""

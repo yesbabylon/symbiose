@@ -42,8 +42,8 @@ class Product extends Model {
 
             'is_internal' => [
                 'type'              => 'boolean',
-                'description'       => 'The product is intended for the Organisation itself.',
-                'help'              => 'Internal products are used by own organisation. Information relating to external products are kept so that the company can work on those.',
+                'description'       => 'The product is intended for the Organization itself.',
+                'help'              => 'Internal products are used by own organization. Information relating to external products are kept so that the company can work on those.',
                 'default'           => false
             ],
 

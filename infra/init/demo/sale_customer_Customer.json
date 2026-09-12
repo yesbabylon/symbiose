@@ -21,7 +21,7 @@
                 "phone": "0477777758",
                 "customer_id": 2001,
                 "is_organisation": false,
-                "organisation_id": 1
+                "organization_id": 1
             },
             {
                 "id": 2002,
@@ -39,7 +39,7 @@
                 "address_country": "BE",
                 "customer_id": 2002,
                 "is_organisation": false,
-                "organisation_id": 1
+                "organization_id": 1
             },
             {
                 "id": 2003,
@@ -55,7 +55,7 @@
                 "email": "jeanmartinmartin@gmail.com",
                 "customer_id": 2003,
                 "is_organisation": false,
-                "organisation_id": 1
+                "organization_id": 1
             }
         ]
     },
@@ -65,7 +65,7 @@
         "data": [
             {
                 "id": 2001,
-                "organisation_id": 1,
+                "organization_id": 1,
                 "is_internal": true,
                 "owner_identity_id": 1,
                 "partner_identity_id": 2001,
@@ -86,7 +86,7 @@
             },
             {
                 "id": 2002,
-                "organisation_id": 1,
+                "organization_id": 1,
                 "is_internal": true,
                 "owner_identity_id": 1,
                 "partner_identity_id": 2002,
@@ -106,7 +106,7 @@
             },
             {
                 "id": 2003,
-                "organisation_id": 1,
+                "organization_id": 1,
                 "is_internal": true,
                 "owner_identity_id": 1,
                 "partner_identity_id": 2003,

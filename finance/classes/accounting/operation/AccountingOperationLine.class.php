@@ -62,7 +62,7 @@ class AccountingOperationLine extends Model {
                 'description'    => 'Accounting operation the line belongs to.',
                 'required'       => true,
                 'ondelete'       => 'cascade',
-                'dependents'     => ['organisation_id', 'journal_id']
+                'dependents'     => ['organization_id', 'journal_id']
             ],
 
             'account_id' => [
@@ -84,11 +84,11 @@ class AccountingOperationLine extends Model {
                 'readonly'    => true
             ],
 
-            'organisation_id' => [
+            'organization_id' => [
                 'type'           => 'computed',
                 'result_type'    => 'many2one',
-                'foreign_object' => 'identity\Organisation',
-                'description'    => 'Organisation inherited from the accounting operation.',
+                'foreign_object' => 'identity\Organization',
+                'description'    => 'Organization inherited from the accounting operation.',
                 'relation'       => ['operation_id' => 'org_id'],
                 'store'          => true,
                 'readonly'       => true

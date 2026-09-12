@@ -18,7 +18,7 @@
             "description": "Code facultatif de référence pour correspondance externe.",
             "help": ""
         },
-        "organisation_id": {
+        "organization_id": {
             "label": "Organisation",
             "description": "",
             "help": ""

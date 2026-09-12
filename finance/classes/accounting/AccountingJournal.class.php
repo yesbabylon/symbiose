@@ -61,10 +61,10 @@ class AccountingJournal extends Model {
                 'dependents'        => ['name']
             ],
 
-            'organisation_id' => [
+            'organization_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Organisation',
-                'description'       => "The organisation the journal belongs to.",
+                'foreign_object'    => 'identity\Organization',
+                'description'       => "The organization the journal belongs to.",
                 'default'           => 1
             ],
 

@@ -38,7 +38,7 @@
             "description": "Nom lisible de la ligne comptable.",
             "help": "Le nom reprend la description de la ligne."
         },
-        "organisation_id": {
+        "organization_id": {
             "label": "Organisation",
             "description": "Organisation héritée de la pièce comptable.",
             "help": "Cette valeur est renseignée automatiquement."

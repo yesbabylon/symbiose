@@ -191,21 +191,21 @@ $getTwigCurrency = function($equal_currency) {
     return $equal_twig_currency_map[$equal_currency] ?? $equal_currency;
 };
 
-$getOrganisationLogo = function($invoice) {
+$getOrganizationLogo = function($invoice) {
     $result = '';
     try {
-        if(!isset($invoice['organisation_id']['image_document_id']['type'], $invoice['organisation_id']['image_document_id']['data'])) {
+        if(!isset($invoice['organization_id']['image_document_id']['type'], $invoice['organization_id']['image_document_id']['data'])) {
             throw new Exception('invalid_image', EQ_ERROR_INVALID_PARAM);
         }
-        if(stripos($invoice['organisation_id']['image_document_id']['type'], 'image/') !== 0) {
+        if(stripos($invoice['organization_id']['image_document_id']['type'], 'image/') !== 0) {
             throw new Exception('invalid_image_type', EQ_ERROR_INVALID_PARAM);
         }
-        if(strlen( $invoice['organisation_id']['image_document_id']['data']) <= 0) {
+        if(strlen( $invoice['organization_id']['image_document_id']['data']) <= 0) {
             throw new Exception('empty_image', EQ_ERROR_INVALID_PARAM);
         }
         $result = sprintf('data:%s;base64,%s',
-                $invoice['organisation_id']['image_document_id']['type'],
-                base64_encode($invoice['organisation_id']['image_document_id']['data'])
+                $invoice['organization_id']['image_document_id']['type'],
+                base64_encode($invoice['organization_id']['image_document_id']['data'])
             );
     }
     catch(Exception $e) {
@@ -263,9 +263,9 @@ $getInvoicePaymentQrCodeUri = function($invoice) {
             throw new Exception('missing_payment_reference', EQ_ERROR_INVALID_PARAM);
         }
         $image = eQual::run('get', 'finance_payment_generate-qr-code', [
-                'recipient_name'    => $invoice['organisation_id']['legal_name'],
-                'recipient_iban'    => $invoice['organisation_id']['bank_account_iban'],
-                'recipient_bic'     => $invoice['organisation_id']['bank_account_bic'],
+                'recipient_name'    => $invoice['organization_id']['legal_name'],
+                'recipient_iban'    => $invoice['organization_id']['bank_account_iban'],
+                'recipient_bic'     => $invoice['organization_id']['bank_account_bic'],
                 'payment_reference' => $invoice['payment_reference'],
                 'payment_amount'    => $invoice['price']
             ]);
@@ -293,7 +293,7 @@ $invoice = Invoice::id($params['id'])
     ->read([
             'invoice_number', 'emission_date', 'due_date', 'status', 'invoice_type', 'payment_reference', 'total', 'price', 'payment_status',
             'reversed_invoice_id' => ['invoice_number'],
-            'organisation_id' => [
+            'organization_id' => [
                 'name', 'address_street', 'address_dispatch', 'address_zip',
                 'address_city', 'address_country', 'has_vat', 'vat_number',
                 'legal_name', 'registration_number', 'bank_account_iban', 'bank_account_bic',
@@ -330,17 +330,17 @@ if(empty($invoice)) {
 
 // adapt specific properties to TXT output
 $invoice['payment_reference'] = DataFormatter::format($invoice['payment_reference'], 'scor');
-$invoice['organisation_id']['bank_account_iban'] = DataFormatter::format($invoice['organisation_id']['bank_account_iban'], 'iban');
-$invoice['organisation_id']['phone'] = DataFormatter::format($invoice['organisation_id']['phone'], 'phone');
-$invoice['organisation_id']['fax'] = DataFormatter::format($invoice['organisation_id']['fax'], 'phone');
+$invoice['organization_id']['bank_account_iban'] = DataFormatter::format($invoice['organization_id']['bank_account_iban'], 'iban');
+$invoice['organization_id']['phone'] = DataFormatter::format($invoice['organization_id']['phone'], 'phone');
+$invoice['organization_id']['fax'] = DataFormatter::format($invoice['organization_id']['fax'], 'phone');
 
 
 $values = [
     'invoice'             => $invoice,
-    'organisation'        => $invoice['organisation_id'],
+    'organization'        => $invoice['organization_id'],
     'customer'            => $invoice['customer_id'],
     'lines'               => $getInvoiceLines($invoice),
-    'organisation_logo'   => $getOrganisationLogo($invoice),
+    'organisation_logo'   => $getOrganizationLogo($invoice),
     'payment_qr_code_uri' => $getInvoicePaymentQrCodeUri($invoice),
     'timezone'            => constant('L10N_TIMEZONE'),
     'locale'              => constant('L10N_LOCALE'),

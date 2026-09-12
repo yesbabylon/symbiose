@@ -51,7 +51,7 @@
             "description": "Date d'émission de la facture.",
             "help": ""
         },
-        "organisation_id": {
+        "organization_id": {
             "label": "Organisation émettrice/réceptrice",
             "description": "Organisation émettrice/réceptrice de la facture.",
             "help": ""

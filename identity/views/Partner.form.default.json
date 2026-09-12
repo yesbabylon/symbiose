@@ -228,8 +228,8 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Partner Organisation",
-                                                "value": "organisation_id",
+                                                "label": "Partner Organization",
+                                                "value": "organization_id",
                                                 "width": "50%"
                                             }
                                         ]

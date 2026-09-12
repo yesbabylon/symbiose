@@ -7,14 +7,14 @@
                 "id": 1012,
                 "setting_id": 1012,
                 "name": "sale.order.sequence",
-                "organisation_id": 1,
+                "organization_id": 1,
                 "value": 1
             },
             {
                 "id": 1016,
                 "setting_id": 1016,
                 "name": "sale.accounting.invoice_sequence",
-                "organisation_id": 1,
+                "organization_id": 1,
                 "value": 1
             }
         ]

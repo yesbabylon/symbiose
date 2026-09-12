@@ -8,7 +8,7 @@
             "description": "Nom du plan comptable.",
             "help": ""
         },
-        "organisation_id": {
+        "organization_id": {
             "label": "Organisation",
             "description": "L'organisation à laquelle appartient l'organigramme.",
             "help": ""

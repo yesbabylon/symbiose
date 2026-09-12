@@ -16,7 +16,7 @@
                         "icon": "business",
                         "description": "",
                         "context": {
-                            "entity": "identity\\Organisation",
+                            "entity": "identity\\Organization",
                             "view": "list.default"
                         }
                     },

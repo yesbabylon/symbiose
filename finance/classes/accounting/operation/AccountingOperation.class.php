@@ -20,6 +20,10 @@ use symbiose\setting\Setting;
  */
 class AccountingOperation extends Model {
 
+    public static function getFlags(): int {
+        return EQ_FLAG_ABSTRACT;
+    }
+
     public static function getName() {
         return 'Accounting operation';
     }
@@ -33,8 +37,8 @@ class AccountingOperation extends Model {
 
             'org_id' => [
                 'type'           => 'many2one',
-                'foreign_object' => 'identity\Organisation',
-                'description'    => 'Organisation the accounting operation belongs to.',
+                'foreign_object' => 'identity\Organization',
+                'description'    => 'Organization the accounting operation belongs to.',
                 'required'       => true,
                 'default'        => 1,
                 'dependents'     => ['fiscal_year']
@@ -98,7 +102,7 @@ class AccountingOperation extends Model {
                 'description'    => 'Accounting journal used for the operation.',
                 'required'       => true,
                 'domain'         => [
-                    ['organisation_id', '=', 'object.org_id']
+                    ['organization_id', '=', 'object.org_id']
                 ]
             ],
 
@@ -315,7 +319,7 @@ class AccountingOperation extends Model {
                 'accounting',
                 'fiscal_year',
                 $default_year,
-                ['organisation_id' => $operation['org_id']]
+                ['organization_id' => $operation['org_id']]
             );
         }
 
@@ -361,7 +365,7 @@ class AccountingOperation extends Model {
             'description',
             'org_id',
             'posting_date',
-            'journal_id' => ['organisation_id'],
+            'journal_id' => ['organization_id'],
             'operation_lines_ids' => [
                 'account_id',
                 'debit',
@@ -376,7 +380,7 @@ class AccountingOperation extends Model {
                 $errors['missing_description'] = 'Description is required.';
             }
             if(!$operation['org_id']) {
-                $errors['missing_organisation'] = 'Organisation is required.';
+                $errors['missing_organisation'] = 'Organization is required.';
             }
             if(!$operation['posting_date']) {
                 $errors['missing_posting_date'] = 'Posting date is required.';
@@ -384,8 +388,8 @@ class AccountingOperation extends Model {
             if(!$operation['journal_id']) {
                 $errors['missing_journal'] = 'Accounting journal is required.';
             }
-            elseif($operation['journal_id']['organisation_id'] !== $operation['org_id']) {
-                $errors['invalid_journal'] = 'Accounting journal belongs to another organisation.';
+            elseif($operation['journal_id']['organization_id'] !== $operation['org_id']) {
+                $errors['invalid_journal'] = 'Accounting journal belongs to another organization.';
             }
 
             if(count($operation['operation_lines_ids']) === 0) {
@@ -535,14 +539,14 @@ class AccountingOperation extends Model {
                 'accounting',
                 'accounting_operation.number_format',
                 '%s{journal}/%02d{year}/%05d{sequence}',
-                ['organisation_id' => $operation['org_id']]
+                ['organization_id' => $operation['org_id']]
             );
             $sequence = Setting::fetch_and_add(
                 'finance',
                 'accounting',
                 'accounting_operation.sequence',
                 1,
-                ['organisation_id' => $operation['org_id']]
+                ['organization_id' => $operation['org_id']]
             );
 
             if(!$sequence) {

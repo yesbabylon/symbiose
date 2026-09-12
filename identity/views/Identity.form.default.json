@@ -1,6 +1,6 @@
 {
     "name": "Identity",
-    "description": "An identity is any kind of person: moral (organisation) or physical (individual).",
+    "description": "An identity is any kind of person: moral (organization) or physical (individual).",
     "layout": {
         "groups": [
             {
@@ -71,7 +71,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "organisation_id",
+                                                "value": "organization_id",
                                                 "visible": false
                                             }
                                         ]

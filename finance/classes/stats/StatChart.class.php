@@ -25,11 +25,11 @@ class StatChart extends Model {
                 'description'       => "Name of the chart of accounts."
             ],
 
-            /* owner organisation */
-            'organisation_id' => [
+            /* owner organization */
+            'organization_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'description'       => "The organisation the chart belongs to.",
+                'description'       => "The organization the chart belongs to.",
                 'required'          => true
             ],
 

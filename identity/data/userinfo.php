@@ -32,14 +32,14 @@ $user_id = $auth->userId();
 $user = User::id($user_id)
     ->read([
         'identity_id' => ['firstname', 'lastname'],
-        'organisation_id'
+        'organization_id'
     ])
     ->adapt('json')
     ->first(true);
 
 $result = array_merge($userinfo, [
         'identity_id'       => $user['identity_id'],
-        'organisation_id'   => $user['organisation_id']
+        'organization_id'   => $user['organization_id']
     ]);
 
 // renew JWT access token

@@ -6,7 +6,7 @@
             {
                 "id": 1,
                 "type_id": 1,
-                "organisation_id": 1,
+                "organization_id": 1,
                 "is_internal": true,
                 "owner_identity_id": 1,
                 "partner_identity_id": 2,

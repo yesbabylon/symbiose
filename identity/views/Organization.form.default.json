@@ -1,6 +1,6 @@
 {
-    "name": "Organisation",
-    "description": "Form holding basic information about an Organisation.",
+    "name": "Organization",
+    "description": "Form holding basic information about an Organization.",
     "layout": {
         "groups": [
             {

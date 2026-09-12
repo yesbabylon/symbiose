@@ -156,7 +156,7 @@ switch($params['variant']) {
                     'name',
                     'phone',
                     'email',
-                    'organisation_id' => [
+                    'organization_id' => [
                         'legal_name',
                         'phone',
                         'email',

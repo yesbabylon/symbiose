@@ -8,7 +8,7 @@
             "description": "Nom du plan comptable analytique.",
             "help": ""
         },
-        "organisation_id": {
+        "organization_id": {
             "label": "Organisation",
             "description": "The organisation the chart belongs to.",
             "help": ""

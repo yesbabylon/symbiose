@@ -232,7 +232,7 @@ $get_selector_fields = static function(string $class): array {
     $fields = ['user_id'];
 
     if(is_a($class, SymbioseSettingValue::class, true) || is_a($class, SymbioseSettingSequence::class, true)) {
-        $fields[] = 'organisation_id';
+        $fields[] = 'organization_id';
     }
 
     return $fields;

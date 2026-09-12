@@ -30,10 +30,10 @@ class Absence extends \equal\orm\Model {
                 'default'           => 'requested'
             ],
 
-            'organisation_id' => [
+            'organization_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'description'       => 'The organisation which the targeted identity is a partner of.',
+                'description'       => 'The organization which the targeted identity is a partner of.',
                 'default'           => 1
             ],
 

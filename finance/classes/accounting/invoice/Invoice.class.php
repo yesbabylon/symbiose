@@ -36,10 +36,10 @@ class Invoice extends Model {
                 'help'              => 'This is an arbitrary text field (to be added at the top of invoices), such as customer reference or any comments to be addressed to the customer.'
             ],
 
-            'organisation_id' => [
+            'organization_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Organisation',
-                'description'       => 'The organisation that emitted/received the invoice.',
+                'foreign_object'    => 'identity\Organization',
+                'description'       => 'The organization that emitted/received the invoice.',
                 'default'           => 1
             ],
 

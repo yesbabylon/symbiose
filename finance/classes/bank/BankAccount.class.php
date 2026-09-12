@@ -7,7 +7,7 @@
 namespace finance\bank;
 
 use equal\orm\Model;
-use identity\Organisation;
+use identity\Organization;
 
 class BankAccount extends Model {
 
@@ -24,13 +24,13 @@ class BankAccount extends Model {
                 'readonly'          => true
             ],
 
-            'organisation_id' => [
+            'organization_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Organisation',
+                'foreign_object'    => 'identity\Organization',
                 'description'       => 'The organization that owns the bank account.',
                 'dependents'        => ['name'],
                 'ondelete'          => 'cascade',
-                'visible'           => ['organisation_id', '<>', null],
+                'visible'           => ['organization_id', '<>', null],
                 'required'          => true
             ],
 
@@ -70,14 +70,14 @@ class BankAccount extends Model {
 
 
     public static function onupdateBankAccountIban($self) {
-        $self->read(['organisation_id', 'bank_account_iban']);
+        $self->read(['organization_id', 'bank_account_iban']);
         foreach($self as $id => $bankAccount) {
-            $organisation = Organisation::id($bankAccount['organisation_id'])->read(['id', 'bank_account_ids'])->first();
-            if($organisation) {
-                // by convention, if current bank account is the first of the organisation, sync back with iban from organisation
-                $first_bank_account_id = min($organisation['bank_account_ids']);
+            $organization = Organization::id($bankAccount['organization_id'])->read(['id', 'bank_account_ids'])->first();
+            if($organization) {
+                // by convention, if current bank account is the first of the organization, sync back with iban from organization
+                $first_bank_account_id = min($organization['bank_account_ids']);
                 if($id == $first_bank_account_id) {
-                    Organisation::id($bankAccount['organisation_id'])
+                    Organization::id($bankAccount['organization_id'])
                        ->update([
                            'bank_account_iban' => $bankAccount['bank_account_iban']
                        ]);
@@ -87,14 +87,14 @@ class BankAccount extends Model {
     }
 
     public static function onupdateBankAccountBic($self) {
-        $self->read(['organisation_id', 'bank_account_bic']);
+        $self->read(['organization_id', 'bank_account_bic']);
         foreach($self as $id => $bankAccount) {
-            $organisation = Organisation::id($bankAccount['organisation_id'])->read(['id', 'bank_account_ids'])->first();
-            if($organisation) {
-                // by convention, if current bank account is the first of the organisation, sync back with iban from organisation
-                $first_bank_account_id = min($organisation['bank_account_ids']);
+            $organization = Organization::id($bankAccount['organization_id'])->read(['id', 'bank_account_ids'])->first();
+            if($organization) {
+                // by convention, if current bank account is the first of the organization, sync back with iban from organization
+                $first_bank_account_id = min($organization['bank_account_ids']);
                 if($id == $first_bank_account_id) {
-                    Organisation::id($bankAccount['organisation_id'])
+                    Organization::id($bankAccount['organization_id'])
                        ->update([
                            'bank_account_bic' => $bankAccount['bank_account_bic']
                        ]);
@@ -110,8 +110,8 @@ class BankAccount extends Model {
             $result['bank_country'] = self::computeCountryFromIban($event['bank_account_iban']);
         }
 
-        if(isset($event['organisation_id']) || isset($event['bank_account_iban'])) {
-            $result['name'] = self::computeName($event['organisation_id'] ?? $values['organisation_id'], $event['bank_account_iban'] ?? $values['bank_account_iban']);
+        if(isset($event['organization_id']) || isset($event['bank_account_iban'])) {
+            $result['name'] = self::computeName($event['organization_id'] ?? $values['organization_id'], $event['bank_account_iban'] ?? $values['bank_account_iban']);
         }
 
         return $result;
@@ -128,18 +128,18 @@ class BankAccount extends Model {
 
     public static function calcName($self) {
         $result = [];
-        $self->read(['organisation_id', 'bank_account_iban']);
+        $self->read(['organization_id', 'bank_account_iban']);
         foreach($self as $id => $bankAccount) {
-            $result[$id] = self::computeName($bankAccount['organisation_id'], $bankAccount['bank_account_iban']);
+            $result[$id] = self::computeName($bankAccount['organization_id'], $bankAccount['bank_account_iban']);
         }
         return $result;
     }
 
     public static function candelete($self) {
-        $self->read(['organisation_id']);
+        $self->read(['organization_id']);
         foreach($self as $bankAccount) {
-            $organisation = Organisation::id($bankAccount['organisation_id'])->read(['bank_account_ids'])->first();
-            if(count($organisation['bank_account_ids']) <= 1 ) {
+            $organization = Organization::id($bankAccount['organization_id'])->read(['bank_account_ids'])->first();
+            if(count($organization['bank_account_ids']) <= 1 ) {
                 return ['id' => ['non_removable' => 'The bank account cannot be removed. Organizations must have at least one bank account.']];
             }
         }
@@ -155,11 +155,11 @@ class BankAccount extends Model {
         return $country;
     }
 
-    private static function computeName($organisation_id, $iban) {
+    private static function computeName($organization_id, $iban) {
         $name = '';
-        $organisation = Organisation::id($organisation_id)->read(['name'])->first();
-        if($organisation && $iban && strlen($iban) > 0){
-            $name = $organisation['name'] . ' - ' . $iban;
+        $organization = Organization::id($organization_id)->read(['name'])->first();
+        if($organization && $iban && strlen($iban) > 0){
+            $name = $organization['name'] . ' - ' . $iban;
         }
         return $name;
     }

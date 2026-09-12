@@ -20,10 +20,10 @@ class Channel extends Model {
                 'required'          => true
             ],
 
-            'organisation_id' => [
+            'organization_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Organisation',
-                'description'       => 'The organisation the channel is dedicated.',
+                'foreign_object'    => 'identity\Organization',
+                'description'       => 'The organization the channel is dedicated.',
                 'default'           => 1,
                 'required'          => true
             ],

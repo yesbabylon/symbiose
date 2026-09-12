@@ -128,22 +128,22 @@ class AccountingEntry extends Model {
 
     public static function calcEntryNumber($self) {
         $result = [];
-        $self->read(['journal_id' => ['code', 'organisation_id']]);
+        $self->read(['journal_id' => ['code', 'organization_id']]);
 
         foreach($self as $id => $entry) {
-            if(!isset($entry['journal_id'], $entry['journal_id']['code'], $entry['journal_id']['organisation_id'])) {
+            if(!isset($entry['journal_id'], $entry['journal_id']['code'], $entry['journal_id']['organization_id'])) {
                 continue;
             }
 
-            $format = Setting::get_value('finance', 'accounting', 'accounting_entry.number_format', '%s{journal}/%02d{year}/%05d{sequence}', ['organisation_id' => $entry['journal_id']['organisation_id']]);
-            $year = Setting::get_value('finance', 'accounting', 'fiscal_year', date('Y'), ['organisation_id' => $entry['journal_id']['organisation_id']]);
-            $sequence = Setting::fetch_and_add('finance', 'accounting', 'accounting_entry.sequence', 1, ['organisation_id' => $entry['journal_id']['organisation_id']]);
+            $format = Setting::get_value('finance', 'accounting', 'accounting_entry.number_format', '%s{journal}/%02d{year}/%05d{sequence}', ['organization_id' => $entry['journal_id']['organization_id']]);
+            $year = Setting::get_value('finance', 'accounting', 'fiscal_year', date('Y'), ['organization_id' => $entry['journal_id']['organization_id']]);
+            $sequence = Setting::fetch_and_add('finance', 'accounting', 'accounting_entry.sequence', 1, ['organization_id' => $entry['journal_id']['organization_id']]);
 
             if($sequence) {
                 $result[$id] = Setting::parse_format($format, [
                         'year'      => $year,
                         'journal'   => $entry['journal_id']['code'],
-                        'org'       => $entry['journal_id']['organisation_id'],
+                        'org'       => $entry['journal_id']['organization_id'],
                         'sequence'  => $sequence
                     ]);
             }

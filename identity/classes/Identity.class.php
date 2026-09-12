@@ -13,7 +13,7 @@ use sale\customer\Contact as CustomerContact;
 use purchase\supplier\Supplier;
 
 /**
- * This class is meant to be used as an interface for other entities (organisation and partner).
+ * This class is meant to be used as an interface for other entities (organization and partner).
  */
 class Identity extends Model {
 
@@ -436,11 +436,11 @@ class Identity extends Model {
                 'help'           => 'Company logo for organizations or profile image for natural person.'
             ],
 
-            'organisation_id' => [
+            'organization_id' => [
                 'type'           => 'many2one',
-                'foreign_object' => 'identity\Organisation',
-                'description'    => 'The organisation the identity refers to.',
-                'onupdate'       => 'onupdateOrganisationId'
+                'foreign_object' => 'identity\Organization',
+                'description'    => 'The organization the identity refers to.',
+                'onupdate'       => 'onupdateOrganizationId'
             ],
 
             'is_active' => [
@@ -484,7 +484,7 @@ class Identity extends Model {
     }
 
     private static function updateField($self, $field) {
-        $self->read(['user_id', 'contact_id', 'customer_contact_id', 'employee_id', 'customer_id', 'supplier_id', 'organisation_id', $field]);
+        $self->read(['user_id', 'contact_id', 'customer_contact_id', 'employee_id', 'customer_id', 'supplier_id', 'organization_id', $field]);
         foreach($self as $id => $identity) {
             if($identity['user_id']) {
                 User::id($identity['user_id'])->update([$field => $identity[$field]]);
@@ -504,8 +504,8 @@ class Identity extends Model {
             if($identity['supplier_id']) {
                 Supplier::id($identity['supplier_id'])->update([$field => $identity[$field]]);
             }
-            if($identity['organisation_id']) {
-                Organisation::id($identity['organisation_id'])->update([$field => $identity[$field]]);
+            if($identity['organization_id']) {
+                Organization::id($identity['organization_id'])->update([$field => $identity[$field]]);
             }
         }
     }
@@ -616,10 +616,10 @@ class Identity extends Model {
         }
     }
 
-    public static function onupdateOrganisationId($self) {
-        $self->read(['organisation_id']);
+    public static function onupdateOrganizationId($self) {
+        $self->read(['organization_id']);
         foreach($self as $id => $identity) {
-            Organisation::id($identity['organisation_id'])->update(['identity_id' => $id]);
+            Organization::id($identity['organization_id'])->update(['identity_id' => $id]);
         }
     }
 
@@ -824,23 +824,23 @@ class Identity extends Model {
 
     public static function onupdateIsOrganisation($self) {
         $self->read(['is_organisation']);
-        foreach($self as $id => $organisation) {
-            if(!$organisation['is_organisation']) {
-                self::id($id)->update(['organisation_id' => null]);
+        foreach($self as $id => $organization) {
+            if(!$organization['is_organisation']) {
+                self::id($id)->update(['organization_id' => null]);
             }
         }
     }
 
     /**
-     * Upon update, if an Identity relates to an Organisation, synchronize common fields with related Organisation
+     * Upon update, if an Identity relates to an Organization, synchronize common fields with related Organization
      */
     public static function onafterupdate($self, $values, $orm) {
-        $organisation_fields = $orm->getModel(Organisation::getType())->getSchema();
-        $self->read(['is_organisation', 'organisation_id']);
-        $organisation_values = array_intersect_key($values, $organisation_fields);
+        $organization_fields = $orm->getModel(Organization::getType())->getSchema();
+        $self->read(['is_organisation', 'organization_id']);
+        $organization_values = array_intersect_key($values, $organization_fields);
         foreach($self as $id => $identity) {
             if($identity['is_organisation']) {
-                Organisation::id($identity['organisation_id'])->update($organisation_values);
+                Organization::id($identity['organization_id'])->update($organization_values);
             }
         }
     }

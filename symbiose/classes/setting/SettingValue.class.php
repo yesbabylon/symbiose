@@ -27,10 +27,10 @@ class SettingValue extends \core\setting\SettingValue {
                 'ondelete'          => 'cascade'
             ],
 
-            'organisation_id' => [
+            'organization_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Organisation',
-                'description'       => 'Organisation the setting is specific to (optional).',
+                'foreign_object'    => 'identity\Organization',
+                'description'       => 'Organization the setting is specific to (optional).',
                 'default'           => 0,
                 'ondelete'          => 'cascade'
             ]

@@ -10,7 +10,7 @@
                 "short_name": "Your company",
                 "has_parent": false,
                 "is_organisation": true,
-                "organisation_id": 1
+                "organization_id": 1
             },
             {
                 "id": 2,

@@ -34,7 +34,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "organisation_id",
+                                                "value": "organization_id",
                                                 "width": "100%"
                                             },
                                             {

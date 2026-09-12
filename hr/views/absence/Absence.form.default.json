@@ -23,8 +23,8 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Organisation",
-                                                "value": "organisation_id",
+                                                "label": "Organization",
+                                                "value": "organization_id",
                                                 "width": "33%"
                                             },
                                             {

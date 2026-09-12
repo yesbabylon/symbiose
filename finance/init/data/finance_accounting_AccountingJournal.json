@@ -6,7 +6,7 @@
             {
                 "id": 1,
                 "name": "Sales Accounting Journal (SALE)",
-                "organisation_id": 1,
+                "organization_id": 1,
                 "journal_type": "SALE",
                 "description": "Sales Accounting Journal"
             }

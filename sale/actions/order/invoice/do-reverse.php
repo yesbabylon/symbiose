@@ -40,7 +40,7 @@ $invoice = Invoice::id($params['id'])
         'invoice_type',
         'order_id',
         'funding_id',
-        'organisation_id',
+        'organization_id',
         'customer_id',
         'is_paid',
         'is_downpayment'

@@ -45,7 +45,7 @@ $invoice = Invoice::id($params['id'])
         'status',
         'invoice_type',
         'is_downpayment',
-        'organisation_id',
+        'organization_id',
         'price',
         'order_id',
         'invoice_lines_ids'

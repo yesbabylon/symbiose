@@ -40,9 +40,9 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                 'description'       => 'Label of the invoice, depending on its status'
             ],
 
-            'organisation_id' => [
+            'organization_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Organisation',
+                'foreign_object'    => 'identity\Organization',
                 'description'       => 'The organization that emitted the invoice.',
                 'default'           => 1
             ],
@@ -338,19 +338,19 @@ class Invoice extends \finance\accounting\invoice\Invoice {
     }
 
     public static function onbeforeInvoice($self) {
-        $self->read(['organisation_id']);
+        $self->read(['organization_id']);
         // Try to generate the accounting entries according to the invoices lines.
         $self->do('generate_accounting_entries');
         foreach($self as $id => $invoice) {
-            $format = Setting::get_value('sale', 'accounting', 'invoice.sequence_format', '%2d{year}-%05d{sequence}', ['organisation_id' => $invoice['organisation_id']]);
-            $year = Setting::get_value('finance', 'accounting', 'fiscal_year', date('Y'), ['organisation_id' => $invoice['organisation_id']]);
-            $sequence = Setting::fetch_and_add('sale', 'accounting', 'invoice.sequence', 1, ['organisation_id' => $invoice['organisation_id']]);
+            $format = Setting::get_value('sale', 'accounting', 'invoice.sequence_format', '%2d{year}-%05d{sequence}', ['organization_id' => $invoice['organization_id']]);
+            $year = Setting::get_value('finance', 'accounting', 'fiscal_year', date('Y'), ['organization_id' => $invoice['organization_id']]);
+            $sequence = Setting::fetch_and_add('sale', 'accounting', 'invoice.sequence', 1, ['organization_id' => $invoice['organization_id']]);
             if(!$sequence) {
                 throw new \Exception('APP::unable to retrieve sequence for invoice', EQ_ERROR_INVALID_CONFIG);
             }
             $invoice_number = Setting::parse_format($format, [
                     'year'      => $year,
-                    'org'       => $invoice['organisation_id'],
+                    'org'       => $invoice['organization_id'],
                     'sequence'  => $sequence
                 ]);
             self::id($id)->update([
@@ -460,7 +460,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                 'status',
                 'invoice_type',
                 'reversed_invoice_id',
-                'organisation_id',
+                'organization_id',
                 'customer_id',
                 'is_downpayment',
                 'invoice_line_groups_ids' => [
@@ -491,7 +491,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                     'invoice_type'        => 'credit_note',
                     'status'              => 'proforma',
                     'emission_date'       => time(),
-                    'organisation_id'     => $invoice['organisation_id'],
+                    'organization_id'     => $invoice['organization_id'],
                     'customer_id'         => $invoice['customer_id'],
                     'is_downpayment'      => $invoice['is_downpayment'],
                     'reversed_invoice_id' => $invoice['id']
@@ -567,10 +567,10 @@ class Invoice extends \finance\accounting\invoice\Invoice {
      * Create the accounting entries according tp invoices lines.
      */
     public static function doGenerateAccountingEntries($self) {
-        $self->read(['id', 'organisation_id', 'accounting_entries_ids' => ['id', 'entry_lines_ids']]);
+        $self->read(['id', 'organization_id', 'accounting_entries_ids' => ['id', 'entry_lines_ids']]);
 
         foreach($self as $id => $invoice) {
-            $journal = AccountingJournal::search([['organisation_id', '=', $invoice['organisation_id']], ['journal_type', '=', 'SALE']])->read(['id'])->first();
+            $journal = AccountingJournal::search([['organization_id', '=', $invoice['organization_id']], ['journal_type', '=', 'SALE']])->read(['id'])->first();
 
             if(!$journal) {
                 throw new \Exception('missing_mandatory_journal', EQ_ERROR_INVALID_CONFIG);

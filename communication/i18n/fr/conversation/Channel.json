@@ -8,7 +8,7 @@
             "description": "Nom du canal de conversation.",
             "help": ""
         },
-        "organisation_id": {
+        "organization_id": {
             "label": "Organisation",
             "description": "Organisation du canal.",
             "help": ""

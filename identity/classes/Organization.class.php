@@ -8,10 +8,10 @@
 namespace identity;
 use finance\bank\BankAccount;
 
-class Organisation extends Identity {
+class Organization extends Identity {
 
     public static function getName() {
-        return 'Organisation';
+        return 'Organization';
     }
 
     public function getTable() {
@@ -40,7 +40,7 @@ class Organisation extends Identity {
             'identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'description'       => 'Identity the organisation relates to.',
+                'description'       => 'Identity the organization relates to.',
                 'onupdate'          => 'onupdateIdentityId'
             ],
 
@@ -61,8 +61,8 @@ class Organisation extends Identity {
             'bank_account_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'finance\bank\BankAccount',
-                'foreign_field'     => 'organisation_id',
-                'description'       => 'List of the bank account of the organisation',
+                'foreign_field'     => 'organization_id',
+                'description'       => 'List of the bank account of the organization',
                 'ondetach'          => 'delete',
                 'order'             => 'id',
                 'sort'              => 'asc'
@@ -77,7 +77,7 @@ class Organisation extends Identity {
 
             'bank_account_bic' => [
                 'type'              => 'string',
-                'description'       => "Identifier of the Bank related to the Organisation's bank account, when set.",
+                'description'       => "Identifier of the Bank related to the Organization's bank account, when set.",
                 'onupdate'          => 'onupdateBankAccountBic'
             ],
 
@@ -87,8 +87,8 @@ class Organisation extends Identity {
     public static function calcName($self) {
         $result = [];
         $self->read(['identity_id' => ['type', 'firstname', 'lastname', 'legal_name', 'short_name']]);
-        foreach($self as $id => $organisation) {
-            $identity = $organisation['identity_id'];
+        foreach($self as $id => $organization) {
+            $identity = $organization['identity_id'];
             $parts = [];
             if($identity['type'] == 'IN') {
                 if(isset($identity['firstname']) && strlen($identity['firstname'])) {
@@ -113,18 +113,18 @@ class Organisation extends Identity {
 
     public static function onupdateBankAccountIban($self) {
         $self->read(['bank_account_ids', 'bank_account_iban', 'bank_account_bic']);
-        foreach($self as $id => $organisation) {
-            if(!isset($organisation['bank_account_ids']) || empty($organisation['bank_account_ids'])) {
+        foreach($self as $id => $organization) {
+            if(!isset($organization['bank_account_ids']) || empty($organization['bank_account_ids'])) {
                 BankAccount::create([
-                    'organisation_id'   => $organisation['id'],
-                    'bank_account_iban' => $organisation['bank_account_iban'],
-                    'bank_account_bic'  => $organisation['bank_account_bic']
+                    'organization_id'   => $organization['id'],
+                    'bank_account_iban' => $organization['bank_account_iban'],
+                    'bank_account_bic'  => $organization['bank_account_bic']
                 ]);
             }
             else {
-                $bank_account_id = reset($organisation['bank_account_ids']);
+                $bank_account_id = reset($organization['bank_account_ids']);
                 BankAccount::id($bank_account_id)->update([
-                    'bank_account_iban' => $organisation['bank_account_iban']
+                    'bank_account_iban' => $organization['bank_account_iban']
                 ]);
             }
         }
@@ -132,12 +132,12 @@ class Organisation extends Identity {
 
     public static function onupdateBankAccountBic($self) {
         $self->read(['bank_account_ids', 'bank_account_bic']);
-        foreach($self as $id => $organisation) {
+        foreach($self as $id => $organization) {
             // #memo - we don't create an account here since IBAN might not have been provided
-            if(isset($organisation['bank_account_ids']) && !empty($organisation['bank_account_ids'])) {
-                $bank_account_id = reset($organisation['bank_account_ids']);
+            if(isset($organization['bank_account_ids']) && !empty($organization['bank_account_ids'])) {
+                $bank_account_id = reset($organization['bank_account_ids']);
                 BankAccount::id($bank_account_id)->update([
-                    'bank_account_bic'  => $organisation['bank_account_bic']
+                    'bank_account_bic'  => $organization['bank_account_bic']
                 ]);
             }
         }
@@ -145,8 +145,8 @@ class Organisation extends Identity {
 
     public static function onupdateIdentityId($self) {
         $self->read(['identity_id']);
-        foreach($self as $id => $organisation) {
-            Identity::id($organisation['identity_id'])->update(['organisation_id' => $id]);
+        foreach($self as $id => $organization) {
+            Identity::id($organization['identity_id'])->update(['organization_id' => $id]);
         }
     }
 
@@ -157,8 +157,8 @@ class Organisation extends Identity {
         $identity_fields = $orm->getModel(Identity::getType())->getSchema();
         $self->read(['identity_id']);
         $identity_values = array_intersect_key($values, $identity_fields);
-        foreach($self as $id => $organisation) {
-            Identity::id($organisation['identity_id'])->update($identity_values);
+        foreach($self as $id => $organization) {
+            Identity::id($organization['identity_id'])->update($identity_values);
         }
     }
 }

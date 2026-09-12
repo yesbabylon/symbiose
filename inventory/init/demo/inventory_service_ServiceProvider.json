@@ -6,7 +6,7 @@
             {
                 "id": 1101,
                 "legal_name": "Google Analytics",
-                "organisation_id": 1,
+                "organization_id": 1,
                 "type_id": 3,
                 "has_vat": false,
                 "address_country": "BE",
@@ -15,7 +15,7 @@
             {
                 "id": 1102,
                 "legal_name": "Microsoft 365",
-                "organisation_id": 1,
+                "organization_id": 1,
                 "type_id": 3,
                 "has_vat": false,
                 "address_country": "BE",

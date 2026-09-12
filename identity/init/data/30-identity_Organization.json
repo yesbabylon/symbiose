@@ -1,6 +1,6 @@
 [
     {
-        "name": "identity\\Organisation",
+        "name": "identity\\Organization",
         "lang": "en",
         "data": [
             {
@@ -8,8 +8,8 @@
                 "type_id": 3,
                 "type": "C",
                 "identity_id": 1,
-                "legal_name": "Your organisation name Inc.",
-                "short_name": "Your organisation",
+                "legal_name": "Your organization name Inc.",
+                "short_name": "Your organization",
                 "has_parent": false,
                 "registration_number": "0123231324",
                 "bank_account_iban": "BE11222233335555",
