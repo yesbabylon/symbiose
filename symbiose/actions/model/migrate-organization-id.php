@@ -72,6 +72,7 @@ $source_column = 'organisation_id';
 $target_column = 'organization_id';
 $existing_tables = array_fill_keys(array_map('strtolower', $db->getTables()), true);
 $table_columns = [];
+$column_definitions = [];
 $tables_to_migrate = [];
 
 foreach($tables as $table) {
@@ -99,13 +100,33 @@ foreach($tables as $table) {
     }
 
     if($has_source) {
+        $result = $db->sendQuery("SHOW CREATE TABLE `{$table}`;");
+        $row = $db->fetchRow($result);
+        $definition = null;
+
+        foreach(preg_split('/\R/', $row[1]) as $line) {
+            $line = trim($line);
+            if(preg_match('/^`' . preg_quote($source_column, '/') . '`\s+(.+)$/', $line, $matches)) {
+                $definition = rtrim($matches[1], ',');
+                break;
+            }
+        }
+
+        if($definition === null) {
+            throw new Exception(
+                "Unable to read the definition of '{$table}.{$source_column}'.",
+                EQ_ERROR_INVALID_CONFIG
+            );
+        }
+
+        $column_definitions[$table] = $definition;
         $tables_to_migrate[] = $table;
     }
 }
 
 foreach($tables_to_migrate as $table) {
     $db->sendQuery(
-        "ALTER TABLE `{$table}` RENAME COLUMN `{$source_column}` TO `{$target_column}`;"
+        "ALTER TABLE `{$table}` CHANGE COLUMN `{$source_column}` `{$target_column}` {$column_definitions[$table]};"
     );
 }
 
