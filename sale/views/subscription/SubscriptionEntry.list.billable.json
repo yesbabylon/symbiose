@@ -24,7 +24,7 @@
             ]
         }
     },
-    "domain": ["object_class", "=", "sale\\subscription\\Subscription"],
+    "domain": ["model", "=", "sale\\subscription\\SubscriptionEntry"],
     "extends": {
         "entity": "sale\\subscription\\SubscriptionEntry",
         "view": "list.default"

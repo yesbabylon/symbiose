@@ -1,7 +1,7 @@
 {
     "name": "Subscription Entries",
     "description": "Default listing of all subscription entries.",
-    "domain": ["object_class", "=", "sale\\subscription\\Subscription"],
+    "domain": ["model", "=", "sale\\subscription\\SubscriptionEntry"],
     "controller": "sale_subscription_subscriptionentry-collect",
     "sort": "desc",
     "layout": {

@@ -29,12 +29,6 @@ class SubscriptionEntry extends SaleEntry {
                 'visible'        => ['pricing_mode', '=', 'consumption']
             ],
 
-            'object_class' => [
-                'type'           => 'string',
-                'description'    => 'Class of the object.',
-                'default'        => 'sale\subscription\SubscriptionEntry'
-            ],
-
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',

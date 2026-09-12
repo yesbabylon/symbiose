@@ -16,6 +16,7 @@ class OrderPaymentPart extends \sale\pay\Payment {
                 'foreign_object'    => 'sale\pos\OrderPayment',
                 'description'       => 'The order payment the part relates to.',
                 'ondelete'          => 'cascade',
+                'required'          => true,
                 'onupdate'          => 'onupdateOrderPaymentId'
             ],
 

@@ -14,7 +14,15 @@ class DocumentRoleAssignment extends \core\Assignment {
                 'type'              => 'string',
                 'description'       => 'Full name of the entity on which the role assignment applies.',
                 'required'          => true,
+                'readonly'          => true,
+                'selection'         => ['documents\Document'],
                 'default'           => 'documents\Document'
+            ],
+
+            'user_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\User',
+                'description'       => "User the role is assigned to."
             ],
 
             'role' => [
@@ -25,7 +33,8 @@ class DocumentRoleAssignment extends \core\Assignment {
                     'viewer'
                 ],
                 'description'       => "Role that is assigned to the user.",
-                'help'              => "The assigned Role should match one of the roles defined at the entity level and returned by the `getRole()` method."
+                'help'              => "The assigned Role should match one of the roles defined at the entity level and returned by the `getRole()` method.",
+                'required'          => true
             ]
         ];
     }

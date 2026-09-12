@@ -11,6 +11,10 @@ use equal\orm\Model;
 
 class Status extends Model {
 
+    public static function getFlags(): int {
+        return EQ_FLAG_ABSTRACT;
+    }
+
     public static function getColumns(): array {
         return [
 
@@ -72,5 +76,48 @@ class Status extends Model {
             ]
 
         ];
+    }
+
+    public static function cancreate($self, $values) {
+        if($error = self::validateTarget($values)) {
+            return $error;
+        }
+
+        return parent::cancreate($self, $values);
+    }
+
+    public static function canupdate($self, $values) {
+        $self->read(['server_id', 'instance_id']);
+        foreach($self as $status) {
+            $targets = array_merge(
+                [
+                    'server_id'   => $status['server_id'],
+                    'instance_id' => $status['instance_id']
+                ],
+                $values
+            );
+            if($error = self::validateTarget($targets)) {
+                return $error;
+            }
+        }
+
+        return parent::canupdate($self, $values);
+    }
+
+    private static function validateTarget(array $values): array {
+        $has_server = !empty($values['server_id']);
+        $has_instance = !empty($values['instance_id']);
+
+        if($has_server === $has_instance) {
+            return ['server_id' => ['invalid_target' => 'Exactly one server or instance is required.']];
+        }
+        if(is_a(static::class, ServerStatus::class, true) && !$has_server) {
+            return ['server_id' => ['incompatible_target' => 'A server status requires a server.']];
+        }
+        if(is_a(static::class, InstanceStatus::class, true) && !$has_instance) {
+            return ['instance_id' => ['incompatible_target' => 'An instance status requires an instance.']];
+        }
+
+        return [];
     }
 }

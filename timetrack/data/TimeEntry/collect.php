@@ -90,7 +90,7 @@ use equal\orm\Domain;
  */
 ['context' => $context] = $providers;
 
-$domain = [ ['object_class', '=', 'timetrack\TimeEntry'] ];
+$domain = [ ['model', '=', 'timetrack\TimeEntry'] ];
 
 if(isset($params['user_id']) && $params['user_id'] > 0) {
     $domain[] = ['user_id', '=', $params['user_id']];

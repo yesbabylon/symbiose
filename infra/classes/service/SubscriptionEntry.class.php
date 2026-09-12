@@ -23,12 +23,6 @@ class SubscriptionEntry extends SaleSubscriptionEntry {
              * Override Sale SubscriptionEntry columns
              */
 
-            'object_class' => [
-                'type'           => 'string',
-                'description'    => 'Concrete SaleEntry class represented by this object.',
-                'default'        => 'infra\service\SubscriptionEntry'
-            ],
-
             'subscription_id' => [
                 'type'           => 'computed',
                 'result_type'    => 'many2one',

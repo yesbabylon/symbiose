@@ -18,7 +18,8 @@ class ServerStatus extends Status {
                 'foreign_object'    => 'infra\server\Server',
                 'ondelete'          => 'cascade',
                 'description'       => "Server concerned by the status.",
-                'help'              => "A status can either concern a server or an instance."
+                'help'              => "A status can either concern a server or an instance.",
+                'required'          => true
             ]
 
         ];

@@ -23,18 +23,6 @@ class SaleEntry extends Model {
     public static function getColumns() {
 
         return [
-            'object_class' => [
-                'type'              => 'string',
-                'description'       => 'Class name of the object.',
-                'help'              => 'Sale entries can to extended by other classes to enrich logic behavior. This field is used to store the class name of the object. Selection is provided as a memo but is non-exhaustive.',
-                'default'           => 'sale\SaleEntry',
-                'selection'         => [
-                    'sale\SaleEntry',
-                    'timetrack\TimeEntry',
-                    'sale\subscription\SubscriptionEntry',
-                ]
-            ],
-
             'code' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
@@ -193,7 +181,7 @@ class SaleEntry extends Model {
 
     public function getIndexes(): array {
         return [
-            ['object_class', 'customer_id']
+            ['model', 'customer_id']
         ];
     }
 
@@ -289,7 +277,7 @@ class SaleEntry extends Model {
     }
 
     public static function doCreateReceivable($self) {
-        $self->read(['id', 'is_internal', 'is_billable', 'date', 'invoice_group', 'object_class', 'receivable_queue_id', 'customer_id']);
+        $self->read(['id', 'is_internal', 'is_billable', 'date', 'invoice_group', 'model', 'receivable_queue_id', 'customer_id']);
         foreach($self as $id => $saleEntry) {
             if($saleEntry['is_internal']) {
                 continue;
@@ -299,7 +287,7 @@ class SaleEntry extends Model {
             }
             // if a receivable has been previously created, remove it
             Receivable::search([
-                    ['origin_object_class', '=', $saleEntry['object_class']],
+                    ['origin_object_class', '=', $saleEntry['model']],
                     ['origin_object_id', '=', $saleEntry['id']]
                 ])
                 ->delete(true);
@@ -308,7 +296,7 @@ class SaleEntry extends Model {
             // create a new receivable assigned to this entry
             $receivable = Receivable::create([
                     'receivables_queue_id' => $receivables_queue_id,
-                    'origin_object_class'  => $saleEntry['object_class'],
+                    'origin_object_class'  => $saleEntry['model'],
                     'origin_object_id'     => $id,
                     'date'                 => $saleEntry['date'],
                     'invoice_group'        => $saleEntry['invoice_group']

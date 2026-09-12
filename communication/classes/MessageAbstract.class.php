@@ -9,7 +9,11 @@ namespace communication;
 
 use equal\orm\Model;
 
-class Message extends Model {
+class MessageAbstract extends Model {
+
+    public static function getFlags(): int {
+        return EQ_FLAG_ABSTRACT;
+    }
 
     public static function getColumns() {
         return [

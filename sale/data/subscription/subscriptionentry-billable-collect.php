@@ -45,7 +45,7 @@ list($params, $providers) = eQual::announce([
 $context = $providers['context'];
 
 $domain = [
-    ['object_class', '=', 'sale\subscription\Subscription'],
+    ['model', '=', 'sale\subscription\SubscriptionEntry'],
     ['status', '=', 'pending'],
     ['is_billable', '=', true],
     ['has_receivable', '=', false]

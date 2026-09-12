@@ -7,7 +7,7 @@
 
 namespace infra\core;
 
-class Group extends \core\User {
+class Group extends \core\Group {
 
     public static function getColumns() {
         return [

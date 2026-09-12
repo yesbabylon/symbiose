@@ -117,7 +117,7 @@ class Server extends Model {
 
             'statuses_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'infra\server\Status',
+                'foreign_object'    => 'infra\server\ServerStatus',
                 'foreign_field'     => 'server_id',
                 'description'       => 'Statuses of the server.'
             ]

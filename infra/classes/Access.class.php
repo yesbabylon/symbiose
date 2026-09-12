@@ -125,6 +125,50 @@ class Access extends Model {
         ];
     }
 
+    public static function cancreate($self, $values) {
+        if($error = self::validateTargetFamily($values)) {
+            return $error;
+        }
+
+        return parent::cancreate($self, $values);
+    }
+
+    public static function canupdate($self, $values) {
+        $self->read(['server_id', 'instance_id', 'software_id', 'service_id']);
+        foreach($self as $access) {
+            $targets = array_merge(
+                [
+                    'server_id'   => $access['server_id'],
+                    'instance_id' => $access['instance_id'],
+                    'software_id' => $access['software_id'],
+                    'service_id'  => $access['service_id']
+                ],
+                $values
+            );
+            if($error = self::validateTargetFamily($targets)) {
+                return $error;
+            }
+        }
+
+        return parent::canupdate($self, $values);
+    }
+
+    private static function validateTargetFamily(array $values): array {
+        $has_infra_target = !empty($values['server_id']) || !empty($values['instance_id']);
+        $has_inventory_target = !empty($values['software_id']) || !empty($values['service_id']);
+
+        if($has_infra_target && $has_inventory_target) {
+            return ['server_id' => ['mixed_target_families' => 'Infrastructure and inventory targets cannot be mixed.']];
+        }
+
+        $is_inventory_access = is_a(static::class, \inventory\Access::class, true);
+        if(($is_inventory_access && $has_infra_target) || (!$is_inventory_access && $has_inventory_target)) {
+            return ['server_id' => ['incompatible_target_family' => 'The target family must match the concrete access model.']];
+        }
+
+        return [];
+    }
+
     public static function onupdateType($self, $values) {
         if(isset($values['port'])) {
             return;

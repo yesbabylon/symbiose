@@ -99,7 +99,7 @@ class Receivable extends Model {
                 'foreign_object'    => 'sale\SaleEntry',
                 'relation'          => ['origin_object_id'],
                 'readonly'          => true,
-                'domain'            => ['object_class', '=', 'sale\SaleEntry'],
+                'domain'            => ['model', '=', 'sale\SaleEntry'],
                 'visible'           => ['origin_object_class', '=', 'sale\SaleEntry']
             ],
 
@@ -109,7 +109,7 @@ class Receivable extends Model {
                 'foreign_object'    => 'timetrack\TimeEntry',
                 'relation'          => ['origin_object_id'],
                 'readonly'          => true,
-                'domain'            => ['object_class', '=', 'timetrack\TimeEntry'],
+                'domain'            => ['model', '=', 'timetrack\TimeEntry'],
                 'visible'           => ['origin_object_class', '=', 'timetrack\TimeEntry']
             ],
 
@@ -119,7 +119,7 @@ class Receivable extends Model {
                 'foreign_object'    => 'sale\subscription\SubscriptionEntry',
                 'relation'          => ['origin_object_id'],
                 'readonly'          => true,
-                'domain'            => ['object_class', '=', 'sale\subscription\SubscriptionEntry'],
+                'domain'            => ['model', '=', 'sale\subscription\SubscriptionEntry'],
                 'visible'           => ['origin_object_class', '=', 'sale\subscription\SubscriptionEntry']
             ],
 

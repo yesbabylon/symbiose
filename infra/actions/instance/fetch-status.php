@@ -6,7 +6,7 @@
 */
 
 use infra\server\Instance;
-use infra\server\Status;
+use infra\server\InstanceStatus;
 
 [$params, $providers] = eQual::announce([
     'description'       => "Fetches and saves statuses for a given instance.",
@@ -50,7 +50,7 @@ if(!$instance) {
 try {
     $status = equal::run('get', 'infra_instance_status', ['id' => $instance['server_id'], 'instance' => $instance['name']]);
 
-    Status::create([
+    InstanceStatus::create([
         'instance_id'   => $instance['id'],
         'status_data'   => json_encode($status)
     ]);

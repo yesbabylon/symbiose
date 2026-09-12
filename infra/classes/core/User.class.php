@@ -7,7 +7,7 @@
 
 namespace infra\core;
 
-class User extends \core\User {
+class User extends \identity\User {
 
     public static function getColumns() {
         return [

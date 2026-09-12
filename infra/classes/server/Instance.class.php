@@ -121,7 +121,7 @@ class Instance extends Model {
 
             'statuses_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'infra\server\Status',
+                'foreign_object'    => 'infra\server\InstanceStatus',
                 'foreign_field'     => 'instance_id',
                 'description'       => 'Statuses of the instance.'
             ]

@@ -7,7 +7,12 @@
 
 namespace communication\conversation;
 
-class ConversationMessage extends \communication\Message {
+class ConversationMessage extends \communication\MessageAbstract {
+
+    public function getTable() {
+        // 'communication_conversation_conversationmessage'
+        return self::getSlug(self::class);
+    }
 
     public static function getColumns() {
         return [

@@ -6,7 +6,7 @@
 */
 
 use infra\server\Server;
-use infra\server\Status;
+use infra\server\ServerStatus;
 
 [$params, $providers] = eQual::announce([
     'description'       => "Fetches and saves statuses for a given server.",
@@ -53,7 +53,7 @@ try {
         'total_proc'    => intval($status['total_proc'] ?? 0)
     ];
 
-    Status::create($values);
+    ServerStatus::create($values);
 
     // server is up
     Server::id($params['id'])->update(['up' => true, 'synced' => time()]);

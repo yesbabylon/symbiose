@@ -34,4 +34,30 @@ class TicketAttachment extends \documents\Document {
 
         ];
     }
+
+    public static function cancreate($self, $values) {
+        if(empty($values['ticket_id']) && empty($values['ticket_entry_id'])) {
+            return ['ticket_id' => ['missing_ticket' => 'A ticket or ticket entry is required.']];
+        }
+
+        return parent::cancreate($self, $values);
+    }
+
+    public static function canupdate($self, $values) {
+        $self->read(['ticket_id', 'ticket_entry_id']);
+        foreach($self as $attachment) {
+            $ticket_id = array_key_exists('ticket_id', $values)
+                ? $values['ticket_id']
+                : $attachment['ticket_id'];
+            $ticket_entry_id = array_key_exists('ticket_entry_id', $values)
+                ? $values['ticket_entry_id']
+                : $attachment['ticket_entry_id'];
+
+            if(empty($ticket_id) && empty($ticket_entry_id)) {
+                return ['ticket_id' => ['missing_ticket' => 'A ticket or ticket entry is required.']];
+            }
+        }
+
+        return parent::canupdate($self, $values);
+    }
 }

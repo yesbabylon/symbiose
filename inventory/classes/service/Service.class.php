@@ -124,7 +124,7 @@ class Service extends Model {
 
             'subscription_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\subscription\Subscription',
+                'foreign_object'    => 'infra\service\Subscription',
                 'description'       => 'The subscription linked to the service.',
                 'visible'           => ['has_subscription', '=', true]
             ],

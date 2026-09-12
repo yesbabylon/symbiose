@@ -99,7 +99,7 @@ $tests = [
 
             $time_entries = TimeEntry::search(['user_id', '=', $user_id])
                 ->read([
-                    'object_class',
+                    'model',
                     'object_id',
                     'project_id',
                     'origin',
@@ -112,7 +112,7 @@ $tests = [
             $time_entry = $time_entries->first();
 
             return count($time_entries) === 1
-                && $time_entry['object_class'] === 'timetrack\Project'
+                && $time_entry['model'] === 'timetrack\TimeEntry'
                 && $time_entry['object_id'] === $project_id
                 && $time_entry['project_id'] === $project_id
                 && $time_entry['origin'] === 'email'
