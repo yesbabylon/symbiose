@@ -7,7 +7,7 @@
 
 [$params, $providers] = eQual::announce([
     'description' => 'Renames the conversation message table and updates its model discriminator.',
-    'help'        => 'The source and target tables must not coexist.',
+    'help'        => 'An existing target table is replaced only when it contains no rows.',
     'params'      => [
         'confirm' => [
             'description' => 'Explicit confirmation that the database migration may run.',
@@ -47,10 +47,6 @@ $existing_tables = array_fill_keys(array_map('strtolower', $db->getTables()), tr
 $source_exists = isset($existing_tables[$source_table]);
 $target_exists = isset($existing_tables[$target_table]);
 
-if($source_exists && $target_exists) {
-    throw new Exception('conversation_message_table_rename_conflict', EQ_ERROR_CONFLICT_OBJECT);
-}
-
 if(!$source_exists) {
     $context->httpResponse()
         ->status(204)
@@ -66,6 +62,14 @@ if(!isset($source_columns['conversation_id'])) {
 
 if(!isset($source_columns['model'])) {
     throw new Exception("Missing required column '{$source_table}.model'.", EQ_ERROR_INVALID_CONFIG);
+}
+
+if($target_exists) {
+    $result = $db->sendQuery("SELECT 1 FROM `{$target_table}` LIMIT 1;");
+    if($db->fetchArray($result)) {
+        throw new Exception('conversation_message_table_rename_conflict', EQ_ERROR_CONFLICT_OBJECT);
+    }
+    $db->sendQuery("DROP TABLE `{$target_table}`;");
 }
 
 $conversation_message = "CONVERT(0x" . bin2hex('communication\conversation\ConversationMessage') . " USING utf8mb4)";
