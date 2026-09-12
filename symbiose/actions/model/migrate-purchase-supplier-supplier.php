@@ -53,7 +53,7 @@ foreach(['model', 'service_provider_category_id'] as $column) {
 }
 
 $sql_literal = static function(string $value): string {
-    return "CONVERT(0x" . bin2hex($value) . " USING utf8mb4)";
+    return "CONVERT(0x" . bin2hex($value) . " USING utf8mb4) COLLATE utf8mb4_unicode_ci";
 };
 
 $service_provider_references = [];

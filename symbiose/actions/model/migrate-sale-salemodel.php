@@ -50,8 +50,8 @@ if(!isset($columns['model'])) {
     throw new Exception("Missing required column '{$table}.model'.", EQ_ERROR_INVALID_CONFIG);
 }
 
-$sale_model = "CONVERT(0x" . bin2hex('sale\SaleModel') . " USING utf8mb4)";
-$time_entry_sale_model = "CONVERT(0x" . bin2hex('timetrack\TimeEntrySaleModel') . " USING utf8mb4)";
+$sale_model = "CONVERT(0x" . bin2hex('sale\SaleModel') . " USING utf8mb4) COLLATE utf8mb4_unicode_ci";
+$time_entry_sale_model = "CONVERT(0x" . bin2hex('timetrack\TimeEntrySaleModel') . " USING utf8mb4) COLLATE utf8mb4_unicode_ci";
 
 $db->sendQuery('START TRANSACTION;');
 

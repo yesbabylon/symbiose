@@ -52,7 +52,7 @@ foreach(['model', 'object_class', 'role'] as $column) {
 }
 
 $sql_literal = static function(string $value): string {
-    return "CONVERT(0x" . bin2hex($value) . " USING utf8mb4)";
+    return "CONVERT(0x" . bin2hex($value) . " USING utf8mb4) COLLATE utf8mb4_unicode_ci";
 };
 
 $document = $sql_literal('documents\Document');
