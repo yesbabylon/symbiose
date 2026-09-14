@@ -51,7 +51,6 @@ class Identity extends IdentityAbstract {
             'type_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\IdentityType',
-                'onupdate'          => 'onupdateTypeId',
                 // default is 'IN' individual
                 'default'           => 1,
                 'dependents  '      => ['type', 'name'],
@@ -68,29 +67,6 @@ class Identity extends IdentityAbstract {
             /*
                 Fields specific to organizations
             */
-            'legal_name' => [
-                'type'              => 'string',
-                'description'       => 'Full name of the Identity.',
-                'visible'           => [ ['type', '<>', 'IN'] ],
-                'dependents'        => ['name'],
-                'onupdate'          => 'onupdateLegalName'
-            ],
-
-            'has_vat' => [
-                'type'              => 'boolean',
-                'description'       => 'Does the organization have a VAT number?',
-                'visible'           => [ ['type', '<>', 'IN'], ['has_parent', '=', false] ],
-                'default'           => false,
-                'onupdate'          => 'onupdateHasVat'
-            ],
-
-            'vat_number' => [
-                'type'              => 'string',
-                'description'       => 'Value Added Tax identification number, if any.',
-                'visible'           => [ ['has_vat', '=', true], ['type', '<>', 'IN'], ['has_parent', '=', false] ],
-                'onupdate'          => 'onupdateVatNumber'
-            ],
-
             'users_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\User',
@@ -126,112 +102,9 @@ class Identity extends IdentityAbstract {
 
 
             /*
-                Contact details.
-                For individuals, these are the contact details of the person herself.
-            */
-            'firstname' => [
-                'type'              => 'string',
-                'description'       => "Full name of the contact (must be a person, not a role).",
-                'visible'           => ['type', '=', 'IN'],
-                'dependents'        => ['name'],
-                'onupdate'          => 'onupdateFirstname'
-            ],
-
-            'lastname' => [
-                'type'              => 'string',
-                'description'       => 'Reference contact surname.',
-                'visible'           => ['type', '=', 'IN'],
-                'dependents'        => ['name'],
-                'onupdate'          => 'onupdateLastname'
-            ],
-
-            'lang_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'core\Lang',
-                'description'       => "Preferred language of the identity.",
-                'default'           => 1,
-                'onupdate'          => 'onupdateLangId'
-            ],
-
-            /*
-                Description of the Identity address.
-                For organizations this is the official (legal) address (typically headquarters, but not necessarily)
-            */
-            'address_street' => [
-                'type'              => 'string',
-                'description'       => 'Street and number.',
-                'onupdate'          => 'onupdateAddressStreet'
-            ],
-
-            'address_dispatch' => [
-                'type'              => 'string',
-                'description'       => 'Optional info for mail dispatch (apartment, box, floor, ...).',
-                'onupdate'          => 'onupdateAddressDispatch'
-            ],
-
-            'address_city' => [
-                'type'              => 'string',
-                'description'       => 'City.',
-                'onupdate'          => 'onupdateAddressCity'
-            ],
-
-            'address_zip' => [
-                'type'              => 'string',
-                'description'       => 'Postal code.',
-                'onupdate'          => 'onupdateAddressZip'
-            ],
-
-            'address_state' => [
-                'type'              => 'string',
-                'description'       => 'State or region.',
-                'onupdate'          => 'onupdateAddressState'
-            ],
-
-            'address_country' => [
-                'type'              => 'string',
-                'usage'             => 'country/iso-3166:2',
-                'description'       => 'Country.',
-                'default'           => 'BE',
-                'onupdate'          => 'onupdateAddressCountry'
-            ],
-
-            /*
-                Additional official contact details.
-                For individuals these are personal contact details, whereas for companies these are official (registered) details.
-            */
-            'email' => [
-                'type'              => 'string',
-                'usage'             => 'email',
-                'onupdate'          => 'onupdateEmail',
-                'description'       => "Identity main email address."
-            ],
-
-            'phone' => [
-                'type'              => 'string',
-                'usage'             => 'phone',
-                'onupdate'          => 'onupdatePhone',
-                'description'       => "Identity secondary phone number (mobile or landline)."
-            ],
-
-            'mobile' => [
-                'type'              => 'string',
-                'usage'             => 'phone',
-                'onupdate'          => 'onupdateMobile',
-                'description'       => "Identity mobile phone number."
-            ],
-
-            /*
                 For organizations, there might be a reference person: a person who is entitled to legally represent the organization (typically the director, the manager, the CEO, ...).
                 These contact details are commonly requested by service providers for validating the identity of an organization.
             */
-            'reference_partner_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'identity\Partner',
-                'domain'            => ['relationship', '=', 'contact'],
-                'description'       => 'Contact (natural person) that can legally represent the organization.',
-                'onupdate'          => 'onupdateReferencePartnerId',
-                'visible'           => [ ['type', '<>', 'IN'], ['type', '<>', 'SE'] ]
-            ],
 
             'user_id' => [
                 'type'              => 'many2one',
@@ -326,97 +199,6 @@ class Identity extends IdentityAbstract {
             $result[$id] = implode(' ', $parts);
         }
         return $result;
-    }
-
-    private static function updateField($self, $field) {
-        $self->read(['user_id', 'contact_id', 'customer_contact_id', 'employee_id', 'customer_id', 'supplier_id', 'organization_id', $field]);
-        foreach($self as $id => $identity) {
-            if($identity['user_id']) {
-                User::id($identity['user_id'])->update([$field => $identity[$field]]);
-            }
-            if($identity['contact_id']) {
-                Contact::id($identity['contact_id'])->update([$field => $identity[$field]]);
-            }
-            if($identity['customer_contact_id']) {
-                CustomerContact::id($identity['customer_contact_id'])->update([$field => $identity[$field]]);
-            }
-            if($identity['employee_id']) {
-                Employee::id($identity['employee_id'])->update([$field => $identity[$field]]);
-            }
-            if($identity['customer_id']) {
-                Customer::id($identity['customer_id'])->update([$field => $identity[$field]]);
-            }
-            if($identity['supplier_id']) {
-                Supplier::id($identity['supplier_id'])->update([$field => $identity[$field]]);
-            }
-            if($identity['organization_id']) {
-                Organization::id($identity['organization_id'])->update([$field => $identity[$field]]);
-            }
-        }
-    }
-
-    public static function onupdateTypeId($self) {
-        self::updateField($self, 'type_id');
-    }
-
-    public static function onupdateLegalName($self) {
-        self::updateField($self, 'legal_name');
-    }
-
-    public static function onupdateFirstname($self) {
-        self::updateField($self, 'firstname');
-    }
-
-    public static function onupdateLastname($self) {
-        self::updateField($self, 'lastname');
-    }
-
-    public static function onupdateHasVat($self) {
-        self::updateField($self, 'has_vat');
-    }
-
-    public static function onupdateVatNumber($self) {
-        self::updateField($self, 'vat_number');
-    }
-
-    public static function onupdateEmail($self) {
-        self::updateField($self, 'email');
-    }
-
-    public static function onupdatePhone($self) {
-        self::updateField($self, 'phone');
-    }
-
-    public static function onupdateMobile($self) {
-        self::updateField($self, 'mobile');
-    }
-
-    public static function onupdateLangId($self) {
-        self::updateField($self, 'lang_id');
-    }
-
-    public static function onupdateAddressStreet($self) {
-        self::updateField($self, 'address_street');
-    }
-
-    public static function onupdateAddressDispatch($self) {
-        self::updateField($self, 'address_dispatch');
-    }
-
-    public static function onupdateAddressCity($self) {
-        self::updateField($self, 'address_city');
-    }
-
-    public static function onupdateAddressZip($self) {
-        self::updateField($self, 'address_zip');
-    }
-
-    public static function onupdateAddressState($self) {
-        self::updateField($self, 'address_state');
-    }
-
-    public static function onupdateAddressCountry($self) {
-        self::updateField($self, 'address_country');
     }
 
     public static function onupdateUserId($self) {
