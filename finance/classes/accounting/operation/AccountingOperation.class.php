@@ -20,10 +20,6 @@ use symbiose\setting\Setting;
  */
 class AccountingOperation extends Model {
 
-    public static function getFlags(): int {
-        return EQ_FLAG_ABSTRACT;
-    }
-
     public static function getName() {
         return 'Accounting operation';
     }
@@ -35,7 +31,7 @@ class AccountingOperation extends Model {
     public static function getColumns() {
         return [
 
-            'org_id' => [
+            'organization_id' => [
                 'type'           => 'many2one',
                 'foreign_object' => 'identity\Organization',
                 'description'    => 'Organization the accounting operation belongs to.',
@@ -102,7 +98,7 @@ class AccountingOperation extends Model {
                 'description'    => 'Accounting journal used for the operation.',
                 'required'       => true,
                 'domain'         => [
-                    ['organization_id', '=', 'object.org_id']
+                    ['organization_id', '=', 'object.organization_id']
                 ]
             ],
 
@@ -192,7 +188,7 @@ class AccountingOperation extends Model {
 
     public function getIndexes(): array {
         return [
-            ['org_id', 'status'],
+            ['organization_id', 'status'],
             ['journal_id', 'posting_date'],
             ['operation_type', 'status']
         ];
@@ -200,7 +196,7 @@ class AccountingOperation extends Model {
 
     public function getUnique() {
         return [
-            ['org_id', 'journal_id', 'fiscal_year', 'operation_number']
+            ['organization_id', 'journal_id', 'fiscal_year', 'operation_number']
         ];
     }
 
@@ -311,7 +307,7 @@ class AccountingOperation extends Model {
     protected static function calcFiscalYear($self): array {
         $result = [];
 
-        $self->read(['org_id', 'posting_date']);
+        $self->read(['organization_id', 'posting_date']);
         foreach($self as $id => $operation) {
             $default_year = date('Y', $operation['posting_date'] ?? time());
             $result[$id] = (string) Setting::get_value(
@@ -319,7 +315,7 @@ class AccountingOperation extends Model {
                 'accounting',
                 'fiscal_year',
                 $default_year,
-                ['organization_id' => $operation['org_id']]
+                ['organization_id' => $operation['organization_id']]
             );
         }
 
@@ -363,7 +359,7 @@ class AccountingOperation extends Model {
 
         $self->read([
             'description',
-            'org_id',
+            'organization_id',
             'posting_date',
             'journal_id' => ['organization_id'],
             'operation_lines_ids' => [
@@ -379,7 +375,7 @@ class AccountingOperation extends Model {
             if(!$operation['description']) {
                 $errors['missing_description'] = 'Description is required.';
             }
-            if(!$operation['org_id']) {
+            if(!$operation['organization_id']) {
                 $errors['missing_organisation'] = 'Organization is required.';
             }
             if(!$operation['posting_date']) {
@@ -388,7 +384,7 @@ class AccountingOperation extends Model {
             if(!$operation['journal_id']) {
                 $errors['missing_journal'] = 'Accounting journal is required.';
             }
-            elseif($operation['journal_id']['organization_id'] !== $operation['org_id']) {
+            elseif($operation['journal_id']['organization_id'] !== $operation['organization_id']) {
                 $errors['invalid_journal'] = 'Accounting journal belongs to another organization.';
             }
 
@@ -524,7 +520,7 @@ class AccountingOperation extends Model {
     protected static function doAssignOperationNumber($self) {
         $self->read([
             'operation_number',
-            'org_id',
+            'organization_id',
             'fiscal_year',
             'journal_id' => ['code']
         ]);
@@ -539,14 +535,14 @@ class AccountingOperation extends Model {
                 'accounting',
                 'accounting_operation.number_format',
                 '%s{journal}/%02d{year}/%05d{sequence}',
-                ['organization_id' => $operation['org_id']]
+                ['organization_id' => $operation['organization_id']]
             );
             $sequence = Setting::fetch_and_add(
                 'finance',
                 'accounting',
                 'accounting_operation.sequence',
                 1,
-                ['organization_id' => $operation['org_id']]
+                ['organization_id' => $operation['organization_id']]
             );
 
             if(!$sequence) {
@@ -556,7 +552,7 @@ class AccountingOperation extends Model {
             $operation_number = Setting::parse_format($format, [
                 'year'     => $operation['fiscal_year'],
                 'journal'  => $operation['journal_id']['code'],
-                'org'      => $operation['org_id'],
+                'org'      => $operation['organization_id'],
                 'sequence' => $sequence
             ]);
 
@@ -569,7 +565,7 @@ class AccountingOperation extends Model {
             'id',
             'name',
             'operation_type',
-            'org_id',
+            'organization_id',
             'journal_id',
             'operation_lines_ids' => [
                 'description',
@@ -584,7 +580,7 @@ class AccountingOperation extends Model {
             $reversal = self::create([
                     'description'     => 'Reversal of ' . $operation['name'],
                     'operation_type'  => $operation['operation_type'],
-                    'org_id'           => $operation['org_id'],
+                    'organization_id'           => $operation['organization_id'],
                     'journal_id'      => $operation['journal_id'],
                     'posting_date'    => time(),
                     'status'          => 'pending',

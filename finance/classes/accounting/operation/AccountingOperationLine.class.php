@@ -89,7 +89,7 @@ class AccountingOperationLine extends Model {
                 'result_type'    => 'many2one',
                 'foreign_object' => 'identity\Organization',
                 'description'    => 'Organization inherited from the accounting operation.',
-                'relation'       => ['operation_id' => 'org_id'],
+                'relation'       => ['operation_id' => 'organization_id'],
                 'store'          => true,
                 'readonly'       => true
             ],

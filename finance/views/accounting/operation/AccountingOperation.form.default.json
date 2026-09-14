@@ -99,7 +99,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "org_id",
+                                                "value": "organization_id",
                                                 "width": "50%"
                                             },
                                             {
