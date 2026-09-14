@@ -15,7 +15,7 @@ use purchase\supplier\Supplier;
 /**
  * This class is meant to be used as an interface for other entities (organization and partner).
  */
-class Identity extends Model {
+class Identity extends IdentityAbstract {
 
     public static function getName() {
         return "Identity";
@@ -58,35 +58,6 @@ class Identity extends Model {
                 'description'       => 'Type of identity.'
             ],
 
-            'type' => [
-                'type'              => 'computed',
-                'result_type'       => 'string',
-                'store'             => true,
-                'instant'           => true,
-                'readonly'          => true,
-                'description'       => 'Code of the type of identity.',
-                'relation'          => ['type_id' => 'code']
-            ],
-
-            'description' => [
-                'type'              => 'string',
-                'usage'             => 'text/plain',
-                'description'       => 'A short reminder to help user identify the targeted person and its specifics.'
-            ],
-
-            'bank_account_iban' => [
-                'type'              => 'string',
-                'usage'             => 'uri/urn.iban',
-                'description'       => "Number of the bank account of the Identity, if any.",
-                'visible'           => [ ['has_parent', '=', false] ]
-            ],
-
-            'bank_account_bic' => [
-                'type'              => 'string',
-                'description'       => "Identifier of the Bank related to the Identity's bank account, when set.",
-                'visible'           => [ ['has_parent', '=', false] ]
-            ],
-
             'signature' => [
                 'type'              => 'string',
                 'usage'             => 'text/html',
@@ -105,13 +76,6 @@ class Identity extends Model {
                 'onupdate'          => 'onupdateLegalName'
             ],
 
-            'short_name' => [
-                'type'              => 'string',
-                'description'       => 'Usual name to be used as a memo for identifying the organization (acronym or short name).',
-                'visible'           => [ ['type', '<>', 'IN'] ],
-                'dependents'        => ['name']
-            ],
-
             'has_vat' => [
                 'type'              => 'boolean',
                 'description'       => 'Does the organization have a VAT number?',
@@ -125,64 +89,6 @@ class Identity extends Model {
                 'description'       => 'Value Added Tax identification number, if any.',
                 'visible'           => [ ['has_vat', '=', true], ['type', '<>', 'IN'], ['has_parent', '=', false] ],
                 'onupdate'          => 'onupdateVatNumber'
-            ],
-
-            'registration_number' => [
-                'type'              => 'string',
-                'description'       => 'Organization registration number (company number).',
-                'visible'           => [ ['type', '<>', 'IN'] ]
-            ],
-
-            /*
-                Fields specific to citizen: children organizations and parent company, if any
-            */
-            'citizen_identification' => [
-                'type'              => 'string',
-                'description'       => 'Citizen registration number, if any.',
-                'visible'           => [ ['type', '=', 'IN'] ]
-            ],
-
-            'nationality' => [
-                'type'              => 'string',
-                'usage'             => 'country/iso-3166:2',
-                'description'       => 'The country the person is citizen of.',
-                'default'           => 'BE'
-            ],
-
-            /*
-                Relational fields specific to organizations: children organizations and parent company, if any
-            */
-            'children_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'identity\Identity',
-                'foreign_field'     => 'parent_id',
-                'domain'            => [ ['id', '<>', 'object.id'], ['type', '<>', 'IN'] ],
-                'description'       => 'Children departments of the organization, if any.',
-                'visible'           => [ ['type', '<>', 'IN'] ]
-            ],
-
-            'has_parent' => [
-                'type'              => 'boolean',
-                'description'       => 'Does the identity have a parent organization?',
-                'visible'           => [ ['type', '<>', 'IN'] ],
-                'default'           => false
-            ],
-
-            'parent_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'identity\Identity',
-                'domain'            => [ ['id', '<>', 'object.id'], ['type', '<>', 'IN'] ],
-                'description'       => 'Parent company of which the organization is a branch (department), if any.',
-                'visible'           => [ ['has_parent', '=', true] ]
-            ],
-
-            'contacts_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'identity\Contact',
-                'foreign_field'     => 'owner_identity_id',
-                'domain'            => ['partner_identity_id', '<>', 'object.id'],
-                'description'       => 'List of contacts related to the organization, if any.',
-                'help'              => 'A contact is an arbitrary relation between two identities. Any Identity can have several contacts.'
             ],
 
             'users_ids' => [
@@ -237,26 +143,6 @@ class Identity extends Model {
                 'visible'           => ['type', '=', 'IN'],
                 'dependents'        => ['name'],
                 'onupdate'          => 'onupdateLastname'
-            ],
-
-            'gender' => [
-                'type'              => 'string',
-                'selection'         => ['M' => 'Male', 'F' => 'Female', 'X' => 'Non-binary'],
-                'description'       => 'Reference contact gender.',
-                'visible'           => ['type', '=', 'IN']
-            ],
-
-            'title' => [
-                'type'              => 'string',
-                'selection'         => ['Dr' => 'Doctor', 'Ms' => 'Miss', 'Mrs' => 'Misses', 'Mr' => 'Mister', 'Pr' => 'Professor'],
-                'description'       => 'Reference contact title.',
-                'visible'           => ['type', '=', 'IN']
-            ],
-
-            'date_of_birth' => [
-                'type'              => 'date',
-                'description'       => 'Date of birth.',
-                'visible'           => ['type', '=', 'IN']
             ],
 
             'lang_id' => [
@@ -320,12 +206,6 @@ class Identity extends Model {
                 'description'       => "Identity main email address."
             ],
 
-            'email_alt' => [
-                'type'              => 'string',
-                'usage'             => 'email',
-                'description'       => "Identity secondary email address."
-            ],
-
             'phone' => [
                 'type'              => 'string',
                 'usage'             => 'phone',
@@ -333,39 +213,11 @@ class Identity extends Model {
                 'description'       => "Identity secondary phone number (mobile or landline)."
             ],
 
-            'phone_alt' => [
-                'type'              => 'string',
-                'usage'             => 'phone',
-                'description'       => "Identity main phone number (mobile or landline)."
-            ],
-
             'mobile' => [
                 'type'              => 'string',
                 'usage'             => 'phone',
                 'onupdate'          => 'onupdateMobile',
                 'description'       => "Identity mobile phone number."
-            ],
-
-            'fax' => [
-                'type'              => 'string',
-                'usage'             => 'phone',
-                'description'       => "Identity main fax number."
-            ],
-
-            // Companies can also have an official website.
-            'website' => [
-                'type'              => 'string',
-                'usage'             => 'uri/url',
-                'description'       => 'Organization main official website URL, if any.',
-                'visible'           => ['type', '<>', 'IN']
-            ],
-
-            // an identity can have additional addresses
-            'addresses_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'identity\Address',
-                'foreign_field'     => 'identity_id',
-                'description'       => 'List of addresses related to the identity.',
             ],
 
             /*
@@ -441,13 +293,6 @@ class Identity extends Model {
                 'foreign_object' => 'identity\Organization',
                 'description'    => 'The organization the identity refers to.',
                 'onupdate'       => 'onupdateOrganizationId'
-            ],
-
-            'is_active' => [
-                'type'              => 'boolean',
-                'description'       => "Is the identity active?",
-                'help'              => "When an identity is not marked as active, it is no longer displayed amongst the selection choices. However, it is still visible in the list of identities, and its related informations and documents remain available.",
-                'default'           => true
             ]
 
         ];
