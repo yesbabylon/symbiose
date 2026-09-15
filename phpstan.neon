@@ -2,7 +2,6 @@ parameters:
     paths:
         - ../packages/calendar
         - ../packages/communication
-        - ../packages/demo
         - ../packages/documents
         - ../packages/finance
         - ../packages/hr
