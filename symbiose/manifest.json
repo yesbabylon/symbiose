@@ -21,6 +21,9 @@
         "support",
         "timetrack"
     ],
+    "requires": {
+        "phpstan/phpstan": ">=2.1"
+    },
     "config": {
         "ORG_NAME": "Yesbabylon",
         "ORG_URL": "https://symbiose.yesbabylon.com",
