@@ -13,6 +13,7 @@
         - 'Sale Model': 'user-manual/timetrack/time-entry-sale-model.md'
 - 'Developer':
     - 'Packages': 'developer-manual/package-description.md'
+    - 'Identity': 'developer-manual/identity/index.md'
     - 'Finance':
         - 'Summary': 'developer-manual/finance/index.md'
         - 'Classes':
