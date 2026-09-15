@@ -209,134 +209,167 @@
         "data": [
             {
                 "id": 1050,
+                "name": "sale.locale.label_invoice",
                 "value": "Facture"
             },
             {
                 "id": 1051,
+                "name": "sale.locale.label_credit-note",
                 "value": "Note de crédit"
             },
             {
                 "id": 1052,
+                "name": "sale.locale.label_customer-name",
                 "value": "Nom"
             },
             {
                 "id": 1053,
+                "name": "sale.locale.label_customer-address",
                 "value": "Adresse"
             },
             {
                 "id": 1054,
+                "name": "sale.locale.label_registration-number",
                 "value": "N° d'entreprise"
             },
             {
                 "id": 1055,
+                "name": "sale.locale.label_vat-number",
                 "value": "N° de TVA"
             },
             {
                 "id": 1056,
+                "name": "sale.locale.label_number",
                 "value": "N°"
             },
             {
                 "id": 1057,
+                "name": "sale.locale.label_date",
                 "value": "Date"
             },
             {
                 "id": 1058,
+                "name": "sale.locale.label_status",
                 "value": "Status"
             },
             {
                 "id": 1059,
+                "name": "sale.locale.label_status-paid",
                 "value": "Payée"
             },
             {
                 "id": 1060,
+                "name": "sale.locale.label_status-to-pay",
                 "value": "À payer"
             },
             {
                 "id": 1061,
+                "name": "sale.locale.label_status-to-refund",
                 "value": "À rembourser"
             },
             {
                 "id": 1062,
+                "name": "sale.locale.label_product-column",
                 "value": "Libellé produit"
             },
             {
                 "id": 1063,
+                "name": "sale.locale.label_qty-column",
                 "value": "Qté"
             },
             {
                 "id": 1064,
+                "name": "sale.locale.label_free-column",
                 "value": "Gté"
             },
             {
                 "id": 1065,
+                "name": "sale.locale.label_unit-price-column",
                 "value": "Prix unit."
             },
             {
                 "id": 1066,
+                "name": "sale.locale.label_discount-column",
                 "value": "Rem%"
             },
             {
                 "id": 1067,
+                "name": "sale.locale.label_vat-column",
                 "value": "TVA"
             },
             {
                 "id": 1068,
+                "name": "sale.locale.label_taxes-column",
                 "value": "Taxes"
             },
             {
                 "id": 1069,
+                "name": "sale.locale.label_price-ex-vat-column",
                 "value": "Prix HT"
             },
             {
                 "id": 1070,
+                "name": "sale.locale.label_price-column",
                 "value": "Prix"
             },
             {
                 "id": 1071,
+                "name": "sale.locale.label_total-ex-vat",
                 "value": "Total HT"
             },
             {
                 "id": 1072,
+                "name": "sale.locale.label_total-inc-vat",
                 "value": "Total TTC"
             },
             {
                 "id": 1073,
+                "name": "sale.locale.label_footer-registration-number",
                 "value": "Numéro d'entreprise"
             },
             {
                 "id": 1074,
+                "name": "sale.locale.label_footer-iban",
                 "value": "IBAN"
             },
             {
                 "id": 1075,
+                "name": "sale.locale.label_footer-email",
                 "value": "E-mail"
             },
             {
                 "id": 1076,
+                "name": "sale.locale.label_footer-web",
                 "value": "Web"
             },
             {
                 "id": 1077,
+                "name": "sale.locale.label_footer-tel",
                 "value": "Tél"
             },
             {
                 "id": 1078,
+                "name": "sale.locale.label_footer-fax",
                 "value": "Fax"
             },
             {
                 "id": 1079,
+                "name": "sale.locale.label_pdf-page",
                 "value": "p. {PAGE_NUM} / {PAGE_COUNT}"
             },
             {
                 "id": 1080,
+                "name": "sale.locale.label_balance-of-must-be-paid-before",
                 "value": "Le solde de %price% doit être réglé avant le %due_date%"
             },
             {
                 "id": 1081,
+                "name": "sale.locale.label_communication",
                 "value": "Communication"
             },
             {
                 "id": 1082,
+                "name": "sale.locale.label_proforma-notice",
                 "value": "Ceci est une facture PROFORMA, établie pour répondre à une demande de prix exacte. Il s'agit d'un document à usage exclusivement commercial, qui n'a pas de valeur légale et ne doit pas faire l'objet d'un paiement. En cas de prise de service effective, une facture définitive sera établie après la conclusion de la vente."
             }
         ]
@@ -347,130 +380,162 @@
         "data": [
             {
                 "id": 1050,
+                "name": "sale.locale.label_invoice",
                 "value": "Factuur"
             },
             {
                 "id": 1051,
+                "name": "sale.locale.label_credit-note",
                 "value": "Kredietwaardigheid"
             },
             {
                 "id": 1052,
+                "name": "sale.locale.label_customer-name",
                 "value": "Naam"
             },
             {
                 "id": 1053,
+                "name": "sale.locale.label_customer-address",
                 "value": "Adres"
             },
             {
                 "id": 1054,
+                "name": "sale.locale.label_registration-number",
                 "value": "Registratienummer"
             },
             {
                 "id": 1055,
+                "name": "sale.locale.label_vat-number",
                 "value": "BTW n°"
             },
             {
                 "id": 1056,
+                "name": "sale.locale.label_number",
                 "value": "N°"
             },
             {
                 "id": 1057,
+                "name": "sale.locale.label_date",
                 "value": "Datum"
             },
             {
                 "id": 1058,
+                "name": "sale.locale.label_status",
                 "value": "Toestand"
             },
             {
                 "id": 1059,
+                "name": "sale.locale.label_status-paid",
                 "value": "Betaald"
             },
             {
                 "id": 1060,
+                "name": "sale.locale.label_status-to-pay",
                 "value": "Te betalen"
             },
             {
                 "id": 1061,
+                "name": "sale.locale.label_status-to-refund",
                 "value": "Te vergoeden"
             },
             {
                 "id": 1062,
+                "name": "sale.locale.label_product-column",
                 "value": "Etiket"
             },
             {
                 "id": 1063,
+                "name": "sale.locale.label_qty-column",
                 "value": "Hoev."
             },
             {
                 "id": 1064,
+                "name": "sale.locale.label_free-column",
                 "value": "Vrij"
             },
             {
                 "id": 1065,
+                "name": "sale.locale.label_unit-price-column",
                 "value": "Een. prijs"
             },
             {
                 "id": 1066,
+                "name": "sale.locale.label_discount-column",
                 "value": "Afn."
             },
             {
                 "id": 1067,
+                "name": "sale.locale.label_vat-column",
                 "value": "BTW"
             },
             {
                 "id": 1068,
+                "name": "sale.locale.label_taxes-column",
                 "value": "Belasting"
             },
             {
                 "id": 1069,
+                "name": "sale.locale.label_price-ex-vat-column",
                 "value": "Prijs ex. BTW"
             },
             {
                 "id": 1070,
+                "name": "sale.locale.label_price-column",
                 "value": "Prijs"
             },
             {
                 "id": 1071,
+                "name": "sale.locale.label_total-ex-vat",
                 "value": "Totaal ex. BTW"
             },
             {
                 "id": 1072,
+                "name": "sale.locale.label_total-inc-vat",
                 "value": "Totaal incl. BTW"
             },
             {
                 "id": 1073,
+                "name": "sale.locale.label_footer-registration-number",
                 "value": "Registratienummer"
             },
             {
                 "id": 1074,
+                "name": "sale.locale.label_footer-iban",
                 "value": "IBAN"
             },
             {
                 "id": 1075,
+                "name": "sale.locale.label_footer-email",
                 "value": "E-mail"
             },
             {
                 "id": 1076,
+                "name": "sale.locale.label_footer-web",
                 "value": "Web"
             },
             {
                 "id": 1077,
+                "name": "sale.locale.label_footer-tel",
                 "value": "Tel"
             },
             {
                 "id": 1078,
+                "name": "sale.locale.label_footer-fax",
                 "value": "Fax"
             },
             {
                 "id": 1079,
+                "name": "sale.locale.label_pdf-page",
                 "value": "p. {PAGE_NUM} / {PAGE_COUNT}"
             },
             {
                 "id": 1080,
+                "name": "sale.locale.label_balance-of-must-be-paid-before",
                 "value": "Saldo van %price% moet betaald zijn voor %due_date%"
             },
             {
                 "id": 1081,
+                "name": "sale.locale.label_communication",
                 "value": "Communicatie"
             }
         ]
