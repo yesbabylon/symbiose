@@ -12,9 +12,9 @@
             "label": "Type",
             "description": "Type d'organisation.",
             "selection": {
-                "I": "Particulier",
+                "IN": "Particulier",
                 "SE": "Travailleur indépendant",
-                "C": "Entreprise",
+                "CO": "Entreprise",
                 "NP": "Association à but non lucratif",
                 "PA": "Administration publique"
             },
@@ -75,26 +75,6 @@
             "description": "Société mère dont l'organisation est une filiale, le cas échéant.",
             "help": ""
         },
-        "employees_ids": {
-            "label": "Employés",
-            "description": "Liste des employés de l'organisation.",
-            "help": ""
-        },
-        "customers_ids": {
-            "label": "Clients",
-            "description": "Liste des clients de l'organisation.",
-            "help": ""
-        },
-        "providers_ids": {
-            "label": "Fournisseurs",
-            "description": "Liste des prestataires de l'organisation, le cas échéant.",
-            "help": ""
-        },
-        "contacts_ids": {
-            "label": "Contacts",
-            "description": "Liste des contacts liés à l'organisation.",
-            "help": "Liste des contacts liés à l'organisation (pas nécessairement des employés), le cas échéant."
-        },
         "address_street": {
             "label": "Rue",
             "description": "Rue et numéro.",
@@ -145,14 +125,19 @@
             "description": "Liste des adresses liées à l'identité.",
             "help": ""
         },
-        "reference_partner_id": {
+        "reference_identity_id": {
             "label": "Personne de référence",
-            "description": "Contact pouvant représenter légalement l'organisation.",
-            "help": "Contact (personne physique) pouvant représenter légalement l'organisation."
+            "description": "Identité pouvant représenter légalement l'organisation.",
+            "help": "Cette identité doit représenter une personne physique."
         },
         "user_id": {
             "label": "Utilisateur",
             "description": "Utilisateur associé à cette identité.",
+            "help": ""
+        },
+        "organization_id": {
+            "label": "Organisation",
+            "description": "Rôle d'organisation associé à cette identité.",
             "help": ""
         },
         "firstname": {
@@ -237,6 +222,12 @@
         "form.default": {
             "name": "Identité",
             "description": "Formulaire de base pour l'affichage du groupe.",
+            "actions": {
+                "action.sync_roles": {
+                    "label": "Synchroniser les rôles",
+                    "description": "Propager les valeurs canoniques actuelles vers tous les rôles liés."
+                }
+            },
             "layout": {
                 "section.identity_info": {
                     "label": "Infos générales"
@@ -262,6 +253,9 @@
         }
     },
     "error": {
+        "id": {
+            "has_roles": "Une identité possédant encore un rôle actif ne peut pas être supprimée."
+        },
         "firstname": {
             "missing": "Le prénom est obligatoire pour une personne physique.",
             "invalid_chars": "Caractères invalides.",

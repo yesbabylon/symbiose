@@ -1,6 +1,20 @@
 {
     "name": "Identity",
     "description": "An identity is any kind of person: moral (organization) or physical (individual).",
+    "actions": [
+        {
+            "id": "action.sync_roles",
+            "label": "Synchronize roles",
+            "description": "Propagate the current canonical values to every linked role.",
+            "controller": "core_model_do",
+            "params": {
+                "entity": "identity\\Identity",
+                "action": "sync_roles",
+                "ids": []
+            },
+            "visible": ["state", "=", "instance"]
+        }
+    ],
     "layout": {
         "groups": [
             {
@@ -66,13 +80,8 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "is_organisation",
-                                                "visible": false
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "organization_id",
-                                                "visible": false
+                                                "width": "100%"
                                             }
                                         ]
                                     }
@@ -181,12 +190,9 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "reference_partner_id",
+                                                "value": "reference_identity_id",
                                                 "label": "Person of reference",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "domain": ["owner_identity_id", "=", "object.id"]
-                                                }
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
@@ -209,37 +215,25 @@
                                                 "type": "field",
                                                 "label": "Employee",
                                                 "value": "employee_id",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "domain": [ ["partner_identity_id", "=", "object.id"] ]
-                                                }
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Customer",
                                                 "value": "customer_id",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "domain": [ ["partner_identity_id", "=", "object.id"] ]
-                                                }
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Supplier",
                                                 "value": "supplier_id",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "domain": [ ["partner_identity_id", "=", "object.id"] ]
-                                                }
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Contact",
                                                 "value": "contact_id",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "domain": [ ["partner_identity_id", "=", "object.id"] ]
-                                                }
+                                                "width": "100%"
                                             }
                                         ]
                                     }
@@ -343,26 +337,6 @@
                                             {
                                                 "type": "field",
                                                 "value": "addresses_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "label": "Contacts",
-                        "id": "section.identity_contacts",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "contacts_ids",
                                                 "width": "100%"
                                             }
                                         ]

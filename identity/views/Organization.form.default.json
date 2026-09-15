@@ -1,6 +1,20 @@
 {
     "name": "Organization",
     "description": "Form holding basic information about an Organization.",
+    "actions": [
+        {
+            "id": "action.sync_from_identity",
+            "label": "Synchronize from Identity",
+            "description": "Replace the role projection with the current canonical Identity values.",
+            "controller": "core_model_do",
+            "params": {
+                "entity": "identity\\Organization",
+                "action": "sync_from_identity",
+                "ids": []
+            },
+            "visible": ["state", "=", "instance"]
+        }
+    ],
     "layout": {
         "groups": [
             {
@@ -55,11 +69,6 @@
                                             {
                                                 "type": "field",
                                                 "value": "type",
-                                                "visible": false
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "has_parent",
                                                 "visible": false
                                             }
                                         ]

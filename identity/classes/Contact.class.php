@@ -6,11 +6,10 @@
 */
 namespace identity;
 
-class Contact extends Partner {
+class Contact extends IdentityFacet {
 
     public function getTable() {
-        // force table name to use distinct tables and ID columns
-        return 'identity_contact';
+        return self::getSlug();
     }
 
     public static function getName() {
@@ -40,17 +39,8 @@ class Contact extends Partner {
         ];
     }
 
-    public static function onafterupdate($self, $values) {
-        parent::onafterupdate($self, $values);
-
-        // If to make sale\customer\Contact work
-        if(get_called_class() === self::class) {
-            $self->read(['partner_identity_id' => ['id', 'contact_id']]);
-            foreach($self as $id => $contact) {
-                if(is_null($contact['partner_identity_id']['contact_id'])) {
-                    Identity::id($contact['partner_identity_id']['id'])->update(['contact_id' => $id]);
-                }
-            }
-        }
+    public function getUniques(): array {
+        return [['identity_id']];
     }
+
 }

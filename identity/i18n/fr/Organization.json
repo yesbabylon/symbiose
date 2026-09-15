@@ -3,6 +3,11 @@
     "plural": "Organisations",
     "description": "Une organisation correspond à une des entités légales utilisant le logiciel.",
     "model": {
+        "identity_id": {
+            "label": "Identité canonique",
+            "description": "Identité canonique représentée par ce rôle d'organisation.",
+            "help": "Une identité ne peut posséder qu'un seul rôle d'organisation."
+        },
         "image_document_id": {
             "label": "Image ou Logo",
             "description": "Image de l'organisation affiché dans les en-têtes officiels.",
@@ -13,6 +18,12 @@
         "form.default": {
             "name": "Organisation",
             "description": "Formulaire de base pour l'affichage d'une organisation'.",
+            "actions": {
+                "action.sync_from_identity": {
+                    "label": "Synchroniser depuis l'identité",
+                    "description": "Remplacer la projection locale par les valeurs actuelles de l'identité canonique."
+                }
+            },
             "layout": {
                 "section.identity_info": {
                     "label": "Infos générales"
@@ -35,8 +46,8 @@
             }
         },
         "list.default": {
-            "name": "Liste d'Identité",
-            "description": "Liste de base des identités existantes.",
+            "name": "Liste des organisations",
+            "description": "Liste des rôles d'organisation et de leur identité canonique.",
             "layout": {}
         }
     },

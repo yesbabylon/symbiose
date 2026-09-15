@@ -9,7 +9,9 @@
                 "legal_name": "Your company name Inc.",
                 "short_name": "Your company",
                 "has_parent": false,
-                "is_organisation": true,
+                "registration_number": "0123231324",
+                "bank_account_iban": "BE11222233335555",
+                "bank_account_bic": "BBRUBEBB",
                 "organization_id": 1
             },
             {

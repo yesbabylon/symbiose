@@ -5,12 +5,12 @@
         "data": [
             {
                 "id": 1,
+                "name": "Your company name Inc.",
                 "type_id": 3,
-                "type": "C",
+                "type": "CO",
                 "identity_id": 1,
-                "legal_name": "Your organization name Inc.",
-                "short_name": "Your organization",
-                "has_parent": false,
+                "legal_name": "Your company name Inc.",
+                "short_name": "Your company",
                 "registration_number": "0123231324",
                 "bank_account_iban": "BE11222233335555",
                 "bank_account_bic": "BBRUBEBB"

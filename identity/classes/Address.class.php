@@ -33,6 +33,19 @@ class Address extends Model {
                 'description'       => 'The display name of the address.'
             ],
 
+            'owner_identity_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\Identity',
+                'description'       => 'The identity that the address relates to.'
+            ],
+
+            'is_primary' => [
+                'type'              => 'boolean',
+                'description'       => 'Flag marking the account as primary account.',
+                'help'              => 'When a primary address is updated, sync is automatically replicated on related identity.',
+                'default'           => false
+            ],
+
             'identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',

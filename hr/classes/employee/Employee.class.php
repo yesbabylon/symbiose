@@ -6,13 +6,12 @@
 */
 namespace hr\employee;
 
-use identity\Identity;
-use identity\Partner;
+use identity\IdentityFacet;
 
-class Employee extends Partner {
+class Employee extends IdentityFacet {
 
     public function getTable() {
-        return 'hr_employee_employee';
+        return self::getSlug();
     }
 
     public static function getName() {
@@ -52,12 +51,6 @@ class Employee extends Partner {
                 'help'              => 'Date at which the contract ends (known in advance for fixed-term or unknown for permanent).'
             ],
 
-            'is_active' => [
-                'type'              => 'boolean',
-                'description'       => 'Marks the employee as currently active within the organisation.',
-                'default'           => true
-            ],
-
             'absences_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'hr\absence\Absence',
@@ -68,21 +61,7 @@ class Employee extends Partner {
         ];
     }
 
-    public function getUnique() {
-        return [
-            ['owner_identity_id', 'partner_identity_id', 'role_id']
-        ];
+    public function getUniques(): array {
+        return [['identity_id']];
     }
-
-    public static function onafterupdate($self, $values) {
-        parent::onafterupdate($self, $values);
-
-        $self->read(['partner_identity_id' => ['id', 'employee_id']]);
-        foreach($self as $id => $employee) {
-            if(isset($employee['partner_identity_id']['id']) && is_null($employee['partner_identity_id']['employee_id'])) {
-                Identity::id($employee['partner_identity_id']['id'])->update(['employee_id' => $id]);
-            }
-        }
-    }
-
 }

@@ -6,12 +6,12 @@
 */
 namespace sale\customer;
 
-use identity\Identity;
+use identity\IdentityFacet;
 
-class Customer extends \identity\Partner {
+class Customer extends IdentityFacet {
 
     public function getTable() {
-        return 'sale_customer_customer';
+        return self::getSlug();
     }
 
     public static function getName() {
@@ -55,13 +55,6 @@ class Customer extends \identity\Partner {
                 'type'              => 'string',
                 'default'           => 'customer',
                 'description'       => 'Force relationship to Customer'
-            ],
-
-            'address' => [
-                'type'              => 'computed',
-                'result_type'       => 'string',
-                'function'          => 'calcAddress',
-                'description'       => 'Main address from related Identity.'
             ],
 
             'ref_account' => [
@@ -166,7 +159,11 @@ class Customer extends \identity\Partner {
         ];
     }
 
-    public static function onupdateCustomerNatureId($self) {
+    public function getUniques(): array {
+        return [['identity_id']];
+    }
+
+    protected static function onupdateCustomerNatureId($self) {
         $self->read(['customer_nature_id' => ['rate_class_id', 'customer_type_id']]);
         foreach($self as $id => $customer) {
             if($customer['customer_nature_id']) {
@@ -178,49 +175,12 @@ class Customer extends \identity\Partner {
         }
     }
 
-    public static function calcAddress($self) {
-        $result = [];
-        $self->read(['address_street', 'address_city']);
-        foreach($self as $id => $customer) {
-            $result[$id] = "{$customer['address_street']} {$customer['address_city']}";
-        }
-        return $result;
-    }
-
-    public static function onupdateCustomerTypeId($self) {
+    protected static function onupdateCustomerTypeId($self) {
         $self->read(['customer_type_id']);
 
         foreach($self as $id => $customer) {
             // #memo - there is a strict equivalence between identity type and customer type (the only distinction is in the presentation)
             self::id($id)->update(['type_id' => $customer['customer_type_id']]);
-        }
-    }
-
-    public static function onupdateLangId($self) {
-        Identity::onupdateLangId($self);
-    }
-
-    public static function onupdateEmail($self) {
-        Identity::onupdateEmail($self);
-    }
-
-    public static function onupdatePhone($self) {
-        Identity::onupdatePhone($self);
-    }
-
-    public static function onupdateMobile($self) {
-        Identity::onupdateMobile($self);
-    }
-
-    public static function onafterupdate($self, $values) {
-        // this must be done after general sync (which creates an Identity if necessary, and prevents updating the `customer_id` of the target Identity)
-        parent::onafterupdate($self, $values);
-
-        $self->read(['partner_identity_id' => ['id', 'customer_id']]);
-        foreach($self as $id => $customer) {
-            if($customer['partner_identity_id']['customer_id'] != $id) {
-                Identity::id($customer['partner_identity_id']['id'])->update(['customer_id' => $id]);
-            }
         }
     }
 

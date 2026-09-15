@@ -1,198 +1,271 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2026
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace identity;
 
-use equal\orm\Model;
-use hr\employee\Employee;
-use sale\customer\Customer;
-use sale\customer\Contact as CustomerContact;
-use purchase\supplier\Supplier;
+use finance\bank\BankAccount;
 
 /**
- * This class is meant to be used as an interface for other entities (organization and partner).
+ * Canonical representation of a natural or legal person.
+ *
+ * Role objects keep local projections of common fields, but Identity remains the
+ * source of truth and owns every explicit role backlink.
  */
 class Identity extends IdentityAbstract {
 
     public static function getName() {
-        return "Identity";
+        return 'Identity';
     }
 
     public static function getDescription() {
-        return "An Identity is either a legal or natural person: organizations are legal persons and users, contacts and employees are natural persons. An identity might have several partners of various kind (contact, employee, provider, customer, ...).";
+        return 'Canonical identity of a natural or legal person, independently of its business roles.';
     }
 
     public static function getColumns() {
         return [
-
             'name' => [
-                'type'              => 'computed',
-                'result_type'       => 'string',
-                'function'          => 'calcName',
-                'store'             => true,
-                'instant'           => true,
-                'dependents'        => [
-                    'user_id'             => 'name',
-                    'contact_id'          => 'name',
-                    'customer_contact_id' => 'name',
-                    'employee_id'         => 'name',
-                    'customer_id'         => 'name',
-                    'supplier_id'         => 'name'
-                ],
-                'description'       => 'The display name of the identity.',
-                'help'              => "The display name is a computed field that returns a concatenated string containing either the firstname+lastname, or the legal name of the Identity, based on the kind of Identity.\n
-                    For instance, 'name', for a company with \"My Company\" as legal name will return \"My Company\". \n
-                    Whereas, for an individual having \"John\" as firstname and \"Smith\" as lastname, it will return \"John Smith\"."
+                'type'        => 'computed',
+                'result_type' => 'string',
+                'function'    => 'calcName',
+                'store'       => true,
+                'instant'     => true,
+                'description' => 'The display name of the identity.'
+            ],
+
+            'hash_sha256' => [
+                'type'        => 'string',
+                'usage'       => 'text/plain:64',
+                'description' => 'SHA256 hash of the identity.',
+                'readonly'    => true
+            ],
+
+            'identity_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\Identity',
+                'description'       => 'Identity the object relates to.',
+                'help'              => 'Identity objects do not have a identity_id backlink.
+                    Therefore it is forced to be left to null using `required`.',
+                'readonly'          => true
+            ],
+
+            'identity_slug' => [
+                'type'        => 'string',
+                'description' => 'Slug for helping identify duplicates.',
+                'help'        => '{type-legal_name-zip-country}'
+            ],
+
+            'slug_hash' => [
+                'type'        => 'string',
+                'usage'       => 'text/plain:32',
+                'description' => 'Hash of the identity slug.'
             ],
 
             'type_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'identity\IdentityType',
-                // default is 'IN' individual
-                'default'           => 1,
-                'dependents  '      => ['type', 'name'],
-                'description'       => 'Type of identity.'
-            ],
-
-            'signature' => [
-                'type'              => 'string',
-                'usage'             => 'text/html',
-                'description'       => 'Identity signature to append to communications.',
-                'multilang'         => true
-            ],
-
-            /*
-                Fields specific to organizations
-            */
-            'users_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'identity\User',
-                'foreign_field'     => 'owner_identity_id',
-                'description'       => 'List of users of the identity, if any.' ,
-                'visible'           => [ ['type', '<>', 'IN'] ]
-            ],
-
-            'employees_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'hr\employee\Employee',
-                'foreign_field'     => 'owner_identity_id',
-                'description'       => 'List of employees of the organization, if any.' ,
-                'visible'           => [ ['type', '<>', 'IN'] ]
-            ],
-
-            'customers_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'sale\customer\Customer',
-                'foreign_field'     => 'owner_identity_id',
-                'domain'            => ['relationship', '=', 'customer'],
-                'description'       => 'List of customers of the organization, if any.',
-                'visible'           => [ ['type', '<>', 'IN'] ]
-            ],
-
-            'suppliers_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'purchase\supplier\Supplier',
-                'foreign_field'     => 'owner_identity_id',
-                'description'       => 'List of suppliers of the organization, if any.',
-                'visible'           => [ ['type', '<>', 'IN'] ]
-            ],
-
-
-            /*
-                For organizations, there might be a reference person: a person who is entitled to legally represent the organization (typically the director, the manager, the CEO, ...).
-                These contact details are commonly requested by service providers for validating the identity of an organization.
-            */
-
-            'user_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'identity\User',
-                'description'       => 'User associated to this identity, if any.',
-                'visible'           => [['type', '=', 'IN']],
-                'onupdate'          => 'onupdateUserId'
-            ],
-
-            'customer_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\customer\Customer',
-                'foreign_field'     => 'partner_identity_id',
-                'description'       => 'Customer associated to this identity, if any.',
-                'onupdate'          => 'onupdateCustomerId'
-            ],
-
-            'supplier_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'purchase\supplier\Supplier',
-                'foreign_field'     => 'partner_identity_id',
-                'description'       => 'Supplier associated to this identity, if any.',
-                'onupdate'          => 'onupdateSupplierId'
-            ],
-
-            'contact_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'identity\Contact',
-                'foreign_field'     => 'partner_identity_id',
-                'description'       => 'Contact associated to this identity, if any.',
-                'onupdate'          => 'onupdateContactId'
-            ],
-
-            'customer_contact_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\customer\Contact',
-                'foreign_field'     => 'partner_identity_id',
-                'description'       => 'Customer contact associated to this identity, if any.',
-                'onupdate'          => 'onupdateCustomerContactId'
-            ],
-
-            'employee_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'hr\employee\Employee',
-                'foreign_field'     => 'partner_identity_id',
-                'description'       => 'Employee associated to this identity, if any.',
-                'onupdate'          => 'onupdateEmployeeId'
-            ],
-
-            'image_document_id' => [
                 'type'           => 'many2one',
-                'foreign_object' => 'documents\Document',
-                'description'    => 'Logo or picture of the identity.',
-                'help'           => 'Company logo for organizations or profile image for natural person.'
+                'foreign_object' => 'identity\IdentityType',
+                'default'        => 1,
+                'dependents'     => ['type', 'name', 'identity_slug', 'slug_hash'],
+                'description'    => 'Type of identity.'
+            ],
+
+            'children_ids' => [
+                'type'           => 'one2many',
+                'foreign_object' => 'identity\Identity',
+                'foreign_field'  => 'parent_id',
+                'domain'         => [['id', '<>', 'object.id'], ['type', '<>', 'IN']],
+                'description'    => 'Children departments of the organization, if any.',
+                'visible'       => [['type', '<>', 'IN']]
+            ],
+
+            'has_parent' => [
+                'type'        => 'boolean',
+                'description' => 'Does the identity have a parent organization?',
+                'visible'    => [['type', '<>', 'IN']],
+                'default'     => false
+            ],
+
+            'parent_id' => [
+                'type'           => 'many2one',
+                'foreign_object' => 'identity\Identity',
+                'domain'         => [['id', '<>', 'object.id'], ['type', '<>', 'IN']],
+                'description'    => 'Parent company of which the organization is a branch, if any.',
+                'visible'       => [['has_parent', '=', true]]
+            ],
+
+            'address_hash' => [
+                'type'        => 'string',
+                'usage'       => 'text/plain:32',
+                'description' => 'Hash of the normalized main address.'
+            ],
+
+            'addresses_ids' => [
+                'type'           => 'one2many',
+                'foreign_object' => 'identity\Address',
+                'foreign_field'  => 'identity_id',
+                'description'    => 'Additional addresses related to the identity.'
+            ],
+
+            'reference_identity_id' => [
+                'type'           => 'many2one',
+                'foreign_object' => 'identity\Identity',
+                'description'    => 'Natural person entitled to represent the identity.',
+                'visible'       => [['type', '<>', 'IN'], ['type', '<>', 'SE']]
+            ],
+
+            // Compatibility link: User is not an Identity role and receives a limited field projection.
+            'user_id' => [
+                'type'           => 'many2one',
+                'foreign_object' => 'identity\User',
+                'description'    => 'User associated with this identity, if any.',
+                'visible'       => [['type', '=', 'IN']]
             ],
 
             'organization_id' => [
                 'type'           => 'many2one',
                 'foreign_object' => 'identity\Organization',
-                'description'    => 'The organization the identity refers to.',
-                'onupdate'       => 'onupdateOrganizationId'
-            ]
+                'description'    => 'Organization role associated with this identity, if any.'
+            ],
 
+            'contact_id' => [
+                'type'           => 'many2one',
+                'foreign_object' => 'identity\Contact',
+                'description'    => 'Contact role associated with this identity, if any.'
+            ],
+
+            'customer_contact_id' => [
+                'type'           => 'many2one',
+                'foreign_object' => 'sale\customer\Contact',
+                'description'    => 'Legacy customer contact associated with this identity, if any.'
+            ],
+
+            'employee_id' => [
+                'type'           => 'many2one',
+                'foreign_object' => 'hr\employee\Employee',
+                'description'    => 'Employee role associated with this identity, if any.'
+            ],
+
+            'customer_id' => [
+                'type'           => 'many2one',
+                'foreign_object' => 'sale\customer\Customer',
+                'description'    => 'Customer role associated with this identity, if any.'
+            ],
+
+            'supplier_id' => [
+                'type'           => 'many2one',
+                'foreign_object' => 'purchase\supplier\Supplier',
+                'description'    => 'Supplier role associated with this identity, if any.'
+            ]
         ];
     }
 
+    public static function getActions() {
+        return [
+            'refresh_bank_accounts' => [
+                'description'   => 'Force sync between Identity main bank account and additional ones.',
+                'function'      => 'doRefreshBankAccounts'
+            ],
+            'refresh_addresses' => [
+                'description'   => 'Force sync between Identity main bank account and additional ones.',
+                'function'      => 'doRefreshAddresses'
+            ]
+        ];
+    }
+
+    // #memo - this is also done in onafterupdate handler
+    protected static function doRefreshBankAccounts($self) {
+        $self->read(['bank_account_iban', 'bank_account_bic', 'bank_name', 'bank_country', 'supplier_id']);
+
+        foreach($self as $id => $identity) {
+            if(!$identity['bank_account_iban'] || strlen($identity['bank_account_iban']) <= 0) {
+                continue;
+            }
+            $mainBankAccount = BankAccount::search([
+                    ['owner_identity_id', '=', $id],
+                    ['bank_account_iban', '=', $identity['bank_account_iban']]
+                ])
+                ->read(['is_primary', 'supplier_id'])
+                ->first();
+
+            if(!$mainBankAccount) {
+                BankAccount::create([
+                    'owner_identity_id' => $id,
+                    'is_primary'        => true,
+                    'bank_account_iban' => $identity['bank_account_iban'],
+                    'bank_account_bic'  => $identity['bank_account_bic'],
+                    'bank_name'         => $identity['bank_name'],
+                    'bank_country'      => $identity['bank_country'],
+                    'supplier_id'       => $identity['supplier_id']
+                ]);
+            }
+            else {
+                if(!$mainBankAccount['is_primary']) {
+                    BankAccount::search([['owner_identity_id', '=', $id]])
+                        ->update(['is_primary' => false]);
+
+                    BankAccount::id($mainBankAccount['id'])
+                        ->update([
+                            'is_primary'    => true,
+                            'supplier_id'   => $identity['supplier_id']
+                        ]);
+                }
+                elseif($identity['supplier_id'] && $mainBankAccount['supplier_id'] !== $identity['supplier_id']) {
+                    BankAccount::id($mainBankAccount['id'])
+                        ->update(['supplier_id' => $identity['supplier_id']]);
+                }
+            }
+        }
+    }
+
+    // #memo - this is also done in onafterupdate handler
+    protected static function doRefreshAddresses($self) {
+        // sync primary address
+        $self->read(['identity_id', 'address_street', 'address_dispatch', 'address_zip', 'address_city', 'address_state', 'address_country']);
+
+        foreach($self as $id => $identity) {
+            if(!$identity['address_street'] || strlen($identity['address_street']) <= 0) {
+                continue;
+            }
+            $identity_id = $identity['identity_id'] ?? $id;
+            $mainAddress = Address::search([['owner_identity_id', '=', $identity_id], ['is_primary', '=', true]])->first();
+            if(!$mainAddress) {
+                $mainAddress = Address::create([
+                    'owner_identity_id' => $identity_id,
+                    'is_primary'        => true,
+                    'address_street'    => $identity['address_street'],
+                    'address_dispatch'  => $identity['address_dispatch'],
+                    'address_zip'       => $identity['address_zip'],
+                    'address_city'      => $identity['address_city'],
+                    'address_state'     => $identity['address_state'],
+                    'address_country'   => $identity['address_country']
+                ]);
+            }
+        }
+    }
+
     /**
-     * For organizations the name is the legal name.
-     * For individuals, the name is the concatenation of first and last names.
+     * For organizations the name is the legal name; for individuals it is firstname + lastname.
      */
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['type', 'firstname', 'lastname', 'legal_name', 'short_name']);
         foreach($self as $id => $identity) {
             $parts = [];
             if($identity['type'] == 'IN') {
-                if(isset($identity['firstname']) && strlen($identity['firstname'])) {
+                if(!empty($identity['firstname'])) {
                     $parts[] = ucfirst($identity['firstname']);
                 }
-                if(isset($identity['lastname']) && strlen($identity['lastname']) ) {
+                if(!empty($identity['lastname'])) {
                     $parts[] = mb_strtoupper($identity['lastname']);
                 }
             }
-            if(empty($parts) ) {
-                if(isset($identity['legal_name']) && strlen($identity['legal_name'])) {
+            if(!$parts) {
+                if(!empty($identity['legal_name'])) {
                     $parts[] = $identity['legal_name'];
                 }
-                elseif(isset($identity['short_name']) && strlen($identity['short_name'])) {
+                elseif(!empty($identity['short_name'])) {
                     $parts[] = $identity['short_name'];
                 }
             }
@@ -201,73 +274,62 @@ class Identity extends IdentityAbstract {
         return $result;
     }
 
-    public static function onupdateUserId($self) {
-        $self->read(['user_id']);
-        foreach($self as $id => $identity) {
-            User::id($identity['user_id'])->update(['identity_id' => $id]);
-        }
-    }
 
-    public static function onupdateContactId($self) {
-        $self->read(['contact_id']);
-        foreach($self as $id => $identity) {
-            Contact::id($identity['contact_id'])->update(['partner_identity_id' => $id]);
-        }
-    }
+    protected static function onafterupdate($self, $values, $orm) {
+        $updated_values = self::computeCommonIdentityValues($values);
 
-    public static function onupdateCustomerContactId($self) {
-        $self->read(['customer_contact_id']);
-        foreach($self as $id => $identity) {
-            CustomerContact::id($identity['customer_contact_id'])->update(['partner_identity_id' => $id]);
-        }
-    }
+        $fields = array_keys($updated_values);
+        $sync_user = array_intersect(['firstname', 'lastname', 'lang_id', 'user_id'], array_keys($values));
 
-    public static function onupdateEmployeeId($self) {
-        $self->read(['employee_id']);
-        foreach($self as $id => $identity) {
-            Employee::id($identity['employee_id'])->update(['partner_identity_id' => $id]);
-        }
-    }
-
-    public static function onupdateSupplierId($self) {
-        $self->read(['supplier_id']);
-        foreach($self as $id => $identity) {
-            Supplier::id($identity['supplier_id'])->update(['partner_identity_id' => $id]);
-        }
-    }
-
-    public static function onupdateCustomerId($self) {
-        $self->read(['customer_id']);
-        foreach($self as $id => $identity) {
-            Customer::id($identity['customer_id'])->update(['partner_identity_id' => $id]);
-        }
-    }
-
-    public static function onupdateOrganizationId($self) {
-        $self->read(['organization_id']);
-        foreach($self as $id => $identity) {
-            Organization::id($identity['organization_id'])->update(['identity_id' => $id]);
-        }
-    }
-
-    /**
-     * When a reference partner is given, add it to the identity's contacts, if not already present
-     */
-    public static function onupdateReferencePartnerId($self) {
-        $self->read(['reference_partner_id', 'reference_partner_id' => 'partner_identity_id', 'contacts_ids' => 'partner_identity_id']);
-        foreach($self as $id => $identity) {
-            $contacts_ids = [];
-            if($identity['contacts_ids'] && count($identity['contacts_ids'])) {
-                $contacts_ids = $identity['contacts_ids']->get(true);
-            }
-            if(!in_array($identity['reference_partner_id']['partner_identity_id'], array_map( function($a) { return $a['partner_identity_id']; }, $contacts_ids))) {
-                // create a contact with the customer as 'booking' contact
-                Contact::create([
-                        'owner_identity_id'     => $id,
-                        'partner_identity_id'   => $identity['reference_partner_id']['partner_identity_id']
-                    ]);
+        $self->read(array_merge(['user_id'], array_keys(self::MAP_FIELDS_FACETS)));
+        try {
+            $events = $orm->disableEvents();
+            foreach($self as $id => $identity) {
+                foreach(self::MAP_FIELDS_FACETS as $facet_field => $descriptor) {
+                    if(!($identity[$facet_field] ?? null)) {
+                        continue;
+                    }
+                    $identityFacet = $descriptor['class']::id($identity[$facet_field])->read($fields)->first();
+                    $map = [];
+                    foreach($updated_values as $field => $value) {
+                        if($value !== ($identityFacet[$field] ?? null)) {
+                            $map[$field] = $value;
+                        }
+                    }
+                    // propagate update to facet class
+                    $descriptor['class']::id($identity[$facet_field])->update($map);
+                    // update backlink if required
+                    if(isset($values[$facet_field])) {
+                        $descriptor['class']::id($identity[$facet_field])->update(['identity_id' => $id]);
+                        if(is_subclass_of($descriptor['class'], IdentityFacet::class)) {
+                            $descriptor['class']::id($identity[$facet_field])->do('sync_from_identity');
+                        }
+                    }
+                }
+                if($sync_user && ($identity['user_id'] ?? null)) {
+                    if(array_key_exists('user_id', $values)) {
+                        User::id($identity['user_id'])->update(['identity_id' => $id]);
+                    }
+                    User::id($identity['user_id'])->do('sync_from_identity');
+                }
             }
         }
+        finally {
+            $orm->enableEvents($events);
+        }
+    }
+
+    public static function candelete($self, $values) {
+        $backlinks = array_merge(['user_id'], array_keys(self::MAP_FIELDS_FACETS));
+        $self->read($backlinks);
+        foreach($self as $identity) {
+            foreach($backlinks as $backlink) {
+                if(!empty($identity[$backlink])) {
+                    return ['id' => ['has_roles' => 'An Identity with an active role cannot be deleted.']];
+                }
+            }
+        }
+        return parent::candelete($self, $values);
     }
 
     /**
@@ -291,7 +353,7 @@ class Identity extends IdentityAbstract {
         }
 
         if(isset($event['address_zip']) && isset($values['address_country'])) {
-            $list = self::getCitiesByZip($event['address_zip'], $values['address_country'], $lang);
+            $list = self::computeCitiesByZip($event['address_zip'], $values['address_country'], $lang);
             if($list) {
                 $result['address_city'] = [
                     'value' => '',
@@ -300,35 +362,73 @@ class Identity extends IdentityAbstract {
             }
         }
 
+        if(isset($event['citizen_identification'])) {
+            // remove spacing chars
+            $result['citizen_identification'] = preg_replace('/[^0-9]/i', '', $event['citizen_identification']);
+        }
+
+        if(isset($event['vat_number'])) {
+            // remove spacing chars
+            $result['vat_number'] = preg_replace('/[^A-Z0-9]/i', '', $event['vat_number']);
+        }
+
+        if(isset($event['has_vat']) && $event['has_vat']) {
+            if(isset($values['address_country'], $values['registration_number']) && $values['address_country'] === 'BE') {
+                $result['vat_number'] = 'BE' . $values['registration_number'];
+            }
+        }
+
+        if(isset($event['registration_number'])) {
+            // remove spacing chars
+            $result['registration_number'] = preg_replace('/[^0-9]/i', '', $event['registration_number']);
+        }
+
+        if(isset($event['bank_account_iban'])) {
+            // remove spacing chars
+            $result['bank_account_iban'] = preg_replace('/[^A-Z0-9]/i', '', $event['bank_account_iban']);
+            $bank_info = self::computeBankFromIban($result['bank_account_iban']);
+            if($bank_info) {
+                $result['bank_account_bic'] = $bank_info['bic'];
+            }
+        }
+
+        if(isset($event['phone'])) {
+            $result['phone'] = preg_replace('/[^\d+]/', '', $event['phone']);
+        }
+
+        if(isset($event['phone_alt'])) {
+            $result['phone_alt'] = preg_replace('/[^\d+]/', '', $event['phone_alt']);
+        }
+
+        if(isset($event['mobile'])) {
+            $result['mobile'] = preg_replace('/[^\d+]/', '', $event['mobile']);
+        }
+
+        if(isset($event['email'])) {
+            $result['email'] = trim($event['email']);
+        }
+
         return $result;
     }
 
-    /**
-     * Returns cities' names based on a zip code and a country.
-     */
     private static function getCitiesByZip($zip, $country, $lang) {
         $result = null;
-
         $file = EQ_BASEDIR."/packages/identity/i18n/{$lang}/zipcodes/{$country}.json";
         if(file_exists($file)) {
-            $data = file_get_contents($file);
-            $map_zip = json_decode($data, true);
+            $map_zip = json_decode(file_get_contents($file), true);
             if(isset($map_zip[$zip])) {
                 $result = $map_zip[$zip];
             }
         }
-        // fallback to english value, if defined
         if(!$result) {
             $file = EQ_BASEDIR."/packages/identity/i18n/en/zipcodes/{$country}.json";
             if(file_exists($file)) {
-                $data = file_get_contents($file);
-                $map_zip = json_decode($data, true);
+                $map_zip = json_decode(file_get_contents($file), true);
                 if(isset($map_zip[$zip])) {
                     $result = $map_zip[$zip];
                 }
             }
         }
-
         return $result;
     }
 
@@ -344,9 +444,17 @@ class Identity extends IdentityAbstract {
      */
     public static function canupdate($om, $ids, $values, $lang='en') {
         if(isset($values['type_id'])) {
-            $identities = $om->read(get_called_class(), $ids, [ 'firstname', 'lastname', 'legal_name' ], $lang);
+            $identities = $om->read(Identity::getType(), $ids, [ 'type', 'firstname', 'lastname', 'legal_name', 'registration_number' ], $lang);
             foreach($identities as $id => $identity) {
-                if($values['type_id'] == 1) {
+                // if type == 'CO' then registration_number is mandatory
+                $type = $values['type'] ?? $identity['type'];
+                if($type === 'CO') {
+                    $registration_number = $values['registration_number'] ?? $identity['registration_number'];
+                    if(!$registration_number || strlen($registration_number) <= 0) {
+                        return ['registration_number' => ['missing_registration_number' => 'Registration number is mandatory for companies.']];
+                    }
+                }
+                elseif($type === 'IN') {
                     $firstname = '';
                     $lastname = '';
                     if(isset($values['firstname'])) {
@@ -384,91 +492,5 @@ class Identity extends IdentityAbstract {
             }
         }
         return parent::canupdate($om, $ids, $values, $lang);
-    }
-
-    public static function getConstraints() {
-        return [
-            'legal_name' =>  [
-                'too_short' => [
-                    'message'       => 'Legal name must be minimum 2 chars long.',
-                    'function'      => function ($legal_name, $values) {
-                        return !( strlen($legal_name) < 2 && isset($values['type_id']) && $values['type_id'] != 1 );
-                    }
-                ],
-                'too_long' => [
-                    'message'       => 'Legal name must be maximum 80 chars long.',
-                    'function'      => function ($legal_name, $values) {
-                        return !( strlen($legal_name) > 80 && isset($values['type_id']) && $values['type_id'] != 1 );
-                    }
-                ],
-                'invalid_chars' => [
-                    'message'       => 'Legal name must contain only naming glyphs.',
-                    'function'      => function ($legal_name, $values) {
-                        if( isset($values['type_id']) && $values['type_id'] == 1 ) {
-                            return true;
-                        }
-                        // authorized : a-z, 0-9, '/', '-', ',', '.', ''', '&'
-                        return (bool) (preg_match('/^[\w\'\-,.&][^_!¡?÷?¿\\+=@#$%ˆ*{}|~<>;:[\]]{1,}$/u', $legal_name));
-                    }
-                ]
-            ],
-            'firstname' =>  [
-                'too_short' => [
-                    'message'       => 'Firstname must be 2 chars long at minimum.',
-                    'function'      => function ($firstname, $values) {
-                        return !( strlen($firstname) < 2 && isset($values['type_id']) && $values['type_id'] == 1 );
-                    }
-                ],
-                'invalid_chars' => [
-                    'message'       => 'Firstname must contain only naming glyphs.',
-                    'function'      => function ($firstname, $values) {
-                        if( isset($values['type_id']) && $values['type_id'] != 1 ) {
-                            return true;
-                        }
-                        return (bool) (preg_match('/^[\w\'\-,.][^0-9_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$/u', $firstname));
-                    }
-                ]
-            ],
-            'lastname' =>  [
-                'too_short' => [
-                    'message'       => 'Lastname must be 2 chars long at minimum.',
-                    'function'      => function ($lastname, $values) {
-                        return !( strlen($lastname) < 2 && isset($values['type_id']) && $values['type_id'] == 1 );
-                    }
-                ],
-                'invalid_chars' => [
-                    'message'       => 'Lastname must contain only naming glyphs.',
-                    'function'      => function ($lastname, $values) {
-                        if( isset($values['type_id']) && $values['type_id'] != 1 ) {
-                            return true;
-                        }
-                        return (bool) (preg_match('/^[\w\'\-,.][^0-9_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$/u', $lastname));
-                    }
-                ]
-            ]
-        ];
-    }
-
-    public static function onupdateIsOrganisation($self) {
-        $self->read(['is_organisation']);
-        foreach($self as $id => $organization) {
-            if(!$organization['is_organisation']) {
-                self::id($id)->update(['organization_id' => null]);
-            }
-        }
-    }
-
-    /**
-     * Upon update, if an Identity relates to an Organization, synchronize common fields with related Organization
-     */
-    public static function onafterupdate($self, $values, $orm) {
-        $organization_fields = $orm->getModel(Organization::getType())->getSchema();
-        $self->read(['is_organisation', 'organization_id']);
-        $organization_values = array_intersect_key($values, $organization_fields);
-        foreach($self as $id => $identity) {
-            if($identity['is_organisation']) {
-                Organization::id($identity['organization_id'])->update($organization_values);
-            }
-        }
     }
 }
