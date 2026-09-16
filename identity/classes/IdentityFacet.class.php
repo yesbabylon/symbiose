@@ -40,6 +40,11 @@ abstract class IdentityFacet extends IdentityAbstract {
                 'description' => 'Replace all common role values with the canonical Identity values.',
                 'policies'    => [],
                 'function'    => 'doSyncFromIdentity'
+            ],
+            'sync_identity_link' => [
+                'description' => 'Align the Identity backlinks with the role Identity link.',
+                'policies'    => [],
+                'function'    => 'doSyncIdentityLink'
             ]
         ];
     }
@@ -84,7 +89,7 @@ abstract class IdentityFacet extends IdentityAbstract {
         }
     }
 
-    protected static function onupdateIdentityId($self) {
+    protected static function doSyncIdentityLink($self) {
         $self->read(['identity_id']);
         $facet_field = null;
         foreach(self::MAP_FIELDS_FACETS as $field => $descriptor) {
@@ -93,11 +98,33 @@ abstract class IdentityFacet extends IdentityAbstract {
                 break;
             }
         }
+        if(!$facet_field) {
+            return;
+        }
         foreach($self as $id => $facet) {
+            $domain = [[$facet_field, '=', $id]];
+            if($facet['identity_id']) {
+                $domain[] = ['id', '<>', $facet['identity_id']];
+            }
+            Identity::search($domain)->update([$facet_field => null]);
+
             if($facet['identity_id']) {
                 Identity::id($facet['identity_id'])->update([$facet_field => $id]);
             }
         }
+    }
+
+    protected static function onupdateIdentityId($self, $values) {
+        $explicit_values = static::computeCommonIdentityValues($values);
+        if($explicit_values) {
+            $self->read(['identity_id']);
+            foreach($self as $facet) {
+                if($facet['identity_id']) {
+                    Identity::id($facet['identity_id'])->update($explicit_values);
+                }
+            }
+        }
+        $self->do('sync_identity_link');
     }
 
     protected static function onafterinstantiate($self, $values, $orm) {
