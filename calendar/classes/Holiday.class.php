@@ -48,7 +48,6 @@ class Holiday extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'integer',
                 'usage'             => 'date/year:4',
-                'description'       => 'Year of the holiday.',
                 'function'          => 'calcYear',
                 'store'             => true
             ],

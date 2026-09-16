@@ -42,7 +42,7 @@ if(!$server) {
 }
 
 try {
-    $status = equal::run('get', 'infra_server_status', ['id' => $params['id']]);
+    $status = eQual::run('get', 'infra_server_status', ['id' => $params['id']]);
 
     $values = [
         'server_id'     => $params['id'],

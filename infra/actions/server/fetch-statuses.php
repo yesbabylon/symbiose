@@ -35,10 +35,10 @@ $servers = Server::search(['server_type', 'in', ['b2', 'k2', 's2']])
     ->get();
 
 foreach($servers as $server) {
-    equal::run('do', 'infra_server_fetch-status', ['id' => $server['id']]);
+    eQual::run('do', 'infra_server_fetch-status', ['id' => $server['id']]);
 
     foreach($server['instances_ids'] ?? [] as $instance_id) {
-        equal::run('do', 'infra_instance_fetch-status', ['id' => $instance_id]);
+        eQual::run('do', 'infra_instance_fetch-status', ['id' => $instance_id]);
     }
 }
 

@@ -218,8 +218,8 @@ class BankStatementLine extends Model {
                     }
                 }
             }
-            return parent::canupdate($orm, $ids, $values, $lang);
         }
+        return parent::canupdate($orm, $ids, $values, $lang);
     }
 
 }

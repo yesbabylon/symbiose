@@ -1,7 +1,7 @@
 <?php
 use equal\html\HtmlTemplate;
 use core\User;
-use learn\Pack;
+use learn\Course;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
@@ -46,7 +46,7 @@ if($user_id <= 0) {
     throw new Exception('unknown_user', QN_ERROR_NOT_ALLOWED);
 }
 
-$pack = Pack::ids($params['course_id'])->read(['title'])->first();
+$pack = Course::ids($params['course_id'])->read(['title'])->first();
 $user = [];
 
 $db = $orm->getDb();

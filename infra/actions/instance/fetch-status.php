@@ -48,7 +48,7 @@ if(!$instance) {
 }
 
 try {
-    $status = equal::run('get', 'infra_instance_status', ['id' => $instance['server_id'], 'instance' => $instance['name']]);
+    $status = eQual::run('get', 'infra_instance_status', ['id' => $instance['server_id'], 'instance' => $instance['name']]);
 
     InstanceStatus::create([
         'instance_id'   => $instance['id'],
