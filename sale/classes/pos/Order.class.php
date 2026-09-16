@@ -6,6 +6,7 @@
 */
 namespace sale\pos;
 use equal\orm\Model;
+use finance\accounting\AccountingEntry;
 use finance\accounting\invoice\Invoice;
 use core\setting\Setting;
 

@@ -7,7 +7,8 @@
 namespace sale\order;
 use equal\orm\Model;
 use sale\customer\Customer;
-use sale\order\Contract;
+use sale\contract\Contract;
+use sale\pay\Funding;
 class Order extends Model {
 
     public static function getDescription() {
@@ -76,7 +77,7 @@ class Order extends Model {
 
             'contracts_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\order\Contract',
+                'foreign_object'    => 'sale\contract\Contract',
                 'foreign_field'     => 'order_id',
                 'sort'              => 'desc',
                 'description'       => 'List of contacts related to the order, if any.'
@@ -181,7 +182,7 @@ class Order extends Model {
 
             'invoices_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\order\Invoice',
+                'foreign_object'    => 'sale\accounting\invoice\Invoice',
                 'foreign_field'     => 'order_id',
                 'description'       => 'Invoices that relate to the order.'
             ]

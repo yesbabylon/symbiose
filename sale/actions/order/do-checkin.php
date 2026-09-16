@@ -6,7 +6,7 @@
 */
 
 use sale\order\Order;
-use sale\order\Contract;
+use sale\contract\Contract;
 
 list($params, $providers) = announce([
     'description'   => "Sets order as checked in.",

@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 use sale\order\Order;
-use sale\order\Contract;
+use sale\contract\Contract;
 
 list($params, $providers) = eQual::announce([
     'description'   => "Checks if a signed version of the contract has been received.",

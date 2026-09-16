@@ -6,9 +6,9 @@
 */
 
 use sale\order\Order;
-use sale\order\Contract;
-use sale\order\ContractLine;
-use sale\order\ContractLineGroup;
+use sale\contract\Contract;
+use sale\contract\ContractLine;
+use sale\contract\ContractLineGroup;
 use sale\pay\Funding;
 
 

@@ -252,7 +252,7 @@ class Payment extends Model {
             Funding::id($payment['funding_id'])->update(['is_paid' => false]);
         }
 
-        return parent::ondelete($self);
+        parent::ondelete($self);
     }
 
     public static function candelete($self) {

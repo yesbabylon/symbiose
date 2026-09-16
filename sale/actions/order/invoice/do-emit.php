@@ -6,7 +6,7 @@
 */
 
 use core\setting\Setting;
-use sale\order\Invoice;
+use sale\accounting\invoice\Invoice;
 use sale\order\Order;
 use sale\pay\Funding;
 

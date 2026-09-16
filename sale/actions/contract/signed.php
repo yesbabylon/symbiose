@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-use sale\order\Contract;
+use sale\contract\Contract;
 use sale\order\Order;
 
 list($params, $providers) = announce([

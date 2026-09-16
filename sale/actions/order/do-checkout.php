@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 use sale\order\Order;
-use sale\order\Invoice;
+use sale\accounting\invoice\Invoice;
 
 list($params, $providers) = announce([
     'description'   => "Sets order as checked out.",

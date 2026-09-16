@@ -7,7 +7,7 @@
 
 use sale\order\Order;
 use sale\pay\Funding;
-use sale\order\Invoice;
+use sale\accounting\invoice\Invoice;
 list($params, $providers) = eQual::announce([
     'description'   => "Generates the proforma for the balance invoice for a order.",
     'params'        => [

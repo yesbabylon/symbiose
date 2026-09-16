@@ -6,7 +6,7 @@
 */
 
 use sale\pay\Funding;
-use sale\order\Invoice;
+use sale\accounting\invoice\Invoice;
 use sale\order\Order;
 
 list($params, $providers) = announce([
