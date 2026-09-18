@@ -105,7 +105,9 @@
                                                             "ACTION.CREATE": false,
                                                             "ACTION.SELECT": false
                                                         }
-                                                    }
+                                                    },
+                                                    "sort": "date",
+                                                    "order": "desc"
                                                 }
                                             }
                                         ]
