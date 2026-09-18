@@ -583,7 +583,11 @@ class Receivable extends Model {
                 $result[$id] = $saleEntry['name'];
 
                 if($origin_object_class === 'timetrack\\TimeEntry') {
-                    $result[$id] = substr(' [' . date($date_format, $saleEntry['date']) . ']' . $result[$id], 0, 255);
+                    $name = date($date_format, $saleEntry['date']) . ' - ' . $result[$id];
+                    if(strlen($name) > 255) {
+                        $name = substr($name, 0, 251) . '…';
+                    }
+                    $result[$id] = $name;
                 }
             }
         }
