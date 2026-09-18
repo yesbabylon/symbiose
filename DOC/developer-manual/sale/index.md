@@ -3,6 +3,30 @@
 This package allows to manage a catalog of products and prices.
 It also provides a workflow to sell products or services to customers and generate invoices.
 
+## General conventions
+
+In Symbiose, the goal is to clearly separate stages that represent different responsibilities, so that a single status such as `billed` or `invoiced` is not used with several meanings.
+
+- **Business lifecycle:** indicates where a service stands in its operational process: recorded, confirmed, approved, and so on.
+- **Charging or allocation method:** indicates how the financial value of the service is handled: direct invoicing, debiting a Service Account, using prepaid credit, and so on.
+- **Commercial issuance:** concerns the document sent to the customer, such as an invoice progressing from draft to approved and then issued.
+- **Accounting integration:** indicates when the transaction is actually recorded in the accounts, typically with a status such as `posted`.
+
+This separation makes workflows easier to understand and, most importantly, avoids confusing **"the service has been approved,"** **"it has been assigned to a charging method,"** **"an invoice has been issued,"** and **"the accounting entry has been posted."**
+
+| Term | Reserved for |
+| --- | --- |
+| `confirmed` | Confirmation of information by its author |
+| `approved` | Approval by an authorized person |
+| `charged` | Conversion of a service into an amount to be charged |
+| `allocated` | Assignment of an amount to a processing mechanism |
+| `invoiced` | Effective inclusion in an invoice |
+| `debited` | Consumption of an account or credit |
+| `issued` | Official issuance of a commercial document |
+| `posted` | Integration into the accounts |
+| `paid` | Effective receipt of payment |
+| `settled` | Final settlement of a financial obligation or item |
+
 ## Catalog
 
 ### Product Model

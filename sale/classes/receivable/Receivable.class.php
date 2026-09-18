@@ -361,6 +361,7 @@ class Receivable extends Model {
         $self->read([
                 'id',
                 'name',
+                'date',
                 'description',
                 'invoice_group',
                 'customer_id',
