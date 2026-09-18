@@ -570,15 +570,21 @@ class Receivable extends Model {
         $result = [];
         $self->read(['origin_object_class', 'origin_object_id']);
 
+        $date_format = Setting::get_value('core', 'locale', 'date.format', 'm/d/Y');
+
         foreach($self as $id => $receivable) {
             $origin_object_class = $receivable['origin_object_class'] ?? SaleEntry::class;
 
             $saleEntry = $origin_object_class::id($receivable['origin_object_id'])
-                ->read(['name'])
+                ->read(['name', 'date'])
                 ->first();
 
             if($saleEntry) {
                 $result[$id] = $saleEntry['name'];
+
+                if($origin_object_class === 'timetrack\\TimeEntry') {
+                    $result[$id] .= ' [' . date($date_format, $saleEntry['date']) . ']';
+                }
             }
         }
 

@@ -1,10 +1,13 @@
 <?php
 
+use core\setting\Setting;
 use sale\customer\Customer;
 use sale\receivable\Receivable;
 use sale\receivable\ReceivablesQueue;
 use sale\subscription\Subscription;
 use sale\subscription\SubscriptionEntry;
+use timetrack\Project;
+use timetrack\TimeEntry;
 
 $tests = [
     '0101' => [
@@ -76,6 +79,86 @@ $tests = [
                 ->delete(true);
 
             Subscription::id($args['subscription_id'])
+                ->delete(true);
+
+            ReceivablesQueue::id($args['receivables_queue_id'])
+                ->delete(true);
+
+            Customer::id($args['customer_id'])
+                ->delete(true);
+        }
+    ],
+    '0102' => [
+        'description' => 'Receivable name appends the localized date for time entries.',
+        'arrange'     => function() {
+            $suffix = uniqid();
+            $entry_date = strtotime('2026-09-18 10:00:00');
+
+            $customer = Customer::create([
+                    'name'                => "Test time entry customer {$suffix}",
+                    'partner_identity_id' => 0
+                ])
+                ->read(['id'])
+                ->first(true);
+
+            $receivables_queue = ReceivablesQueue::create([
+                    'customer_id' => $customer['id']
+                ])
+                ->read(['id'])
+                ->first(true);
+
+            $project = Project::create([
+                    'name'                 => "Test time entry project {$suffix}",
+                    'customer_id'          => $customer['id'],
+                    'receivable_queue_id' => $receivables_queue['id']
+                ])
+                ->read(['id'])
+                ->first(true);
+
+            $time_entry = TimeEntry::create([
+                    'project_id'  => $project['id'],
+                    'date'        => $entry_date,
+                    'description' => "Test time entry description {$suffix}",
+                    'origin'      => 'project'
+                ])
+                ->read(['id', 'name'])
+                ->first(true);
+
+            $receivable = Receivable::create([
+                    'receivables_queue_id' => $receivables_queue['id'],
+                    'origin_object_class'  => TimeEntry::class,
+                    'origin_object_id'     => $time_entry['id'],
+                    'date'                 => $entry_date
+                ])
+                ->read(['id', 'name'])
+                ->first(true);
+
+            $date_format = Setting::get_value('core', 'locale', 'date.format', 'm/d/Y');
+
+            return [
+                'customer_id'              => $customer['id'],
+                'receivables_queue_id'     => $receivables_queue['id'],
+                'project_id'               => $project['id'],
+                'time_entry_id'            => $time_entry['id'],
+                'receivable_id'            => $receivable['id'],
+                'receivable_name'          => $receivable['name'],
+                'expected_receivable_name' => $time_entry['name'].' ['.date($date_format, $entry_date).']'
+            ];
+        },
+        'act'         => function($args) {
+            return $args;
+        },
+        'assert'      => function($args) {
+            return $args['receivable_name'] === $args['expected_receivable_name'];
+        },
+        'rollback'    => function($args) {
+            Receivable::id($args['receivable_id'])
+                ->delete(true);
+
+            TimeEntry::id($args['time_entry_id'])
+                ->delete(true);
+
+            Project::id($args['project_id'])
                 ->delete(true);
 
             ReceivablesQueue::id($args['receivables_queue_id'])
