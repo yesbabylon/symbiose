@@ -32,6 +32,13 @@ list($params, $providers) = eQual::announce([
             'min'               => 1
         ],
 
+        'status' => [
+            'type'              => 'string',
+            'description'       => 'Status of the subscription entry.',
+            'selection'         => ['all', 'pending', 'ready', 'validated', 'billed'],
+            'default'           => 'all'
+        ],
+
         'is_billable' => [
             'type'              => 'boolean',
             'description'       => 'Can be billed to the customer.',
@@ -76,6 +83,10 @@ if(isset($params['customer_id'])) {
 
 if(isset($params['product_id'])) {
     $domain[] = ['product_id', '=', $params['product_id']];
+}
+
+if(isset($params['status']) && $params['status'] !== 'all') {
+    $domain[] = ['status', '=', $params['status']];
 }
 
 if(!is_null($params['is_billable'])) {

@@ -23,6 +23,11 @@
                                                 "value": "customer_id",
                                                 "label": "Customer",
                                                 "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "33%"
                                             }
                                         ]
                                     },
