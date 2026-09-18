@@ -238,6 +238,13 @@ class Receivable extends Model {
                 'ondelete'          => 'null'
             ],
 
+            'invoice_status' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'relation'          => ['invoice_id' => 'status'],
+                'store'             => false
+            ],
+
             // receivable is either linked to an invoice line or to a service account entry
 
             'invoice_line_id' => [
@@ -277,9 +284,67 @@ class Receivable extends Model {
                 'help'        => 'Uses the provided service account when possible, otherwise uses the unique active service account of the customer.',
                 'policies'    => [],
                 'function'    => 'doPostServiceAccount'
+            ],
+            'unpost_invoice' => [
+                'description' => 'Remove receivables from their proforma invoices.',
+                'help'        => 'Deletes the related invoice lines and sets the receivables back to pending.',
+                'policies'    => ['can_unpost_invoice'],
+                'function'    => 'doUnpostInvoice'
             ]
 
         ]);
+    }
+
+    public static function getPolicies(): array {
+        return array_merge(parent::getPolicies(), [
+            'can_unpost_invoice' => [
+                'description' => 'Check whether receivables can be removed from their invoices.',
+                'function'    => 'policyCanUnpostInvoice'
+            ]
+        ]);
+    }
+
+    protected static function policyCanUnpostInvoice($self): array {
+        $result = [];
+
+        $self->read([
+            'status',
+            'invoice_id' => ['id', 'status'],
+            'invoice_line_id' => ['id', 'invoice_id', 'receivable_id']
+        ]);
+
+        foreach($self as $id => $receivable) {
+            if($receivable['status'] !== 'posted') {
+                $result[$id] = [
+                    'receivable_not_posted' => 'Only posted receivables can be removed from an invoice.'
+                ];
+            }
+            elseif(!isset($receivable['invoice_id']['id'])) {
+                $result[$id] = [
+                    'missing_invoice' => 'The receivable is not linked to an invoice.'
+                ];
+            }
+            elseif($receivable['invoice_id']['status'] !== 'proforma') {
+                $result[$id] = [
+                    'invoice_not_proforma' => 'The receivable can only be removed from a proforma invoice.'
+                ];
+            }
+            elseif(!isset($receivable['invoice_line_id']['id'])) {
+                $result[$id] = [
+                    'missing_invoice_line' => 'The receivable is not linked to an invoice line.'
+                ];
+            }
+            elseif(
+                $receivable['invoice_line_id']['invoice_id'] !== $receivable['invoice_id']['id']
+                || $receivable['invoice_line_id']['receivable_id'] !== $id
+            ) {
+                $result[$id] = [
+                    'invoice_line_mismatch' => 'The invoice line does not match the receivable.'
+                ];
+            }
+        }
+
+        return $result;
     }
 
     protected static function doPostInvoice($self, $values) {
@@ -377,6 +442,22 @@ class Receivable extends Model {
                     'invoice_id'      => $invoice['id'],
                     'invoice_line_id' => $invoiceLine['id'],
                     'status'          => 'posted'
+                ]);
+        }
+    }
+
+    protected static function doUnpostInvoice($self) {
+        $self->read(['invoice_line_id']);
+
+        foreach($self as $id => $receivable) {
+            InvoiceLine::id($receivable['invoice_line_id'])
+                ->delete(true);
+
+            self::id($id)
+                ->update([
+                    'status'          => 'pending',
+                    'invoice_id'      => null,
+                    'invoice_line_id' => null
                 ]);
         }
     }

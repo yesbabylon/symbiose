@@ -28,6 +28,11 @@
                     "label": "Débiter le compte de service",
                     "description": "Créer une ligne de compte de service à partir d'une prestation de temps.",
                     "help": ""
+                },
+                "action.unpost_invoice": {
+                    "label": "Décomptabiliser",
+                    "description": "Retirer la créance de sa facture pro forma et supprimer la ligne de facture correspondante.",
+                    "help": "Cette action remet la créance en attente."
                 }
             },
             "layout": {
@@ -68,7 +73,12 @@
             "missing_customer": "La créance n'est liée à aucun client.",
             "missing_service_account": "Aucun compte de service actif n'a été trouvé pour ce client.",
             "service_account_customer_mismatch": "Le compte de service sélectionné ne correspond pas au client de la créance.",
-            "inactive_service_account": "Le compte de service sélectionné n'est pas actif."
+            "inactive_service_account": "Le compte de service sélectionné n'est pas actif.",
+            "receivable_not_posted": "Seule une créance comptabilisée peut être retirée d'une facture.",
+            "missing_invoice": "La créance n'est liée à aucune facture.",
+            "invoice_not_proforma": "La créance peut uniquement être retirée d'une facture pro forma.",
+            "missing_invoice_line": "La créance n'est liée à aucune ligne de facture.",
+            "invoice_line_mismatch": "La ligne de facture ne correspond pas à la créance."
         }
     }
 }

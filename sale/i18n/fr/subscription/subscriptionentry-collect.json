@@ -1,0 +1,18 @@
+{
+    "model": {
+        "status": {
+            "label": "Statut",
+            "description": "Statut des entrées d'abonnement à afficher.",
+            "selection": {
+                "all": "Tous",
+                "pending": "Brouillon",
+                "ready": "Prête",
+                "validated": "Validée",
+                "billed": "Comptabilisée"
+            },
+            "help": ""
+        }
+    },
+    "view": {},
+    "error": {}
+}

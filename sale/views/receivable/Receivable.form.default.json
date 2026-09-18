@@ -15,6 +15,22 @@
             "description": "Create a service account entry from a time receivable.",
             "controller": "sale_receivable_Receivable_post-service-account",
             "visible": [["status", "=", "pending"], ["origin_object_class", "=", "timetrack\\TimeEntry"]]
+        },
+        {
+            "id": "action.unpost_invoice",
+            "label": "Unpost",
+            "description": "Remove the receivable from its proforma invoice.",
+            "controller": "core_model_do",
+            "params": {
+                "entity": "sale\\receivable\\Receivable",
+                "action": "unpost_invoice",
+                "ids": []
+            },
+            "confirm": true,
+            "visible": [
+                ["status", "=", "posted"],
+                ["invoice_status", "=", "proforma"]
+            ]
         }
     ],
     "layout": {
@@ -31,6 +47,11 @@
                                             {
                                                 "type": "field",
                                                 "value": "status",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "invoice_status",
                                                 "visible": false
                                             },
                                             {
