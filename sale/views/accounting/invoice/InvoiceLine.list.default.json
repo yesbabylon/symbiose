@@ -8,6 +8,7 @@
         {
             "field": "invoice_line_group_id",
             "open": true,
+            "colspan": 3,
             "operations": {
                 "total": {
                     "operation": "SUM",
