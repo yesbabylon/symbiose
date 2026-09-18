@@ -41,7 +41,6 @@ class SaleEntry extends Model {
                 'result_type'       => 'string',
                 'description'       => 'Short readable identifier of the entry.',
                 'function'          => 'calcName',
-                'instant'           => true,
                 'store'             => true
             ],
 
