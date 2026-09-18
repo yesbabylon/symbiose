@@ -11,7 +11,7 @@ use sale\customer\Customer;
 class ServiceAccount extends \sale\contract\Contract {
 
     public function getTable() {
-        return 'sale_contract_serviceaccount';
+        return self::getSlug();
     }
 
     public static function getDescription() {
