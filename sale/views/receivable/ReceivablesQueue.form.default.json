@@ -106,8 +106,8 @@
                                                             "ACTION.SELECT": false
                                                         }
                                                     },
-                                                    "sort": "date",
-                                                    "order": "desc"
+                                                    "order": "date",
+                                                    "sort": "desc"
                                                 }
                                             }
                                         ]
