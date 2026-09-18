@@ -150,67 +150,17 @@
                         }
                     },
                     {
-                        "id": "sales.subscriptions.entries",
-                        "type": "parent",
-                        "label": "Entries",
+                        "id": "sales.subscriptions.entries.all",
+                        "type": "entry",
+                        "label": "All",
                         "icon": "check",
-                        "description": "Subscription entries parent menu.",
-                        "children": [
-                            {
-                                "id": "sales.subscriptions.entries.all",
-                                "type": "entry",
-                                "label": "All",
-                                "icon": "list",
-                                "description": "Display all subscription entries.",
-                                "context": {
-                                    "entity": "sale\\subscription\\SubscriptionEntry",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            },
-                            {
-                                "id": "sales.subscriptions.entries.to-bill",
-                                "type": "entry",
-                                "label": "To bill",
-                                "icon": "payments",
-                                "description": "Display subscription entries ready to be billed.",
-                                "context": {
-                                    "entity": "sale\\subscription\\SubscriptionEntry",
-                                    "view": "list.billable",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            },
-                            {
-                                "id": "sales.subscriptions.entries.billed",
-                                "type": "entry",
-                                "label": "Billed",
-                                "icon": "receipt_long",
-                                "description": "Display billed subscription entries.",
-                                "context": {
-                                    "entity": "sale\\subscription\\SubscriptionEntry",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc",
-                                    "domain": [ ["status", "=", "billed"] ]
-                                }
-                            },
-                            {
-                                "id": "sales.subscriptions.entries.archived",
-                                "type": "entry",
-                                "label": "Archived",
-                                "icon": "inventory",
-                                "description": "Archived entries",
-                                "context": {
-                                    "entity": "sale\\subscription\\SubscriptionEntry",
-                                    "view": "list.default",
-                                    "order": "created",
-                                    "sort": "desc",
-                                    "domain": [ ["state", "=", "archive"] ]
-                                }
-                            }
-                        ]
+                        "description": "Display all subscription entries.",
+                        "context": {
+                            "entity": "sale\\subscription\\SubscriptionEntry",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
                     }
                 ]
             },

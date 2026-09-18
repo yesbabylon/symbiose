@@ -34,6 +34,7 @@ class SubscriptionEntry extends SaleEntry {
                 'result_type'       => 'string',
                 'description'       => 'Short readable identifier of the entry.',
                 'store'             => true,
+                'instant'           => true,
                 'function'          => 'calcName'
             ],
 
