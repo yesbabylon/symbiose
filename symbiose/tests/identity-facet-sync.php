@@ -9,7 +9,9 @@ use sale\customer\Customer;
 $tests = [
     '0101' => [
         'description' => 'Propagate Identity fields to linked facets.',
-        'help'        => 'Creates one Identity linked to a Customer and a Supplier, updates its email, then verifies that the same value is stored on the Identity and both facets.',
+        'help'        => "Creates one Identity linked to a Customer and a Supplier, 
+            updates its email, 
+            then verifies that the same value is stored on the Identity and both facets.",
         'arrange'     => function() {
             $suffix = str_replace('.', '', uniqid('', true));
             $identity = Identity::create([
@@ -20,9 +22,9 @@ $tests = [
                     'email'                  => "canonical.{$suffix}@example.com"
                 ])
                 ->read(['id'])
-                ->first(true);
-            $customer = Customer::create(['identity_id' => $identity['id']])->read(['id'])->first(true);
-            $supplier = Supplier::create(['identity_id' => $identity['id']])->read(['id'])->first(true);
+                ->first();
+            $customer = Customer::create(['identity_id' => $identity['id']])->first();
+            $supplier = Supplier::create(['identity_id' => $identity['id']])->first();
 
             return [
                 'identity_id' => $identity['id'],
@@ -36,9 +38,9 @@ $tests = [
 
             return array_merge($args, [
                 'expected_email' => $email,
-                'identity'       => Identity::id($args['identity_id'])->read(['email'])->first(true),
-                'customer'       => Customer::id($args['customer_id'])->read(['email'])->first(true),
-                'supplier'       => Supplier::id($args['supplier_id'])->read(['email'])->first(true)
+                'identity'       => Identity::id($args['identity_id'])->read(['email'])->first(),
+                'customer'       => Customer::id($args['customer_id'])->read(['email'])->first(),
+                'supplier'       => Supplier::id($args['supplier_id'])->read(['email'])->first()
             ]);
         },
         'assert'      => function($args) {
