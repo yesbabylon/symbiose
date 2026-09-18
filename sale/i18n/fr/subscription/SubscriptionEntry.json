@@ -46,6 +46,20 @@
         "list.default": {
             "name": "Entrées d'abonnement",
             "description": "Liste des entrées d'abonnement.",
+            "actions": {
+                "action.transition.ready": {
+                    "label": "Marquer comme prêtes",
+                    "description": "Marquer les entrées d'abonnement sélectionnées comme prêtes."
+                },
+                "action.transition.validate": {
+                    "label": "Valider",
+                    "description": "Valider les entrées d'abonnement sélectionnées."
+                },
+                "action.transition.bill": {
+                    "label": "Facturer",
+                    "description": "Créer une créance pour les entrées d'abonnement sélectionnées."
+                }
+            },
             "layout": {}
         },
         "list.selection": {

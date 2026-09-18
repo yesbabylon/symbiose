@@ -4,6 +4,44 @@
     "domain": ["model", "=", "sale\\subscription\\SubscriptionEntry"],
     "controller": "sale_subscription_subscriptionentry-collect",
     "sort": "desc",
+    "header": {
+        "selection": {
+            "show_inline": ["action.transition.ready"],
+            "default": false,
+            "actions": [
+                {
+                    "id": "action.transition.ready",
+                    "label": "Mark Ready",
+                    "icon": "play_arrow",
+                    "controller": "model_transition",
+                    "params": {
+                        "entity": "sale\\subscription\\SubscriptionEntry",
+                        "transition": "submit"
+                    }
+                },
+                {
+                    "id": "action.transition.validate",
+                    "label": "Validate",
+                    "icon": "task_alt",
+                    "controller": "model_transition",
+                    "params": {
+                        "entity": "sale\\subscription\\SubscriptionEntry",
+                        "transition": "validate"
+                    }
+                },
+                {
+                    "id": "action.transition.bill",
+                    "label": "Bill",
+                    "icon": "send",
+                    "controller": "model_transition",
+                    "params": {
+                        "entity": "sale\\subscription\\SubscriptionEntry",
+                        "transition": "bill"
+                    }
+                }
+            ]
+        }
+    },
     "layout": {
         "items": [
             {
