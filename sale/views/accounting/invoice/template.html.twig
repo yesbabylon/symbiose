@@ -104,8 +104,8 @@
                     'class':                     'organisation-info',
                     'registration_number_label': labels.registration_number,
                     'vat_number_label':          labels.vat_number,
-                    'organisation':              invoice.organisation_id,
-                    'organisation_logo':         organisation_logo
+                    'organization':              invoice.organization_id,
+                    'organization_logo':         organization_logo
                 } only
             %}
 
@@ -181,7 +181,7 @@
             {%
                 include 'components/organisation-footer-info.html.twig' with {
                     'class':         'organisation-footer-info',
-                    'organisation':  invoice.organisation_id,
+                    'organization':  invoice.organization_id,
                     'footer_labels': labels.footer
                 } only
             %}

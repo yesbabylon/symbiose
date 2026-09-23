@@ -216,17 +216,17 @@
 
         <!-- organisation-info start -->
             <div class="organisation-info {{ debug ? 'debug':'' }}">
-                {% if (organisation_logo|length > 0) %}
-                    <img src="{{ organisation_logo }}" alt="Company logo" />
+                {% if (organization_logo|length > 0) %}
+                    <img src="{{ organization_logo }}" alt="Company logo" />
                 {% endif %}
                 <div style="margin-left: 8px;">
-                    <h3>{{ organisation.legal_name }}</h3>
-                    <div>{{ organisation.address_street }} {{ organisation.address_zip }} {{ organisation.address_city }}</div>
-                    <div>{{ labels.registration_number }}: <b>{{ organisation.registration_number }}</b></div>
+                    <h3>{{ organization.legal_name }}</h3>
+                    <div>{{ organization.address_street }} {{ organization.address_zip }} {{ organization.address_city }}</div>
+                    <div>{{ labels.registration_number }}: <b>{{ organization.registration_number }}</b></div>
                     <div>{{ labels.vat_number }}:
                         <strong>
-                        {% if (organisation.has_vat == true) %}
-                            {{ organisation.vat_number }}
+                        {% if (organization.has_vat == true) %}
+                            {{ organization.vat_number }}
                         {% else %}
                             N/A
                         {% endif %}
@@ -334,9 +334,9 @@
     <footer class="{{ debug ? 'debug' : '' }}">
         <!-- organisation-footer-info start -->
         <div class="organisation-info">
-            <div>{{ organisation.legal_name }} - {{ organisation.address_street }} {{ organisation.address_zip }} {{ organisation.address_city }}</div>
-            <div>{{ labels.footer.registration_number }}: {{ organisation.registration_number }} - {{ labels.footer.iban }}: {{ organisation.bank_account_iban }}</div>
-            <div>{{ labels.footer.email }}: {{ organisation.email }} - {{ labels.footer.web }}: {{ organisation.website }} - {{ labels.footer.tel }}: {{ organisation.phone }}{% if organisation.fax %} - {{ labels.footer.fax }}: {{ organisation.fax }}{% endif %}</div>
+            <div>{{ organization.legal_name }} - {{ organization.address_street }} {{ organization.address_zip }} {{ organization.address_city }}</div>
+            <div>{{ labels.footer.registration_number }}: {{ organization.registration_number }} - {{ labels.footer.iban }}: {{ organization.bank_account_iban }}</div>
+            <div>{{ labels.footer.email }}: {{ organization.email }} - {{ labels.footer.web }}: {{ organization.website }} - {{ labels.footer.tel }}: {{ organization.phone }}{% if organization.fax %} - {{ labels.footer.fax }}: {{ organization.fax }}{% endif %}</div>
         </div>
         <!-- organisation-footer-info end -->
     </footer>
@@ -363,14 +363,14 @@
                                 {{ labels.columns['discount'] }}
                             </th>
                             <th style="text-align: right; padding-right: 7px;">
-                                {% if (invoice.organisation_id.has_vat == false) or (invoice.organisation_id.vat_number is null) or (invoice.organisation_id.vat_number == '') %}
+                                {% if (invoice.organization_id.has_vat == false) or (invoice.organization_id.vat_number is null) or (invoice.organization_id.vat_number == '') %}
                                     {{ labels.columns['taxes'] }}
                                 {% else %}
                                     {{ labels.columns['vat'] }}
                                 {% endif %}
                             </th>
                             <th style="text-align: right; padding-right: 7px;">
-                                {% if (invoice.organisation_id.has_vat == false) or (invoice.organisation_id.vat_number is null) or (invoice.organisation_id.vat_number == '') %}
+                                {% if (invoice.organization_id.has_vat == false) or (invoice.organization_id.vat_number is null) or (invoice.organization_id.vat_number == '') %}
                                     {{ labels.columns['price'] }}
                                 {% else %}
                                     {{ labels.columns['price_ex_vat'] }}
@@ -444,7 +444,7 @@
                                 {% endif %}
                             </td>
                             <td style="width: 8%; text-align: right;">
-                                {% if line.vat_rate is not null and invoice.organisation_id.has_vat %}
+                                {% if line.vat_rate is not null and invoice.organization_id.has_vat %}
                                     {{ line.vat_rate | format_number(style='percent') }}
                                 {% endif %}
                             </td>
@@ -505,11 +505,11 @@
 
                 <div style="padding-top: 20px; padding-left: 15px;">
                     <b style="text-transform: uppercase;">{{ labels.communication }}</b><b> : {{ invoice.payment_reference }}</b><br/>
-                    IBAN : {{ invoice.organisation_id.bank_account_iban }}<br/>
-                    BIC : {{ invoice.organisation_id.bank_account_bic }}<br/>
+                    IBAN : {{ invoice.organization_id.bank_account_iban }}<br/>
+                    BIC : {{ invoice.organization_id.bank_account_bic }}<br/>
                     <br/>
-                    {{ invoice.organisation_id.legal_name }}<br/>
-                    {{ invoice.organisation_id.address_street }} {{ invoice.organisation_id.address_zip }} {{ invoice.organisation_id.address_city }}<br/>
+                    {{ invoice.organization_id.legal_name }}<br/>
+                    {{ invoice.organization_id.address_street }} {{ invoice.organization_id.address_zip }} {{ invoice.organization_id.address_city }}<br/>
                 </div>
 
                 <div style="position: absolute; right: 10px; top: 15px;">
