@@ -10,7 +10,7 @@ use sale\customer\Customer;
 
 class ServiceAccount extends \sale\contract\Contract {
 
-    public function getTable() {
+    public static function getModelTable(): string {
         return self::getSlug();
     }
 

@@ -17,7 +17,7 @@ use sale\receivable\Receivable;
 
 class Invoice extends \finance\accounting\invoice\Invoice {
 
-    public function getTable() {
+    public static function getModelTable(): string {
         return 'sale_accounting_invoice_invoice';
     }
 

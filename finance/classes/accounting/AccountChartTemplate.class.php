@@ -8,7 +8,7 @@ namespace finance\accounting;
 
 class AccountChartTemplate extends AccountChart {
 
-    public function getTable() {
+    public static function getModelTable(): string {
         return 'finance_accounting_account_chart_template';
     }
 }

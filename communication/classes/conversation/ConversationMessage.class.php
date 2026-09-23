@@ -9,7 +9,7 @@ namespace communication\conversation;
 
 class ConversationMessage extends \communication\MessageAbstract {
 
-    public function getTable() {
+    public static function getModelTable(): string {
         // 'communication_conversation_conversationmessage'
         return self::getSlug(self::class);
     }

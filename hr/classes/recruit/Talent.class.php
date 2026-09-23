@@ -8,7 +8,7 @@ namespace hr\recruit;
 
 class Talent extends \identity\Partner {
 
-    public function getTable() {
+    public static function getModelTable(): string {
         return 'talentlead_identity_talent';
     }
 

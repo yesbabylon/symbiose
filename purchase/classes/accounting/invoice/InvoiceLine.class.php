@@ -11,7 +11,7 @@ use finance\accounting\invoice\InvoiceLine as FinanceInvoiceLine;
 
 class InvoiceLine extends FinanceInvoiceLine {
 
-    public function getTable() {
+    public static function getModelTable(): string {
         return 'purchase_accounting_invoice_invoiceline';
     }
 

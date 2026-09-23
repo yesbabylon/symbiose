@@ -14,7 +14,7 @@ class Organization extends IdentityFacet {
         return 'Organization';
     }
 
-    public function getTable() {
+    public static function getModelTable(): string {
         return self::getSlug();
     }
 

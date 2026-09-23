@@ -11,7 +11,7 @@ use finance\accounting\invoice\Invoice as FinanceInvoice;
 
 class Invoice extends FinanceInvoice {
 
-    public function getTable() {
+    public static function getModelTable(): string {
         return 'purchase_accounting_invoice_invoice';
     }
 

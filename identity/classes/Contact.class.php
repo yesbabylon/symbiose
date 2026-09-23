@@ -8,7 +8,7 @@ namespace identity;
 
 class Contact extends IdentityFacet {
 
-    public function getTable() {
+    public static function getModelTable(): string {
         return self::getSlug();
     }
 

@@ -17,7 +17,7 @@ class Contact extends \identity\Contact {
         return "Customer contacts are persons, external to the organisation, that represent the customer or provide a link for information about the customer.";
     }
 
-    public function getTable() {
+    public static function getModelTable(): string {
         // force table name to use distinct tables and ID columns
         return 'sale_customer_contact';
     }

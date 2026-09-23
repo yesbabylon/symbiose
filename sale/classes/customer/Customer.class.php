@@ -10,7 +10,7 @@ use identity\IdentityFacet;
 
 class Customer extends IdentityFacet {
 
-    public function getTable() {
+    public static function getModelTable(): string {
         return self::getSlug();
     }
 
