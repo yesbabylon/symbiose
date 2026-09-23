@@ -9,8 +9,8 @@ use sale\receivable\Receivable;
 use sale\receivable\ReceivablesQueue;
 
 list($params, $providers) = eQual::announce([
-    'description'   => "Post pending time receivables of selected queues to Service Accounts.\nSelect an existing Service Account or leave empty to use each customer's active Service Account.",
-    'help'          => "Create Service Account entries from pending time receivables of selected queues.",
+    'description'   => "Post open time receivables of selected queues to Service Accounts.\nSelect an existing Service Account or leave empty to use each customer's active Service Account.",
+    'help'          => "Create Service Account entries from open time receivables of selected queues.",
     'params'        => [
         'id' => [
             'type'           => 'integer',
@@ -74,7 +74,7 @@ foreach($receivables_queues as $receivables_queue) {
     $receivables_ids = Receivable::search([
             ['receivables_queue_id', '=', $receivables_queue['id']],
             ['origin_object_class', '=', 'timetrack\\TimeEntry'],
-            ['status', '=', 'pending']
+            ['status', '=', 'open']
         ])
         ->ids();
 

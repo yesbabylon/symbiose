@@ -6,14 +6,14 @@
     },
     "actions": [
         {
-            "id": "action.invoice",
-            "label": "Invoice",
-            "description": "To Invoice.",
+            "id": "action.post",
+            "label": "Post",
+            "description": "Post the invoice to accounting.",
             "controller": "core_model_transition",
             "visible": ["status", "=", "proforma"],
             "params": {
                 "entity": "sale\\accounting\\invoice\\Invoice",
-                "transition": "invoice",
+                "transition": "post",
                 "ids": []
             }
         },
@@ -35,14 +35,14 @@
             "description": "Cancel invoice.",
             "controller": "sale_accounting_invoice_cancel",
             "confirm": true,
-            "visible": ["status", "=", "invoice"]
+            "visible": ["status", "=", "posted"]
         },
         {
             "id": "action.mark_paid",
             "label": "Mark as paid",
             "description": "Mark the invoice as paid (payment received).",
             "confirm": true,
-            "visible": ["status", "=", "invoice"]
+            "visible": ["status", "=", "posted"]
         }
     ],
     "routes": [
@@ -179,7 +179,7 @@
                     {
                         "id": "section.payments",
                         "label": "Payment",
-                        "visible": ["status", "=", "invoice"],
+                        "visible": ["status", "=", "posted"],
                         "rows": [
                             {
                                 "columns": [

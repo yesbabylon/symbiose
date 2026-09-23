@@ -90,7 +90,7 @@ $create_fixture = function() {
 
     Receivable::id($receivable['id'])
         ->update([
-            'status'          => 'posted',
+            'status'          => 'settled',
             'invoice_id'      => $invoice['id'],
             'invoice_line_id' => $invoice_line['id']
         ]);
@@ -154,7 +154,7 @@ $tests = [
                 ->read(['id'])
                 ->first(true);
 
-            return $receivable['status'] === 'pending'
+            return $receivable['status'] === 'open'
                 && is_null($receivable['invoice_id'])
                 && is_null($receivable['invoice_line_id'])
                 && !$invoice_line;
@@ -167,7 +167,7 @@ $tests = [
             $args = $create_fixture();
 
             Invoice::id($args['invoice_id'])
-                ->update(['status' => 'invoice']);
+                ->update(['status' => 'posted']);
 
             return $args;
         },
@@ -194,7 +194,7 @@ $tests = [
                 ->first(true);
 
             return $args['action_rejected']
-                && $receivable['status'] === 'posted'
+                && $receivable['status'] === 'settled'
                 && $receivable['invoice_id'] === $args['invoice_id']
                 && $receivable['invoice_line_id'] === $args['invoice_line_id']
                 && isset($invoice_line['id']);

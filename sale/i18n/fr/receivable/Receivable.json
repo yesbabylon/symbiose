@@ -7,8 +7,8 @@
             "label": "Statut",
             "description": "Statut actuel de la créance.",
             "selection": {
-                "pending": "En attente",
-                "posted": "Comptabilisée",
+                "open": "Ouverte",
+                "settled": "Traitée",
                 "cancelled": "Annulée"
             },
             "help": ""
@@ -32,7 +32,7 @@
                 "action.unpost_invoice": {
                     "label": "Décomptabiliser",
                     "description": "Retirer la créance de sa facture pro forma et supprimer la ligne de facture correspondante.",
-                    "help": "Cette action remet la créance en attente."
+                    "help": "Cette action rouvre la créance."
                 }
             },
             "layout": {
@@ -52,8 +52,8 @@
             "layout": {}
         },
         "list.pending": {
-            "name": "Créances en attente",
-            "description": "Liste des créances en attente.",
+            "name": "Créances ouvertes",
+            "description": "Liste des créances ouvertes en attente d'affectation.",
             "layout": {}
         },
         "list.queue-selection": {
@@ -65,7 +65,7 @@
     "error": {
         "errors": {
             "receivable_invalid_id": "Aucune créance valide n'a été sélectionnée.",
-            "receivable_not_pending": "La créance doit être en attente pour être imputée à un compte de service.",
+            "receivable_not_open": "La créance doit être ouverte pour être imputée à un compte de service.",
             "receivable_not_time_entry": "Seules les créances issues d'une prestation de temps peuvent être imputées à un compte de service.",
             "unknown_origin_time_entry": "La prestation de temps liée à la créance est introuvable.",
             "receivable_has_no_billable_duration": "La prestation de temps ne contient aucune durée facturable.",
@@ -74,7 +74,7 @@
             "missing_service_account": "Aucun compte de service actif n'a été trouvé pour ce client.",
             "service_account_customer_mismatch": "Le compte de service sélectionné ne correspond pas au client de la créance.",
             "inactive_service_account": "Le compte de service sélectionné n'est pas actif.",
-            "receivable_not_posted": "Seule une créance comptabilisée peut être retirée d'une facture.",
+            "receivable_not_settled": "Seule une créance traitée peut être retirée d'une facture.",
             "missing_invoice": "La créance n'est liée à aucune facture.",
             "invoice_not_proforma": "La créance peut uniquement être retirée d'une facture pro forma.",
             "missing_invoice_line": "La créance n'est liée à aucune ligne de facture.",

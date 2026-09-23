@@ -24,7 +24,7 @@ list($params, $providers) = eQual::announce([
 
         'keep_receivables' => [
             'type'              => 'boolean',
-            'description'       => 'If true sets receivables back to pending, else sets them to cancelled.',
+            'description'       => 'If true sets receivables back to open, else sets them to cancelled.',
             'default'           => true
         ]
 
@@ -49,7 +49,7 @@ if(empty($params['ids'])) {
 
 $invoices_ids = Invoice::search([
         ['id', 'in', $params['ids']],
-        ['status', '=', 'invoice']
+        ['status', '=', 'posted']
     ])
     ->ids();
 

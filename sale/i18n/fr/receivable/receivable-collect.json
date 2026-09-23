@@ -5,8 +5,8 @@
             "description": "Statut des créances à afficher.",
             "selection": {
                 "all": "Toutes",
-                "pending": "En attente",
-                "posted": "Comptabilisées",
+                "open": "Ouvertes",
+                "settled": "Traitées",
                 "cancelled": "Annulées"
             },
             "help": ""

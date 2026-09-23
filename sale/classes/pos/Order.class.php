@@ -167,7 +167,7 @@ class Order extends Model {
                 foreach($orders as $oid => $order) {
                     if($order['has_funding']) {
                         if($order['funding_id.type'] == 'invoice') {
-                            $om->update(Invoice::getType(), $order['funding_id.invoice_id'], ['status' => 'invoice', 'is_paid' => null], $lang);
+                            $om->update(Invoice::getType(), $order['funding_id.invoice_id'], ['status' => 'posted', 'is_paid' => null], $lang);
                         }
                     }
                     // no funding and no invoice: generate stand alone accounting entries

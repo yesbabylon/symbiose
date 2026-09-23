@@ -59,7 +59,7 @@
                                                 "view": "list.dashboard",
                                                 "domain": [
                                                     ["date", "<", "date.this.month.first()"],
-                                                    ["status", "<>", "billed"]
+                                                    ["status", "<>", "charged"]
                                                 ]
                                             }
                                         ]

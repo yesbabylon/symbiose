@@ -8,7 +8,7 @@
 use sale\receivable\Receivable;
 
 [$params, $providers] = eQual::announce([
-    'description'   => 'Invoice all pending receivables.',
+    'description'   => 'Invoice all open receivables.',
     'params'        => [],
     'response'      => [
         'content-type'  => 'application/json',
@@ -21,9 +21,9 @@ use sale\receivable\Receivable;
 /** @var \equal\php\Context $context */
 ['context' => $context] = $providers;
 
-$pending_receivables_ids = Receivable::search(['status', '=', 'pending'])->ids();
+$open_receivables_ids = Receivable::search(['status', '=', 'open'])->ids();
 
-foreach($pending_receivables_ids as $receivable_id) {
+foreach($open_receivables_ids as $receivable_id) {
     eQual::run('do', 'sale_receivable_Receivable_invoice', ['ids' => $receivable_id]);
 }
 

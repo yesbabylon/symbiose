@@ -91,7 +91,7 @@ if(!$order) {
     throw new Exception("unknown_order", EQ_ERROR_UNKNOWN_OBJECT);
 }
 
-if($invoice['invoice_type'] == 'invoice' && $invoice['status'] == 'invoice' && !$invoice['is_downpayment']) {
+if($invoice['invoice_type'] == 'invoice' && $invoice['status'] == 'posted' && !$invoice['is_downpayment']) {
     throw new Exception("incompatible_invoice_status", EQ_ERROR_INVALID_PARAM);
 }
 
@@ -104,10 +104,10 @@ foreach($order['invoices_ids'] as $id => $order_invoice) {
     }
 }
 
-$sum_invoices = ($invoice['status'] == 'invoice' && $invoice['invoice_type'] == 'invoice') ? $invoice['price'] : 0.0;
+$sum_invoices = ($invoice['status'] == 'posted' && $invoice['invoice_type'] == 'invoice') ? $invoice['price'] : 0.0;
 
 foreach($order['invoices_ids'] as $oid => $odata) {
-    if($odata['status'] == 'invoice' && $type == 'invoice') {
+    if($odata['status'] == 'posted' && $type == 'invoice') {
         $sum_invoices += ($odata['invoice_type'] == 'invoice') ? $odata['price'] : -($odata['price']);
     }
 }
@@ -116,7 +116,7 @@ if(round($sum_invoices, 2) > round($order['price'], 2)) {
     throw new Exception("exceeding_order_price", EQ_ERROR_INVALID_PARAM);
 }
 
-Invoice::id($params['id'])->transition('invoice');
+Invoice::id($params['id'])->transition('post');
 
 if(!$invoice['is_downpayment']) {
     if($invoice['invoice_type'] == 'invoice') {

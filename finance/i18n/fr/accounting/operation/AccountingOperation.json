@@ -152,7 +152,7 @@
             "already_reversed": "La pièce comptable a déjà été extournée.",
             "missing_accounting_entries": "Aucune écriture comptable n'est associée à la pièce.",
             "unbalanced_accounting_entry": "Une écriture comptable de la pièce n'est pas équilibrée.",
-            "cancelled_accounting_entry": "Une écriture comptable annulée ne peut pas être validée.",
+            "reversed_accounting_entry": "Une écriture comptable extournée ne peut pas être comptabilisée.",
             "unable_to_assign_operation_number": "Impossible d'attribuer un numéro à la pièce comptable."
         }
     }

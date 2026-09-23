@@ -32,13 +32,13 @@
                         "type": "field",
                         "value": "due_date",
                         "width": "33%",
-                        "visible": ["status", "=", "invoice"]
+                        "visible": ["status", "=", "posted"]
                     },
                     {
                         "type": "field",
                         "value": "payment_terms_id",
                         "width": "33%",
-                        "visible": ["status", "<>", "invoice"]
+                        "visible": ["status", "<>", "posted"]
                     }
                 ]
             },

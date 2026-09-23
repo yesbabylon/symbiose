@@ -3,29 +3,29 @@
     "description": "Subscription entry.",
     "actions": [
         {
-            "id": "action.transition.validate",
-            "label": "Validate",
+            "id": "action.transition.approve",
+            "label": "Approve",
             "controller": "model_transition",
             "params": {
                 "entity": "sale\\subscription\\SubscriptionEntry",
-                "transition": "validate",
+                "transition": "approve",
                 "ids": []
             },
             "visible": [
-                ["status", "in", ["pending", "ready"]]
+                ["status", "in", ["pending", "submitted"]]
             ]
         },
         {
-            "id": "action.transition.bill",
-            "label": "Bill",
+            "id": "action.transition.charge",
+            "label": "Charge",
             "controller": "model_transition",
             "params": {
                 "entity": "sale\\subscription\\SubscriptionEntry",
-                "transition": "bill",
+                "transition": "charge",
                 "ids": []
             },
             "visible": [
-                ["status", "=", "validated"],
+                ["status", "=", "approved"],
                 ["is_billable", "=", true]
             ]
         }

@@ -49,6 +49,10 @@
             "name": "Facture",
             "description": "",
             "actions": {
+                "action.post": {
+                    "label": "Comptabiliser",
+                    "description": "Attribuer le numéro définitif et générer les écritures comptables."
+                },
                 "action.cancel": {
                     "label": "Annuler"
                 },

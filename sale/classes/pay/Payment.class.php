@@ -98,7 +98,7 @@ class Payment extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\accounting\invoice\Invoice',
                 'description'       => 'The invoice targeted by the payment, if any.',
-                'domain'            => ['status', '=', 'invoice']
+                'domain'            => ['status', '=', 'posted']
             ],
 
             'is_exported' => [

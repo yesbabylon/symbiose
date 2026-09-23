@@ -42,7 +42,7 @@ list($context, $orm) = [$providers['context'], $providers['orm']];
 $invoice = Invoice::search([['order_id', '=', $params['id']],
                            ['invoice_type', '=', 'invoice'],
                            ['is_downpayment', '=', false],
-                           ['status', '=', 'invoice']])
+                           ['status', '=', 'posted']])
             ->read(['id'])
             ->first(true);
 

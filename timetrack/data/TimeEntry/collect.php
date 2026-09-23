@@ -70,9 +70,9 @@ use equal\orm\Domain;
             'selection'      => [
                     'all',
                     'pending',
-                    'ready',
-                    'validated',
-                    'billed'
+                    'submitted',
+                    'approved',
+                    'charged'
                 ],
             'default'        => 'all'
         ]

@@ -45,7 +45,7 @@ list($params, $providers) = eQual::announce([
 $context = $providers['context'];
 
 $domain = [
-    ['status', '=', 'validated'],
+    ['status', '=', 'approved'],
     ['is_billable', '=', true],
     ['has_receivable', '=', false]
 ];

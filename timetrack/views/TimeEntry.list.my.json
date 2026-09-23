@@ -4,7 +4,7 @@
     "controller": "timetrack_TimeEntry_collect",
     "domain": [
         ["creator", "=", "user.id"],
-        ["status", "<>", "billed"]
+        ["status", "<>", "charged"]
     ],
     "filters": [
         {

@@ -1,6 +1,6 @@
 {
-    "name": "Pending Receivables",
-    "description": "This view is intended for displaying the Pending Receivables.",
+    "name": "Open Receivables",
+    "description": "This view displays open receivables awaiting allocation.",
     "controller": "sale_receivable_receivable-pending-collect",
     "access": {
     },
@@ -20,7 +20,7 @@
             ]
         }
     },
-    "domain": ["status", "=", "pending"],
+    "domain": ["status", "=", "open"],
     "actions" : [
         {
             "id": "actions.bulk_invoice",

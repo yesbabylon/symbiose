@@ -37,10 +37,10 @@
             "label": "Status",
             "selection": {
                 "all": "Tous",
-                "pending": "Brouillon",
-                "ready": "Prête",
-                "validated": "Validée",
-                "billed": "Comptabilisée"
+                "pending": "En cours",
+                "submitted": "Soumise",
+                "approved": "Approuvée",
+                "charged": "Prise en charge"
             }
         }
     }

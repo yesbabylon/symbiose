@@ -35,7 +35,7 @@ list($params, $providers) = eQual::announce([
         'status' => [
             'type'              => 'string',
             'description'       => 'Status of the subscription entry.',
-            'selection'         => ['all', 'pending', 'ready', 'validated', 'billed'],
+            'selection'         => ['all', 'pending', 'submitted', 'approved', 'charged'],
             'default'           => 'all'
         ],
 

@@ -26,7 +26,7 @@
             "selection": {
                 "all": "Toutes",
                 "proforma": "pro forma",
-                "invoice": "facture",
+                "posted": "comptabilisée",
                 "cancelled": "annulée"
             },
             "help": ""

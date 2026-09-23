@@ -5,10 +5,10 @@
             "description": "Statut des entrées d'abonnement à afficher.",
             "selection": {
                 "all": "Tous",
-                "pending": "Brouillon",
-                "ready": "Prête",
-                "validated": "Validée",
-                "billed": "Comptabilisée"
+                "pending": "En cours",
+                "submitted": "Soumise",
+                "approved": "Approuvée",
+                "charged": "Prise en charge"
             },
             "help": ""
         }

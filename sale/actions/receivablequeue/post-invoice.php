@@ -9,8 +9,8 @@ use sale\receivable\ReceivablesQueue;
 use sale\receivable\Receivable;
 
 list($params, $providers) = eQual::announce([
-    'description'   => "Invoice pending receivables of selected queues.\nSelect an existing invoice or leave empty to create a new one.",
-    'help'          => "Create invoice lines from pending receivables of selected queues. Create new invoice if no pending proforma found for customer.",
+    'description'   => "Invoice open receivables of selected queues.\nSelect an existing invoice or leave empty to create a new one.",
+    'help'          => "Create invoice lines from open receivables of selected queues. Create a new invoice if no proforma is available for the customer.",
     'params'        => [
         'id' => [
             'type'           => 'integer',
@@ -71,7 +71,7 @@ if(isset($params['invoice_id'])) {
 foreach($receivables_queues as $receivables_queue) {
     $receivables_ids = Receivable::search([
             ['receivables_queue_id', '=', $receivables_queue['id']],
-            ['status', '=', 'pending']
+            ['status', '=', 'open']
         ])
         ->ids();
 

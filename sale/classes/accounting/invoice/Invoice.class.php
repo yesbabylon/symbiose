@@ -52,7 +52,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                 'description'       => 'Current status of the invoice.',
                 'selection'         => [
                     'proforma',             // draft invoice (no number yet)
-                    'invoice',              // final invoice (with unique number and accounting entries)
+                    'posted',               // final invoice (with unique number and accounting entries)
                     'cancelled'             // the invoice has been cancelled (through reversing entries)
                 ],
                 'default'           => 'proforma'
@@ -217,15 +217,15 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                 'description' => 'Draft invoice, still waiting to be completed and for customer approval.',
                 'icon' => 'edit',
                 'transitions' => [
-                    'invoice' => [
-                        'description' => 'Update the invoice status based on the `invoice` field.',
-                        'help'        => 'The `invoice` field is set by a dedicated controller that manages invoice approval requests.',
+                    'post' => [
+                        'description' => 'Post the invoice and generate its definitive accounting data.',
+                        'help'        => 'Posting assigns the definitive number and generates the accounting entries.',
                         'policies'    => [
                             'can-be-invoiced',
                         ],
-                        'onbefore'  => 'onbeforeInvoice',
-                        'onafter'   => 'onafterInvoice',
-                        'status'    => 'invoice',
+                        'onbefore'  => 'onbeforePost',
+                        'onafter'   => 'onafterPost',
+                        'status'    => 'posted',
                     ],
                     'cancel-proforma' => [
                         'description' => 'Delete the proforma and set receivables statuses back to pending.',
@@ -234,8 +234,8 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                     ]
                 ],
             ],
-            'invoice' => [
-                'description' => 'Invoice can no longer be modified and can be sent to the customer.',
+            'posted' => [
+                'description' => 'Invoice has been posted, can no longer be modified and can be sent to the customer.',
                 'icon' => 'receipt_long',
                 'transitions' => [
                     'cancel' => [
@@ -279,7 +279,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
         $self->read(['status', 'invoice_number']);
         foreach($self as $id => $invoice) {
             // #memo - prevent generating a payment reference for a proforma
-            if($invoice['status'] == 'invoice') {
+            if($invoice['status'] == 'posted') {
                 // arbitrary value for balance (final) invoice
                 $code_ref = 500;
 
@@ -337,7 +337,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
         return $result;
     }
 
-    public static function onbeforeInvoice($self) {
+    public static function onbeforePost($self) {
         $self->read(['organization_id']);
         // Try to generate the accounting entries according to the invoices lines.
         $self->do('generate_accounting_entries');
@@ -367,7 +367,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
      * Generate the fundings for a collection of invoices that just transitioned to "invoiced".
      * Fundings must be created here because due_date is set at invoice emission
     */
-    public static function onafterInvoice($self) {
+    public static function onafterPost($self) {
         try {
             // #memo - failing in emitting the fundings cannot interrupt the transition
             $self->do('create_funding');
@@ -380,14 +380,14 @@ class Invoice extends \finance\accounting\invoice\Invoice {
     public static function onafterCancelProforma($self) {
         foreach($self as $id => $invoice) {
             $receivables_ids = Receivable::search([
-                    ['status', '=', 'posted'],
+                    ['status', '=', 'settled'],
                     ['invoice_id', '=', $id],
                 ])
                 ->ids();
 
             Receivable::ids($receivables_ids)
                 ->update([
-                    'status'          => 'pending',
+                    'status'          => 'open',
                     'invoice_id'      => null,
                     'invoice_line_id' => null
                 ]);
@@ -399,7 +399,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
         $self->read(['id']);
         foreach($self as $invoice) {
                 $receivables_ids = Receivable::search([
-                    ['status', '=', 'posted'],
+                    ['status', '=', 'settled'],
                     ['invoice_id', '=', $invoice['id']],
                 ])
                 ->ids();
@@ -415,14 +415,14 @@ class Invoice extends \finance\accounting\invoice\Invoice {
         $self->read(['id']);
         foreach($self as $invoice) {
             $receivables_ids = Receivable::search([
-                    ['status', '=', 'posted'],
+                    ['status', '=', 'settled'],
                     ['invoice_id', '=', $invoice['id']],
                 ])
                 ->ids();
 
             Receivable::ids($receivables_ids)
                 ->update([
-                    'status'          => 'pending',
+                    'status'          => 'open',
                     'invoice_id'      => null,
                     'invoice_line_id' => null
                 ]);
@@ -435,7 +435,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
         return [
             'reverse' => [
                 'description'   => 'Creates a new invoice of type credit note to reverse invoice.',
-                'help'          => 'Reversing an invoice can only be done when status is "invoice".',
+                'help'          => 'Reversing an invoice can only be done when status is "posted".',
                 'policies'      => [],
                 'function'      => 'doReverseInvoice'
             ],
@@ -591,7 +591,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                     'journal_id'            => $journal['id'],
                     'origin_object_class'   => self::getType(),
                     'origin_object_id'      => $id,
-                    'status'                => 'validated'
+                    'status'                => 'posted'
                 ])
                 ->first();
 

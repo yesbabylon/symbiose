@@ -224,10 +224,10 @@ class AccountingOperation extends Model {
                 'policies'    => [],
                 'function'    => 'doGenerateAccountingEntries'
             ],
-            'validate_accounting_entries' => [
-                'description' => 'Validate the accounting entries of the operation.',
+            'post_accounting_entries' => [
+                'description' => 'Post the accounting entries of the operation.',
                 'policies'    => [],
-                'function'    => 'doValidateAccountingEntries'
+                'function'    => 'doPostAccountingEntries'
             ],
             'assign_operation_number' => [
                 'description' => 'Assign the definitive accounting operation number.',
@@ -492,7 +492,7 @@ class AccountingOperation extends Model {
         }
     }
 
-    protected static function doValidateAccountingEntries($self) {
+    protected static function doPostAccountingEntries($self) {
         $self->read([
             'accounting_entries_ids' => [
                 'id',
@@ -507,12 +507,12 @@ class AccountingOperation extends Model {
                 if(count($entry['entry_lines_ids']) === 0 || !$entry['is_balanced']) {
                     throw new \Exception('unbalanced_accounting_entry', EQ_ERROR_INVALID_PARAM);
                 }
-                if($entry['status'] === 'cancelled') {
-                    throw new \Exception('cancelled_accounting_entry', EQ_ERROR_INVALID_PARAM);
+                if($entry['status'] === 'reversed') {
+                    throw new \Exception('reversed_accounting_entry', EQ_ERROR_INVALID_PARAM);
                 }
 
                 AccountingEntry::id($entry['id'])
-                    ->update(['status' => 'validated']);
+                    ->update(['status' => 'posted']);
             }
         }
     }
@@ -607,7 +607,7 @@ class AccountingOperation extends Model {
 
     protected static function onbeforePost($self) {
         $self->do('generate_accounting_entries');
-        $self->do('validate_accounting_entries');
+        $self->do('post_accounting_entries');
         $self->do('assign_operation_number');
         $self->update(['posted_at' => time()]);
     }

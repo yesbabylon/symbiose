@@ -406,13 +406,13 @@ class TimeEntry extends SaleEntry {
         $self->read(['status', 'project_id' => ['is_internal'], 'is_billable', 'is_full_day', 'time_start', 'time_end', 'duration', 'billable_duration', 'billed_duration']);
 
         foreach($self as $id => $entry) {
-            if(in_array($entry['status'], ['pending', 'ready'])) {
+            if(in_array($entry['status'], ['pending', 'submitted'])) {
                 // allowed statuses, keep checking business constraints below
             }
             else {
                 $editable_fields = ['description', 'detailed_description', 'status'];
 
-                if($entry['status'] === 'validated') {
+                if($entry['status'] === 'approved') {
                     $editable_fields = array_merge($editable_fields, ['product_id', 'price_id', 'unit_price', 'is_billable', 'billed_duration', 'has_receivable', 'receivable_id']);
                 }
 
@@ -865,7 +865,7 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function policyReadyForValidation($self): array {
+    public static function policyReadyForSubmission($self): array {
         $result = [];
         $self->read(['description', 'project_id', 'user_id', 'origin', 'duration']);
         foreach($self as $id => $entry) {
@@ -894,13 +894,13 @@ class TimeEntry extends SaleEntry {
                     'submit' => [
                         'description' => 'Sets time entry as ready for validation.',
                         'policies' => [
-                            'ready-for-validation',
+                            'ready-for-submission',
                         ],
-                        'status' => 'ready',
+                        'status' => 'submitted',
                     ],
                 ],
             ],
-            'ready' => [
+            'submitted' => [
                 'description' => 'Time entry required information are waiting for approval.',
                 'help' => 'Specific information about time entry (project, user, origin and duration) have been completed and time entry is waiting for approval.',
                 'icon' => 'pending',
@@ -909,29 +909,29 @@ class TimeEntry extends SaleEntry {
                         'description' => 'Refuse time entry, sets its status back to pending.',
                         'status' => 'pending',
                     ],
-                    'validate' => [
-                        'description' => 'Validate time entry.',
-                        'status' => 'validated',
+                    'approve' => [
+                        'description' => 'Approve time entry.',
+                        'status' => 'approved',
                     ],
                 ],
             ],
-            'validated' => [
-                'description' => 'Sale information must be completed to bill the sale entry.',
-                'help' => 'Time entry information have been validated, product and prices information must be completed to be billable.',
+            'approved' => [
+                'description' => 'Sale information must be completed before the time entry can be charged.',
+                'help' => 'The time entry has been approved; product and price information must be completed before creating its receivable.',
                 'icon' => 'check_circled',
                 'transitions' => [
-                    'bill' => [
-                        'description' => 'Create receivable, from time entry, who will be billed to the customer.',
+                    'charge' => [
+                        'description' => 'Create the receivable that financially handles the time entry.',
                         'onbefore' => 'doCreateReceivable',
                         'policies' => [
                             'billable',
                         ],
-                        'status' => 'billed',
+                        'status' => 'charged',
                     ],
                 ],
             ],
-            'billed' => [
-                'description' => 'A receivable was generated, it can be invoiced to the customer.',
+            'charged' => [
+                'description' => 'A receivable was generated and can now be allocated.',
                 'icon' => 'receipt_long',
                 'transitions' => [
                 ],

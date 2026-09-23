@@ -82,10 +82,10 @@
             "label": "Status",
             "description": "Status de l'entrée.",
             "selection": {
-                "pending": "Brouillon",
-                "ready": "Prête",
-                "validated": "Validée",
-                "billed": "Comptabilisée"
+                "pending": "En cours",
+                "submitted": "Soumise",
+                "approved": "Approuvée",
+                "charged": "Prise en charge"
             },
             "help": ""
         }
@@ -95,8 +95,12 @@
             "name": "Entrée de vente",
             "description": "Formulaire de modification par défaut d'une entrée de vente.",
             "actions": {
-                "action.transition.bill": {
-                    "label": "Comptabiliser",
+                "action.transition.approve": {
+                    "label": "Approuver",
+                    "help": ""
+                },
+                "action.transition.charge": {
+                    "label": "Prendre en charge",
                     "help": ""
                 }
             },

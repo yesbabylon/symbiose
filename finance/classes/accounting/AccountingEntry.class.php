@@ -83,8 +83,8 @@ class AccountingEntry extends Model {
                 'type'              => 'string',
                 'selection'         => [
                     'pending',
-                    'validated',
-                    'cancelled'
+                    'posted',
+                    'reversed'
                 ],
                 'default'           => 'pending',
                 'description'       => 'Status of the accounting entry.',

@@ -47,11 +47,12 @@ class Invoice extends Model {
                 'type'              => 'string',
                 'description'       => 'Current status of the invoice.',
                 'selection'         => [
-                    'invoice',
+                    'proforma',
+                    'posted',
                     'cancelled'
                 ],
-                'default'           => 'invoice',
-                'help'              => "Status set to 'invoice' means the invoice has been emitted with a unique number and accounting entries. `cancelled` means that the invoice has been cancelled through a credit note (and related reversing entries)."
+                'default'           => 'posted',
+                'help'              => "Status set to 'posted' means the invoice has been emitted with a unique number and accounting entries. `cancelled` means that the invoice has been cancelled through a credit note (and related reversing entries)."
             ],
 
             'invoice_type' => [
@@ -97,7 +98,7 @@ class Invoice extends Model {
                     'credit_balance',   // over paid: reimbursement to buyer is required
                     'balanced'          // fully paid and balanced
                 ],
-                'visible'           => ['status', '=', 'invoice'],
+                'visible'           => ['status', '=', 'posted'],
                 'default'           => 'pending'
             ],
 
@@ -172,12 +173,12 @@ class Invoice extends Model {
                 'description' => 'Draft invoice that is being completed.',
                 'icon' => 'edit',
                 'transitions' => [
-                    'invoice' => [
-                        'description' => 'Invoice the drafted proforma.',
+                    'post' => [
+                        'description' => 'Post the drafted proforma.',
                         'policies' => [
                             'can-be-invoiced',
                         ],
-                        'status' => 'invoice',
+                        'status' => 'posted',
                     ],
                     'cancel' => [
                         'description' => 'Cancel the invoice.',
@@ -185,8 +186,8 @@ class Invoice extends Model {
                     ],
                 ],
             ],
-            'invoice' => [
-                'description' => 'Invoice has been emitted and can no longer be modified.',
+            'posted' => [
+                'description' => 'Invoice has been posted and can no longer be modified.',
                 'icon' => 'receipt_long',
                 'transitions' => [
                     'cancel' => [

@@ -97,7 +97,7 @@
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc",
-                            "domain": [ ["status", "=", "billed"], ["has_receivable", "=", true] ]
+                            "domain": [ ["status", "=", "charged"], ["has_receivable", "=", true] ]
                         }
                     },
                     {
@@ -302,7 +302,7 @@
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc",
-                            "domain": ["status", "=", "posted"]
+                            "domain": ["status", "=", "settled"]
                         }
                     }
                 ]
@@ -339,7 +339,7 @@
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc",
-                            "domain": [["status", "=", "invoice"], ["payment_status", "<>", "balanced"]]
+                            "domain": [["status", "=", "posted"], ["payment_status", "<>", "balanced"]]
                         }
                     },
                     {
@@ -353,7 +353,7 @@
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc",
-                            "domain": [["status", "=", "invoice"], ["payment_status", "=", "balanced"]]
+                            "domain": [["status", "=", "posted"], ["payment_status", "=", "balanced"]]
                         }
                     },
                     {

@@ -43,7 +43,7 @@ list($params, $providers) = eQual::announce([
         'status' => [
             'type'              => 'string',
             'description'       => 'Version of the invoice.',
-            'selection'         => ['all', 'proforma', 'invoice', 'cancelled'],
+            'selection'         => ['all', 'proforma', 'posted', 'cancelled'],
             'default'           => 'all'
         ],
 

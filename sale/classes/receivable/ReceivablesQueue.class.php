@@ -42,7 +42,7 @@ class ReceivablesQueue extends Model {
                 'foreign_object'    => 'sale\receivable\Receivable',
                 'foreign_field'     => 'receivables_queue_id',
                 'description'       => 'The pending Receivables attached to the queue.',
-                'domain'            => ['status', '=', 'pending']
+                'domain'            => ['status', '=', 'open']
             ],
 
             'posted_receivables_ids' => [
@@ -50,7 +50,7 @@ class ReceivablesQueue extends Model {
                 'foreign_object'    => 'sale\receivable\Receivable',
                 'foreign_field'     => 'receivables_queue_id',
                 'description'       => 'The posted Receivables attached to the queue.',
-                'domain'            => ['status', '=', 'posted']
+                'domain'            => ['status', '=', 'settled']
             ],
 
             'pending_receivables_count' => [

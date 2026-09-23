@@ -56,7 +56,7 @@ if($invoice['invoice_type'] != 'invoice') {
 }
 
 
-if($invoice['status'] != 'invoice') {
+if($invoice['status'] != 'posted') {
     throw new Exception("incompatible_status", QN_ERROR_UNKNOWN_OBJECT);
 }
 

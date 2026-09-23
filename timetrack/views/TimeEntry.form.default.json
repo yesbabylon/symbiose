@@ -3,7 +3,7 @@
     "description": "Default form for time entry",
     "actions": [
         {
-            "id": "action.transition.ready",
+            "id": "action.transition.submit",
             "label": "Submit",
             "controller": "model_transition",
             "params": {
@@ -17,17 +17,17 @@
             ]
         },
         {
-            "id": "action.transition.validate",
-            "label": "Validate",
+            "id": "action.transition.approve",
+            "label": "Approve",
             "controller": "model_transition",
             "params": {
                 "entity": "timetrack\\TimeEntry",
-                "transition": "validate",
+                "transition": "approve",
                 "ids": []
             },
             "visible": [
                 ["state", "<>", "draft"],
-                ["status", "=", "ready"]
+                ["status", "=", "submitted"]
             ]
         },
         {
@@ -41,21 +41,21 @@
             },
             "visible": [
                 ["state", "<>", "draft"],
-                ["status", "=", "ready"]
+                ["status", "=", "submitted"]
             ]
         },
         {
-            "id": "action.transition.bill",
-            "label": "Bill",
+            "id": "action.transition.charge",
+            "label": "Charge",
             "controller": "model_transition",
             "params": {
                 "entity": "timetrack\\TimeEntry",
-                "transition": "bill",
+                "transition": "charge",
                 "ids": []
             },
             "visible": [
                 ["state", "<>", "draft"],
-                ["status", "=", "validated"],
+                ["status", "=", "approved"],
                 ["is_billable", "=", true]
             ]
         }

@@ -85,7 +85,7 @@
             "name": "Saisie du temps",
             "description": "Formulaire de modification par défaut d'une saisie de temps.",
             "actions": {
-                "action.transition.ready": {
+                "action.transition.submit": {
                     "label": "Soumettre",
                     "help": ""
                 },
@@ -93,12 +93,12 @@
                     "label": "Refuser",
                     "help": ""
                 },
-                "action.transition.validate": {
-                    "label": "Valider",
+                "action.transition.approve": {
+                    "label": "Approuver",
                     "help": ""
                 },
-                "action.transition.bill": {
-                    "label": "Comptabiliser",
+                "action.transition.charge": {
+                    "label": "Prendre en charge",
                     "help": ""
                 }
             },

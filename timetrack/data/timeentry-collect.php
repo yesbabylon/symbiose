@@ -70,9 +70,9 @@ list($params, $providers) = eQual::announce([
             'selection'      => [
                     'all',
                     'pending',
-                    'ready',
-                    'validated',
-                    'billed'
+                    'submitted',
+                    'approved',
+                    'charged'
                 ],
             'default'        => 'all'
         ]

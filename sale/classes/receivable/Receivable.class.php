@@ -62,13 +62,13 @@ class Receivable extends Model {
 
             'status' => [
                 'type'              => 'string',
-                'description'       => 'Status of the receivable (pending, posted or cancelled).',
+                'description'       => 'Status of the receivable (open, settled or cancelled).',
                 'selection'         => [
-                    'pending',
-                    'posted',
+                    'open',
+                    'settled',
                     'cancelled'
                 ],
-                'default'           => 'pending'
+                'default'           => 'open'
             ],
 
             'origin_object_class' => [
@@ -274,20 +274,20 @@ class Receivable extends Model {
     public static function getActions() {
         return array_merge(parent::getActions(), [
             'post_invoice' => [
-                'description' => 'Create invoice lines from pending receivables.',
+                'description' => 'Create invoice lines from open receivables.',
                 'help'        => 'Uses the provided proforma invoice when possible, otherwise creates or reuses a customer proforma.',
                 'policies'    => [],
                 'function'    => 'doPostInvoice'
             ],
             'post_service_account' => [
-                'description' => 'Create service account entries from pending receivables.',
+                'description' => 'Create service account entries from open receivables.',
                 'help'        => 'Uses the provided service account when possible, otherwise uses the unique active service account of the customer.',
                 'policies'    => [],
                 'function'    => 'doPostServiceAccount'
             ],
             'unpost_invoice' => [
                 'description' => 'Remove receivables from their proforma invoices.',
-                'help'        => 'Deletes the related invoice lines and sets the receivables back to pending.',
+                'help'        => 'Deletes the related invoice lines and sets the receivables back to open.',
                 'policies'    => ['can_unpost_invoice'],
                 'function'    => 'doUnpostInvoice'
             ]
@@ -314,9 +314,9 @@ class Receivable extends Model {
         ]);
 
         foreach($self as $id => $receivable) {
-            if($receivable['status'] !== 'posted') {
+            if($receivable['status'] !== 'settled') {
                 $result[$id] = [
-                    'receivable_not_posted' => 'Only posted receivables can be removed from an invoice.'
+                    'receivable_not_settled' => 'Only settled receivables can be removed from an invoice.'
                 ];
             }
             elseif(!isset($receivable['invoice_id']['id'])) {
@@ -442,7 +442,7 @@ class Receivable extends Model {
                 ->update([
                     'invoice_id'      => $invoice['id'],
                     'invoice_line_id' => $invoiceLine['id'],
-                    'status'          => 'posted'
+                    'status'          => 'settled'
                 ]);
         }
     }
@@ -456,7 +456,7 @@ class Receivable extends Model {
 
             self::id($id)
                 ->update([
-                    'status'          => 'pending',
+                    'status'          => 'open',
                     'invoice_id'      => null,
                     'invoice_line_id' => null
                 ]);
@@ -497,8 +497,8 @@ class Receivable extends Model {
         }
 
         foreach($self as $id => $receivable) {
-            if($receivable['status'] !== 'pending') {
-                throw new \Exception('receivable_not_pending', EQ_ERROR_INVALID_PARAM);
+            if($receivable['status'] !== 'open') {
+                throw new \Exception('receivable_not_open', EQ_ERROR_INVALID_PARAM);
             }
 
             if($receivable['origin_object_class'] !== 'timetrack\\TimeEntry') {
@@ -562,7 +562,7 @@ class Receivable extends Model {
                 ->update([
                     'service_account_id'        => $serviceAccount['id'] ,
                     'service_account_entry_id'  => $serviceAccountEntry['id'],
-                    'status'                    => 'posted'
+                    'status'                    => 'settled'
                 ]);
         }
     }
@@ -764,8 +764,8 @@ class Receivable extends Model {
         $self->read(['status']);
         foreach($self as $receivable) {
             if(array_key_exists('receivables_queue_id', $values)) {
-                if($receivable['status'] !== 'pending') {
-                    return ['receivables_queue_id' => ['not_allowed' => 'Queue can be modified only when status pending.']];
+                if($receivable['status'] !== 'open') {
+                    return ['receivables_queue_id' => ['not_allowed' => 'Queue can be modified only when status is open.']];
                 }
 
                 if(is_null($values['receivables_queue_id'])) {

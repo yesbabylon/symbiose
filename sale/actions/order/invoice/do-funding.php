@@ -46,7 +46,7 @@ $invoice = Invoice::id($params['id'])
             'price', 'balance', 'due_date'])
     ->first(true);
 
-if($invoice['status'] != 'invoice') {
+if($invoice['status'] != 'posted') {
     throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
 }
 

@@ -15,7 +15,7 @@
                 "free_qty": 0,
                 "discount": 0,
                 "object_id": 4,
-                "status": "billed"
+                "status": "charged"
             },
             {
                 "id": 2,
@@ -46,7 +46,7 @@
                 "free_qty": 0,
                 "discount": 0,
                 "object_id": 4,
-                "status": "billed",
+                "status": "charged",
                 "date_from": "2024-04-01T00:00:00+00:00",
                 "date_to": "2024-05-01T00:00:00+00:00"
             },

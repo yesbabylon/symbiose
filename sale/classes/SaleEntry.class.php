@@ -159,9 +159,9 @@ class SaleEntry extends Model {
                 'type'              => 'string',
                 'selection'         => [
                     'pending',
-                    'ready',
-                    'validated',
-                    'billed'
+                    'submitted',
+                    'approved',
+                    'charged'
                 ],
                 'description'       => 'Status of the sale entry.',
                 'default'           => 'pending'
@@ -188,9 +188,9 @@ class SaleEntry extends Model {
 
     public static function getPolicies(): array {
         return [
-            'ready-for-validation' => [
-                'description' => 'Verifies that the sale entry can enter validation process (Used in timetrack\TimeEntry).',
-                'function'    => 'policyReadyForValidation'
+            'ready-for-submission' => [
+                'description' => 'Verifies that the sale entry can be submitted for approval (used in timetrack\TimeEntry).',
+                'function'    => 'policyReadyForSubmission'
             ],
             'billable' => [
                 'description' => 'Verifies that sale entry holds all information required for billing.',
@@ -249,7 +249,7 @@ class SaleEntry extends Model {
      * @param $self
      * @return array
      */
-    public static function policyReadyForValidation($self): array {
+    public static function policyReadyForSubmission($self): array {
         $result = [];
         $self->read(['id']);
         foreach($self as $id => $entry) {
@@ -261,8 +261,8 @@ class SaleEntry extends Model {
         $result = [];
         $self->read(['status', 'is_internal', 'customer_id', 'product_id', 'price_id', 'unit_price', 'qty', 'is_billable']);
         foreach($self as $id => $entry) {
-            // #memo - a sale entry can be set to 'billed' status even if not billable (to mark the entry as processed when there is no invoicing)
-            if( $entry['status'] !== 'validated' ||
+            // #memo - a sale entry can be set to 'charged' status even if not billable (to mark the entry as processed when no receivable is required)
+            if( $entry['status'] !== 'approved' ||
                 (!$entry['is_internal'] && (!isset($entry['customer_id']) || !isset($entry['product_id']) || !isset($entry['price_id'])))
             ) {
                 trigger_error("APP::Sale entry [{$id}] is not billable ({$entry['status']}) : [{$entry['customer_id']}]; product [{$entry['product_id']}]; price [{$entry['price_id']}]", EQ_REPORT_WARNING);
@@ -322,17 +322,17 @@ class SaleEntry extends Model {
                         'description' => 'Sets sale entry as ready for validation.',
                         'help' => 'Can only be applied if sale\\SaleEntry has a validation process.',
                         'policies' => [
-                            'ready-for-validation',
+                            'ready-for-submission',
                         ],
-                        'status' => 'ready',
+                        'status' => 'submitted',
                     ],
-                    'validate' => [
-                        'description' => 'Validate sale entry.',
-                        'status' => 'validated'
+                    'approve' => [
+                        'description' => 'Approve sale entry.',
+                        'status' => 'approved'
                     ],
                 ],
             ],
-            'ready' => [
+            'submitted' => [
                 'description' => 'Sale entry submitted for approval.',
                 'help' => 'This status can be used by children of this class to check the completed specific information (Used by timetrack\\TimeEntry).',
                 'icon' => 'pending',
@@ -341,29 +341,29 @@ class SaleEntry extends Model {
                         'description' => 'Refuse sale entry, sets its status back to pending.',
                         'status' => 'pending',
                     ],
-                    'validate' => [
-                        'description' => 'Validate sale entry.',
-                        'status' => 'validated',
+                    'approve' => [
+                        'description' => 'Approve sale entry.',
+                        'status' => 'approved',
                     ],
                 ],
             ],
-            'validated' => [
-                'description' => 'Sale entry validated, now sale information must be completed to bill the sale entry.',
-                'help' => 'To bill the sale entry the sale information (product, price, unit price) must be completed.',
+            'approved' => [
+                'description' => 'Sale entry approved; its financial information must now be completed before charging it.',
+                'help' => 'To charge the sale entry, its sale information (product, price and unit price) must be completed.',
                 'icon' => 'check_circle',
                 'transitions' => [
-                    'bill' => [
-                        'description' => 'Create receivable, from sale entry, who will be invoiced to the customer.',
+                    'charge' => [
+                        'description' => 'Create the receivable that financially handles the sale entry.',
                         'onbefore' => 'doCreateReceivable',
                         'policies' => [
                             'billable',
                         ],
-                        'status' => 'billed',
+                        'status' => 'charged',
                     ],
                 ],
             ],
-            'billed' => [
-                'description' => 'A receivable was generated, it can be invoiced to the customer.',
+            'charged' => [
+                'description' => 'A receivable was generated and can now be allocated.',
                 'help' => 'Sale entry life cycle is over, its data cannot be modified.',
                 'icon' => 'receipt_long',
                 'transitions' => [

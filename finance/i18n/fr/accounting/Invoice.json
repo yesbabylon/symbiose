@@ -18,7 +18,7 @@
             "description": "La situation à un moment donné au cours d'un processus.",
             "selection": {
                 "proforma": "pro forma",
-                "invoice": "facture",
+                "posted": "comptabilisée",
                 "cancelled": "annulée"
             },
             "help": ""

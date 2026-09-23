@@ -42,7 +42,7 @@ list($params, $providers) = eQual::announce([
         'status' => [
             'type'              => 'string',
             'description'       => 'Version of the receivable.',
-            'selection'         => ['all','pending', 'posted', 'cancelled'],
+            'selection'         => ['all', 'open', 'settled', 'cancelled'],
             'default'           => 'all'
         ],
 
