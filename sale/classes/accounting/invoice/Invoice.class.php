@@ -608,10 +608,10 @@ class Invoice extends \finance\accounting\invoice\Invoice {
         $result = [];
 
         // retrieve specific accounts numbers
-        $account_sales = Setting::get_value('sale', 'accounting', 'account_sales', 'not_found');
-        $account_sales_taxes = Setting::get_value('sale', 'accounting', 'account_sales-taxes', 'not_found');
-        $account_trade_debtors = Setting::get_value('sale', 'accounting', 'account_trade-debtors', 'not_found');
-        // $account_downpayments = Setting::get_value('sale', 'accounting', 'account_downpayment', 'not_found');
+        $account_sales = Setting::get_value('sale', 'accounting', 'account.sales', 'not_found');
+        $account_sales_taxes = Setting::get_value('sale', 'accounting', 'account.sales_taxes', 'not_found');
+        $account_trade_debtors = Setting::get_value('sale', 'accounting', 'account.trade_debtors', 'not_found');
+        // $account_downpayments = Setting::get_value('sale', 'accounting', 'account.downpayment', 'not_found');
 
         $accountSales = Account::search(['code', '=', $account_sales])->read(['id', 'description'])->first();
         $accountSalesTaxes = Account::search(['code', '=', $account_sales_taxes])->read(['id', 'description'])->first();
