@@ -26,7 +26,7 @@ list($params, $providers) = eQual::announce([
 
         'has_pending_receivables' => [
             'type'              => 'boolean',
-            'description'       => 'Has pending receivables waiting to be invoiced.'
+            'description'       => 'Has open receivables waiting to be allocated.'
         ]
 
     ],
@@ -53,7 +53,7 @@ $params['domain'] = (new Domain($params['domain']))
 
 $result = eQual::run('get', 'model_collect', $params, true);
 
-// Filter here because pending_receivables_count is a computed field that is not stored in database
+// Filter here because pending_receivables_count is a computed field that is not stored in database.
 if(isset($params['has_pending_receivables']) && $params['has_pending_receivables']) {
     $result = array_values(
         array_filter(

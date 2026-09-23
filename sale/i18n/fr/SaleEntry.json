@@ -83,9 +83,9 @@
             "description": "Status de l'entrée.",
             "selection": {
                 "pending": "En cours",
-                "submitted": "Soumise",
-                "approved": "Approuvée",
-                "charged": "Prise en charge"
+                "submitted": "A valider",
+                "approved": "Validé",
+                "charged": "Pris en charge"
             },
             "help": ""
         }

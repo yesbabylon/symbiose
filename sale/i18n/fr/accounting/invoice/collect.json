@@ -26,7 +26,7 @@
             "selection": {
                 "all": "Toutes",
                 "proforma": "pro forma",
-                "posted": "comptabilisée",
+                "posted": "Comptabilisée",
                 "cancelled": "annulée"
             },
             "help": ""

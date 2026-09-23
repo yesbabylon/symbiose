@@ -4,8 +4,8 @@
     "description": "Une file de créances regroupe les éléments ouverts ou déjà traités d'un client.",
     "model": {
         "posted_receivables_ids": {
-            "label": "Créances traitées",
-            "description": "Liste des créances traitées rattachées à la file.",
+            "label": "Créances soldées",
+            "description": "Liste des créances soldées rattachées à la file.",
             "help": ""
         }
     },
@@ -31,7 +31,7 @@
                     "help": ""
                 },
                 "section.posted_receivables_ids": {
-                    "label": "Créances traitées",
+                    "label": "Créances soldées",
                     "help": ""
                 }
             }

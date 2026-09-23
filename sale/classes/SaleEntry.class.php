@@ -202,7 +202,7 @@ class SaleEntry extends Model {
     public static function getActions() {
         return [
             'create_receivable' => [
-                'description'   => "Sets the validated flag to true.",
+                'description'   => 'Create a receivable for the sale entry.',
                 'policies'      => [],
                 'function'      => 'doCreateReceivable'
             ],
@@ -319,7 +319,7 @@ class SaleEntry extends Model {
                 'icon' => 'edit',
                 'transitions' => [
                     'submit' => [
-                        'description' => 'Sets sale entry as ready for validation.',
+                        'description' => 'Submit sale entry for approval.',
                         'help' => 'Can only be applied if sale\\SaleEntry has a validation process.',
                         'policies' => [
                             'ready-for-submission',
@@ -444,7 +444,7 @@ class SaleEntry extends Model {
         $self->read(['has_receivable']);
         foreach($self as $sale_entry) {
             if($sale_entry['has_receivable']) {
-                return ['has_receivable' => ['non_editable' => 'Billed sale entry cannot be modified.']];
+                return ['has_receivable' => ['non_editable' => 'Charged sale entry cannot be modified.']];
             }
         }
 

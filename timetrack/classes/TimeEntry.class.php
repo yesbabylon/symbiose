@@ -892,7 +892,7 @@ class TimeEntry extends SaleEntry {
                 'icon' => 'edit',
                 'transitions' => [
                     'submit' => [
-                        'description' => 'Sets time entry as ready for validation.',
+                        'description' => 'Submit time entry for approval.',
                         'policies' => [
                             'ready-for-submission',
                         ],

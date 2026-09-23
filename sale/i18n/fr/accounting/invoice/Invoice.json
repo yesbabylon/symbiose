@@ -3,6 +3,16 @@
     "plural": "Factures",
     "description": "",
     "model": {
+        "status": {
+            "label": "Statut",
+            "description": "État courant de la facture.",
+            "help": "Suit la facture depuis sa préparation jusqu'à sa comptabilisation ou son annulation.",
+            "selection": {
+                "proforma": "Proforma",
+                "posted": "Comptabilisée",
+                "cancelled": "Annulée"
+            }
+        },
         "organization_id": {
             "label": "Organisation émettrice",
             "description": "Organisation émettrice de la facture.",

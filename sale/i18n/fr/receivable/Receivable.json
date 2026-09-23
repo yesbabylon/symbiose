@@ -7,9 +7,9 @@
             "label": "Statut",
             "description": "Statut actuel de la créance.",
             "selection": {
-                "open": "Ouverte",
-                "settled": "Traitée",
-                "cancelled": "Annulée"
+                "open": "Ouvert",
+                "settled": "Soldé",
+                "cancelled": "Annulé"
             },
             "help": ""
         }

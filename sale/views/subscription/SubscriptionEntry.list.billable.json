@@ -12,13 +12,13 @@
             "default" : false,
             "actions" : [
                 {
-                    "id": "header.selection.actions.bill",
-                    "label": "Bill",
+                    "id": "header.selection.actions.charge",
+                    "label": "Charge",
                     "icon": "receipt_long",
                     "controller": "core_model_transition",
                     "params": {
                         "entity": "sale\\subscription\\SubscriptionEntry",
-                        "transition": "bill"
+                        "transition": "charge"
                     }
                 }
             ]

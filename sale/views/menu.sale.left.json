@@ -279,11 +279,11 @@
                         }
                     },
                     {
-                        "id": "item.receivable.pending",
+                        "id": "item.receivable.open",
                         "type": "entry",
-                        "label": "Pending",
+                        "label": "Open",
                         "icon": "pending_actions",
-                        "description": "Display pending receivables.",
+                        "description": "Display open receivables.",
                         "context": {
                             "entity": "sale\\receivable\\Receivable",
                             "view": "list.pending",
@@ -292,11 +292,11 @@
                         }
                     },
                     {
-                        "id": "item.receivable.posted",
+                        "id": "item.receivable.settled",
                         "type": "entry",
-                        "label": "Posted",
+                        "label": "Settled",
                         "icon": "receipt_long",
-                        "description": "Posted receivables.",
+                        "description": "Settled receivables.",
                         "context": {
                             "entity": "sale\\receivable\\Receivable",
                             "view": "list.default",

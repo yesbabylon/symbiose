@@ -1,7 +1,7 @@
 {
     "name": "Facture",
     "plural": "Factures",
-    "description": "Une facture est un document juridique délivré à un acheteur, qui se rapporte à une vente, et fait partie du système comptable.",
+    "description": "Une facture est un document juridique délivré à un acheteur, qui se rapporte à une vente et fait partie du système comptable.",
     "model": {
         "name": {
             "label": "Numéro",
@@ -17,9 +17,9 @@
             "label": "Statut",
             "description": "La situation à un moment donné au cours d'un processus.",
             "selection": {
-                "proforma": "pro forma",
-                "posted": "comptabilisée",
-                "cancelled": "annulée"
+                "proforma": "Proforma",
+                "posted": "Comptabilisée",
+                "cancelled": "Annulée"
             },
             "help": ""
         },

@@ -5,9 +5,9 @@
             "description": "Statut des créances à afficher.",
             "selection": {
                 "all": "Toutes",
-                "open": "Ouvertes",
-                "settled": "Traitées",
-                "cancelled": "Annulées"
+                "open": "Ouvert",
+                "settled": "Soldé",
+                "cancelled": "Annulé"
             },
             "help": ""
         }

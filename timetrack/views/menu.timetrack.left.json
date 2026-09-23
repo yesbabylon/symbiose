@@ -40,7 +40,7 @@
                         }
                     },
                     {
-                        "id": "time_entries.ready",
+                        "id": "time_entries.submitted",
                         "type": "entry",
                         "label": "To validate",
                         "icon": "task_alt",
@@ -56,9 +56,9 @@
                         }
                     },
                     {
-                        "id": "time_entries.billable",
+                        "id": "time_entries.approved",
                         "type": "entry",
-                        "label": "To bill",
+                        "label": "Approved",
                         "icon": "payments",
                         "description": "Entries waiting to be invoiced.",
                         "context": {
@@ -110,11 +110,11 @@
                                 }
                             },
                             {
-                                "id": "time_entries.billed",
+                                "id": "time_entries.charged",
                                 "type": "entry",
-                                "label": "Billed",
+                                "label": "Charged",
                                 "icon": "price_check",
-                                "description": "Entries waiting to be validated.",
+                                "description": "Entries for which a receivable has been generated.",
                                 "context": {
                                     "entity": "timetrack\\TimeEntry",
                                     "view": "list.default",

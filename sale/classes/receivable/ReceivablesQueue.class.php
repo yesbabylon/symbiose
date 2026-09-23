@@ -41,7 +41,7 @@ class ReceivablesQueue extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\receivable\Receivable',
                 'foreign_field'     => 'receivables_queue_id',
-                'description'       => 'The pending Receivables attached to the queue.',
+                'description'       => 'The open Receivables attached to the queue.',
                 'domain'            => ['status', '=', 'open']
             ],
 
@@ -49,14 +49,14 @@ class ReceivablesQueue extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\receivable\Receivable',
                 'foreign_field'     => 'receivables_queue_id',
-                'description'       => 'The posted Receivables attached to the queue.',
+                'description'       => 'The settled Receivables attached to the queue.',
                 'domain'            => ['status', '=', 'settled']
             ],
 
             'pending_receivables_count' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
-                'description'       => 'Quantity of pending receivables attached to the queue.',
+                'description'       => 'Quantity of open receivables attached to the queue.',
                 'function'          => 'calcPendingReceivablesCount'
             ],
 

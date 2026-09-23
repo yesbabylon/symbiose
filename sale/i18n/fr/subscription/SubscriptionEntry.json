@@ -33,12 +33,12 @@
             "name": "Entrée d'abonnement",
             "description": "Formulaire de modification d'une entrée d'abonnement.",
             "actions": {
-                "action.transition.validate": {
-                    "label": "Valider",
+                "action.transition.approve": {
+                    "label": "Approuver",
                     "description": "Valider cette entrée d'abonnement."
                 },
-                "action.transition.bill": {
-                    "label": "Facturer",
+                "action.transition.charge": {
+                    "label": "Prendre en charge",
                     "description": "Créer une créance pour cette entrée d'abonnement."
                 }
             }
@@ -47,16 +47,16 @@
             "name": "Entrées d'abonnement",
             "description": "Liste des entrées d'abonnement.",
             "actions": {
-                "action.transition.ready": {
-                    "label": "Marquer comme prêtes",
-                    "description": "Marquer les entrées d'abonnement sélectionnées comme prêtes."
+                "action.transition.submit": {
+                    "label": "Soumettre",
+                    "description": "Soumettre les entrées d'abonnement sélectionnées pour validation."
                 },
-                "action.transition.validate": {
-                    "label": "Valider",
+                "action.transition.approve": {
+                    "label": "Approuver",
                     "description": "Valider les entrées d'abonnement sélectionnées."
                 },
-                "action.transition.bill": {
-                    "label": "Facturer",
+                "action.transition.charge": {
+                    "label": "Prendre en charge",
                     "description": "Créer une créance pour les entrées d'abonnement sélectionnées."
                 }
             },

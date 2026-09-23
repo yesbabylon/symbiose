@@ -33,7 +33,7 @@
                                             {
                                                 "id": "item.current_month",
                                                 "label": "Current month overview",
-                                                "description": "Validated time entries waiting to be invoiced.",
+                                                "description": "Approved time entries waiting to be charged.",
                                                 "height": "50%",
                                                 "width": "100%",
                                                 "entity": "timetrack\\TimeEntry",
@@ -50,9 +50,9 @@
                                         "width": "50%",
                                         "items": [
                                             {
-                                                "id": "item.non_billed",
-                                                "label": "Entries to be billed",
-                                                "description": "All non-billed time entries, by status.",
+                                                "id": "item.non_charged",
+                                                "label": "Entries to be charged",
+                                                "description": "All non-charged time entries, by status.",
                                                 "height": "100%",
                                                 "width": "100%",
                                                 "entity": "timetrack\\TimeEntry",

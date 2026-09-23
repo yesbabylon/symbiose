@@ -38,9 +38,9 @@
             "selection": {
                 "all": "Tous",
                 "pending": "En cours",
-                "submitted": "Soumise",
-                "approved": "Approuvée",
-                "charged": "Prise en charge"
+                "submitted": "A valider",
+                "approved": "Validé",
+                "charged": "Pris en charge"
             }
         }
     }

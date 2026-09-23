@@ -3,12 +3,12 @@
     "description": "Subscription entry.",
     "actions": [
         {
-            "id": "action.transition.bill",
-            "label": "Bill",
+            "id": "action.transition.charge",
+            "label": "Charge",
             "controller": "model_transition",
             "params": {
                 "entity": "infra\\service\\SubscriptionEntry",
-                "transition": "bill",
+                "transition": "charge",
                 "ids": []
             },
             "visible": [

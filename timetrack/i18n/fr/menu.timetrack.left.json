@@ -16,14 +16,14 @@
         "time_entries.by_day_user": {
             "label": "Par jour et utilisateur"
         },
-        "time_entries.ready": {
-            "label": "À valider"
+        "time_entries.submitted": {
+            "label": "A valider"
         },
-        "time_entries.billable": {
-            "label": "À facturer"
+        "time_entries.approved": {
+            "label": "Validé"
         },
-        "time_entries.billed": {
-            "label": "Facturées"
+        "time_entries.charged": {
+            "label": "Pris en charge"
         },
         "time_entries.archived": {
             "label": "Archivées"

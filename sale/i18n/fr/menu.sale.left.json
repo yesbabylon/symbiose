@@ -85,12 +85,12 @@
             "label": "Toutes",
             "help": ""
         },
-        "item.receivable.pending": {
-            "label": "En attente",
+        "item.receivable.open": {
+            "label": "Ouvert",
             "help": ""
         },
-        "item.receivable.posted": {
-            "label": "Comptabilisées",
+        "item.receivable.settled": {
+            "label": "Soldé",
             "help": ""
         },
         "orders.group.all": {

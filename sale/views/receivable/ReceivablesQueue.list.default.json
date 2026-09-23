@@ -51,7 +51,7 @@
             {
                 "type": "field",
                 "value": "pending_receivables_count",
-                "label": "# Pending receivables",
+                "label": "# Open receivables",
                 "width": "40%"
             }
         ]

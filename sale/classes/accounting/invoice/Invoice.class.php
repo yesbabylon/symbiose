@@ -228,7 +228,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                         'status'    => 'posted',
                     ],
                     'cancel-proforma' => [
-                        'description' => 'Delete the proforma and set receivables statuses back to pending.',
+                        'description' => 'Delete the proforma and set receivables statuses back to open.',
                         'onafter' => 'onafterCancelProforma',
                         'status'  => 'proforma',
                     ]
@@ -244,7 +244,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                         'status' => 'cancelled',
                     ],
                     'cancel-keep-receivables' => [
-                        'description' => 'Set the invoice status as cancelled and set receivables statuses back to pending.',
+                        'description' => 'Set the invoice status as cancelled and set receivables statuses back to open.',
                         'onafter' => 'onafterCancelKeepReceivables',
                         'status' => 'cancelled',
                     ],
@@ -364,7 +364,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
 
 
     /**
-     * Generate the fundings for a collection of invoices that just transitioned to "invoiced".
+     * Generate the fundings for a collection of invoices that just transitioned to "posted".
      * Fundings must be created here because due_date is set at invoice emission
     */
     public static function onafterPost($self) {

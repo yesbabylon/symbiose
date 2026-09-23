@@ -27,12 +27,12 @@
     },
     "header": {
         "selection": {
-            "show_inline": ["action.transition.ready"],
+            "show_inline": ["action.transition.submit"],
             "default": false,
             "actions" : [
                 {
-                    "id": "action.transition.ready",
-                    "label": "Mark Ready",
+                    "id": "action.transition.submit",
+                    "label": "Submit",
                     "icon": "play_arrow",
                     "controller": "model_transition",
                     "params": {
@@ -41,23 +41,23 @@
                     }
                 },
                 {
-                    "id": "action.transition.validate",
-                    "label": "Validate",
+                    "id": "action.transition.approve",
+                    "label": "Approve",
                     "icon": "task_alt",
                     "controller": "model_transition",
                     "params": {
                         "entity": "timetrack\\TimeEntry",
-                        "transition": "validate"
+                        "transition": "approve"
                     }
                 },
                 {
-                    "id": "action.transition.bill",
-                    "label": "Bill",
+                    "id": "action.transition.charge",
+                    "label": "Charge",
                     "icon": "send",
                     "controller": "model_transition",
                     "params": {
                         "entity": "timetrack\\TimeEntry",
-                        "transition": "bill"
+                        "transition": "charge"
                     }
                 }
             ]

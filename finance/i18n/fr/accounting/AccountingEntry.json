@@ -33,9 +33,9 @@
             "description": "État courant de l'écriture comptable.",
             "help": "Suit l'écriture depuis sa préparation jusqu'à sa comptabilisation ou son extourne.",
             "selection": {
-                "pending": "en préparation",
-                "posted": "comptabilisée",
-                "reversed": "extournée"
+                "pending": "En préparation",
+                "posted": "Comptabilisée",
+                "reversed": "Extournée"
             }
         }
     },

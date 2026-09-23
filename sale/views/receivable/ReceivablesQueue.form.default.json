@@ -5,13 +5,13 @@
         {
             "id": "action.post-invoice",
             "label": "Invoice",
-            "description": "Invoice all pending receivables of the queue.",
+            "description": "Invoice all open receivables of the queue.",
             "controller": "sale_receivablequeue_post-invoice"
         },
         {
             "id": "action.post-service-account",
             "label": "Charge Service Account",
-            "description": "Post all pending time receivables of the queue to a service account.",
+            "description": "Post all open time receivables of the queue to a service account.",
             "controller": "sale_receivablequeue_post-service-account"
         }
     ],
@@ -52,7 +52,7 @@
             {
                 "sections": [
                     {
-                        "label": "Pending receivables",
+                        "label": "Open receivables",
                         "id": "section.pending_receivables_ids",
                         "visible": ["state", "<>", "draft"],
                         "rows": [
@@ -84,7 +84,7 @@
                         ]
                     },
                     {
-                        "label": "Posted receivables",
+                        "label": "Settled receivables",
                         "id": "section.posted_receivables_ids",
                         "visible": ["state", "<>", "draft"],
                         "rows": [
