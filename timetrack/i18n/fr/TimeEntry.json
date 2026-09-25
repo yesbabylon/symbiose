@@ -84,24 +84,6 @@
         "form.default": {
             "name": "Saisie du temps",
             "description": "Formulaire de modification par défaut d'une saisie de temps.",
-            "actions": {
-                "action.transition.submit": {
-                    "label": "Soumettre",
-                    "help": ""
-                },
-                "action.transition.refuse": {
-                    "label": "Refuser",
-                    "help": ""
-                },
-                "action.transition.approve": {
-                    "label": "Approuver",
-                    "help": ""
-                },
-                "action.transition.charge": {
-                    "label": "Prendre en charge",
-                    "help": ""
-                }
-            },
             "layout": {
                 "section.details": {
                     "label": "Détails",
@@ -120,6 +102,34 @@
         "list.default": {
             "name": "Saisies de temps",
             "description": "Liste des saisies de temps.",
+            "header": {
+                "selection": {
+                    "actions": {
+                        "action.transition.submit": {
+                            "label": "Soumettre",
+                            "help": ""
+                        },
+                        "action.transition.refuse": {
+                            "label": "Refuser",
+                            "help": ""
+                        },
+                        "action.transition.approve": {
+                            "label": "Approuver",
+                            "help": ""
+                        },
+                        "action.transition.charge": {
+                            "label": "Prendre en charge",
+                            "help": ""
+                        }
+                    }
+                }
+            },
+            "actions": {
+                "action.create-empty": {
+                    "label": "Nouveau",
+                    "help": ""
+                }
+            },
             "layout": {}
         },
         "list.grouped": {
