@@ -1,0 +1,24 @@
+{
+    "name": "Issued sales invoices",
+    "description": "Tax-excluded totals of issued sales invoices by month for the current year.",
+    "access": {
+        "groups": ["sale.default.users"]
+    },
+    "controller": "core_model_chart",
+    "layout": {
+        "entity": "sale\\accounting\\invoice\\Invoice",
+        "type": "bar",
+        "stacked": false,
+        "group_by": "range",
+        "range_field": "emission_date",
+        "range_interval": "month",
+        "range_from": "date.this.year.first",
+        "range_to": "date.this.year.last",
+        "datasets": [
+            {
+                "label": "Total HTVA",
+                "operation": ["SUM", "object.total"]
+            }
+        ]
+    }
+}

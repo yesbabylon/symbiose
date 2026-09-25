@@ -87,6 +87,16 @@
             "name": "Paiements",
             "description": "Liste des paiements.",
             "layout": {}
+        },
+        "dashboard.default": {
+            "name": "Tableau de bord des ventes",
+            "description": "Vue d'ensemble des paiements et de la facturation.",
+            "layout": {
+                "item.issued_invoices": {
+                    "label": "Factures de vente émises par mois (HTVA)",
+                    "description": "Totaux HTVA des factures de vente émises, regroupés par mois pour l'année en cours."
+                }
+            }
         }
     },
     "error": {

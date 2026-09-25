@@ -91,6 +91,11 @@
             "name": "Factures",
             "description": "",
             "layout": {}
+        },
+        "chart.issuedTotal": {
+            "name": "Factures de vente émises",
+            "description": "Totaux HTVA des factures de vente émises, regroupés par mois pour l'année en cours.",
+            "layout": {}
         }
     },
     "error": {}

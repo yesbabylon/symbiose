@@ -37,6 +37,28 @@
                                         ]
                                     }
                                 ]
+                            },
+                            {
+                                "height": "50%",
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "id": "item.issued_invoices",
+                                                "label": "Monthly issued sales invoices (excl. VAT)",
+                                                "description": "Tax-excluded totals of issued sales invoices by month for the current year.",
+                                                "width": "100%",
+                                                "entity": "sale\\accounting\\invoice\\Invoice",
+                                                "view": "chart.issued",
+                                                "domain": [
+                                                    ["status", "=", "posted"],
+                                                    ["invoice_type", "=", "invoice"]
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
                         ]
                     }
