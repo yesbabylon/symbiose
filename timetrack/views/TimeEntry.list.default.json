@@ -31,6 +31,9 @@
             "default": false,
             "actions" : [
                 {
+                    "id": "ACTION.CLONE"
+                },
+                {
                     "id": "action.transition.submit",
                     "label": "Submit",
                     "icon": "play_arrow",
