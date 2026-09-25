@@ -6,13 +6,9 @@
 */
 namespace purchase\supplier;
 
-use identity\IdentityFacet;
+use identity\IdentityFacetAbstract;
 
-class Supplier extends IdentityFacet {
-
-    public static function getModelTable(): string {
-        return self::getSlug();
-    }
+class Supplier extends IdentityFacetAbstract {
 
     public static function getName() {
         return 'Supplier';

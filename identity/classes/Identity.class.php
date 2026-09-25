@@ -301,7 +301,7 @@ class Identity extends IdentityAbstract {
                     // update backlink if required
                     if(isset($values[$facet_field])) {
                         $descriptor['class']::id($identity[$facet_field])->update(['identity_id' => $id]);
-                        if(is_subclass_of($descriptor['class'], IdentityFacet::class)) {
+                        if(is_subclass_of($descriptor['class'], IdentityFacetAbstract::class)) {
                             $descriptor['class']::id($identity[$facet_field])->do('sync_from_identity');
                         }
                     }

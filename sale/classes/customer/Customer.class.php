@@ -6,13 +6,9 @@
 */
 namespace sale\customer;
 
-use identity\IdentityFacet;
+use identity\IdentityFacetAbstract;
 
-class Customer extends IdentityFacet {
-
-    public static function getModelTable(): string {
-        return self::getSlug();
-    }
+class Customer extends IdentityFacetAbstract {
 
     public static function getName() {
         return 'Customer';

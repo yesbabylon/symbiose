@@ -6,11 +6,7 @@
 */
 namespace identity;
 
-class Contact extends IdentityFacet {
-
-    public static function getModelTable(): string {
-        return self::getSlug();
-    }
+class Contact extends IdentityFacetAbstract {
 
     public static function getName() {
         return "Contact";

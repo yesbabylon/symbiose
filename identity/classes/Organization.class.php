@@ -8,14 +8,10 @@
 namespace identity;
 use finance\bank\BankAccount;
 
-class Organization extends IdentityFacet {
+class Organization extends IdentityFacetAbstract {
 
     public static function getName() {
         return 'Organization';
-    }
-
-    public static function getModelTable(): string {
-        return self::getSlug();
     }
 
     public static function getDescription() {

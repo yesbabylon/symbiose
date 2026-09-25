@@ -6,13 +6,9 @@
 */
 namespace hr\employee;
 
-use identity\IdentityFacet;
+use identity\IdentityFacetAbstract;
 
-class Employee extends IdentityFacet {
-
-    public static function getModelTable(): string {
-        return self::getSlug();
-    }
+class Employee extends IdentityFacetAbstract {
 
     public static function getName() {
         return 'Employee';
