@@ -20,7 +20,7 @@
                                                 "label": "Monthly issued sales invoices (excl. VAT)",
                                                 "description": "Tax-excluded totals of issued sales invoices by month for the current year.",
                                                 "width": "50%",
-                                                "entity": "sale\\accounting\\invoice\\Invoice",
+                                                "entity": "sale\\accounting\\invoice\\SaleInvoice",
                                                 "view": "chart.issued",
                                                 "domain": [
                                                     ["status", "=", "posted"],

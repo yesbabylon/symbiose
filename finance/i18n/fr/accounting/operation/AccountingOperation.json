@@ -15,7 +15,9 @@
             "selection": {
                 "misc": "opération diverse",
                 "sale_invoice": "facture de vente",
-                "purchase_invoice": "facture d'achat"
+                "purchase_invoice": "facture d'achat",
+                "sale_credit_note": "note de crédit sur vente",
+                "purchase_credit_note": "note de crédit sur achat"
             }
         },
         "posting_date": {

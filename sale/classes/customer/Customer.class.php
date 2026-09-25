@@ -110,7 +110,7 @@ class Customer extends IdentityFacetAbstract {
 
             'invoices_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\accounting\invoice\Invoice',
+                'foreign_object'    => 'sale\accounting\invoice\SaleInvoice',
                 'foreign_field'     => 'customer_id',
                 'description'       => 'List invoices of the customer.'
             ],

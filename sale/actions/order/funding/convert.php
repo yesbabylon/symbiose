@@ -5,9 +5,9 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 use sale\pay\Funding;
-use sale\accounting\invoice\Invoice;
-use sale\accounting\invoice\InvoiceLine;
-use sale\accounting\invoice\InvoiceLineGroup;
+use sale\accounting\invoice\SaleInvoice;
+use sale\accounting\invoice\SaleInvoiceLine;
+use sale\accounting\invoice\SaleInvoiceLineGroup;
 use sale\catalog\Product;
 use sale\price\Price;
 use sale\price\PriceList;
@@ -64,7 +64,7 @@ if (empty($downpayment_product)) {
 
 $order = $funding['order_id'];
 
-$invoice = Invoice::create([
+$invoice = SaleInvoice::create([
         'order_id'          => $order['id'],
         'customer_id'       => $order['customer_id'],
         'funding_id'        => $funding['id'],
@@ -74,7 +74,7 @@ $invoice = Invoice::create([
     ->read(['id','name', 'invoice_number','status', 'customer_id'])
     ->first(true);
 
-$invoice_line_group = InvoiceLineGroup::create([
+$invoice_line_group = SaleInvoiceLineGroup::create([
         'invoice_id' => $invoice['id'],
         'name'       => $downpayment_product['name']
     ])
@@ -105,7 +105,7 @@ if($vat_rate > 0) {
 }
 
 
-InvoiceLine::create([
+SaleInvoiceLine::create([
     'invoice_id'                => $invoice['id'],
     'invoice_line_group_id'     => $invoice_line_group['id'],
     'product_id'                => $downpayment_product['id'],

@@ -8,9 +8,9 @@ namespace sale\receivable;
 
 use core\setting\Setting;
 use equal\orm\Model;
-use sale\accounting\invoice\Invoice;
-use sale\accounting\invoice\InvoiceLine;
-use sale\accounting\invoice\InvoiceLineGroup;
+use sale\accounting\invoice\SaleInvoice;
+use sale\accounting\invoice\SaleInvoiceLine;
+use sale\accounting\invoice\SaleInvoiceLineGroup;
 use sale\serviceaccount\ServiceAccount;
 use sale\serviceaccount\ServiceAccountEntry;
 use sale\subscription\Subscription;
@@ -233,7 +233,7 @@ class Receivable extends Model {
 
             'invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\accounting\invoice\Invoice',
+                'foreign_object'    => 'sale\accounting\invoice\SaleInvoice',
                 'description'       => 'Invoice on which the receivable has been accounted.',
                 'ondelete'          => 'null'
             ],
@@ -249,7 +249,7 @@ class Receivable extends Model {
 
             'invoice_line_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\accounting\invoice\InvoiceLine',
+                'foreign_object'    => 'sale\accounting\invoice\SaleInvoiceLine',
                 'description'       => 'The invoice line that has been generated based on the item.',
                 'ondelete'          => 'null'
             ],
@@ -350,7 +350,7 @@ class Receivable extends Model {
     protected static function doPostInvoice($self, $values) {
 
         if(isset($values['invoice_id']) && $values['invoice_id'] > 0) {
-            $defaultInvoice = Invoice::id($values['invoice_id'])
+            $defaultInvoice = SaleInvoice::id($values['invoice_id'])
                 ->read(['id', 'customer_id'])
                 ->first();
             if(!$defaultInvoice) {
@@ -380,14 +380,14 @@ class Receivable extends Model {
                 $invoice = $defaultInvoice;
             }
             else {
-                $invoice = Invoice::search([
+                $invoice = SaleInvoice::search([
                         ['customer_id', '=', $receivable['customer_id']],
                         ['status', '=', 'proforma']
                     ])
                     ->first();
 
                 if(!isset($invoice)) {
-                    $invoice = Invoice::create([
+                    $invoice = SaleInvoice::create([
                             'customer_id' => $receivable['customer_id']
                         ])
                         ->first();
@@ -404,7 +404,7 @@ class Receivable extends Model {
                 $invoice_line_group_name = $values['invoice_line_group_name'];
             }
 
-            $invoiceLineGroup = InvoiceLineGroup::search([
+            $invoiceLineGroup = SaleInvoiceLineGroup::search([
                     ['invoice_id', '=', $invoice['id']],
                     ['name', '=', $invoice_line_group_name]
                 ])
@@ -412,14 +412,14 @@ class Receivable extends Model {
                 ->first();
 
             if(!$invoiceLineGroup) {
-                $invoiceLineGroup = InvoiceLineGroup::create([
+                $invoiceLineGroup = SaleInvoiceLineGroup::create([
                         'invoice_id' => $invoice['id'],
                         'name'       => $invoice_line_group_name
                     ])
                     ->first();
             }
 
-            $invoiceLine = InvoiceLine::create([
+            $invoiceLine = SaleInvoiceLine::create([
                     // #memo - force name to receivable name instead of computed value (receivable name holds its own description when applicable)
                     'name'                  => $receivable['name'],
                     'description'           => implode(' - ', array_filter([$receivable['product_id']['name'], strip_tags($receivable['product_id']['description'])])),
@@ -451,7 +451,7 @@ class Receivable extends Model {
         $self->read(['invoice_line_id']);
 
         foreach($self as $id => $receivable) {
-            InvoiceLine::id($receivable['invoice_line_id'])
+            SaleInvoiceLine::id($receivable['invoice_line_id'])
                 ->delete(true);
 
             self::id($id)

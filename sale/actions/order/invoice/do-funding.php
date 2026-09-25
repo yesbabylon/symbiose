@@ -6,7 +6,7 @@
 */
 
 use sale\pay\Funding;
-use sale\accounting\invoice\Invoice;
+use sale\accounting\invoice\SaleInvoice;
 use sale\order\Order;
 
 list($params, $providers) = announce([
@@ -38,7 +38,7 @@ list($params, $providers) = announce([
  */
 list($context, $orm) = [$providers['context'], $providers['orm']];
 
-$invoice = Invoice::id($params['id'])
+$invoice = SaleInvoice::id($params['id'])
     ->update(['balance' => null])
     ->read(['id', 'status', 'invoice_type',
             'is_downpayment', 'order_id',
@@ -73,7 +73,7 @@ if(is_null($invoice['funding_id'])) {
                 ->read(['id', 'name'])
                 ->first(true);
 
-            Invoice::id($params['id'])->update(['funding_id' => $new_funding['id']]);
+            SaleInvoice::id($params['id'])->update(['funding_id' => $new_funding['id']]);
         }
     }
     elseif($invoice['invoice_type'] == 'credit_note') {
@@ -106,7 +106,7 @@ if(is_null($invoice['funding_id'])) {
                 ->read(['id', 'name'])
                 ->first(true);
 
-            Invoice::id($params['id'])->update(['funding_id' => $new_funding['id']]);
+            SaleInvoice::id($params['id'])->update(['funding_id' => $new_funding['id']]);
         }
     }
 }

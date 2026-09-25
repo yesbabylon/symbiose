@@ -6,7 +6,7 @@
 */
 use core\setting\Setting;
 use equal\data\DataFormatter;
-use sale\accounting\invoice\Invoice;
+use sale\accounting\invoice\SaleInvoice;
 use Twig\TwigFilter;
 use Twig\Environment as TwigEnvironment;
 use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
@@ -285,11 +285,11 @@ $getInvoicePaymentQrCodeUri = function($invoice) {
 $lang = $params['lang'] ?? null;
 
 if(!$lang) {
-    $invoice = Invoice::id($params['id'])->read(['customer_id' => ['lang_id' => ['code']]])->first();
+    $invoice = SaleInvoice::id($params['id'])->read(['customer_id' => ['lang_id' => ['code']]])->first();
     $lang = $invoice['customer_id']['lang_id']['code'];
 }
 
-$invoice = Invoice::id($params['id'])
+$invoice = SaleInvoice::id($params['id'])
     ->read([
             'invoice_number', 'emission_date', 'due_date', 'status', 'invoice_type', 'payment_reference', 'total', 'price', 'payment_status',
             'reversed_invoice_id' => ['invoice_number'],

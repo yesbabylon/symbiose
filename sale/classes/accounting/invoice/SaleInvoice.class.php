@@ -15,7 +15,7 @@ use sale\customer\Customer;
 use sale\pay\Funding;
 use sale\receivable\Receivable;
 
-class Invoice extends \finance\accounting\invoice\Invoice {
+class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
 
     public static function getModelTable(): string {
         return 'sale_accounting_invoice_invoice';
@@ -32,6 +32,80 @@ class Invoice extends \finance\accounting\invoice\Invoice {
     public static function getColumns() {
 
         return [
+            'description' => [
+                'type'        => 'computed',
+                'result_type' => 'string',
+                'relation'    => ['name'],
+                'store'       => true,
+                'readonly'    => true,
+                'description' => 'Accounting description of the invoice.'
+            ],
+
+            'operation_type' => [
+                'type'        => 'computed',
+                'result_type' => 'string',
+                'function'    => 'calcOperationType',
+                'store'       => true,
+                'instant'     => true,
+                'readonly'    => true,
+                'description' => 'Accounting operation type derived from the invoice type.'
+            ],
+
+            'posting_date' => [
+                'type'        => 'computed',
+                'result_type' => 'date',
+                'function'    => 'calcPostingDate',
+                'store'       => true,
+                'instant'     => true,
+                'readonly'    => true,
+                'description' => 'Accounting date derived from the invoice emission date.'
+            ],
+
+            'operation_number' => [
+                'type'        => 'computed',
+                'result_type' => 'string',
+                'relation'    => ['invoice_number'],
+                'store'       => true,
+                'readonly'    => true,
+                'description' => 'Accounting operation number matching the invoice number.'
+            ],
+
+            'journal_id' => [
+                'type'           => 'many2one',
+                'foreign_object' => 'finance\accounting\AccountingJournal',
+                'description'    => 'Accounting journal used to post the invoice.',
+                'domain'         => [
+                    ['organization_id', '=', 'object.organization_id']
+                ],
+                'readonly'       => true
+            ],
+
+            'reversal_of_id' => [
+                'type'           => 'many2one',
+                'foreign_object' => 'sale\accounting\invoice\SaleInvoice',
+                'description'    => 'Posted invoice reversed by this credit note.',
+                'readonly'       => true
+            ],
+
+            'reversal_operations_ids' => [
+                'type'           => 'one2many',
+                'foreign_object' => 'sale\accounting\invoice\SaleInvoice',
+                'foreign_field'  => 'reversal_of_id',
+                'description'    => 'Credit notes created to reverse this invoice.',
+                'readonly'       => true,
+                'order'          => 'emission_date',
+                'sort'           => 'desc'
+            ],
+
+            'operation_lines_ids' => [
+                'type'           => 'computed',
+                'result_type'    => 'one2many',
+                'foreign_object' => 'finance\accounting\operation\AccountingOperationLine',
+                'description'    => 'Generic operation lines are unused by sale invoices.',
+                'function'       => 'calcOperationLines',
+                'readonly'       => true
+            ],
+
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
@@ -44,7 +118,8 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Organization',
                 'description'       => 'The organization that emitted the invoice.',
-                'default'           => 1
+                'default'           => 1,
+                'required'          => true
             ],
 
             'status' => [
@@ -60,9 +135,26 @@ class Invoice extends \finance\accounting\invoice\Invoice {
 
             'reversed_invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\accounting\invoice\Invoice',
+                'foreign_object'    => 'sale\accounting\invoice\SaleInvoice',
                 'description'       => 'Credit note that was created for cancelling the invoice, if any.',
                 'visible'           => ['status', '=', 'cancelled']
+            ],
+
+            'reference' => [
+                'type'              => 'string',
+                'description'       => 'Note or comments to be addressed to the customer.',
+                'help'              => 'Arbitrary text displayed at the top of the invoice.'
+            ],
+
+            'invoice_type' => [
+                'type'              => 'string',
+                'description'       => 'Whether the document is an invoice or a credit note.',
+                'selection'         => [
+                    'invoice',
+                    'credit_note'
+                ],
+                'default'           => 'invoice',
+                'dependents'        => ['operation_type', 'price_billed']
             ],
 
             'is_downpayment' => [
@@ -88,7 +180,21 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                 'type'              => 'string',
                 'description'       => 'Number of the invoice, according to organization logic.',
                 'default'           => '[proforma]',
-                'dependents'        => ['name']
+                'dependents'        => ['name', 'operation_number', 'payment_reference']
+            ],
+
+            'payment_status' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'pending',
+                    'overdue',
+                    'debit_balance',
+                    'credit_balance',
+                    'balanced'
+                ],
+                'visible'           => ['status', '=', 'posted'],
+                'default'           => 'pending',
+                'description'       => 'Payment state of the invoice.'
             ],
 
             'payment_reference' => [
@@ -105,6 +211,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                 'description'       => 'Reference date for computing the due date.',
                 'help'              => 'This value can be changed while the invoice is `proforma`, but cannot be changed afterward (once emitted).',
                 'default'           => function() { return time(); },
+                'dependents'        => ['due_date', 'posting_date']
             ],
 
             'due_date' => [
@@ -118,7 +225,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
 
             'invoice_lines_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\accounting\invoice\InvoiceLine',
+                'foreign_object'    => 'sale\accounting\invoice\SaleInvoiceLine',
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Detailed lines of the invoice.',
                 'ondetach'          => 'delete',
@@ -127,11 +234,29 @@ class Invoice extends \finance\accounting\invoice\Invoice {
 
             'invoice_line_groups_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\accounting\invoice\InvoiceLineGroup',
+                'foreign_object'    => 'sale\accounting\invoice\SaleInvoiceLineGroup',
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Groups of lines of the invoice.',
                 'ondetach'          => 'delete',
                 'dependents'        => ['total', 'price']
+            ],
+
+            'total' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:4',
+                'description'       => 'Total tax-excluded price of the invoice.',
+                'function'          => 'calcTotal',
+                'store'             => true
+            ],
+
+            'price' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:2',
+                'description'       => 'Final tax-included invoiced amount.',
+                'function'          => 'calcPrice',
+                'store'             => true
             ],
 
             /**
@@ -171,12 +296,107 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                 'type'              => 'one2many',
                 'foreign_object'    => 'finance\accounting\AccountingEntry',
                 'foreign_field'     => 'origin_object_id',
-                'domain'            => ['origin_object_class', '=', 'sale\accounting\invoice\Invoice'],
+                'domain'            => ['origin_object_class', '=', 'sale\accounting\invoice\SaleInvoice'],
                 'description'       => 'Accounting entries relating to the lines of the invoice.',
-                'ondetach'          => 'delete'
+                'ondetach'          => 'delete',
+                'dependents'        => ['is_balanced']
+            ],
+
+            'is_balanced' => [
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => 'Whether all accounting entries of the invoice are balanced.',
+                'function'          => 'calcIsBalanced',
+                'readonly'          => true
             ]
 
         ];
+    }
+
+    protected static function calcOperationType($self): array {
+        $result = [];
+
+        $self->read(['invoice_type']);
+        foreach($self as $id => $invoice) {
+            $result[$id] = $invoice['invoice_type'] === 'credit_note'
+                ? 'sale_credit_note'
+                : 'sale_invoice';
+        }
+
+        return $result;
+    }
+
+    protected static function calcOperationLines($self): array {
+        $result = [];
+
+        $self->read(['id']);
+        foreach($self as $id => $invoice) {
+            $result[$id] = [];
+        }
+
+        return $result;
+    }
+
+    protected static function calcPostingDate($self): array {
+        $result = [];
+
+        $self->read(['emission_date']);
+        foreach($self as $id => $invoice) {
+            $result[$id] = $invoice['emission_date']
+                ? strtotime(date('Y-m-d', $invoice['emission_date']))
+                : null;
+        }
+
+        return $result;
+    }
+
+    protected static function calcIsBalanced($self): array {
+        $result = [];
+
+        $self->read(['accounting_entries_ids' => ['is_balanced']]);
+        foreach($self as $id => $invoice) {
+            $is_balanced = count($invoice['accounting_entries_ids']) > 0;
+            foreach($invoice['accounting_entries_ids'] as $entry) {
+                if(!$entry['is_balanced']) {
+                    $is_balanced = false;
+                    break;
+                }
+            }
+            $result[$id] = $is_balanced;
+        }
+
+        return $result;
+    }
+
+    public static function calcTotal($self): array {
+        $result = [];
+        $self->read(['invoice_lines_ids' => ['total']]);
+        $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision', 2);
+        foreach($self as $id => $invoice) {
+            $total = array_reduce($invoice['invoice_lines_ids']->get(true), function($carry, $line) use($currency_decimal_precision) {
+                return $carry + round($line['total'], $currency_decimal_precision);
+            }, 0.0);
+            $result[$id] = round($total, $currency_decimal_precision);
+        }
+
+        return $result;
+    }
+
+    /**
+     * #todo - this is incorrect, workaround based on 21% tax
+     *
+     * #memo - VAT is computed by rate, on sums of lines grouped by rate
+     */
+    public static function calcPrice($self): array {
+        $result = [];
+        $self->read(['total']);
+        $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision', 2);
+        foreach($self as $id => $invoice) {
+            $price = $invoice['total'] * 1.21;
+            $result[$id] = round($price, $currency_decimal_precision);
+        }
+
+        return $result;
     }
 
     public static function calcPriceBilled($self) {
@@ -355,6 +575,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                 ]);
             self::id($id)->update([
                     'invoice_number' => $invoice_number,
+                    'posted_at'      => time(),
                     'due_date'       => null,
                     'price'          => null,
                     'total'          => null
@@ -409,6 +630,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
         }
 
         $self->do('reverse');
+        $self->update(['cancelled_at' => time()]);
     }
 
     public static function onafterCancelKeepReceivables($self) {
@@ -429,6 +651,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
         }
 
         $self->do('reverse');
+        $self->update(['cancelled_at' => time()]);
     }
 
     public static function getActions() {
@@ -459,6 +682,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
         $self->read([
                 'status',
                 'invoice_type',
+                'payment_status',
                 'reversed_invoice_id',
                 'organization_id',
                 'customer_id',
@@ -466,6 +690,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                 'invoice_line_groups_ids' => [
                     'name',
                     'invoice_lines_ids' => [
+                        'description',
                         'product_id',
                         'price_id',
                         'qty',
@@ -487,26 +712,27 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                 continue;
             }
 
-            $reversed_invoice = Invoice::create([
+            $reversed_invoice = SaleInvoice::create([
                     'invoice_type'        => 'credit_note',
                     'status'              => 'proforma',
                     'emission_date'       => time(),
                     'organization_id'     => $invoice['organization_id'],
                     'customer_id'         => $invoice['customer_id'],
                     'is_downpayment'      => $invoice['is_downpayment'],
-                    'reversed_invoice_id' => $invoice['id']
+                    'reversed_invoice_id' => $invoice['id'],
+                    'reversal_of_id'      => $invoice['id']
                 ])
                 ->read(['id'])
                 ->first(true);
             foreach($invoice['invoice_line_groups_ids'] as $invoice_line_group) {
-                $reversed_group = InvoiceLineGroup::create([
+                $reversed_group = SaleInvoiceLineGroup::create([
                         'name'       => $invoice_line_group['name'],
                         'invoice_id' => $reversed_invoice['id']
                     ])
                     ->first(true);
 
                 foreach($invoice_line_group['invoice_lines_ids'] as $line) {
-                    InvoiceLine::create([
+                    SaleInvoiceLine::create([
                             'description'            => $line['description'],
                             'invoice_id'             => $reversed_invoice['id'],
                             'invoice_line_group_id'  => $reversed_group['id'],
@@ -528,14 +754,14 @@ class Invoice extends \finance\accounting\invoice\Invoice {
 
             if(in_array($invoice['payment_status'], ['pending', 'overdue'])) {
                 // no payment was received yet : mark both invoices as balanced (no transaction required)
-                Invoice::id($reversed_invoice['id'])->update(['payment_status' => 'balanced']);
-                Invoice::id($invoice['id'])->update(['payment_status' => 'balanced']);
+                SaleInvoice::id($reversed_invoice['id'])->update(['payment_status' => 'balanced']);
+                SaleInvoice::id($invoice['id'])->update(['payment_status' => 'balanced']);
             }
             else {
                 // #todo: Alert finance_accounting - reimbursement needed
             }
 
-            Invoice::id($invoice['id'])
+            SaleInvoice::id($invoice['id'])
                 ->update(['reversed_invoice_id' => $reversed_invoice['id']]);
         }
     }
@@ -558,7 +784,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
                 ])
                 ->first();
 
-            Invoice::id($invoice['id'])
+            SaleInvoice::id($invoice['id'])
                 ->update(['funding_id' => $funding['id']]);
         }
     }
@@ -575,6 +801,8 @@ class Invoice extends \finance\accounting\invoice\Invoice {
             if(!$journal) {
                 throw new \Exception('missing_mandatory_journal', EQ_ERROR_INVALID_CONFIG);
             }
+
+            SaleInvoice::id($id)->update(['journal_id' => $journal['id']]);
 
             // remove previously created entries, if any (there should be none)
             $accounting_entries_ids = array_map(function ($a) { return $a['id']; }, $invoice['accounting_entries_ids']->get(true));
@@ -640,7 +868,7 @@ class Invoice extends \finance\accounting\invoice\Invoice {
         $map_accounting_entries = [];
 
         // fetch invoice lines
-        $lines = InvoiceLine::ids($invoice['invoice_lines_ids'])
+        $lines = SaleInvoiceLine::ids($invoice['invoice_lines_ids'])
             ->read([
                 'total', 'price',
                 'price_id' => [
@@ -732,51 +960,62 @@ class Invoice extends \finance\accounting\invoice\Invoice {
     }
 
     /**
-     * Check whether an object can be updated, and perform some additional operations if necessary.
-     * This method can be overridden to define a more precise set of tests.
-     *
-     * @param  \equal\orm\ObjectManager   $om         ObjectManager instance.
-     * @param  array                      $ids        List of objects identifiers.
-     * @param  array                      $values     Associative array holding the new values to be assigned.
-     * @param  string                     $lang       Language in which multilang fields are being updated.
-     * @return array                      Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
+     * Allow business and technical synchronization fields after posting.
      */
-    public static function canupdate($om, $ids, $values, $lang = 'en') {
-        $res = $om->read(self::getType(), $ids, ['status']);
+    public static function canupdate($self, $values) {
+        $self->read(['status']);
 
-        if($res > 0) {
-            foreach($res as $id => $invoice) {
-                // only allow editable fields
-                if($invoice['status'] != 'proforma') {
-                    // editable fields for sale\accounting\invoice\Invoice
-                    $editable_fields = ['payment_status', 'customer_ref', 'funding_id', 'reversed_invoice_id'];
+        $editable_fields = [
+            'status',
+            'payment_status',
+            'customer_ref',
+            'funding_id',
+            'reversed_invoice_id',
+            'reversal_of_id',
+            'posted_at',
+            'cancelled_at',
+            'journal_id',
+            'name',
+            'description',
+            'operation_type',
+            'posting_date',
+            'operation_number',
+            'is_balanced',
+            'payment_reference',
+            'due_date',
+            'total',
+            'price',
+            'price_billed'
+        ];
 
-                    if( count(array_diff(array_keys($values), $editable_fields)) ) {
-                    //    return ['status' => ['non_editable' => "Invoice can only be updated while its status is proforma ({$id})."]];
-                    }
-                }
+        foreach($self as $id => $invoice) {
+            if(
+                $invoice['status'] !== 'proforma'
+                && count(array_diff(array_keys($values), $editable_fields)) > 0
+            ) {
+                return [
+                    'status' => [
+                        'non_editable' => "Invoice {$id} can only be edited while proforma."
+                    ]
+                ];
             }
         }
-        return parent::canupdate($om, $ids, $values, $lang);
+
+        return [];
     }
 
     /**
-     * Check whether the invoice can be deleted.
-     *
-     * @param  \equal\orm\ObjectManager    $om         ObjectManager instance.
-     * @param  array                       $ids       List of objects identifiers.
-     * @return array                       Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
+     * Only proforma invoices can be deleted.
      */
-    public static function candelete($om, $ids) {
-        $res = $om->read(get_called_class(), $ids, ['status']);
+    public static function candelete($self) {
+        $self->read(['status']);
 
-        if($res > 0) {
-            foreach($res as $id => $invoice) {
-                if($invoice['status'] != 'proforma') {
-                    return ['status' => ['non_removable' => 'Invoice can only be deleted while its status is proforma.']];
-                }
+        foreach($self as $invoice) {
+            if($invoice['status'] !== 'proforma') {
+                return ['status' => ['non_removable' => 'Invoice can only be deleted while its status is proforma.']];
             }
         }
-        return parent::candelete($om, $ids);
+
+        return [];
     }
 }

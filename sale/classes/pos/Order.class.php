@@ -7,7 +7,7 @@
 namespace sale\pos;
 use equal\orm\Model;
 use finance\accounting\AccountingEntry;
-use finance\accounting\invoice\Invoice;
+use sale\accounting\invoice\SaleInvoice;
 use core\setting\Setting;
 
 class Order extends Model {
@@ -88,7 +88,7 @@ class Order extends Model {
 
             'invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\accounting\invoice\Invoice',
+                'foreign_object'    => 'sale\accounting\invoice\SaleInvoice',
                 'description'       => 'The invoice that relates to the order, if any.',
                 'visible'           => ['has_invoice', '=', true]
             ],
@@ -167,7 +167,7 @@ class Order extends Model {
                 foreach($orders as $oid => $order) {
                     if($order['has_funding']) {
                         if($order['funding_id.type'] == 'invoice') {
-                            $om->update(Invoice::getType(), $order['funding_id.invoice_id'], ['status' => 'posted', 'is_paid' => null], $lang);
+                            $om->update(SaleInvoice::getType(), $order['funding_id.invoice_id'], ['status' => 'posted', 'is_paid' => null], $lang);
                         }
                     }
                     // no funding and no invoice: generate stand alone accounting entries

@@ -1,0 +1,181 @@
+{
+    "name": "Ligne de facture de vente",
+    "plural": "Lignes de factures de vente",
+    "description": "Ligne de facture de vente détaillant un produit et ses quantités.",
+    "model": {
+        "description": {
+            "label": "Description",
+            "description": "Description complémentaire de la ligne.",
+            "help": "Cette description est indépendante du produit sélectionné."
+        },
+        "debit": {
+            "label": "Débit",
+            "description": "Montant débité associé à la ligne comptable.",
+            "help": "Ce champ générique est facultatif pour une ligne de facture."
+        },
+        "credit": {
+            "label": "Crédit",
+            "description": "Montant crédité associé à la ligne comptable.",
+            "help": "Ce champ générique est facultatif pour une ligne de facture."
+        },
+        "vat_rate": {
+            "label": "Taux de TVA",
+            "description": "Taux de TVA appliqué à la ligne.",
+            "help": "Le taux est normalement déterminé à partir du prix sélectionné."
+        },
+        "accounting_operation_id": {
+            "label": "Opération comptable",
+            "description": "Opération comptable représentée par la facture liée.",
+            "help": "Cette valeur correspond automatiquement à la facture de la ligne."
+        },
+        "account_id": {
+            "label": "Compte",
+            "description": "Compte comptable éventuellement associé à la ligne.",
+            "help": "La génération des écritures utilise prioritairement les règles comptables du prix."
+        },
+        "name": {
+            "label": "Nom",
+            "description": "Libellé calculé à partir du produit.",
+            "help": "Cette valeur est renseignée automatiquement."
+        },
+        "organization_id": {
+            "label": "Organisation",
+            "description": "Organisation héritée de la facture.",
+            "help": "Cette valeur est renseignée automatiquement."
+        },
+        "journal_id": {
+            "label": "Journal",
+            "description": "Journal comptable hérité de la facture.",
+            "help": "Cette valeur est renseignée automatiquement."
+        },
+        "account_code": {
+            "label": "Code du compte",
+            "description": "Code du compte comptable sélectionné.",
+            "help": "Cette valeur est renseignée automatiquement."
+        },
+        "is_expense": {
+            "label": "Charge",
+            "description": "Indique si le compte associé est un compte de charge.",
+            "help": "Cette valeur est renseignée automatiquement."
+        },
+        "is_income": {
+            "label": "Produit comptable",
+            "description": "Indique si le compte associé est un compte de produit.",
+            "help": "Cette valeur est renseignée automatiquement."
+        },
+        "invoice_line_group_id": {
+            "label": "Groupe",
+            "description": "Groupe auquel appartient la ligne de facture.",
+            "help": "Le groupe doit appartenir à la même facture."
+        },
+        "invoice_id": {
+            "label": "Facture",
+            "description": "Facture de vente à laquelle la ligne est liée.",
+            "help": "Une ligne ne peut plus être déplacée vers une autre facture."
+        },
+        "unit_price": {
+            "label": "Prix unitaire",
+            "description": "Prix unitaire du produit lié à la ligne.",
+            "help": "Cette valeur est calculée à partir du prix sélectionné."
+        },
+        "qty": {
+            "label": "Quantité",
+            "description": "Quantité facturée du produit.",
+            "help": "La quantité doit être supérieure à la quantité gratuite."
+        },
+        "free_qty": {
+            "label": "Quantité gratuite",
+            "description": "Nombre d'unités accordées gratuitement.",
+            "help": "La quantité gratuite doit être positive et inférieure à la quantité facturée."
+        },
+        "discount": {
+            "label": "Remise",
+            "description": "Taux de remise appliqué à la ligne.",
+            "help": "La remise doit être comprise entre 0 % et 99 %."
+        },
+        "total": {
+            "label": "Total HTVA",
+            "description": "Montant total hors TVA de la ligne.",
+            "help": "Cette valeur est calculée automatiquement."
+        },
+        "price": {
+            "label": "Prix TVAC",
+            "description": "Montant total TVA comprise de la ligne.",
+            "help": "Cette valeur est calculée automatiquement."
+        },
+        "downpayment_invoice_id": {
+            "label": "Facture d'acompte",
+            "description": "Facture d'acompte déduite par cette ligne.",
+            "help": "Ce champ est utilisé lors de la facturation d'un acompte."
+        },
+        "product_id": {
+            "label": "Produit",
+            "description": "Produit auquel la ligne se rapporte.",
+            "help": "Le produit détermine le libellé et les prix disponibles."
+        },
+        "price_id": {
+            "label": "Prix",
+            "description": "Prix appliqué à la ligne.",
+            "help": "Le prix détermine le prix unitaire et le taux de TVA."
+        },
+        "receivable_id": {
+            "label": "Créance",
+            "description": "Créance à l'origine de la ligne de facture.",
+            "help": "Une ligne provenant d'une créance possède des restrictions de modification."
+        },
+        "has_receivable": {
+            "label": "Issue d'une créance",
+            "description": "Indique si la ligne a été générée depuis une créance.",
+            "help": "Cette valeur est renseignée automatiquement."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Ligne de facture de vente",
+            "description": "Détail d'une ligne de facture de vente.",
+            "layout": {
+                "section.details": {
+                    "label": "Détails"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Lignes de factures de vente",
+            "description": "Liste des lignes de factures de vente.",
+            "layout": {}
+        },
+        "list.order": {
+            "name": "Lignes de facture de la commande",
+            "description": "Liste des lignes de facture associées à une commande.",
+            "layout": {}
+        }
+    },
+    "error": {
+        "invoice_id": {
+            "non_editable": "La ligne ne peut plus être liée à une autre facture."
+        },
+        "status": {
+            "non_editable": "La ligne ne peut être modifiée que lorsque la facture est pro forma."
+        },
+        "invoice_line_group_id": {
+            "invalid_param": "Le groupe doit appartenir à la même facture."
+        },
+        "qty": {
+            "must_be_greater_than_free_qty": "La quantité doit être supérieure à la quantité gratuite."
+        },
+        "free_qty": {
+            "must_be_greater_than_or_equal_to_zero": "La quantité gratuite doit être positive ou nulle.",
+            "must_be_lower_than_qty": "La quantité gratuite doit être inférieure à la quantité."
+        },
+        "unit_price": {
+            "must_be_greater_than_zero": "Le prix unitaire doit être supérieur à zéro."
+        },
+        "discount": {
+            "must_be_greater_than_zero": "La remise doit être positive ou nulle.",
+            "must_be_lower_than_one": "La remise doit être inférieure à 100 %."
+        },
+        "receivable_id": {
+            "non_editable": "Une ligne générée depuis une créance ne peut pas être modifiée."
+        }
+    }
+}

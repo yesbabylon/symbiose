@@ -1,0 +1,233 @@
+{
+    "name": "Facture",
+    "plural": "Factures",
+    "description": "Facture de vente adressée à un client.",
+    "model": {
+        "description": {
+            "label": "Description comptable",
+            "description": "Description comptable dérivée du nom de la facture.",
+            "help": "Cette valeur est renseignée automatiquement."
+        },
+        "operation_type": {
+            "label": "Type d'opération",
+            "description": "Type comptable déduit du type de facture.",
+            "help": "Une facture de vente ou une note de crédit est déterminée automatiquement."
+        },
+        "posting_date": {
+            "label": "Date comptable",
+            "description": "Date comptable dérivée de la date d'émission.",
+            "help": "Cette valeur est renseignée automatiquement."
+        },
+        "operation_number": {
+            "label": "Numéro de pièce",
+            "description": "Numéro comptable identique au numéro de facture.",
+            "help": "Cette valeur est renseignée lors de la comptabilisation."
+        },
+        "journal_id": {
+            "label": "Journal comptable",
+            "description": "Journal de ventes utilisé pour comptabiliser la facture.",
+            "help": "Le journal est sélectionné automatiquement selon l'organisation."
+        },
+        "reversal_of_id": {
+            "label": "Extourne de",
+            "description": "Facture extournée par cette note de crédit.",
+            "help": "Cette relation est renseignée automatiquement lors de l'annulation."
+        },
+        "reversal_operations_ids": {
+            "label": "Notes de crédit",
+            "description": "Notes de crédit créées pour extourner la facture.",
+            "help": "Ces documents assurent la traçabilité de l'annulation."
+        },
+        "operation_lines_ids": {
+            "label": "Lignes comptables génériques",
+            "description": "Lignes génériques non utilisées par les factures de vente.",
+            "help": "Les écritures sont générées directement depuis les lignes de facture."
+        },
+        "name": {
+            "label": "Nom",
+            "description": "Identification lisible de la facture.",
+            "help": "Le nom combine le numéro de facture et le client."
+        },
+        "reference": {
+            "label": "Commentaire",
+            "description": "Note ou commentaire destiné au client.",
+            "help": "Ce texte peut être affiché en tête de la facture."
+        },
+        "invoice_type": {
+            "label": "Type de facture",
+            "description": "Nature du document commercial.",
+            "help": "Sélectionnez une facture ou une note de crédit.",
+            "selection": {
+                "invoice": "facture",
+                "credit_note": "note de crédit"
+            }
+        },
+        "invoice_number": {
+            "label": "Numéro de facture",
+            "description": "Numéro définitif attribué à la facture.",
+            "help": "Le numéro est attribué lors de la comptabilisation."
+        },
+        "reversed_invoice_id": {
+            "label": "Facture inverse",
+            "description": "Facture ou note de crédit associée à l'annulation.",
+            "help": "Cette relation relie la facture et sa note de crédit."
+        },
+        "payment_status": {
+            "label": "État du paiement",
+            "description": "État courant du règlement de la facture.",
+            "help": "Cette valeur évolue selon les paiements reçus.",
+            "selection": {
+                "pending": "en attente",
+                "overdue": "en retard",
+                "debit_balance": "solde débiteur",
+                "credit_balance": "solde créditeur",
+                "balanced": "soldée"
+            }
+        },
+        "payment_reference": {
+            "label": "Communication structurée",
+            "description": "Référence utilisée pour identifier les paiements.",
+            "help": "Cette valeur est générée après la comptabilisation."
+        },
+        "emission_date": {
+            "label": "Date d'émission",
+            "description": "Date de référence de la facture.",
+            "help": "Cette date sert au calcul de l'échéance et de la date comptable."
+        },
+        "due_date": {
+            "label": "Échéance",
+            "description": "Date limite attendue pour le paiement.",
+            "help": "L'échéance est calculée à partir des conditions de paiement."
+        },
+        "total": {
+            "label": "Total hors taxes",
+            "description": "Montant total hors taxes de la facture.",
+            "help": "Cette valeur est calculée depuis les lignes de facture."
+        },
+        "price": {
+            "label": "Total toutes taxes comprises",
+            "description": "Montant final toutes taxes comprises.",
+            "help": "Cette valeur est calculée automatiquement."
+        },
+        "invoice_lines_ids": {
+            "label": "Lignes de facture",
+            "description": "Lignes commerciales détaillées de la facture.",
+            "help": "Ces lignes servent à calculer les montants et les écritures."
+        },
+        "invoice_line_groups_ids": {
+            "label": "Groupes de lignes",
+            "description": "Groupes utilisés pour organiser les lignes de facture.",
+            "help": "Les groupes structurent la présentation de la facture."
+        },
+        "accounting_entries_ids": {
+            "label": "Écritures comptables",
+            "description": "Écritures générées lors de la comptabilisation.",
+            "help": "Les écritures sont produites depuis les lignes de facture."
+        },
+        "is_balanced": {
+            "label": "Équilibrée",
+            "description": "Indique si toutes les écritures sont équilibrées.",
+            "help": "Cette valeur est calculée automatiquement."
+        },
+        "customer_ref": {
+            "label": "Référence client",
+            "description": "Référence demandée par le client.",
+            "help": "Cette référence peut être affichée sur la facture."
+        },
+        "status": {
+            "label": "Statut",
+            "description": "État courant de la facture.",
+            "help": "Suit la facture depuis sa préparation jusqu'à sa comptabilisation ou son annulation.",
+            "selection": {
+                "proforma": "Proforma",
+                "posted": "Comptabilisée",
+                "cancelled": "Annulée"
+            }
+        },
+        "organization_id": {
+            "label": "Organisation émettrice",
+            "description": "Organisation émettrice de la facture.",
+            "help": ""
+        },
+        "customer_id": {
+            "label": "Destinataire",
+            "description": "Organisation responsable de payer la facture.",
+            "help": "Client ou organisation responsable de payer les biens et services liés à la vente."
+        },
+        "invoice_purpose": {
+            "label": "Objet",
+            "description": "Objet de la facture (vente).",
+            "selection": {
+                "sell": "vente",
+                "buy": "achat"
+            },
+            "help": ""
+        },
+        "funding_id": {
+            "label": "Financement",
+            "description": "Financement associé à la facture.",
+            "help": "Le financement représente l'invitation envoyée au client pour s'acquitter de la facture en la finançant via un ou plusieurs paiements."
+        },
+        "payment_terms_id": {
+            "label": "Conditions de paiement",
+            "description": "Conditions de paiement d'application pour la facture.",
+            "help": "Ces conditions sont communiquées au client pour la l'acquittement de la facture."
+        },
+        "is_downpayment": {
+            "label": "Facture d'acompte?",
+            "description": "Marque la facture comme une facture d'acompte relative à un paiement anticipé",
+            "help": ""
+        },
+        "price_billed": {
+            "label": "Total",
+            "description": "Montant final TTC utilisé pour l'affichage (inversé pour les notes de crédit).",
+            "help": ""
+        }
+
+    },
+    "view": {
+        "form.default": {
+            "name": "Facture",
+            "description": "",
+            "actions": {
+                "action.post": {
+                    "label": "Comptabiliser",
+                    "description": "Attribuer le numéro définitif et générer les écritures comptables."
+                },
+                "action.cancel": {
+                    "label": "Annuler"
+                },
+                "action.cancel-proforma": {
+                    "label": "Supprimer"
+                }
+            },
+            "routes": {
+                "route.print.pdf": {
+                    "label": "Imprimer facture"
+                }
+            },
+            "layout": {
+                "sections.invoice_lines": {
+                    "label": "Lignes de facture"
+                },
+                "sections.invoice_entries": {
+                    "label": "Écritures comptables"
+                },
+                "section.payments": {
+                    "label": "Paiement"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Factures",
+            "description": "",
+            "layout": {}
+        },
+        "chart.issuedTotal": {
+            "name": "Factures de vente émises",
+            "description": "Totaux HTVA des factures de vente émises, regroupés par mois pour l'année en cours.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

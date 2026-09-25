@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use sale\accounting\invoice\Invoice;
+use sale\accounting\invoice\SaleInvoice;
 use sale\receivable\Receivable;
 
 [$params, $providers] = eQual::announce([
@@ -28,7 +28,7 @@ use sale\receivable\Receivable;
 
         'invoice_id' => [
             'type'              => 'many2one',
-            'foreign_object'    => 'sale\accounting\invoice\Invoice',
+            'foreign_object'    => 'sale\accounting\invoice\SaleInvoice',
             'description'       => 'Proforma will be created (leave empty to create a new one).',
             'domain'            => ['status', '=', 'proforma'],
         ],

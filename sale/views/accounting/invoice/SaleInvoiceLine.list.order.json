@@ -1,22 +1,9 @@
 {
-    "name": "Invoice Lines",
+    "name": "Sale Invoice Lines",
     "description": "Displays invoice lines.",
     "access": {
         "groups": ["sale.default.users"]
     },
-    "group_by": [
-        {
-            "field": "invoice_line_group_id",
-            "open": true,
-            "colspan": 3,
-            "operations": {
-                "total": {
-                    "operation": "SUM",
-                    "usage": "amount/money:2"
-                }
-            }
-        }
-    ],
     "operations": {
         "total": {
             "total": {
@@ -29,7 +16,6 @@
             }
         }
     },
-    "sort": "asc",
     "limit": 500,
     "extends": {
         "entity": "finance\\accounting\\InvoiceLine",

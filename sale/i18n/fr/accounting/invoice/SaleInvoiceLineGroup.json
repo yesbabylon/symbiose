@@ -1,0 +1,55 @@
+{
+    "name": "Groupe de lignes de facture de vente",
+    "plural": "Groupes de lignes de facture de vente",
+    "description": "Groupe de lignes réunissant plusieurs éléments d'une facture de vente.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Libellé du groupe affiché sur la facture.",
+            "help": "Utilisez un libellé permettant d'identifier clairement le groupe."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Description courte du groupe affichée sur la facture.",
+            "help": "Ce texte complète le nom du groupe."
+        },
+        "order": {
+            "label": "Ordre",
+            "description": "Position du groupe dans la facture.",
+            "help": "Les groupes sont présentés selon cette valeur croissante."
+        },
+        "invoice_id": {
+            "label": "Facture",
+            "description": "Facture de vente à laquelle le groupe appartient.",
+            "help": "Toutes les lignes du groupe doivent appartenir à cette facture."
+        },
+        "invoice_lines_ids": {
+            "label": "Lignes de facture",
+            "description": "Lignes de facture réunies dans le groupe.",
+            "help": "Les totaux du groupe sont calculés depuis ces lignes."
+        },
+        "total": {
+            "label": "Total HTVA",
+            "description": "Montant total hors TVA des lignes du groupe.",
+            "help": "Cette valeur est calculée automatiquement."
+        },
+        "price": {
+            "label": "Prix TVAC",
+            "description": "Montant total TVA comprise des lignes du groupe.",
+            "help": "Cette valeur est calculée automatiquement."
+        },
+        "is_visible": {
+            "label": "Visible",
+            "description": "Indique si le groupe apparaît sur la facture.",
+            "help": "Désactivez cette option pour masquer le groupe sur le document."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Groupe de lignes de facture de vente",
+            "description": "Détail d'un groupe de lignes de facture de vente.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

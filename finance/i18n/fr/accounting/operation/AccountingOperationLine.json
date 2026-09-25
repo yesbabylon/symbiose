@@ -23,7 +23,7 @@
             "description": "Taux de TVA associé à la ligne.",
             "help": "Une valeur saisie en pourcentage est automatiquement convertie en taux."
         },
-        "operation_id": {
+        "accounting_operation_id": {
             "label": "Pièce comptable",
             "description": "Pièce comptable à laquelle appartient la ligne.",
             "help": "Les lignes ne sont modifiables que lorsque la pièce est en attente."
@@ -81,7 +81,7 @@
         }
     },
     "error": {
-        "operation_id": {
+        "accounting_operation_id": {
             "missing": "La pièce comptable est obligatoire.",
             "non_editable": "Les lignes ne sont modifiables que lorsque la pièce est en attente.",
             "non_removable": "Les lignes ne peuvent être supprimées que lorsque la pièce est en attente."

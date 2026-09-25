@@ -1,7 +1,7 @@
 <?php
 
-use sale\accounting\invoice\Invoice;
-use sale\accounting\invoice\InvoiceLine;
+use sale\accounting\invoice\SaleInvoice;
+use sale\accounting\invoice\SaleInvoiceLine;
 use sale\customer\Customer;
 use sale\price\Price;
 use sale\price\PriceList;
@@ -71,13 +71,13 @@ $create_fixture = function() {
         ->read(['id'])
         ->first(true);
 
-    $invoice = Invoice::create([
+    $invoice = SaleInvoice::create([
             'customer_id' => $customer['id']
         ])
         ->read(['id'])
         ->first(true);
 
-    $invoice_line = InvoiceLine::create([
+    $invoice_line = SaleInvoiceLine::create([
             'invoice_id'     => $invoice['id'],
             'product_id'     => 1,
             'price_id'       => $price['id'],
@@ -112,7 +112,7 @@ $rollback_fixture = function($args) {
     Receivable::id($args['receivable_id'])
         ->delete(true);
 
-    Invoice::id($args['invoice_id'])
+    SaleInvoice::id($args['invoice_id'])
         ->update(['status' => 'proforma'])
         ->delete(true);
 
@@ -150,7 +150,7 @@ $tests = [
                 ->read(['status', 'invoice_id', 'invoice_line_id'])
                 ->first(true);
 
-            $invoice_line = InvoiceLine::id($args['invoice_line_id'])
+            $invoice_line = SaleInvoiceLine::id($args['invoice_line_id'])
                 ->read(['id'])
                 ->first(true);
 
@@ -166,7 +166,7 @@ $tests = [
         'arrange'     => function() use($create_fixture) {
             $args = $create_fixture();
 
-            Invoice::id($args['invoice_id'])
+            SaleInvoice::id($args['invoice_id'])
                 ->update(['status' => 'posted']);
 
             return $args;
@@ -189,7 +189,7 @@ $tests = [
                 ->read(['status', 'invoice_id', 'invoice_line_id'])
                 ->first(true);
 
-            $invoice_line = InvoiceLine::id($args['invoice_line_id'])
+            $invoice_line = SaleInvoiceLine::id($args['invoice_line_id'])
                 ->read(['id'])
                 ->first(true);
 

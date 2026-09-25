@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use sale\accounting\invoice\Invoice;
+use sale\accounting\invoice\SaleInvoice;
 
 list($params, $providers) = announce([
     'description'   => 'Download pdf of given invoice.',
@@ -38,7 +38,7 @@ list($params, $providers) = announce([
 /** @var \equal\php\Context $context */
 $context = $providers['context'];
 
-$invoice = Invoice::id($params['id'])
+$invoice = SaleInvoice::id($params['id'])
     ->read(['id'])
     ->first();
 

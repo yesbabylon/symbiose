@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-use sale\accounting\invoice\Invoice;
+use sale\accounting\invoice\SaleInvoice;
 use sale\receivable\ReceivablesQueue;
 use sale\receivable\Receivable;
 
@@ -25,7 +25,7 @@ list($params, $providers) = eQual::announce([
         ],
         'invoice_id' => [
             'type'           => 'many2one',
-            'foreign_object' => 'sale\accounting\invoice\Invoice',
+            'foreign_object' => 'sale\accounting\invoice\SaleInvoice',
             'description'    => 'If left empty a new invoice proforma will be created.',
             'domain'         => ['status', '=', 'proforma'],
         ]
@@ -56,7 +56,7 @@ if(!$receivables_queues) {
 }
 
 if(isset($params['invoice_id'])) {
-    $invoice = Invoice::search([
+    $invoice = SaleInvoice::search([
             ['id', '=', $params['invoice_id']],
             ['status', '=', 'proforma']
         ])

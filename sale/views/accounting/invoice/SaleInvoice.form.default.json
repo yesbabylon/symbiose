@@ -1,5 +1,5 @@
 {
-    "name": "Invoice",
+    "name": "Sale invoice",
     "description": "Sales invoice details.",
     "access": {
         "groups": ["sale.default.users"]
@@ -12,7 +12,7 @@
             "controller": "core_model_transition",
             "visible": ["status", "=", "proforma"],
             "params": {
-                "entity": "sale\\accounting\\invoice\\Invoice",
+                "entity": "sale\\accounting\\invoice\\SaleInvoice",
                 "transition": "post",
                 "ids": []
             }
@@ -24,7 +24,7 @@
             "controller": "core_model_transition",
             "visible": ["status", "=", "proforma"],
             "params": {
-                "entity": "sale\\accounting\\invoice\\Invoice",
+                "entity": "sale\\accounting\\invoice\\SaleInvoice",
                 "transition": "cancel-proforma",
                 "ids": []
             }

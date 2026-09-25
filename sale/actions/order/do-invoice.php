@@ -7,7 +7,7 @@
 
 use sale\order\Order;
 use sale\pay\Funding;
-use sale\accounting\invoice\Invoice;
+use sale\accounting\invoice\SaleInvoice;
 list($params, $providers) = eQual::announce([
     'description'   => "Generates the proforma for the balance invoice for a order.",
     'params'        => [
@@ -49,7 +49,7 @@ if($order['status'] != 'checkedout') {
 }
 
 
-$deposit_invoices = Invoice::search([
+$deposit_invoices = SaleInvoice::search([
                         ['order_id', '=', $order['id']],
                         ['is_downpayment', '=', true]
                 ])

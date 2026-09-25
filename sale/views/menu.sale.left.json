@@ -321,7 +321,7 @@
                         "icon": "pending_actions",
                         "description": "Display proformas (non-invoiced).",
                         "context": {
-                            "entity": "sale\\accounting\\invoice\\Invoice",
+                            "entity": "sale\\accounting\\invoice\\SaleInvoice",
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc",
@@ -335,7 +335,7 @@
                         "icon": "money_off",
                         "description": "Display unpaid invoices.",
                         "context": {
-                            "entity": "sale\\accounting\\invoice\\Invoice",
+                            "entity": "sale\\accounting\\invoice\\SaleInvoice",
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc",
@@ -349,7 +349,7 @@
                         "icon": "paid",
                         "description": "Display paid invoices.",
                         "context": {
-                            "entity": "sale\\accounting\\invoice\\Invoice",
+                            "entity": "sale\\accounting\\invoice\\SaleInvoice",
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc",
@@ -363,7 +363,7 @@
                         "icon": "cancel",
                         "description": "Display credit note.",
                         "context": {
-                            "entity": "sale\\accounting\\invoice\\Invoice",
+                            "entity": "sale\\accounting\\invoice\\SaleInvoice",
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc",
@@ -377,7 +377,7 @@
                         "icon": "receipt",
                         "description": "Display all invoices.",
                         "context": {
-                            "entity": "sale\\accounting\\invoice\\Invoice",
+                            "entity": "sale\\accounting\\invoice\\SaleInvoice",
                             "view": "list.default",
                             "order": "created",
                             "sort": "asc"

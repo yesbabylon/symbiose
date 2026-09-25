@@ -38,7 +38,7 @@ class AccountingOperationLine extends Model {
                 'usage'       => 'amount/money:4',
                 'description' => 'Amount debited from the account.',
                 'default'     => 0.0,
-                'dependents'  => ['operation_id' => 'is_balanced']
+                'dependents'  => ['accounting_operation_id' => 'is_balanced']
             ],
 
             'credit' => [
@@ -46,7 +46,7 @@ class AccountingOperationLine extends Model {
                 'usage'       => 'amount/money:4',
                 'description' => 'Amount credited to the account.',
                 'default'     => 0.0,
-                'dependents'  => ['operation_id' => 'is_balanced']
+                'dependents'  => ['accounting_operation_id' => 'is_balanced']
             ],
 
             'vat_rate' => [
@@ -56,7 +56,7 @@ class AccountingOperationLine extends Model {
                 'default'     => 0.0
             ],
 
-            'operation_id' => [
+            'accounting_operation_id' => [
                 'type'           => 'many2one',
                 'foreign_object' => 'finance\accounting\operation\AccountingOperation',
                 'description'    => 'Accounting operation the line belongs to.',
@@ -89,7 +89,7 @@ class AccountingOperationLine extends Model {
                 'result_type'    => 'many2one',
                 'foreign_object' => 'identity\Organization',
                 'description'    => 'Organization inherited from the accounting operation.',
-                'relation'       => ['operation_id' => 'organization_id'],
+                'relation'       => ['accounting_operation_id' => 'organization_id'],
                 'store'          => true,
                 'readonly'       => true
             ],
@@ -99,7 +99,7 @@ class AccountingOperationLine extends Model {
                 'result_type'    => 'many2one',
                 'foreign_object' => 'finance\accounting\AccountingJournal',
                 'description'    => 'Accounting journal inherited from the operation.',
-                'relation'       => ['operation_id' => 'journal_id'],
+                'relation'       => ['accounting_operation_id' => 'journal_id'],
                 'store'          => true,
                 'instant'        => true,
                 'readonly'       => true
@@ -138,7 +138,7 @@ class AccountingOperationLine extends Model {
 
     public function getIndexes(): array {
         return [
-            ['operation_id'],
+            ['accounting_operation_id'],
             ['account_id']
         ];
     }
@@ -178,11 +178,11 @@ class AccountingOperationLine extends Model {
     }
 
     protected static function doSetDefaultDescription($self) {
-        $self->read(['description', 'operation_id' => ['description']]);
+        $self->read(['description', 'accounting_operation_id' => ['description']]);
         foreach($self as $id => $line) {
-            if(!$line['description'] && $line['operation_id']['description']) {
+            if(!$line['description'] && $line['accounting_operation_id']['description']) {
                 self::id($id)->update([
-                    'description' => $line['operation_id']['description']
+                    'description' => $line['accounting_operation_id']['description']
                 ]);
             }
         }
@@ -209,15 +209,15 @@ class AccountingOperationLine extends Model {
     }
 
     public static function cancreate($self, $values) {
-        if(empty($values['operation_id'])) {
-            return ['operation_id' => ['missing' => 'Accounting operation is required.']];
+        if(empty($values['accounting_operation_id'])) {
+            return ['accounting_operation_id' => ['missing' => 'Accounting operation is required.']];
         }
 
-        $operation = AccountingOperation::id($values['operation_id'])
+        $operation = AccountingOperation::id($values['accounting_operation_id'])
             ->read(['status'])
             ->first();
         if(!$operation || $operation['status'] !== 'pending') {
-            return ['operation_id' => ['non_editable' => 'Lines can only be added to a pending operation.']];
+            return ['accounting_operation_id' => ['non_editable' => 'Lines can only be added to a pending operation.']];
         }
 
         $error = self::validateAmounts(
@@ -232,11 +232,11 @@ class AccountingOperationLine extends Model {
     }
 
     public static function canupdate($self, $values) {
-        $self->read(['operation_id' => ['status'], 'debit', 'credit']);
+        $self->read(['accounting_operation_id' => ['status'], 'debit', 'credit']);
 
         foreach($self as $line) {
-            if($line['operation_id']['status'] !== 'pending') {
-                return ['operation_id' => ['non_editable' => 'Lines can only be changed while their operation is pending.']];
+            if($line['accounting_operation_id']['status'] !== 'pending') {
+                return ['accounting_operation_id' => ['non_editable' => 'Lines can only be changed while their operation is pending.']];
             }
 
             $debit = (float) ($values['debit'] ?? $line['debit']);
@@ -251,11 +251,11 @@ class AccountingOperationLine extends Model {
     }
 
     public static function candelete($self) {
-        $self->read(['operation_id' => ['status']]);
+        $self->read(['accounting_operation_id' => ['status']]);
 
         foreach($self as $line) {
-            if($line['operation_id']['status'] !== 'pending') {
-                return ['operation_id' => ['non_removable' => 'Lines can only be deleted while their operation is pending.']];
+            if($line['accounting_operation_id']['status'] !== 'pending') {
+                return ['accounting_operation_id' => ['non_removable' => 'Lines can only be deleted while their operation is pending.']];
             }
         }
 

@@ -1,5 +1,5 @@
 {
-    "name": "Invoice Line",
+    "name": "Sale Invoice Line",
     "description": "Invoice lines describe the products and quantities that are part of an invoice.",
     "access": {
         "groups": ["finance.default.users", "sale.default.users"]

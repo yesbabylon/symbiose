@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use sale\accounting\invoice\Invoice;
+use sale\accounting\invoice\SaleInvoice;
 use sale\pay\Funding;
 list($params, $providers) = eQual::announce([
     'description'   => 'Cancel given invoices, can keep or cancel linked receivables.',
@@ -29,7 +29,7 @@ if(!isset($params['id']) || $params['id'] <= 0) {
     throw new Exception('invoice_invalid_id', EQ_ERROR_INVALID_PARAM);
 }
 
-$invoice = Invoice::id($params['id'])
+$invoice = SaleInvoice::id($params['id'])
     ->read(['id','status','invoice_type', 'is_downpayment', 'funding_id','fundings_ids'])
     ->first(true);
 
@@ -43,7 +43,7 @@ if($invoice['is_downpayment']) {
     Funding::id($invoice['funding_id'])->update(['funding_type' => 'installment']);
 }
 
-Invoice::id($invoice['id'])->delete(true);
+SaleInvoice::id($invoice['id'])->delete(true);
 
 $context->httpResponse()
         ->status(204)

@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use sale\accounting\invoice\Invoice;
+use sale\accounting\invoice\SaleInvoice;
 use sale\order\Order;
 use sale\pay\Funding;
 
@@ -34,7 +34,7 @@ list($params, $providers) = announce([
 list($context, $orm) = [$providers['context'], $providers['orm']];
 
 
-$invoice = Invoice::id($params['id'])
+$invoice = SaleInvoice::id($params['id'])
     ->read([
         'status',
         'invoice_type',
@@ -60,9 +60,9 @@ if($invoice['status'] != 'posted') {
     throw new Exception("incompatible_status", QN_ERROR_UNKNOWN_OBJECT);
 }
 
-Invoice::id($params['id'])->transition('cancel');
+SaleInvoice::id($params['id'])->transition('cancel');
 
-Invoice::search(['reversed_invoice_id', '=', $params['id']])->update(['order_id'   => $invoice['order_id']]);
+SaleInvoice::search(['reversed_invoice_id', '=', $params['id']])->update(['order_id'   => $invoice['order_id']]);
 
 if(!is_null($invoice['funding_id'])) {
     $funding = Funding::id($invoice['funding_id'])->read(['paid_amount', 'is_paid'])->first(true);

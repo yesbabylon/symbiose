@@ -10,7 +10,15 @@ use sale\catalog\Product;
 use sale\price\Price;
 use sale\price\PriceList;
 
-class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
+class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationLine {
+
+    public static function getName() {
+        return 'Sale invoice line';
+    }
+
+    public static function getDescription() {
+        return 'Invoice lines describe the products and quantities that are part of an invoice.';
+    }
 
     public static function getModelTable(): string {
         return 'sale_accounting_invoice_invoiceline';
@@ -18,6 +26,28 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
 
     public static function getColumns() {
         return [
+
+            'description' => [
+                'type'              => 'string',
+                'description'       => 'Complementary description of the line (independent from product).'
+            ],
+
+            'accounting_operation_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'sale\accounting\invoice\SaleInvoice',
+                'description'       => 'Accounting operation represented by the related invoice.',
+                'relation'          => ['invoice_id'],
+                'readonly'          => true
+            ],
+
+            'account_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'finance\accounting\Account',
+                'description'       => 'Optional accounting account associated with the invoice line.',
+                'ondelete'          => 'null',
+                'domain'            => ['is_group_account', '=', false]
+            ],
 
             /**
              * Override Finance Invoice columns
@@ -34,7 +64,7 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
 
             'invoice_line_group_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\accounting\invoice\InvoiceLineGroup',
+                'foreign_object'    => 'sale\accounting\invoice\SaleInvoiceLineGroup',
                 'description'       => 'Group the line relates to (in turn, groups relate to their invoice).',
                 'ondelete'          => 'cascade',
                 'domain'            => ['invoice_id', '=', 'object.invoice_id'],
@@ -42,7 +72,7 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
 
             'invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\accounting\invoice\Invoice',
+                'foreign_object'    => 'sale\accounting\invoice\SaleInvoice',
                 'description'       => 'Invoice the line is related to.',
                 'required'          => true,
                 'ondelete'          => 'cascade'
@@ -91,8 +121,32 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
                 'dependents'        => ['price', 'total', 'invoice_id' => ['total', 'price']]
             ],
 
+            'total' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:4',
+                'description'       => 'Total tax-excluded price of the line (computed).',
+                'function'          => 'calcTotal',
+                'store'             => true
+            ],
+
+            'price' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:2',
+                'description'       => 'Final tax-included price of the line (computed).',
+                'function'          => 'calcPrice',
+                'store'             => true
+            ],
+
+            'downpayment_invoice_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\accounting\invoice\SaleInvoice',
+                'description'       => 'Downpayment invoice (for invoiced downpayment).'
+            ],
+
             /**
-             * Specific Sale InvoiceLine columns
+             * Specific sale invoice line columns
              */
 
             'product_id' => [
@@ -125,7 +179,15 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
         ];
     }
 
-    public static function onchange($event, $values): array {
+    public function getIndexes(): array {
+        return [];
+    }
+
+    public static function getActions() {
+        return [];
+    }
+
+    public static function onchange($event, $values, $view = null): array {
         $result = [];
 
         if(isset($event['product_id'])) {
@@ -198,15 +260,100 @@ class InvoiceLine extends \finance\accounting\invoice\InvoiceLine {
         return $result;
     }
 
+    public static function calcTotal($self): array {
+        $result = [];
+        $self->read(['qty', 'unit_price', 'free_qty', 'discount']);
+        foreach($self as $id => $line) {
+            $result[$id] = $line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']);
+        }
+
+        return $result;
+    }
+
+    public static function calcPrice($self): array {
+        $result = [];
+        $self->read(['total', 'vat_rate']);
+        foreach($self as $id => $line) {
+            $total = (float) $line['total'];
+            $vat = (float) $line['vat_rate'];
+            $result[$id] = round($total * (1.0 + $vat), 2);
+        }
+
+        return $result;
+    }
+
+    public static function cancreate($self, $values): array {
+        return [];
+    }
+
     public static function canupdate($self, $values): array {
-        $self->read(['has_receivable']);
+        $self->read(['has_receivable', 'invoice_id' => ['id', 'status'], 'qty', 'free_qty']);
         $allowed_fields = ['name', 'invoice_line_group_id'];
         foreach($self as $id => $invoiceLine) {
             if($invoiceLine['has_receivable'] && count(array_diff(array_keys($values), $allowed_fields)) > 0) {
                 return ['receivable_id' => ['non_editable' => 'Invoice lines generated by receivable cannot be updated.']];
             }
+
+            if(
+                isset($invoiceLine['invoice_id']['id'], $values['invoice_id'])
+                && $invoiceLine['invoice_id']['id'] !== $values['invoice_id']
+            ) {
+                return ['invoice_id' => ['non_editable' => 'Line cannot be linked to another invoice after creation.']];
+            }
+
+            if($invoiceLine['invoice_id']['status'] !== 'proforma') {
+                return ['status' => ['non_editable' => 'Invoice Line can only be updated while its invoice\'s status is proforma.']];
+            }
+
+            if(isset($values['invoice_line_group_id'])) {
+                $group = SaleInvoiceLineGroup::id($values['invoice_line_group_id'])
+                    ->read(['invoice_id'])
+                    ->first();
+
+                if($group && $group['invoice_id'] !== $invoiceLine['invoice_id']['id']) {
+                    return ['invoice_line_group_id' => ['invalid_param' => 'Group must be linked to same invoice.']];
+                }
+            }
+
+            if(isset($values['qty'])) {
+                $free_qty = $values['free_qty'] ?? $invoiceLine['free_qty'];
+                if($free_qty && $values['qty'] <= $free_qty) {
+                    return ['qty' => ['must_be_greater_than_free_qty' => 'Quantity must be greater than free quantity.']];
+                }
+            }
+
+            if(isset($values['free_qty'])) {
+                if($values['free_qty'] < 0) {
+                    return ['free_qty' => ['must_be_greater_than_or_equal_to_zero' => 'Free quantity must be greater than or equal to 0.']];
+                }
+
+                $qty = $values['qty'] ?? $invoiceLine['qty'];
+                if($values['free_qty'] && $values['free_qty'] >= $qty) {
+                    return ['free_qty' => ['must_be_lower_than_qty' => 'Free quantity must be lower than quantity.']];
+                }
+            }
+
+            if(isset($values['unit_price']) && $values['unit_price'] <= 0) {
+                return ['unit_price' => ['must_be_greater_than_zero' => 'Unit price must be greater than 0.']];
+            }
+
+            if(isset($values['discount'])) {
+                if($values['discount'] < 0) {
+                    return ['discount' => ['must_be_greater_than_zero' => 'Discount must be greater than or equal to 0%.']];
+                }
+                if($values['discount'] > 0.99) {
+                    return ['discount' => ['must_be_lower_than_one' => 'Discount must be lower than 100%.']];
+                }
+            }
         }
 
-        return parent::canupdate($self, $values);
+        return [];
+    }
+
+    public static function candelete($self): array {
+        return [];
+    }
+
+    protected static function oncreate($self, $values, $lang) {
     }
 }

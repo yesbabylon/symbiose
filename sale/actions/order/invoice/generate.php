@@ -5,9 +5,9 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use sale\accounting\invoice\Invoice;
-use sale\accounting\invoice\InvoiceLine;
-use sale\accounting\invoice\InvoiceLineGroup;
+use sale\accounting\invoice\SaleInvoice;
+use sale\accounting\invoice\SaleInvoiceLine;
+use sale\accounting\invoice\SaleInvoiceLineGroup;
 use sale\order\Order;
 use sale\pay\Funding;
 use sale\catalog\Product;
@@ -39,7 +39,7 @@ list($params, $providers) = eQual::announce([
 list($context, $orm) = [$providers['context'], $providers['orm']];
 
 
-$invoice = Invoice::search([['order_id', '=', $params['id']],
+$invoice = SaleInvoice::search([['order_id', '=', $params['id']],
                            ['invoice_type', '=', 'invoice'],
                            ['is_downpayment', '=', false],
                            ['status', '=', 'posted']])
@@ -100,20 +100,20 @@ if(count($order['order_lines_ids']) <= 0) {
     throw new Exception("empty_order", QN_ERROR_INVALID_PARAM);
 }
 
-$proforma = Invoice::search([['order_id', '=', $order['id']],
+$proforma = SaleInvoice::search([['order_id', '=', $order['id']],
                              ['invoice_type', '=', 'invoice'],
                              ['status', '=', 'proforma']])
             ->read(['id', 'fundings_ids'])
             ->first(true);
 
 if($proforma) {
-    Invoice::id($proforma['id'])->delete(true);
+    SaleInvoice::id($proforma['id'])->delete(true);
     Funding::ids($proforma['fundings_ids'])->update(['invoice_id' => null]);
 }
 
 $order_lines_ids = [];
 
-$invoice = Invoice::create([
+$invoice = SaleInvoice::create([
         'order_id'          => $order['id'],
         'customer_id'       => $order['customer_id']['id']
     ])
@@ -123,7 +123,7 @@ $invoice = Invoice::create([
 
 foreach($order['order_lines_groups_ids'] as $group_id => $group) {
 
-    $invoice_line_group = InvoiceLineGroup::create([
+    $invoice_line_group = SaleInvoiceLineGroup::create([
             'name'              => $group['name'],
             'invoice_id'        => $invoice['id']
         ])
@@ -132,7 +132,7 @@ foreach($order['order_lines_groups_ids'] as $group_id => $group) {
 
     foreach($group['order_lines_ids'] as $lid => $line) {
         $order_lines_ids[] = $lid;
-        InvoiceLine::create([
+        SaleInvoiceLine::create([
                 'invoice_id'                => $invoice['id'],
                 'invoice_line_group_id'     => $invoice_line_group['id'],
                 'product_id'                => $line['product_id'],
@@ -171,7 +171,7 @@ if($fundings) {
 
     foreach($fundings as $fid => $funding) {
         if($funding['funding_type'] == 'invoice') {
-            $funding_invoice = Invoice::id($funding['invoice_id'])
+            $funding_invoice = SaleInvoice::id($funding['invoice_id'])
                 ->read([
                         'id', 'created', 'name', 'status', 'partner_id', 'invoice_type', 'is_downpayment', 'price',
                         'invoice_lines_ids' => ['vat_rate', 'product_id', 'qty', 'price', 'unit_price']
@@ -180,7 +180,7 @@ if($fundings) {
 
             if($funding_invoice['invoice_type'] == 'invoice' && $funding_invoice['is_downpayment']) {
                 foreach($funding_invoice['invoice_lines_ids'] as $lid => $line) {
-                    $new_line = InvoiceLine::create([
+                    $new_line = SaleInvoiceLine::create([
                         'invoice_id'                => $invoice['id'],
                         'name'                      => $funding_invoice['name'],
                         'product_id'                => $line['product_id'],
@@ -209,7 +209,7 @@ if($fundings) {
         }
     }
 
-    InvoiceLineGroup::create([
+    SaleInvoiceLineGroup::create([
         'name'              => $downpayment_product['name'],
         'invoice_id'        => $invoice['id'],
         'invoice_lines_ids' => $i_lines_ids

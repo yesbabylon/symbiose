@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 use sale\order\Order;
-use sale\accounting\invoice\Invoice;
+use sale\accounting\invoice\SaleInvoice;
 
 list($params, $providers) = announce([
     'description'   => "Sets order as checked out.",
@@ -42,7 +42,7 @@ if(!$order) {
     throw new Exception("unknown_order", QN_ERROR_UNKNOWN_OBJECT);
 }
 
-$balance_invoice = Invoice::search([['order_id', '=', $order['id']], ['is_downpayment', '=', false], ['invoice_type', '=', 'invoice'], ['status', '=', 'posted']])->read(['id'])->first(true);
+$balance_invoice = SaleInvoice::search([['order_id', '=', $order['id']], ['is_downpayment', '=', false], ['invoice_type', '=', 'invoice'], ['status', '=', 'posted']])->read(['id'])->first(true);
 
 if($balance_invoice) {
     throw new Exception("emitted_balance_invoice", QN_ERROR_INVALID_PARAM);

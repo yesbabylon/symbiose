@@ -6,7 +6,7 @@
 */
 
 use core\setting\Setting;
-use sale\accounting\invoice\Invoice;
+use sale\accounting\invoice\SaleInvoice;
 use sale\order\Order;
 use sale\pay\Funding;
 
@@ -37,7 +37,7 @@ list($params, $providers) = eQual::announce([
  */
 ['context' => $context, 'orm' => $om] = $providers;
 
-$invoice = Invoice::id($params['id'])
+$invoice = SaleInvoice::id($params['id'])
     ->read([
         'id',
         'state',
@@ -116,7 +116,7 @@ if(round($sum_invoices, 2) > round($order['price'], 2)) {
     throw new Exception("exceeding_order_price", EQ_ERROR_INVALID_PARAM);
 }
 
-Invoice::id($params['id'])->transition('post');
+SaleInvoice::id($params['id'])->transition('post');
 
 if(!$invoice['is_downpayment']) {
     if($invoice['invoice_type'] == 'invoice') {

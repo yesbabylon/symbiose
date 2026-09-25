@@ -1,12 +1,12 @@
 {
     "name": "Issued sales invoices",
-    "description": "Tax-excluded totals of issued sales invoices by month for the current year.",
+    "description": "Tax-excluded totals of issued sale invoices by month for the current year.",
     "access": {
         "groups": ["sale.default.users"]
     },
     "controller": "core_model_chart",
     "layout": {
-        "entity": "sale\\accounting\\invoice\\Invoice",
+        "entity": "sale\\accounting\\invoice\\SaleInvoice",
         "type": "bar",
         "stacked": false,
         "group_by": "range",

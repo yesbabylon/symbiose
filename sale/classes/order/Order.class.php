@@ -182,7 +182,7 @@ class Order extends Model {
 
             'invoices_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\accounting\invoice\Invoice',
+                'foreign_object'    => 'sale\accounting\invoice\SaleInvoice',
                 'foreign_field'     => 'order_id',
                 'description'       => 'Invoices that relate to the order.'
             ]

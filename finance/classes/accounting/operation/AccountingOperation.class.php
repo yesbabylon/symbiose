@@ -54,7 +54,9 @@ class AccountingOperation extends Model {
                 'selection'   => [
                     'misc',
                     'sale_invoice',
-                    'purchase_invoice'
+                    'purchase_invoice',
+                    'sale_credit_note',
+                    'purchase_credit_note'
                 ],
                 'default'     => 'misc',
                 'required'    => true,
@@ -122,7 +124,7 @@ class AccountingOperation extends Model {
             'operation_lines_ids' => [
                 'type'           => 'one2many',
                 'foreign_object' => 'finance\accounting\operation\AccountingOperationLine',
-                'foreign_field'  => 'operation_id',
+                'foreign_field'  => 'accounting_operation_id',
                 'description'    => 'Lines used to generate the accounting entries.',
                 'ondetach'       => 'delete',
                 'dependents'     => ['is_balanced']
@@ -135,7 +137,7 @@ class AccountingOperation extends Model {
                 'domain'         => [
                     'origin_object_class',
                     '=',
-                    'finance\accounting\operation\AccountingOperation'
+                    static::getType()
                 ],
                 'description'    => 'Accounting entries generated from the operation.',
                 'dependents'     => ['is_balanced']
@@ -556,7 +558,7 @@ class AccountingOperation extends Model {
                 'sequence' => $sequence
             ]);
 
-            self::id($id)->update(['operation_number' => $operation_number]);
+            static::id($id)->update(['operation_number' => $operation_number]);
         }
     }
 
@@ -567,6 +569,7 @@ class AccountingOperation extends Model {
             'operation_type',
             'organization_id',
             'journal_id',
+            'accounting_entries_ids' => ['id'],
             'operation_lines_ids' => [
                 'description',
                 'account_id',
@@ -576,11 +579,18 @@ class AccountingOperation extends Model {
             ]
         ]);
 
+        $reversal_types = [
+            'sale_invoice'         => 'sale_credit_note',
+            'purchase_invoice'     => 'purchase_credit_note',
+            'sale_credit_note'     => 'sale_invoice',
+            'purchase_credit_note' => 'purchase_invoice'
+        ];
+
         foreach($self as $operation) {
-            $reversal = self::create([
+            $reversal = static::create([
                     'description'     => 'Reversal of ' . $operation['name'],
-                    'operation_type'  => $operation['operation_type'],
-                    'organization_id'           => $operation['organization_id'],
+                    'operation_type'  => $reversal_types[$operation['operation_type']] ?? $operation['operation_type'],
+                    'organization_id' => $operation['organization_id'],
                     'journal_id'      => $operation['journal_id'],
                     'posting_date'    => time(),
                     'status'          => 'pending',
@@ -591,17 +601,25 @@ class AccountingOperation extends Model {
 
             foreach($operation['operation_lines_ids'] as $line) {
                 AccountingOperationLine::create([
-                    'operation_id' => $reversal['id'],
-                    'description'  => $line['description'],
-                    'account_id'   => $line['account_id'],
-                    'debit'        => $line['credit'],
-                    'credit'       => $line['debit'],
-                    'vat_rate'     => $line['vat_rate']
+                    'accounting_operation_id' => $reversal['id'],
+                    'description'             => $line['description'],
+                    'account_id'              => $line['account_id'],
+                    'debit'                   => $line['credit'],
+                    'credit'                  => $line['debit'],
+                    'vat_rate'                => $line['vat_rate']
                 ]);
             }
 
-            self::id($reversal['id'])->transition('submit');
-            self::id($reversal['id'])->transition('post');
+            static::id($reversal['id'])->transition('submit');
+            static::id($reversal['id'])->transition('post');
+
+            $entry_ids = array_map(
+                static fn($entry) => $entry['id'],
+                $operation['accounting_entries_ids']->get(true)
+            );
+            if($entry_ids) {
+                AccountingEntry::ids($entry_ids)->update(['status' => 'reversed']);
+            }
         }
     }
 
