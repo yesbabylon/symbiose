@@ -18,10 +18,6 @@ class SaleInvoiceLineGroup extends Model {
         return 'Invoice line groups are related to an invoice and are meant to visually join several invoice lines.';
     }
 
-    public static function getModelTable(): string {
-        return 'sale_accounting_invoice_invoicelinegroup';
-    }
-
     public static function getColumns() {
         return [
 

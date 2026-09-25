@@ -20,10 +20,6 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
         return 'Invoice lines describe the products and quantities that are part of an invoice.';
     }
 
-    public static function getModelTable(): string {
-        return 'sale_accounting_invoice_invoiceline';
-    }
-
     public static function getColumns() {
         return [
 
