@@ -1,6 +1,6 @@
 {
-    "name": "Invoice search",
-    "description": "Advanced collector for invoices",
+    "name": "Accounting operation search",
+    "description": "Advanced search for accounting operations",
     "layout": {
         "groups": [
             {
@@ -12,6 +12,11 @@
                                     {
                                         "width": "25%",
                                         "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "operation_type",
+                                                "width": "100%"
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "status",
@@ -30,21 +35,6 @@
                                             {
                                                 "type": "field",
                                                 "value": "date_to",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "25%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "price_min",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "price_max",
                                                 "width": "100%"
                                             }
                                         ]

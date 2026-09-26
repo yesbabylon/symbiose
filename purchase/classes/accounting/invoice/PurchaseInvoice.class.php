@@ -7,13 +7,9 @@
 
 namespace purchase\accounting\invoice;
 
-use finance\accounting\invoice\Invoice as FinanceInvoice;
+use finance\accounting\operation\AccountingOperation;
 
-class Invoice extends FinanceInvoice {
-
-    public static function getModelTable(): string {
-        return 'purchase_accounting_invoice_invoice';
-    }
+class PurchaseInvoice extends AccountingOperation {
 
     public static function getName() {
         return 'Purchase invoice';
@@ -38,18 +34,9 @@ class Invoice extends FinanceInvoice {
 
             'invoice_lines_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'purchase\accounting\invoice\InvoiceLine',
+                'foreign_object'    => 'purchase\accounting\invoice\PurchaseInvoiceLine',
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Detailed lines of the invoice.',
-                'ondetach'          => 'delete',
-                'dependents'        => ['total', 'price']
-            ],
-
-            'invoice_line_groups_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'purchase\accounting\invoice\InvoiceLineGroup',
-                'foreign_field'     => 'invoice_id',
-                'description'       => 'Groups of lines of the invoice.',
                 'ondetach'          => 'delete',
                 'dependents'        => ['total', 'price']
             ],

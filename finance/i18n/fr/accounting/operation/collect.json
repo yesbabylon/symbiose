@@ -1,0 +1,41 @@
+{
+    "model": {
+        "date_from": {
+            "label": "Date comptable de début",
+            "description": "Début de l'intervalle de dates comptables.",
+            "help": "Limite la recherche aux pièces comptables comptabilisées à partir de cette date."
+        },
+        "date_to": {
+            "label": "Date comptable de fin",
+            "description": "Fin de l'intervalle de dates comptables.",
+            "help": "Limite la recherche aux pièces comptables comptabilisées jusqu'à cette date."
+        },
+        "operation_type": {
+            "label": "Type de pièce",
+            "description": "Type métier de la pièce comptable.",
+            "help": "Limite la recherche à un type de pièce comptable.",
+            "selection": {
+                "all": "Tous",
+                "misc": "Opération diverse",
+                "sale_invoice": "Facture de vente",
+                "purchase_invoice": "Facture d'achat",
+                "sale_credit_note": "Note de crédit sur vente",
+                "purchase_credit_note": "Note de crédit sur achat"
+            }
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut courant de la pièce comptable.",
+            "help": "Limite la recherche aux pièces comptables ayant ce statut.",
+            "selection": {
+                "all": "Tous",
+                "pending": "En attente",
+                "proforma": "Prête à comptabiliser",
+                "posted": "Comptabilisée",
+                "cancelled": "Annulée"
+            }
+        }
+    },
+    "view": {},
+    "error": {}
+}

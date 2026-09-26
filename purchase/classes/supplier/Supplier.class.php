@@ -34,7 +34,7 @@ class Supplier extends IdentityFacetAbstract {
 
             'invoices_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'purchase\accounting\invoice\Invoice',
+                'foreign_object'    => 'purchase\accounting\invoice\PurchaseInvoice',
                 'foreign_field'     => 'supplier_id',
                 'description'       => 'Purchase invoices from the supplier.'
             ]

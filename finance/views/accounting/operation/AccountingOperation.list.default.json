@@ -4,6 +4,7 @@
     "access": {
         "groups": ["finance.default.users"]
     },
+    "controller": "finance_accounting_operation_collect",
     "order": "posting_date",
     "sort": "desc",
     "layout": {

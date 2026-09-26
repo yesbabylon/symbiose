@@ -23,7 +23,7 @@
                 "icon": "receipt_long",
                 "description": "",
                 "context": {
-                    "entity": "purchase\\accounting\\invoice\\Invoice",
+                    "entity": "purchase\\accounting\\invoice\\PurchaseInvoice",
                     "view": "list.default",
                     "order": "id",
                     "sort": "asc"
