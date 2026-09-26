@@ -16,23 +16,75 @@
             }
         }
     },
+    "sort": "asc",
     "limit": 500,
-    "extends": {
-        "entity": "finance\\accounting\\InvoiceLine",
-        "view": "list.default"
-    },
     "layout": {
-        "update": {
-            "item.group": {
-                "after": [
-                    {
-                        "type": "field",
-                        "value": "product_id",
-                        "label": "Product",
-                        "width": "25%"
-                    }
-                ]
+        "items": [
+            {
+                "id": "item.name",
+                "type": "field",
+                "value": "name",
+                "width": "25%"
+            },
+            {
+                "id": "item.description",
+                "type": "field",
+                "value": "description",
+                "width": "25%"
+            },
+            {
+                "id": "item.group",
+                "type": "field",
+                "label": "Group",
+                "value": "invoice_line_group_id",
+                "width": "0%",
+                "visible": false
+            },
+            {
+                "type": "field",
+                "value": "product_id",
+                "label": "Product",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "unit_price",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "Quantity",
+                "value": "qty",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Free qty",
+                "value": "free_qty",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Disc.%",
+                "value": "discount",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "vat_rate",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "total",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "price",
+                "width": "15%",
+                "visible": false
             }
-        }
+        ]
     }
 }

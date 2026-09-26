@@ -5,26 +5,45 @@
         "groups": ["purchase.default.users"]
     },
     "controller": "purchase_accounting_invoice_collect",
-    "domain" : ["supplier_id", ">", 0],
-    "extends": {
-        "entity": "finance\\accounting\\Invoice",
-        "view": "list.default"
-    },
-    "layout": {
-        "remove": [
-            "item.invoice_purpose"
-        ],
-        "update": {
-            "item.name": {
-                "after": [
-                    {
-                        "type": "field",
-                        "label": "Supplier",
-                        "value": "supplier_id",
-                        "width": "20%"
-                    }
-                ]
-            }
+    "domain": ["supplier_id", ">", 0],
+    "header": {
+        "actions": {
+            "ACTION.CREATE": false
         }
+    },
+    "order": "posting_date",
+    "sort": "desc",
+    "limit": 100,
+    "layout": {
+        "items": [
+            {
+                "id": "item.name",
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "id": "item.supplier",
+                "type": "field",
+                "label": "Supplier",
+                "value": "supplier_id",
+                "width": "20%"
+            },
+            {
+                "id": "item.posting.date",
+                "type": "field",
+                "value": "posting_date",
+                "width": "20%",
+                "sortable": true,
+                "widget": {
+                    "usage": "date/plain.short"
+                }
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "20%"
+            }
+        ]
     }
 }
