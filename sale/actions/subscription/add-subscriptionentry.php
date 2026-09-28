@@ -111,7 +111,7 @@ if(!$subscriptionEntry) {
 
     if($pricing_mode === 'fixed') {
         $subscriptionEntry = $subscriptionEntry
-            ->transition('validate');
+            ->transition('approve');
     }
 
     $subscriptionEntry = $subscriptionEntry->first();
