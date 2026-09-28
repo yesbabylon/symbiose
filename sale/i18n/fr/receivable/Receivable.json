@@ -67,6 +67,7 @@
             "receivable_invalid_id": "Aucune créance valide n'a été sélectionnée.",
             "receivable_not_open": "La créance doit être ouverte pour être imputée à un compte de service.",
             "receivable_not_time_entry": "Seules les créances issues d'une prestation de temps peuvent être imputées à un compte de service.",
+            "product_model_not_service": "Seules les créances associées à un produit de type service peuvent être imputées à un compte de service.",
             "unknown_origin_time_entry": "La prestation de temps liée à la créance est introuvable.",
             "receivable_has_no_billable_duration": "La prestation de temps ne contient aucune durée facturable.",
             "unknown_service_account": "Le compte de service sélectionné est introuvable.",

@@ -282,7 +282,7 @@ class Receivable extends Model {
             'post_service_account' => [
                 'description' => 'Create service account entries from open receivables.',
                 'help'        => 'Uses the provided service account when possible, otherwise uses the unique active service account of the customer.',
-                'policies'    => [],
+                'policies'    => ['can_post_service_account'],
                 'function'    => 'doPostServiceAccount'
             ],
             'unpost_invoice' => [
@@ -297,11 +297,78 @@ class Receivable extends Model {
 
     public static function getPolicies(): array {
         return array_merge(parent::getPolicies(), [
+            'can_post_service_account' => [
+                'description' => 'Check whether receivables can be posted to a service account.',
+                'function'    => 'policyCanPostServiceAccount'
+            ],
             'can_unpost_invoice' => [
                 'description' => 'Check whether receivables can be removed from their invoices.',
                 'function'    => 'policyCanUnpostInvoice'
             ]
         ]);
+    }
+
+    protected static function policyCanPostServiceAccount($self): array {
+        $result = [];
+
+        $self->read([
+            'status',
+            'origin_object_class',
+            'customer_id',
+            'time_entry_id' => [
+                'id',
+                'billed_duration',
+                'product_id' => [
+                    'product_model_id' => ['type']
+                ]
+            ],
+            'subscription_entry_id' => [
+                'id',
+                'product_id' => [
+                    'product_model_id' => ['type']
+                ]
+            ]
+        ]);
+
+        foreach($self as $id => $receivable) {
+            if($receivable['status'] !== 'open') {
+                $result[$id] = [
+                    'receivable_not_open' => 'Only open receivables can be posted to a service account.'
+                ];
+            }
+            elseif(!in_array($receivable['origin_object_class'], ['timetrack\\TimeEntry', 'sale\\subscription\\SubscriptionEntry'], true)) {
+                $result[$id] = [
+                    'non_supported_origin_class' => 'The receivable origin class is not supported for service account posting.'
+                ];
+            }
+            elseif(
+                ($receivable['origin_object_class'] === 'timetrack\\TimeEntry'
+                    ? ($receivable['time_entry_id']['product_id']['product_model_id']['type'] ?? null)
+                    : ($receivable['subscription_entry_id']['product_id']['product_model_id']['type'] ?? null)
+                ) !== 'service'
+            ) {
+                $result[$id] = [
+                    'product_model_not_service' => 'Only receivables for service products can be posted to a service account.'
+                ];
+            }
+            elseif(!isset($receivable['time_entry_id']['id'])) {
+                $result[$id] = [
+                    'unknown_origin_time_entry' => 'The receivable is not linked to a time entry.'
+                ];
+            }
+            elseif(!$receivable['customer_id']) {
+                $result[$id] = [
+                    'missing_customer' => 'The receivable is not linked to a customer.'
+                ];
+            }
+            elseif(!isset($receivable['time_entry_id']['billed_duration']) || (float) $receivable['time_entry_id']['billed_duration'] <= 0.0) {
+                $result[$id] = [
+                    'receivable_has_no_billable_duration' => 'The receivable has no billable duration.'
+                ];
+            }
+        }
+
+        return $result;
     }
 
     protected static function policyCanUnpostInvoice($self): array {
@@ -469,15 +536,11 @@ class Receivable extends Model {
                 'id',
                 'name',
                 'description',
-                'status',
                 'origin_object_class',
                 'origin_object_id',
                 'date',
                 'customer_id',
                 'time_entry_id' => [
-                    'id',
-                    'description',
-                    'billed_duration',
                     'travel_time',
                     'on_site',
                     'origin',
@@ -497,23 +560,6 @@ class Receivable extends Model {
         }
 
         foreach($self as $id => $receivable) {
-            if($receivable['status'] !== 'open') {
-                throw new \Exception('receivable_not_open', EQ_ERROR_INVALID_PARAM);
-            }
-
-            // #todo - true discriminant is the used product, which must be a product invoiced by the hour
-            if(!in_array($receivable['origin_object_class'], ['timetrack\\TimeEntry', 'sale\\subscription\\SubscriptionEntry'], true)) {
-                throw new \Exception('non_supported_origin_class', EQ_ERROR_INVALID_PARAM);
-            }
-
-            if(!isset($receivable['time_entry_id']['id'])) {
-                throw new \Exception('unknown_origin_time_entry', EQ_ERROR_UNKNOWN_OBJECT);
-            }
-
-            if(!$receivable['customer_id']) {
-                throw new \Exception('missing_customer', EQ_ERROR_INVALID_PARAM);
-            }
-
             $serviceAccount = $defaultServiceAccount;
 
             if(!$serviceAccount) {
@@ -538,10 +584,6 @@ class Receivable extends Model {
             }
 
             $timeEntry = $receivable['time_entry_id'];
-
-            if(!isset($timeEntry['billed_duration']) || (float) $timeEntry['billed_duration'] <= 0.0) {
-                throw new \Exception('receivable_has_no_billable_duration', EQ_ERROR_INVALID_PARAM);
-            }
 
             $serviceAccountEntry = ServiceAccountEntry::create([
                     'name'                => $receivable['name'],
