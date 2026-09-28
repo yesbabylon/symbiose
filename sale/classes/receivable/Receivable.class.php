@@ -88,7 +88,7 @@ class Receivable extends Model {
                 'type'              => 'integer',
                 'description'       => 'Object identifier, as a complement to `origin_object_class`.',
                 'help'              => 'Together origin_object_class and origin_object_id reference the accounting document the entry is linked to.',
-                'dependents'        => ['name', 'description', 'sale_entry_id', 'time_entry_id', 'subscription_entry_id', 'product_id', 'price_id', 'unit_price', 'vat_rate', 'qty', 'free_qty', 'discount', 'total', 'price'],
+                'dependents'        => ['name', 'description', 'product_id', 'price_id', 'unit_price', 'vat_rate', 'qty', 'free_qty', 'discount', 'total', 'price'],
                 'required'          => true,
                 'readonly'          => true
             ],
@@ -356,7 +356,7 @@ class Receivable extends Model {
                     'missing_customer' => 'The receivable is not linked to a customer.'
                 ];
             }
-            elseif($receivable['time_entry_id'] && !isset($receivable['time_entry_id']['billed_duration']) || (float) $receivable['time_entry_id']['billed_duration'] <= 0.0) {
+            elseif($receivable['origin_object_class'] === 'timetrack\\TimeEntry' && !isset($receivable['time_entry_id']['billed_duration']) || (float) $receivable['time_entry_id']['billed_duration'] <= 0.0) {
                 $result[$id] = [
                     'receivable_has_no_billable_duration' => 'The receivable has no billable duration.'
                 ];
