@@ -351,17 +351,12 @@ class Receivable extends Model {
                     'product_model_not_service' => 'Only receivables for service products can be posted to a service account.'
                 ];
             }
-            elseif(!isset($receivable['time_entry_id']['id'])) {
-                $result[$id] = [
-                    'unknown_origin_time_entry' => 'The receivable is not linked to a time entry.'
-                ];
-            }
             elseif(!$receivable['customer_id']) {
                 $result[$id] = [
                     'missing_customer' => 'The receivable is not linked to a customer.'
                 ];
             }
-            elseif(!isset($receivable['time_entry_id']['billed_duration']) || (float) $receivable['time_entry_id']['billed_duration'] <= 0.0) {
+            elseif($receivable['time_entry_id'] && !isset($receivable['time_entry_id']['billed_duration']) || (float) $receivable['time_entry_id']['billed_duration'] <= 0.0) {
                 $result[$id] = [
                     'receivable_has_no_billable_duration' => 'The receivable has no billable duration.'
                 ];
