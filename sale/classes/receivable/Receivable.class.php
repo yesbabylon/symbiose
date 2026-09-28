@@ -501,8 +501,9 @@ class Receivable extends Model {
                 throw new \Exception('receivable_not_open', EQ_ERROR_INVALID_PARAM);
             }
 
-            if($receivable['origin_object_class'] !== 'timetrack\\TimeEntry') {
-                throw new \Exception('receivable_not_time_entry', EQ_ERROR_INVALID_PARAM);
+            // #todo - true discriminant is the used product, which must be a product invoiced by the hour
+            if(!in_array($receivable['origin_object_class'], ['timetrack\\TimeEntry', 'sale\\subscription\\SubscriptionEntry'], true)) {
+                throw new \Exception('non_supported_origin_class', EQ_ERROR_INVALID_PARAM);
             }
 
             if(!isset($receivable['time_entry_id']['id'])) {
