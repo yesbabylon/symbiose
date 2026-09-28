@@ -356,7 +356,7 @@ class Receivable extends Model {
                     'missing_customer' => 'The receivable is not linked to a customer.'
                 ];
             }
-            elseif($receivable['origin_object_class'] === 'timetrack\\TimeEntry' && !isset($receivable['time_entry_id']['billed_duration']) || (float) $receivable['time_entry_id']['billed_duration'] <= 0.0) {
+            elseif($receivable['origin_object_class'] === 'timetrack\\TimeEntry' && !isset($receivable['time_entry_id']['billed_duration']) ?? null) {
                 $result[$id] = [
                     'receivable_has_no_billable_duration' => 'The receivable has no billable duration.'
                 ];
