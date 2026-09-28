@@ -24,7 +24,8 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'default'           => 'timetrack\TimeEntry',
                 'selection'         => [
                     'sale\SaleEntry',
-                    'timetrack\TimeEntry'
+                    'timetrack\TimeEntry',
+                    'sale\subscription\SubscriptionEntry'
                 ]
             ],
 
