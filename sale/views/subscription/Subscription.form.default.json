@@ -249,6 +249,12 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "qty",
+                                                "width": "15%",
+                                                "visible": ["pricing_mode", "=", "consumption"]
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "price",
                                                 "width": "15%"
                                             }

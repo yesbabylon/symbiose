@@ -79,9 +79,17 @@ class Subscription extends Model  {
                     'consumption' => 'Consumption'
                 ],
                 'description'       => 'Pricing mode of the subscription.',
-                'help'              => 'Fixed subscriptions compute the period price. Consumption subscriptions use the selected price as unit price and require quantity entry on each generated sale entry.',
+                'help'              => 'Fixed subscriptions compute the period price. Consumption subscriptions multiply the selected unit price by the subscription quantity.',
                 'default'           => 'fixed',
                 'dependents'        => ['price_id', 'price']
+            ],
+
+            'qty' => [
+                'type'              => 'float',
+                'description'       => 'Quantity used to compute the subscription price.',
+                'default'           => 1.0,
+                'visible'           => ['pricing_mode', '=', 'consumption'],
+                'dependents'        => ['price']
             ],
 
             'is_auto_renew' => [
@@ -155,7 +163,7 @@ class Subscription extends Model  {
                 'function'          => 'calcPrice',
                 'store'             => true,
                 'description'       => 'Price of the subscription.',
-                'help'              => 'This is a computed price and not stored, since it depends on the price list that relate to the subsequent sales.'
+                'help'              => 'The price is computed from the pricing mode and selected price. In consumption mode, it is the quantity multiplied by the selected unit price.'
             ],
 
             'subscription_entries_ids' => [
@@ -204,8 +212,9 @@ class Subscription extends Model  {
         }
 
         $pricing_mode = $event['pricing_mode'] ?? $values['pricing_mode'] ?? 'fixed';
+        $qty = $event['qty'] ?? $values['qty'] ?? 1.0;
 
-        if( (isset($event['product_id']) || isset($event['pricing_mode']) || isset($event['date_from']) || isset($event['duration'])) && isset($date_from, $date_to) ) {
+        if( (isset($event['product_id']) || isset($event['pricing_mode']) || isset($event['qty']) || isset($event['date_from']) || isset($event['duration'])) && isset($date_from, $date_to) ) {
             $product_id = $event['product_id'] ?? $values['product_id'] ?? null;
 
             if($product_id) {
@@ -216,7 +225,7 @@ class Subscription extends Model  {
                 );
 
                 if($price_id) {
-                    $price = Price::id($price_id)->read(['id', 'name'])->first();
+                    $price = Price::id($price_id)->read(['id', 'name', 'price'])->first();
                     if($price) {
                         $result['price_id'] = [
                             'id'    => $price['id'],
@@ -227,7 +236,7 @@ class Subscription extends Model  {
                             $result['price'] = ($computed_price > 0) ? $computed_price : ($values['price'] ?? null);
                         }
                         else {
-                            $result['price'] = null;
+                            $result['price'] = isset($price['price']) ? round($qty * $price['price'], 4) : ($values['price'] ?? null);
                         }
                     }
                 }
@@ -322,11 +331,17 @@ class Subscription extends Model  {
 
     protected static function calcPrice($self): array {
         $result = [];
-        $self->read(['pricing_mode', 'duration', 'price', 'price_id' => ['price', 'has_period', 'period']]);
+        $self->read(['pricing_mode', 'qty', 'duration', 'price', 'price_id' => ['price', 'has_period', 'period']]);
 
         foreach($self as $id => $subscription) {
             if(($subscription['pricing_mode'] ?? 'fixed') === 'consumption') {
-                $result[$id] = null;
+                if(isset($subscription['price_id']['price'])) {
+                    $qty = $subscription['qty'] ?? 1.0;
+                    $result[$id] = round($qty * $subscription['price_id']['price'], 4);
+                }
+                else {
+                    $result[$id] = $subscription['price'] ?? null;
+                }
                 continue;
             }
 

@@ -32,11 +32,16 @@
         "pricing_mode": {
             "label": "Mode de tarification",
             "description": "Mode utilisé pour calculer le prix de l'abonnement.",
-            "help": "Le mode forfait calcule le prix de la période. Le mode quantité prestée utilise le prix sélectionné comme prix unitaire et demande la quantité sur chaque vente générée.",
+            "help": "Le mode forfait calcule le prix de la période. Le mode quantité prestée multiplie le prix unitaire sélectionné par la quantité de l'abonnement.",
             "selection": {
                 "fixed": "Forfait",
                 "consumption": "Quantité prestée"
             }
+        },
+        "qty": {
+            "label": "Quantité",
+            "description": "Quantité utilisée pour calculer le prix de l'abonnement.",
+            "help": "Ce champ est utilisé lorsque le mode de tarification est Quantité prestée."
         },
         "is_expired": {
             "label": "Expiré",
@@ -78,10 +83,10 @@
             "description": "Le prix du produit lié à l'abonnement.",
             "help": ""
         },
-        "unit_price": {
-            "label": "Prix unitaire",
-            "description": "Le montant du prix d'une période de l'abonnement.",
-            "help": ""
+        "price": {
+            "label": "Prix",
+            "description": "Prix calculé de l'abonnement.",
+            "help": "En mode Quantité prestée, le prix correspond par défaut à la quantité multipliée par le prix unitaire sélectionné."
         },
         "subscription_entries_ids": {
             "label": "Ventes",
