@@ -514,6 +514,7 @@ class Receivable extends Model {
 
         foreach($self as $id => $receivable) {
             SaleInvoiceLine::id($receivable['invoice_line_id'])
+                ->do('reset_invoice_prices')
                 ->delete(true);
 
             self::id($id)

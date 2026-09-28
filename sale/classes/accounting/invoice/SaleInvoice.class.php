@@ -667,8 +667,20 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
                 'description'   => 'Creates accounting entries according to  invoice lines.',
                 'policies'      => [],
                 'function'      => 'doGenerateAccountingEntries'
+            ],
+            'refresh_prices' => [
+                'description'   => 'Forces the recomputation of the invoice price and total.',
+                'policies'      => [],
+                'function'      => 'doRefreshPrices'
             ]
         ];
+    }
+
+    protected static function doRefreshPrices($self) {
+        $self->update([
+            'price' => null,
+            'total' => null
+        ]);
     }
 
     /**

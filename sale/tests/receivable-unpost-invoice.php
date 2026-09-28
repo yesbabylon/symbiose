@@ -95,6 +95,10 @@ $create_fixture = function() {
             'invoice_line_id' => $invoice_line['id']
         ]);
 
+    SaleInvoice::id($invoice['id'])
+        ->read(['total', 'price'])
+        ->first(true);
+
     return [
         'customer_id'           => $customer['id'],
         'receivables_queue_id'  => $receivables_queue['id'],
@@ -137,7 +141,7 @@ $rollback_fixture = function($args) {
 
 $tests = [
     '0101' => [
-        'description' => 'Unposting a receivable removes its proforma invoice line and resets the receivable.',
+        'description' => 'Unposting a receivable removes its proforma invoice line and recomputes the invoice prices.',
         'arrange'     => $create_fixture,
         'act'         => function($args) {
             Receivable::id($args['receivable_id'])
@@ -154,10 +158,16 @@ $tests = [
                 ->read(['id'])
                 ->first(true);
 
+            $invoice = SaleInvoice::id($args['invoice_id'])
+                ->read(['total', 'price'])
+                ->first(true);
+
             return $receivable['status'] === 'open'
                 && is_null($receivable['invoice_id'])
                 && is_null($receivable['invoice_line_id'])
-                && !$invoice_line;
+                && !$invoice_line
+                && (float) $invoice['total'] === 0.0
+                && (float) $invoice['price'] === 0.0;
         },
         'rollback'    => $rollback_fixture
     ],

@@ -180,7 +180,20 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
     }
 
     public static function getActions() {
-        return [];
+        return [
+            'reset_invoice_prices' => [
+                'description'   => 'Resets price and total computed fields of the invoice.',
+                'policies'      => [],
+                'function'      => 'doResetInvoicePrices'
+            ]
+        ];
+    }
+
+    protected static function doResetInvoicePrices($self) {
+        $self->read(['invoice_id']);
+
+        SaleInvoice::ids(array_column($self->toArray(), 'invoice_id'))
+            ->do('refresh_prices');
     }
 
     public static function onchange($event, $values, $view = null): array {
@@ -348,6 +361,12 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
 
     public static function candelete($self): array {
         return [];
+    }
+
+    protected static function ondelete($self) {
+        $self->do('reset_invoice_prices');
+
+        parent::ondelete($self);
     }
 
     protected static function oncreate($self, $values, $lang) {
