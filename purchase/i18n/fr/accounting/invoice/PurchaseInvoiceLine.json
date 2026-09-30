@@ -19,7 +19,7 @@
             "help": "Renseignez soit un débit, soit un crédit positif."
         },
         "vat_rate": {
-            "label": "Taux de TVA",
+            "label": "Taux Taxes",
             "description": "Taux de TVA associé à la ligne.",
             "help": "Une valeur saisie en pourcentage est automatiquement convertie en taux."
         },

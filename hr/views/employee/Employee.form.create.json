@@ -33,15 +33,19 @@
                                         "items":[
                                             {
                                                 "type": "field",
-                                                "label": "Role",
-                                                "value": "role_id",
+                                                "value": "employee_number",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Date start",
-                                                "value": "date_start",
-                                                "width": "50%"
+                                                "value": "description",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Role",
+                                                "value": "role_id",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

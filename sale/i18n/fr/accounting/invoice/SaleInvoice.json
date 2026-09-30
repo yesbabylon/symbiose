@@ -105,7 +105,7 @@
             "help": "Cette valeur est calculée depuis les lignes de facture."
         },
         "price": {
-            "label": "Total toutes taxes comprises",
+            "label": "Total taxes comprises",
             "description": "Montant final toutes taxes comprises.",
             "help": "Cette valeur est calculée automatiquement."
         },

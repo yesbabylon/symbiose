@@ -39,6 +39,16 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "employee_number",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "label": "Role",
                                                 "value": "role_id",
                                                 "width": "75%"
@@ -55,14 +65,8 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "date_start",
-                                                "width": "50%",
-                                                "readonly": true
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "date_end",
-                                                "width": "50%",
+                                                "value": "first_employment_date",
+                                                "width": "100%",
                                                 "readonly":  true
                                             }
                                         ]

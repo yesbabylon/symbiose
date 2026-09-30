@@ -1,0 +1,46 @@
+{
+    "name": "Salaire",
+    "plural": "Salaires",
+    "description": "Montant de salaire applicable à partir d'une date donnée.",
+    "model": {
+        "employment_contract_id": {
+            "label": "Contrat de travail",
+            "description": "Contrat de travail auquel le salaire s'applique.",
+            "help": "Sélectionnez le contrat concerné par cette évolution salariale."
+        },
+        "date": {
+            "label": "Date d'effet",
+            "description": "Première date à laquelle le montant salarial s'applique.",
+            "help": "Le salaire restera applicable jusqu'à l'entrée suivante de l'historique."
+        },
+        "salary_amount": {
+            "label": "Montant du salaire",
+            "description": "Montant salarial applicable à partir de la date d'effet.",
+            "help": "Exprimez le montant selon la période salariale définie sur le contrat."
+        },
+        "change_reason": {
+            "label": "Motif du changement",
+            "description": "Motif de l'établissement ou de la modification du salaire.",
+            "help": "Sélectionnez la raison qui justifie ce nouveau montant.",
+            "selection": {
+                "contract": "Contrat",
+                "individual_increase": "Augmentation individuelle",
+                "indexation": "Indexation",
+                "seniority_adjustment": "Adaptation liée à l'ancienneté"
+            }
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Salaire",
+            "description": "Formulaire d'une entrée de l'historique salarial.",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Historique salarial",
+            "description": "Historique des salaires par contrat de travail.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

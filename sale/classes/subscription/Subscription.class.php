@@ -182,13 +182,7 @@ class Subscription extends Model  {
         foreach($self as $id => $subscription) {
             $date_to = null;
             if($subscription['date_from']) {
-                $date_to = strtotime(
-                    '-1 day',
-                    strtotime(
-                        self::MAP_DURATION_OFFSETS[$subscription['duration']],
-                        $subscription['date_from']
-                    )
-                );
+                $date_to = strtotime('-1 day', strtotime(self::MAP_DURATION_OFFSETS[$subscription['duration']], $subscription['date_from']));
             }
             self::id($id)->update(['date_to' => $date_to]);
         }
@@ -199,7 +193,9 @@ class Subscription extends Model  {
 
         $duration = $event['duration'] ?? $values['duration'] ?? 'yearly';
         $date_from =  $event['date_from'] ?? $values['date_from'] ?? null;
-        $date_to = $date_from ? strtotime(self::MAP_DURATION_OFFSETS[$duration], $date_from) : null;
+        $date_to = $date_from
+            ? strtotime('-1 day', strtotime(self::MAP_DURATION_OFFSETS[$duration], $date_from))
+            : null;
 
         if( isset($event['date_from']) || isset($event['duration']) ) {
             $now = time();

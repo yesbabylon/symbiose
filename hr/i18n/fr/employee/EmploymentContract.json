@@ -1,0 +1,114 @@
+{
+    "name": "Contrat de travail",
+    "plural": "Contrats de travail",
+    "description": "Contrat de travail liant un employé à l'organisation.",
+    "model": {
+        "employee_id": {
+            "label": "Employé",
+            "description": "Employé concerné par le contrat.",
+            "help": "Sélectionnez l'employé auquel ce contrat s'applique."
+        },
+        "contract_type": {
+            "label": "Type de contrat",
+            "description": "Type du contrat de travail.",
+            "help": "Sélectionnez la nature juridique du contrat de travail.",
+            "selection": {
+                "permanent": "Durée indéterminée",
+                "fixed_term": "Durée déterminée",
+                "temporary": "Intérim",
+                "internship": "Stage",
+                "student": "Étudiant"
+            }
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut actuel du contrat de travail.",
+            "help": "Un contrat actif est pris en compte pour déterminer si l'employé travaille actuellement.",
+            "selection": {
+                "draft": "Brouillon",
+                "active": "Actif",
+                "ended": "Terminé"
+            }
+        },
+        "job_title": {
+            "label": "Fonction",
+            "description": "Fonction exercée dans le cadre du contrat.",
+            "help": "Indiquez l'intitulé de la fonction prévue par le contrat."
+        },
+        "work_regime": {
+            "label": "Régime de travail",
+            "description": "Régime horaire prévu par le contrat.",
+            "help": "Précisez si le contrat est à temps plein ou à temps partiel.",
+            "selection": {
+                "full_time": "Temps plein",
+                "part_time": "Temps partiel"
+            }
+        },
+        "weekly_hours": {
+            "label": "Heures hebdomadaires",
+            "description": "Nombre d'heures de travail par semaine.",
+            "help": "Renseignez la durée de travail hebdomadaire prévue par le contrat."
+        },
+        "contractual_salary": {
+            "label": "Salaire contractuel",
+            "description": "Montant du salaire convenu lors de l'établissement du contrat.",
+            "help": "Ce montant sert de valeur initiale avant toute évolution salariale."
+        },
+        "salary_period": {
+            "label": "Période salariale",
+            "description": "Période couverte par les montants de salaire.",
+            "help": "Indiquez si les montants sont exprimés par semaine ou par mois.",
+            "selection": {
+                "weekly": "Hebdomadaire",
+                "monthly": "Mensuelle"
+            }
+        },
+        "date_start": {
+            "label": "Date de début",
+            "description": "Date de la première journée de travail.",
+            "help": "Cette date détermine le premier jour couvert par le contrat."
+        },
+        "date_end": {
+            "label": "Date de fin",
+            "description": "Date de la dernière journée de travail.",
+            "help": "Cette date peut rester vide pour un contrat à durée indéterminée."
+        },
+        "employment_salaries_ids": {
+            "label": "Historique salarial",
+            "description": "Évolutions de salaire liées au contrat de travail.",
+            "help": "Chaque entrée conserve un montant et sa date de prise d'effet."
+        },
+        "current_salary": {
+            "label": "Salaire actuel",
+            "description": "Salaire applicable à la date du jour.",
+            "help": "Le salaire contractuel est utilisé lorsqu'aucune évolution salariale n'est encore applicable."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Contrat de travail",
+            "description": "Formulaire d'un contrat de travail.",
+            "layout": {
+                "section.general": {
+                    "label": "Informations générales"
+                },
+                "section.working_conditions": {
+                    "label": "Conditions de travail"
+                },
+                "section.salary_history": {
+                    "label": "Historique salarial"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Contrats de travail",
+            "description": "Liste des contrats de travail.",
+            "layout": {}
+        }
+    },
+    "error": {
+        "date_start": {
+            "overlapping_contract": "La période du contrat chevauche celle d'un autre contrat de cet employé."
+        }
+    }
+}

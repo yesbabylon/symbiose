@@ -1,6 +1,6 @@
 {
-    "name": "Contract",
-    "description": "Form for an employee contract.",
+    "name": "Employment salary",
+    "description": "Form for a salary history entry.",
     "access": {
         "groups": ["hr.default.users"]
     },
@@ -17,11 +17,21 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "employee_id",
+                                                "value": "employment_contract_id",
                                                 "width": "100%",
                                                 "widget": {
                                                     "heading": true
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "change_reason",
+                                                "width": "50%"
                                             }
                                         ]
                                     },
@@ -30,13 +40,8 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "date_start",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "date_end",
-                                                "width": "50%"
+                                                "value": "salary_amount",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

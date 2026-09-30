@@ -24,7 +24,7 @@
             "help": ""
         },
         "vat_rate": {
-            "label": "Taux de tva",
+            "label": "Taux Taxes",
             "description": "Taux de TVA à appliquer.",
             "help": ""
         },

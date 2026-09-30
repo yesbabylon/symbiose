@@ -8,6 +8,21 @@
             "description": "Nom complet de l'employé (lié à l'identité).",
             "help": ""
         },
+        "description": {
+            "label": "Description",
+            "description": "Informations complémentaires concernant l'employé.",
+            "help": "Ajoutez les informations utiles qui ne figurent pas dans les autres champs."
+        },
+        "employee_number": {
+            "label": "Matricule",
+            "description": "Numéro interne attribué à l'employé.",
+            "help": "Renseignez le matricule utilisé pour identifier l'employé en interne."
+        },
+        "role_id": {
+            "label": "Rôle",
+            "description": "Rôle attribué à l'employé.",
+            "help": "Sélectionnez le rôle principal de l'employé."
+        },
         "owner_identity_id": {
             "label": "Employé par",
             "description": "L'organisation dont l'identité ciblée est partenaire.",
@@ -33,25 +48,25 @@
             "description": "IBAN arbitraire associé à l'employé",
             "help": ""
         },
-        "date_start": {
-            "label": "Date de début",
-            "description": "Date de la première journée de travail du contrat en cours.",
-            "help": ""
-        },
-        "date_end": {
-            "label": "Date de fin",
-            "description": "Date à laquelle le contrat en cours se termine.",
-            "help": ""
+        "first_employment_date": {
+            "label": "Première date d'emploi",
+            "description": "Date de début du premier contrat de l'employé.",
+            "help": "Cette date est calculée à partir des contrats actifs ou terminés."
         },
         "is_active": {
             "label": "Est actif",
-            "description": "Marque l'employé comme actuellement actif dans l'organisation.",
-            "help": ""
+            "description": "Indique si l'employé dispose d'un contrat actif aujourd'hui.",
+            "help": "Ce champ est recalculé automatiquement à partir des contrats de l'employé."
         },
         "absences_ids": {
             "label": "Absences",
             "description": "Liste des absences de l'employé.",
             "help": ""
+        },
+        "contracts_ids": {
+            "label": "Contrats de travail",
+            "description": "Liste des contrats de travail de l'employé.",
+            "help": "Ajoutez et consultez les contrats de travail associés à l'employé."
         }
     },
     "view": {

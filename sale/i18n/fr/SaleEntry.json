@@ -84,7 +84,7 @@
             "selection": {
                 "pending": "En cours",
                 "submitted": "A valider",
-                "approved": "Validé",
+                "approved": "Approuvé",
                 "charged": "Pris en charge"
             },
             "help": ""

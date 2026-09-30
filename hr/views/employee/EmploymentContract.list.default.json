@@ -1,0 +1,54 @@
+{
+    "name": "Employment contracts",
+    "description": "List of employment contracts.",
+    "access": {
+        "groups": ["hr.default.users"]
+    },
+    "order": "date_start",
+    "sort": "desc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "employee_id",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "job_title",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "contract_type",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "date_start",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "date_end",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "current_salary",
+                "width": "15%"
+            }
+        ]
+    }
+}

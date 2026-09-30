@@ -1,0 +1,37 @@
+{
+    "name": "Employment salaries",
+    "description": "Salary history entries by employment contract.",
+    "access": {
+        "groups": ["hr.default.users"]
+    },
+    "order": "date",
+    "sort": "desc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "employment_contract_id",
+                "width": "40%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "date",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "salary_amount",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "change_reason",
+                "width": "20%",
+                "sortable": true
+            }
+        ]
+    }
+}
