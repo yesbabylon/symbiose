@@ -40,7 +40,7 @@ class Employee extends IdentityFacetAbstract {
             'date_start' => [
                 'type'              => 'computed',
                 'result_type'       => 'date',
-                'description'       => 'Date of the first day of work.',
+                'description'       => 'Date of the pending contract\'s first day of work.',
                 'store'             => true,
                 'function'          => 'calcDateStart'
             ],
@@ -48,7 +48,7 @@ class Employee extends IdentityFacetAbstract {
             'date_end' => [
                 'type'              => 'computed',
                 'result_type'       => 'date',
-                'description'       => 'Date of the last day of work.',
+                'description'       => 'Date of the pending contract\'s last day of work.',
                 'help'              => 'Date at which the contract ends (known in advance for fixed-term or unknown for permanent).',
                 'store'             => true,
                 'function'          => 'calcDateEnd'
