@@ -35,12 +35,12 @@
         },
         "date_start": {
             "label": "Date de début",
-            "description": "Date de la première journée de travail.",
+            "description": "Date de la première journée de travail du contrat en cours.",
             "help": ""
         },
         "date_end": {
             "label": "Date de fin",
-            "description": "Date à laquelle le contrat se termine.",
+            "description": "Date à laquelle le contrat en cours se termine.",
             "help": ""
         },
         "is_active": {
@@ -58,7 +58,17 @@
         "form.default": {
             "name": "Employé",
             "description": "Formulaire de base pour afficher un employé (Partenaire).",
-            "layout": {}
+            "layout": {
+                "section.identity_info": {
+                    "label": "Informations"
+                },
+                "section.employee": {
+                    "label": "Employé"
+                },
+                "section.absences": {
+                    "label": "Absences"
+                }
+            }
         },
         "list.default": {
             "name": "Employés",

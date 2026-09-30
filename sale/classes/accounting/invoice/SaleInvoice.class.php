@@ -395,7 +395,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
         return $result;
     }
 
-    public static function calcPriceBilled($self) {
+    public static function calcPriceBilled($self): array {
         $result = [];
         $self->read(['invoice_type', 'price']);
         foreach($self as $id => $invoice) {

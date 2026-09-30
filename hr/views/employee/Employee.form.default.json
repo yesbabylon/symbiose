@@ -36,27 +36,44 @@
                                 "columns": [
                                     {
                                         "width": "50%",
-                                        "items":[
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Role",
                                                 "value": "role_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "date_start",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "date_end",
-                                                "width": "50%"
+                                                "width": "75%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "is_active",
-                                                "width": "50%"
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "date_start",
+                                                "width": "50%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date_end",
+                                                "width": "50%",
+                                                "readonly":  true
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "contracts_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }
