@@ -97,9 +97,9 @@ try {
          LIMIT 1;"
     );
     if($orphan) {
-        throw new Exception(
-            "Service account migration stopped: entry {$orphan['id']} has no receivable.",
-            EQ_ERROR_CONFLICT_OBJECT
+        trigger_error(
+            "APP::Service account migration ignored entry {$orphan['id']} with no receivable.",
+            EQ_REPORT_WARNING
         );
     }
 
