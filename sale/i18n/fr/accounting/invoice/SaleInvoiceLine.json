@@ -98,11 +98,6 @@
             "description": "Montant total hors TVA de la ligne.",
             "help": "Cette valeur est calculée automatiquement."
         },
-        "price": {
-            "label": "Prix TVAC",
-            "description": "Montant total TVA comprise de la ligne.",
-            "help": "Cette valeur est calculée automatiquement."
-        },
         "downpayment_invoice_id": {
             "label": "Facture d'acompte",
             "description": "Facture d'acompte déduite par cette ligne.",

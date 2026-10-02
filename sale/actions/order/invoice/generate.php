@@ -174,7 +174,7 @@ if($fundings) {
             $funding_invoice = SaleInvoice::id($funding['invoice_id'])
                 ->read([
                         'id', 'created', 'name', 'status', 'partner_id', 'invoice_type', 'is_downpayment', 'price',
-                        'invoice_lines_ids' => ['vat_rate', 'product_id', 'qty', 'price', 'unit_price']
+                        'invoice_lines_ids' => ['vat_rate', 'product_id', 'qty', 'unit_price']
                     ])
                 ->first(true);
 

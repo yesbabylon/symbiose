@@ -6,6 +6,7 @@
 */
 namespace sale\accounting\invoice;
 
+use core\setting\Setting;
 use equal\orm\Model;
 
 class SaleInvoiceLineGroup extends Model {
@@ -100,15 +101,34 @@ class SaleInvoiceLineGroup extends Model {
 
     public static function calcPrice($self) {
         $result = [];
-        $self->read(['invoice_lines_ids' => ['price']]);
+        $self->read(['invoice_lines_ids' => ['total', 'vat_rate']]);
+        $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision');
         foreach($self as $id => $group) {
-            $result[$id] = array_reduce(
-                $group['invoice_lines_ids']->toArray(),
-                function($carry, $line) {
-                    return $carry + $line['price'];
-                },
-                0
-            );
+            $map_taxable_amounts = [];
+            foreach($group['invoice_lines_ids'] as $line) {
+                $vat_rate = (float) $line['vat_rate'];
+                $tax_ref = strval($vat_rate);
+                if(!isset($map_taxable_amounts[$tax_ref])) {
+                    $map_taxable_amounts[$tax_ref] = [
+                        'vat_rate'       => $vat_rate,
+                        'taxable_amount' => 0.0
+                    ];
+                }
+                $map_taxable_amounts[$tax_ref]['taxable_amount'] += round(
+                    (float) $line['total'],
+                    $currency_decimal_precision
+                );
+            }
+
+            $price = 0.0;
+            foreach($map_taxable_amounts as $taxable_amount) {
+                $total = round($taxable_amount['taxable_amount'], $currency_decimal_precision);
+                $price += $total + round(
+                    $total * $taxable_amount['vat_rate'],
+                    $currency_decimal_precision
+                );
+            }
+            $result[$id] = round($price, $currency_decimal_precision);
         }
 
         return $result;

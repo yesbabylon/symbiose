@@ -109,6 +109,11 @@
             "description": "Montant final toutes taxes comprises.",
             "help": "Cette valeur est calculée automatiquement."
         },
+        "tax_lines": {
+            "label": "Ventilation des taxes",
+            "description": "Montants taxables et taxes regroupés par référence fiscale.",
+            "help": "Cette valeur est calculée automatiquement depuis les lignes de facture."
+        },
         "invoice_lines_ids": {
             "label": "Lignes de facture",
             "description": "Lignes commerciales détaillées de la facture.",

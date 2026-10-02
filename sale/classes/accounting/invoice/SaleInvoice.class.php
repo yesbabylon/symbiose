@@ -255,6 +255,16 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
                 'store'             => true
             ],
 
+            'tax_lines' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'usage'             => 'text/json',
+                'description'       => 'Tax breakdown grouped by tax reference.',
+                'function'          => 'calcTaxLines',
+                'store'             => false,
+                'readonly'          => true
+            ],
+
             /**
              * Specific Sale Invoice columns
              */
@@ -377,10 +387,27 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
         foreach($self as $id => $invoice) {
             $lines = $invoice['invoice_lines_ids']->toArray();
             $tax_exclusive_amount = self::computeTaxExclusiveAmount($lines);
-            $vat_breakdowns = self::computeTaxBreakdowns($lines);
-            $tax_amount = self::computeTaxAmount($vat_breakdowns);
+            $tax_lines = self::computeTaxLines($lines);
+            $tax_amount = self::computeTaxAmount($tax_lines);
 
             $result[$id] = round($tax_exclusive_amount + $tax_amount, $currency_decimal_precision);
+        }
+
+        return $result;
+    }
+
+    protected static function calcTaxLines($self): array {
+        $result = [];
+        $self->read([
+            'invoice_lines_ids' => [
+                'total',
+                'vat_rate'
+            ]
+        ]);
+
+        foreach($self as $id => $invoice) {
+            $tax_lines = self::computeTaxLines($invoice['invoice_lines_ids']->toArray());
+            $result[$id] = json_encode((object) $tax_lines, JSON_THROW_ON_ERROR);
         }
 
         return $result;
@@ -397,47 +424,48 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
         return round($tax_exclusive_amount, $currency_decimal_precision);
     }
 
-    private static function computeTaxBreakdowns(array $lines): array {
-        $vat_breakdowns = [];
+    private static function computeTaxLines(array $lines): array {
+        $tax_lines = [];
         $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision');
 
         foreach($lines as $line) {
             $vat_rate = (float) ($line['vat_rate'] ?? 0.0);
-            $breakdown_key = sprintf('%.12F', $vat_rate);
+            $tax_ref = strval($vat_rate);
 
-            if(!isset($vat_breakdowns[$breakdown_key])) {
-                $vat_breakdowns[$breakdown_key] = [
-                    'taxable_amount' => 0.0,
-                    'vat_rate'       => $vat_rate
+            if(!isset($tax_lines[$tax_ref])) {
+                $tax_lines[$tax_ref] = [
+                    'vat_rate'       => $vat_rate,
+                    'taxable_amount' => 0.0
                 ];
             }
 
-            $vat_breakdowns[$breakdown_key]['taxable_amount'] += round(
+            $tax_lines[$tax_ref]['taxable_amount'] += round(
                 (float) ($line['total'] ?? 0.0),
                 $currency_decimal_precision
             );
         }
 
-        foreach($vat_breakdowns as &$vat_breakdown) {
-            $vat_breakdown['taxable_amount'] = round(
-                $vat_breakdown['taxable_amount'],
+        foreach($tax_lines as &$tax_line) {
+            $tax_line['taxable_amount'] = round(
+                $tax_line['taxable_amount'],
+                $currency_decimal_precision
+            );
+            $tax_line['tax_amount'] = round(
+                $tax_line['taxable_amount'] * $tax_line['vat_rate'],
                 $currency_decimal_precision
             );
         }
-        unset($vat_breakdown);
+        unset($tax_line);
 
-        return $vat_breakdowns;
+        return $tax_lines;
     }
 
-    private static function computeTaxAmount(array $vat_breakdowns): float {
+    private static function computeTaxAmount(array $tax_lines): float {
         $tax_amount = 0.0;
         $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision');
 
-        foreach($vat_breakdowns as $vat_breakdown) {
-            $tax_amount += round(
-                $vat_breakdown['taxable_amount'] * $vat_breakdown['vat_rate'],
-                $currency_decimal_precision
-            );
+        foreach($tax_lines as $tax_line) {
+            $tax_amount += $tax_line['tax_amount'];
         }
 
         return round($tax_amount, $currency_decimal_precision);
@@ -744,8 +772,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
                         'downpayment_invoice_id',
                         'vat_rate',
                         'unit_price',
-                        'total',
-                        'price'
+                        'total'
                     ]
                 ]
             ]);
@@ -791,8 +818,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
                         ->update([
                             'vat_rate'   => $line['vat_rate'],
                             'unit_price' => $line['unit_price'],
-                            'total'      => $line['total'],
-                            'price'      => $line['price']
+                            'total'      => $line['total']
                         ]);
                 }
             }
@@ -910,11 +936,13 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
         }
 
         $map_accounting_entries = [];
+        $map_vat_taxable_amounts = [];
+        $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision');
 
         // fetch invoice lines
         $lines = SaleInvoiceLine::ids($invoice['invoice_lines_ids'])
             ->read([
-                'total', 'price',
+                'total', 'vat_rate',
                 'price_id' => [
                     'accounting_rule_id' => [
                         'vat_rule_id' => ['account_id'],
@@ -945,12 +973,20 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
             // #memo - Only one VAT rate can be applied per line: we should only retrieve the associated account.
             $vat_account_id = $line['price_id']['accounting_rule_id']['vat_rule_id']['account_id'];
 
-            if(!isset($map_accounting_entries[$vat_account_id])) {
-                $map_accounting_entries[$vat_account_id] = 0.0;
+            $tax_ref = strval((float) $line['vat_rate']);
+            if(!isset($map_vat_taxable_amounts[$tax_ref])) {
+                $map_vat_taxable_amounts[$tax_ref] = [
+                    'vat_rate'        => (float) $line['vat_rate'],
+                    'account_amounts' => []
+                ];
             }
-
-            $vat_amount = ($line['price'] < 0 ? -1.0 : 1.0) * (abs($line['price']) - abs($line['total']));
-            $map_accounting_entries[$vat_account_id] += $vat_amount;
+            if(!isset($map_vat_taxable_amounts[$tax_ref]['account_amounts'][$vat_account_id])) {
+                $map_vat_taxable_amounts[$tax_ref]['account_amounts'][$vat_account_id] = 0.0;
+            }
+            $map_vat_taxable_amounts[$tax_ref]['account_amounts'][$vat_account_id] += round(
+                (float) $line['total'],
+                $currency_decimal_precision
+            );
 
             $remaining_amount = $line['total'];
 
@@ -978,6 +1014,32 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
                 $map_accounting_entries[$ruleLine['account_id']] += $amount;
 
                 ++$i;
+            }
+        }
+
+        foreach($map_vat_taxable_amounts as $vat_taxable_amounts) {
+            $account_amounts = $vat_taxable_amounts['account_amounts'];
+            $taxable_amount = round(array_sum($account_amounts), $currency_decimal_precision);
+            $remaining_tax_amount = round(
+                $taxable_amount * $vat_taxable_amounts['vat_rate'],
+                $currency_decimal_precision
+            );
+            $last_account_id = array_key_last($account_amounts);
+
+            foreach($account_amounts as $account_id => $account_amount) {
+                $tax_amount = $remaining_tax_amount;
+                if($account_id !== $last_account_id) {
+                    $tax_amount = round(
+                        $account_amount * $vat_taxable_amounts['vat_rate'],
+                        $currency_decimal_precision
+                    );
+                    $remaining_tax_amount -= $tax_amount;
+                }
+
+                if(!isset($map_accounting_entries[$account_id])) {
+                    $map_accounting_entries[$account_id] = 0.0;
+                }
+                $map_accounting_entries[$account_id] += $tax_amount;
             }
         }
 

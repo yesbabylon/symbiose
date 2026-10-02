@@ -81,7 +81,7 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
                 'description'       => 'Unit price of the product related to the line.',
                 'function'          => 'calcUnitPrice',
                 'store'             => true,
-                'dependents'        => ['total', 'price', 'invoice_id' => ['total', 'price']]
+                'dependents'        => ['total', 'invoice_id' => ['total', 'price']]
             ],
 
             'vat_rate' => [
@@ -92,21 +92,21 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
                 'function'          => 'calcVatRate',
                 'store'             => true,
                 'default'           => 0.0,
-                'dependents'        => ['price', 'invoice_id' => ['price']]
+                'dependents'        => ['invoice_id' => ['price']]
             ],
 
             'qty' => [
                 'type'              => 'float',
                 'description'       => 'Quantity of product.',
                 'default'           => 0,
-                'dependents'        => ['price', 'total', 'invoice_id' => ['total', 'price']]
+                'dependents'        => ['total', 'invoice_id' => ['total', 'price']]
             ],
 
             'free_qty' => [
                 'type'              => 'integer',
                 'description'       => 'Free quantity.',
                 'default'           => 0,
-                'dependents'        => ['price', 'total', 'invoice_id' => ['total', 'price']]
+                'dependents'        => ['total', 'invoice_id' => ['total', 'price']]
             ],
 
             'discount' => [
@@ -114,7 +114,7 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
                 'usage'             => 'amount/rate',
                 'description'       => 'Total amount of discount to apply, if any.',
                 'default'           => 0.0,
-                'dependents'        => ['price', 'total', 'invoice_id' => ['total', 'price']]
+                'dependents'        => ['total', 'invoice_id' => ['total', 'price']]
             ],
 
             'total' => [
@@ -123,15 +123,6 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
                 'usage'             => 'amount/money:4',
                 'description'       => 'Total tax-excluded price of the line (computed).',
                 'function'          => 'calcTotal',
-                'store'             => true
-            ],
-
-            'price' => [
-                'type'              => 'computed',
-                'result_type'       => 'float',
-                'usage'             => 'amount/money:2',
-                'description'       => 'Final tax-included price of the line (computed).',
-                'function'          => 'calcPrice',
                 'store'             => true
             ],
 
@@ -157,7 +148,7 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\price\Price',
                 'description'       => 'The price the line relates to (assigned at line creation).',
-                'dependents'        => ['vat_rate', 'price', 'total']
+                'dependents'        => ['vat_rate', 'total']
             ],
 
             'receivable_id' => [
@@ -274,18 +265,6 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
         $self->read(['qty', 'unit_price', 'free_qty', 'discount']);
         foreach($self as $id => $line) {
             $result[$id] = $line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']);
-        }
-
-        return $result;
-    }
-
-    public static function calcPrice($self): array {
-        $result = [];
-        $self->read(['total', 'vat_rate']);
-        foreach($self as $id => $line) {
-            $total = (float) $line['total'];
-            $vat = (float) $line['vat_rate'];
-            $result[$id] = round($total * (1.0 + $vat), 2);
         }
 
         return $result;
