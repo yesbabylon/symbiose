@@ -37,7 +37,6 @@ export class OrderLine {
         public vat_rate: number = 0.0,
         public discount: number = 0.0,
         public qty: number = 0,
-        public free_qty: number = 0,
         public total: number = 0,
         public price: number = 0,
         public funding_id: number = 0,

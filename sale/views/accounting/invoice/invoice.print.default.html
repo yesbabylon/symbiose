@@ -353,9 +353,6 @@
                             <th style="text-align: center; padding-right: 7px;">
                                 {{ labels.columns['qty'] }}
                             </th>
-                            <th style="text-align: center; padding-right: 7px;">
-                                {{ labels.columns['free'] }}
-                            </th>
                             <th style="text-align: right; padding-right: 7px;">
                                 {{ labels.columns['unit_price'] }}
                             </th>
@@ -383,7 +380,7 @@
                         <tr valign="top">
                             <!-- group line -->
                             {% if line.is_group %}
-                            <td style="width: 43%;">
+                            <td style="width: 51%;">
                                 <b>{{ line.name }}</b>
                                 <br />{{ line.description }}
                             </td>
@@ -394,7 +391,6 @@
                                     {% endif %}
                                 {% endif %}
                             </td>
-                            <td style="width: 8%; text-align: center;"></td>
                             <td style="width: 12%; text-align: right;">
                                 {% if line.count_lines == 1 %}
                                     {% if line.unit_price is not null %}
@@ -419,7 +415,7 @@
                             </td>
                             <!-- regular line -->
                             {% else %}
-                            <td style="width: 43%;">
+                            <td style="width: 51%;">
                                 {% if ( line.name | length ) > 0 %}
                                     {{ line.name }}<br />
                                     <small>{{ line.description }}</small>
@@ -429,9 +425,6 @@
                             </td>
                             <td style="width: 8%; text-align: center;">
                                 {{ line.qty | format_number({ 'fraction_digit': 2 }) }}
-                            </td>
-                            <td style="width: 8%; text-align: center;">
-                                {{ line.free_qty | format_number({ 'fraction_digit': 2 }) }}
                             </td>
                             <td style="width: 12%; text-align: right;">
                                 {% if line.unit_price is not null %}

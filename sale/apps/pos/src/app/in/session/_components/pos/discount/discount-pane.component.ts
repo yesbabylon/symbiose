@@ -27,14 +27,6 @@ export class SessionOrderLinesDiscountPaneComponent implements OnInit {
         console.log('update discount pane', values);
         if(values) {
             this.liners = [{
-                name: "Gratuités",
-                unit : "p.",
-                value : values.free_qty,
-                field : 'free_qty',
-                color : "",
-                disabled : false
-            },
-            {
                 name: "Réduction",
                 unit : "%",
                 value : (values.discount*100).toFixed(0),

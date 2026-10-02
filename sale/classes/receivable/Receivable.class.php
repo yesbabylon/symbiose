@@ -88,7 +88,7 @@ class Receivable extends Model {
                 'type'              => 'integer',
                 'description'       => 'Object identifier, as a complement to `origin_object_class`.',
                 'help'              => 'Together origin_object_class and origin_object_id reference the accounting document the entry is linked to.',
-                'dependents'        => ['name', 'description', 'product_id', 'price_id', 'unit_price', 'vat_rate', 'qty', 'free_qty', 'discount', 'total', 'price'],
+                'dependents'        => ['name', 'description', 'product_id', 'price_id', 'unit_price', 'vat_rate', 'qty', 'discount', 'total', 'price'],
                 'required'          => true,
                 'readonly'          => true
             ],
@@ -185,16 +185,6 @@ class Receivable extends Model {
                 'result_type'       => 'float',
                 'description'       => 'Quantity of product.',
                 'function'          => 'calcQty',
-                'store'             => true,
-                'dependents'        => ['total', 'price'],
-                'readonly'          => true
-            ],
-
-            'free_qty' => [
-                'type'              => 'computed',
-                'result_type'       => 'integer',
-                'description'       => 'Free quantity of product, if any.',
-                'function'          => 'calcFreeQty',
                 'store'             => true,
                 'dependents'        => ['total', 'price'],
                 'readonly'          => true
@@ -441,7 +431,6 @@ class Receivable extends Model {
                 'unit_price',
                 'vat_rate',
                 'qty',
-                'free_qty',
                 'discount'
             ]);
 
@@ -501,7 +490,6 @@ class Receivable extends Model {
                     'unit_price'            => $receivable['unit_price'],
                     'vat_rate'              => $receivable['vat_rate'],
                     'qty'                   => $receivable['qty'],
-                    'free_qty'              => $receivable['free_qty'],
                     'discount'              => $receivable['discount'],
                     'has_receivable'        => true,
                     'receivable_id'         => $receivable['id']
@@ -784,20 +772,6 @@ class Receivable extends Model {
         return $result;
     }
 
-    protected static function calcFreeQty($self): array {
-        $result = [];
-        $self->read(['origin_object_id']);
-
-        foreach($self as $id => $receivable) {
-            $saleEntry = SaleEntry::id($receivable['origin_object_id'])->read(['free_qty'])->first();
-            if($saleEntry) {
-                $result[$id] = $saleEntry['free_qty'];
-            }
-        }
-
-        return $result;
-    }
-
     protected static function calcDiscount($self): array {
         $result = [];
         $self->read(['origin_object_id']);
@@ -814,7 +788,7 @@ class Receivable extends Model {
 
     protected static function calcTotal($self) {
         $result = [];
-        $self->read(['unit_price', 'discount', 'qty', 'free_qty']);
+        $self->read(['unit_price', 'discount', 'qty']);
         foreach($self as $id => $receivable) {
             if(!isset($receivable['unit_price'], $receivable['qty'])) {
                 continue;
@@ -823,9 +797,7 @@ class Receivable extends Model {
             $unit_price = (float) $receivable['unit_price'];
             $discount = (float) ($receivable['discount'] ?? 0.0);
             $qty = (float) $receivable['qty'];
-            $free_qty = (float) ($receivable['free_qty'] ?? 0.0);
-
-            $result[$id] = $unit_price * (1.0 - $discount) * ($qty - $free_qty);
+            $result[$id] = $unit_price * (1.0 - $discount) * $qty;
         }
 
         return $result;

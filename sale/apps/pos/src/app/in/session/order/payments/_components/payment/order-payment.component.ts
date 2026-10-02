@@ -192,7 +192,6 @@ export class SessionOrderPaymentsOrderPaymentComponent extends TreeComponent<Ord
                 funding_id: line.funding_id,
                 vat_rate: line.vat_rate,
                 discount: line.discount,
-                free_qty: line.free_qty,
                 name: line.name,
                 qty: line.qty-parseInt(this.line_quantity)
             });

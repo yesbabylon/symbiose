@@ -104,13 +104,6 @@ class OrderLine extends Model {
                 'dependents'        => ['total', 'price', 'vat_rate','order_id' => ['total', 'price'], 'order_line_group_id' => ['total', 'price']]
             ],
 
-            'free_qty' => [
-                'type'              => 'integer',
-                'description'       => 'Free quantity.',
-                'default'           => 0,
-                'dependents'        => ['total', 'price', 'vat_rate','order_id' => ['total', 'price'], 'order_line_group_id' => ['total', 'price']]
-            ],
-
             'order' => [
                 'type'              => 'integer',
                 'description'       => 'Order by which the line have to be sorted when presented visually.',
@@ -185,17 +178,16 @@ class OrderLine extends Model {
         }
 
 
-        if($result['unit_price'] || isset($event['qty']) || isset($event['free_qty']) || isset($event['discount'])){
+        if($result['unit_price'] || isset($event['qty']) || isset($event['discount'])){
             $price = Price::id($values['price_id'])->read(['price'])->first(true);
             $qty =  $event['qty'] ?? $values['qty'];
-            $free_qty = $event['free_qty'] ??  $values['free_qty'];
             $discount = $event['discount'] ??  $values['discount'];
             $vat_rate = $event['vat_rate'] ??  $values['vat_rate'];
             $unit_price =  $event['unit_price'] ??  $values['unit_price'];
 
-            $result['fare_benefit'] = self::calculateFareBenefit($free_qty, $qty, $price['price'], $vat_rate, $unit_price);
+            $result['fare_benefit'] = self::calculateFareBenefit($qty, $price['price'], $vat_rate, $unit_price);
 
-            $total = self::calculateTotal($unit_price , $qty, $free_qty,  $discount);
+            $total = self::calculateTotal($unit_price, $qty, $discount);
             $result['total'] = $total;
             $result['price'] = self::calculatePrice($total, $vat_rate);
         }
@@ -217,15 +209,15 @@ class OrderLine extends Model {
 
     public static function calcTotal($self) {
         $result = [];
-        $self->read(['qty','unit_price','free_qty','discount']);
+        $self->read(['qty', 'unit_price', 'discount']);
         foreach($self as $id => $line) {
-            $result[$id] = self::calculateTotal($line['unit_price'],$line['qty'], $line['free_qty'],  $line['discount']);
+            $result[$id] = self::calculateTotal($line['unit_price'], $line['qty'], $line['discount']);
         }
         return $result;
     }
 
-    public static function calculateTotal($unit_price, $qty, $free_qty, $discount) {
-        return round($unit_price * (1.0 - $discount) * ($qty - $free_qty), 4);
+    public static function calculateTotal($unit_price, $qty, $discount) {
+        return round($unit_price * (1.0 - $discount) * $qty, 4);
     }
 
     public static function calcPrice($self) {
@@ -263,19 +255,22 @@ class OrderLine extends Model {
 
     public static function calcFareBenefit($self) {
         $result = [];
-        $self->read(['free_qty', 'qty', 'price_id', 'vat_rate', 'unit_price']);
+        $self->read(['qty', 'price_id', 'vat_rate', 'unit_price']);
         foreach($self as $id => $line) {
             $price = Price::id($line['price_id'])->read(['price'])->first(true);
-            $result[$id] = self::calculateFareBenefit($line['free_qty'],$line['qty'],
-                                                      $price['price'],$line['vat_rate'],
-                                                      $line['unit_price']);
+            $result[$id] = self::calculateFareBenefit(
+                $line['qty'],
+                $price['price'],
+                $line['vat_rate'],
+                $line['unit_price']
+            );
         }
         return $result;
     }
 
-    public static function calculateFareBenefit($free_qty, $qty, $price, $vat_rate, $unit_price ) {
+    public static function calculateFareBenefit($qty, $price, $vat_rate, $unit_price) {
         $catalog_price = $price * $qty * (1.0 + $vat_rate);
-        $fare_price = $unit_price * ($qty - $free_qty) * (1.0 + $vat_rate);
+        $fare_price = $unit_price * $qty * (1.0 + $vat_rate);
         $benefit = round($catalog_price - $fare_price, 2);
         return max(0.0, $benefit);
     }
@@ -326,7 +321,7 @@ class OrderLine extends Model {
 
 
     public static function canupdate($self, $values): array {
-        $self->read(['id','order_id','order_line_group_id', 'qty', 'free_qty']);
+        $self->read(['id', 'order_id', 'order_line_group_id']);
         foreach($self as $line) {
             if(isset($values['order_line_group_id'])) {
                 $group = OrderLineGroup::id($values['order_line_group_id'])
@@ -352,21 +347,6 @@ class OrderLine extends Model {
                     return ['qty' => ['must_be_greater_than_zero' => 'Quantity must be greater than 0.']];
                 }
 
-                $free_qty = $values['free_qty'] ?? $line['free_qty'];
-                if($values['qty'] <= $free_qty) {
-                    return ['qty' => ['must_be_greater_than_free_qty' => 'Quantity must be greater than free quantity.']];
-                }
-            }
-
-            if(isset($values['free_qty'])) {
-                if($values['free_qty'] < 0) {
-                    return ['free_qty' => ['must_be_greater_than_or_equal_to_zero' => 'Free quantity must be greater than or equal to 0.']];
-                }
-
-                $qty = $values['qty'] ?? $line['qty'];
-                if($values['free_qty'] >= $qty) {
-                    return ['free_qty' => ['must_be_lower_than_qty' => 'Free quantity must be lower than quantity.']];
-                }
             }
 
             if(isset($values['unit_price']) && $values['unit_price'] <= 0) {

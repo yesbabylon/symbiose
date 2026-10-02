@@ -76,12 +76,6 @@ class ContractLine extends Model {
                 'required'          => true
             ],
 
-            'free_qty' => [
-                'type'              => 'integer',
-                'description'       => 'Free quantity.',
-                'default'           => 0
-            ],
-
             // #memo - important: to allow the maximum flexibility, percent values can hold 4 decimal digits (must not be rounded, except for display)
             'discount' => [
                 'type'              => 'float',
@@ -123,9 +117,9 @@ class ContractLine extends Model {
 
     public static function calcTotal($self) {
         $result = [];
-        $self->read(['unit_price', 'qty', 'free_qty', 'discount']);
+        $self->read(['unit_price', 'qty', 'discount']);
         foreach($self as $id => $line) {
-            $result[$id] = $line['unit_price'] * (1 - $line['discount']) * ($line['qty'] - $line['free_qty']);
+            $result[$id] = $line['unit_price'] * (1 - $line['discount']) * $line['qty'];
         }
 
         return $result;

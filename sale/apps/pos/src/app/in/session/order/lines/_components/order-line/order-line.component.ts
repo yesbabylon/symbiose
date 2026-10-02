@@ -73,7 +73,6 @@ export class SessionOrderLinesOrderLineComponent extends TreeComponent<OrderLine
             // remove trailing 3rd digit, if any
             unit_price:  parseFloat((+this.instance.unit_price).toFixed(2)),
             discount: this.instance.discount, 
-            free_qty: this.instance.free_qty, 
             vat_rate: this.instance.vat_rate 
         });
 

@@ -187,9 +187,6 @@ export class SessionOrderLinesComponent extends TreeComponent<Order, OrderCompon
                 case 'qty':
                     keypad_str = this.selectedLine.qty.toString();
                     break;
-                case 'free_qty':
-                    keypad_str = this.selectedLine.free_qty.toString();
-                    break;
                 case 'unit_price':
                     keypad_str = this.selectedLine.unit_price.toString();
                     break;
@@ -285,9 +282,6 @@ export class SessionOrderLinesComponent extends TreeComponent<Order, OrderCompon
             case 'qty':
                 this.selectedLine = <OrderLine> {...this.selectedLine, qty: parseInt(keypad_str, 10)};
                 break;
-            case 'free_qty':
-                this.selectedLine = <OrderLine> {...this.selectedLine, free_qty: parseInt(keypad_str, 10)};
-                break;
             case 'unit_price':
                 let unit_price: number = parseFloat(keypad_str);
                 let int_part = Math.trunc(unit_price);
@@ -340,7 +334,7 @@ export class SessionOrderLinesComponent extends TreeComponent<Order, OrderCompon
 
 
     /**
-     * Possible values are : qty, free_qty, unit_price, discount, vat_rate
+     * Possible values are : qty, unit_price, discount, vat_rate
      * @param event
      */
     public onSelectField(event: any) {

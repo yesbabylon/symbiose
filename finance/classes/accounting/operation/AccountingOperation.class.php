@@ -639,7 +639,7 @@ class AccountingOperation extends Model {
         $self->update(['cancelled_at' => time()]);
     }
 
-    public static function canupdate($self, $values) {
+    protected static function canupdate($self, $values) {
         $self->read(['status']);
 
         $technical_fields = [

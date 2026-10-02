@@ -767,7 +767,6 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
                         'product_id',
                         'price_id',
                         'qty',
-                        'free_qty',
                         'discount',
                         'downpayment_invoice_id',
                         'vat_rate',
@@ -811,7 +810,6 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
                             'product_id'             => $line['product_id'],
                             'price_id'               => $line['price_id'],
                             'qty'                    => $line['qty'],
-                            'free_qty'               => $line['free_qty'],
                             'discount'               => $line['discount'],
                             'downpayment_invoice_id' => $line['downpayment_invoice_id']
                         ])
@@ -1068,7 +1066,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
     /**
      * Allow business and technical synchronization fields after posting.
      */
-    public static function canupdate($self, $values) {
+    protected static function canupdate($self, $values) {
         $self->read(['status']);
 
         $editable_fields = [

@@ -142,12 +142,6 @@ class SaleEntry extends Model {
                 'dependents'        => ['total']
             ],
 
-            'free_qty' => [
-                'type'              => 'integer',
-                'description'       => 'Free quantity of product, if any.',
-                'default'           => 0
-            ],
-
             'discount' => [
                 'type'              => 'float',
                 'usage'             => 'amount/rate',
@@ -428,14 +422,14 @@ class SaleEntry extends Model {
     public static function calcTotal($self) {
         $result = [];
         // #memo - qty is based on billable_duration
-        $self->read(['is_billable', 'qty', 'unit_price', 'free_qty', 'discount']);
+        $self->read(['is_billable', 'qty', 'unit_price', 'discount']);
         foreach($self as $id => $entry) {
             if(!$entry['is_billable']) {
                 $result[$id] = 0;
                 continue;
             }
             // #todo - round to the sale price precision, from settings
-            $result[$id] = round($entry['unit_price'] * (1.0 - $entry['discount']) * ($entry['qty'] - $entry['free_qty']), 4);
+            $result[$id] = round($entry['unit_price'] * (1.0 - $entry['discount']) * $entry['qty'], 4);
         }
         return $result;
     }

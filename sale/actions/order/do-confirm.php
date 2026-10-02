@@ -68,7 +68,6 @@ $order = Order::id($params['id'])
                 'unit_price',
                 'vat_rate',
                 'qty',
-                'free_qty',
                 'discount',
                 'price',
                 'total'
@@ -119,7 +118,6 @@ foreach($order['order_lines_groups_ids'] as $group) {
             'vat_rate'                  => $line['vat_rate'],
             'unit_price'                => $line['unit_price'],
             'qty'                       => $line['qty'],
-            'free_qty'                  => $line['free_qty'],
             'discount'                  => $line['discount']
         ];
 

@@ -89,14 +89,6 @@ class OrderLine extends Model {
                 'onupdate'          => '_resetPrice'
             ],
 
-            'free_qty' => [
-                'type'              => 'integer',
-                'usage'             => 'numeric/integer',
-                'description'       => 'Amount of freebies in this line.',
-                'default'           => 0.0,
-                'onupdate'          => '_resetPrice'
-            ],
-
             'total' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
@@ -166,10 +158,10 @@ class OrderLine extends Model {
 
     public static function calcTotal($om, $ids, $lang) {
         $result = [];
-        $lines = $om->read(__CLASS__, $ids, ['unit_price', 'qty', 'free_qty', 'discount']);
+        $lines = $om->read(__CLASS__, $ids, ['unit_price', 'qty', 'discount']);
         if($lines > 0) {
             foreach($lines as $lid => $line) {
-                $result[$lid] = round(($line['unit_price'] * (1 - $line['discount'])) * ($line['qty'] - $line['free_qty']), 4);
+                $result[$lid] = round(($line['unit_price'] * (1 - $line['discount'])) * $line['qty'], 4);
             }
         }
         return $result;

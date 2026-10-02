@@ -102,13 +102,6 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
                 'dependents'        => ['total', 'invoice_id' => ['total', 'price']]
             ],
 
-            'free_qty' => [
-                'type'              => 'integer',
-                'description'       => 'Free quantity.',
-                'default'           => 0,
-                'dependents'        => ['total', 'invoice_id' => ['total', 'price']]
-            ],
-
             'discount' => [
                 'type'              => 'float',
                 'usage'             => 'amount/rate',
@@ -262,9 +255,9 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
 
     public static function calcTotal($self): array {
         $result = [];
-        $self->read(['qty', 'unit_price', 'free_qty', 'discount']);
+        $self->read(['qty', 'unit_price', 'discount']);
         foreach($self as $id => $line) {
-            $result[$id] = $line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']);
+            $result[$id] = $line['unit_price'] * (1.0 - $line['discount']) * $line['qty'];
         }
 
         return $result;
@@ -275,7 +268,7 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
     }
 
     public static function canupdate($self, $values): array {
-        $self->read(['has_receivable', 'invoice_id' => ['id', 'status'], 'qty', 'free_qty']);
+        $self->read(['has_receivable', 'invoice_id' => ['id', 'status']]);
         $allowed_fields = ['name', 'invoice_line_group_id'];
         foreach($self as $id => $invoiceLine) {
             if($invoiceLine['has_receivable'] && count(array_diff(array_keys($values), $allowed_fields)) > 0) {
@@ -300,24 +293,6 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
 
                 if($group && $group['invoice_id'] !== $invoiceLine['invoice_id']['id']) {
                     return ['invoice_line_group_id' => ['invalid_param' => 'Group must be linked to same invoice.']];
-                }
-            }
-
-            if(isset($values['qty'])) {
-                $free_qty = $values['free_qty'] ?? $invoiceLine['free_qty'];
-                if($free_qty && $values['qty'] <= $free_qty) {
-                    return ['qty' => ['must_be_greater_than_free_qty' => 'Quantity must be greater than free quantity.']];
-                }
-            }
-
-            if(isset($values['free_qty'])) {
-                if($values['free_qty'] < 0) {
-                    return ['free_qty' => ['must_be_greater_than_or_equal_to_zero' => 'Free quantity must be greater than or equal to 0.']];
-                }
-
-                $qty = $values['qty'] ?? $invoiceLine['qty'];
-                if($values['free_qty'] && $values['free_qty'] >= $qty) {
-                    return ['free_qty' => ['must_be_lower_than_qty' => 'Free quantity must be lower than quantity.']];
                 }
             }
 

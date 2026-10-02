@@ -81,7 +81,6 @@ $getInvoiceLines = function($invoice) {
             'unit_price'  => null,
             'vat_rate'    => null,
             'qty'         => null,
-            'free_qty'    => null,
             'is_group'    => true
         ];
 
@@ -98,7 +97,6 @@ $getInvoiceLines = function($invoice) {
                 'vat_rate'    => $line['vat_rate'],
                 'qty'         => $line['qty'],
                 'discount'    => $line['discount'],
-                'free_qty'    => $line['free_qty'],
                 'is_group'    => false,
                 'count_lines' => 0
             ];
@@ -124,7 +122,6 @@ $getInvoiceLines = function($invoice) {
             'vat_rate'   => $line['vat_rate'],
             'qty'        => $line['qty'],
             'discount'   => $line['discount'],
-            'free_qty'   => $line['free_qty'],
             'is_group'   => false
         ];
     }
@@ -188,7 +185,6 @@ $getLabels = function($lang) {
         'columns' => [
             'product'                    => Setting::get_value('sale', 'locale', 'label_product-column', 'Product label', [], $lang),
             'qty'                        => Setting::get_value('sale', 'locale', 'label_qty-column', 'Qty', [], $lang),
-            'free'                       => Setting::get_value('sale', 'locale', 'label_free-column', 'Free', [], $lang),
             'unit_price'                 => Setting::get_value('sale', 'locale', 'label_unit-price-column', 'U. price', [], $lang),
             'discount'                   => Setting::get_value('sale', 'locale', 'label_discount-column', 'Disc.', [], $lang),
             'vat'                        => Setting::get_value('sale', 'locale', 'label_vat-column', 'VAT', [], $lang),
@@ -260,7 +256,7 @@ $invoice = SaleInvoice::id($params['id'])
             ],
             'invoice_lines_ids' => [
                 'name', 'product_id', 'description', 'qty', 'unit_price',
-                'discount', 'free_qty', 'vat_rate', 'total'
+                'discount', 'vat_rate', 'total'
             ],
             'invoice_line_groups_ids' => [
                 'name',
@@ -268,7 +264,7 @@ $invoice = SaleInvoice::id($params['id'])
                 'is_aggregate',
                 'invoice_lines_ids' => [
                     'name', 'product_id', 'description', 'qty', 'unit_price',
-                    'discount', 'free_qty', 'vat_rate', 'total'
+                    'discount', 'vat_rate', 'total'
                 ]
             ]
         ], $lang)

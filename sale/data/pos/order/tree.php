@@ -73,7 +73,6 @@ switch($params['variant']) {
                 'vat_rate',
                 'qty',
                 'discount',
-                'free_qty',
                 'total',
                 'price',
                 'has_funding',
@@ -121,7 +120,6 @@ switch($params['variant']) {
                     'vat_rate',
                     'qty',
                     'discount',
-                    'free_qty',
                     'total',
                     'price',
                     'has_funding',
@@ -188,7 +186,6 @@ switch($params['variant']) {
                 'vat_rate',
                 'qty',
                 'discount',
-                'free_qty',
                 'total',
                 'price'
             ]
