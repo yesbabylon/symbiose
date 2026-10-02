@@ -55,7 +55,8 @@
                                                 "type": "field",
                                                 "value": "status",
                                                 "label": "Status",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "readonly": true
                                             }
                                         ]
                                     },
@@ -66,7 +67,8 @@
                                                 "type": "field",
                                                 "value": "service_account_id",
                                                 "label": "Service account",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "readonly": true
                                             },
                                             {
                                                 "type": "field",
@@ -105,7 +107,8 @@
                                                 "type": "field",
                                                 "value": "date",
                                                 "label": "To",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "readonly": true
                                             }
                                         ]
                                     },

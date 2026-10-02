@@ -11,6 +11,9 @@ use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
 
 class Report extends \equal\orm\Model {
 
+    private static $status_transition_ids = [];
+    private static $deleted_service_account_ids = [];
+
     public static function getColumns() {
 
         return [
@@ -27,8 +30,8 @@ class Report extends \equal\orm\Model {
 
             'date' => [
                 'type'              => 'date',
-                'description'       => 'Date of the most recent line on the report (equivalent to date_to).',
-                'help'              => 'Should be the last day included in the report date-range @ 23:59:59.',
+                'description'       => 'Last calendar day of the reporting period.',
+                'help'              => 'This date is determined by the account reporting frequency.',
                 'default'           => time(),
                 'dependents'        => ['name']
             ],
@@ -36,7 +39,7 @@ class Report extends \equal\orm\Model {
             'date_from' => [
                 'type'              => 'computed',
                 'result_type'       => 'date',
-                'description'       => 'Day after the previous published report last date.',
+                'description'       => 'Day after the previous finalized report end date.',
                 'help'              => 'There might be some remaining time entries included in report whose date precedes the report\'s date_from.',
                 'function'          => 'calcDateFrom',
                 'store'             => true,
@@ -47,6 +50,7 @@ class Report extends \equal\orm\Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\serviceaccount\ServiceAccount',
                 'description'       => 'The service account the line belongs to.',
+                'required'          => true,
                 'dependents'        => ['customer_id', 'balance_old', 'has_lines', 'is_sendable']
             ],
 
@@ -203,25 +207,98 @@ class Report extends \equal\orm\Model {
     protected static function doRelease($self) {
         $self->read([
             'status',
-            'is_empty',
-            'service_account_id' => ['m_reporting']
+            'date',
+            'service_account_id' => ['id', 'reporting_mode']
         ]);
 
-        foreach($self as $report) {
+        foreach($self as $id => $report) {
             if($report['status'] !== 'pending') {
                 throw new \Exception('already_released_report', EQ_ERROR_NOT_ALLOWED);
             }
+            if((int) $report['date'] > strtotime('today')) {
+                throw new \Exception('report_period_not_ended', EQ_ERROR_NOT_ALLOWED);
+            }
+            if(empty($report['service_account_id']['id'])) {
+                throw new \Exception('missing_service_account', EQ_ERROR_INVALID_PARAM);
+            }
         }
 
-        foreach($self as $id => $report) {
-            $status = (
-                    ($report['service_account_id']['m_reporting'] ?? null) === 'archive'
-                    || $report['is_empty']
-                )
-                ? 'archived'
-                : 'released';
+        ['db' => $db_connector] = \eQual::inject(['db']);
+        $db = $db_connector->connect();
+        if(!$db) {
+            throw new \Exception('missing_database', EQ_ERROR_INVALID_CONFIG);
+        }
 
-            self::id($id)->update(['status' => $status]);
+        $db->sendQuery('START TRANSACTION;');
+        try {
+            foreach($self as $id => $report) {
+                $service_account_id = $report['service_account_id']['id'];
+
+                ServiceAccount::id($service_account_id)->do('generate_report', ['manage_transaction' => false]);
+
+                $entries_ids = ServiceAccountEntry::search([
+                        ['report_id', '=', $id],
+                        ['status', '=', 'pending']
+                    ])
+                    ->ids();
+                if($entries_ids) {
+                    ServiceAccountEntry::ids($entries_ids)->do('sync_from_receivable');
+                }
+
+                $entries_after_cutoff = ServiceAccountEntry::search([
+                        ['report_id', '=', $id],
+                        ['date', '>=', strtotime('+1 day', (int) $report['date'])]
+                    ], [
+                        'limit' => 1
+                    ])
+                    ->ids();
+                if($entries_after_cutoff) {
+                    throw new \Exception('entry_after_period', EQ_ERROR_CONFLICT_OBJECT);
+                }
+
+                $missing_entries_ids = ServiceAccountEntry::search([
+                        ['service_account_id', '=', $service_account_id],
+                        ['status', '=', 'pending'],
+                        ['report_id', '=', null],
+                        ['date', '<', strtotime('+1 day', (int) $report['date'])]
+                    ], [
+                        'limit' => 1
+                    ])
+                    ->ids();
+                if($missing_entries_ids) {
+                    throw new \Exception('unreported_entries_before_cutoff', EQ_ERROR_CONFLICT_OBJECT);
+                }
+
+                $final_report = self::id($id)
+                    ->update(self::getComputedInvalidation())
+                    ->read(['is_empty', 'total_points', 'total_credits', 'balance_old', 'balance_new'])
+                    ->first();
+
+                $status = (
+                        ($report['service_account_id']['reporting_mode'] ?? null) === 'archive'
+                        || ($final_report['is_empty'] ?? false)
+                    )
+                    ? 'archived'
+                    : 'released';
+
+                self::$status_transition_ids[$id] = true;
+                self::id($id)->update(['status' => $status]);
+
+                if($entries_ids) {
+                    ServiceAccountEntry::ids($entries_ids)->do('release');
+                }
+                ServiceAccount::id($service_account_id)->do('refresh_balances');
+            }
+            $db->sendQuery('COMMIT;');
+        }
+        catch(\Throwable $throwable) {
+            $db->sendQuery('ROLLBACK;');
+            throw $throwable;
+        }
+        finally {
+            foreach($self->ids() as $id) {
+                unset(self::$status_transition_ids[$id]);
+            }
         }
     }
 
@@ -236,20 +313,11 @@ class Report extends \equal\orm\Model {
      */
     public static function onupdateStatus($self, $values) {
         if(isset($values['status']) && in_array($values['status'], ['released', 'archived', 'sent'])) {
-            $self->read(['service_account_id', 'service_account_entries_ids']);
+            $self->read(['service_account_id']);
             foreach($self as $report) {
                 try {
-                    $entries_ids = ($report['service_account_entries_ids'] instanceof \equal\orm\Collection)
-                        ? $report['service_account_entries_ids']->ids()
-                        : (array) $report['service_account_entries_ids'];
-
-                    // update all lines attached to the report
-                    if(count($entries_ids)) {
-                        ServiceAccountEntry::ids($entries_ids)->update(['locked_date' => time()]);
-                    }
-                    // update parent service account balance
                     if($report['service_account_id']) {
-                        ServiceAccount::id($report['service_account_id'])->update(['balance_current' => null]);
+                        ServiceAccount::id($report['service_account_id'])->do('refresh_balances');
                     }
                 }
                 catch(\Exception $e) {
@@ -268,8 +336,7 @@ class Report extends \equal\orm\Model {
         $result = [];
         $self->read([
             'date',
-            'service_account_id' => ['id', 'reporting_from', 'date_from'],
-            'service_account_entries_ids' => ['date']
+            'service_account_id' => ['id', 'reporting_from', 'date_from']
         ]);
 
         foreach($self as $id => $report) {
@@ -286,14 +353,6 @@ class Report extends \equal\orm\Model {
             $fallback_date = $report['service_account_id']['reporting_from']
                 ?? $report['service_account_id']['date_from']
                 ?? null;
-
-            if(!$fallback_date) {
-                foreach($report['service_account_entries_ids'] as $entry) {
-                    if($entry['date'] && (!$fallback_date || $entry['date'] < $fallback_date)) {
-                        $fallback_date = $entry['date'];
-                    }
-                }
-            }
 
             if(!$fallback_date) {
                 $fallback_date = $report['date'];
@@ -316,12 +375,12 @@ class Report extends \equal\orm\Model {
 
     public static function calcTotalPoints($self) {
         $result = [];
-        $self->read(['service_account_entries_ids' => ['origin_object_class', 'points']]);
+        $self->read(['service_account_entries_ids' => ['points', 'receivable_id' => ['origin_object_class']]]);
         foreach($self as $id => $report) {
             $total_points = 0.0;
             foreach($report['service_account_entries_ids'] as $line) {
                 // Time entries consume service account points, which are stored as positive values on entries.
-                if($line['origin_object_class'] === 'timetrack\TimeEntry') {
+                if(($line['receivable_id']['origin_object_class'] ?? null) === 'timetrack\TimeEntry') {
                     $total_points -= $line['points'];
                 }
             }
@@ -333,11 +392,11 @@ class Report extends \equal\orm\Model {
 
     public static function calcTotalCredits($self) {
         $result = [];
-        $self->read(['service_account_entries_ids' => ['origin_object_class', 'points']]);
+        $self->read(['service_account_entries_ids' => ['points', 'receivable_id' => ['origin_object_class']]]);
         foreach($self as $id => $report) {
             $total_credits = 0.0;
             foreach($report['service_account_entries_ids'] as $line) {
-                if($line['origin_object_class'] !== 'timetrack\TimeEntry') {
+                if(($line['receivable_id']['origin_object_class'] ?? null) !== 'timetrack\TimeEntry') {
                     // Credits and corrections increment the service account balance.
                     $total_credits += $line['points'];
                 }
@@ -424,14 +483,14 @@ class Report extends \equal\orm\Model {
         $self->read([
             'status',
             'date_from',
-            'service_account_id' => ['m_reporting', 'reporting_from']
+            'service_account_id' => ['reporting_mode', 'reporting_from']
         ]);
         foreach($self as $id => $report) {
             $service_account = $report['service_account_id'] ?? [];
             $reporting_from = $service_account['reporting_from'] ?? null;
 
             $result[$id] = $report['status'] === 'released'
-                && ($service_account['m_reporting'] ?? null) === 'send'
+                && ($service_account['reporting_mode'] ?? null) === 'send'
                 && (!$reporting_from || $report['date_from'] >= $reporting_from);
         }
         return $result;
@@ -444,17 +503,67 @@ class Report extends \equal\orm\Model {
      * @var \equal\orm\Collection $self
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
-    public static function canupdate($self, $values) {
-        $self->read(['status']);
-        // #memo - pdf data is generated asynchronously
-        // is_sendable can be invalidated from the service account
-        $allowed = ['status', 'pdf_data', 'is_sendable'];
-        foreach($self as $report) {
-            if($report['status'] != 'pending' && count(array_diff(array_keys($values), $allowed)) > 0 ) {
-                return ['status' => ['not_allowed' => 'Released Reports cannot be changed.']];
+    public static function cancreate($self, $values): array {
+        if(($values['status'] ?? 'pending') !== 'pending') {
+            return ['status' => ['invalid_status' => 'New reports must start in pending status.']];
+        }
+        if(!empty($values['service_account_id'])) {
+            $pending_report = self::search([
+                    ['service_account_id', '=', $values['service_account_id']],
+                    ['status', '=', 'pending']
+                ], [
+                    'limit' => 1
+                ])
+                ->ids();
+            if($pending_report) {
+                return ['status' => ['second_pending_report' => 'Only one pending report is allowed per service account.']];
             }
         }
-        return parent::canupdate($self);
+        return parent::cancreate($self, $values);
+    }
+
+    public static function canupdate($self, $values) {
+        $self->read(['status', 'service_account_id', 'service_account_entries_ids' => ['date']]);
+        $allowed_on_final = ['pdf_data', 'is_sendable'];
+        foreach($self as $id => $report) {
+            if($report['status'] !== 'pending' && count(array_diff(array_keys($values), $allowed_on_final)) > 0) {
+                return ['status' => ['not_allowed' => 'Released Reports cannot be changed.']];
+            }
+
+            if(array_key_exists('status', $values) && !isset(self::$status_transition_ids[$id])) {
+                return ['status' => ['non_editable' => 'Report status can only be changed by a workflow action.']];
+            }
+
+            if(
+                array_key_exists('service_account_id', $values)
+                && (int) $values['service_account_id'] !== (int) $report['service_account_id']
+            ) {
+                if(count($report['service_account_entries_ids'])) {
+                    return ['service_account_id' => ['non_editable' => 'A report with entries cannot be moved to another account.']];
+                }
+                $pending_report = self::search([
+                        ['service_account_id', '=', $values['service_account_id']],
+                        ['status', '=', 'pending'],
+                        ['id', '<>', $id]
+                    ], [
+                        'limit' => 1
+                    ])
+                    ->ids();
+                if($pending_report) {
+                    return ['status' => ['second_pending_report' => 'Only one pending report is allowed per service account.']];
+                }
+            }
+
+            if(array_key_exists('date', $values)) {
+                $next_day = strtotime('+1 day', (int) $values['date']);
+                foreach($report['service_account_entries_ids'] as $entry) {
+                    if(!empty($entry['date']) && (int) $entry['date'] >= $next_day) {
+                        return ['date' => ['entry_after_period' => 'The report contains an entry after the requested period end.']];
+                    }
+                }
+            }
+        }
+        return parent::canupdate($self, $values);
     }
 
     public static function candelete($self) {
@@ -465,6 +574,43 @@ class Report extends \equal\orm\Model {
             }
         }
         return parent::candelete($self);
+    }
+
+    protected static function onbeforedelete($self) {
+        $self->read(['service_account_id', 'service_account_entries_ids']);
+        foreach($self as $id => $report) {
+            self::$deleted_service_account_ids[$id] = $report['service_account_id'];
+            $entries_ids = ($report['service_account_entries_ids'] instanceof \equal\orm\Collection)
+                ? $report['service_account_entries_ids']->ids()
+                : (array) $report['service_account_entries_ids'];
+            if($entries_ids) {
+                ServiceAccountEntry::ids($entries_ids)->update(['report_id' => null]);
+            }
+        }
+    }
+
+    protected static function onafterdelete($ids) {
+        foreach($ids as $id) {
+            $service_account_id = self::$deleted_service_account_ids[$id] ?? null;
+            if($service_account_id) {
+                ServiceAccount::id($service_account_id)->do('refresh_balances');
+            }
+            unset(self::$deleted_service_account_ids[$id]);
+        }
+    }
+
+    private static function getComputedInvalidation(): array {
+        return [
+            'date_from'     => null,
+            'has_lines'     => null,
+            'is_empty'      => null,
+            'total_points'  => null,
+            'total_credits' => null,
+            'balance_old'   => null,
+            'balance_new'   => null,
+            'is_sendable'   => null,
+            'pdf_data'      => null
+        ];
     }
 
     /**
@@ -506,9 +652,8 @@ class Report extends \equal\orm\Model {
                 'service_account_id' => [
                     'id',
                     'name',
-                    'contactName',
                     'customer_id'   => ['name', 'customer_external_ref', 'ref_account'],
-                    'sa_type_id'    => ['name']
+                    'contract_type_id' => ['name']
                 ],
                 'service_account_entries_ids' => [
                     'date',
@@ -517,21 +662,17 @@ class Report extends \equal\orm\Model {
                     'pause',
                     'on_site',
                     'description',
-                    'has_ticket',
-                    'has_task',
-                    'taskID',
-                    'taskNumber',
-                    'taskDescription',
-                    'ticketID',
-                    'ticketNumber',
-                    'ticketDescription',
                     'contact',
                     'points',
                     'calculation_log',
-                    'sa_line_type_id'   => ['name'],
                     'creator'           => ['firstname', 'lastname'],
                     'employee_id'       => ['name', 'partner_identity_id' => ['firstname', 'lastname']],
-                    'role_id'           => ['name']
+                    'role_id'           => ['name'],
+                    'receivable_id'     => [
+                        'origin_object_class',
+                        'origin_object_id',
+                        'time_entry_id' => ['origin', 'ticket_id', 'reference', 'description']
+                    ]
                 ]
             ])
             ->first();
@@ -555,16 +696,21 @@ class Report extends \equal\orm\Model {
             $map_tt_lines = [];
             $map_cc_lines = [];
 
-            // group all lines by ticketID or taskID
+            // Group time-based consumption through the originating receivable.
             foreach($report['service_account_entries_ids'] as $line) {
-                // line relates to a Task or a Ticket
-                if($line['has_ticket'] || $line['has_task']) {
-
-                    $parent_id = ($line['has_ticket'])?'ticket-'.$line['ticketID']:'task-'.$line['taskID'];
-                    $description = ($line['has_ticket'])?$line['ticketDescription']:$line['taskDescription'];
-                    // if no title nor description was received, fallback to TT number
+                $receivable = $line['receivable_id'] ?? [];
+                if(($receivable['origin_object_class'] ?? null) === 'timetrack\TimeEntry') {
+                    $time_entry = $receivable['time_entry_id'] ?? [];
+                    $ticket_id = $time_entry['ticket_id'] ?? null;
+                    $parent_id = $ticket_id
+                        ? 'ticket-'.$ticket_id
+                        : 'time-entry-'.($receivable['origin_object_id'] ?? 0);
+                    $description = $time_entry['description']
+                        ?? $time_entry['reference']
+                        ?? $line['description']
+                        ?? '';
                     if(strlen($description) <= 0) {
-                        $description = ($line['has_ticket'])?'Ticket '.$line['ticketNumber']:'Task '.$line['taskNumber'];
+                        $description = $ticket_id ? 'Ticket '.$ticket_id : 'Time entry';
                     }
 
                     if(!isset($map_tt_lines[$parent_id])) {
@@ -600,7 +746,7 @@ class Report extends \equal\orm\Model {
                         'on_site'       => ($line['on_site'])?'Yes':'No',
                         'who'           => $who,
                         'role'          => $line['role_id']['name'] ?? '',
-                        'type'          => $line['sa_line_type_id']['name'] ?? '',
+                        'type'          => $time_entry['origin'] ?? '',
                         'points'        => number_format((float) round(-$line['points'], 2), 2, '.', ''),
                         'description'   => ucfirst(substr(str_replace('<br />', ' ; ', strip_tags($line['description'])), 0, 370)),
                         'log'           => str_replace('<br />', ' ; ', $line['calculation_log'])
@@ -634,7 +780,7 @@ class Report extends \equal\orm\Model {
                 'balance_old'       => (($report['balance_old'] >= 0)?'+':'').number_format((float) round($report['balance_old'], 2), 2, '.', ''),
                 'balance_new'       => (($report['balance_new'] >= 0)?'+':'').number_format((float) round($report['balance_new'], 2), 2, '.', ''),
                 'customer'          => $customer_label,
-                'account_type'      => $report['service_account_id']['sa_type_id']['name'] ?? '',
+                'account_type'      => $report['service_account_id']['contract_type_id']['name'] ?? '',
                 'emission_date'     => date("d/m/Y", $report['created']),
                 'period'            => date("F Y", $report['date']),
                 'period_dates'      => date("d/m/Y", $report['date_from']).' - '.date("d/m/Y", $report['date']),

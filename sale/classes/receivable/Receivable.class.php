@@ -315,6 +315,7 @@ class Receivable extends Model {
             'status',
             'origin_object_class',
             'customer_id',
+            'service_account_entry_id' => ['id', 'receivable_id'],
             'time_entry_id' => [
                 'id',
                 'billed_duration',
@@ -331,6 +332,14 @@ class Receivable extends Model {
         ]);
 
         foreach($self as $id => $receivable) {
+            if(!empty($receivable['service_account_entry_id']['id'])) {
+                if((int) ($receivable['service_account_entry_id']['receivable_id'] ?? 0) !== (int) $id) {
+                    $result[$id] = [
+                        'service_account_entry_mismatch' => 'The receivable and service account entry relations are not symmetric.'
+                    ];
+                }
+                continue;
+            }
             if($receivable['status'] !== 'open') {
                 $result[$id] = [
                     'receivable_not_open' => 'Only open receivables can be posted to a service account.'
@@ -356,7 +365,7 @@ class Receivable extends Model {
                     'missing_customer' => 'The receivable is not linked to a customer.'
                 ];
             }
-            elseif($receivable['origin_object_class'] === 'timetrack\\TimeEntry' && !isset($receivable['time_entry_id']['billed_duration']) ?? null) {
+            elseif($receivable['origin_object_class'] === 'timetrack\\TimeEntry' && !isset($receivable['time_entry_id']['billed_duration'])) {
                 $result[$id] = [
                     'receivable_has_no_billable_duration' => 'The receivable has no billable duration.'
                 ];
@@ -536,6 +545,8 @@ class Receivable extends Model {
                 'origin_object_id',
                 'date',
                 'customer_id',
+                'service_account_id',
+                'service_account_entry_id' => ['id', 'receivable_id', 'service_account_id'],
                 'time_entry_id' => [
                     'travel_time',
                     'on_site',
@@ -543,6 +554,12 @@ class Receivable extends Model {
                     'priority'
                 ]
             ]);
+
+        ['db' => $db_connector] = \eQual::inject(['db']);
+        $db = $db_connector->connect();
+        if(!$db) {
+            throw new \Exception('missing_database', EQ_ERROR_INVALID_CONFIG);
+        }
 
         $defaultServiceAccount = null;
         if(isset($values['service_account_id']) && $values['service_account_id'] > 0) {
@@ -555,54 +572,88 @@ class Receivable extends Model {
             }
         }
 
-        foreach($self as $id => $receivable) {
-            $serviceAccount = $defaultServiceAccount;
+        $db->sendQuery('START TRANSACTION;');
+        try {
+            foreach($self as $id => $receivable) {
+                if(!empty($receivable['service_account_entry_id']['id'])) {
+                    if((int) ($receivable['service_account_entry_id']['receivable_id'] ?? 0) !== (int) $id) {
+                        throw new \Exception('service_account_entry_mismatch', EQ_ERROR_CONFLICT_OBJECT);
+                    }
+                    if(
+                        $defaultServiceAccount
+                        && (int) $receivable['service_account_entry_id']['service_account_id'] !== (int) $defaultServiceAccount['id']
+                    ) {
+                        throw new \Exception('service_account_entry_account_mismatch', EQ_ERROR_CONFLICT_OBJECT);
+                    }
+                    continue;
+                }
 
-            if(!$serviceAccount) {
-                $serviceAccount = ServiceAccount::search([
+                $existing_entries_ids = ServiceAccountEntry::search([
+                        ['receivable_id', '=', $id]
+                    ], [
+                        'limit' => 2
+                    ])
+                    ->ids();
+                if($existing_entries_ids) {
+                    throw new \Exception('receivable_already_linked', EQ_ERROR_CONFLICT_OBJECT);
+                }
+
+                $serviceAccount = $defaultServiceAccount;
+
+                if(!$serviceAccount) {
+                    $serviceAccount = ServiceAccount::search([
                         ['customer_id', '=', $receivable['customer_id']],
                         ['is_active', '=', true]
                     ])
                     ->read(['id', 'customer_id', 'is_active'])
                     ->first();
 
-                if(!$serviceAccount) {
-                    throw new \Exception('missing_service_account', EQ_ERROR_INVALID_PARAM);
+                    if(!$serviceAccount) {
+                        throw new \Exception('missing_service_account', EQ_ERROR_INVALID_PARAM);
+                    }
                 }
+
+                if(!isset($serviceAccount['customer_id']) || (int) $serviceAccount['customer_id'] !== (int) $receivable['customer_id']) {
+                    throw new \Exception('service_account_customer_mismatch', EQ_ERROR_INVALID_PARAM);
+                }
+
+                if(!isset($serviceAccount['is_active']) || !$serviceAccount['is_active']) {
+                    throw new \Exception('inactive_service_account', EQ_ERROR_INVALID_PARAM);
+                }
+
+                $timeEntry = $receivable['origin_object_class'] === 'timetrack\\TimeEntry'
+                    ? ($receivable['time_entry_id'] ?? [])
+                    : [];
+
+                $serviceAccountEntry = ServiceAccountEntry::create([
+                        'receivable_id'       => $id,
+                        'service_account_id'  => $serviceAccount['id'],
+                        'status'              => 'pending',
+                        'posting_date'        => time(),
+                        'travel_time'         => (int) ($timeEntry['travel_time'] ?? 0),
+                        'on_site'             => (bool) ($timeEntry['on_site'] ?? false),
+                        'helpdesk'            => (($timeEntry['origin'] ?? null) === 'support'),
+                        'priority'            => (int) ($timeEntry['priority'] ?? 2)
+                    ])
+                    ->read(['id', 'points'])
+                    ->first();
+
+                if(!$serviceAccountEntry) {
+                    throw new \Exception('service_account_entry_creation_failed', EQ_ERROR_INVALID_PARAM);
+                }
+
+                self::id($receivable['id'])
+                    ->update([
+                        'service_account_id'       => $serviceAccount['id'],
+                        'service_account_entry_id' => $serviceAccountEntry['id'],
+                        'status'                   => 'settled'
+                    ]);
             }
-
-            if(!isset($serviceAccount['customer_id']) || $serviceAccount['customer_id'] !== $receivable['customer_id']) {
-                throw new \Exception('service_account_customer_mismatch', EQ_ERROR_INVALID_PARAM);
-            }
-
-            if(!isset($serviceAccount['is_active']) || !$serviceAccount['is_active']) {
-                throw new \Exception('inactive_service_account', EQ_ERROR_INVALID_PARAM);
-            }
-
-            $timeEntry = $receivable['time_entry_id'];
-
-            $serviceAccountEntry = ServiceAccountEntry::create([
-                    'name'                => $receivable['name'],
-                    'origin_object_class' => $receivable['origin_object_class'],
-                    'origin_object_id'    => $receivable['origin_object_id'],
-                    'service_account_id'  => $serviceAccount['id'],
-                    'description'         => $receivable['description'] ?? '',
-                    'date'                => $receivable['date'] ?? time(),
-                    'travel_time'         => (int) ($timeEntry['travel_time'] ?? 0),
-                    'on_site'             => (bool) ($timeEntry['on_site'] ?? false),
-                    'helpdesk'            => (($timeEntry['origin'] ?? null) === 'support'),
-                    'priority'            => (int) ($timeEntry['priority'] ?? 2),
-                    'posting_date'        => time()
-                ])
-                ->read(['id', 'points'])
-                ->first();
-
-            self::id($receivable['id'])
-                ->update([
-                    'service_account_id'        => $serviceAccount['id'] ,
-                    'service_account_entry_id'  => $serviceAccountEntry['id'],
-                    'status'                    => 'settled'
-                ]);
+            $db->sendQuery('COMMIT;');
+        }
+        catch(\Throwable $throwable) {
+            $db->sendQuery('ROLLBACK;');
+            throw $throwable;
         }
     }
 

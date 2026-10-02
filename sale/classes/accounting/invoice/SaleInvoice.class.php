@@ -150,7 +150,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
                     'credit_note'
                 ],
                 'default'           => 'invoice',
-                'dependents'        => ['operation_type', 'price_billed']
+                'dependents'        => ['operation_type']
             ],
 
             'is_downpayment' => [
@@ -240,7 +240,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
             'total' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'usage'             => 'amount/money:4',
+                'usage'             => 'amount/money:2',
                 'description'       => 'Total tax-excluded price of the invoice.',
                 'function'          => 'calcTotal',
                 'store'             => true
@@ -277,15 +277,6 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
                 'foreign_object'    => 'sale\pay\PaymentTerms',
                 'description'       => 'The payment terms to apply to the invoice.',
                 'default'           => 1
-            ],
-
-            'price_billed' => [
-                'type'              => 'computed',
-                'result_type'       => 'float',
-                'function'          => 'calcPriceBilled',
-                'usage'             => 'amount/money:2',
-                'store'             => true,
-                'description'       => "Final tax-included amount used for display (inverted for credit notes)."
             ],
 
             'accounting_entries_ids' => [
@@ -364,47 +355,93 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
         return $result;
     }
 
-    public static function calcTotal($self): array {
+    protected static function calcTotal($self): array {
         $result = [];
         $self->read(['invoice_lines_ids' => ['total']]);
-        $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision', 2);
         foreach($self as $id => $invoice) {
-            $total = array_reduce($invoice['invoice_lines_ids']->get(true), function($carry, $line) use($currency_decimal_precision) {
-                return $carry + round($line['total'], $currency_decimal_precision);
-            }, 0.0);
-            $result[$id] = round($total, $currency_decimal_precision);
+            $result[$id] = self::computeTaxExclusiveAmount($invoice['invoice_lines_ids']->toArray());
         }
 
         return $result;
     }
 
-    /**
-     * #todo - this is incorrect, workaround based on 21% tax
-     *
-     * #memo - VAT is computed by rate, on sums of lines grouped by rate
-     */
-    public static function calcPrice($self): array {
+    protected static function calcPrice($self): array {
         $result = [];
-        $self->read(['total']);
-        $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision', 2);
+        $self->read([
+            'invoice_lines_ids' => [
+                'total',
+                'vat_rate'
+            ]
+        ]);
+        $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision');
         foreach($self as $id => $invoice) {
-            $price = $invoice['total'] * 1.21;
-            $result[$id] = round($price, $currency_decimal_precision);
+            $lines = $invoice['invoice_lines_ids']->toArray();
+            $tax_exclusive_amount = self::computeTaxExclusiveAmount($lines);
+            $vat_breakdowns = self::computeTaxBreakdowns($lines);
+            $tax_amount = self::computeTaxAmount($vat_breakdowns);
+
+            $result[$id] = round($tax_exclusive_amount + $tax_amount, $currency_decimal_precision);
         }
 
         return $result;
     }
 
-    public static function calcPriceBilled($self): array {
-        $result = [];
-        $self->read(['invoice_type', 'price']);
-        foreach($self as $id => $invoice) {
-            $result[$id] = $invoice['invoice_type'] == 'invoice' ? $invoice['price'] : -$invoice['price'];
+    private static function computeTaxExclusiveAmount(array $lines): float {
+        $tax_exclusive_amount = 0.0;
+        $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision');
+
+        foreach($lines as $line) {
+            $tax_exclusive_amount += round((float) ($line['total'] ?? 0.0), $currency_decimal_precision);
         }
 
-        return $result;
+        return round($tax_exclusive_amount, $currency_decimal_precision);
     }
 
+    private static function computeTaxBreakdowns(array $lines): array {
+        $vat_breakdowns = [];
+        $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision');
+
+        foreach($lines as $line) {
+            $vat_rate = (float) ($line['vat_rate'] ?? 0.0);
+            $breakdown_key = sprintf('%.12F', $vat_rate);
+
+            if(!isset($vat_breakdowns[$breakdown_key])) {
+                $vat_breakdowns[$breakdown_key] = [
+                    'taxable_amount' => 0.0,
+                    'vat_rate'       => $vat_rate
+                ];
+            }
+
+            $vat_breakdowns[$breakdown_key]['taxable_amount'] += round(
+                (float) ($line['total'] ?? 0.0),
+                $currency_decimal_precision
+            );
+        }
+
+        foreach($vat_breakdowns as &$vat_breakdown) {
+            $vat_breakdown['taxable_amount'] = round(
+                $vat_breakdown['taxable_amount'],
+                $currency_decimal_precision
+            );
+        }
+        unset($vat_breakdown);
+
+        return $vat_breakdowns;
+    }
+
+    private static function computeTaxAmount(array $vat_breakdowns): float {
+        $tax_amount = 0.0;
+        $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision');
+
+        foreach($vat_breakdowns as $vat_breakdown) {
+            $tax_amount += round(
+                $vat_breakdown['taxable_amount'] * $vat_breakdown['vat_rate'],
+                $currency_decimal_precision
+            );
+        }
+
+        return round($tax_amount, $currency_decimal_precision);
+    }
 
     public static function getPolicies(): array {
         return [
@@ -481,7 +518,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
         return $result;
     }
 
-    public static function calcName($self): array {
+    protected static function calcName($self): array {
         $result = [];
         $self->read(['invoice_number',  'customer_id' => ['name']]);
         foreach($self as $id => $invoice) {
@@ -490,7 +527,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
         return $result;
     }
 
-    public static function calcPaymentReference($self): array {
+    protected static function calcPaymentReference($self): array {
         $result = [];
         $self->read(['status', 'invoice_number']);
         foreach($self as $id => $invoice) {
@@ -523,7 +560,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
         return sprintf("%3d%04d%03d%02d", $a, $b / 1000, $b % 1000, $control);
     }
 
-    public static function calcDueDate($self): array {
+    protected static function calcDueDate($self): array {
         $result = [];
         $self->read(['emission_date', 'payment_terms_id' => ['delay_from', 'delay_count']]);
         foreach($self as $id => $invoice) {
@@ -800,7 +837,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
     /**
      * Create the accounting entries according tp invoices lines.
      */
-    public static function doGenerateAccountingEntries($self) {
+    protected static function doGenerateAccountingEntries($self) {
         $self->read(['id', 'organization_id', 'accounting_entries_ids' => ['id', 'entry_lines_ids']]);
 
         foreach($self as $id => $invoice) {
@@ -813,8 +850,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
             SaleInvoice::id($id)->update(['journal_id' => $journal['id']]);
 
             // remove previously created entries, if any (there should be none)
-            $accounting_entries_ids = array_map(function ($a) { return $a['id']; }, $invoice['accounting_entries_ids']->get(true));
-            AccountingEntry::ids($accounting_entries_ids)->delete(true);
+            AccountingEntry::ids($invoice['accounting_entries_ids']->ids())->delete(true);
 
             // generate accounting entries
             $accounting_entry_lines = self::computeAccountingEntryLines($id);
@@ -992,8 +1028,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
             'payment_reference',
             'due_date',
             'total',
-            'price',
-            'price_billed'
+            'price'
         ];
 
         foreach($self as $id => $invoice) {

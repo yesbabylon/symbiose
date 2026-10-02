@@ -4,6 +4,8 @@
     "controller": "sale_receivable_receivable-pending-collect",
     "access": {
     },
+    "order": "created",
+    "sort": "desc",
     "header": {
         "actions": {
             "ACTION.CREATE" : false

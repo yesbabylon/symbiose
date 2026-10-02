@@ -29,14 +29,16 @@
                 "value": "date",
                 "label": "To",
                 "width": "12%",
-                "sortable": true
+                "sortable": true,
+                "readonly": true
             },
             {
                 "type": "field",
                 "value": "service_account_id",
                 "label": "Service account",
                 "width": "20%",
-                "sortable": true
+                "sortable": true,
+                "readonly": true
             },
             {
                 "type": "field",
@@ -51,7 +53,8 @@
                 "value": "status",
                 "label": "Status",
                 "width": "10%",
-                "sortable": true
+                "sortable": true,
+                "readonly": true
             },
             {
                 "type": "field",

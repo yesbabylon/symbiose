@@ -12,6 +12,17 @@
             "label": "Envoyable",
             "description": "Indique si le rapport est prêt à être envoyé au client.",
             "help": "Le rapport doit être validé, utiliser le mode de reporting « envoi » et ne pas commencer avant la date de début du reporting."
+        },
+        "status": {
+            "label": "Statut",
+            "description": "État technique du rapport.",
+            "selection": {
+                "pending": "en attente",
+                "released": "validé",
+                "archived": "archivé",
+                "sent": "envoyé"
+            },
+            "help": "Le statut est modifié uniquement par les actions du workflow."
         }
     },
     "view": {
@@ -57,6 +68,11 @@
     "error": {
         "errors": {
             "already_released_report": "Seul un rapport en attente peut être validé.",
+            "report_period_not_ended": "Le rapport ne peut pas être validé avant la date de fin de sa période.",
+            "unreported_entries_before_cutoff": "Des lignes antérieures à la clôture ne sont pas affectées au rapport.",
+            "second_pending_report": "Un seul rapport en attente est autorisé par compte de service.",
+            "invalid_status": "Un nouveau rapport doit être créé avec le statut en attente.",
+            "entry_after_period": "Le rapport contient une ligne postérieure à sa date de fin.",
             "unknown_report": "Le rapport demandé est introuvable.",
             "report_rendering_failed": "Le rapport HTML n’a pas pu être généré.",
             "report_generation_failed": "Le rapport PDF n’a pas pu être généré."
