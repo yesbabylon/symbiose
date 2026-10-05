@@ -134,7 +134,7 @@ $invoice = SaleInvoice::id($params['id'])
         'operation_type',
         'emission_date',
         'due_date',
-        'number',
+        'operation_number',
         'total_discount',
         'total',
         'subtotals',
@@ -331,7 +331,7 @@ switch($invoice['operation_type']) {
             'Invoice' => [
                 'cbc:CustomizationID'           => 'urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0',
                 'cbc:ProfileID'                 => 'urn:fdc:peppol.eu:2017:poacc:billing:01:1.0',
-                'cbc:ID'                        => $invoice['number'],
+                'cbc:ID'                        => $invoice['operation_number'],
                 'cbc:IssueDate'                 => date('Y-m-d', $invoice['emission_date']),
                 'cbc:DueDate'                   => date('Y-m-d', $invoice['due_date']),
                 'cbc:InvoiceTypeCode'           => 380,
@@ -352,7 +352,7 @@ switch($invoice['operation_type']) {
                 'cbc' => [
                     'CustomizationID'       => 'urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0',
                     'ProfileID'             => 'urn:fdc:peppol.eu:2017:poacc:billing:01:1.0',
-                    'ID'                    => $invoice['number'],
+                    'ID'                    => $invoice['operation_number'],
                     'IssueDate'             => date('Y-m-d', $invoice['emission_date']),
                     'InvoiceTypeCode'       => 381,
                     'DocumentCurrencyCode'  => 'EUR'
