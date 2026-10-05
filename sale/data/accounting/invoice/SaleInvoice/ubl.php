@@ -9,16 +9,14 @@ use identity\IdentityType;
 use sale\accounting\invoice\SaleInvoice;
 
 [$params, $providers] = eQual::announce([
-    'description'   => "Generate the UBL file of a given invoice.",
+    'description'   => 'Generate the UBL file of a given invoice.',
     'params'        => [
-
         'id' =>  [
             'type'          => 'integer',
-            'description'   => "Identifier of the invoice for which the UBL file has to be generated.",
+            'description'   => 'Identifier of the invoice for which the UBL file has to be generated.',
             'min'           => 1,
             'required'      => true
         ]
-
     ],
     'access' => [
         'visibility'    => 'protected',
@@ -137,8 +135,7 @@ $invoice = SaleInvoice::id($params['id'])
         'operation_number',
         'total_discount',
         'total',
-        'subtotals',
-        'subtotals_vat',
+        'tax_lines',
         'total_vat',
         'price',
         'organization_id' => [
@@ -402,16 +399,16 @@ $ubl['Invoice']['cac:TaxTotal'] = [
     'cac:TaxSubtotal'   => ['items' => []]
 ];
 
-$subtotals_vat = json_decode($invoice['subtotals_vat'], true);
+$tax_lines = json_decode($invoice['tax_lines'], true);
 
-foreach($subtotals_vat as $vat_rate_index => $subtotal_vat) {
-    $vat_rate = ((float) $vat_rate_index) / 100;
+foreach($tax_lines as $tax_line) {
+    $vat_rate = $tax_line['vat_rate'];
 
     $has_vat = $vat_rate !== 0.0;
 
     $item = [
-        'cbc:TaxableAmount' => ['attributes' => ['currencyID' => 'EUR'], 'content' => $formatMoney($invoice['subtotals'][$vat_rate_index])],
-        'cbc:TaxAmount'     => ['attributes' => ['currencyID' => 'EUR'], 'content' => $formatMoney($subtotal_vat)],
+        'cbc:TaxableAmount' => ['attributes' => ['currencyID' => 'EUR'], 'content' => $formatMoney($tax_line['taxable_amount'])],
+        'cbc:TaxAmount'     => ['attributes' => ['currencyID' => 'EUR'], 'content' => $formatMoney($tax_line['tax_amount'])],
         'cac:TaxCategory'   => [
             'cbc:ID'                        => $has_vat ? 'S' : 'E',
             'cbc:Percent'                   => $formatVatRate($vat_rate),
