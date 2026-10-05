@@ -175,9 +175,7 @@ $invoice = SaleInvoice::id($params['id'])
             'price'
         ]
     ])
-    ->first(true);
-
-file_put_contents(QN_LOG_STORAGE_DIR.'/tmp.log', json_encode($invoice).PHP_EOL, FILE_APPEND | LOCK_EX);
+    ->first();
 
 if(is_null($invoice)) {
     throw new Exception('unknown_invoice', EQ_ERROR_UNKNOWN_OBJECT);
