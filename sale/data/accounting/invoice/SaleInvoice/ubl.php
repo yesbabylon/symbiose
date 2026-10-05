@@ -133,7 +133,6 @@ $invoice = SaleInvoice::id($params['id'])
         'emission_date',
         'due_date',
         'operation_number',
-        'total_discount',
         'total',
         'tax_lines',
         'total_vat',
@@ -392,12 +391,17 @@ foreach($invoice['invoice_lines_ids'] as $line) {
     $ubl['Invoice']['cac:InvoiceLine']['items'][] = $item;
 }
 
+$tax_lines = json_decode($invoice['tax_lines'], true);
+
+$total_tax_amount = 0.0;
+foreach($tax_lines as $tax_line) {
+    $total_tax_amount += $tax_line['tax_amount'];
+}
+
 $ubl['Invoice']['cac:TaxTotal'] = [
-    'cbc:TaxAmount'     => ['attributes' => ['currencyID' => 'EUR'], 'content' => $formatMoney($invoice['total_vat'])],
+    'cbc:TaxAmount'     => ['attributes' => ['currencyID' => 'EUR'], 'content' => $formatMoney($total_tax_amount)],
     'cac:TaxSubtotal'   => ['items' => []]
 ];
-
-$tax_lines = json_decode($invoice['tax_lines'], true);
 
 foreach($tax_lines as $tax_line) {
     $vat_rate = $tax_line['vat_rate'];
@@ -423,10 +427,13 @@ foreach($tax_lines as $tax_line) {
     $ubl['Invoice']['cac:TaxTotal']['cac:TaxSubtotal']['items'][] = $item;
 }
 
+// #memo - discounts are not handled yet
+$total_discount = 0.0;
+
 $ubl['Invoice']['cac:LegalMonetaryTotal'] = [
     'cbc:LineExtensionAmount' => [
         'attributes'    => ['currencyID' => 'EUR'],
-        'content'       => $formatMoney($invoice['total'] + $invoice['total_discount'])
+        'content'       => $formatMoney($invoice['total'] + $total_discount)
     ],
     'cbc:TaxExclusiveAmount' => [
         'attributes'    => ['currencyID' => 'EUR'],
@@ -438,7 +445,7 @@ $ubl['Invoice']['cac:LegalMonetaryTotal'] = [
     ],
     'cbc:AllowanceTotalAmount' => [
         'attributes'    => ['currencyID' => 'EUR'],
-        'content'       => $formatMoney($invoice['total_discount'])
+        'content'       => $formatMoney($total_discount)
     ],
     'cbc:ChargeTotalAmount' => [
         'attributes'    => ['currencyID' => 'EUR'],
