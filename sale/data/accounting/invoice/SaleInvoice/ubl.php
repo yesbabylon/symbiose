@@ -132,7 +132,7 @@ $formatToUblXml = function($data): string {
 $invoice = SaleInvoice::id($params['id'])
     ->read([
         'operation_type',
-        'date',
+        'emission_date',
         'due_date',
         'number',
         'total_discount',
@@ -183,7 +183,7 @@ $invoice = SaleInvoice::id($params['id'])
 file_put_contents(QN_LOG_STORAGE_DIR.'/tmp.log', json_encode($invoice).PHP_EOL, FILE_APPEND | LOCK_EX);
 
 if(is_null($invoice)) {
-    throw new Exception('unknown_accounting_operation', EQ_ERROR_UNKNOWN_OBJECT);
+    throw new Exception('unknown_invoice', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
 // see https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/ for more information
@@ -332,7 +332,7 @@ switch($invoice['operation_type']) {
                 'cbc:CustomizationID'           => 'urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0',
                 'cbc:ProfileID'                 => 'urn:fdc:peppol.eu:2017:poacc:billing:01:1.0',
                 'cbc:ID'                        => $invoice['number'],
-                'cbc:IssueDate'                 => date('Y-m-d', $invoice['date']),
+                'cbc:IssueDate'                 => date('Y-m-d', $invoice['emission_date']),
                 'cbc:DueDate'                   => date('Y-m-d', $invoice['due_date']),
                 'cbc:InvoiceTypeCode'           => 380,
                 'cbc:DocumentCurrencyCode'      => 'EUR',
@@ -353,7 +353,7 @@ switch($invoice['operation_type']) {
                     'CustomizationID'       => 'urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0',
                     'ProfileID'             => 'urn:fdc:peppol.eu:2017:poacc:billing:01:1.0',
                     'ID'                    => $invoice['number'],
-                    'IssueDate'             => date('Y-m-d', $invoice['date']),
+                    'IssueDate'             => date('Y-m-d', $invoice['emission_date']),
                     'InvoiceTypeCode'       => 381,
                     'DocumentCurrencyCode'  => 'EUR'
                 ]
