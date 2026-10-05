@@ -1,0 +1,24 @@
+{
+    "name": "Contacts dashboard summary filters",
+    "description": "No additional filters are required for the dashboard summary.",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

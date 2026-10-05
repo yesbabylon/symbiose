@@ -89,7 +89,7 @@ $tests = [
             ];
         },
         'act'         => function($args) {
-            $html = eQual::run('get', 'sale_accounting_invoice_render-html', [
+            $html = eQual::run('get', 'sale_accounting_invoice_SaleInvoice_render-html', [
                 'id'    => $args['invoice_id'],
                 'lang'  => 'fr',
                 'debug' => false

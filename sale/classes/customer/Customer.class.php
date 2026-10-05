@@ -117,7 +117,7 @@ class Customer extends IdentityFacetAbstract {
 
             'contacts_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\customer\Contact',
+                'foreign_object'    => 'sale\customer\CustomerContact',
                 'foreign_field'     => 'customer_id',
                 'description'       => 'List contacts of the customer.'
             ],

@@ -1,0 +1,58 @@
+{
+    "name": "Contacts dashboard",
+    "description": "Search all contacts and monitor contact quality indicators.",
+    "icon": "contacts",
+    "refresh_interval": 300,
+    "layout": {
+        "groups": [
+            {
+                "id": "group.main",
+                "height": "100%",
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "height": "70%",
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "id": "item.contacts",
+                                                "label": "All contacts",
+                                                "description": "Search a person, company, email address, phone number or VAT number.",
+                                                "height": "100%",
+                                                "width": "100%",
+                                                "entity": "identity\\Identity",
+                                                "view": "list.contacts"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "height": "30%",
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "id": "item.summary",
+                                                "label": "Contacts and alerts",
+                                                "description": "Counts of contacts by role and data quality alerts.",
+                                                "height": "100%",
+                                                "width": "100%",
+                                                "entity": "identity\\contacts\\collect-summary",
+                                                "view": "list.default"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

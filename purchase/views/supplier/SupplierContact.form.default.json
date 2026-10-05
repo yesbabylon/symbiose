@@ -1,11 +1,11 @@
 {
-    "name": "Contact",
-    "description": "Customer contact form.",
+    "name": "Supplier Contact",
+    "description": "Supplier contact form.",
     "access": {
-        "groups": ["sale.default.users"]
+        "groups": ["purchase.default.users"]
     },
     "extends": {
-        "entity": "identity\\Partner",
+        "entity": "identity\\Contact",
         "view": "form.default"
     },
     "layout": {
@@ -15,8 +15,8 @@
                     "items": [
                         {
                             "type": "field",
-                            "label": "Customer",
-                            "value": "customer_id",
+                            "label": "Supplier",
+                            "value": "supplier_id",
                             "width": "100%"
                         }
                     ]

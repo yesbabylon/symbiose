@@ -1,0 +1,14 @@
+{
+    "name": "Menu supérieur Contacts",
+    "description": "Navigation supérieure de l'application Contacts.",
+    "view": {
+        "item.home": {
+            "label": "Tableau de bord",
+            "description": "Tableau de bord des contacts."
+        },
+        "item.contacts": {
+            "label": "Tous les contacts",
+            "description": "Rechercher et consulter tous les contacts."
+        }
+    }
+}

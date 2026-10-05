@@ -1,0 +1,42 @@
+{
+    "name": "Menu Contacts",
+    "description": "Navigation principale de l'application Contacts.",
+    "view": {
+        "item.organization": {
+            "label": "Mon organisation",
+            "description": "Gérer l'entité principale, ses entités liées et ses contacts internes."
+        },
+        "item.organization.main": {
+            "label": "Entité principale",
+            "description": "Entité légale principale de l'installation."
+        },
+        "item.organization.related": {
+            "label": "Sociétés / entités liées",
+            "description": "Entités légales liées à l'organisation principale."
+        },
+        "item.organization.establishments": {
+            "label": "Unités d'établissement",
+            "description": "Unités d'établissement de l'organisation."
+        },
+        "item.organization.internal_contacts": {
+            "label": "Contacts internes",
+            "description": "Employés et groupes d'utilisateurs de l'organisation."
+        },
+        "item.organization.internal_contacts.employees": {
+            "label": "Employés",
+            "description": "Personnes possédant un rôle d'employé."
+        },
+        "item.organization.internal_contacts.groups": {
+            "label": "Groupes",
+            "description": "Groupes d'utilisateurs."
+        },
+        "item.customers": {
+            "label": "Clients",
+            "description": "Contacts possédant un rôle de client."
+        },
+        "item.suppliers": {
+            "label": "Fournisseurs",
+            "description": "Contacts possédant un rôle de fournisseur."
+        }
+    }
+}

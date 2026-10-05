@@ -1,33 +1,26 @@
 {
-    "name": "Identity menu",
+    "name": "Contacts top menu",
     "layout": {
         "items": [
             {
                 "id": "item.home",
-                "label": "Home",
-                "description": "",
-                "icon": "menu_book",
+                "label": "Dashboard",
+                "description": "Contacts dashboard.",
+                "icon": "dashboard",
                 "type": "entry",
-                "route": "/"
-            },
-            {
-                "id": "item.identity",
-                "type": "entry",
-                "label": "Identities",
-                "description": "",
                 "context": {
                     "entity": "identity\\Identity",
-                    "view": "list.default"
+                    "view": "dashboard.default"
                 }
             },
             {
-                "id": "item.partner",
+                "id": "item.contacts",
                 "type": "entry",
-                "label": "Partners",
-                "description": "",
+                "label": "All contacts",
+                "description": "Search and browse all contacts.",
                 "context": {
-                    "entity": "identity\\Partner",
-                    "view": "list.default"
+                    "entity": "identity\\Identity",
+                    "view": "list.contacts"
                 }
             }
         ]

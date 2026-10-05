@@ -8,7 +8,7 @@
     "apps": [
         {
             "id": "identity",
-            "name": "Contact",
+            "name": "Contacts",
             "extends": "app",
             "description": "Manage contacts and identities.",
             "icon": "contacts",
@@ -22,6 +22,11 @@
                 "menus": {
                     "left": "identity.left",
                     "top": "identity.top"
+                },
+                "context": {
+                    "description": "Contacts dashboard.",
+                    "entity": "identity\\Identity",
+                    "view": "dashboard.default"
                 }
             }
         }

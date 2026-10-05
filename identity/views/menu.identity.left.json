@@ -1,143 +1,106 @@
 {
-    "name": "Identity menu",
+    "name": "Contacts menu",
     "layout": {
         "items": [
             {
-                "id": "item.corporate",
-                "label": "Corporate",
-                "description": "",
-                "icon": "now_widgets",
+                "id": "item.organization",
+                "label": "My organization",
+                "description": "Manage the main organization, its related entities and internal contacts.",
+                "icon": "corporate_fare",
                 "type": "parent",
                 "children": [
                     {
-                        "id": "item.organizations",
+                        "id": "item.organization.main",
                         "type": "entry",
-                        "label": "Organizations",
+                        "label": "Main entity",
                         "icon": "business",
-                        "description": "",
+                        "description": "Main legal entity of the installation.",
                         "context": {
                             "entity": "identity\\Organization",
-                            "view": "list.default"
+                            "view": "list.default",
+                            "domain": ["id", "=", 1]
                         }
                     },
                     {
-                        "id": "item.addresses",
+                        "id": "item.organization.related",
                         "type": "entry",
-                        "label": "Addresses",
-                        "icon": "place",
-                        "description": "",
+                        "label": "Related companies and entities",
+                        "icon": "account_tree",
+                        "description": "Legal entities related to the main organization.",
                         "context": {
-                            "entity": "identity\\Address",
-                            "view": "list.default"
+                            "entity": "identity\\Organization",
+                            "view": "list.default",
+                            "domain": ["id", "<>", 1]
                         }
                     },
                     {
-                        "id": "item.establishments",
+                        "id": "item.organization.establishments",
                         "type": "entry",
                         "label": "Establishments",
                         "icon": "apartment",
-                        "description": "",
+                        "description": "Establishment units of the organization.",
                         "context": {
                             "entity": "identity\\Establishment",
                             "view": "list.default"
                         }
-                    }
-                ]
-            },
-            {
-                "id": "item.identity",
-                "label": "Identities",
-                "icon": "manage",
-                "type": "parent",
-                "children": [
-                    {
-                        "id": "item.companies",
-                        "type": "entry",
-                        "label": "Companies",
-                        "icon": "business",
-                        "description": "",
-                        "context": {
-                            "entity": "identity\\Identity",
-                            "view": "list.default",
-                            "domain": ["type_id", "=", 3]
-                        }
                     },
                     {
-                        "id": "item.individuals",
-                        "type": "entry",
-                        "label": "Individuals",
+                        "id": "item.organization.internal_contacts",
+                        "label": "Internal contacts",
+                        "description": "Employees and user groups of the organization.",
                         "icon": "people",
-                        "description": "",
-                        "context": {
-                            "entity": "identity\\Identity",
-                            "view": "list.default",
-                            "domain": ["type_id", "=", 1]
-                        }
-                    },
-                    {
-                        "id": "item.identities",
-                        "type": "entry",
-                        "label": "All",
-                        "icon": "face",
-                        "description": "",
-                        "context": {
-                            "entity": "identity\\Identity",
-                            "view": "list.default"
-                        }
-                    }
-
-                ]
-            },
-            {
-                "id": "item.groups_users",
-                "label": "Groups & Users",
-                "description": "",
-                "icon": "people",
-                "type": "parent",
-                "children": [
-                    {
-                        "id": "item.groups",
-                        "type": "entry",
-                        "label": "Groups",
-                        "icon": "group",
-                        "description": "",
-                        "context": {
-                            "entity": "core\\Group",
-                            "view": "list.default"
-                        }
-                    },
-                    {
-                        "id": "item.users",
-                        "type": "entry",
-                        "label": "Users",
-                        "icon": "person",
-                        "description": "",
-                        "context": {
-                            "entity": "identity\\User",
-                            "view": "list.default"
-                        }
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "item.organization.internal_contacts.employees",
+                                "type": "entry",
+                                "label": "Employees",
+                                "icon": "badge",
+                                "description": "People with an employee role.",
+                                "context": {
+                                    "entity": "identity\\Identity",
+                                    "view": "list.contacts",
+                                    "domain": ["employee_id", "<>", null]
+                                }
+                            },
+                            {
+                                "id": "item.organization.internal_contacts.groups",
+                                "type": "entry",
+                                "label": "Groups",
+                                "icon": "group",
+                                "description": "User groups.",
+                                "context": {
+                                    "entity": "core\\Group",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
                     }
                 ]
             },
             {
-                "id": "item.settings",
-                "type": "parent",
-                "label": "Settings",
-                "icon": "settings",
-                "description": "",
-                "children": [
-                    {
-                        "id": "item.identityType",
-                        "type": "entry",
-                        "label": "Identities Types",
-                        "icon": "face",
-                        "description": "",
-                        "context": {
-                            "entity": "identity\\IdentityType",
-                            "view": "list.default"
-                        }
-                    }
-                ]
+                "id": "item.customers",
+                "type": "entry",
+                "label": "Customers",
+                "icon": "handshake",
+                "description": "Contacts with a customer role.",
+                "context": {
+                    "entity": "identity\\Identity",
+                    "view": "list.contacts",
+                    "domain": ["customer_id", "<>", null]
+                }
+            },
+            {
+                "id": "item.suppliers",
+                "type": "entry",
+                "label": "Suppliers",
+                "icon": "local_shipping",
+                "description": "Contacts with a supplier role.",
+                "context": {
+                    "entity": "identity\\Identity",
+                    "view": "list.contacts",
+                    "domain": ["supplier_id", "<>", null]
+                }
             }
         ]
     }

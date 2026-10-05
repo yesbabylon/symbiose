@@ -67,7 +67,7 @@ if(!$lang) {
     $lang = $invoice['customer_id']['lang_id']['code'];
 }
 
-$html = eQual::run('get', 'sale_accounting_invoice_render-html', [
+$html = eQual::run('get', 'sale_accounting_invoice_SaleInvoice_render-html', [
     'id'      => $params['id'],
     'mode'    => $params['mode'],
     'view_id' => 'print.default',

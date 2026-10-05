@@ -51,7 +51,7 @@
             "label": "Print invoice",
             "description": "Displays all lines but without group.",
             "icon": "print",
-            "route": "/?get=sale_accounting_invoice_render-pdf&id=object.id",
+            "route": "/?get=sale_accounting_invoice_SaleInvoice_render-pdf&id=object.id",
             "target": "_blank",
             "absolute": true
         }

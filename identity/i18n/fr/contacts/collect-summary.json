@@ -1,0 +1,64 @@
+{
+    "name": "Synthèse des contacts",
+    "plural": "Synthèses des contacts",
+    "description": "Indicateurs de volume et de qualité des contacts.",
+    "model": {
+        "internal_count": {
+            "label": "Internes",
+            "description": "Nombre de contacts possédant un rôle d'employé.",
+            "help": ""
+        },
+        "customer_count": {
+            "label": "Clients",
+            "description": "Nombre de contacts possédant un rôle de client.",
+            "help": ""
+        },
+        "supplier_count": {
+            "label": "Fournisseurs",
+            "description": "Nombre de contacts possédant un rôle de fournisseur.",
+            "help": ""
+        },
+        "total_count": {
+            "label": "Total",
+            "description": "Nombre total de rôles de contact.",
+            "help": ""
+        },
+        "incomplete_count": {
+            "label": "Incomplets",
+            "description": "Nombre de contacts dont les informations essentielles sont incomplètes.",
+            "help": ""
+        },
+        "duplicate_count": {
+            "label": "Doublons",
+            "description": "Nombre de contacts partageant une même clé de détection de doublon.",
+            "help": ""
+        }
+    },
+    "view": {
+        "list.default": {
+            "name": "Synthèse des contacts",
+            "description": "Nombre de contacts par rôle et alertes de qualité des données.",
+            "layout": {
+                "item.internal": {
+                    "label": "Internes"
+                },
+                "item.customers": {
+                    "label": "Clients"
+                },
+                "item.suppliers": {
+                    "label": "Fournisseurs"
+                },
+                "item.total": {
+                    "label": "Total"
+                },
+                "item.incomplete": {
+                    "label": "Incomplets"
+                },
+                "item.duplicates": {
+                    "label": "Doublons"
+                }
+            }
+        }
+    },
+    "error": {}
+}

@@ -1,0 +1,31 @@
+{
+    "name": "Contacts search",
+    "description": "Search contacts across names, email addresses, phone numbers and VAT numbers.",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "query",
+                                                "label": "Search a person, company, email, phone or VAT number",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

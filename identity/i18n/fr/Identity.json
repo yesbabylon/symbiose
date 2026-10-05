@@ -250,6 +250,25 @@
             "name": "Liste d'Identité",
             "description": "Liste de base des identités existantes.",
             "layout": {}
+        },
+        "list.contacts": {
+            "name": "Contacts",
+            "description": "Liste de toutes les personnes et organisations avec recherche avancée.",
+            "layout": {}
+        },
+        "dashboard.default": {
+            "name": "Contacts",
+            "description": "Rechercher tous les contacts et suivre la qualité de leurs données.",
+            "layout": {
+                "item.contacts": {
+                    "label": "Tous les contacts",
+                    "description": "Rechercher une personne, une société, un e-mail, un téléphone ou un numéro de TVA."
+                },
+                "item.summary": {
+                    "label": "Contacts et alertes",
+                    "description": "Nombre de contacts par rôle et alertes de qualité des données."
+                }
+            }
         }
     },
     "error": {
