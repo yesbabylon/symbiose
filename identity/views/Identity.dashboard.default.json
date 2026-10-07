@@ -33,12 +33,22 @@
                                         "items": [
                                             {
                                                 "id": "item.summary",
-                                                "label": "Contacts and alerts",
-                                                "description": "Counts of contacts by role and data quality alerts.",
-                                                "height": "100%",
+                                                "label": "Contacts summary",
+                                                "description": "Counts of contacts by type.",
+                                                "height": "50%",
                                                 "width": "100%",
                                                 "entity": "identity\\contacts\\collect-summary",
                                                 "view": "list.default"
+                                            },
+                                            {
+                                                "id": "item.alerts",
+                                                "label": "Alerts",
+                                                "description": "Counts of contacts by role and data quality alerts.",
+                                                "height": "50%",
+                                                "width": "100%",
+                                                "entity": "core\\alert\\Message",
+                                                "view": "list.default",
+                                                "domain":  [ ["object_class", "in", ["identity\\Contact", "sale\\customer\\CustomerContact", "purchase\\supplier\\SupplierContact"]] ]
                                             }
                                         ]
                                     }
