@@ -12,10 +12,10 @@
                     {
                         "rows": [
                             {
-                                "height": "70%",
+                                "height": "100%",
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "66%",
                                         "items": [
                                             {
                                                 "id": "item.contacts",
@@ -27,14 +27,9 @@
                                                 "view": "list.contacts"
                                             }
                                         ]
-                                    }
-                                ]
-                            },
-                            {
-                                "height": "30%",
-                                "columns": [
+                                    },
                                     {
-                                        "width": "100%",
+                                        "width": "33%",
                                         "items": [
                                             {
                                                 "id": "item.summary",
