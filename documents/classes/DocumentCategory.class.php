@@ -56,17 +56,17 @@ class DocumentCategory extends Model {
         ];
     }
 
-    public static function calcPath($self): array {
+    public static function calcPath($self, $lang): array {
         $result = [];
         $self->read(['name', 'parent_id']);
         foreach($self as $id => $category) {
-            $result[$id] = self::addParentPath($category['name'], $category['parent_id']);
+            $result[$id] = self::addParentPath($category['name'], $category['parent_id'], $lang);
         }
 
         return $result;
     }
 
-    public static function addParentPath($path, $parent_id = null) {
+    public static function addParentPath($path, $parent_id, $lang) {
         if(is_null($parent_id)) {
             return $path;
         }
@@ -77,7 +77,8 @@ class DocumentCategory extends Model {
 
         return self::addParentPath(
             $parent_category['name'].'/'.$path,
-            $parent_category['parent_id']
+            $parent_category['parent_id'],
+            $lang
         );
     }
 
