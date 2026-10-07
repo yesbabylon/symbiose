@@ -58,8 +58,7 @@ class BankStatementLine extends Model {
 
             'customer_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Partner',
-                'domain'            => ['relationship', '=', 'customer'],
+                'foreign_object'    => 'sale\customer\Customer',
                 'description'       => 'The customer the payment relates to, if known.',
                 'readonly'          => true
             ],
@@ -140,7 +139,7 @@ class BankStatementLine extends Model {
     }
 
     public static function onupdateStatus($om, $ids, $values, $lang) {
-        $lines = $om->read(self::getType(), $ids, ['status', 'bank_statement_id', 'payments_ids.partner_id']);
+        $lines = $om->read(self::getType(), $ids, ['status', 'bank_statement_id', 'payments_ids.customer_id']);
 
         if($lines > 0) {
             $bank_statements_ids = [];
@@ -149,9 +148,9 @@ class BankStatementLine extends Model {
                 $bank_statements_ids[] = $line['bank_statement_id'];
                 if($line['status'] == 'reconciled') {
                     // resolve customer_id: retrieve first payment
-                    if(count((array) $line['payments_ids.partner_id'])) {
-                        $payment = reset($line['payments_ids.partner_id']);
-                        $om->update(self::getType(), $lid, ['customer_id' => $payment['partner_id']]);
+                    if(count((array) $line['payments_ids.customer_id'])) {
+                        $payment = reset($line['payments_ids.customer_id']);
+                        $om->update(self::getType(), $lid, ['customer_id' => $payment['customer_id']]);
                     }
                 }
             }

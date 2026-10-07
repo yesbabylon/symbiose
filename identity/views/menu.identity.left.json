@@ -47,10 +47,21 @@
                     {
                         "id": "item.organization.internal_contacts",
                         "label": "Internal contacts",
-                        "description": "Employees and user groups of the organization.",
+                        "description": "Employees and contact groups of the organization.",
                         "icon": "people",
                         "type": "parent",
                         "children": [
+                            {
+                                "id": "item.organization.internal_contacts.contacts",
+                                "type": "entry",
+                                "label": "Contacts",
+                                "icon": "badge",
+                                "description": "All contacts.",
+                                "context": {
+                                    "entity": "identity\\Contact",
+                                    "view": "list.contacts"
+                                }
+                            },
                             {
                                 "id": "item.organization.internal_contacts.employees",
                                 "type": "entry",
@@ -58,19 +69,18 @@
                                 "icon": "badge",
                                 "description": "People with an employee role.",
                                 "context": {
-                                    "entity": "identity\\Identity",
-                                    "view": "list.contacts",
-                                    "domain": ["employee_id", "<>", null]
+                                    "entity": "hr\\employee\\Employee",
+                                    "view": "list.default"
                                 }
                             },
                             {
                                 "id": "item.organization.internal_contacts.groups",
                                 "type": "entry",
-                                "label": "Groups",
+                                "label": "Contact groups",
                                 "icon": "group",
-                                "description": "User groups.",
+                                "description": "Groups used to organize contacts.",
                                 "context": {
-                                    "entity": "core\\Group",
+                                    "entity": "identity\\ContactGroup",
                                     "view": "list.default"
                                 }
                             }

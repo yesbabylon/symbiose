@@ -30,7 +30,23 @@ class Contact extends IdentityFacetAbstract {
                 'type'              => 'string',
                 'description'       => 'Position of the contact (natural person) within the target organisation (legal person), e.g. \'director\', \'CEO\', \'Regional manager\'.',
                 'visible'           => [ ['relationship', '=', 'contact'] ]
-            ]
+            ],
+
+            'is_internal' => [
+                'type'              => 'boolean',
+                'description'       => 'Mark the contact as relating to the organization.',
+                'default'           => false
+            ],
+
+            'contact_groups_ids' => [
+                'type'            => 'many2many',
+                'foreign_object'  => 'identity\ContactGroup',
+                'foreign_field'   => 'contacts_ids',
+                'rel_table'       => 'identity_rel_contact_group_contact',
+                'rel_foreign_key' => 'contact_group_id',
+                'rel_local_key'   => 'contact_id',
+                'description'     => 'Contact groups to which the identity belongs.'
+            ],
 
         ];
     }

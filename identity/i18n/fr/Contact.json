@@ -1,5 +1,12 @@
 {
     "name": "Contact",
     "plural": "Contacts",
-    "description": "Les contacts regroupent des informations concernant des personnes liées à une identité spécifique."
+    "description": "Les contacts regroupent des informations concernant des personnes liées à une identité spécifique.",
+    "model": {
+        "contact_groups_ids": {
+            "label": "Groupes de contacts",
+            "description": "Groupes de contacts auxquels appartient l'identité.",
+            "help": "Utilisez ces groupes pour organiser le contact indépendamment des accès utilisateurs."
+        }
+    }
 }

@@ -1,0 +1,21 @@
+{
+    "name": "Contact groups",
+    "description": "List of contact groups.",
+    "order": "name",
+    "sort": "asc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "40%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "60%"
+            }
+        ]
+    }
+}

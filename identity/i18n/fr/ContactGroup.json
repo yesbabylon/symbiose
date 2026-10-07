@@ -1,0 +1,42 @@
+{
+    "name": "Groupe de contacts",
+    "plural": "Groupes de contacts",
+    "description": "Les groupes de contacts permettent d'organiser les contacts indépendamment des groupes d'accès des utilisateurs.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom du groupe de contacts.",
+            "help": "Saisissez un nom unique permettant d'identifier le groupe."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Finalité du groupe de contacts.",
+            "help": "Précisez l'usage prévu pour ce groupe de contacts."
+        },
+        "contacts_ids": {
+            "label": "Contacts",
+            "description": "Contacts appartenant au groupe.",
+            "help": "Sélectionnez les contacts à inclure dans ce groupe."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Groupe de contacts",
+            "description": "Gérer un groupe de contacts et ses membres.",
+            "layout": {
+                "section.general": {
+                    "label": "Général"
+                },
+                "section.contacts": {
+                    "label": "Contacts"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Groupes de contacts",
+            "description": "Liste des groupes de contacts.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

@@ -6,7 +6,9 @@
 */
 namespace hr\recruit;
 
-class Talent extends \identity\Partner {
+use identity\IdentityFacetAbstract;
+
+class Talent extends IdentityFacetAbstract {
 
     public static function getModelTable(): string {
         return 'talentlead_identity_talent';
@@ -49,6 +51,10 @@ class Talent extends \identity\Partner {
             ]
 
         ];
+    }
+
+    public function getUniques(): array {
+        return [['identity_id']];
     }
 
 }

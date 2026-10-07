@@ -20,15 +20,15 @@
         },
         "item.organization.internal_contacts": {
             "label": "Contacts internes",
-            "description": "Employés et groupes d'utilisateurs de l'organisation."
+            "description": "Employés et groupes de contacts de l'organisation."
         },
         "item.organization.internal_contacts.employees": {
             "label": "Employés",
             "description": "Personnes possédant un rôle d'employé."
         },
         "item.organization.internal_contacts.groups": {
-            "label": "Groupes",
-            "description": "Groupes d'utilisateurs."
+            "label": "Groupes de contacts",
+            "description": "Groupes servant à organiser les contacts."
         },
         "item.customers": {
             "label": "Clients",

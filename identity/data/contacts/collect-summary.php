@@ -44,7 +44,7 @@ $result = [
     [
         'id'    => 1,
         'type'  => 'internal',
-        'total' => Contact::search()->count()
+        'total' => Contact::search(['is_internal', '=', true])->count()
     ],
     [
         'id'    => 2,
