@@ -265,8 +265,12 @@
                     "description": "Rechercher une personne, une société, un e-mail, un téléphone ou un numéro de TVA."
                 },
                 "item.summary": {
-                    "label": "Contacts et alertes",
-                    "description": "Nombre de contacts par rôle et alertes de qualité des données."
+                    "label": "Synthèse des contacts",
+                    "description": "Nombre de contacts par type."
+                },
+                "item.alerts": {
+                    "label": "Alertes",
+                    "description": "Nombre de contacts par rôle et alertes sur la qualité des données."
                 }
             }
         }

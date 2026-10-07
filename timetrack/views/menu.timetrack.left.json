@@ -29,8 +29,6 @@
                         "context": {
                             "entity": "timetrack\\TimeEntry",
                             "view": "list.default",
-                            "order": "created",
-                            "sort": "desc",
                             "limit": 500,
                             "domain": [
                                 ["status", "<>", "charged"],
@@ -48,8 +46,6 @@
                         "context": {
                             "entity": "timetrack\\TimeEntry",
                             "view": "list.default",
-                            "order": "created",
-                            "sort": "asc",
                             "domain": [
                                 ["status", "=", "submitted"]
                             ]
