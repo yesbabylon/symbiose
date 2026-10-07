@@ -21,11 +21,27 @@
                 "description": "Time entries.",
                 "children": [
                     {
+                        "id": "time_entries.user",
+                        "type": "entry",
+                        "label": "My overview",
+                        "icon": "person",
+                        "description": "Entries for current user.",
+                        "context": {
+                            "entity": "timetrack\\TimeEntry",
+                            "view": "list.default",
+                            "limit": 500,
+                            "domain": [
+                                ["user_id", "=", "user.id"],
+                                ["status", "<>", "charged"]
+                            ]
+                        }
+                    },
+                    {
                         "id": "time_entries.month_overview",
                         "type": "entry",
                         "label": "Month overview",
                         "icon": "hourglass_top",
-                        "description": "All entries for current month.",
+                        "description": "Not charged entries for current month.",
                         "context": {
                             "entity": "timetrack\\TimeEntry",
                             "view": "list.default",

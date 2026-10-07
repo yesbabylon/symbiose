@@ -16,6 +16,12 @@
         "time_entries.by_day_user": {
             "label": "Par jour et utilisateur"
         },
+        "time_entries.user": {
+            "label": "Mon aperçu"
+        },
+        "time_entries.month_overview": {
+            "label": "Aperçu mois"
+        },
         "time_entries.submitted": {
             "label": "A valider"
         },
