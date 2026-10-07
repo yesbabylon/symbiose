@@ -5,7 +5,9 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use identity\Identity;
+use identity\Contact;
+use purchase\supplier\SupplierContact;
+use sale\customer\CustomerContact;
 
 [$params, $providers] = eQual::announce([
     'description' => 'Return contact counts by contact type or related alert category for the Contacts dashboard.',
@@ -42,17 +44,17 @@ $result = [
     [
         'id'    => 1,
         'type'  => 'internal',
-        'total' => count(Identity::search(['employee_id', '<>', null])->ids())
+        'total' => Contact::search()->count()
     ],
     [
         'id'    => 2,
         'type'  => 'customers',
-        'total' => count(Identity::search(['customer_id', '<>', null])->ids())
+        'total' => CustomerContact::search()->count()
     ],
     [
         'id'    => 3,
         'type'  => 'suppliers',
-        'total' => count(Identity::search(['supplier_id', '<>', null])->ids())
+        'total' => SupplierContact::search()->count()
     ],
     [
         'id'    => 4,

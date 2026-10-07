@@ -29,10 +29,9 @@
                         "context": {
                             "entity": "timetrack\\TimeEntry",
                             "view": "list.default",
-                            "limit": 500,
+                            "limit": 50,
                             "domain": [
-                                ["user_id", "=", "user.id"],
-                                ["status", "<>", "charged"]
+                                ["user_id", "=", "user.id"]
                             ]
                         }
                     },
