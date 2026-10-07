@@ -1,8 +1,16 @@
 {
     "name": "Contacts dashboard summary",
-    "description": "Contact counts and data quality alerts.",
+    "description": "Contact counts by type and data quality alert category.",
     "controller": "identity_contacts_collect-summary",
-    "limit": 1,
+    "limit": 5,
+    "operations": {
+        "total": {
+            "total": {
+                "operation": "SUM",
+                "usage": "numeric/integer"
+            }
+        }
+    },
     "header": {
         "selection": {
             "default": false
@@ -14,51 +22,19 @@
     "layout": {
         "items": [
             {
-                "id": "item.internal",
+                "id": "item.type",
                 "type": "field",
-                "label": "Internal",
-                "value": "internal_count",
-                "width": "16%",
-                "readonly": true
-            },
-            {
-                "id": "item.customers",
-                "type": "field",
-                "label": "Customers",
-                "value": "customer_count",
-                "width": "16%",
-                "readonly": true
-            },
-            {
-                "id": "item.suppliers",
-                "type": "field",
-                "label": "Suppliers",
-                "value": "supplier_count",
-                "width": "16%",
+                "label": "Contact type",
+                "value": "type",
+                "width": "50%",
                 "readonly": true
             },
             {
                 "id": "item.total",
                 "type": "field",
-                "label": "Total",
-                "value": "total_count",
-                "width": "16%",
-                "readonly": true
-            },
-            {
-                "id": "item.incomplete",
-                "type": "field",
-                "label": "Incomplete",
-                "value": "incomplete_count",
-                "width": "18%",
-                "readonly": true
-            },
-            {
-                "id": "item.duplicates",
-                "type": "field",
-                "label": "Duplicates",
-                "value": "duplicate_count",
-                "width": "18%",
+                "label": "Number of contacts",
+                "value": "total",
+                "width": "50%",
                 "readonly": true
             }
         ]
