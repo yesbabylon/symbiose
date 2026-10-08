@@ -25,7 +25,7 @@
                                 "label": "Taille des documents",
                                 "description": "",
                                 "context": {
-                                    "entity": "documents\\Document",
+                                    "entity": "document\\document\\Document",
                                     "view": "chart.default"
                                 }
                             }

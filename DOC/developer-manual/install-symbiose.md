@@ -50,7 +50,7 @@ $ git clone https://github.com/yesbabylon/symbiose.git packages
 packages
 ├── core (from eQual framework)
 ├── identity
-├── documents
+├── document
 ├── finance
 ├── sale
 ├── inventory

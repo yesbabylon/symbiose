@@ -194,7 +194,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "posted_at",
+                                                "value": "issue_date",
                                                 "width": "50%"
                                             },
                                             {

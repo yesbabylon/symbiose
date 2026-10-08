@@ -1,0 +1,22 @@
+[
+    {
+        "name": "document\\DocumentCategory",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "Main Category"
+            }
+        ]
+    },
+    {
+        "name": "document\\DocumentCategory",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 1,
+                "name": "Categorie principale"
+            }
+        ]
+    }
+]

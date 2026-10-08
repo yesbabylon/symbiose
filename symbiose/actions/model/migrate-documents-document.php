@@ -39,7 +39,7 @@ if(!$db) {
     throw new Exception('missing_database', EQ_ERROR_INVALID_CONFIG);
 }
 
-$table = 'documents_document';
+$table = 'document_document_document';
 $existing_tables = array_fill_keys(array_map('strtolower', $db->getTables()), true);
 if(!isset($existing_tables[$table])) {
     throw new Exception("Missing required table '{$table}'.", EQ_ERROR_INVALID_CONFIG);
@@ -52,7 +52,7 @@ foreach(['model', 'ticket_id', 'ticket_entry_id'] as $column) {
     }
 }
 
-$document = "CONVERT(0x" . bin2hex('documents\Document') . " USING utf8mb4)";
+$document = "CONVERT(0x" . bin2hex('document\document\Document') . " USING utf8mb4)";
 $ticket_attachment = "CONVERT(0x" . bin2hex('support\TicketAttachment') . " USING utf8mb4)";
 
 $db->sendQuery('START TRANSACTION;');

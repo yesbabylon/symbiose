@@ -3,7 +3,7 @@ cd ..
 ./equal.run --do=init_package --package=symbiose
 ./equal.run --do=init_package --package=calendar
 ./equal.run --do=init_package --package=communication
-./equal.run --do=init_package --package=documents
+./equal.run --do=init_package --package=document
 ./equal.run --do=init_package --package=finance
 ./equal.run --do=init_package --package=hr
 ./equal.run --do=init_package --package=identity

@@ -7,7 +7,7 @@
 
 namespace communication\template;
 
-use documents\Document;
+use document\document\Document;
 use equal\orm\Model;
 
 class TemplateAttachment extends Model {
@@ -23,7 +23,7 @@ class TemplateAttachment extends Model {
 
             'document_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'documents\Document',
+                'foreign_object'    => 'document\document\Document',
                 'description'       => "The document that the attachment points to."
             ],
 

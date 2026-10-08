@@ -1,0 +1,73 @@
+{
+    "name": "Main dashboard",
+    "description": "",
+    "layout": {
+        "groups": [
+			{
+                "label": "test",
+                "height": "100%",
+                "sections": [
+                    {                
+                        "rows": [
+                            {
+                                "height": "50%",
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "id": "item.documents",
+                                                "label": "Alertes",
+                                                "description": "",
+                                                "width": "50%",
+                                                "entity": "core\\alert\\Message",
+                                                "view": "list.dashboard",
+                                                "domain": ["object_class", "=", "document\\document\\Document"]
+                                            },
+                                            {
+                                                "id": "item.documents2",
+                                                "label": "Documents",
+                                                "description": "",
+                                                "width": "50%",
+                                                "entity": "document\\document\\Document",
+                                                "view": "list.dashboard",
+                                                "domain": ["creator", "=", "user.id"]
+                                            }
+
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "height": "50%",
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "id": "item.documents3",
+                                                "label": "Mémoire",
+                                                "description": "",
+                                                "width": "50%",
+                                                "entity": "document\\document\\Document",
+                                                "view": "chart.default"
+                                            },
+                                            {
+                                                "id": "item.documents4",
+                                                "label": "Catégories de documents",
+                                                "description": "",
+                                                "width": "50%",
+                                                "entity": "document\\DocumentCategory",
+                                                "view": "chart.default"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }                            
+                        ]
+                    }
+                ]
+            }            
+        ]
+    }
+}

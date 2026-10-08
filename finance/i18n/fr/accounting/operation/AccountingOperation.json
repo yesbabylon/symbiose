@@ -41,7 +41,7 @@
                 "cancelled": "annulée"
             }
         },
-        "posted_at": {
+        "issue_date": {
             "label": "Comptabilisée le",
             "description": "Date et heure de comptabilisation de la pièce.",
             "help": "Cette valeur est renseignée automatiquement."

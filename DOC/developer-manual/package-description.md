@@ -220,7 +220,7 @@ This package instantiates `Holiday & HolidayYear`classes.
 
 This package instantiates classes used as templates/attachments and is very useful for any mailing service or anything related to messages.
 
-## documents
+## document
 
 This package ables the use of documents for your application, with the possibility to import a large amount of different file extensions.  
 

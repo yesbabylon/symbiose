@@ -1,0 +1,135 @@
+{
+    "name": "Document",
+    "plural": "Documents",
+    "description": "Vue par défaut pour la liste des documents.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom du document.",
+            "help": ""
+        },
+        "data": {
+            "label": "Données",
+            "description": "Données binaires brutes du document.",
+            "help": ""
+        },
+        "content_type": {
+            "label": "Type de média",
+            "description": "Type MIME détecté à partir du contenu binaire.",
+            "help": "Une valeur générique application/octet-stream est utilisée lorsque le format ne peut pas être identifié."
+        },
+        "type": {
+            "label": "Type de média",
+            "description": "Alias de compatibilité du type MIME.",
+            "help": "Utilisez content_type pour les nouvelles intégrations."
+        },
+        "content_size": {
+            "label": "Taille",
+            "description": "Taille du fichier (en octets).",
+            "help": "Cette valeur est calculée automatiquement à partir du contenu binaire."
+        },
+        "size": {
+            "label": "Taille",
+            "description": "Alias de compatibilité de la taille du fichier.",
+            "help": "Utilisez content_size pour les nouvelles intégrations."
+        },
+        "extension": {
+            "label": "Extension",
+            "description": "Extension canonique déduite du type MIME du document.",
+            "help": "Par exemple : jpg, pdf ou docx."
+        },
+        "readable_size": {
+            "label": "Taille",
+            "description": "Taille du document (format simplifié).",
+            "help": ""
+        },
+        "hash": {
+            "label": "Clé",
+            "description": "Empreinte MD5 utilisée pour accéder au document.",
+            "help": "L'identifiant du document est inclus afin que deux contenus identiques restent accessibles séparément."
+        },
+        "hash_sha256": {
+            "label": "Empreinte SHA-256",
+            "description": "Empreinte SHA-256 exacte du contenu binaire.",
+            "help": "Prévue pour l'identification du document et la prise en charge future des signatures numériques."
+        },
+        "link": {
+            "label": "Lien",
+            "description": "Lien direct du document.",
+            "help": ""
+        },
+        "document_visibility": {
+            "label": "Visibilité",
+            "description": "Définit qui peut accéder au document.",
+            "help": "Cette valeur est synchronisée avec les nœuds associés. Les documents internes et externes nécessitent une authentification ; les documents publics sont accessibles sans authentification.",
+            "selection": {
+                "organization": "Organisation",
+                "external": "Utilisateurs externes",
+                "public": "Public"
+            }
+        },
+        "lang_id": {
+            "label": "Langue",
+            "description": "Langue du document.",
+            "help": ""
+        },
+        "category_id": {
+            "label": "Catégorie",
+            "description": "Catégorie dans laquelle se trouve le document.",
+            "help": ""
+        },
+        "tags_ids": {
+            "label": "Étiquettes",
+            "description": "Étiquettes du document.",
+            "help": ""
+        },
+        "tags": {
+            "label": "Étiquettes",
+            "description": "Courte liste des étiquettes du document.",
+            "help": ""
+        },
+        "parent_node_id": {
+            "label": "Dossier parent",
+            "description": "Dossier dans lequel le nœud du document est placé.",
+            "help": "Choisir un dossier crée ou déplace automatiquement le nœud de navigation associé au document."
+        },
+        "node_id": {
+            "label": "Nœud de navigation",
+            "description": "Nœud de navigation associé au document.",
+            "help": "Ce nœud est géré automatiquement à partir du dossier parent sélectionné."
+        },
+        "preview_image": {
+            "label": "Aperçu",
+            "description": "Vignette d'aperçu du document.",
+            "help": ""
+        },
+        "template_attachments_ids": {
+            "label": "Pièces jointes",
+            "description": "Pièces jointes utilisant le document.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.create": {
+            "name": "Nouveau document",
+            "description": "Créer un document et le placer éventuellement dans l'arborescence virtuelle."
+        },
+        "form.default": {
+            "name": "Document",
+            "description": "",
+            "layout": {
+                "section.details": {
+                    "label": "Dètails"
+                },
+                "section.tags": {
+                    "label": "Étiquettes"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Documents",
+            "description": "Liste des documents.",
+            "layout": {}
+        }
+    }
+}

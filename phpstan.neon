@@ -2,7 +2,7 @@ parameters:
     paths:
         - ../packages/calendar
         - ../packages/communication
-        - ../packages/documents
+        - ../packages/document
         - ../packages/finance
         - ../packages/hr
         - ../packages/identity

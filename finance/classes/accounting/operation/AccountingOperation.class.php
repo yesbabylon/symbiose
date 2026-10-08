@@ -67,6 +67,7 @@ class AccountingOperation extends Model {
                 'type'        => 'date',
                 'usage'       => 'date/plain',
                 'description' => 'Date at which the operation is accounted.',
+                'help'        => 'This value is mandatory but can be manually set. There is a distinction between posting date and the time at which the operation is actually posted (issue date).',
                 'required'    => true,
                 'default'     => function() {
                     return time();
@@ -82,7 +83,7 @@ class AccountingOperation extends Model {
                 'dependents'  => ['name']
             ],
 
-            'posted_at' => [
+            'issue_date' => [
                 'type'        => 'datetime',
                 'description' => 'Date and time at which the operation was posted.',
                 'readonly'    => true
@@ -627,7 +628,7 @@ class AccountingOperation extends Model {
         $self->do('generate_accounting_entries');
         $self->do('post_accounting_entries');
         $self->do('assign_operation_number');
-        $self->update(['posted_at' => time()]);
+        $self->update(['issue_date' => time()]);
     }
 
     protected static function onbeforeCancel($self) {
@@ -646,7 +647,7 @@ class AccountingOperation extends Model {
             'status',
             'name',
             'operation_number',
-            'posted_at',
+            'issue_date',
             'cancelled_at',
             'reversal_of_id'
         ];

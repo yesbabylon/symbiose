@@ -59,7 +59,7 @@
                                 "description": "All contacts.",
                                 "context": {
                                     "entity": "identity\\Contact",
-                                    "view": "list.contacts"
+                                    "view": "list.default"
                                 }
                             },
                             {

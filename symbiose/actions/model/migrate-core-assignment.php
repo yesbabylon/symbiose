@@ -55,8 +55,8 @@ $sql_literal = static function(string $value): string {
     return "CONVERT(0x" . bin2hex($value) . " USING utf8mb4) COLLATE utf8mb4_unicode_ci";
 };
 
-$document = $sql_literal('documents\Document');
-$document_role_assignment = $sql_literal('documents\DocumentRoleAssignment');
+$document = $sql_literal('document\document\Document');
+$document_role_assignment = $sql_literal('document\DocumentRoleAssignment');
 $assignment = $sql_literal('core\Assignment');
 $owner = $sql_literal('owner');
 $editor = $sql_literal('editor');

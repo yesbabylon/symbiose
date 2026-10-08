@@ -1,0 +1,42 @@
+{
+    "name": "Documents left menu",
+    "layout": {
+        "items": [
+            {
+                "id": "item.documents",
+                "type": "entry",
+                "label": "Documents",
+                "icon": "description",
+                "description": "Menu display all documents.",
+                "context": {
+                    "entity": "document\\document\\Document",
+                    "view": "list.default",
+                    "order": "created",
+                    "sort": "desc"
+                }
+            },
+            {
+                "id": "item.categories",
+                "type": "entry",
+                "label": "Categories",
+                "icon": "category",
+                "description": "Menu display all categories.",
+                "context": {
+                    "entity": "document\\DocumentCategory",
+                    "view": "list.default"
+                }
+            },
+            {
+                "id": "item.tags",
+                "type": "entry",
+                "label": "Tags",
+                "icon": "sell",
+                "description": "Menu display all tags.",
+                "context": {
+                    "entity": "document\\document\\DocumentTag",
+                    "view": "list.default"
+                }
+            }
+        ]
+    }
+}

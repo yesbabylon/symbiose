@@ -287,7 +287,7 @@ abstract class IdentityAbstract extends Model {
 
             'image_document_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'documents\Document',
+                'foreign_object'    => 'document\document\Document',
                 'description'       => 'Logo or picture of the identity.',
                 'help'              => 'Company logo for organizations or profile image for natural persons.'
             ],

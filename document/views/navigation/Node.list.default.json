@@ -1,0 +1,60 @@
+{
+    "name": "Navigation Nodes",
+    "description": "Browse folders and documents in the virtual file system.",
+    "order": "node_type,name",
+    "sort": "desc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "parent_id",
+                "width": "0%",
+                "visible": false
+            },
+            {
+                "type": "field",
+                "value": "node_type",
+                "width": "10%",
+                "sortable": true,
+                "widget": {
+                    "type": "string",
+                    "usage": "icon"
+                }
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "nodes_count",
+                "width": "10%",
+                "visible": [
+                    "node_type",
+                    "=",
+                    "folder"
+                ]
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "node_visibility",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "document_link",
+                "width": "20%",
+                "widget": {
+                    "link": true
+                }
+            }
+        ]
+    }
+}

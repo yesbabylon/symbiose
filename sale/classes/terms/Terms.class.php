@@ -46,7 +46,7 @@ class Terms extends Model {
 
             'document_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'documents\Document',
+                'foreign_object'    => 'document\document\Document',
                 'description'       => 'The document the explaining the payment terms.'
             ],
 

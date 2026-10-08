@@ -1,0 +1,81 @@
+{
+    "name": "Nœud de navigation",
+    "plural": "Nœuds de navigation",
+    "description": "Dossier ou document d'une arborescence documentaire virtuelle.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom affiché pour le dossier ou le document.",
+            "help": "Choisissez un nom clair pour retrouver facilement le nœud."
+        },
+        "code": {
+            "label": "Code",
+            "description": "Code facultatif identifiant le dossier dans l'application.",
+            "help": "Utilisez un code stable lorsque le dossier doit être retrouvé automatiquement."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Courte description de l'usage du dossier.",
+            "help": "Précisez le contenu attendu dans ce dossier."
+        },
+        "node_type": {
+            "label": "Type",
+            "description": "Type de contenu représenté par le nœud.",
+            "help": "Un dossier contient d'autres nœuds ; un nœud document référence un document.",
+            "selection": {
+                "folder": "Dossier",
+                "document": "Document"
+            }
+        },
+        "nodes_count": {
+            "label": "Documents",
+            "description": "Nombre de documents contenus dans ce nœud et ses descendants.",
+            "help": "Le comptage parcourt récursivement les sous-dossiers."
+        },
+        "parent_id": {
+            "label": "Dossier parent",
+            "description": "Dossier contenant le nœud.",
+            "help": "Laissez ce champ vide pour créer un nœud à la racine."
+        },
+        "node_visibility": {
+            "label": "Visibilité",
+            "description": "Définit qui peut consulter le nœud.",
+            "help": "Pour un nœud document, cette valeur est synchronisée avec la visibilité du document associé.",
+            "selection": {
+                "organization": "Organisation",
+                "external": "Utilisateurs externes",
+                "public": "Public"
+            }
+        },
+        "document_id": {
+            "label": "Document",
+            "description": "Document représenté par le nœud.",
+            "help": "Ce champ est utilisé uniquement pour les nœuds de type document."
+        },
+        "document_link": {
+            "label": "Lien du document",
+            "description": "Adresse permettant d'ouvrir le document représenté.",
+            "help": "Le lien est repris automatiquement depuis le document."
+        },
+        "nodes_ids": {
+            "label": "Contenu",
+            "description": "Nœuds directement contenus dans ce dossier.",
+            "help": "Utilisez cette liste pour parcourir et organiser l'arborescence."
+        },
+        "is_system": {
+            "label": "Géré par le système",
+            "description": "Indique que le dossier est géré par un traitement applicatif.",
+            "help": "Les consommateurs peuvent utiliser cet indicateur pour restreindre les modifications manuelles."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Nœud de navigation",
+            "description": "Créer ou modifier un dossier ou un document dans l'arborescence virtuelle."
+        },
+        "list.default": {
+            "name": "Nœuds de navigation",
+            "description": "Parcourir les dossiers et documents de l'arborescence virtuelle."
+        }
+    }
+}

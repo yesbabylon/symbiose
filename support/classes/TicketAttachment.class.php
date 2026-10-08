@@ -6,14 +6,14 @@
 */
 namespace support;
 
-class TicketAttachment extends \documents\Document {
+class TicketAttachment extends \document\document\Document {
 
     public static function getColumns() {
         return [
 
             'category_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'documents\DocumentCategory',
+                'foreign_object'    => 'document\DocumentCategory',
                 'description'       => 'Category of the document (default to \'support\')',
                 'default'           =>  2
             ],

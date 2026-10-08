@@ -636,7 +636,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
                 ]);
             self::id($id)->update([
                     'invoice_number' => $invoice_number,
-                    'posted_at'      => time(),
+                    'issue_date'     => time(),
                     'due_date'       => null,
                     'price'          => null,
                     'total'          => null
@@ -1076,7 +1076,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
             'funding_id',
             'reversed_invoice_id',
             'reversal_of_id',
-            'posted_at',
+            'issue_date',
             'cancelled_at',
             'journal_id',
             'name',
