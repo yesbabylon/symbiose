@@ -25,13 +25,13 @@ use symbiose\import\DataImport;
         'accept-origin' => '*',
         'content-type'  => 'application/json'
     ],
-    'providers'     => ['context', 'orm']
+    'providers'     => ['context']
 ]);
 
 /**
  * @var \equal\php\Context $context
  */
-['context' => $context, 'orm' => $orm] = $providers;
+['context' => $context] = $providers;
 
 $dataImport = DataImport::id($params['id'])
     ->read(['model', 'name', 'document_id' => ['data']])
