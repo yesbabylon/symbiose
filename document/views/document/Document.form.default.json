@@ -42,11 +42,6 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "category_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "document_visibility",
                                                 "width": "100%"
                                             },

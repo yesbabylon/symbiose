@@ -73,11 +73,6 @@
             "description": "Langue du document.",
             "help": ""
         },
-        "category_id": {
-            "label": "Catégorie",
-            "description": "Catégorie dans laquelle se trouve le document.",
-            "help": ""
-        },
         "tags_ids": {
             "label": "Étiquettes",
             "description": "Étiquettes du document.",

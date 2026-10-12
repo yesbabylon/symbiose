@@ -28,7 +28,7 @@ $old_prefix = 'documents\\';
 $new_prefix = 'document\\';
 
 $sql_literal = static function(string $value): string {
-    return "CONVERT(0x".bin2hex($value)." USING utf8mb4)";
+    return "CONVERT(0x".bin2hex($value)." USING utf8mb4) COLLATE utf8mb4_unicode_ci";
 };
 
 $old_prefix_literal = $sql_literal($old_prefix);

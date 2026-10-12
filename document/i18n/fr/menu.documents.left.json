@@ -5,10 +5,6 @@
             "label": "Documents",
             "help": ""
         },
-        "item.categories": {
-            "label": "Catégories",
-            "help": ""
-        },
         "item.tags": {
             "label": "Étiquettes",
             "help": ""

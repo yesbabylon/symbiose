@@ -120,13 +120,6 @@ class Document extends Model {
                 'default'           => 1
             ],
 
-            'category_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'document\DocumentCategory',
-                'description'       => 'Category of the document.',
-                'default'           => 1
-            ],
-
             'tags_ids' => [
                 'type'              => 'many2many',
                 'foreign_object'    => 'document\document\DocumentTag',

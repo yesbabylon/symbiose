@@ -48,16 +48,8 @@
                                                 "id": "item.documents3",
                                                 "label": "Mémoire",
                                                 "description": "",
-                                                "width": "50%",
+                                                "width": "100%",
                                                 "entity": "document\\document\\Document",
-                                                "view": "chart.default"
-                                            },
-                                            {
-                                                "id": "item.documents4",
-                                                "label": "Catégories de documents",
-                                                "description": "",
-                                                "width": "50%",
-                                                "entity": "document\\DocumentCategory",
                                                 "view": "chart.default"
                                             }
                                         ]

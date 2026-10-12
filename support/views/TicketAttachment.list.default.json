@@ -27,13 +27,6 @@
                 "label": "Type",
                 "value": "type",
                 "width": "8%"
-            },
-            {
-                "type": "field",
-                "value": "category_id",
-                "label": "Category",
-                "width": "10%",
-                "readonly": true
             }
         ]
     }

@@ -16,17 +16,6 @@
                 }
             },
             {
-                "id": "item.categories",
-                "type": "entry",
-                "label": "Categories",
-                "icon": "category",
-                "description": "Menu display all categories.",
-                "context": {
-                    "entity": "document\\DocumentCategory",
-                    "view": "list.default"
-                }
-            },
-            {
                 "id": "item.tags",
                 "type": "entry",
                 "label": "Tags",

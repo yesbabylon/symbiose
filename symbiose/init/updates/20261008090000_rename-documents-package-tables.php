@@ -20,7 +20,6 @@ if(!in_array($dbms, ['MYSQL', 'MARIADB'], true)) {
 }
 
 $table_renames = [
-    'document_documentcategory'          => ['documents_documentcategory'],
     'document_document_document'         => ['documents_document_document', 'documents_document'],
     'document_document_documentsubtype'  => ['documents_document_documentsubtype'],
     'document_document_documenttag'      => ['documents_document_documenttag', 'documents_documenttag'],

@@ -29,17 +29,6 @@
                                     "view": "chart.default",
                                     "mode": "grid"
                                 }
-                            },
-                            {
-                                "id": "settings.all_documents.categories",
-                                "type": "entry",
-                                "label": "Catégories des documents",
-                                "description": "",
-                                "context": {
-                                    "entity": "document\\DocumentCategory",
-                                    "view": "chart.default",
-                                    "mode": "grid"
-                                }
                             }
                         ]
                     },
