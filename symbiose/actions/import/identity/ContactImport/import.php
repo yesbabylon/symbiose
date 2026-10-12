@@ -45,11 +45,15 @@ $formatPhone = function($value) {
 };
 
 $import = ContactImport::id($params['id'])
-    ->read(['document_id' => ['content_type']])
+    ->read(['status', 'document_id' => ['content_type']])
     ->first();
 
 if(!$import) {
     throw new Exception('unknown_data_import', EQ_ERROR_UNKNOWN_OBJECT);
+}
+
+if(!in_array($import['status'], ['doc_uploaded', 'import_failed'])) {
+    throw new Exception('wrong_status', EQ_ERROR_UNKNOWN);
 }
 
 $map_parse_actions = [
@@ -74,8 +78,6 @@ if($parse_action === 'parse-csv') {
         'default' => $data
     ];
 }
-
-file_put_contents(QN_LOG_STORAGE_DIR.'/tmp.log', json_encode($data).PHP_EOL, FILE_APPEND | LOCK_EX);
 
 $identity_type_individual = IdentityType::search(['code', '=', 'IN'])->first();
 
@@ -127,7 +129,9 @@ if($success) {
     ContactImport::id($import['id'])->transition('mark_imported');
 }
 else {
-    ContactImport::id($import['id'])->transition('mark_import_failed');
+    if($import['status'] !== 'import_failed') {
+        ContactImport::id($import['id'])->transition('mark_import_failed');
+    }
 
     throw new Exception('import_failed', EQ_ERROR_UNKNOWN);
 }
