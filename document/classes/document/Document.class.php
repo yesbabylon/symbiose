@@ -23,7 +23,8 @@ class Document extends Model {
             'name' => [
                 'type'              => 'string',
                 'required'          => true,
-                'onupdate'          => 'onupdateName'
+                'onupdate'          => 'onupdateName',
+                'dependents'        => ['content_type', 'extension']
             ],
 
             'data' => [
@@ -458,7 +459,41 @@ class Document extends Model {
 
     protected static function calcContentType($self) {
         $result = [];
-        $self->read(['data']);
+        $self->read(['name', 'data']);
+
+        static $map_plain_text_extensions = [
+            'css'   => 'text/css',
+            'csv'   => 'text/csv',
+            'htm'   => 'text/html',
+            'html'  => 'text/html',
+            'ical'  => 'text/calendar',
+            'ics'   => 'text/calendar',
+            'js'    => 'application/javascript',
+            'json'  => 'application/json',
+            'kml'   => 'application/vnd.google-earth.kml+xml',
+            'm3u'   => 'audio/x-mpegurl',
+            'm4u'   => 'video/vnd.mpegurl',
+            'php'   => 'application/x-httpd-php',
+            'php3'  => 'application/x-httpd-php',
+            'php4'  => 'application/x-httpd-php',
+            'phps'  => 'application/x-httpd-php-source',
+            'phtml' => 'application/x-httpd-php',
+            'rtx'   => 'text/richtext',
+            'shtml' => 'text/html',
+            'smi'   => 'application/smil',
+            'smil'  => 'application/smil',
+            'srt'   => 'application/x-subrip',
+            'svg'   => 'image/svg+xml',
+            'vcf'   => 'text/vcard',
+            'vlc'   => 'application/videolan',
+            'vtt'   => 'text/vtt',
+            'xht'   => 'application/xhtml+xml',
+            'xhtml' => 'application/xhtml+xml',
+            'xml'   => 'application/xml',
+            'xsl'   => 'application/xml',
+            'xspf'  => 'application/xspf+xml',
+            'zsh'   => 'application/x-zsh'
+        ];
 
         foreach($self as $id => $document) {
             if(!isset($document['data'])) {
@@ -470,12 +505,17 @@ class Document extends Model {
                 $mime = $finfo->buffer($document['data']);
 
                 if(empty($mime)) {
-                    $result[$id] = 'application/octet-stream';
-                    continue;
+                    $mime = 'application/octet-stream';
+                }
+                elseif($mime === 'text/plain') {
+                    $extension = strtolower(pathinfo($document['name'], PATHINFO_EXTENSION));
+
+                    if(isset($map_plain_text_extensions[$extension])) {
+                        $mime = $map_plain_text_extensions[$extension];
+                    }
                 }
 
                 $result[$id] = $mime;
-
             }
             catch(\Exception $e) {
                 $result[$id] = 'application/octet-stream';

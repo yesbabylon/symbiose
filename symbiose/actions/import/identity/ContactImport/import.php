@@ -58,7 +58,6 @@ if(!in_array($import['status'], ['doc_uploaded', 'import_failed'])) {
 
 $map_parse_actions = [
     'text/csv'                                                          => 'parse-csv',
-    'text/plain'                                                        => 'parse-csv',
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'parse-xls'
 ];
 
