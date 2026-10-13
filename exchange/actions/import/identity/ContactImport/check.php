@@ -31,6 +31,23 @@ use exchange\import\identity\ContactImport;
  */
 ['context' => $context] = $providers;
 
+/**
+ * Methods
+ */
+
+$formatPhone = function($value) {
+    $phone = preg_replace('/[^0-9+]/', '', $value);
+    if(empty($phone)) {
+        $phone = null;
+    }
+
+    return $phone;
+};
+
+/**
+ * Action
+ */
+
 $import = ContactImport::id($params['id'])
     ->read(['status', 'document_id' => ['content_type']])
     ->first();
@@ -89,17 +106,20 @@ foreach($data as $index => $item) {
         ++$result['errors'];
         $result['logs'][] = "ERR - missing `lastname`";
     }
-    if(!preg_match('/^\+?[0-9]*$/', $item['phone'])) {
+    $formatted_phone = $formatPhone($item['phone']);
+    if(!preg_match('/^\+?[0-9]*$/', $formatted_phone)) {
         ++$result['errors'];
-        $result['logs'][] = "ERR - invalid `phone` ({$item['phone']}) at row " . ($index + 2);
+        $result['logs'][] = "ERR - invalid `phone` ($formatted_phone) at row " . ($index + 2);
     }
-    if(!preg_match('/^\+?[0-9]*$/', $item['mobile'])) {
+    $formatted_mobile = $formatPhone($item['mobile']);
+    if(!preg_match('/^\+?[0-9]*$/', $formatted_mobile)) {
         ++$result['errors'];
-        $result['logs'][] = "ERR - invalid `mobile` ({$item['mobile']}) at row " . ($index + 2);
+        $result['logs'][] = "ERR - invalid `mobile` ($formatted_mobile) at row " . ($index + 2);
     }
-    if(strlen($item['email']) > 0 && !preg_match('/^([_a-z0-9-\.]+)(\+([_a-z0-9]+))?@(([a-z0-9-]+\.)*)([a-z0-9-]{1,63})(\.[a-z-]{2,24})$/i', $item['email'])) {
+    $formatted_email = trim($item['email']);
+    if(strlen($item['email']) > 0 && !preg_match('/^([_a-z0-9-\.]+)(\+([_a-z0-9]+))?@(([a-z0-9-]+\.)*)([a-z0-9-]{1,63})(\.[a-z-]{2,24})$/i', $formatted_email)) {
         ++$result['errors'];
-        $result['logs'][] = "ERR - invalid `email` ({$item['email']}) at row " . ($index + 2);
+        $result['logs'][] = "ERR - invalid `email` ($formatted_email) at row " . ($index + 2);
     }
     if(!preg_match('/^[A-Z]{2}$/', $item['address_country'])) {
         ++$result['errors'];
