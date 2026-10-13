@@ -6,6 +6,7 @@
 */
 
 use exchange\import\DataImport;
+use Symfony\Component\Intl\Countries;
 
 [$params, $providers] = eQual::announce([
     'type'          => 'get',
@@ -16,7 +17,7 @@ use exchange\import\DataImport;
         'id' => [
             'type'              => 'many2one',
             'description'       => 'Identifier of the targeted DataImport object.',
-            'foreign_object'    => 'DataImport',
+            'foreign_object'    => 'exchange\import\DataImport',
             'required'          => true
         ]
     ],
@@ -286,6 +287,123 @@ try {
         return str_replace('+', '', $phone);
     };
 
+    $normalize_country = static function(string $country, ?string $language = null): string {
+        $country = trim($country);
+        if($country === '') {
+            return '';
+        }
+
+        $country_code = strtoupper($country);
+        if(strlen($country_code) === 2 && Countries::exists($country_code)) {
+            return $country_code;
+        }
+
+        if(strlen($country_code) === 3 && Countries::alpha3CodeExists($country_code)) {
+            return Countries::getAlpha2Code($country_code);
+        }
+
+        $normalize_country_name = static function(string $name): string {
+            $name = mb_strtolower(trim($name), 'UTF-8');
+            $name = preg_replace('/[^\p{L}\p{N}]+/u', ' ', $name);
+
+            return trim(preg_replace('/\s+/u', ' ', $name));
+        };
+
+        $country_name = $normalize_country_name($country);
+        $country_aliases = [
+            'united states of america'                         => 'US',
+            'republic of albania'                              => 'AL',
+            'principality of andorra'                          => 'AD',
+            'republic of armenia'                              => 'AM',
+            'republic of austria'                              => 'AT',
+            'republic of azerbaijan'                           => 'AZ',
+            'republic of belarus'                              => 'BY',
+            'kingdom of belgium'                               => 'BE',
+            'bosnia herzegovina'                               => 'BA',
+            'republic of bosnia and herzegovina'               => 'BA',
+            'republic of bulgaria'                             => 'BG',
+            'republic of croatia'                              => 'HR',
+            'republic of cyprus'                               => 'CY',
+            'czech republic'                                   => 'CZ',
+            'kingdom of denmark'                               => 'DK',
+            'republic of estonia'                              => 'EE',
+            'republic of finland'                              => 'FI',
+            'french republic'                                  => 'FR',
+            'republic of georgia'                              => 'GE',
+            'federal republic of germany'                      => 'DE',
+            'hellenic republic'                                => 'GR',
+            'republic of hungary'                              => 'HU',
+            'republic of iceland'                              => 'IS',
+            'eire'                                             => 'IE',
+            'éire'                                             => 'IE',
+            'republic of ireland'                              => 'IE',
+            'italian republic'                                 => 'IT',
+            'republic of latvia'                               => 'LV',
+            'principality of liechtenstein'                    => 'LI',
+            'republic of lithuania'                            => 'LT',
+            'grand duchy of luxembourg'                        => 'LU',
+            'republic of malta'                                => 'MT',
+            'republic of moldova'                              => 'MD',
+            'moldova republic of'                              => 'MD',
+            'principality of monaco'                           => 'MC',
+            'republic of montenegro'                           => 'ME',
+            'holland'                                          => 'NL',
+            'the netherlands'                                  => 'NL',
+            'kingdom of the netherlands'                       => 'NL',
+            'macedonia'                                        => 'MK',
+            'republic of north macedonia'                      => 'MK',
+            'former yugoslav republic of macedonia'            => 'MK',
+            'macedonia the former yugoslav republic of'        => 'MK',
+            'kingdom of norway'                                => 'NO',
+            'republic of poland'                               => 'PL',
+            'portuguese republic'                              => 'PT',
+            'rumania'                                          => 'RO',
+            'roumania'                                         => 'RO',
+            'russian federation'                               => 'RU',
+            'republic of san marino'                           => 'SM',
+            'most serene republic of san marino'               => 'SM',
+            'republic of serbia'                               => 'RS',
+            'slovak republic'                                  => 'SK',
+            'republic of slovenia'                             => 'SI',
+            'kingdom of spain'                                 => 'ES',
+            'kingdom of sweden'                                => 'SE',
+            'swiss confederation'                              => 'CH',
+            'turkey'                                           => 'TR',
+            'republic of turkey'                               => 'TR',
+            'republic of turkiye'                              => 'TR',
+            'republic of türkiye'                              => 'TR',
+            'the ukraine'                                      => 'UA',
+            'uk'                                               => 'GB',
+            'u k'                                              => 'GB',
+            'britain'                                          => 'GB',
+            'great britain'                                    => 'GB',
+            'united kingdom of great britain and northern ireland' => 'GB',
+            'holy see'                                         => 'VA',
+            'vatican'                                          => 'VA',
+            'vatican city state'                               => 'VA',
+            'holy see vatican city state'                      => 'VA'
+        ];
+        if(isset($country_aliases[$country_name])) {
+            return $country_aliases[$country_name];
+        }
+
+        $locales = array_values(array_unique(array_filter([$language, 'en'])));
+        foreach($locales as $locale) {
+            try {
+                foreach(Countries::getNames($locale) as $code => $name) {
+                    if($normalize_country_name($name) === $country_name) {
+                        return $code;
+                    }
+                }
+            }
+            catch(Throwable $e) {
+                // Ignore unknown locales and try the next fallback.
+            }
+        }
+
+        return '';
+    };
+
     $mapped_data = [];
     foreach($cards as $card) {
         $properties = $card['properties'];
@@ -342,6 +460,8 @@ try {
             $address = array_map($component_to_text, array_slice($address, 0, 7));
         }
 
+        $address_language = $address_property['params']['LANGUAGE'][0] ?? null;
+
         $mapped_data[] = [
             'firstname'         => $firstname,
             'lastname'          => $lastname,
@@ -353,7 +473,7 @@ try {
             'address_city'      => $address[3],
             'address_zip'       => $address[5],
             'address_state'     => $address[4],
-            'address_country'   => strtoupper($address[6])
+            'address_country'   => $normalize_country($address[6], $address_language)
         ];
     }
 }

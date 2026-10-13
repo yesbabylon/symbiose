@@ -42,8 +42,8 @@ class DataImport extends Model {
                 'selection'         => [
                     'doc_missing',
                     'doc_uploaded',
-                    'import_check_failed',
-                    'import_checked',
+                    'check_failed',
+                    'checked',
                     'import_failed',
                     'imported'
                 ],

@@ -1,0 +1,84 @@
+{
+    "name": "Data Import",
+    "actions": [
+        {
+            "id": "action.check",
+            "label": "Check",
+            "description": "Check consistency of uploaded data.",
+            "controller": "exchange_import_DataImport_check",
+            "params": {
+                "id": "object.id"
+            },
+            "visible": ["status", "in", ["doc_uploaded", "check_failed"]]
+        },
+        {
+            "id": "action.import",
+            "label": "Import",
+            "description": "Import the uploaded data.",
+            "controller": "exchange_import_DataImport_import",
+            "params": {
+                "id": "object.id"
+            },
+            "visible": ["status", "in", ["checked", "import_failed"]]
+        }
+    ],
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "66%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "import_type",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "document_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "100%",
+                                                "visible": false
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "logs",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "height": 400
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

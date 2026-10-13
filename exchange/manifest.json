@@ -1,0 +1,33 @@
+{
+  "name": "exchange",
+  "description": "Import and export package.",
+  "version": "1.0",
+  "authors": ["Yesbabylon"],
+  "license": "LGPL-3",
+  "depends_on": [
+    "core",
+    "identity",
+    "finance",
+    "sale"
+  ],
+  "apps": [
+    {
+      "id": "import",
+      "name": "Import",
+      "extends": "app",
+      "description": "Application import",
+      "icon": "upload",
+      "color": "#dd7c52",
+      "access": {
+        "groups": [
+          "users"
+        ]
+      },
+      "params": {
+        "menus": {
+          "left": "import.left"
+        }
+      }
+    }
+  ]
+}
