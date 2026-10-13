@@ -105,18 +105,27 @@ foreach($data as $item) {
             ['lastname', 'ilike', trim($item['lastname'])]
         ];
 
-        $identity = Identity::search([
-            array_merge($base_domain, [
+        $domain = [];
+        if(!empty(trim($item['email']))) {
+            $domain[] = array_merge($base_domain, [
                 ['email', '=', trim($item['email'])]
-            ]),
-            array_merge($base_domain, [
+            ]);
+        }
+        elseif(!empty($formatPhone($item['phone']))) {
+            $domain[] = array_merge($base_domain, [
                 ['phone', '=', $formatPhone($item['phone'])]
-            ]),
-            array_merge($base_domain, [
+            ]);
+        }
+        elseif(!empty($formatPhone($item['mobile']))) {
+            $domain[] = array_merge($base_domain, [
                 ['mobile', '=', $formatPhone($item['mobile'])]
-            ])
-        ])
-            ->first();
+            ]);
+        }
+
+        $identity = null;
+        if(!empty($domain)) {
+            $identity = Identity::search($domain)->first();
+        }
 
         if(!$identity) {
             $identity = Identity::create([
