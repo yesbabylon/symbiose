@@ -58,6 +58,8 @@ if(!in_array($import['status'], ['checked', 'import_failed'])) {
 
 $map_parse_actions = [
     'text/csv'                                                          => 'parse-csv',
+    'text/vcard'                                                        => 'parse-vcard',
+    'text/x-vcard'                                                      => 'parse-vcard',
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'parse-xls'
 ];
 
@@ -67,7 +69,7 @@ if(!isset($map_parse_actions[$import['document_id']['content_type']])) {
 
 $parse_action = $map_parse_actions[$import['document_id']['content_type']];
 
-$data = eQual::run('get', "symbiose_import_$parse_action", [
+$data = eQual::run('get', "exchange_import_$parse_action", [
     'id' => $params['id']
 ]);
 
