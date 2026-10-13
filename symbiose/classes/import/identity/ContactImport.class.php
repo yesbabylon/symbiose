@@ -26,13 +26,6 @@ class ContactImport extends DataImport {
                 'type'              => 'string',
                 'description'       => 'Forced type of import.',
                 'default'           => 'contacts_import'
-            ],
-
-            'data' => [
-                'type'              => 'binary',
-                'description'       => 'Raw binary data of the uploaded document',
-                'help'              => 'This field is meant to be used for the subsequent document creation, and is emptied once the document creation is confirmed.',
-                'onupdate'          => 'onupdateData'
             ]
 
         ];

@@ -11,7 +11,7 @@ use symbiose\import\DataImport;
 [$params, $providers] = eQual::announce([
     'description'   => "Parses a data import to return its content as JSON.",
     'params'        => [
-        'id' =>  [
+        'id' => [
             'type'              => 'many2one',
             'description'       => "Identifier of the targeted DataImport object.",
             'foreign_object'    => 'symbiose\import\DataImport',
@@ -65,9 +65,10 @@ foreach($spreadsheet->getWorksheetIterator() as $worksheet) {
     $sheet_name = trim($worksheet->getTitle());
 
     $headers = $parse_xls_config[$sheet_name] ?? null;
-    if(!$headers) {
+    if(empty($headers) && !empty($parse_xls_config['default']) && !isset($result['default'])) {
+        // #memo - allow to use first sheet as default
         $sheet_name = 'default';
-        $headers = $parse_xls_config[$sheet_name] ?? null;
+        $headers = $parse_xls_config['default'];
     }
     if(!$headers) {
         continue;

@@ -42,6 +42,8 @@ class DataImport extends Model {
                 'selection'         => [
                     'doc_missing',
                     'doc_uploaded',
+                    'import_check_failed',
+                    'import_checked',
                     'import_failed',
                     'imported'
                 ],
@@ -73,7 +75,7 @@ class DataImport extends Model {
     }
 
     public static function getActions(): array {
-        return array_merge(parent::getActions(), [
+        return [
             'create_document' => [
                 'description'   => 'Create the document holding the uploaded import data.',
                 'policies'      => [],
@@ -84,50 +86,48 @@ class DataImport extends Model {
                 'policies'      => [],
                 'function'      => 'doSynchronizeDocumentStatus'
             ]
-        ]);
-    }
-
-    public static function getPolicies(): array {
-        return [
-            'importable' => [
-                'description'   => 'Checks if the import is importable',
-                'function'      => 'policyImportable'
-            ]
         ];
-    }
-
-    protected static function policyImportable($self): array {
-        $self->read(['document_id']);
-        foreach($self as $id => $dataImport) {
-            if(!$dataImport['document_id']) {
-                return [
-                    'document_id' => [
-                        'missing_document' => 'Missing document for import.'
-                    ]
-                ];
-            }
-        }
-
-        return [];
     }
 
     public static function getWorkflow() {
         return [
             'doc_missing' => [
-                'description' => 'The document is missing, it has to be uploaded.',
+                'description' => 'The document is missing, it must to be uploaded.',
                 'transitions' => [
                     'mark_uploaded' => [
                         'status'        => 'doc_uploaded',
-                        'description'   => 'Mark the import as uploaded.'
+                        'description'   => 'Mark the import as document uploaded.'
                     ]
                 ]
             ],
             'doc_uploaded' => [
-                'description' => 'The document was uploaded and is waiting to be imported.',
+                'description' => 'The document was uploaded and is waiting to be checked for validity.',
+                'transitions' => [
+                    'mark_check_failed' => [
+                        'status'        => 'check_failed',
+                        'description'   => 'Mark the import document as failing the validations checks.'
+                    ],
+                    'mark_checked' => [
+                        'status'        => 'checked',
+                        'description'   => 'Mark the import document as passing the validation checks.'
+                    ]
+                ]
+            ],
+            'check_failed' => [
+                'description' => "The document hasn't passed the validation checks.",
+                'transitions' => [
+                    'mark_checked' => [
+                        'status'        => 'checked',
+                        'description'   => 'Mark the import document as passing the validation checks.'
+                    ]
+                ]
+            ],
+            'checked' => [
+                'description' => "The document has passed the validation checks and is ready to be imported.",
                 'transitions' => [
                     'mark_import_failed' => [
                         'status'        => 'import_failed',
-                        'description'   => 'Mark the document as import failed.'
+                        'description'   => 'Mark the data import as failed.'
                     ],
                     'mark_imported' => [
                         'status'        => 'imported',

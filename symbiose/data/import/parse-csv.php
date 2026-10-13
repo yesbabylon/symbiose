@@ -10,7 +10,7 @@ use symbiose\import\DataImport;
 [$params, $providers] = eQual::announce([
     'description'   => 'Parses a CSV data import and returns its content as JSON.',
     'params'        => [
-        'id' =>  [
+        'id' => [
             'type'              => 'many2one',
             'description'       => 'Identifier of the targeted DataImport object.',
             'foreign_object'    => 'symbiose\import\DataImport',
