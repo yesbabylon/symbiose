@@ -153,6 +153,7 @@ foreach($data as $item) {
                 ->first();
 
             $result['created']++;
+            $result['logs'][] = "INFO- created identity id {$identity['id']}";
         }
         else {
             Identity::id($identity['id'])
@@ -170,6 +171,8 @@ foreach($data as $item) {
                 ->read(['name'])
                 ->first();
 
+            $result['logs'][] = "INFO- updated identity id {$identity['id']}";
+
             $contact = Contact::search(['identity_id', '=', $identity['id']])->first();
             if(!$contact) {
                 $contact = Contact::create([
@@ -178,9 +181,11 @@ foreach($data as $item) {
                     ->first();
 
                 $result['created']++;
+                $result['logs'][] = "INFO- created contact id {$contact['id']}";
             }
             else {
                 $result['updated']++;
+                $result['logs'][] = "INFO- updated contact id {$contact['id']}";
             }
         }
     }
