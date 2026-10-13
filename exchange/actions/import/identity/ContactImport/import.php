@@ -6,9 +6,9 @@
 */
 
 use identity\Contact;
+use exchange\import\identity\ContactImport;
 use identity\Identity;
 use identity\IdentityType;
-use symbiose\import\identity\ContactImport;
 
 [$params, $providers] = eQual::announce([
     'description'   => 'Import contacts from uploaded file.',
@@ -16,7 +16,7 @@ use symbiose\import\identity\ContactImport;
         'id' => [
             'type'              => 'many2one',
             'description'       => 'Identifier of the targeted ContactImport object.',
-            'foreign_object'    => 'symbiose\import\identity\ContactImport',
+            'foreign_object'    => 'identity\ContactImport',
             'required'          => true
         ]
     ],

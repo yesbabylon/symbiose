@@ -5,9 +5,9 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-namespace symbiose\import\identity;
+namespace exchange\import\identity;
 
-use symbiose\import\DataImport;
+use exchange\import\DataImport;
 
 class ContactImport extends DataImport {
 

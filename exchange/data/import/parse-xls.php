@@ -5,8 +5,8 @@
     Licensed under the GNU AGPL v3 License - https://www.gnu.org/licenses/agpl-3.0.html
 */
 
+use exchange\import\DataImport;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use symbiose\import\DataImport;
 
 [$params, $providers] = eQual::announce([
     'description'   => "Parses a data import to return its content as JSON.",
@@ -14,7 +14,7 @@ use symbiose\import\DataImport;
         'id' => [
             'type'              => 'many2one',
             'description'       => "Identifier of the targeted DataImport object.",
-            'foreign_object'    => 'symbiose\import\DataImport',
+            'foreign_object'    => 'DataImport',
             'required'          => true
         ]
     ],

@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-namespace symbiose\import;
+namespace exchange\import;
 
 use document\document\Document;
 use equal\orm\Model;

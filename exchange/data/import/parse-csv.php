@@ -5,7 +5,7 @@
     Licensed under the GNU AGPL v3 License - https://www.gnu.org/licenses/agpl-3.0.html
 */
 
-use symbiose\import\DataImport;
+use exchange\import\DataImport;
 
 [$params, $providers] = eQual::announce([
     'description'   => 'Parses a CSV data import and returns its content as JSON.',
@@ -13,7 +13,7 @@ use symbiose\import\DataImport;
         'id' => [
             'type'              => 'many2one',
             'description'       => 'Identifier of the targeted DataImport object.',
-            'foreign_object'    => 'symbiose\import\DataImport',
+            'foreign_object'    => 'DataImport',
             'required'          => true
         ]
     ],

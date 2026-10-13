@@ -5,7 +5,7 @@
     Licensed under the GNU AGPL v3 License - https://www.gnu.org/licenses/agpl-3.0.html
 */
 
-use symbiose\import\identity\ContactImport;
+use exchange\import\identity\ContactImport;
 
 [$params, $providers] = eQual::announce([
     'description'   => 'Check the import contacts document data.',
@@ -13,7 +13,7 @@ use symbiose\import\identity\ContactImport;
         'id' => [
             'type'              => 'many2one',
             'description'       => 'Identifier of the targeted ContactImport object.',
-            'foreign_object'    => 'symbiose\import\identity\ContactImport'
+            'foreign_object'    => 'identity\ContactImport'
         ]
     ],
     'access'        => [
