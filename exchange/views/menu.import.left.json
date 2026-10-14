@@ -1,0 +1,31 @@
+{
+    "name": "Import menu",
+    "search": false,
+    "layout": {
+        "items": [
+            {
+                "id": "item.imports",
+                "type": "entry",
+                "label": "Imports",
+                "icon": "view_list",
+                "description": "Listing of imports.",
+                "context": {
+                    "view": "list.default",
+                    "entity": "exchange\\import\\DataImport"
+                }
+            },
+            {
+                "id": "item.create-contacts-import",
+                "type": "entry",
+                "label": "New contacts",
+                "icon": "contacts",
+                "description": "Create an import of contacts.",
+                "context": {
+                    "view": "form.import",
+                    "entity": "exchange\\import\\identity\\ContactImport",
+                    "purpose": "create"
+                }
+            }
+        ]
+    }
+}

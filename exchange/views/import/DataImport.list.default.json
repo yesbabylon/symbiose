@@ -1,0 +1,27 @@
+{
+    "name": "Data Imports",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "document_id",
+                "width": "16%"
+            },
+            {
+                "type": "field",
+                "value": "import_type",
+                "width": "16%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "16%"
+            }
+        ]
+    }
+}

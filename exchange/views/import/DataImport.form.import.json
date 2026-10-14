@@ -1,0 +1,62 @@
+{
+    "name": "Data Import",
+    "description": "Data import.",
+    "header": {
+        "actions": {
+            "ACTION.SAVE": [
+                {
+                    "id": "SAVE_AND_VIEW",
+                    "view_id": "form.default",
+                    "visible": false
+                }
+            ],
+            "ACTION.CANCEL": false
+        }
+    },
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "0%",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "import_type",
+                                                "width": "33%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "data",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "type": "upload",
+                                                    "autosave": true,
+                                                    "required": true,
+                                                    "height": "600"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
