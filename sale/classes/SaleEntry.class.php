@@ -52,7 +52,7 @@ class SaleEntry extends Model {
 
             'detailed_description' => [
                 'type'              => 'string',
-                'usage'             => 'text/html',
+                'usage'             => 'text/plain',
                 'description'       => 'Detailed description of the entry (if relevant).'
             ],
 
