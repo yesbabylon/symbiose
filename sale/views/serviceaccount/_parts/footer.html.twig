@@ -1,0 +1,28 @@
+{% if organization %}
+<div class="footer">
+    <p style="text-align: center; padding-right: 120px;">
+        {% if organization.name %}<b>{{organization.name}}</b>{% endif %}
+        {% if organization.address_street or organization.address_dispatch or organization.address_zip or organization.address_city or organization.address_country %}
+        <br />
+        {{organization.address_street}}
+        {% if organization.address_dispatch %}, {{organization.address_dispatch}}{% endif %}
+        {% if organization.address_zip or organization.address_city %}
+            {% if organization.address_street or organization.address_dispatch %} &middot; {% endif %}
+            {{organization.address_zip}} {{organization.address_city}}
+        {% endif %}
+        {% if organization.address_country %} &middot; {{organization.address_country}}{% endif %}
+        {% endif %}
+        {% if organization.phone or organization.email or organization.website %}
+        <br />
+        {% if organization.phone %}{{ labels['report.footer.phone'] }} {{organization.phone}}{% endif %}
+        {% if organization.email %}{% if organization.phone %} &middot; {% endif %}{{ labels['report.footer.email'] }} {{organization.email}}{% endif %}
+        {% if organization.website %}{% if organization.phone or organization.email %} &middot; {% endif %}{{ labels['report.footer.website'] }} {{organization.website}}{% endif %}
+        {% endif %}
+    </p>
+    {% if organization.logo %}
+    <div style="position: absolute; bottom: 0; right: 10px;">
+        <img src="{{organization.logo}}" style="max-width: 100px; max-height: 50px;" />
+    </div>
+    {% endif %}
+</div>
+{% endif %}

@@ -1,0 +1,39 @@
+<div class="header">
+    <table cellpadding="0" cellspacing="0">
+        <tr valign="middle">
+            <td colspan="2" style="font-size: 20px; border-bottom: solid 1px black; height: 20px; padding: 0 20px;">{{ labels['report.title'] }}</td>
+        </tr>
+        <tr valign="top">
+            <td style="width: 74%; padding: 10px 25px;">
+                <div class="summary-row" style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 80px;"><b>{{ labels['report.header.contract'] }}:</b></div>
+                    <div style="display: inline-block;">{{customer}} - {{service_account}}</div>
+                </div>
+                <!--
+                <div class="summary-row" style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 80px;"><b>{{ labels['report.header.category'] }}:</b></div>
+                    <div style="display: inline-block;">{{account_type}}</div>
+                </div>
+                -->
+                <div class="summary-row" style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 80px;"><b>{{ labels['report.header.report'] }}:</b></div>
+                    <div style="display: inline-block;">{{period}} ({{period_dates}})</div>
+                </div>
+            </td>
+            <td style="width: 26%; padding: 10px 25px;">
+                <div class="summary-row" style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 120px;"><b>{{ labels['report.header.created_on'] }}:</b></div>
+                    <div style="display: inline-block; width: 90px; text-align: right;">{{emission_date}}</div>
+                </div>
+                <div class="summary-row" style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 120px;"><b>{{ labels['report.header.previous_balance'] }}:</b></div>
+                    <div style="display: inline-block; width: 90px; text-align: right;">{{balance_old}}</div>
+                </div>
+                <div class="summary-row" style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 120px;"><b>{{ labels['report.header.new_balance'] }}:</b></div>
+                    <div style="display: inline-block; width: 90px; text-align: right;">{{balance_new}}</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

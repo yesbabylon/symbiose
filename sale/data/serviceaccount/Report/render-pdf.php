@@ -36,6 +36,10 @@ use sale\serviceaccount\Report;
         'filename' => [
             'description' => 'Name given to the generated PDF file.',
             'type'        => 'string'
+        ],
+        'lang' => [
+            'description' => 'Language in which labels and multilang fields are rendered (2 letters ISO 639-1).',
+            'type'        => 'string'
         ]
     ],
     'access' => [
@@ -61,12 +65,18 @@ if(empty($report)) {
 }
 
 try {
-    $html = (string) eQual::run('get', 'sale_serviceaccount_Report_render-html', [
+    $html_params = [
         'id'      => $params['id'],
         'details' => $params['details'],
         'logs'    => $params['logs'],
         'view_id' => $params['view_id']
-    ]);
+    ];
+
+    if(isset($params['lang']) && strlen($params['lang']) > 0) {
+        $html_params['lang'] = $params['lang'];
+    }
+
+    $html = (string) eQual::run('get', 'sale_serviceaccount_Report_render-html', $html_params);
 
     $options = new DompdfOptions();
     $options->set('isRemoteEnabled', true);
@@ -78,7 +88,7 @@ try {
 
     $canvas = $dompdf->getCanvas();
     $font = $dompdf->getFontMetrics()->getFont('helvetica', 'regular');
-    $canvas->page_text(750, 32, 'page {PAGE_NUM} / {PAGE_COUNT}', $font, 10, [0, 0, 0]);
+    $canvas->page_text(750, 32, '{PAGE_NUM} / {PAGE_COUNT}', $font, 10, [0, 0, 0]);
 
     $output = $dompdf->output();
 }
