@@ -182,11 +182,15 @@ class SaleEntry extends Model {
 
     public static function getPolicies(): array {
         return [
-            'ready-for-submission' => [
+            'can_submit' => [
                 'description' => 'Verifies that the sale entry can be submitted for approval (used in timetrack\TimeEntry).',
                 'function'    => 'policyReadyForSubmission'
             ],
-            'billable' => [
+            'can_approve' => [
+                'description' => 'Verifies that the sale entry can be approved.',
+                'function'    => 'policyCanApprove'
+            ],
+            'can_charge' => [
                 'description' => 'Verifies that sale entry holds all information required for billing.',
                 'function'    => 'policyBillable'
             ]
@@ -251,15 +255,17 @@ class SaleEntry extends Model {
         return $result;
     }
 
+    public static function policyCanApprove($self): array {
+        return [];
+    }
+
     public static function policyBillable($self): array {
         $result = [];
-        $self->read(['status', 'is_internal', 'customer_id', 'product_id', 'price_id', 'unit_price', 'qty', 'is_billable']);
+        $self->read(['is_internal', 'customer_id', 'product_id', 'price_id', 'unit_price', 'qty', 'is_billable']);
         foreach($self as $id => $entry) {
             // #memo - a sale entry can be set to 'charged' status even if not billable (to mark the entry as processed when no receivable is required)
-            if( $entry['status'] !== 'approved' ||
-                (!$entry['is_internal'] && (!isset($entry['customer_id']) || !isset($entry['product_id']) || !isset($entry['price_id'])))
-            ) {
-                trigger_error("APP::Sale entry [{$id}] is not billable ({$entry['status']}) : [{$entry['customer_id']}]; product [{$entry['product_id']}]; price [{$entry['price_id']}]", EQ_REPORT_WARNING);
+            if(!$entry['is_internal'] && (!isset($entry['customer_id']) || !isset($entry['product_id']) || !isset($entry['price_id']))) {
+                trigger_error("APP::Sale entry [{$id}] is not billable: [{$entry['customer_id']}]; product [{$entry['product_id']}]; price [{$entry['price_id']}]", EQ_REPORT_WARNING);
                 $result[$id] = [
                     'sale_entry_not_billable' => "Sale entry is not billable [{$id}]."
                 ];
@@ -316,12 +322,15 @@ class SaleEntry extends Model {
                         'description' => 'Submit sale entry for approval.',
                         'help' => 'Can only be applied if sale\\SaleEntry has a validation process.',
                         'policies' => [
-                            'ready-for-submission',
+                            'can_submit',
                         ],
                         'status' => 'submitted',
                     ],
                     'approve' => [
                         'description' => 'Approve sale entry.',
+                        'policies' => [
+                            'can_approve',
+                        ],
                         'status' => 'approved'
                     ],
                 ],
@@ -337,6 +346,9 @@ class SaleEntry extends Model {
                     ],
                     'approve' => [
                         'description' => 'Approve sale entry.',
+                        'policies' => [
+                            'can_approve',
+                        ],
                         'status' => 'approved',
                     ],
                 ],
@@ -350,7 +362,7 @@ class SaleEntry extends Model {
                         'description' => 'Create the receivable that financially handles the sale entry.',
                         'onbefore' => 'doCreateReceivable',
                         'policies' => [
-                            'billable',
+                            'can_charge',
                         ],
                         'status' => 'charged',
                     ],

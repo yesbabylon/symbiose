@@ -885,18 +885,50 @@ class TimeEntry extends SaleEntry {
         ];
     }
 
+    protected static function onbeforeApproveFromPending($self): void {
+        $self->transition('submit');
+    }
+
+    protected static function onbeforeChargeFromPending($self): void {
+        $self
+            ->transition('submit')
+            ->transition('approve')
+            ->transition('charge');
+    }
+
+    protected static function onbeforeChargeFromSubmitted($self): void {
+        $self
+            ->transition('approve')
+            ->transition('charge');
+    }
+
+    protected static function onbeforeCharge($self): void {
+        $self->do('create_receivable');
+    }
+
     public static function getWorkflow() {
+
         return [
             'pending' => [
                 'description' => 'Time entry is still a draft and waiting to be completed.',
                 'icon' => 'edit',
                 'transitions' => [
                     'submit' => [
-                        'description' => 'Submit time entry for approval.',
-                        'policies' => [
-                            'ready-for-submission',
-                        ],
-                        'status' => 'submitted',
+                        'description'   => 'Submit time entry for approval.',
+                        'policies'      => ['can_submit'],
+                        'status'        => 'submitted',
+                    ],
+                    'approve' => [
+                        'description'   => 'Submit and approve time entry.',
+                        'policies'      => ['can_submit', 'can_approve'],
+                        'onbefore'      => 'onbeforeApproveFromPending',
+                        'status'        => 'approved',
+                    ],
+                    'charge' => [
+                        'description'   => 'Submit, approve and charge time entry.',
+                        'policies'      => ['can_submit', 'can_approve', 'can_charge'],
+                        'onbefore'      => 'onbeforeChargeFromPending',
+                        'status'        => 'charged',
                     ],
                 ],
             ],
@@ -911,7 +943,16 @@ class TimeEntry extends SaleEntry {
                     ],
                     'approve' => [
                         'description' => 'Approve time entry.',
+                        'policies' => [
+                            'can_approve',
+                        ],
                         'status' => 'approved',
+                    ],
+                    'charge' => [
+                        'description'   => 'Approve and charge time entry.',
+                        'policies'      => ['can_approve', 'can_charge'],
+                        'onbefore'      => 'onbeforeChargeFromSubmitted',
+                        'status'        => 'charged',
                     ],
                 ],
             ],
@@ -922,9 +963,9 @@ class TimeEntry extends SaleEntry {
                 'transitions' => [
                     'charge' => [
                         'description' => 'Create the receivable that financially handles the time entry.',
-                        'onbefore' => 'doCreateReceivable',
+                        'onbefore' => 'onbeforeCharge',
                         'policies' => [
-                            'billable',
+                            'can_charge',
                         ],
                         'status' => 'charged',
                     ],
