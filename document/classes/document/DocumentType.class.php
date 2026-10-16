@@ -18,6 +18,7 @@ class DocumentType extends Model {
             'name' => [
                 'type'              => 'string',
                 'description'       => 'Name of the document Type.',
+                'multilang'         => true,
                 'required'          => true
             ],
 
@@ -61,14 +62,11 @@ class DocumentType extends Model {
             'document_visibility' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'condo',        // visible to all owners of a same condo + syndic
-                    'ownership',    // visible to all owners of a same ownership + syndic
-                    'owner',        // visible only to a single owner or supplier
-                    'suppliership', // visible to a specific supplier of a condo + syndic
-                    'agency'        // visible only to syndic (employees)
+                    'organization',
+                    'external',
+                    'public'
                 ],
                 'default'           => 'agency',
-                'onupdate'          => 'onupdateDocumentVisibility',
                 'description'       => 'Defines who can access the document.',
                 'help'              => 'This field is synchronized with the node and updates automatically when the parent node visibility changes.'
             ],

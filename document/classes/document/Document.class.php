@@ -495,29 +495,27 @@ class Document extends Model {
             'zsh'   => 'application/x-zsh'
         ];
 
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+
         foreach($self as $id => $document) {
             if(!isset($document['data'])) {
                 continue;
             }
 
             try {
-                $finfo = new \finfo(FILEINFO_MIME_TYPE);
                 $mime = $finfo->buffer($document['data']);
 
                 if(empty($mime)) {
                     $mime = 'application/octet-stream';
                 }
                 elseif($mime === 'text/plain') {
-                    $extension = strtolower(pathinfo($document['name'], PATHINFO_EXTENSION));
-
-                    if(isset($map_plain_text_extensions[$extension])) {
-                        $mime = $map_plain_text_extensions[$extension];
-                    }
+                    $extension = strtolower(pathinfo($document['name'] ?? '', PATHINFO_EXTENSION));
+                    $mime = $map_plain_text_extensions[$extension] ?? $mime;
                 }
 
                 $result[$id] = $mime;
             }
-            catch(\Exception $e) {
+            catch(\Throwable $e) {
                 $result[$id] = 'application/octet-stream';
             }
 

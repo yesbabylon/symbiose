@@ -17,6 +17,7 @@ class DocumentSubtype extends Model {
             'name' => [
                 'type'              => 'string',
                 'description'       => 'Name of the document Subtype.',
+                'multilang'         => true,
                 'required'          => true
             ],
 
