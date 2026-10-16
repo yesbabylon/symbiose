@@ -5,19 +5,16 @@
     Licensed under the GNU AGPL v3 License - https://www.gnu.org/licenses/agpl-3.0.html
 */
 
-use exchange\import\DataImport;
+use exchange\import\identity\ContactImport;
 use Symfony\Component\Intl\Countries;
 
 [$params, $providers] = eQual::announce([
-    'type'          => 'get',
-    'name'          => 'import_parse-vcard',
-    'package_name'  => 'exchange',
-    'description'   => 'Parses a vCard 4.0 data import and returns its contacts as JSON.',
+    'description'   => 'Parse a vCard 4.0 contact import and return normalized contacts.',
     'params'        => [
         'id' => [
             'type'              => 'many2one',
-            'description'       => 'Identifier of the targeted DataImport object.',
-            'foreign_object'    => 'exchange\import\DataImport',
+            'description'       => 'Identifier of the targeted ContactImport object.',
+            'foreign_object'    => 'exchange\import\identity\ContactImport',
             'required'          => true
         ]
     ],
@@ -37,11 +34,11 @@ use Symfony\Component\Intl\Countries;
  */
 ['context' => $context] = $providers;
 
-$dataImport = DataImport::id($params['id'])
+$contactImport = ContactImport::id($params['id'])
     ->read(['document_id' => ['data']])
     ->first();
 
-if(!$dataImport) {
+if(!$contactImport) {
     throw new Exception('unknown_data_import', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
@@ -112,18 +109,21 @@ $decode_parameter = static function(string $value): string {
     return preg_replace_callback(
         '/\^(\^|n|\')/i',
         static function(array $matches): string {
-            return match(strtolower($matches[1])) {
-                'n'     => "\n",
-                "'"     => '"',
-                default => '^'
-            };
+            if(strtolower($matches[1]) === 'n') {
+                return "\n";
+            }
+            if($matches[1] === "'") {
+                return '"';
+            }
+
+            return '^';
         },
         $value
     );
 };
 
 try {
-    $vcard_data = $dataImport['document_id']['data'] ?? null;
+    $vcard_data = $contactImport['document_id']['data'] ?? null;
     if(!is_string($vcard_data)) {
         throw new Exception('Invalid vCard data.');
     }
@@ -280,7 +280,7 @@ try {
         }
 
         $phone = preg_replace('/[^0-9+]/', '', $phone);
-        if(str_starts_with($phone, '+')) {
+        if(substr($phone, 0, 1) === '+') {
             return '+' . str_replace('+', '', substr($phone, 1));
         }
 
@@ -423,7 +423,7 @@ try {
         if($firstname === '' && $lastname === '') {
             $formatted_name = $pick_property($properties, 'FN');
             $formatted_name = $formatted_name === null ? '' : trim($unescape_value($formatted_name['value']));
-            if(str_contains($formatted_name, ',')) {
+            if(strpos($formatted_name, ',') !== false) {
                 [$lastname, $firstname] = array_map('trim', explode(',', $formatted_name, 2));
             }
             elseif($formatted_name !== '') {

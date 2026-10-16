@@ -8,6 +8,7 @@
 namespace exchange\import;
 
 use document\document\Document;
+use document\document\DocumentType;
 use equal\orm\Model;
 
 class DataImport extends Model {
@@ -28,171 +29,220 @@ class DataImport extends Model {
                 'description'       => 'Display name of data import.',
             ],
 
-            'import_type' => [
-                'type'              => 'string',
-                'selection'         => [
-                    'contacts_import'
-                ],
-                'description'       => 'Targeted type of the import.',
-                'required'          => true
-            ],
-
-            'status' => [
-                'type'              => 'string',
-                'selection'         => [
-                    'doc_missing',
-                    'doc_uploaded',
-                    'check_failed',
-                    'checked',
-                    'import_failed',
-                    'imported'
-                ],
-                'default'           => 'doc_missing'
-            ],
-
             'data' => [
                 'type'              => 'binary',
-                'description'       => 'Raw binary data of the uploaded document',
-                'help'              => 'This field is meant to be used for the subsequent document creation, and is emptied once the document creation is confirmed.',
-                'onupdate'          => 'onupdateData'
+                'description'       => 'Raw binary data of the uploaded document.',
+                'help'              => 'This field is meant to be used for the subsequent document creation, and is emptied once the document creation is confirmed.'
             ],
 
             'document_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'document\document\Document',
                 'description'       => 'Targeted document of the import.',
-                'onupdate'          => 'onupdateDocumentId',
                 'readonly'          => true
+            ],
+
+            'import_type' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'banks_import',
+                    'contacts_import',
+                    'customers_import',
+                    'suppliers_import',
+                ],
+                'description'       => 'Targeted type of the import.',
+                'required'          => true
             ],
 
             'logs' => [
                 'type'              => 'string',
                 'usage'             => 'text/json',
                 'description'       => 'Human readable descriptor of the processing result.'
-            ]
+            ],
+
+            'status' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'pending',
+                    'ready',
+                    'failing',
+                    'imported'
+                ],
+                'default'           => 'pending',
+                'description'       => 'Current processing status (to avoid concurrent executions).',
+                'help'              => "Remains `pending` while the uploaded data hasn't passed validation."
+            ],
 
         ];
     }
 
     public static function getActions(): array {
-        return [
-            'create_document' => [
-                'description'   => 'Create the document holding the uploaded import data.',
-                'policies'      => [],
-                'function'      => 'doCreateDocument'
+        return array_merge(parent::getActions(), [
+            'process' => [
+                'description' => 'Check and import a newly instantiated data import.',
+                'policies'    => [],
+                'function'    => 'doProcess'
             ],
-            'synchronize_document_status' => [
-                'description'   => 'Mark the import as uploaded once a document is linked.',
-                'policies'      => [],
-                'function'      => 'doSynchronizeDocumentStatus'
+            'remove' => [
+                'description' => 'Remove a terminal data import.',
+                'help'        => 'Only failing or imported data imports can be removed.',
+                'policies'    => ['can_remove'],
+                'function'    => 'doRemove'
             ]
-        ];
+        ]);
+    }
+
+    public static function getPolicies(): array {
+        return array_merge(parent::getPolicies(), [
+            'can_check' => [
+                'description' => 'Check whether the data import is pending.',
+                'function'    => 'policyCanCheck'
+            ],
+            'can_import' => [
+                'description' => 'Check whether the data import is ready.',
+                'function'    => 'policyCanImport'
+            ],
+            'can_remove' => [
+                'description' => 'Check whether the data import can be removed.',
+                'function'    => 'policyCanRemove'
+            ]
+        ]);
     }
 
     public static function getWorkflow() {
         return [
-            'doc_missing' => [
-                'description' => 'The document is missing, it must to be uploaded.',
+            'pending' => [
+                'description' => 'The uploaded data is waiting to be checked.',
                 'transitions' => [
-                    'mark_uploaded' => [
-                        'status'        => 'doc_uploaded',
-                        'description'   => 'Mark the import as document uploaded.'
-                    ]
-                ]
-            ],
-            'doc_uploaded' => [
-                'description' => 'The document was uploaded and is waiting to be checked for validity.',
-                'transitions' => [
-                    'mark_check_failed' => [
-                        'status'        => 'check_failed',
-                        'description'   => 'Mark the import document as failing the validations checks.'
+                    'mark_failing' => [
+                        'status'        => 'failing',
+                        'description'   => 'Mark the data import as failing.'
                     ],
-                    'mark_checked' => [
-                        'status'        => 'checked',
-                        'description'   => 'Mark the import document as passing the validation checks.'
+                    'mark_ready' => [
+                        'status'        => 'ready',
+                        'description'   => 'Mark the data import as ready.'
                     ]
                 ]
             ],
-            'check_failed' => [
-                'description' => "The document hasn't passed the validation checks.",
+            'ready' => [
+                'description' => 'The uploaded data is ready to be imported.',
                 'transitions' => [
-                    'mark_checked' => [
-                        'status'        => 'checked',
-                        'description'   => 'Mark the import document as passing the validation checks.'
-                    ]
-                ]
-            ],
-            'checked' => [
-                'description' => "The document has passed the validation checks and is ready to be imported.",
-                'transitions' => [
-                    'mark_import_failed' => [
-                        'status'        => 'import_failed',
+                    'mark_failing' => [
+                        'status'        => 'failing',
                         'description'   => 'Mark the data import as failed.'
                     ],
                     'mark_imported' => [
                         'status'        => 'imported',
-                        'description'   => 'Mark the document as imported.'
+                        'description'   => 'Mark the data import as imported.'
                     ]
                 ]
             ],
-            'import_failed' => [
-                'description' => "The document couldn't be imported.",
-                'transitions' => [
-                    'mark_imported' => [
-                        'status'        => 'imported',
-                        'description'   => 'Mark the document as imported.'
-                    ]
-                ]
+            'failing' => [
+                'description' => 'The data import failed and can only be removed.'
             ],
             'imported' => [
-                'description' => 'The uploaded document was parsed and imported.'
+                'description' => 'The uploaded data was imported.'
             ]
         ];
+    }
+
+    protected static function policyCanCheck($self): array {
+        $result = [];
+
+        $self->read(['status']);
+
+        foreach($self as $id => $dataImport) {
+            if($dataImport['status'] !== 'pending') {
+                $result[$id] = [
+                    'data_import_not_pending' => 'Only pending data imports can be checked.'
+                ];
+            }
+        }
+
+        return $result;
+    }
+
+    protected static function policyCanImport($self): array {
+        $result = [];
+
+        $self->read(['status']);
+
+        foreach($self as $id => $dataImport) {
+            if($dataImport['status'] !== 'ready') {
+                $result[$id] = [
+                    'data_import_not_ready' => 'Only ready data imports can be imported.'
+                ];
+            }
+        }
+
+        return $result;
+    }
+
+    protected static function policyCanRemove($self): array {
+        $result = [];
+
+        $self->read(['status']);
+
+        foreach($self as $id => $dataImport) {
+            if(!in_array($dataImport['status'], ['failing', 'imported'], true)) {
+                $result[$id] = [
+                    'data_import_not_terminal' => 'Only failing or imported data imports can be removed.'
+                ];
+            }
+        }
+
+        return $result;
+    }
+
+    protected static function doRemove($self) {
+        $self->delete(true);
+    }
+
+    protected static function onafterinstantiate($self) {
+        if($self->getClass() !== self::class) {
+            $self->do('process');
+        }
+    }
+
+    protected static function doProcess($self) {
+        try {
+            $self
+                ->do('check')
+                ->do('import');
+        }
+        catch(\Throwable $e) {
+            // unexpected error
+        }
     }
 
     /**
      * Handle data update (i.e. file upload).
      * This method is used to create the document based on received data, and start the processing.
      */
-    protected static function onupdateData($self) {
-        $self->do('create_document');
-    }
-
-    protected static function doCreateDocument($self) {
-        $self->read(['name', 'data']);
+    protected static function onbeforeinstantiate($self) {
+        $self->read(['name', 'data', 'import_type']);
 
         foreach($self as $id => $dataImport) {
             if(!$dataImport['data']) {
                 continue;
             }
 
+            $documentType = DocumentType::search(['code', '=', $dataImport['import_type']])->first();
+
             $document = Document::create([
-                'name'  => $dataImport['name'],
-                'data'  => $dataImport['data']
-            ])
-                ->read(['id'])
-                ->first(true);
-
-            // remove current object data (pointless after successful import)
-            self::id($id)
-                ->write([
-                    'document_id'   => $document['id'],
-                    'data'          => null
+                    'name'              => $dataImport['name'],
+                    'data'              => $dataImport['data'],
+                    'document_type_id'  => $documentType['id'],
+                    'is_origin'         => true
                 ])
-                ->do('synchronize_document_status');
-        }
-    }
+                ->first();
 
-    protected static function onupdateDocumentId($self) {
-        $self->do('synchronize_document_status');
-    }
-
-    protected static function doSynchronizeDocumentStatus($self) {
-        $self->read(['status', 'document_id']);
-        foreach($self as $id => $dataImport) {
-            if($dataImport['document_id'] && $dataImport['status'] === 'doc_missing') {
-                self::id($id)->transition('mark_uploaded');
-            }
+            self::id($id)->write([
+                    // attach document
+                    'document_id'   => $document['id'],
+                    // remove current object data (pointless after successful import)
+                    'data'          => null
+                ]);
         }
     }
 

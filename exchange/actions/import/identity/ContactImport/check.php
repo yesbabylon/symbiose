@@ -13,7 +13,8 @@ use exchange\import\identity\ContactImport;
         'id' => [
             'type'              => 'many2one',
             'description'       => 'Identifier of the targeted ContactImport object.',
-            'foreign_object'    => 'identity\ContactImport'
+            'foreign_object'    => 'exchange\import\identity\ContactImport',
+            'required'          => true
         ]
     ],
     'access'        => [
@@ -32,67 +33,41 @@ use exchange\import\identity\ContactImport;
 ['context' => $context] = $providers;
 
 /**
- * Methods
- */
-
-$formatPhone = function($value) {
-    $phone = preg_replace('/[^0-9+]/', '', $value);
-    if(empty($phone)) {
-        $phone = null;
-    }
-
-    return $phone;
-};
-
-/**
  * Action
  */
 
 $import = ContactImport::id($params['id'])
-    ->read(['status', 'document_id' => ['content_type']])
+    ->read(['status', 'document_id'])
     ->first();
 
 if(!$import) {
     throw new Exception('unknown_data_import', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
-if(!in_array($import['status'], ['doc_uploaded', 'check_failed'])) {
+if($import['status'] !== 'pending') {
     throw new Exception('wrong_status', EQ_ERROR_UNKNOWN);
 }
-
-$map_parse_actions = [
-    'text/csv'                                                          => 'parse-csv',
-    'text/vcard'                                                        => 'parse-vcard',
-    'text/x-vcard'                                                      => 'parse-vcard',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'parse-xls'
-];
-
-if(!isset($map_parse_actions[$import['document_id']['content_type']])) {
-    throw new Exception('invalid_import_document_type', EQ_ERROR_INVALID_PARAM);
+if(!$import['document_id']) {
+    throw new Exception('missing_import_document', EQ_ERROR_INVALID_PARAM);
 }
-
-$parse_action = $map_parse_actions[$import['document_id']['content_type']];
-
-$data = eQual::run('get', "exchange_import_$parse_action", [
-    'id' => $params['id']
-]);
 
 $result = [
     'errors'    => 0,
     'logs'      => []
 ];
 
-if($parse_action === 'parse-xls') {
-    if(count($data) > 1) {
-        ++$result['errors'];
-        $result['logs'][] = "ERR - XLSX import document must only contain one sheet";
-    }
-
-    // Set XLSX default sheet data in data to match csv
-    $data = $data['default'];
+$data = [];
+try {
+    $data = eQual::run('get', 'exchange_import_identity_ContactImport_parse', [
+        'id' => $params['id']
+    ]);
+}
+catch(Throwable $e) {
+    ++$result['errors'];
+    $result['logs'][] = "ERR - {$e->getMessage()}";
 }
 
-if(empty($data)) {
+if($result['errors'] === 0 && empty($data)) {
     ++$result['errors'];
     $result['logs'][] = "ERR - empty import";
 }
@@ -106,40 +81,37 @@ foreach($data as $index => $item) {
         ++$result['errors'];
         $result['logs'][] = "ERR - missing `lastname`";
     }
-    $formatted_phone = $formatPhone($item['phone']);
-    if(!preg_match('/^\+?[0-9]*$/', $formatted_phone)) {
+
+    $email = $item['email'] ?? '';
+    $phone = $item['phone'] ?? '';
+    $mobile = $item['mobile'] ?? '';
+    if($email === '' && $phone === '' && $mobile === '') {
         ++$result['errors'];
-        $result['logs'][] = "ERR - invalid `phone` ($formatted_phone) at row " . ($index + 2);
+        $result['logs'][] = "ERR - missing contact information at row " . ($index + 2);
     }
-    $formatted_mobile = $formatPhone($item['mobile']);
-    if(!preg_match('/^\+?[0-9]*$/', $formatted_mobile)) {
+
+    if($phone !== '' && !preg_match('/^\+?[0-9]+$/', $phone)) {
         ++$result['errors'];
-        $result['logs'][] = "ERR - invalid `mobile` ($formatted_mobile) at row " . ($index + 2);
+        $result['logs'][] = "ERR - invalid `phone` ($phone) at row " . ($index + 2);
     }
-    $formatted_email = trim($item['email']);
-    if(strlen($item['email']) > 0 && !preg_match('/^([_a-z0-9-\.]+)(\+([_a-z0-9]+))?@(([a-z0-9-]+\.)*)([a-z0-9-]{1,63})(\.[a-z-]{2,24})$/i', $formatted_email)) {
+    if($mobile !== '' && !preg_match('/^\+?[0-9]+$/', $mobile)) {
         ++$result['errors'];
-        $result['logs'][] = "ERR - invalid `email` ($formatted_email) at row " . ($index + 2);
+        $result['logs'][] = "ERR - invalid `mobile` ($mobile) at row " . ($index + 2);
     }
-    if(!preg_match('/^[A-Z]{2}$/', $item['address_country'])) {
+    if($email !== '' && !preg_match('/^([_a-z0-9-\.]+)(\+([_a-z0-9]+))?@(([a-z0-9-]+\.)*)([a-z0-9-]{1,63})(\.[a-z-]{2,24})$/i', $email)) {
         ++$result['errors'];
-        $result['logs'][] = "ERR - invalid `address_country` ({$item['address_country']}) at row " . ($index + 2);
+        $result['logs'][] = "ERR - invalid `email` ($email) at row " . ($index + 2);
+    }
+
+    $address_country = $item['address_country'] ?? '';
+    if($address_country !== '' && !preg_match('/^[A-Z]{2}$/', $address_country)) {
+        ++$result['errors'];
+        $result['logs'][] = "ERR - invalid `address_country` ($address_country) at row " . ($index + 2);
     }
 }
 
 if($result['errors'] === 0) {
     $result['logs'][] = "INFO- file is valid (no errors found).";
-}
-
-ContactImport::id($import['id'])->update([
-    'logs' => json_encode($result['logs'], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
-]);
-
-if($result['errors'] === 0) {
-    ContactImport::id($import['id'])->transition('mark_checked');
-}
-elseif($import['status'] !== 'check_failed') {
-    ContactImport::id($import['id'])->transition('mark_check_failed');
 }
 
 $context

@@ -1,5 +1,6 @@
 {
-    "name": "Data Imports",
+    "name": "Data imports",
+    "description": "List all data imports.",
     "layout": {
         "items": [
             {
@@ -9,18 +10,18 @@
             },
             {
                 "type": "field",
-                "value": "document_id",
-                "width": "16%"
+                "value": "model",
+                "width": "25%"
             },
             {
                 "type": "field",
-                "value": "import_type",
-                "width": "16%"
+                "value": "document_id",
+                "width": "25%"
             },
             {
                 "type": "field",
                 "value": "status",
-                "width": "16%"
+                "width": "25%"
             }
         ]
     }

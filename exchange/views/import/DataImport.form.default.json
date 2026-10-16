@@ -1,25 +1,19 @@
 {
-    "name": "Data Import",
+    "name": "Data import",
+    "description": "Review a data import.",
     "actions": [
         {
-            "id": "action.check",
-            "label": "Check",
-            "description": "Check consistency of uploaded data.",
-            "controller": "exchange_import_DataImport_check",
+            "id": "action.remove",
+            "label": "Remove",
+            "description": "Remove this completed or failed data import.",
+            "controller": "core_model_do",
             "params": {
-                "id": "object.id"
+                "entity": "exchange\\import\\DataImport",
+                "action": "remove",
+                "ids": []
             },
-            "visible": ["status", "in", ["doc_uploaded", "check_failed"]]
-        },
-        {
-            "id": "action.import",
-            "label": "Import",
-            "description": "Import the uploaded data.",
-            "controller": "exchange_import_DataImport_import",
-            "params": {
-                "id": "object.id"
-            },
-            "visible": ["status", "in", ["checked", "import_failed"]]
+            "confirm": true,
+            "visible": ["status", "in", ["failing", "imported"]]
         }
     ],
     "layout": {
@@ -36,12 +30,18 @@
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "66%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "import_type",
-                                                "width": "50%"
+                                                "value": "model",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
@@ -51,8 +51,10 @@
                                             {
                                                 "type": "field",
                                                 "value": "status",
-                                                "width": "100%",
-                                                "visible": false
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             }
                                         ]
                                     }
@@ -68,6 +70,7 @@
                                                 "value": "logs",
                                                 "width": "100%",
                                                 "widget": {
+                                                    "readonly": true,
                                                     "height": 400
                                                 }
                                             }

@@ -1,0 +1,102 @@
+{
+    "name": "Contact import",
+    "description": "Review and process a contact import.",
+    "actions": [
+        {
+            "id": "action.check",
+            "label": "Check",
+            "description": "Check consistency of uploaded data.",
+            "controller": "core_model_do",
+            "params": {
+                "entity": "exchange\\import\\identity\\ContactImport",
+                "action": "check",
+                "ids": []
+            },
+            "visible": ["status", "=", "pending"]
+        },
+        {
+            "id": "action.import",
+            "label": "Import",
+            "description": "Import the uploaded data.",
+            "controller": "core_model_do",
+            "params": {
+                "entity": "exchange\\import\\identity\\ContactImport",
+                "action": "import",
+                "ids": []
+            },
+            "visible": ["status", "=", "ready"]
+        },
+        {
+            "id": "action.remove",
+            "label": "Remove",
+            "description": "Remove this completed or failed data import.",
+            "controller": "core_model_do",
+            "params": {
+                "entity": "exchange\\import\\identity\\ContactImport",
+                "action": "remove",
+                "ids": []
+            },
+            "confirm": true,
+            "visible": ["status", "in", ["failing", "imported"]]
+        }
+    ],
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "66%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "import_type",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "document_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "100%",
+                                                "visible": false
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "logs",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "height": 400
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
