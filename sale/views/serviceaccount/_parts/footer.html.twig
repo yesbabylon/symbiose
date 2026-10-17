@@ -4,38 +4,36 @@
         {% if organization.name %}<b>{{organization.name}}</b>{% endif %}
         {% if organization.registration_number %}
             {% if organization.name %} &middot; {% endif %}
-            {{ labels['report.footer.registration_number'] }}: <b>{{organization.registration_number}}</b>
+            {{ labels['report.footer.registration_number'] }}: {{organization.registration_number}}
         {% endif %}
         {% if organization.name or organization.registration_number %} &middot; {% endif %}
         {{ labels['report.footer.vat_number'] }}:
-        <b>
-            {% if organization.has_vat and organization.vat_number %}
-                {{organization.vat_number}}
-            {% else %}
-                {{ labels['report.footer.not_applicable'] }}
-            {% endif %}
-        </b>
-        {% if organization.address_street or organization.address_dispatch or organization.address_zip or organization.address_city or organization.address_country %}
-        <br />
-        {{organization.address_street}}
-        {% if organization.address_dispatch %}, {{organization.address_dispatch}}{% endif %}
-        {% if organization.address_zip or organization.address_city %}
-            {% if organization.address_street or organization.address_dispatch %} &middot; {% endif %}
-            {{organization.address_zip}} {{organization.address_city}}
+        {% if organization.has_vat and organization.vat_number %}
+            {{organization.vat_number}}
+        {% else %}
+            {{ labels['report.footer.not_applicable'] }}
         {% endif %}
-        {% if organization.address_country %} &middot; {{organization.address_country}}{% endif %}
+        {% if organization.address_street or organization.address_dispatch or organization.address_zip or organization.address_city or organization.address_country %}
+            <br />
+            {{organization.address_street}}
+            {% if organization.address_dispatch %}, {{organization.address_dispatch}}{% endif %}
+            {% if organization.address_zip or organization.address_city %}
+                {% if organization.address_street or organization.address_dispatch %} &middot; {% endif %}
+                {{organization.address_zip}} {{organization.address_city}}
+            {% endif %}
+            {% if organization.address_country %} &middot; {{organization.address_country}}{% endif %}
         {% endif %}
         {% if organization.phone or organization.email or organization.website %}
-        <br />
-        {% if organization.phone %}{{ labels['report.footer.phone'] }} {{organization.phone}}{% endif %}
-        {% if organization.email %}{% if organization.phone %} &middot; {% endif %}{{ labels['report.footer.email'] }} {{organization.email}}{% endif %}
-        {% if organization.website %}{% if organization.phone or organization.email %} &middot; {% endif %}{{ labels['report.footer.website'] }} {{organization.website}}{% endif %}
+            <br />
+            {% if organization.phone %}{{ labels['report.footer.phone'] }} {{organization.phone}}{% endif %}
+            {% if organization.email %}{% if organization.phone %} &middot; {% endif %}{{ labels['report.footer.email'] }} {{organization.email}}{% endif %}
+            {% if organization.website %}{% if organization.phone or organization.email %} &middot; {% endif %}{{ labels['report.footer.website'] }} {{organization.website}}{% endif %}
         {% endif %}
     </p>
     {% if organization.logo %}
-    <div style="position: absolute; bottom: 0; right: 10px;">
-        <img src="{{organization.logo}}" style="max-width: 100px; max-height: 50px;" />
-    </div>
+        <div style="position: absolute; bottom: 0; right: 10px;">
+            <img src="{{organization.logo}}" style="max-width: 100px; max-height: 50px;" />
+        </div>
     {% endif %}
 </div>
 {% endif %}
