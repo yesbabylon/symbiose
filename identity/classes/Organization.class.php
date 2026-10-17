@@ -21,6 +21,14 @@ class Organization extends IdentityFacetAbstract {
     public static function getColumns() {
         return [
 
+            'organization_id' => [
+                'type'           => 'many2one',
+                'foreign_object' => 'identity\Organization',
+                'description' => 'Not applicable to Organization facets; inherited for schema consistency.',
+                'default'        => null,
+                'readonly'       => true
+            ],
+
             'type_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\IdentityType',

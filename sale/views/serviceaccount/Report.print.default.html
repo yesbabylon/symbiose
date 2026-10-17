@@ -234,22 +234,24 @@ hr {
     <div class="wrapper">
         <div class="section-title" style="width: 100%; border-bottom: solid 1px black;">{{ labels['report.balance.title'] }}</div>
         <div style="margin-top: 20px;">
-            <div style="width: 100%; height: 18px;">
-                <div style="display: inline-block; width: 80%;">{{ labels['report.balance.initial'] }}</div>
-                <div style="display: inline-block; width: 20%; text-align: right; font-weight: bold;">{{balance_old}}</div>
-            </div>
-            <div style="width: 100%; height: 18px;">
-                <div style="display: inline-block; width: 80%;">{{ labels['report.balance.services'] }}</div>
-                <div style="display: inline-block; width: 20%; text-align: right; font-weight: bold;">{{total_tickets}}</div>
-            </div>
-            <div style="width: 100%; height: 18px;">
-                <div style="display: inline-block; width: 80%;">{{ labels['report.balance.credits'] }}</div>
-                <div style="display: inline-block; width: 20%; text-align: right; font-weight: bold;">{{total_credits}}</div>
-            </div>
-            <div style="width: 100%; height: 18px;">
-                <div style="display: inline-block; width: 80%;">{{ labels['report.balance.new'] }}</div>
-                <div style="display: inline-block; width: 20%; text-align: right; font-weight: bold;">{{balance_new}}</div>
-            </div>
+            <table width="100%" style="border: 0;" cellpadding="0" cellspacing="0">
+                <tr style="height: 18px;">
+                    <td width="80%">{{ labels['report.balance.initial'] }}</td>
+                    <td width="20%" style="text-align: right; font-weight: bold;">{{balance_old}}</td>
+                </tr>
+                <tr style="height: 18px;">
+                    <td width="80%">{{ labels['report.balance.services'] }}</td>
+                    <td width="20%" style="text-align: right; font-weight: bold;">{{total_tickets}}</td>
+                </tr>
+                <tr style="height: 18px;">
+                    <td width="80%">{{ labels['report.balance.credits'] }}</td>
+                    <td width="20%" style="text-align: right; font-weight: bold;">{{total_credits}}</td>
+                </tr>
+                <tr style="height: 18px;">
+                    <td width="80%">{{ labels['report.balance.new'] }}</td>
+                    <td width="20%" style="text-align: right; font-weight: bold;">{{balance_new}}</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

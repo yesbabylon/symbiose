@@ -16,6 +16,13 @@ abstract class IdentityFacetAbstract extends IdentityAbstract {
 
     public static function getColumns() {
         return [
+            'organization_id' => [
+                'type'           => 'many2one',
+                'foreign_object' => 'identity\Organization',
+                'description'    => 'Organization role associated with this identity, if any.',
+                'default'        => 1
+            ],
+
             'identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
