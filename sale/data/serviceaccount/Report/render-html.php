@@ -117,7 +117,10 @@ $default_labels = [
     'report.fallback.time_entry'          => 'Time entry',
     'report.footer.phone'                 => 'Tel.',
     'report.footer.email'                 => 'Email',
-    'report.footer.website'               => 'Web'
+    'report.footer.website'               => 'Web',
+    'report.footer.registration_number'   => 'Registration no.',
+    'report.footer.vat_number'            => 'VAT no.',
+    'report.footer.not_applicable'        => 'N/A'
 ];
 
 $labels_path = sprintf(
@@ -182,6 +185,9 @@ $report = Report::id($params['id'])
                 'organization_id' => [
                     'name',
                     'legal_name',
+                    'registration_number',
+                    'has_vat',
+                    'vat_number',
                     'address_street',
                     'address_dispatch',
                     'address_zip',
@@ -347,16 +353,19 @@ if($organization) {
     }
 
     $organization_data = [
-        'name'             => $organization_name,
-        'address_street'   => $organization['address_street'] ?? '',
-        'address_dispatch' => $organization['address_dispatch'] ?? '',
-        'address_zip'      => $organization['address_zip'] ?? '',
-        'address_city'     => $organization['address_city'] ?? '',
-        'address_country'  => $organization['address_country'] ?? '',
-        'phone'            => $organization['phone'] ?? '',
-        'email'            => $organization['email'] ?? '',
-        'website'          => $organization['website'] ?? '',
-        'logo'             => ''
+        'name'                => $organization_name,
+        'registration_number' => $organization['registration_number'] ?? '',
+        'has_vat'             => (bool) ($organization['has_vat'] ?? false),
+        'vat_number'          => $organization['vat_number'] ?? '',
+        'address_street'      => $organization['address_street'] ?? '',
+        'address_dispatch'    => $organization['address_dispatch'] ?? '',
+        'address_zip'         => $organization['address_zip'] ?? '',
+        'address_city'        => $organization['address_city'] ?? '',
+        'address_country'     => $organization['address_country'] ?? '',
+        'phone'               => $organization['phone'] ?? '',
+        'email'               => $organization['email'] ?? '',
+        'website'             => $organization['website'] ?? '',
+        'logo'                => ''
     ];
 
     $logo_document = $organization['image_document_id'] ?? null;

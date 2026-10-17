@@ -1,5 +1,8 @@
 {
     "report.footer.phone": "Tél.",
     "report.footer.email": "E-mail",
-    "report.footer.website": "Web"
+    "report.footer.website": "Web",
+    "report.footer.registration_number": "N° d’entreprise",
+    "report.footer.vat_number": "N° TVA",
+    "report.footer.not_applicable": "N/A"
 }

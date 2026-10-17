@@ -2,6 +2,19 @@
 <div class="footer">
     <p style="text-align: center; padding-right: 120px;">
         {% if organization.name %}<b>{{organization.name}}</b>{% endif %}
+        {% if organization.registration_number %}
+            {% if organization.name %} &middot; {% endif %}
+            {{ labels['report.footer.registration_number'] }}: <b>{{organization.registration_number}}</b>
+        {% endif %}
+        {% if organization.name or organization.registration_number %} &middot; {% endif %}
+        {{ labels['report.footer.vat_number'] }}:
+        <b>
+            {% if organization.has_vat and organization.vat_number %}
+                {{organization.vat_number}}
+            {% else %}
+                {{ labels['report.footer.not_applicable'] }}
+            {% endif %}
+        </b>
         {% if organization.address_street or organization.address_dispatch or organization.address_zip or organization.address_city or organization.address_country %}
         <br />
         {{organization.address_street}}
