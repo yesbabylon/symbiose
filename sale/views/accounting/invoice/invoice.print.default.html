@@ -42,20 +42,6 @@
             width: 100%;
         }
 
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            /* height must match body::margin-top */
-            height: 280px;
-            border: 0;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            box-sizing: border-box;
-            overflow: hidden;
-        }
-
         h1, h2, h3 {
             margin-top: 0;
             margin-bottom: 0;
@@ -67,79 +53,6 @@
 
         h3 {
             font-size: 15px;
-        }
-
-        header.debug {
-            border: solid 1px blue;
-        }
-
-        header .organisation-info {
-            position: absolute;
-            height: 160px;
-            width: 50%;
-            max-width: 350px;
-            z-index: 1;
-        }
-
-        header .organisation-info img {
-            width: 350px;
-            height: auto;
-            /* #memo - we should keep this but it can lead to stretching the image and object-fit is not supported*/
-            /* max-height: 100px; */
-            border: 0;
-            margin-bottom: 10px;
-        }
-
-        header .organisation-info.debug {
-            border: solid 1px red;
-        }
-
-        header .customer-info {
-            position: absolute;
-            top: 30px;
-            right: 0;
-            width: 300px;
-            height: 160px;
-            font-size: 13px;
-            text-align: left;
-        }
-
-        header .customer-info.debug {
-            border: solid 1px green;
-        }
-
-        header .invoice-details {
-            position: absolute;
-            top: 160px;
-            left: 0;
-            height: 120px;
-            width: 100%;
-        }
-
-        header .invoice-details .invoice-ref {
-            position: absolute;
-            width: 350px;
-            height: 100%;
-            overflow: hidden
-        }
-
-        header .invoice-details .invoice-ref.debug {
-            border: solid 1px turquoise;
-        }
-
-        header .invoice-details .invoice-info {
-            position: absolute;
-            top: 0;
-            right: 0;
-            font-size: 13px;
-            width: 200px;
-            height: 100%;
-            text-align: left;
-            overflow: hidden;
-        }
-
-        header .invoice-details .invoice-info.debug {
-            border: solid 1px yellow;
         }
 
         main.debug {
@@ -182,164 +95,14 @@
             border-bottom: 1px solid black;
         }
 
-        footer {
-            position: fixed;
-            bottom: 0px;
-            left: 0;
-            right: 0;
-            /* height must match body::margin-bottom */
-            height: 50px;
-            width: 100%;
-            overflow: hidden;
-            z-index: 1;
-            font-size: 11px;
-            border: 0;
-            margin: 0;
-            padding: 0;
-            background-color: white;
-            border-top: solid 1px black;
-        }
-
-        footer.debug {
-            border: solid 1px yellow;
-        }
-
-        footer .organisation-info {
-            margin-top: 10px;
-            text-align: center;
-        }
     </style>
+    {% include '_parts/header.style.html.twig' %}
+    {% include '_parts/footer.style.html.twig' %}
 </head>
 
 <body>
-    <header class="{{ debug ? 'debug':'' }}">
-
-        <!-- organisation-info start -->
-            <div class="organisation-info {{ debug ? 'debug':'' }}">
-                {% if (organization_logo|length > 0) %}
-                    <img src="{{ organization_logo }}" alt="Company logo" />
-                {% endif %}
-                <div style="margin-left: 8px;">
-                    <h3>{{ organization.legal_name }}</h3>
-                    <div>{{ organization.address_street }} {{ organization.address_zip }} {{ organization.address_city }}</div>
-                    <div>{{ labels.registration_number }}: <b>{{ organization.registration_number }}</b></div>
-                    <div>{{ labels.vat_number }}:
-                        <strong>
-                        {% if (organization.has_vat == true) %}
-                            {{ organization.vat_number }}
-                        {% else %}
-                            N/A
-                        {% endif %}
-                        </strong>
-                    </div>
-                </div>
-            </div>
-        <!-- organisation-info end -->
-
-        <!-- customer-info start -->
-            <div class="customer-info {{ debug ? 'debug' : '' }}">
-                <table>
-                    <tr>
-                        <td style="width: 70px; vertical-align: top;">
-                            <b>{{ labels.customer_name }}:</b>
-                        </td>
-                        <td>
-                            {{ customer.name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;">
-                            <b>{{ labels.customer_address }}:</b>
-                        </td>
-                        <td>
-                            {% if customer.address_street|length > 0 %}
-                                <div>{{ customer.address_street }}</div>
-                            {% endif %}
-
-                            {% if customer.address_dispatch|length > 0 %}
-                                <div>{{ customer.address_dispatch }}</div>
-                            {% endif %}
-
-                            <div>{{ customer.address_city }} {{ customer.address_zip }} {{ customer.address_country }}</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top;">
-                            <b>{{ labels.vat_number }}:</b>
-                        </td>
-                        <td>
-                            {% if customer.has_vat and customer.vat_number|length > 0 %}
-                                {{ customer.vat_number }}
-                            {% else %}
-                                N/A
-                            {% endif %}
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        <!-- customer-info end -->
-
-        <!-- invoice-details start -->
-            <div class="invoice-details {{ debug ? 'debug' : '' }}">
-                <!-- invoice-ref start -->
-                    <div class="invoice-ref {{ debug ? 'debug' : '' }}">
-                    </div>
-                <!-- invoice-ref start -->
-
-                <!-- invoice-info start -->
-                    <div class="invoice-info {{ debug ? 'debug' : '' }}">
-                        <h2 style="text-transform: capitalize;">
-                            {% if invoice.invoice_type == 'invoice' %}
-                                {{ labels.invoice }}
-                            {% else %}
-                                {{ labels.credit_note }}
-                            {% endif %}
-                        </h2>
-
-                        <div style="margin-bottom: 5px; margin-top: 5px; text-transform: uppercase;">
-                            {{ labels.number }}: <b>{{ invoice.invoice_number }}</b>
-                        </div>
-
-                        <div style="margin-bottom: 5px; text-transform: uppercase;">
-                            {{ labels.date }}: <b>{{ invoice.emission_date | date(date_format, timezone) }}</b>
-                        </div>
-
-                        {% if invoice.invoice_type == 'invoice' %}
-                        <div style="margin-bottom: 5px; text-transform: uppercase;">
-                            {{ labels.status }}:
-                            <b>
-                                {% if invoice.payment_status == 'balanced' %}
-                                    {{ labels.status_paid }}
-                                {% else %}
-                                    {% if invoice.payment_status == 'credit_balance' %}
-                                        {{ labels.status_to_refund }}
-                                    {% else %}
-                                        {{ labels.status_to_pay }}
-                                    {% endif %}
-                                {% endif %}
-                            </b>
-                        </div>
-                        <!-- credit note -->
-                        {% else %}
-                            <div style="margin-bottom: 5px; margin-top: 5px; text-transform: uppercase;">
-                                REF: <b>{{ invoice.reversed_invoice_id.invoice_number }}</b>
-                            </div>
-                        {% endif %}
-                    </div>
-                <!-- invoice-info start -->
-            </div>
-        <!-- invoice-details end -->
-    </header>
-
-    <footer class="{{ debug ? 'debug' : '' }}">
-        <!-- organisation-footer-info start -->
-        <div class="organisation-info">
-            <div>{{ organization.legal_name }} - {{ organization.address_street }} {{ organization.address_zip }} {{ organization.address_city }}</div>
-            <div>{{ labels.footer.registration_number }}: {{ organization.registration_number }} - {{ labels.footer.iban }}: {{ organization.bank_account_iban }}</div>
-            <div>{{ labels.footer.email }}: {{ organization.email }} - {{ labels.footer.web }}: {{ organization.website }} - {{ labels.footer.tel }}: {{ organization.phone }}{% if organization.fax %} - {{ labels.footer.fax }}: {{ organization.fax }}{% endif %}</div>
-        </div>
-        <!-- organisation-footer-info end -->
-    </footer>
+    {% include '_parts/header.html.twig' %}
+    {% include '_parts/footer.html.twig' %}
 
     <main class="{{ debug ? 'debug' : '' }}">
         <!-- invoice-lines start -->

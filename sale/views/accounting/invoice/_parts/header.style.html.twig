@@ -1,0 +1,88 @@
+<style type="text/css">
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* height must match body::margin-top */
+    height: 280px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+header.debug {
+    border: solid 1px blue;
+}
+
+header .organisation-info {
+    position: absolute;
+    height: 160px;
+    width: 50%;
+    max-width: 350px;
+    z-index: 1;
+}
+
+header .organisation-info img {
+    width: 350px;
+    height: auto;
+    /* #memo - we should keep this but it can lead to stretching the image and object-fit is not supported*/
+    /* max-height: 100px; */
+    border: 0;
+    margin-bottom: 10px;
+}
+
+header .organisation-info.debug {
+    border: solid 1px red;
+}
+
+header .customer-info {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    width: 300px;
+    height: 160px;
+    font-size: 13px;
+    text-align: left;
+}
+
+header .customer-info.debug {
+    border: solid 1px green;
+}
+
+header .invoice-details {
+    position: absolute;
+    top: 160px;
+    left: 0;
+    height: 120px;
+    width: 100%;
+}
+
+header .invoice-details .invoice-ref {
+    position: absolute;
+    width: 350px;
+    height: 100%;
+    overflow: hidden
+}
+
+header .invoice-details .invoice-ref.debug {
+    border: solid 1px turquoise;
+}
+
+header .invoice-details .invoice-info {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 13px;
+    width: 200px;
+    height: 100%;
+    text-align: left;
+    overflow: hidden;
+}
+
+header .invoice-details .invoice-info.debug {
+    border: solid 1px yellow;
+}
+</style>
