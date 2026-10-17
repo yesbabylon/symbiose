@@ -24,10 +24,6 @@
             "billed_duration": {
                 "operation": "SUM",
                 "usage": "time/plain"
-            },
-            "total": {
-                "operation": "SUM",
-                "usage": "amount/money:2"
             }
         }
     },
@@ -48,10 +44,6 @@
                 "billed_duration": {
                     "operation": "SUM",
                     "usage": "time/plain"
-                },
-                "total": {
-                    "operation": "SUM",
-                    "usage": "amount/money:2"
                 }
             }
         },
@@ -72,10 +64,6 @@
                 "billed_duration": {
                     "operation": "SUM",
                     "usage": "time/plain"
-                },
-                "total": {
-                    "operation": "SUM",
-                    "usage": "amount/money:2"
                 }
             }
         }
@@ -166,16 +154,6 @@
                 "value": "billed_duration",
                 "width": "10%",
                 "sortable": true
-            },
-            {
-                "type": "field",
-                "label": "Total",
-                "value": "total",
-                "width": "10%",
-                "sortable": true,
-                "widget": {
-                    "usage": "amount/money:2"
-                }
             },
             {
                 "type": "field",
