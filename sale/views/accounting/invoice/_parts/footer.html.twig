@@ -1,7 +1,7 @@
 <footer class="{{ debug ? 'debug' : '' }}">
     <!-- organisation-footer-info start -->
     <div class="organisation-info">
-        <div>{{ organization.legal_name }} - {{ organization.address_street }} {{ organization.address_zip }} {{ organization.address_city }}</div>
+        <div><b>{{ organization.legal_name }}</b> - {{ organization.address_street }} {{ organization.address_zip }} {{ organization.address_city }}</div>
         <div>{{ labels.footer.registration_number }}: {{ organization.registration_number }} - {{ labels.footer.iban }}: {{ organization.bank_account_iban }}</div>
         <div>{{ labels.footer.email }}: {{ organization.email }} - {{ labels.footer.web }}: {{ organization.website }} - {{ labels.footer.tel }}: {{ organization.phone }}{% if organization.fax %} - {{ labels.footer.fax }}: {{ organization.fax }}{% endif %}</div>
     </div>
