@@ -8,6 +8,61 @@
             "description": "Identifiant de l'extrait.",
             "help": ""
         },
+        "raw_data": {
+            "label": "Données brutes",
+            "description": "Contenu original utilisé pour créer le relevé.",
+            "help": ""
+        },
+        "document_id": {
+            "label": "Document source",
+            "description": "Document à partir duquel le relevé a été importé.",
+            "help": ""
+        },
+        "bank_account_id": {
+            "label": "Compte bancaire",
+            "description": "Compte bancaire auquel se rapporte le relevé.",
+            "help": ""
+        },
+        "statement_number": {
+            "label": "Numéro de relevé",
+            "description": "Numéro de séquence attribué au relevé par la banque.",
+            "help": ""
+        },
+        "statement_currency": {
+            "label": "Devise",
+            "description": "Devise des montants du relevé.",
+            "help": ""
+        },
+        "opening_date": {
+            "label": "Date d'ouverture",
+            "description": "Date de début de la période couverte par le relevé.",
+            "help": ""
+        },
+        "closing_date": {
+            "label": "Date de clôture",
+            "description": "Date de fin de la période couverte par le relevé.",
+            "help": ""
+        },
+        "opening_balance": {
+            "label": "Solde d'ouverture",
+            "description": "Solde du compte avant les transactions du relevé.",
+            "help": ""
+        },
+        "closing_balance": {
+            "label": "Solde de clôture",
+            "description": "Solde du compte après les transactions du relevé.",
+            "help": ""
+        },
+        "balance_delta": {
+            "label": "Variation du solde",
+            "description": "Différence entre les soldes de clôture et d'ouverture.",
+            "help": ""
+        },
+        "expected_opening_balance": {
+            "label": "Solde d'ouverture attendu",
+            "description": "Solde de clôture du relevé antérieur du même compte.",
+            "help": ""
+        },
         "date": {
             "label": "Date du relevé",
             "description": "Date du relevé.",
@@ -21,6 +76,11 @@
         "bank_account_bic": {
             "label": "Code BIC",
             "description": "Code d'identification de la banque.",
+            "help": ""
+        },
+        "bank_account_suffix": {
+            "label": "Suffixe du compte",
+            "description": "Identifiant complémentaire du compte bancaire.",
             "help": ""
         },
         "bank_account_number": {
@@ -41,6 +101,21 @@
         "new_balance": {
             "label": "Nouveau solde",
             "description": "Solde du compte après les transactions.",
+            "help": ""
+        },
+        "is_reconciled": {
+            "label": "Réconcilié",
+            "description": "Indique si toutes les lignes sont réconciliées ou ignorées.",
+            "help": ""
+        },
+        "is_balanced": {
+            "label": "Équilibré",
+            "description": "Indique si la variation du solde correspond à la somme des lignes.",
+            "help": ""
+        },
+        "is_exported": {
+            "label": "Exporté",
+            "description": "Indique si le relevé a été exporté vers un outil externe.",
             "help": ""
         },
         "status": {

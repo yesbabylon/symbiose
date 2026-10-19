@@ -1,0 +1,68 @@
+{
+    "name": "Import d'extraits bancaires",
+    "plural": "Imports d'extraits bancaires",
+    "description": "Importe des extraits bancaires à partir d'un fichier CODA ou XLSX.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom du fichier importé.",
+            "help": "Reprend le nom du fichier sélectionné lors de la création."
+        },
+        "data": {
+            "label": "Fichier",
+            "description": "Fichier CODA ou XLSX à importer.",
+            "help": "Formats acceptés : CODA (.cod, .coda, .txt) et XLSX."
+        },
+        "document_id": {
+            "label": "Document source",
+            "description": "Document conservé comme source de l'import.",
+            "help": "Le fichier déposé est conservé séparément des relevés normalisés."
+        },
+        "import_type": {
+            "label": "Type d'import",
+            "description": "Type de données importées.",
+            "help": "Valeur technique définissant le traitement d'import bancaire."
+        },
+        "logs": {
+            "label": "Journal",
+            "description": "Résultat détaillé du contrôle et de l'import.",
+            "help": "Présente les contrôles, avertissements et créations effectués."
+        },
+        "status": {
+            "label": "Statut",
+            "description": "État courant de l'import.",
+            "help": "Le contrôle précède toujours la création des relevés bancaires.",
+            "selection": {
+                "pending": "À contrôler",
+                "ready": "Prêt",
+                "failing": "En erreur",
+                "imported": "Importé"
+            }
+        }
+    },
+    "view": {
+        "form.import": {
+            "name": "Nouvel import bancaire",
+            "description": "Sélectionner un fichier CODA ou XLSX.",
+            "layout": {},
+            "actions": {}
+        },
+        "form.default": {
+            "name": "Import d'extraits bancaires",
+            "description": "Contrôle et résultat de l'import.",
+            "layout": {},
+            "actions": {
+                "action.check": {"label": "Contrôler"},
+                "action.import": {"label": "Importer"},
+                "action.remove": {"label": "Supprimer"}
+            }
+        },
+        "list.default": {
+            "name": "Imports d'extraits bancaires",
+            "description": "Liste des imports d'extraits bancaires.",
+            "layout": {},
+            "actions": {}
+        }
+    },
+    "error": {}
+}

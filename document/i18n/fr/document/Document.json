@@ -13,6 +13,26 @@
             "description": "Données binaires brutes du document.",
             "help": ""
         },
+        "is_origin": {
+            "label": "Document d'origine",
+            "description": "Indique que le document est à l'origine de traitements.",
+            "help": "Le document est une pièce primaire conservée telle quelle avec les données binaires originales importées ou générées."
+        },
+        "origin_document_id": {
+            "label": "Document d'origine",
+            "description": "Document importé à l'origine, le cas échéant.",
+            "help": "Lien facultatif vers le document original dont ce document est dérivé."
+        },
+        "origin_relation_type": {
+            "label": "Relation à l'origine",
+            "description": "Rôle de ce document par rapport à son document d'origine.",
+            "help": "Un rendu est généré pour afficher le document d'origine. Une pièce jointe est extraite du document d'origine.",
+            "selection": {
+                "rendering": "Rendu",
+                "attachment": "Pièce jointe",
+                "segment": "Segment"
+            }
+        },
         "content_type": {
             "label": "Type de média",
             "description": "Type MIME détecté à partir du contenu binaire.",

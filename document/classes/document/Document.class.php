@@ -32,6 +32,30 @@ class Document extends Model {
                 'dependents'        => ['hash', 'hash_sha256', 'content_type', 'content_size', 'extension', 'readable_size', 'preview_image']
             ],
 
+            'is_origin' => [
+                'type'              => 'boolean',
+                'default'           => false,
+                'readonly'          => true,
+                'description'       => 'Document is the origin of one or more processing.',
+                'help'              => 'Document is a primary attachment stored as-is with the original imported (or generated) binary data.'
+            ],
+
+            'origin_document_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'document\document\Document',
+                'description'       => 'Targets the originally imported document, if any.',
+                'help'              => 'Optional link to an original document the document derives from.'
+            ],
+
+            'origin_relation_type' => [
+                'type'              => 'string',
+                'selection'         => ['rendering', 'attachment', 'segment'],
+                'readonly'          => true,
+                'description'       => 'Role of this document relative to its origin document.',
+                'help'              => 'A rendering is generated for displaying the origin document. An attachment is extracted from the origin document.',
+                'visible'           => ['origin_document_id', '<>', null]
+            ],
+
             'content_type' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',

@@ -1,0 +1,54 @@
+{
+    "name": "Bank statement import",
+    "description": "Upload a CODA or XLSX document to import bank statements.",
+    "header": {
+        "actions": {
+            "ACTION.SAVE": [
+                {
+                    "id": "SAVE_AND_CLOSE",
+                    "view_id": "form.default",
+                    "visible": false
+                }
+            ],
+            "ACTION.CANCEL": false
+        }
+    },
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "0%",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "data",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "type": "upload",
+                                                    "autosave": true,
+                                                    "required": true,
+                                                    "height": "700"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

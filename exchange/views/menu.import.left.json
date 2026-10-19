@@ -25,6 +25,18 @@
                     "entity": "exchange\\import\\identity\\ContactImport",
                     "purpose": "create"
                 }
+            },
+            {
+                "id": "item.create-bank-statements-import",
+                "type": "entry",
+                "label": "New bank statements",
+                "icon": "account_balance",
+                "description": "Create an import of bank statements.",
+                "context": {
+                    "view": "form.import",
+                    "entity": "exchange\\import\\finance\\BankStatementImport",
+                    "purpose": "create"
+                }
             }
         ]
     }

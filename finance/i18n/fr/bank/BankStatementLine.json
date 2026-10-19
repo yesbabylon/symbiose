@@ -3,6 +3,21 @@
     "plural": "Lignes de Relevé Bancaire",
     "description": "",
     "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom calculé de la ligne du relevé bancaire.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Alias de la communication bancaire.",
+            "help": ""
+        },
+        "sequence_number": {
+            "label": "Numéro de séquence",
+            "description": "Position de la ligne dans le relevé bancaire.",
+            "help": ""
+        },
         "bank_statement_id": {
             "label": "Relevé bancaire",
             "description": "Le relevé bancaire auquel la ligne se rapporte.",
@@ -23,9 +38,54 @@
             "description": "Montant du paiement.",
             "help": ""
         },
+        "amount_currency": {
+            "label": "Devise",
+            "description": "Devise du montant de la transaction.",
+            "help": ""
+        },
+        "transaction_type": {
+            "label": "Type de transaction",
+            "description": "Type normalisé de la transaction bancaire.",
+            "help": ""
+        },
+        "communication": {
+            "label": "Communication",
+            "description": "Communication associée à la transaction.",
+            "help": ""
+        },
+        "communication_type": {
+            "label": "Type de communication",
+            "description": "Nature libre ou structurée de la communication.",
+            "help": ""
+        },
+        "mandate_identifier": {
+            "label": "Identifiant de mandat",
+            "description": "Identifiant du mandat de prélèvement SEPA.",
+            "help": ""
+        },
+        "remaining_amount": {
+            "label": "Montant restant",
+            "description": "Montant qui doit encore être affecté à des paiements.",
+            "help": ""
+        },
+        "is_reconciled": {
+            "label": "Réconciliée",
+            "description": "Indique si les paiements correspondent au montant de la ligne.",
+            "help": ""
+        },
         "account_iban": {
             "label": "Compte IBAN",
             "description": "IBAN à l'origine du paiement.",
+            "help": ""
+        },
+        "account_suffix": {
+            "label": "Suffixe du compte",
+            "description": "Identifiant complémentaire du compte de la contrepartie.",
+            "help": ""
+        },
+        "account_bic": {
+            "label": "Code BIC",
+            "description": "Code BIC du compte de la contrepartie.",
             "help": ""
         },
         "account_holder": {
@@ -52,6 +112,21 @@
         "message": {
             "label": "Communication",
             "description": "Communication complémentaire.",
+            "help": ""
+        },
+        "payments_ids": {
+            "label": "Paiements",
+            "description": "Paiements directement affectés à la ligne.",
+            "help": ""
+        },
+        "logs": {
+            "label": "Journal technique",
+            "description": "Journal de réconciliation et des futures générations.",
+            "help": ""
+        },
+        "is_suspense": {
+            "label": "Compte d'attente",
+            "description": "Indique que l'origine est inconnue ou incertaine.",
             "help": ""
         }
     },

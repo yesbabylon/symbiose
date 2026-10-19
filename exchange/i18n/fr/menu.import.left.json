@@ -1,0 +1,17 @@
+{
+    "description": "Menu des imports",
+    "view": {
+        "item.imports": {
+            "label": "Imports",
+            "help": ""
+        },
+        "item.create-contacts-import": {
+            "label": "Nouveaux contacts",
+            "help": ""
+        },
+        "item.create-bank-statements-import": {
+            "label": "Nouveaux extraits bancaires",
+            "help": ""
+        }
+    }
+}
