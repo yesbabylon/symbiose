@@ -1,0 +1,23 @@
+{
+    "name": "Template types",
+    "description": "List of template types.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "33%"
+            },
+            {
+                "type": "field",
+                "value": "code",
+                "width": "33%"
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "33%"
+            }
+        ]
+    }
+}

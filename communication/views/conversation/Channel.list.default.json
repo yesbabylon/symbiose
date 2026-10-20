@@ -1,0 +1,18 @@
+{
+    "name": "Channels",
+    "description": "List of conversation channels.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "50%"
+            },
+            {
+                "type": "field",
+                "value": "organization_id",
+                "width": "50%"
+            }
+        ]
+    }
+}
