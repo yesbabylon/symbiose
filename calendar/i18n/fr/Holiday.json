@@ -5,49 +5,48 @@
     "model": {
         "name": {
             "label": "Libellé",
-            "description": "",
-            "help": ""
+            "description": "Libellé du congé ou du jour férié.",
+            "help": "Utilisez un libellé permettant d'identifier clairement le congé ou le jour férié."
         },
         "date_from": {
             "label": "Date / Du",
-            "description": "Date / premier jour du congé.",
-            "help": ""
+            "description": "Date de début du congé.",
+            "help": "Pour un congé d'un seul jour, cette date est également utilisée comme date de fin."
         },
         "date_to": {
             "label": "Au",
-            "description": "Dernier jour du congé.",
-            "help": ""
+            "description": "Date de fin du congé.",
+            "help": "Ce champ est visible uniquement lorsque le congé s'étend sur plusieurs jours."
         },
         "is_single_day": {
             "label": "Un seul jour ?",
-            "description": "Le congé est-il un jour unique?",
-            "help": ""
+            "description": "Indique si le congé dure un seul jour.",
+            "help": "Lorsque cette option est activée, la date de fin reprend automatiquement la date de début."
         },
         "holiday_year_id": {
             "label": "Année",
-            "description": "Année sur laquelle porte le congé.",
-            "help": ""
+            "description": "Année d'éphémérides à laquelle appartient le congé.",
+            "help": "Sélectionnez la liste annuelle à laquelle le congé doit être rattaché."
         },
         "year": {
             "label": "Année",
-            "description": "Année sur laquelle porte le congé.",
-            "help": ""
+            "description": "Année civile à laquelle s'applique le congé.",
+            "help": "Cette valeur est calculée automatiquement à partir de l'année d'éphémérides associée."
         },
         "type": {
             "label": "Type",
-            "description": "Type d'opération auquel cette règle se rapporte.",
+            "description": "Catégorie du congé.",
             "selection": {
                 "school_vacation" : "Congé scolaire",
                 "public_holiday" : "Congé officiel"
 
             },
-            "help": ""
+            "help": "Sélectionnez « Congé scolaire » ou « Congé officiel » selon la nature du congé."
         }
         
     },
     "view": {       
     },
     "error": {
-
     }
 }
