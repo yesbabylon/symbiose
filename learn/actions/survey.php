@@ -66,7 +66,7 @@ try {
     $subject = '';
     // read template according to user requested language
     $file = "packages/learn/views/mail_survey_invite.html";
-    if(!($html = @file_get_contents($file, FILE_TEXT))) {
+    if(!($html = @file_get_contents($file))) {
         throw new Exception("missing_template", QN_ERROR_INVALID_CONFIG);
     }
 

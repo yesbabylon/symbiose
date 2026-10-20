@@ -87,10 +87,10 @@ class IpAddress extends Model {
         $result = [];
         $self->read(['ip_v4', 'ip_v6']);
         foreach($self as $id => $address) {
-            if(isset($address['ip_v4']) && strlen($address['ip_v4'] > 0)) {
+            if(isset($address['ip_v4']) && strlen($address['ip_v4']) > 0) {
                 $result[$id] = $address['ip_v4'];
             }
-            elseif(isset($address['ip_v6']) && strlen($address['ip_v6'] > 0)) {
+            elseif(isset($address['ip_v6']) && strlen($address['ip_v6']) > 0) {
                 $result[$id] = $address['ip_v6'];
             }
         }

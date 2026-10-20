@@ -875,8 +875,8 @@ class Document extends Model {
                     $new_width  = $target_width;
                 }
 
-                $offset_x  = round( ($target_width - $new_width) / 2 );
-                $offset_y  = round( ($target_height - $new_height) / 2 );
+                $offset_x  = (int) round( ($target_width - $new_width) / 2 );
+                $offset_y  = (int) round( ($target_height - $new_height) / 2 );
                 imagecopyresampled($dst_image, $src_image, $offset_x, $offset_y, 0, 0, $new_width, $new_height, $src_width, $src_height);
 
                 // get binary value of generated image
