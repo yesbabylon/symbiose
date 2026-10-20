@@ -779,7 +779,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
             // compute final result
             $points = round($time / (15 * 60), 2);
 
-            if(!is_numeric($points) || is_nan($points)) {
+            if(is_nan($points)) {
                 // should not occur
                 $logs[] = "ERROR - result is not a number";
                 $updates[$id] = [

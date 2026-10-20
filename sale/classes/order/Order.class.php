@@ -263,13 +263,13 @@ class Order extends Model {
             if($order['status'] == 'confirmed') {
 
 
-                file_put_contents('/var/www/html/log/errores.log', 'dentro del if de confime'. ".\n", FILE_APPEND | LOCK_EX);
+                file_put_contents('/var/www/html/log/errores.log', 'dentro del if de confirme'. ".\n", FILE_APPEND | LOCK_EX);
                 $contracts_ids = Contract::search([
                         ['order_id', '=', $id],
                         ['status', '=', 'signed']
                     ])->ids();
 
-                if(!$contracts_ids && count($contracts_ids) <= 0) {
+                if(count($contracts_ids) === 0) {
                     continue;
                 }
 

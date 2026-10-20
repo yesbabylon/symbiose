@@ -397,8 +397,10 @@ function displayPage($page) {
           case 'submit_button':
             // do not show on non-interactive output
             continue 2;
+            /*
             $content = $widget['content'].' >';
             break;
+            */
           case 'selector_wide':
           case 'selector':
             /*
@@ -434,14 +436,18 @@ function displayPage($page) {
           case 'tooltip':
             // do not show non-interactive output
             continue 2;
+            /*
             $tooltipcontent = $widget["content"];
             $content = "<div class=\"tooltip\">Tip!<span class=\"text\">{$tooltipcontent}</span></div>";
             break;
+            */
           case 'sound':
             // do not show non-interactive output
             continue 2;
+            /*
             $content = "<div class=\"sound-container\"><span>{$widget["content"]}</span><div class=\"play\"></div></div>";
             break;
+            */
           case 'video':
             // do not show non-interactive output
             // #todo : convert to PDF link URL

@@ -50,7 +50,7 @@ if($entry['status'] != 'draft') {
 TicketEntry::id($params['id'])->update(['status' => 'sent']);
 $ticket = Ticket::id($entry['ticket_id'])->read(['assignee_id'])->first();
 
-if(!isset($ticket['assignee_id']) || is_null($ticket['assignee_id'])) {
+if(is_null($ticket['assignee_id'])) {
     Ticket::id($entry['ticket_id'])->update(['assignee_id' => $user_id]);
 }
 

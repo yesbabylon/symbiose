@@ -409,6 +409,8 @@ class Order extends Model {
                     }
 
                     // create a debit line on account "taxes to pay"
+                    /*
+                    always 0.0 here...
                     if($debit_vat_sum > 0) {
                         $debit = round($debit_vat_sum, 2);
                         $credit = 0.0;
@@ -422,6 +424,7 @@ class Order extends Model {
                             'credit'        => $credit
                         ];
                     }
+                    */
 
                     // create a debit line on account "trade debtors"
                     $debit = round($prices_sum, 2);

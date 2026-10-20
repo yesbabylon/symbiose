@@ -11,8 +11,10 @@ $tests = [
         'test'        => function() {
             $columns = SubscriptionEntry::getColumns();
 
+            $subscription_entry = new ReflectionClass(SubscriptionEntry::class);
+
             return !isset($columns['object_class'])
-                && is_a(SubscriptionEntry::class, SaleEntry::class, true);
+                && $subscription_entry->isSubclassOf(SaleEntry::class);
         }
     ]
 ];

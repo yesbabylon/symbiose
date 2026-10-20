@@ -101,7 +101,7 @@ class Project extends Model {
         if(isset($event['has_sale_model']) && !$event['has_sale_model']) {
             $result['sale_model_id'] = null;
         }
-        if(isset($event['sale_model_id']) && !is_null($event['sale_model_id'])) {
+        if(isset($event['sale_model_id'])) {
             $result['has_sale_model'] = true;
         }
         if(isset($event['product_id'])) {

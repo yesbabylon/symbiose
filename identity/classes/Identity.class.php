@@ -301,10 +301,9 @@ class Identity extends IdentityAbstract {
                     $descriptor['class']::id($identity[$facet_field])->update($map);
                     // update backlink if required
                     if(isset($values[$facet_field])) {
-                        $descriptor['class']::id($identity[$facet_field])->update(['identity_id' => $id]);
-                        if(is_subclass_of($descriptor['class'], IdentityFacetAbstract::class)) {
-                            $descriptor['class']::id($identity[$facet_field])->do('sync_from_identity');
-                        }
+                        $descriptor['class']::id($identity[$facet_field])
+                            ->update(['identity_id' => $id])
+                            ->do('sync_from_identity');
                     }
                 }
                 if($sync_user && ($identity['user_id'] ?? null)) {
@@ -398,6 +397,7 @@ class Identity extends IdentityAbstract {
         return $result;
     }
 
+    /*
     private static function getCitiesByZip($zip, $country, $lang) {
         $result = null;
         $file = EQ_BASEDIR."/packages/identity/i18n/{$lang}/zipcodes/{$country}.json";
@@ -418,6 +418,7 @@ class Identity extends IdentityAbstract {
         }
         return $result;
     }
+    */
 
     /**
      * Check whether an object can be updated, and perform some additional operations if necessary.

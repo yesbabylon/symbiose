@@ -152,7 +152,7 @@ abstract class IdentityFacetAbstract extends IdentityAbstract {
                 $identity_id = null;
 
                 // VAT number (strong identifier)
-                if(!$identity_id && !empty($identity_values['vat_number'])) {
+                if(!empty($identity_values['vat_number'])) {
                     $existing = Identity::search([
                         ['vat_number', '=', $identity_values['vat_number']]
                     ])
