@@ -36,7 +36,7 @@ list($orm, $context, $spool, $auth) = [ $providers['orm'], $providers['context']
     Retrieve current user id
 */
 
-if(!isset($_COOKIE) || !isset($_COOKIE["wp_lms_user"]) || !is_numeric($_COOKIE["wp_lms_user"])) {
+if(!isset($_COOKIE["wp_lms_user"]) || !is_numeric($_COOKIE["wp_lms_user"])) {
     throw new Exception('unknown_user', QN_ERROR_NOT_ALLOWED);
 }
 
@@ -49,19 +49,19 @@ if($user_id <= 0) {
 $pack = Course::ids($params['course_id'])->read(['title'])->first();
 $user = [];
 
+$users = [];
+
 $db = $orm->getDb();
 $res = $db->getRecords(['wp_users'], ['user_email'], NULL, [ [ ['ID', '=', $user_id] ] ], 'ID', [], 0, 1);
 while ($row = $db->fetchArray($res)) {
     $users[] = $row;
 }
 
-if(count($users)) {
+if(count($users) > 0) {
     $user = array_pop($users);
 }
 
 try {
-
-
     // subject of the email should be defined in the template, as a <var> tag holding a 'title' attribute
     $subject = '';
     // read template according to user requested language

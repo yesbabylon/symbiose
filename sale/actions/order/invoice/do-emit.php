@@ -107,7 +107,7 @@ foreach($order['invoices_ids'] as $id => $order_invoice) {
 $sum_invoices = ($invoice['status'] == 'posted' && $invoice['invoice_type'] == 'invoice') ? $invoice['price'] : 0.0;
 
 foreach($order['invoices_ids'] as $oid => $odata) {
-    if($odata['status'] == 'posted' && $type == 'invoice') {
+    if($odata['status'] == 'posted' && $invoice['invoice_type'] == 'invoice') {
         $sum_invoices += ($odata['invoice_type'] == 'invoice') ? $odata['price'] : -($odata['price']);
     }
 }

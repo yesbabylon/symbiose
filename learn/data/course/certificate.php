@@ -40,7 +40,7 @@ list($context, $orm) = [ $providers['context'], $providers['orm']];
     Retrieve current user id
 */
 
-if(!isset($_COOKIE) || !isset($_COOKIE["wp_lms_user"]) || !is_numeric($_COOKIE["wp_lms_user"])) {
+if(!isset($_COOKIE["wp_lms_user"]) || !is_numeric($_COOKIE["wp_lms_user"])) {
   throw new Exception('unknown_user', QN_ERROR_NOT_ALLOWED);
 }
 

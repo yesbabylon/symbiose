@@ -171,6 +171,8 @@ class Payment extends Model {
             'invoice_id' => ['customer_id'],
         ];
 
+        $fundings_ids = [];
+
         $self->read(['funding_id', 'customer_id', 'funding_id' => $funding_fields, 'amount', 'statement_line_id']);
         foreach($self as $id => $payment) {
             if($payment['funding_id']) {
@@ -187,7 +189,9 @@ class Payment extends Model {
             }
         }
 
-        Funding::ids($fundings_ids)->read(['is_paid', 'paid_amount']);
+        if(!empty($fundings_ids)) {
+            Funding::ids($fundings_ids)->read(['is_paid', 'paid_amount']);
+        }
     }
 
     public static function canupdate($self, $values) {

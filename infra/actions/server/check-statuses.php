@@ -43,7 +43,12 @@ $servers = Server::search([
     ])
     ->get();
 
-$serverAlertPolicies = AlertPolicy::search(['alert_type', 'in', ['all', $server['server_type']]])
+$map_server_types = [];
+foreach($servers as $server) {
+    $map_server_types[$server['server_type']] = true;
+}
+
+$serverAlertPolicies = AlertPolicy::search(['alert_type', 'in', array_merge(['all'], array_keys($map_server_types))])
     ->read([
         'id',
         'name',
@@ -76,7 +81,7 @@ foreach($servers as $server) {
     $max_repetition = 1;
     foreach($serverAlertPolicies as $policy) {
         foreach($policy['alert_triggers_ids'] as $trigger) {
-            $max_repetition = max($max_repetition, $alert_trigger['repetition']);
+            $max_repetition = max($max_repetition, $trigger['repetition']);
         }
     }
 

@@ -31,24 +31,22 @@ list($params, $providers) = eQual::announce([
 list($context, $dispatch) = [ $providers['context'], $providers['dispatch']];
 
 $subscription = Subscription::id($params['id'])
-    ->read([
-        'id',
-        'is_expired',
-        'has_upcoming_expiry',
-    ])
+    ->read(['is_expired', 'has_upcoming_expiry'])
     ->first(true);
 
-$httpResponse = $context->httpResponse()->status(200);
+$httpResponse = $context->httpResponse();
 
+$result = null;
 if($subscription['is_expired'] || $subscription['has_upcoming_expiry']) {
     $result = $subscription['id'];
     $dispatch->dispatch('sale.subscription.check.expiration', 'sale\subscription\Subscription', $subscription['id'], 'important', 'sale_subscription_check-expiration', ['id' => $params['id']], [], null, null);
-    $httpResponse->status(qn_error_http(QN_ERROR_NOT_ALLOWED));
+    $httpResponse->status(eq_error_http(EQ_ERROR_NOT_ALLOWED));
 }
 else {
     $dispatch->cancel('sale.subscription.check.expiration', 'sale\subscription\Subscription', $subscription['id']);
 }
 
-$httpResponse->body($result)
-             ->send();
+$httpResponse
+    ->body($result)
+    ->send();
 

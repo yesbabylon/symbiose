@@ -709,16 +709,11 @@ class TimeEntry extends SaleEntry {
         }
     }
     protected static function calcProductId($self) {
+        $result = [];
         $saleModel = SaleModel::id(1)->read(['product_id'])->first();
         $self->read(['project_id' => ['sale_model_id' => ['product_id']]]);
         foreach($self as $id => $timeEntry) {
-            if($timeEntry['project_id']['sale_model_id']['product_id'] ?? null) {
-                $result[$id] = $timeEntry['project_id']['sale_model_id']['product_id'];
-            }
-            else {
-                // fallback to default product (from default sale model)
-                $result[$id] = $saleModel['product_id'];
-            }
+            $result[$id] = $timeEntry['project_id']['sale_model_id']['product_id'] ?? $saleModel['product_id'];
         }
         return $result;
     }

@@ -19,6 +19,7 @@ parameters:
     scanDirectories:
         - ../lib
         - ../packages/core
-    scanFiles:
+    bootstrapFiles:
         - ../eq.lib.php
+    scanFiles:
         - ../run.php

@@ -30,6 +30,11 @@ list($params, $providers) = eQual::announce([
     'providers'     => ['context', 'orm', 'auth']
 ]);
 
+/**
+ * @var \equal\php\Context $context
+ */
+['context' => $context] = $providers;
+
 $module = eQual::run('get', 'learn_module', ['lang' => $params['lang'], 'id' => $params['id']]);
 
 
