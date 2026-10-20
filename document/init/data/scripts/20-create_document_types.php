@@ -200,11 +200,22 @@ $createDocumentType([
 
 $createDocumentType([
         'name'        => [
+            'fr' => 'Facture de vente',
+            'en' => 'Sales invoice',
+            'nl' => 'Verkoopfactuur'
+        ],
+        'code'        => 'sale_invoice',
+        'folder_code' => 'customer_invoices',
+        'description' => 'Facture de vente émise à un client.'
+    ]);
+
+$createDocumentType([
+        'name'        => [
             'fr' => 'Facture fournisseur',
             'en' => 'Supplier invoice',
             'nl' => 'Leveranciersfactuur'
         ],
-        'code'        => 'supplier_invoice',
+        'code'        => 'purchase_invoice',
         'folder_code' => 'supplier_invoices',
         'description' => 'Document comptable à comptabiliser et à réconcilier.'
     ],
@@ -236,6 +247,28 @@ $createDocumentType([
             'code'        => 'off_contract',
             'folder_code' => 'supplier_invoices'
         ]
+    ]);
+
+$createDocumentType([
+        'name'        => [
+            'fr' => 'Note de crédit sur vente',
+            'en' => 'Sales credit note',
+            'nl' => 'Verkoopcreditnota'
+        ],
+        'code'        => 'sale_credit_note',
+        'folder_code' => 'customer_invoices',
+        'description' => 'Note de crédit sur vente émise à un client.'
+    ]);
+
+$createDocumentType([
+        'name'        => [
+            'fr' => 'Note de crédit sur achat',
+            'en' => 'Purchase credit note',
+            'nl' => 'Aankoopcreditnota'
+        ],
+        'code'        => 'purchase_credit_note',
+        'folder_code' => 'supplier_invoices',
+        'description' => 'Note de crédit reçue d\'un fournisseur.'
     ]);
 
 $createDocumentType([

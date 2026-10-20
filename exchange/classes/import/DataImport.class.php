@@ -46,10 +46,11 @@ class DataImport extends Model {
                 'type'              => 'string',
                 'selection'         => [
                     'banks_import',
-                    'bank_statement',
                     'contacts_import',
                     'customers_import',
                     'suppliers_import',
+                    'bank_statement',
+                    'purchase_invoice'
                 ],
                 'description'       => 'Targeted type of the import.',
                 'required'          => true

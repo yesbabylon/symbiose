@@ -24,7 +24,7 @@ class BankStatementImport extends DataImport {
             'import_type' => [
                 'type'              => 'string',
                 'description'       => 'Forced type of import.',
-                'default'           => 'bank_statement_import'
+                'default'           => 'bank_statement'
             ]
         ];
     }
