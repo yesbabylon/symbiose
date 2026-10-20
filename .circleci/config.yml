@@ -46,7 +46,7 @@ jobs:
       # import test data
       - run: php run.php --do=init_package --package=symbiose --force=true --import=false --test=true
       # Run static analysis
-      - run: ~/repo/vendor/bin/phpstan analyse --no-progress --level=0 --memory-limit=-1 --configuration=packages/phpstan.neon
+      - run: ~/repo/vendor/bin/phpstan analyse --no-progress --level=5 --memory-limit=-1 --configuration=packages/phpstan.neon
       # Run tests
       - run: php run.php --do=test_package --package=symbiose
       # export logs on failure
