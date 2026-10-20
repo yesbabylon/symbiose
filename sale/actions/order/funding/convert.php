@@ -101,10 +101,11 @@ $price_lists_ids = PriceList::search(
 
 $vat_rate = 0.0;
 foreach($price_lists_ids as $price_list_id) {
-    $prices_ids = Price::search([ ['price_list_id', '=', $price_list_id], ['product_id', '=', $downpayment_product['id']]])->get();
-    if($prices_ids) {
-        $prices = Price::ids($prices_ids)->read(['vat_rate']);
-        $price = reset($prices);
+    $price = Price::search([ ['price_list_id', '=', $price_list_id], ['product_id', '=', $downpayment_product['id']]])
+        ->read(['vat_rate'])
+        ->first();
+
+    if($price) {
         $vat_rate = $price['vat_rate'];
     }
 }
