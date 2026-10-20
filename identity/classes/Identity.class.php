@@ -420,7 +420,7 @@ class Identity extends IdentityAbstract {
     }
 
     /**
-     * Check wether an object can be updated, and perform some additional operations if necessary.
+     * Check whether an object can be updated, and perform some additional operations if necessary.
      * This method can be overridden to define a more precise set of tests.
      *
      * @param  object   $om         ObjectManager instance.

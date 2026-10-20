@@ -299,14 +299,6 @@ class Order extends Model {
         return parent::canupdate($om, $ids, $values, $lang);
     }
 
-    /**
-     * Check wether an object can be deleted.
-     * This method can be overriden to define a more precise set of tests.
-     *
-     * @param  ObjectManager    $om         ObjectManager instance.
-     * @param  array            $oids       List of objects identifiers.
-     * @return array            Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
-     */
     public static function candelete($om, $oids) {
         $orders = $om->read(self::getType(), $oids, [ 'price' ]);
 
@@ -326,7 +318,7 @@ class Order extends Model {
      *
      * @param  \equal\orm\ObjectManager    $om         ObjectManager instance.
      * @param  array                       $oids       List of objects identifiers.
-     * @param  array                       $lines_ds   Filtered list of identifiers of lines that must generate entries.
+     * @param  array                       $lines_ids  Filtered list of identifiers of lines that must generate entries.
      * @param  string                      $lang       Language code in which to process the request.
      * @return array                       Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
      */

@@ -327,7 +327,7 @@ class Report extends \equal\orm\Model {
 
     /**
      * Compute the value of the date_from` field: the day following the date_to of the previous report, or 01/01/2023 if none exists.
-     * @var \equal\orm\Collection $self
+     * @param \equal\orm\Collection $self
      */
     public static function calcDateFrom($self) {
         $result = [];
@@ -494,10 +494,10 @@ class Report extends \equal\orm\Model {
     }
 
     /**
-     * Check wether an object can be updated, and perform some additional operations if necessary.
+     * Check whether an object can be updated, and perform some additional operations if necessary.
      * This method can be overridden to define a more precise set of tests.
      *
-     * @var \equal\orm\Collection $self
+     * @param \equal\orm\Collection $self
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
     public static function cancreate($self, $values): array {
