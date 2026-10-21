@@ -47,6 +47,24 @@ jobs:
       - run: php run.php --do=init_package --package=symbiose --force=true --import=false --test=true
       # Run static analysis
       - run: ~/repo/vendor/bin/phpstan analyse --no-progress --level=5 --memory-limit=-1 --configuration=packages/phpstan.neon
+      # Run package consistency check
+      - run: php run.php --do=test_package-consistency --package=calendar
+      - run: php run.php --do=test_package-consistency --package=communication
+      - run: php run.php --do=test_package-consistency --package=document
+      - run: php run.php --do=test_package-consistency --package=exchange
+      - run: php run.php --do=test_package-consistency --package=finance
+      - run: php run.php --do=test_package-consistency --package=hr
+      - run: php run.php --do=test_package-consistency --package=identity
+      - run: php run.php --do=test_package-consistency --package=infra
+      - run: php run.php --do=test_package-consistency --package=inventory
+      - run: php run.php --do=test_package-consistency --package=learn
+      - run: php run.php --do=test_package-consistency --package=purchase
+      - run: php run.php --do=test_package-consistency --package=realestate
+      - run: php run.php --do=test_package-consistency --package=sale
+      - run: php run.php --do=test_package-consistency --package=stats
+      - run: php run.php --do=test_package-consistency --package=support
+      - run: php run.php --do=test_package-consistency --package=symbiose
+      - run: php run.php --do=test_package-consistency --package=timetrack
       # Run tests
       - run: php run.php --do=test_package --package=symbiose
       # export logs on failure
