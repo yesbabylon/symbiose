@@ -55,7 +55,7 @@ class RentalUnit extends Model {
             'category' => [
                 'type'              => 'string',
                 'selection'         => ['hostel', 'lodge'],
-                'description'       => 'Type of rental unit (that usually comes with extra accommodations, ie meals; or rented as is).',
+                'description'       => 'Rental type, often with extras like meals, or rented as is.',
                 'default'           => 'hostel'
             ],
 
@@ -93,14 +93,14 @@ class RentalUnit extends Model {
 
             'can_partial_rent' => [
                 'type'              => 'boolean',
-                'description'       => 'Flag to mark the unit as rentable partially (when children units).',
+                'description'       => 'Flag: unit can be partially rented (via its child units).',
                 'visible'           => [ 'has_children', '=', true ],
                 'default'           => false
             ],
 
             'children_ids' => [
                 'type'              => 'one2many',
-                'description'       => "The list of rental units the current unit can be divided into, if any (i.e. a dorm might be rent as individual beds).",
+                'description'       => "Rental units this unit can be split into (e.g. dorm beds).",
                 'foreign_object'    => 'realestate\RentalUnit',
                 'foreign_field'     => 'parent_id'
             ],
@@ -137,20 +137,6 @@ class RentalUnit extends Model {
                 ],
                 'description'       => 'Action required for the rental unit.',
                 'default'           => 'none'
-            ],
-
-            'consumptions_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'sale\booking\Consumption',
-                'foreign_field'     => 'rental_unit_id',
-                'description'       => "The consumptions that relate to the rental unit."
-            ],
-
-            'composition_items_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'sale\booking\CompositionItem',
-                'foreign_field'     => 'rental_unit_id',
-                'description'       => "The composition items that relate to the rental unit."
             ],
 
             'rental_unit_category_id' => [

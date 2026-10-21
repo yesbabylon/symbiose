@@ -6,12 +6,12 @@
         "name": {
             "label": "Nom",
             "description": "Nom de l'untié.",
-            "help": ""
+            "help": "Nom complet de l'unité locative."
         },
         "order": {
             "label": "Ordre",
-            "description": "Valeur arbitraire pour odonner les unités locatives.",
-            "help": ""
+            "description": "Valeur arbitraire pour ordonner les unités locatives.",
+            "help": "Définir un ordre de priorité de l'unité locative."
         },
         "type": {
             "label": "Type",
@@ -25,7 +25,7 @@
                 "room": "Salle",
                 "FFE": "Mobilier, accessoires et équipement"
             },
-            "help": ""
+            "help": "Type de l'unité locative permettant de la distinguer."
         },
         "rental_unit_category_id": {
             "label": "Catégorie",
@@ -35,32 +35,32 @@
         "capacity": {
             "label": "Capacité",
             "description": "Le nombre de personnes pouvant séjourner dans l'unité.",
-            "help": ""
+            "help": "Définissez la capacité d'accueille de l'unité locative."
         },
         "is_accommodation": {
             "label": "Logement",
             "description": "L'unité locative est un logement.",
-            "help": ""
+            "help": "Est-ce que l'unité locative est un logement."
         },
         "has_children": {
             "label": "Sous-unités",
             "description": "Drapeau indiquant que l'unité a des sous-unités.",
-            "help": ""
+            "help": "Est-ce que l'unité locative a des sous-unités."
         },
         "has_parent": {
             "label": "A parent",
             "description": "Drapeau indiquant que l'unité a des sous-unités.",
-            "help": ""
+            "help": "Est-ce que l'unité locative est parente et a des unités locatives."
         },
         "can_rent": {
             "label": "Peut être loué",
             "description": "Unité disponible à la location ?",
-            "help": ""
+            "help": "Est-ce que l'unité locative peut être louée."
         },
         "can_partial_rent": {
             "label": "Location partielle ?",
             "description": "L'unité peut être louée partiellement.",
-            "help": ""
+            "help": "Est-ce que l'unité locative peut être louée partiellement."
         },
         "children_ids": {
             "label": "Sous-unités",
@@ -80,8 +80,8 @@
                 "busy_part": "Partiellement occupé",
                 "ooo": "En dérangement"
             },
-            "description": "",
-            "help": ""
+            "description": "Status de l'unité locative.",
+            "help": "Le status actuel de l'unité locative."
         },
         "action_required": {
             "label": "Action requise",
@@ -90,8 +90,8 @@
                 "cleanup_daily": "Nettoyage quotidien",
                 "cleanup_full": "Nettoyage complet"
             },
-            "description": "",
-            "help": ""
+            "description": "L’intervention requise sur le logement locatif.",
+            "help": "L’intervention qui sera éventuellement requise sur le logement locatif."
         }
     },
     "view": {
