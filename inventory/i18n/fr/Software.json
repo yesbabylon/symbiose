@@ -6,52 +6,52 @@
         "name": {
             "label": "Nom",
             "description": "Nom du logiciel.",
-            "help": ""
+            "help": "Indiquez un nom permettant d'identifier le logiciel."
         },
         "description": {
             "label": "Description",
             "description": "Description du logiciel.",
-            "help": ""
+            "help": "Décrivez la fonction ou l'usage du logiciel."
         },
         "edition": {
             "label": "Édition",
             "description": "Édition du logiciel.",
-            "help": ""
+            "help": "Indiquez l'édition installée du logiciel."
         },
         "version": {
             "label": "Version",
             "description": "Version du logiciel.",
-            "help": ""
+            "help": "Indiquez la version installée du logiciel."
         },
         "customer_id": {
             "label": "Client",
             "description": "Client propriétaire du logiciel.",
-            "help": ""
+            "help": "Sélectionnez le client propriétaire du logiciel."
         },
         "instance_id": {
             "label": "Instance",
             "description": "Instance sur laquelle le logiciel est installé.",
-            "help": ""
+            "help": "Sélectionnez l'instance sur laquelle le logiciel est installé."
         },
         "server_id": {
             "label": "Serveur",
             "description": "Serveur sur lequel le logiciel est installé.",
-            "help": ""
+            "help": "Sélectionnez le serveur sur lequel le logiciel est installé."
         },
         "product_id": {
             "label": "Produit",
             "description": "Produit duquel le logiciel fait partie.",
-            "help": ""
+            "help": "Sélectionnez le produit auquel le logiciel appartient."
         },
         "service_id": {
             "label": "Service",
             "description": "Service duquel le logiciel fait partie.",
-            "help": ""
+            "help": "Sélectionnez le service auquel le logiciel appartient."
         },
         "accesses_ids": {
             "label": "Accès",
             "description": "Accès au logiciel.",
-            "help": ""
+            "help": "Ajoutez les accès permettant de se connecter au logiciel."
         }
     },
     "view": {
