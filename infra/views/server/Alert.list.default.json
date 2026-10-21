@@ -1,0 +1,33 @@
+{
+    "name": "Alerts",
+    "description": "Default list of monitoring alerts.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "alert_policy_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "server_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "instance_id",
+                "width": "20%"
+            }
+        ]
+    }
+}

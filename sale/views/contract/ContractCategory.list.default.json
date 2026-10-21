@@ -1,0 +1,23 @@
+{
+    "name": "Model",
+    "description": "Interface for model definition classes.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "33%"
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "33%"
+            },
+            {
+                "type": "field",
+                "value": "is_active",
+                "width": "33%"
+            }
+        ]
+    }
+}

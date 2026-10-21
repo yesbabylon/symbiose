@@ -1,0 +1,38 @@
+{
+    "name": "User accesses",
+    "description": "Default list of course access grants.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "code",
+                "width": "14%"
+            },
+            {
+                "type": "field",
+                "value": "code_alpha",
+                "width": "14%"
+            },
+            {
+                "type": "field",
+                "value": "course_id",
+                "width": "14%"
+            },
+            {
+                "type": "field",
+                "value": "master_user_id",
+                "width": "14%"
+            },
+            {
+                "type": "field",
+                "value": "user_id",
+                "width": "14%"
+            },
+            {
+                "type": "field",
+                "value": "is_complete",
+                "width": "14%"
+            }
+        ]
+    }
+}

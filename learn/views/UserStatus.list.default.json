@@ -1,0 +1,43 @@
+{
+    "name": "User statuses",
+    "description": "Default list of learner module progress records.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "course_id",
+                "width": "12%"
+            },
+            {
+                "type": "field",
+                "value": "module_id",
+                "width": "12%"
+            },
+            {
+                "type": "field",
+                "value": "user_id",
+                "width": "12%"
+            },
+            {
+                "type": "field",
+                "value": "chapter_index",
+                "width": "12%"
+            },
+            {
+                "type": "field",
+                "value": "page_index",
+                "width": "12%"
+            },
+            {
+                "type": "field",
+                "value": "page_count",
+                "width": "12%"
+            },
+            {
+                "type": "field",
+                "value": "is_complete",
+                "width": "12%"
+            }
+        ]
+    }
+}
