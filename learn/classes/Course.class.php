@@ -91,7 +91,7 @@ class Course extends Model
 				'rel_table'       => 'learn_rel_lang_course',
 				'rel_foreign_key' => 'lang_id',
 				'rel_local_key'   => 'course_id',
-				'description'     => "List of languages in which the program is available"
+				'description'     => "List of languages in which the program is available."
 			]
 
 		];

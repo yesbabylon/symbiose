@@ -44,7 +44,8 @@ class UserAccess extends Model
 
             'master_user_id' => [
                 'type'        => 'integer',
-                'description' => 'External user identifier of the master account (for multiaccounts). If a company has bought a course for its employees, the master account is the one that has bought the course.',
+                'description' => 'External identifier of the account that purchased the course.',
+                'help'        => 'For multi-account access, this is the account that purchased the course for its users.',
                 'default'     => 1
             ],
 
