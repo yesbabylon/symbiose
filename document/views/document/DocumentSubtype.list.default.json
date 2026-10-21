@@ -1,0 +1,48 @@
+{
+    "name": "Document subtypes",
+    "description": "List of document subtypes.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "12%"
+            },
+            {
+                "type": "field",
+                "value": "uuid",
+                "width": "12%"
+            },
+            {
+                "type": "field",
+                "value": "code",
+                "width": "12%"
+            },
+            {
+                "type": "field",
+                "value": "folder_code",
+                "width": "12%"
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "12%"
+            },
+            {
+                "type": "field",
+                "value": "document_type_id",
+                "width": "12%"
+            },
+            {
+                "type": "field",
+                "value": "document_type_uuid",
+                "width": "12%"
+            },
+            {
+                "type": "field",
+                "value": "document_visibility",
+                "width": "12%"
+            }
+        ]
+    }
+}
