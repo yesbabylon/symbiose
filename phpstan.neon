@@ -9,6 +9,7 @@ parameters:
         - ../packages/calendar
         - ../packages/communication
         - ../packages/document
+        - ../packages/exchange
         - ../packages/finance
         - ../packages/hr
         - ../packages/identity
