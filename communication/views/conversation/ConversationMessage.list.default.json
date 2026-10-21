@@ -1,0 +1,33 @@
+{
+    "name": "Conversation messages",
+    "description": "List of conversation messages.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "moment",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "user_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "content",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "conversation_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            }
+        ]
+    }
+}

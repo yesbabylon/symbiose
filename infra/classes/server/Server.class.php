@@ -49,7 +49,7 @@ class Server extends Model {
 
             'up' => [
                 'type'              => 'boolean',
-                'description'       => 'Is the server currently up, is set according to the last infra\server\Status retrieval.',
+                'description'       => 'Whether the latest status check found the server reachable.',
                 'default'           => false,
                 'onupdate'          => 'onupdateUp'
             ],

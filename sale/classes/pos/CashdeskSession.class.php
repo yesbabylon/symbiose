@@ -115,7 +115,7 @@ class CashdeskSession extends Model {
 
 
     /**
-     * Check wether an object can be updated.
+     * Check whether an object can be updated.
      * These tests come in addition to the unique constraints return by method `getUnique()`.
      * This method can be overriden to define a more precise set of tests.
      *

@@ -49,9 +49,10 @@ if(empty($params['ids'])) {
 }
 
 $receivables_queues = ReceivablesQueue::ids($params['ids'])
-    ->read(['id']);
+    ->read(['id'])
+    ->get();
 
-if(!$receivables_queues) {
+if(count($receivables_queues) === 0) {
     throw new Exception('unknown_receivables_queue', QN_ERROR_UNKNOWN_OBJECT);
 }
 

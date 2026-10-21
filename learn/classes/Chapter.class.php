@@ -53,7 +53,6 @@ class Chapter extends Model {
                 'description'       => 'Module the chapter relates to.',
                 'required'          => true,
                 'ondelete'          => 'cascade',         // delete chapter when parent module is deleted
-                'onupdate'          => 'onupdateModuleId'
             ],
 
             'page_count' => [
@@ -109,15 +108,4 @@ class Chapter extends Model {
         }
         $orm->read('learn\Module', array_keys($modules_ids), ['page_count'], $lang);
     }
-
-
-    public static function onupdateModuleId($om, $oids, $values, $lang) {
-        $chapters = $om->read(__CLASS__, $oids, ['module_id'], $lang);
-
-        foreach($chapters as $oid => $chapter) {
-            Module::onchangeChaptersIds($om, $chapter['module_id'], $lang);
-        }
-    }
-
-
 }

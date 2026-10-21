@@ -7,27 +7,27 @@
         "name": {
             "label": "Nom",
             "description": "Nom de l'établissement.",
-            "help": ""
+            "help": "Indiquez le nom usuel de l'établissement."
         },
         "organization_id": {
             "label": "Organisation",
             "description": "L'organisation à laquelle appartient l'établissement.",
-            "help": ""
+            "help": "Sélectionnez l'organisation dont dépend cet établissement."
         },
         "phone": {
             "label": "Téléphone",
             "description": "Numéro de téléphone de contact officiel.",
-            "help": ""
+            "help": "Indiquez le numéro de téléphone officiel de l'établissement."
         },
         "email": {
             "label": "Email",
             "description": "Adresse e-mail de contact officielle.",
-            "help": ""
+            "help": "Indiquez l'adresse e-mail officielle de l'établissement."
         },
         "address_street": {
             "label": "Rue",
             "description": "Rue et numéro de l'adresse d'établissement.",
-            "help": ""
+            "help": "Indiquez la rue et le numéro de l'établissement."
         },
         "address_dispatch": {
             "label": "Complément d'adresse",
@@ -37,42 +37,42 @@
         "address_city": {
             "label": "Ville",
             "description": "Ville dans laquelle se situe l'établissement.",
-            "help": ""
+            "help": "Indiquez la ville dans laquelle se situe l'établissement."
         },
         "address_zip": {
             "label": "Code postal",
             "description": "Code Postal.",
-            "help": ""
+            "help": "Indiquez le code postal de l'établissement."
         },
         "address_state": {
             "label": "État",
             "description": "État ou région.",
-            "help": ""
+            "help": "Indiquez l'état ou la région de l'établissement."
         },
         "address_country": {
             "label": "Pays",
             "description": "Pays dans lequel se situe l'établissement.",
-            "help": ""
+            "help": "Sélectionnez le pays dans lequel se situe l'établissement."
         },
         "registration_number": {
             "label": "Numéro d'enregistrement",
             "description": "Numéro d'unité de l'établissement.",
-            "help": ""
+            "help": "Indiquez le numéro officiel attribué à l'unité d'établissement."
         },
         "bank_account_iban": {
             "label": "IBAN",
             "description": "Numéro de compte bancaire au format international.",
-            "help": ""
+            "help": "Indiquez l'IBAN du compte bancaire de l'établissement."
         },
         "bank_account_bic": {
             "label": "BIC",
             "description": "Numéro d'identification de la banque.",
-            "help": ""
+            "help": "Indiquez le code BIC de la banque liée au compte."
         },
         "analytic_section_id":{
             "label":"Section analytique", 
             "description": "Code de la section analytique associée.",
-            "help": ""
+            "help": "Sélectionnez la section analytique associée à l'établissement."
         }
     },
     "view": {

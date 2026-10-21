@@ -40,7 +40,6 @@ class SaleModel extends Model {
             'has_price' => [
                 'type'           => 'boolean',
                 'description'    => 'Flag telling if a fixed sale model applies to the project.',
-                'instant'        => true,
                 'default'        => false
             ],
 

@@ -34,13 +34,6 @@ class FundingPlan extends Model {
                 'description'       => "The rate class that applies to the payment plan."
             ],
 
-            'booking_type_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\booking\BookingType',
-                'description'       => "Filter for selecting the plan according to booking type.",
-                'default'           => 1                // default to 'general public'
-            ],
-
             'payment_deadlines_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\pay\PaymentDeadline',

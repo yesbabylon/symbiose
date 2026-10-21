@@ -125,12 +125,12 @@ try {
                     $value = $text_adapter->adaptIn($value, 'phone');
                     break;
                 case 'address_country':
-                    if(!is_null($value)) {
+                    if(!empty($value)) {
                         $value = strtoupper(trim((string) $value));
                     }
                     break;
                 default:
-                    if(!is_null($value)) {
+                    if(!empty($value)) {
                         $value = trim((string) $value);
                     }
             }

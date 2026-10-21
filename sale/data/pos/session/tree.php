@@ -53,7 +53,7 @@ $tree = [
 
 $cashdesksessions = CashdeskSession::id($params['id'])->read($tree)->adapt('txt')->get(true);
 
-if(!$cashdesksessions || !count($cashdesksessions)) {
+if(count($cashdesksessions) === 0) {
     throw new Exception("unknown_order", QN_ERROR_UNKNOWN_OBJECT);
 }
 

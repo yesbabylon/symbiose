@@ -5,18 +5,17 @@
     "model": {
         "name": {
             "label": "Libellé",
-            "description": "",
-            "help": ""
+            "description": "Libellé de la liste annuelle d'éphémérides.",
+            "help": "Utilisez un libellé permettant d'identifier clairement cette liste annuelle."
         },
         "year": {
             "label": "Année",
-            "description": "Année de listes d'éphémérides.",
-            "help": ""
+            "description": "Année civile couverte par la liste d'éphémérides.",
+            "help": "Les congés et jours fériés rattachés à cette liste s'appliquent à cette année."
         }        
     },
     "view": {       
     },
     "error": {
-
     }
 }

@@ -28,7 +28,7 @@ class ContractLine extends Model {
 
             'description' => [
                 'type'              => 'string',
-                'description'       => 'Complementary description of the line. If set, replaces the product name.',
+                'description'       => 'Additional line description. If set, replaces the product name.',
                 'default'           => ''
             ],
 

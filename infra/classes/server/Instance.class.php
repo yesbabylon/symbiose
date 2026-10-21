@@ -80,7 +80,7 @@ class Instance extends Model {
 
             'up' => [
                 'type'              => 'boolean',
-                'description'       => 'Is the instance currently up, is set according to the last infra\server\Status retrieval.',
+                'description'       => 'Whether the latest status check found the instance reachable.',
                 'default'           => false
             ],
 

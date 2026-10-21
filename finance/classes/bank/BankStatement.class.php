@@ -95,7 +95,7 @@ class BankStatement extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:2',
-                'description'       => 'Expected opening balance based on the previous statement for the same account.',
+                'description'       => 'Expected opening balance based on the previous statement.',
                 'function'          => 'calcExpectedOpeningBalance',
                 'store'             => false,
                 'readonly'          => true
@@ -131,7 +131,7 @@ class BankStatement extends Model {
             'is_reconciled' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'description'       => 'A statement is reconciled when all its lines are reconciled or ignored.',
+                'description'       => 'Whether all statement lines are reconciled or ignored.',
                 'function'          => 'calcIsReconciled',
                 'store'             => true
             ],
@@ -152,7 +152,7 @@ class BankStatement extends Model {
             ],
             'is_exported' => [
                 'type'              => 'boolean',
-                'description'       => 'Flag for marking statement as exported (for import in external tool).',
+                'description'       => 'Whether the statement was exported to an external tool.',
                 'default'           => false
             ],
             // CODA statements can contain either an IBAN or a Belgian BBAN.

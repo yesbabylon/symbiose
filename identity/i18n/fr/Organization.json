@@ -11,7 +11,7 @@
         "image_document_id": {
             "label": "Image ou Logo",
             "description": "Image de l'organisation affiché dans les en-têtes officiels.",
-            "help": ""
+            "help": "Sélectionnez le logo à afficher sur les documents officiels."
         }
     },
     "view": {

@@ -201,7 +201,7 @@ $ensure_section = static function(string $section) use ($orm): int {
     ]);
 };
 
-$ensure_setting = static function(array $source_setting, array $target) use ($orm, $ensure_section, $get_setting_id): ?int {
+$ensure_setting = static function(array $source_setting, array $target) use ($orm, $ensure_section, $get_setting_id): int {
     $target_setting_id = $get_setting_id($target);
 
     if($target_setting_id) {

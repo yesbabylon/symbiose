@@ -69,7 +69,7 @@ class AlertTrigger extends Model {
 
             'key' => [
                 'type'              => 'string',
-                'description'       => "Name of the server status data used for the check if the alert must be triggered.",
+                'description'       => "Status key evaluated to determine whether the alert triggers.",
                 'help'              => "A selection is applied when trigger_type is changed. Some status data keys are only available for certain types of servers (@see MAP_STATUS_KEYS_TYPES).",
                 'required'          => true,
                 'dependents'        => ['name'],
@@ -111,7 +111,6 @@ class AlertTrigger extends Model {
                 'type'              => 'integer',
                 'description'       => "Number of repetitions needed for the alert to be triggered.",
                 'help'              => "If repetition is 1, then the trigger must match twice in a row.",
-                'min'               => 1,
                 'default'           => 1,
                 'dependents'        => ['name']
             ]
@@ -216,4 +215,3 @@ class AlertTrigger extends Model {
         ];
     }
 }
-

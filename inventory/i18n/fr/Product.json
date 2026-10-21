@@ -6,42 +6,42 @@
         "name": {
             "label": "Nom",
             "description": "Nom du produit.",
-            "help": ""
+            "help": "Indiquez un nom permettant d'identifier le produit."
         },
         "description": {
             "label": "Description",
             "description": "Description du produit.",
-            "help": ""
+            "help": "Décrivez la fonction et le périmètre du produit."
         },
         "is_internal": {
             "label": "Interne",
             "description": "Le produit est interne à l'entreprise.",
-            "help": "Le produit fait partie de l'infrasture de l'entreprise (et pas de celle d'un client)."
+            "help": "Le produit fait partie de l'infrastructure de l'entreprise (et pas de celle d'un client)."
         },
         "customer_id": {
             "label": "Client",
             "description": "Client à qui appartient le produit.",
-            "help": ""
+            "help": "Sélectionnez le client propriétaire du produit."
         },
         "servers_ids": {
             "label": "Serveurs",
             "description": "Serveurs utilisés afin de proposer le produit.",
-            "help": ""
+            "help": "Sélectionnez les serveurs utilisés par le produit."
         },
         "instances_ids": {
             "label": "Instances",
             "description": "Instances utilisées afin de proposer le produit.",
-            "help": ""
+            "help": "Sélectionnez les instances utilisées par le produit."
         },
         "services_ids": {
             "label": "Services",
             "description": "Services qui composent le produit.",
-            "help": ""
+            "help": "Sélectionnez les services qui composent le produit."
         },
         "softwares_ids": {
             "label": "Logiciels",
             "description": "Logiciels qui composent le produit.",
-            "help": ""
+            "help": "Sélectionnez les logiciels qui composent le produit."
         }
     },
     "view": {

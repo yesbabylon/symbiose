@@ -28,7 +28,7 @@ class Contact extends IdentityFacetAbstract {
 
             'position' => [
                 'type'              => 'string',
-                'description'       => 'Position of the contact (natural person) within the target organisation (legal person), e.g. \'director\', \'CEO\', \'Regional manager\'.',
+                'description'       => 'Position held by the contact within the organization.',
                 'visible'           => [ ['relationship', '=', 'contact'] ]
             ],
 

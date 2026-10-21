@@ -100,7 +100,7 @@ class Report extends \equal\orm\Model {
             'is_sendable' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'description'       => 'Flag telling if the Report is ready to be sent according to the app logic.',
+                'description'       => 'Flag telling if the Report is ready to be sent per app logic.',
                 'help'              => 'The Report must be released, use the `send` reporting mode, and not start before `reporting_from`.',
                 'function'          => 'calcIsSendable',
                 'store'             => true
@@ -128,7 +128,7 @@ class Report extends \equal\orm\Model {
                 'store'             => true,
                 'instant'           => true,
                 'function'          => 'calcBalanceOld',
-                'description'       => 'Previous balance of the related Service Account (from last previous report).',
+                'description'       => 'Service Account balance from the previous report.',
                 'help'              => "Tells the balance after invoicing the lines assigned to the report.
                                         For released reports, this value might differ from the relating ServiceAccount's balance."
             ],
@@ -327,7 +327,7 @@ class Report extends \equal\orm\Model {
 
     /**
      * Compute the value of the date_from` field: the day following the date_to of the previous report, or 01/01/2023 if none exists.
-     * @var \equal\orm\Collection $self
+     * @param \equal\orm\Collection $self
      */
     public static function calcDateFrom($self) {
         $result = [];
@@ -494,10 +494,10 @@ class Report extends \equal\orm\Model {
     }
 
     /**
-     * Check wether an object can be updated, and perform some additional operations if necessary.
+     * Check whether an object can be updated, and perform some additional operations if necessary.
      * This method can be overridden to define a more precise set of tests.
      *
-     * @var \equal\orm\Collection $self
+     * @param \equal\orm\Collection $self
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
     public static function cancreate($self, $values): array {

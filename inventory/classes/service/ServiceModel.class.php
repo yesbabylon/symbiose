@@ -23,7 +23,7 @@ class ServiceModel  extends Model {
                 'type'              => 'string',
                 'unique'            => true,
                 'required'          => true,
-                'description'       => 'Unique identifier of the service model. (ex: Google API, mailtrap.io).'
+                'description'       => 'Unique service model name, such as Google API or Mailtrap.'
             ],
 
             'description' => [

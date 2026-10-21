@@ -37,7 +37,7 @@ class DocumentSubtype extends Model {
 
             'folder_code' => [
                 'type'              => 'string',
-                'description'       => 'Code of the Folder node a document by this type must be assigned to.'
+                'description'       => 'Folder node code assigned to documents of this subtype.'
             ],
 
             'description' => [
@@ -63,20 +63,6 @@ class DocumentSubtype extends Model {
                 'description'       => 'Unique document type identifier provided by GLOBAL instance.'
             ],
 
-            'recording_rules_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'document\recording\RecordingRule',
-                'foreign_field'     => 'document_subtype_id',
-                'description'       => 'Rules matching the document subtype.'
-            ],
-
-            'labeling_rules_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'document\labeling\LabelingRule',
-                'foreign_field'     => 'document_subtype_id',
-                'description'       => 'Rules matching the document subtype.'
-            ],
-
             'documents_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'document\document\Document',
@@ -94,9 +80,7 @@ class DocumentSubtype extends Model {
                     'agency'        // visible only to syndic (employees)
                 ],
                 'default'           => 'agency',
-                'onupdate'          => 'onupdateDocumentVisibility',
-                'description'       => 'Defines who can access the document.',
-                'help'              => 'This field is synchronized with the node and updates automatically when the parent node visibility changes.'
+                'description'       => 'Defines who can access the document.'
             ]
 
         ];

@@ -1,4 +1,6 @@
 {
+    "name": "Partner",
+    "description": "Default form for displaying a partner relationship.",
     "access": {
         "groups": ["users"]
     },
@@ -58,7 +60,8 @@
                                         "items": [
                                             {
                                                 "type": "label",
-                                                "value": ""
+                                                "value": "",
+                                                "width": "100%"
                                             }
                                         ]
                                     },

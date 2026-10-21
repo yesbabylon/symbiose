@@ -6,12 +6,12 @@
 		"name": {
 			"label": "Nom",
 			"description": "Code abrégé de la catégorie d'unité locatif.",
-			"help": ""
+			"help": "Nom de la catégorie d'unité locative."
 		},
         "description": {
 			"label": "Description",
 			"description": "Raison de la catégorisation des logements locatifs.",
-			"help": ""
+			"help": "Raison de la catégorisation des logements locatifs."
 		}
 	},
 	"view": {

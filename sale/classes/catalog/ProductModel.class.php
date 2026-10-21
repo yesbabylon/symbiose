@@ -130,13 +130,13 @@ class ProductModel extends Model {
 
             'schedule_default_value' => [
                 'type'              => 'string',
-                'description'       => "Default value of the schedule according to type (time: '9:00', timerange: '9:00-10:00').",
+                'description'       => "Default schedule value by type (e.g. ‘9:00’, ‘9:00-10:00’).",
                 'visible'           => [ ['type', '=', 'service'], ['service_type', '=', 'schedulable'] ]
             ],
 
             'schedule_offset' => [
                 'type'              => 'integer',
-                'description'       => 'Default number of days to set-off the service from a sojourn start date.',
+                'description'       => 'Default days between sojourn start and service date.',
                 'default'           => 0,
                 'visible'           => [ ['type', '=', 'service'], ['service_type', '=', 'schedulable'] ]
             ],
@@ -183,7 +183,7 @@ class ProductModel extends Model {
                 'type'              => 'many2many',
                 'foreign_object'    => 'sale\catalog\Category',
                 'foreign_field'     => 'product_models_ids',
-                'description'       => 'Linked categories',
+                'description'       => 'Linked categories.',
                 'rel_table'         => 'sale_product_rel_productmodel_category',
                 'rel_foreign_key'   => 'category_id',
                 'rel_local_key'     => 'productmodel_id'

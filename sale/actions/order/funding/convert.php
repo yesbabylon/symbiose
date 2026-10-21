@@ -39,6 +39,16 @@ list($params, $providers) = eQual::announce([
  */
 list($context) = [$providers['context']];
 
+$downpayment_sku = Setting::get_value('sale', 'accounting', 'downpayment_sku');
+if(!$downpayment_sku) {
+    throw new Exception('missing_downpayment_sku', EQ_ERROR_INVALID_CONFIG);
+}
+
+$downpayment_product = Product::search(['sku', '=', $downpayment_sku])->first();
+if(!$downpayment_product) {
+    throw new Exception('unknown_downpayment_product', EQ_ERROR_UNKNOWN_OBJECT);
+}
+
 $funding = Funding::id($params['id'])
                     ->read(['id','funding_type', 'due_amount',
                             'order_id' => ['id', 'customer_id', 'delivery_date']])
@@ -91,10 +101,11 @@ $price_lists_ids = PriceList::search(
 
 $vat_rate = 0.0;
 foreach($price_lists_ids as $price_list_id) {
-    $prices_ids = Price::search([ ['price_list_id', '=', $price_list_id], ['product_id', '=', $downpayment_product_id]])->get();
-    if($prices_ids) {
-        $prices = Price::ids($prices_ids)->read(['vat_rate']);
-        $price = reset($prices);
+    $price = Price::search([ ['price_list_id', '=', $price_list_id], ['product_id', '=', $downpayment_product['id']]])
+        ->read(['vat_rate'])
+        ->first();
+
+    if($price) {
         $vat_rate = $price['vat_rate'];
     }
 }

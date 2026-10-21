@@ -58,7 +58,7 @@ class AlertPolicy extends Model {
                 'rel_table'         => 'infra_server_alert_rel_core_group',
                 'rel_foreign_key'   => 'group_id',
                 'rel_local_key'     => 'alert_id',
-                'description'       => "Group of users to which the alert will be sent if triggers matches."
+                'description'       => "Groups whose members receive alerts when triggers match."
             ]
 
         ];

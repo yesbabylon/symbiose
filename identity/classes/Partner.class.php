@@ -33,13 +33,13 @@ class Partner extends Model {
             'organization_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Organization',
-                'description'       => 'Organization (of the current installation) the partner belongs to (defaults to current).',
+                'description'       => 'Current organization to which the partner belongs.',
                 'default'           => 1
             ],
 
             'is_internal' => [
                 'type'              => 'boolean',
-                'description'       => 'The partnership relates to (one of) the organization(s) from the current installation.',
+                'description'       => 'Whether the partnership involves a current organization.',
                 'default'           => true
             ],
 
@@ -147,8 +147,7 @@ class Partner extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'core\Lang',
                 'description'       => "Preferred language of the identity.",
-                'default'           => 1,
-                'onupdate'          => 'onupdateLangId'
+                'default'           => 1
             ],
 
             'address_street' => [
@@ -186,21 +185,18 @@ class Partner extends Model {
             'email' => [
                 'type'              => 'string',
                 'usage'             => 'email',
-                'onupdate'          => 'onupdateEmail',
                 'description'       => "Identity main email address."
             ],
 
             'phone' => [
                 'type'              => 'string',
                 'usage'             => 'phone',
-                'onupdate'          => 'onupdatePhone',
                 'description'       => "Identity secondary phone number (mobile or landline)."
             ],
 
             'mobile' => [
                 'type'              => 'string',
                 'usage'             => 'phone',
-                'onupdate'          => 'onupdateMobile',
                 'description'       => "Identity mobile phone number."
             ],
 

@@ -33,7 +33,7 @@ class Product extends Model {
 
             'label' => [
                 'type'              => 'string',
-                'description'       => 'Human readable memo for identifying the product. Allows duplicates.',
+                'description'       => 'Readable memo identifying the product (duplicates allowed).',
                 'required'          => true,
                 'dependents'        => ['name']
             ],
@@ -131,7 +131,7 @@ class Product extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
                 'function'          => 'calcCanBuy',
-                'description'       => "Can this product be purchased? (from model)",
+                'description'       => "Can this product be purchased? (from model).",
                 'help'              => "Field can_buy is adapted when related value is changed in parent ProductModel.",
                 'store'             => true,
                 'readonly'          => true
@@ -141,7 +141,7 @@ class Product extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
                 'function'          => 'calcCanSell',
-                'description'       => "Can this product be sold? (from model)",
+                'description'       => "Can this product be sold? (from model).",
                 'help'              => "Field can_sell is adapted when related value is changed in parent ProductModel.",
                 'store'             => true,
                 'readonly'          => true

@@ -6,22 +6,22 @@
         "name": {
             "label": "Nom",
             "description": "Nom du logiciel.",
-            "help": ""
+            "help": "Indiquez le nom du modèle de logiciel."
         },
         "description": {
             "label": "Description",
             "description": "Description du logiciel.",
-            "help": ""
+            "help": "Décrivez la fonction ou l'usage du modèle de logiciel."
         },
         "edition": {
             "label": "Édition",
             "description": "Édition du logiciel.",
-            "help": ""
+            "help": "Indiquez l'édition proposée par ce modèle."
         },
         "version": {
             "label": "Version",
             "description": "Version du logiciel.",
-            "help": ""
+            "help": "Indiquez la version proposée par ce modèle."
         }
     },
     "view": {

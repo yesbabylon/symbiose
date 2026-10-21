@@ -107,7 +107,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
                 'result_type'       => 'string',
                 'store'             => true,
                 'function'          => 'calcName',
-                'description'       => 'Label of the invoice, depending on its status'
+                'description'       => 'Label of the invoice, depending on its status.'
             ],
 
             'organization_id' => [
@@ -155,7 +155,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
 
             'is_downpayment' => [
                 'type'              => 'boolean',
-                'description'       => 'Marks the invoice as a deposit invoice relating to a downpayment (funding).',
+                'description'       => 'Marks the invoice as a deposit (downpayment) invoice.',
                 'default'           => false
             ],
 
@@ -167,7 +167,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
 
             'invoice_purpose' => [
                 'type'              => 'string',
-                'description'       => 'Is the invoice concerning a sale to a customer or a buy from a supplier.',
+                'description'       => 'Whether the invoice is a customer sale or a supplier purchase.',
                 'default'           => 'sell',
                 'visible'           => false
             ],

@@ -24,6 +24,17 @@
             "help": ""
         }
     },
-    "view": {},
+    "view": {
+        "form.default": {
+            "name": "Conversation",
+            "description": "Formulaire de modification d'une conversation.",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Conversations",
+            "description": "Liste des conversations.",
+            "layout": {}
+        }
+    },
     "error": {}
 }

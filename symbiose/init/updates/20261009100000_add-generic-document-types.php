@@ -256,10 +256,6 @@ foreach($document_types as $document_type_data) {
     $document_subtypes = $document_type_data['subtypes'] ?? [];
     unset($document_type_data['subtypes']);
 
-    if(empty($document_type_data['description'])) {
-        $document_type_data['description'] = 'Type de document : '.$document_type_data['name'].'.';
-    }
-
     $document_type = DocumentType::search(['code', '=', $document_type_data['code']]);
     $document_type_ids = $document_type->ids();
 
@@ -281,9 +277,12 @@ foreach($document_types as $document_type_data) {
     $document_type_id = reset($document_type_ids);
 
     foreach($document_subtypes as $document_subtype_data) {
+        /*
+        Not needed because no description on subtype
         if(empty($document_subtype_data['description'])) {
             $document_subtype_data['description'] = 'Sous-type de document : '.$document_subtype_data['name'].'.';
         }
+        */
 
         $document_subtype_data['document_type_id'] = $document_type_id;
 

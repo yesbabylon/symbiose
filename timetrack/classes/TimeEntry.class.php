@@ -131,7 +131,7 @@ class TimeEntry extends SaleEntry {
             'qty' => [
                 'type'           => 'computed',
                 'result_type'    => 'float',
-                'description'    => 'Quantity is expressed in hours, rounded to the quarter hour, and based on the billed duration.',
+                'description'    => 'Hours, rounded to the quarter hour, from the billed duration.',
                 'function'       => 'calcQty',
                 'store'          => true
             ],
@@ -177,7 +177,7 @@ class TimeEntry extends SaleEntry {
             'on_site' => [
                 'type'              => 'boolean',
                 'default'           => false,
-                'description'       => 'Does the entry imply some travel? Value retrieved from the related Ticket.'
+                'description'       => 'Does the entry involve travel? Value taken from the Ticket.'
             ],
 
             'is_full_day' => [
@@ -206,7 +206,7 @@ class TimeEntry extends SaleEntry {
                     4       => 'Critical'
                 ],
                 'default'           => 1,
-                'description'       => 'Priority level retrieved from the related Ticket (1 = low, 4 = critical).'
+                'description'       => 'Priority from the related Ticket (1 = low, 4 = critical).'
             ],
 
             'billable_duration' => [
@@ -240,7 +240,7 @@ class TimeEntry extends SaleEntry {
             'creation_delta' => [
                 'type'              => 'computed',
                 'result_type'       => 'time',
-                'description'       => 'Computed delay between the time of recording of the entry and the actual time the work took place.',
+                'description'       => 'Computed delay between recording the entry and the actual work.',
                 'function'          => 'calcCreationDelta',
                 'store'             => true
             ],
@@ -254,7 +254,7 @@ class TimeEntry extends SaleEntry {
                     'support'
                 ],
                 'dependents'     => ['name'],
-                'description'    => 'Origin of the time entry: what the task performed is a response to.',
+                'description'    => 'Origin of the time entry: what the task is a response to.',
                 'help'           => "Project: refers to a Project Management task.\n
                                      Backlog: refers to one (or more) entry from the backlog associated with the project.\n
                                      E-mail: refers to a specific email conversation.\n
@@ -484,9 +484,9 @@ class TimeEntry extends SaleEntry {
         $refresh_durations = false;
         $refresh_sale_amounts = false;
 
-        $get_changed_value = function(string $field, $default = null) use ($event, &$result) {
-            if(array_key_exists($field, $result)) {
-                return $result[$field];
+        $get_changed_value = function(array $changed_values, string $field, $default = null) use ($event) {
+            if(array_key_exists($field, $changed_values)) {
+                return $changed_values[$field];
             }
 
             if(array_key_exists($field, $event)) {
@@ -554,7 +554,7 @@ class TimeEntry extends SaleEntry {
             $refresh_durations = true;
         }
 
-        $has_sale_model = (bool) $get_changed_value('has_sale_model', $get_assigned_value('has_sale_model', false));
+        $has_sale_model = (bool) $get_changed_value($result, 'has_sale_model', $get_assigned_value('has_sale_model', false));
 
         if(
             (
@@ -564,8 +564,8 @@ class TimeEntry extends SaleEntry {
             )
             && !$has_sale_model
         ) {
-            $product_id = $get_changed_value('product_id', $get_assigned_value('product_id'));
-            $date = $get_changed_value('date', $get_assigned_value('date', time()));
+            $product_id = $get_changed_value($result, 'product_id', $get_assigned_value('product_id'));
+            $date = $get_changed_value($result, 'date', $get_assigned_value('date', time()));
 
             if($product_id) {
                 $price = self::computeApplicablePrice($product_id, $date);
@@ -601,7 +601,7 @@ class TimeEntry extends SaleEntry {
             $refresh_durations = true;
         }
 
-        $is_full_day = (bool) $get_changed_value('is_full_day', $get_assigned_value('is_full_day', false));
+        $is_full_day = (bool) $get_changed_value($result, 'is_full_day', $get_assigned_value('is_full_day', false));
         if($is_full_day && array_key_exists('is_full_day', $event)) {
             $result['time_start'] = 9 * 3600;
             $result['time_end'] = 17 * 3600;
@@ -610,8 +610,8 @@ class TimeEntry extends SaleEntry {
 
         if($refresh_durations) {
             if(!$is_full_day) {
-                $time_start = $get_changed_value('time_start');
-                $time_end = $get_changed_value('time_end');
+                $time_start = $get_changed_value($result, 'time_start');
+                $time_end = $get_changed_value($result, 'time_end');
                 $assigned_time_start = $get_assigned_value('time_start');
                 $assigned_time_end = $get_assigned_value('time_end');
 
@@ -624,7 +624,7 @@ class TimeEntry extends SaleEntry {
                 }
 
                 if(isset($time_start, $time_end) && $time_end < $time_start) {
-                    $base_duration = $get_changed_value('duration', $get_assigned_value('duration', 0));
+                    $base_duration = $get_changed_value($result, 'duration', $get_assigned_value('duration', 0));
                     $result['time_end'] = $time_start + $base_duration;
                     $time_end = $result['time_end'];
                 }
@@ -639,9 +639,9 @@ class TimeEntry extends SaleEntry {
                 }
             }
 
-            $duration = $get_changed_value('duration', $get_assigned_value('duration', 0));
-            $is_internal = (bool) $get_changed_value('is_internal', $get_assigned_value('is_internal', false));
-            $is_billable = (bool) $get_changed_value('is_billable', $get_assigned_value('is_billable', true));
+            $duration = $get_changed_value($result, 'duration', $get_assigned_value('duration', 0));
+            $is_internal = (bool) $get_changed_value($result, 'is_internal', $get_assigned_value('is_internal', false));
+            $is_billable = (bool) $get_changed_value($result, 'is_billable', $get_assigned_value('is_billable', true));
 
             $billable_duration = self::computeBillableDurationValue($duration, $is_billable, $is_internal);
             $result['billable_duration'] = $billable_duration;
@@ -660,12 +660,12 @@ class TimeEntry extends SaleEntry {
         }
 
         if($refresh_sale_amounts) {
-            $billed_duration = $get_changed_value('billed_duration', $get_assigned_value('billed_duration', 0));
+            $billed_duration = $get_changed_value($result, 'billed_duration', $get_assigned_value('billed_duration', 0));
             $qty = round((floatval($billed_duration) / 3600) * 4) / 4;
-            $is_billable = (bool) $get_changed_value('is_billable', $get_assigned_value('is_billable', true));
-            $unit_price = $get_changed_value('unit_price', $get_assigned_value('unit_price', 0));
-            $free_qty = $get_changed_value('free_qty', $get_assigned_value('free_qty', 0));
-            $discount = $get_changed_value('discount', $get_assigned_value('discount', 0));
+            $is_billable = (bool) $get_changed_value($result, 'is_billable', $get_assigned_value('is_billable', true));
+            $unit_price = $get_changed_value($result, 'unit_price', $get_assigned_value('unit_price', 0));
+            $free_qty = $get_changed_value($result, 'free_qty', $get_assigned_value('free_qty', 0));
+            $discount = $get_changed_value($result, 'discount', $get_assigned_value('discount', 0));
 
             $result['qty'] = $qty;
             $result['total'] = $is_billable
@@ -709,16 +709,11 @@ class TimeEntry extends SaleEntry {
         }
     }
     protected static function calcProductId($self) {
+        $result = [];
         $saleModel = SaleModel::id(1)->read(['product_id'])->first();
         $self->read(['project_id' => ['sale_model_id' => ['product_id']]]);
         foreach($self as $id => $timeEntry) {
-            if($timeEntry['project_id']['sale_model_id']['product_id'] ?? null) {
-                $result[$id] = $timeEntry['project_id']['sale_model_id']['product_id'];
-            }
-            else {
-                // fallback to default product (from default sale model)
-                $result[$id] = $saleModel['product_id'];
-            }
+            $result[$id] = $timeEntry['project_id']['sale_model_id']['product_id'] ?? $saleModel['product_id'];
         }
         return $result;
     }

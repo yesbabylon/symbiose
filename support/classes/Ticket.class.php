@@ -35,8 +35,7 @@ class Ticket extends Model {
                     'pending',
                     'closed'
                 ],
-                'default'           => 'draft',
-                'onupdate'          => 'onupdateStatus'
+                'default'           => 'draft'
             ],
 
             'type' => [
@@ -86,7 +85,7 @@ class Ticket extends Model {
             'assignee_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'core\User',
-                'description'       => 'Person that is handling the ticket (who will provide an answer or perform an action regarding it).',
+                'description'       => 'Person handling the ticket (provides an answer or acts on it).',
                 'onupdate'          => 'onupdateAssigneeId'
             ],
 

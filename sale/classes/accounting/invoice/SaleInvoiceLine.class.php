@@ -61,7 +61,7 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
             'invoice_line_group_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\accounting\invoice\SaleInvoiceLineGroup',
-                'description'       => 'Group the line relates to (in turn, groups relate to their invoice).',
+                'description'       => 'Group this line belongs to (groups belong to an invoice).',
                 'ondelete'          => 'cascade',
                 'domain'            => ['invoice_id', '=', 'object.invoice_id'],
             ],

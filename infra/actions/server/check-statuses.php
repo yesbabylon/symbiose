@@ -43,7 +43,12 @@ $servers = Server::search([
     ])
     ->get();
 
-$serverAlertPolicies = AlertPolicy::search(['alert_type', 'in', ['all', $server['server_type']]])
+$map_server_types = [];
+foreach($servers as $server) {
+    $map_server_types[$server['server_type']] = true;
+}
+
+$serverAlertPolicies = AlertPolicy::search(['alert_type', 'in', array_merge(['all'], array_keys($map_server_types))])
     ->read([
         'id',
         'name',
@@ -75,8 +80,12 @@ foreach($servers as $server) {
     // find out the max repetition required amongst all applicable triggers
     $max_repetition = 1;
     foreach($serverAlertPolicies as $policy) {
+        if(!in_array($policy['alert_type'], ['all', $server['server_type']])) {
+            continue;
+        }
+
         foreach($policy['alert_triggers_ids'] as $trigger) {
-            $max_repetition = max($max_repetition, $alert_trigger['repetition']);
+            $max_repetition = max($max_repetition, $trigger['repetition']);
         }
     }
 
@@ -106,6 +115,10 @@ foreach($servers as $server) {
 
     // Create alerts if triggers matches
     foreach($serverAlertPolicies as $policy) {
+        if(!in_array($policy['alert_type'], ['all', $server['server_type']])) {
+            continue;
+        }
+
         if(AlertPolicy::getTriggersResult($policy, $statuses)) {
             Alert::create([
                     'name'              => $policy['name'],

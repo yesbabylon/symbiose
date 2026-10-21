@@ -1,5 +1,6 @@
 {
     "name": "Time entries",
+    "description": "Time entries chart",
     "controller": "core_model_chart",
     "layout": {
         "entity": "timetrack\\TimeEntry",
