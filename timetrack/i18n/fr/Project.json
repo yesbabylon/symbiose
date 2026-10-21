@@ -1,43 +1,43 @@
 {
     "name": "Project",
     "plural": "Projects",
-    "description": "Un projet organise les saisies de temps et permet de configurer un modele de vente pour appliquer automatiquement les champs lies a la vente d'une entree de temps.",
+    "description": "Un projet organise les saisies de temps et permet de configurer un modèle de vente pour appliquer automatiquement les champs lies a la vente d'une entree de temps.",
     "model": {
         "description": {
             "label": "Description",
             "description": "Description du projet.",
-            "help": ""
+            "help": "Texte présentant le projet : objectifs, périmètre et informations utiles pour les personnes qui y participent."
         },
         "customer_id": {
             "label": "Client",
             "description": "Client a qui le projet est destine.",
-            "help": ""
+            "help": "Client pour lequel le projet est réalisé. Il sert notamment à facturer les prestations liées au projet."
         },
         "product_id": {
             "label": "Produit",
             "description": "Le produit (logiciel) auquel se rapporte le projet.",
-            "help": ""
+            "help": "Produit ou logiciel concerné par le projet, afin de regrouper les prestations par produit."
         },
         "has_sale_model": {
-            "label": "Utiliser un modele de vente",
-            "description": "Indique si un modele de vente fixe doit etre applique au projet.",
-            "help": ""
+            "label": "Utiliser un modèle de vente",
+            "description": "Indique si un modèle de vente fixe doit être applique au projet.",
+            "help": "Cochez cette case pour appliquer un modèle de vente fixe à toutes les saisies de temps du projet. Le modèle de vente est alors à sélectionner."
         },
         "sale_model_id": {
-            "label": "Modele de vente",
-            "description": "Le modele de vente a appliquer sur les saisies de temps du projet.",
-            "help": ""
+            "label": "Modèle de vente",
+            "description": "Modèle de vente à appliquer aux saisies de temps du projet.",
+            "help": "Modèle qui définit le produit et le prix assignés aux ventes générées par les saisies de temps du projet. Utilisé uniquement si l'option « Utiliser un modèle de vente » est cochée."
         },
         "receivable_queue_id": {
-            "label": "File d'attente des creances",
-            "description": "La file d'attente des creances a utiliser pour les creances generees par les saisies de temps du projet.",
-            "help": ""
+            "label": "File d'attente des créances",
+            "description": "File d'attente des créances générées par les saisies du projet.",
+            "help": "File d'attente dans laquelle sont placées les créances générées par les saisies de temps du projet, en vue de leur traitement."
         }
     },
     "view": {
         "form.default": {
             "name": "Projet",
-            "description": "Formulaire de modification par defaut d'un projet.",
+            "description": "Formulaire de modification par défaut d'un projet.",
             "layout": {
                 "section.time_entries": {
                     "label": "Prestations"

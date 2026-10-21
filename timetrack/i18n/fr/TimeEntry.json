@@ -6,52 +6,52 @@
         "description": {
             "label": "Description courte",
             "description": "Brève description de l'entrée.",
-            "help": ""
+            "help": "Résumé en une ligne de la prestation, utilisé comme libellé dans les listes et sur les documents."
         },
         "detailed_description": {
             "label": "Description",
             "description": "Détails et description avancée de l'entrée (si nécessaire).",
-            "help": ""
+            "help": "Informations complémentaires sur la prestation (contexte, travaux réalisés, remarques). Facultatif."
         },
         "date": {
             "label": "Date",
             "description": "Date de la prestation.",
-            "help": ""
+            "help": "Jour auquel la prestation a été réalisée."
         },
         "time_start": {
             "label": "Début",
             "description": "Heure de début de la prestation.",
-            "help": ""
+            "help": "Heure à laquelle la prestation a commencé. Avec l'heure de fin, elle permet de calculer la durée prestée."
         },
         "time_end": {
             "label": "Fin",
             "description": "Heure de fin  de la prestation.",
-            "help": ""
+            "help": "Heure à laquelle la prestation s'est terminée. Elle doit être postérieure à l'heure de début."
         },
         "is_full_day": {
             "label": "Jour entier",
             "description": "La prestation a pris la journée entière.",
-            "help": ""
+            "help": "Cochez cette case si la prestation a occupé toute la journée, sans heures de début et de fin précises."
         },
         "duration": {
             "label": "Durée prestée",
             "description": "Durée de la prestation liée à l'entrée.",
-            "help": ""
+            "help": "Temps réellement passé sur la prestation. Il peut être calculé à partir des heures de début et de fin."
         },
         "billable_duration": {
             "label": "Durée facturable",
             "description": "Durée à facturer au client.",
-            "help": ""
+            "help": "Temps pouvant être facturé au client. Il peut différer de la durée prestée (par exemple en cas de geste commercial)."
         },
         "billed_duration": {
             "label": "Durée facturée",
             "description": "Durée effectivement facturée au client.",
-            "help": ""
+            "help": "Temps déjà repris sur une facture. Cette valeur est renseignée lors de la facturation."
         },
         "user_id": {
             "label": "Utilisateur",
             "description": "Utilisateur qui a réalisé l'entrée.",
-            "help": ""
+            "help": "Personne qui a effectué la prestation."
         },
         "origin": {
             "label": "Origine",
@@ -62,7 +62,7 @@
                 "email": "E-mail",
                 "support": "Support"
             },
-            "help": ""
+            "help": "Indique la source de la demande à l'origine de la prestation. Le champ Référence permet de préciser cette origine."
         },
         "ticket_id": {
             "label": "Id ticket",
@@ -72,12 +72,12 @@
         "ticket_link": {
             "label": "Lien ticket",
             "description": "Lien du ticket de support.",
-            "help": ""
+            "help": "Adresse permettant d'ouvrir directement le ticket de support associé à la prestation."
         },
         "reference": {
             "label": "Référence",
             "description": "Référence pour compléter l'origine.",
-            "help": ""
+            "help": "Identifiant libre qui complète l'origine (numéro de tâche, d'entrée du backlog, de conversation, etc.)."
         }
     },
     "view": {

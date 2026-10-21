@@ -131,7 +131,7 @@ class TimeEntry extends SaleEntry {
             'qty' => [
                 'type'           => 'computed',
                 'result_type'    => 'float',
-                'description'    => 'Quantity is expressed in hours, rounded to the quarter hour, and based on the billed duration.',
+                'description'    => 'Hours, rounded to the quarter hour, from the billed duration.',
                 'function'       => 'calcQty',
                 'store'          => true
             ],
@@ -177,7 +177,7 @@ class TimeEntry extends SaleEntry {
             'on_site' => [
                 'type'              => 'boolean',
                 'default'           => false,
-                'description'       => 'Does the entry imply some travel? Value retrieved from the related Ticket.'
+                'description'       => 'Does the entry involve travel? Value taken from the Ticket.'
             ],
 
             'is_full_day' => [
@@ -206,7 +206,7 @@ class TimeEntry extends SaleEntry {
                     4       => 'Critical'
                 ],
                 'default'           => 1,
-                'description'       => 'Priority level retrieved from the related Ticket (1 = low, 4 = critical).'
+                'description'       => 'Priority from the related Ticket (1 = low, 4 = critical).'
             ],
 
             'billable_duration' => [
@@ -240,7 +240,7 @@ class TimeEntry extends SaleEntry {
             'creation_delta' => [
                 'type'              => 'computed',
                 'result_type'       => 'time',
-                'description'       => 'Computed delay between the time of recording of the entry and the actual time the work took place.',
+                'description'       => 'Computed delay between recording the entry and the actual work.',
                 'function'          => 'calcCreationDelta',
                 'store'             => true
             ],
@@ -254,7 +254,7 @@ class TimeEntry extends SaleEntry {
                     'support'
                 ],
                 'dependents'     => ['name'],
-                'description'    => 'Origin of the time entry: what the task performed is a response to.',
+                'description'    => 'Origin of the time entry: what the task is a response to.',
                 'help'           => "Project: refers to a Project Management task.\n
                                      Backlog: refers to one (or more) entry from the backlog associated with the project.\n
                                      E-mail: refers to a specific email conversation.\n
