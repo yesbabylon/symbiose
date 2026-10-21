@@ -41,8 +41,8 @@ class Customer extends IdentityFacetAbstract {
             'customer_type_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\CustomerType',
-                'description'       => "Type of customer (map with rate classes). Defaults to 'individual'.",
-                'help'              => "If partner is a customer, it can be assigned a customer type",
+                'description'       => "Customer type (maps to rate classes). Defaults to ‘individual’.",
+                'help'              => "If partner is a customer, it can be assigned a customer type.",
                 'default'           => 1,
                 'onupdate'          => 'onupdateCustomerTypeId'
             ],
@@ -50,12 +50,12 @@ class Customer extends IdentityFacetAbstract {
             'relationship' => [
                 'type'              => 'string',
                 'default'           => 'customer',
-                'description'       => 'Force relationship to Customer'
+                'description'       => 'Force relationship to Customer.'
             ],
 
             'ref_account' => [
                 'type'              => 'string',
-                'description'       => 'Arbitrary reference account number for identifying the customer in external accounting softwares.',
+                'description'       => 'Customer account number for external accounting software.',
                 'readonly'          => true
             ],
 
@@ -71,13 +71,6 @@ class Customer extends IdentityFacetAbstract {
                 'foreign_object'    => 'sale\SaleEntry',
                 'foreign_field'     => 'customer_id',
                 'description'       => 'List sales entries of the customer.'
-            ],
-
-            'bookings_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'sale\booking\Booking',
-                'foreign_field'     => 'booking_id',
-                'description'       => 'List bookings of the customer.'
             ],
 
             'products_ids' => [

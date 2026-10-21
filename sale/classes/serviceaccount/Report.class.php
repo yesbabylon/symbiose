@@ -100,7 +100,7 @@ class Report extends \equal\orm\Model {
             'is_sendable' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'description'       => 'Flag telling if the Report is ready to be sent according to the app logic.',
+                'description'       => 'Flag telling if the Report is ready to be sent per app logic.',
                 'help'              => 'The Report must be released, use the `send` reporting mode, and not start before `reporting_from`.',
                 'function'          => 'calcIsSendable',
                 'store'             => true
@@ -128,7 +128,7 @@ class Report extends \equal\orm\Model {
                 'store'             => true,
                 'instant'           => true,
                 'function'          => 'calcBalanceOld',
-                'description'       => 'Previous balance of the related Service Account (from last previous report).',
+                'description'       => 'Service Account balance from the previous report.',
                 'help'              => "Tells the balance after invoicing the lines assigned to the report.
                                         For released reports, this value might differ from the relating ServiceAccount's balance."
             ],

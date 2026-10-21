@@ -125,7 +125,7 @@ class Receivable extends Model {
 
             'invoice_group' => [
                 'type'              => 'string',
-                'description'       => 'Arbitrary name for grouping sales when invoicing (might be left unset).',
+                'description'       => 'Custom name to group sales on invoices (optional).',
             ],
 
             'customer_id' => [

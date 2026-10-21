@@ -54,7 +54,7 @@ class Operation extends Model {
             'amount' => [
                 'type'              => 'float',
                 'usage'             => 'amount/money:2',
-                'description'       => 'Amount of the operation (cash in for positive amount, cash out otherwise).',
+                'description'       => 'Operation amount (positive = cash in, negative = cash out).',
                 'default'           => 0.0
             ],
 

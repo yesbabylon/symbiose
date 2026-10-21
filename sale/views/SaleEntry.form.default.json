@@ -115,6 +115,7 @@
                                             },
                                             {
                                                 "type": "label",
+                                                "value": "",
                                                 "width": "50%"
                                             },
                                             {
@@ -125,6 +126,7 @@
                                             },
                                             {
                                                 "type": "label",
+                                                "value": "",
                                                 "width": "50%"
                                             },
                                             {
@@ -145,16 +147,7 @@
                                         "items": [
                                             {
                                                 "type": "label",
-                                                "width": "66%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Free Quantity",
-                                                "value": "free_qty",
-                                                "width": "33%"
-                                            },
-                                            {
-                                                "type": "label",
+                                                "value": "",
                                                 "width": "66%"
                                             },
                                             {

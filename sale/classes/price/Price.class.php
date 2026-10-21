@@ -41,14 +41,14 @@ class Price extends Model {
                 'result_type'       => 'float',
                 'function'          => 'calcPriceVat',
                 'usage'             => 'amount/money:2',
-                'description'       => "Tax included price. This field is used to allow encoding prices VAT incl.",
+                'description'       => "Tax-included price. Allows entering prices VAT incl.",
                 'store'             => true,
                 'visible'           => ['price_type', '=', 'direct']
             ],
 
             'price_type' => [
                 'type'              => 'string',
-                'description'       => 'If computed a calculation method is used to compute the price amount.',
+                'description'       => 'If computed, a calculation method determines the price amount.',
                 'selection'         => ['direct', 'computed'],
                 'default'           => 'direct'
             ],
@@ -80,7 +80,7 @@ class Price extends Model {
             'accounting_rule_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\AccountingRule',
-                'description'       => "Selling accounting rule. If set, overrides the rule of the product this price is assigned to.",
+                'description'       => "Sales accounting rule. If set, overrides the product’s rule.",
                 'dependents'        => ['vat_rate', 'price_vat']
             ],
 
@@ -105,7 +105,7 @@ class Price extends Model {
 
             'has_period' => [
                 'type'              => 'boolean',
-                'description'       => 'Mark price as not punctual with recurring period (handled in Subpcription).',
+                'description'       => 'Marks the price as recurring (handled in Subscription).',
                 'default'           => false
             ],
 

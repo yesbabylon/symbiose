@@ -32,14 +32,14 @@ class OrderLine extends Model {
 
             'description' => [
                 'type'              => 'string',
-                'description'       => 'Complementary description of the line. If set, replaces the product name.',
+                'description'       => 'Additional line description. If set, replaces the product name.',
                 'default'           => ''
             ],
 
             'order_line_group_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\order\OrderLineGroup',
-                'description'       => 'Group the line relates to (in turn, groups relate to their order).',
+                'description'       => 'Group this line belongs to (groups belong to an order).',
                 'ondelete'          => 'cascade',
                 'required'          => true
             ],
@@ -48,7 +48,7 @@ class OrderLine extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'sale\order\Order',
-                'description'       => 'The order the line relates to (for consistency, lines should be accessed using the group they belong to).',
+                'description'       => 'The order the line relates to (access lines via their group).',
                 'function'          => 'calcOrder',
                 'store'             => true,
                 'instant'           => true,
@@ -94,7 +94,7 @@ class OrderLine extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\order\OrderPriceAdapter',
                 'foreign_field'     => 'order_line_id',
-                'description'       => 'All price adapters: auto and manual discounts applied on the line.'
+                'description'       => 'All price adapters: auto and manual discounts on the line.'
             ],
 
             'qty' => [
@@ -106,7 +106,7 @@ class OrderLine extends Model {
 
             'order' => [
                 'type'              => 'integer',
-                'description'       => 'Order by which the line have to be sorted when presented visually.',
+                'description'       => 'Sort order of the line when displayed.',
                 'default'           => 1
             ],
 

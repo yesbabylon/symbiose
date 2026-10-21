@@ -33,7 +33,7 @@ class Contract extends Model {
             'description' => [
                 'type'              => 'string',
                 'usage'             => 'text/plain:small',
-                'description'       => 'Short description or comments about the contract (e.g. the object of the agreement).'
+                'description'       => 'Short description or comments on the contract (e.g. its object).'
             ],
 
             'contract_type_id' => [

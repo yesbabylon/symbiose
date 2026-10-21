@@ -37,7 +37,7 @@ class OrderLineGroup extends Model {
             'order_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\order\Order',
-                'description'       => 'Order the line relates to (for consistency, lines should be accessed using the group they belong to).',
+                'description'       => 'Order the line relates to (access lines via their group).',
                 'required'          => true,
                 'ondelete'          => 'cascade'
             ],

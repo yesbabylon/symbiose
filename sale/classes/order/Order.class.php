@@ -21,7 +21,7 @@ class Order extends Model {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'description'       => "Code to serve as reference (might not be unique)",
+                'description'       => "Code to serve as reference (might not be unique).",
                 'function'          => 'calcName',
                 'store'             => true
             ],
@@ -35,7 +35,7 @@ class Order extends Model {
 
             'customer_reference' => [
                 'type'              => 'string',
-                'description'       => "Code or short string given by the customer as own reference, if any.",
+                'description'       => "Code or short string used by the customer as own reference.",
                 'default'           => ''
             ],
 
@@ -71,7 +71,7 @@ class Order extends Model {
 
             'has_contract' => [
                 'type'              => 'boolean',
-                'description'       => "Has a contract been generated yet? Flag is reset in case of changes before the sojourn.",
+                'description'       => "Has a contract been generated? Reset on changes before the stay.",
                 'default'           => false
             ],
 
@@ -139,7 +139,7 @@ class Order extends Model {
 
             'date_expiry' => [
                 'type'              => 'date',
-                'description'       => 'Order expiration date in Option',
+                'description'       => 'Order expiration date in Option.',
                 'visible'           => [["status", "=", "option"],["is_noexpiry", "=", false]],
                 'default'           => time()
             ],
