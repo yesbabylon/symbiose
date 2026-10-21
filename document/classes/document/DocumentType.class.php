@@ -44,7 +44,7 @@ class DocumentType extends Model {
 
             'folder_code' => [
                 'type'              => 'string',
-                'description'       => 'Code of the Folder node a document by this type must be assigned to.',
+                'description'       => 'Folder node code assigned to documents of this type.',
                 'required'          => true
             ],
 
@@ -89,34 +89,6 @@ class DocumentType extends Model {
                 'foreign_object'    => 'document\document\DocumentSubtype',
                 'foreign_field'     => 'document_type_id',
                 'description'       => 'Sub-types relating to the Document Type.'
-            ],
-
-            'document_assignment_rules_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'document\processing\DocumentAssignmentRule',
-                'foreign_field'     => 'document_type_id',
-                'description'       => "Document assignment rules that are related to this document type."
-            ],
-
-            'validation_rules_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'document\validation\ValidationRule',
-                'foreign_field'     => 'document_type_id',
-                'description'       => 'Validation rules relating to the document type.'
-            ],
-
-            'recording_rules_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'document\recording\RecordingRule',
-                'foreign_field'     => 'document_type_id',
-                'description'       => 'Recording rules relating to the document type.'
-            ],
-
-            'labeling_rules_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'document\recording\RecordingRule',
-                'foreign_field'     => 'document_type_id',
-                'description'       => 'Labeling rules relating to the document type.'
             ]
 
 
