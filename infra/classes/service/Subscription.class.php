@@ -24,7 +24,7 @@ class Subscription extends SaleSubscription  {
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
-                'description'       => 'The Customer concerned by the subscription (information found in service).',
+                'description'       => 'Customer associated with the subscription service.',
                 'visible'           => [
                     ['service_id', '<>', null],
                     ['is_internal', '=', false]
@@ -64,7 +64,7 @@ class Subscription extends SaleSubscription  {
             'is_internal' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'description'       => 'Is the subscription for own organisation (information found in service).',
+                'description'       => 'Whether the subscription is for internal use.',
                 'visible'           => ['service_id', '<>', null],
                 'store'             => true,
                 'instant'           => true,
@@ -74,7 +74,7 @@ class Subscription extends SaleSubscription  {
             'has_external_provider' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'description'       => 'The subscription has an external provider (information found in service).',
+                'description'       => 'Whether the subscription uses an external provider.',
                 'visible'           => ['service_id', '<>', null],
                 'store'             => true,
                 'instant'           => true,

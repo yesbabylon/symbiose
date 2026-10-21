@@ -57,7 +57,7 @@ class IpAddress extends Model {
             'exposure' => [
                 'type'        => 'string',
                 'selection'   => ['public', 'private'],
-                'description' => 'Network exposure indicates whether the IP address is publicly routable or limited to a private network.',
+                'description' => 'Whether the IP address is public or private.',
                 'help'        => 'A public address is routable on the Internet. A private address is only reachable through a private network, VPN, or internal routing.',
                 'default'     => 'public'
             ],
@@ -66,7 +66,7 @@ class IpAddress extends Model {
                 'type'              => 'string',
                 'default'           => 'none',
                 'selection'         => ['none', 'forward', 'reverse', 'forward_reverse'],
-                'description'       => 'DNS status indicates whether DNS records are associated with the IP address.',
+                'description'       => 'DNS records currently associated with the IP address.',
                 'help'              => "None means the IP address is not associated with a managed DNS record.
                     Forward means a hostname resolves to this IP address.
                     Reverse means the IP address resolves to a hostname through a PTR record."
