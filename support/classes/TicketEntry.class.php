@@ -12,8 +12,8 @@ use core\Mail;
 class TicketEntry extends Model {
 
     public static function getColumns() {
-
         return [
+
             'status' => [
                 'type'              => 'string',
                 'selection'         => [
@@ -70,7 +70,6 @@ class TicketEntry extends Model {
 
         ];
     }
-
 
     public static function onupdateDescription($om, $oids, $values, $lang) {
         // update excerpt
