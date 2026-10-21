@@ -1,0 +1,43 @@
+{
+    "name": "Sale invoice line group",
+    "description": "Invoice line groups are related to an invoice and are meant to visually join several invoice lines.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "14%"
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "14%"
+            },
+            {
+                "type": "field",
+                "value": "order",
+                "width": "14%"
+            },
+            {
+                "type": "field",
+                "value": "invoice_id",
+                "width": "14%"
+            },
+            {
+                "type": "field",
+                "value": "total",
+                "width": "14%"
+            },
+            {
+                "type": "field",
+                "value": "price",
+                "width": "14%"
+            },
+            {
+                "type": "field",
+                "value": "is_visible",
+                "width": "14%"
+            }
+        ]
+    }
+}
