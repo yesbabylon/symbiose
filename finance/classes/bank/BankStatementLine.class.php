@@ -159,7 +159,7 @@ class BankStatementLine extends Model {
             ],
             'account_holder' => [
                 'type'              => 'string',
-                'description'       => 'Name of the person or organization from which the transaction originates.',
+                'description'       => 'Name of the transaction originator.',
                 'readonly'          => true
             ],
             'logs' => [
@@ -169,7 +169,7 @@ class BankStatementLine extends Model {
             ],
             'is_suspense' => [
                 'type'              => 'boolean',
-                'description'       => 'Origin is unknown or unsure and the line has been put on a suspense account.',
+                'description'       => 'Whether the line is assigned to a suspense account.',
                 'default'           => false
             ],
             'status' => [

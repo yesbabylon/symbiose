@@ -43,7 +43,7 @@ class AccountingEntry extends Model {
 
             'origin_object_id' => [
                 'type'              => 'integer',
-                'description'       => 'Object identifier, of `origin_object_class`, he entry originates from.'
+                'description'       => 'Identifier of the object from which the entry originates.'
             ],
 
             'debit' => [
@@ -67,7 +67,7 @@ class AccountingEntry extends Model {
             'is_balanced' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'description'       => 'An entry is balanced if the total debited amount equals the total credited amount.',
+                'description'       => 'Whether total debits equal total credits.',
                 'function'          => 'calcIsBalanced'
             ],
 
