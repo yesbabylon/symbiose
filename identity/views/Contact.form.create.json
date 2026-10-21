@@ -1,4 +1,6 @@
 {
+    "name": "Create contact",
+    "description": "Form for creating a contact.",
     "access": {
         "groups": ["order.default.users", "sale.default.users"]
     },
@@ -30,8 +32,8 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Owner identity",
-                                                "value": "owner_identity_id",
+                                                "label": "Organization",
+                                                "value": "organization_id",
                                                 "width": "50%"
                                             },
                                             {
@@ -100,7 +102,8 @@
                                         "items": [
                                             {
                                                 "type": "label",
-                                                "value": ""
+                                                "value": "",
+                                                "width": "100%"
                                             }
                                         ]
                                     },

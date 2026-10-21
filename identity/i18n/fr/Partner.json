@@ -6,37 +6,27 @@
         "name": {
             "label": "Nom",
             "description": "Nom affiché du partenaire (lié au nom de l'identité).",
-            "help": ""
+            "help": "Cette valeur reprend automatiquement le nom de l'identité partenaire."
         },
         "owner_identity_id": {
             "label": "Organisation",
             "description": "L'organisation dont l'identité ciblée est partenaire.",
-            "help": ""
+            "help": "Sélectionnez l'identité pour laquelle cette relation est définie."
         },
         "partner_identity_id": {
             "label": "Identité Partenaire",
             "description": "L'identité ciblée (le partenaire).",
-            "help": ""
-        },
-        "partner_organisation_id": {
-            "label": "Organisation du partenaire",
-            "description": "Organisation au sein de laquelle travaille le contact.",
-            "help": ""
-        },
-        "partner_position": {
-            "label": "Fonction",
-            "description": "Rôle du contact au sein de l'organisation.",
-            "help": "Rôle du contact au sein de l'organisation (ex. directeur, PDG, responsable régional)."
+            "help": "Sélectionnez l'identité qui constitue le partenaire de la relation."
         },
         "has_vat": {
             "label": "Assujetti TVA",
             "description": "Cette organisation a-t-elle un numéro de TVA ?",
-            "help": ""
+            "help": "Activez cette option lorsque le partenaire dispose d'un numéro de TVA."
         },
         "vat_number": {
             "label": "Numéro de TVA",
             "description": "Numéro d'identification à la TVA.",
-            "help": ""
+            "help": "Indiquez le numéro de TVA officiel du partenaire."
         },
         "type": {
             "label": "Type",
@@ -48,12 +38,12 @@
                 "NP": "Association à but non lucratif",
                 "PA": "Administration publique"
             },
-            "help": ""
+            "help": "Cette valeur est déterminée par le type d'identité sélectionné."
         },
         "type_id": {
             "label": "Type",
             "description": "Type de identité.",
-            "help": "cette information provient de l'identitié ciblée."
+            "help": "Cette information provient de l'identité ciblée."
         },
         "relationship": {
             "label": "Relation",
@@ -66,37 +56,32 @@
                 "payer": "payeur",
                 "other": "autre"
             },
-            "help": ""
+            "help": "Sélectionnez la nature de la relation entre les deux identités."
         },
         "lang_id": {
             "label": "Langue",
             "description": "Langue du client (en lien avec son identité).",
-            "help": ""
+            "help": "Sélectionnez la langue de communication préférée du partenaire."
         },
         "firstname": {
             "label": "Prénom",
             "description": "Nom complet du contact (doit être une personne, pas un rôle).",
-            "help": ""
+            "help": "Indiquez le prénom lorsque le partenaire est une personne physique."
         },
         "lastname": {
             "label": "Nom",
             "description": "Nom.",
-            "help": ""
+            "help": "Indiquez le nom de famille lorsque le partenaire est une personne physique."
         },
         "legal_name": {
             "label": "Nom légal",
             "description": "Nom complet de l'Identité.",
-            "help": ""
-        },
-        "short_name": {
-            "label": "Nom usuel",
-            "description": "Nom utilisé en interne pour identifier l'organisation.",
-            "help": "Le nom usuel n'est jamais présenté au client et peut contenir tout caractère ou mot permettant de faciliter l'identification de l'organisation (acronyme ou nom abrégé)."
+            "help": "Indiquez le nom légal lorsque le partenaire est une personne morale."
         },
         "address_street": {
             "label": "Rue",
             "description": "Rue et numéro.",
-            "help": ""
+            "help": "Indiquez la rue et le numéro de l'adresse principale."
         },
         "address_dispatch": {
             "label": "Complément d'adresse",
@@ -106,32 +91,32 @@
         "address_city": {
             "label": "Ville",
             "description": "Ville.",
-            "help": ""
+            "help": "Indiquez la ville de l'adresse principale."
         },
         "address_zip": {
             "label": "Code Postal",
             "description": "Code Postal.",
-            "help": ""
+            "help": "Indiquez le code postal de l'adresse principale."
         },
         "address_state": {
             "label": "État",
             "description": "État ou région.",
-            "help": ""
+            "help": "Indiquez l'état ou la région de l'adresse principale."
         },
         "address_country": {
             "label": "Pays",
             "description": "Pays.",
-            "help": ""
+            "help": "Sélectionnez le pays de l'adresse principale."
         },
         "email": {
             "label": "Email",
             "description": "Adresse e-mail principale.",
-            "help": ""
+            "help": "Indiquez l'adresse e-mail principale du partenaire."
         },
         "phone": {
             "label": "Numéro de téléphone",
             "description": "Numéro de téléphone.",
-            "help": ""
+            "help": "Indiquez le numéro de téléphone principal du partenaire."
         }
     },
     "view": {

@@ -24,7 +24,7 @@ class Organization extends IdentityFacetAbstract {
             'organization_id' => [
                 'type'           => 'many2one',
                 'foreign_object' => 'identity\Organization',
-                'description' => 'Not applicable to Organization facets; inherited for schema consistency.',
+                'description' => 'Inherited field unused by organization facets.',
                 'default'        => null,
                 'readonly'       => true
             ],

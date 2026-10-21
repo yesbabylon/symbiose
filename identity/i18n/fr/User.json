@@ -6,12 +6,12 @@
 		"name": {
 			"label": "Nom de l'utilisateur",
 			"description": "Le nom d'affichage de l'utilisateur.",
-			"help": ""
+			"help": "Cette valeur est calculée à partir de l'identité associée."
 		},
 		"identity_id": {
 			"label": "Identité",
 			"description": "Le contact lié à l'utilisateur.",
-			"help": ""
+			"help": "Sélectionnez l'identité dont le nom et la langue seront synchronisés."
 		}
 	},
 	"view": {

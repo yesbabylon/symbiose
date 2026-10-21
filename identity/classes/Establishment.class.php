@@ -98,7 +98,7 @@ class Establishment extends Model {
 
             'registration_number' => [
                 'type'              => 'string',
-                'description'       => 'Establishment registration number (establishment unit number), if any.'
+                'description'       => 'Official registration number of the establishment.'
             ],
 
             'bank_account_iban' => [

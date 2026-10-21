@@ -6,7 +6,7 @@
         "name": {
             "label": "Nom",
             "description": "Nom d'affichage de l'identité.",
-            "help": ""
+            "help": "Cette valeur est calculée à partir du nom légal ou du prénom et du nom."
         },
         "type": {
             "label": "Type",
@@ -18,17 +18,17 @@
                 "NP": "Association à but non lucratif",
                 "PA": "Administration publique"
             },
-            "help": ""
+            "help": "Cette valeur est déterminée par le type d'identité sélectionné."
         },
         "type_id": {
             "label": "Type",
-            "description": "",
-            "help": ""
+            "description": "Type attribué à l'identité.",
+            "help": "Sélectionnez le type correspondant à la personne ou à l'organisation."
         },
         "legal_name": {
             "label": "Nom légal",
             "description": "Nom complet de l'Identité.",
-            "help": ""
+            "help": "Indiquez le nom légal complet pour une personne morale."
         },
         "short_name": {
             "label": "Nom usuel",
@@ -43,42 +43,42 @@
         "has_parent": {
             "label": "Département ou filiale",
             "description": "Cette identité est un département d'une organisation.",
-            "help": ""
+            "help": "Activez cette option lorsque l'identité dépend d'une organisation mère."
         },
         "has_vat": {
             "label": "Assujetti TVA",
             "description": "Cette organisation a-t-elle un numéro de TVA ?",
-            "help": ""
+            "help": "Activez cette option lorsque l'organisation dispose d'un numéro de TVA."
         },
         "vat_number": {
             "label": "Numéro de TVA",
             "description": "Numéro d'identification à la TVA.",
-            "help": ""
+            "help": "Indiquez le numéro de TVA officiel de l'organisation."
         },
         "registration_number": {
             "label": "Numéro d'entreprise",
             "description": "Numéro d'enregistrement commercial (numéro d'entreprise).",
-            "help": ""
+            "help": "Indiquez le numéro officiel d'enregistrement de l'organisation."
         },
         "citizen_identification": {
             "label": "Numéro de registre national",
             "description": "Numéro de registre national (facultatif).",
-            "help": ""
+            "help": "Indiquez le numéro d'identification national de la personne, si nécessaire."
         },
         "children_ids": {
             "label": "Filiales",
             "description": "Les organisations appartenant à l'entreprise, le cas échéant.",
-            "help": ""
+            "help": "Cette liste reprend les identités rattachées à cette organisation mère."
         },
         "parent_id": {
             "label": "Organisation mère",
             "description": "Société mère dont l'organisation est une filiale, le cas échéant.",
-            "help": ""
+            "help": "Sélectionnez l'organisation mère dont dépend cette identité."
         },
         "address_street": {
             "label": "Rue",
             "description": "Rue et numéro.",
-            "help": ""
+            "help": "Indiquez la rue et le numéro de l'adresse principale."
         },
         "address_dispatch": {
             "label": "Complément d'adresse",
@@ -88,42 +88,42 @@
         "address_city": {
             "label": "Ville",
             "description": "Ville.",
-            "help": ""
+            "help": "Indiquez la ville de l'adresse principale."
         },
         "address_zip": {
             "label": "Code Postal",
             "description": "Code Postal.",
-            "help": ""
+            "help": "Indiquez le code postal de l'adresse principale."
         },
         "address_state": {
             "label": "État",
             "description": "État ou région.",
-            "help": ""
+            "help": "Indiquez l'état ou la région de l'adresse principale."
         },
         "address_country": {
             "label": "Pays",
             "description": "Pays.",
-            "help": ""
+            "help": "Sélectionnez le pays de l'adresse principale."
         },
         "email": {
             "label": "Email",
             "description": "Adresse e-mail principale.",
-            "help": ""
+            "help": "Indiquez l'adresse e-mail principale de l'identité."
         },
         "phone": {
             "label": "Numéro de téléphone",
             "description": "Numéro de téléphone.",
-            "help": ""
+            "help": "Indiquez le numéro de téléphone principal de l'identité."
         },
         "website": {
             "label": "Site Web officiel",
             "description": "URL du site Web officiel de l'organisation, le cas échéant.",
-            "help": ""
+            "help": "Indiquez l'URL complète du site officiel de l'organisation."
         },
         "addresses_ids": {
             "label": "Adresses",
             "description": "Liste des adresses liées à l'identité.",
-            "help": ""
+            "help": "Ajoutez les adresses secondaires liées à cette identité."
         },
         "reference_identity_id": {
             "label": "Personne de référence",
@@ -133,22 +133,22 @@
         "user_id": {
             "label": "Utilisateur",
             "description": "Utilisateur associé à cette identité.",
-            "help": ""
+            "help": "Cette valeur relie l'identité à son rôle utilisateur."
         },
         "organization_id": {
             "label": "Organisation",
             "description": "Rôle d'organisation associé à cette identité.",
-            "help": ""
+            "help": "Cette valeur relie l'identité à son rôle d'organisation."
         },
         "firstname": {
             "label": "Prénom",
             "description": "Nom complet du contact (doit être une personne, pas un rôle).",
-            "help": ""
+            "help": "Indiquez le prénom de la personne physique."
         },
         "lastname": {
             "label": "Nom",
             "description": "Nom.",
-            "help": ""
+            "help": "Indiquez le nom de famille de la personne physique."
         },
         "gender": {
             "label": "Genre",
@@ -158,7 +158,7 @@
                 "F": "Féminin",
                 "X": "Non-binaire"
             },
-            "help": ""
+            "help": "Sélectionnez le genre de la personne, si cette information est utile."
         },
         "title": {
             "label": "Titre",
@@ -170,52 +170,52 @@
                 "Mr": "Monsieur",
                 "Pr": "Professeur"
             },
-            "help": ""
+            "help": "Sélectionnez le titre de civilité de la personne."
         },
         "date_of_birth": {
             "label": "Date de naissance",
             "description": "Date de naissance de la personne.",
-            "help": ""
+            "help": "Indiquez la date de naissance de la personne."
         },
         "lang_id": {
             "label": "Langue",
             "description": "Langue parlée préférée.",
-            "help": ""
+            "help": "Sélectionnez la langue de communication préférée."
         },
         "bank_account_iban": {
             "label": "IBAN",
             "description": "Compte bancaire.",
-            "help": ""
+            "help": "Indiquez l'IBAN du compte bancaire principal."
         },
         "bank_account_bic": {
             "label": "BIC",
             "description": "Identifiant BIC lié au compte.",
-            "help": ""
+            "help": "Indiquez le code BIC de la banque liée au compte principal."
         },
         "contact_id": {
             "label": "Contact",
             "description": "Contact associé à cette identité.",
-            "help": ""
+            "help": "Cette valeur relie l'identité à son rôle de contact."
         },
         "customer_contact_id": {
             "label": "Contact client",
             "description": "Contact client associé à cette identité.",
-            "help": ""
+            "help": "Cette valeur relie l'identité à son rôle de contact client."
         },
         "employee_id": {
             "label": "Employé",
             "description": "Employé associé à cette identité.",
-            "help": ""
+            "help": "Cette valeur relie l'identité à son rôle d'employé."
         },
         "customer_id": {
             "label": "Client",
             "description": "Client associé à cette identité.",
-            "help": ""
+            "help": "Cette valeur relie l'identité à son rôle de client."
         },
         "supplier_id": {
             "label": "Fournisseur",
             "description": "Fournisseur associé à cette identité.",
-            "help": ""
+            "help": "Cette valeur relie l'identité à son rôle de fournisseur."
         }
     },
     "view": {
