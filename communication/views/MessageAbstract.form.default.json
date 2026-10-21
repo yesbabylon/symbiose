@@ -26,11 +26,6 @@
                                                 "type": "field",
                                                 "value": "content",
                                                 "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "name",
-                                                "width": "100%"
                                             }
                                         ]
                                     }

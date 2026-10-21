@@ -17,11 +17,6 @@
                 "type": "field",
                 "value": "content",
                 "width": "25%"
-            },
-            {
-                "type": "field",
-                "value": "name",
-                "width": "25%"
             }
         ]
     }
