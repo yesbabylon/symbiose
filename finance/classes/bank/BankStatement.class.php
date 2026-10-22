@@ -359,7 +359,7 @@ class BankStatement extends Model {
         return sprintf('BE%02d%s', $control, $account_number);
     }
 
-    public function getUnique() {
+    public function getUniques(): array {
         return [
             ['bank_account_iban', 'statement_number', 'opening_date', 'opening_balance', 'closing_date', 'closing_balance']
         ];

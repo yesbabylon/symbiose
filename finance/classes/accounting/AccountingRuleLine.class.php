@@ -57,7 +57,7 @@ class AccountingRuleLine extends Model {
     }
 
 
-    public static function calcAccount($om, $ids, $lang) {
+    protected static function calcAccount($om, $ids, $lang) {
         $result = [];
 
         $res = $om->read(get_called_class(), $ids, ['account_id.code']);

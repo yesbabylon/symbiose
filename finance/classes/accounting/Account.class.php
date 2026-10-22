@@ -146,7 +146,7 @@ class Account extends Model {
         ];
     }
 
-    public static function calcLevel($self) {
+    protected static function calcLevel($self) {
         $result = [];
         $self->read(['parent_account_id' => ['level']]);
         foreach($self as $id => $line) {
@@ -161,7 +161,7 @@ class Account extends Model {
         return $result;
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['code', 'level']);
         foreach($self as $id => $line) {
@@ -170,7 +170,7 @@ class Account extends Model {
         return $result;
     }
 
-    public function getUnique() {
+    public function getUniques(): array {
         return [
             ['code']
         ];

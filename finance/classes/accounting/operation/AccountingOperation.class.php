@@ -197,7 +197,7 @@ class AccountingOperation extends Model {
         ];
     }
 
-    public function getUnique() {
+    public function getUniques(): array {
         return [
             ['organization_id', 'journal_id', 'fiscal_year', 'operation_number']
         ];
