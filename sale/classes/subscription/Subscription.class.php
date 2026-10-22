@@ -284,7 +284,7 @@ class Subscription extends Model  {
         return $result;
     }
 
-    public static function calcPriceId($self): array {
+    protected static function calcPriceId($self): array {
         $result = [];
         $self->read(['product_id', 'date_from', 'date_to']);
         foreach($self as $id => $subscription) {
@@ -357,7 +357,7 @@ class Subscription extends Model  {
         return $result;
     }
 
-    public static function calcIsExpired($self): array {
+    protected static function calcIsExpired($self): array {
         $result = [];
         $self->read(['date_to']);
         foreach($self as $id => $subscription) {
@@ -369,7 +369,7 @@ class Subscription extends Model  {
         return $result;
     }
 
-    public static function calcUpcomingExpiry($self): array {
+    protected static function calcUpcomingExpiry($self): array {
         $result = [];
         $self->read(['date_to']);
         foreach($self as $id => $subscription) {

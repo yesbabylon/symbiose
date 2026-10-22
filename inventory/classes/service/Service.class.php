@@ -39,14 +39,13 @@ class Service extends Model {
                 'foreign_object'    => 'inventory\service\ServiceModel',
                 'description'       => 'The service model to which the service belongs.',
                 'required'          => true,
-                'dependents'        => ['has_subscription', 'is_billable']
+                'dependents'        => ['name', 'has_external_provider', 'service_provider_id']
             ],
 
             'has_subscription' => [
                 'type'              => 'boolean',
                 'description'       => 'The service has a subscription.',
-                'default'           => false,
-                'dependents'        => ['is_billable', 'is_internal', 'subscription_id'],
+                'default'           => false
             ],
 
             'is_billable' => [
@@ -90,7 +89,7 @@ class Service extends Model {
                 'foreign_object'    => 'inventory\Product',
                 'ondelete'          => 'cascade',
                 'description'       => 'The product to which the service belongs.',
-                'dependents'        => ['is_internal', 'customer_id'],
+                'dependents'        => ['name', 'is_internal', 'customer_id'],
                 'required'          => true
             ],
 
@@ -184,7 +183,7 @@ class Service extends Model {
 
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['service_model_id', 'product_id']);
         foreach($self as $id => $service) {
@@ -218,7 +217,7 @@ class Service extends Model {
         return $name;
     }
 
-    public static function calcIsInternal($self) {
+    protected static function calcIsInternal($self) {
         $result = [];
         $self->read(['product_id' => ['is_internal']]);
         foreach($self as $id => $service) {
@@ -227,7 +226,7 @@ class Service extends Model {
         return $result;
     }
 
-    public static function calcCustomerId($self) {
+    protected static function calcCustomerId($self) {
         $result = [];
         $self->read(['product_id' => ['customer_id']]);
         foreach($self as $id => $service) {

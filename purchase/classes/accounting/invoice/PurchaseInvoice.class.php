@@ -37,8 +37,7 @@ class PurchaseInvoice extends AccountingOperation {
                 'foreign_object'    => 'purchase\accounting\invoice\PurchaseInvoiceLine',
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Detailed lines of the invoice.',
-                'ondetach'          => 'delete',
-                'dependents'        => ['total', 'price']
+                'ondetach'          => 'delete'
             ],
 
             /**

@@ -14,7 +14,7 @@ class User extends \identity\User {
 
             'server_alerts_ids' => [
                 'type'              => 'many2many',
-                'foreign_object'    => 'infra\server\Alert',
+                'foreign_object'    => 'infra\server\AlertPolicy',
                 'foreign_field'     => 'users_ids',
                 'rel_table'         => 'infra_server_alert_rel_core_user',
                 'rel_foreign_key'   => 'alert_id',

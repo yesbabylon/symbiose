@@ -108,7 +108,7 @@ class SubscriptionEntry extends SaleEntry {
         ];
     }
 
-    public static function calcName($self): array {
+    protected static function calcName($self): array {
         $result = [];
         $self->read(['subscription_id' => ['name'], 'date_from', 'date_to']);
         foreach($self as $id => $entry) {

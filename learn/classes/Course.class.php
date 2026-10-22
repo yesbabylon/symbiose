@@ -103,7 +103,7 @@ class Course extends Model
 	 * @param $lang
 	 * @return array
 	 */
-	public static function calcViewLink(ObjectManager $om, array $oids, $lang): array
+	protected static function calcViewLink(ObjectManager $om, array $oids, $lang): array
 	{
 		$result = [];
 
@@ -128,7 +128,7 @@ class Course extends Model
 	 * @param $lang
 	 * @return array
 	 */
-	public static function calcEditLink(ObjectManager $om, array $oids, $lang): array
+	protected static function calcEditLink(ObjectManager $om, array $oids, $lang): array
 	{
 		$result = [];
 

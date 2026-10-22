@@ -71,7 +71,7 @@ class Holiday extends Model {
         ];
     }
 
-    public static function calcYear($orm, $oids, $lang) {
+    protected static function calcYear($orm, $oids, $lang) {
         $result = [];
         $res = $orm->read(__CLASS__, $oids, ['holiday_year_id.year'], $lang);
         foreach($res as $oid => $odata) {

@@ -195,7 +195,7 @@ class OrderLine extends Model {
         return $result;
     }
 
-    public static function calcVatRate($self) {
+    protected static function calcVatRate($self) {
         $result = [];
         $self->read(['price_id' => ['vat_rate']]);
         foreach($self as $id => $line) {
@@ -207,7 +207,7 @@ class OrderLine extends Model {
         return $result;
     }
 
-    public static function calcTotal($self) {
+    protected static function calcTotal($self) {
         $result = [];
         $self->read(['qty', 'unit_price', 'discount']);
         foreach($self as $id => $line) {
@@ -216,11 +216,11 @@ class OrderLine extends Model {
         return $result;
     }
 
-    public static function calculateTotal($unit_price, $qty, $discount) {
+    protected static function calculateTotal($unit_price, $qty, $discount) {
         return round($unit_price * (1.0 - $discount) * $qty, 4);
     }
 
-    public static function calcPrice($self) {
+    protected static function calcPrice($self) {
         $result = [];
         $self->read(['total','vat_rate']);
         foreach($self as $id => $line) {
@@ -229,11 +229,11 @@ class OrderLine extends Model {
         return $result;
     }
 
-    public static function calculatePrice($total, $vat_rate) {
+    protected static function calculatePrice($total, $vat_rate) {
         return round( $total  * (1.0 + $vat_rate), 2);
     }
 
-    public static function calcOrder($self) {
+    protected static function calcOrder($self) {
         $result = [];
         $self->read(['order_line_group_id']);
         foreach($self as $id => $line) {
@@ -243,7 +243,7 @@ class OrderLine extends Model {
         return $result;
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['product_id']);
         foreach($self as $id => $line) {
@@ -253,7 +253,7 @@ class OrderLine extends Model {
         return $result;
     }
 
-    public static function calcFareBenefit($self) {
+    protected static function calcFareBenefit($self) {
         $result = [];
         $self->read(['qty', 'price_id', 'vat_rate', 'unit_price']);
         foreach($self as $id => $line) {
@@ -268,7 +268,7 @@ class OrderLine extends Model {
         return $result;
     }
 
-    public static function calculateFareBenefit($qty, $price, $vat_rate, $unit_price) {
+    protected static function calculateFareBenefit($qty, $price, $vat_rate, $unit_price) {
         $catalog_price = $price * $qty * (1.0 + $vat_rate);
         $fare_price = $unit_price * $qty * (1.0 + $vat_rate);
         $benefit = round($catalog_price - $fare_price, 2);

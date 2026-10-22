@@ -175,7 +175,7 @@ class Report extends \equal\orm\Model {
         ];
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['date', 'status']);
         foreach($self as $id => $report) {
@@ -329,7 +329,7 @@ class Report extends \equal\orm\Model {
      * Compute the value of the date_from` field: the day following the date_to of the previous report, or 01/01/2023 if none exists.
      * @param \equal\orm\Collection $self
      */
-    public static function calcDateFrom($self) {
+    protected static function calcDateFrom($self) {
         $result = [];
         $self->read([
             'date',
@@ -360,7 +360,7 @@ class Report extends \equal\orm\Model {
         return $result;
     }
 
-    public static function calcHasLines($self) {
+    protected static function calcHasLines($self) {
         $result = [];
         $self->read(['service_account_entries_ids']);
         foreach($self as $id => $report) {
@@ -370,7 +370,7 @@ class Report extends \equal\orm\Model {
         // return array_map(fn ($a) => (bool) count((array) $a['service_account_entries_ids']), $self->read(['service_account_entries_ids'])->get());
     }
 
-    public static function calcTotalPoints($self) {
+    protected static function calcTotalPoints($self) {
         $result = [];
         $self->read(['service_account_entries_ids' => ['points', 'receivable_id' => ['origin_object_class']]]);
         foreach($self as $id => $report) {
@@ -387,7 +387,7 @@ class Report extends \equal\orm\Model {
     }
 
 
-    public static function calcTotalCredits($self) {
+    protected static function calcTotalCredits($self) {
         $result = [];
         $self->read(['service_account_entries_ids' => ['points', 'receivable_id' => ['origin_object_class']]]);
         foreach($self as $id => $report) {
@@ -408,7 +408,7 @@ class Report extends \equal\orm\Model {
      * The value of this field should be computed only once and fetched upon creation.
      * #memo - Calculation is triggered upon assignation of the service_account_id.
      */
-    public static function calcBalanceOld($self) {
+    protected static function calcBalanceOld($self) {
         $result = [];
         $self->read(['date', 'service_account_id']);
         foreach($self as $id => $report) {
@@ -433,7 +433,7 @@ class Report extends \equal\orm\Model {
      * The value of this field should be computed only once and fetched upon creation.
      * #memo - Calculation is triggered upon assignation of the service_account_id.
      */
-    public static function calcBalanceNew($self) {
+    protected static function calcBalanceNew($self) {
         $result = [];
         $self->read(['balance_old', 'total_points', 'total_credits']);
         foreach($self as $id => $report) {
@@ -448,7 +448,7 @@ class Report extends \equal\orm\Model {
     /**
      * Provide the link for generating the PDF version of the Report.
      */
-    public static function calcLink($self) {
+    protected static function calcLink($self) {
         $result = [];
         foreach($self as $id => $report) {
             $result[$id] = '/?get=sale_serviceaccount_Report_render-pdf&id='.$id;
@@ -456,7 +456,7 @@ class Report extends \equal\orm\Model {
         return $result;
     }
 
-    public static function calcIsEmpty($self) {
+    protected static function calcIsEmpty($self) {
         $result = [];
         $self->read(['service_account_entries_ids']);
         foreach($self as $id => $report) {
@@ -465,7 +465,7 @@ class Report extends \equal\orm\Model {
         return $result;
     }
 
-    public static function calcPdfData($self) {
+    protected static function calcPdfData($self) {
         $result = [];
 
         foreach($self as $id => $report) {
@@ -475,7 +475,7 @@ class Report extends \equal\orm\Model {
         return $result;
     }
 
-    public static function calcIsSendable($self) {
+    protected static function calcIsSendable($self) {
         $result = [];
         $self->read([
             'status',

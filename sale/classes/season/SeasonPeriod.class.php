@@ -83,7 +83,7 @@ class SeasonPeriod extends Model {
         ];
     }
 
-    public static function calcMonth($self) {
+    protected static function calcMonth($self) {
         $result = [];
         $self->read(['date_from']);
         foreach($self as $id => $period) {
@@ -92,7 +92,7 @@ class SeasonPeriod extends Model {
         return $result;
     }
 
-    public static function calcYear($self) {
+    protected static function calcYear($self) {
         $result = [];
         $self->read(['date_from']);
         foreach($self as $id => $period) {
@@ -101,7 +101,7 @@ class SeasonPeriod extends Model {
         return $result;
     }
 
-    public static function calcSeasonCategoryId($self) {
+    protected static function calcSeasonCategoryId($self) {
         $result = [];
         $self->read(['season_id' => ['season_category_id']]);
         foreach($self as $id => $period) {

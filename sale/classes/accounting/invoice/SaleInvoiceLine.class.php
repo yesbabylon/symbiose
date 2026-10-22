@@ -220,7 +220,7 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
         return $result;
     }
 
-    public static function calcName($self): array {
+    protected static function calcName($self): array {
         $result = [];
         $self->read(['product_id' => ['name']]);
         foreach($self as $id => $line) {
@@ -230,7 +230,7 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
         return $result;
     }
 
-    public static function calcUnitPrice($self): array {
+    protected static function calcUnitPrice($self): array {
         $result = [];
         $self->read(['price_id' => ['price']]);
         foreach($self as $id => $line) {
@@ -240,7 +240,7 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
         return $result;
     }
 
-    public static function calcVatRate($self): array {
+    protected static function calcVatRate($self): array {
         $result = [];
         $self->read(['price_id' => ['vat_rate']]);
         foreach($self as $id => $line) {
@@ -253,7 +253,7 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
         return $result;
     }
 
-    public static function calcTotal($self): array {
+    protected static function calcTotal($self): array {
         $result = [];
         $self->read(['qty', 'unit_price', 'discount']);
         foreach($self as $id => $line) {

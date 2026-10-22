@@ -730,7 +730,7 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function calcIsInternal($self) {
+    protected static function calcIsInternal($self) {
         $result = [];
         $self->read(['project_id' => ['is_internal'], 'inventory_product_id' => ['is_internal']]);
         foreach($self as $id => $entry) {
@@ -739,7 +739,7 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['project_id' => ['name'], 'origin', 'reference', 'description']);
         foreach($self as $id => $entry) {
@@ -812,7 +812,7 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function calcBilledDuration($self): array {
+    protected static function calcBilledDuration($self): array {
         $result = [];
         $self->read(['billable_duration']);
         foreach($self as $id => $entry) {
@@ -821,7 +821,7 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function calcDuration($self, $orm): array {
+    protected static function calcDuration($self, $orm): array {
         $result = [];
         $self->read(['state', 'is_full_day', 'time_start', 'time_end']);
         foreach($self as $id => $entry) {
@@ -839,7 +839,7 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function calcQty($self): array {
+    protected static function calcQty($self): array {
         $result = [];
         $self->read(['billed_duration']);
         foreach($self as $id => $entry) {
@@ -849,7 +849,7 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function calcTicketLink($self): array {
+    protected static function calcTicketLink($self): array {
         $result = [];
         $self->read(['origin', 'ticket_id', 'project_id' => ['product_id' => ['url']]]);
         foreach($self as $id => $entry) {

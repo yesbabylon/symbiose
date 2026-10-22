@@ -57,7 +57,7 @@ class TicketEntry extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'support\Ticket',
                 'description'       => "Ticket the entry relates to.",
-                'ondelete'          => 'delete'
+                'ondelete'          => 'cascade'
             ],
 
             'attachments_ids' => [

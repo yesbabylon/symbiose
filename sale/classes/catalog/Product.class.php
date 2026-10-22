@@ -171,7 +171,7 @@ class Product extends Model {
      * Computes the display name of the product as a concatenation of Label and SKU.
      *
      */
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['label', 'sku']);
         foreach($self as $id => $product) {
@@ -189,23 +189,23 @@ class Product extends Model {
         return $result;
     }
 
-    public static function calcIsPack($self): array {
+    protected static function calcIsPack($self): array {
         return self::calcFromProductModel($self, 'is_pack');
     }
 
-    public static function calcHasOwnPrice($self): array {
+    protected static function calcHasOwnPrice($self): array {
         return self::calcFromProductModel($self, 'has_own_price');
     }
 
-    public static function calcCanBuy($self): array {
+    protected static function calcCanBuy($self): array {
         return self::calcFromProductModel($self, 'can_buy');
     }
 
-    public static function calcCanSell($self): array {
+    protected static function calcCanSell($self): array {
         return self::calcFromProductModel($self, 'can_sell');
     }
 
-    public static function calcFamilyId($self): array {
+    protected static function calcFamilyId($self): array {
         return self::calcFromProductModel($self, 'family_id');
     }
 

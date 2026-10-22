@@ -93,7 +93,7 @@ class Employee extends IdentityFacetAbstract {
         return [['identity_id']];
     }
 
-    public static function calcIsActive($self): array {
+    protected static function calcIsActive($self): array {
         $result = [];
         $today = strtotime(date('Y-m-d'));
         $self->read(['contracts_ids' => ['status', 'date_start', 'date_end']]);
@@ -117,7 +117,7 @@ class Employee extends IdentityFacetAbstract {
         return $result;
     }
 
-    public static function calcFirstEmploymentDate($self): array {
+    protected static function calcFirstEmploymentDate($self): array {
         $result = [];
         $self->read(['contracts_ids' => ['status', 'date_start']]);
         foreach($self as $id => $employee) {
