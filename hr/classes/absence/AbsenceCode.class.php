@@ -44,7 +44,7 @@ class AbsenceCode extends \equal\orm\Model {
         ];
     }
 
-    public static function calcName($om, $ids, $lang) {
+    protected static function calcName($om, $ids, $lang) {
         $result = [];
         $codes = $om->read(self::getType(), $ids, ['code', 'description'], $lang);
         foreach($codes as $oid => $code) {
