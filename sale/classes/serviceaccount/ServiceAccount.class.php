@@ -280,7 +280,7 @@ class ServiceAccount extends \sale\contract\Contract {
         $self->read(['balance_effective', 'balance_estimated']);
     }
 
-    public static function calcBalanceEffective($self) {
+    protected static function calcBalanceEffective($self) {
         $result = [];
         foreach($self as $id => $service_account) {
             $report = Report::search([
@@ -297,7 +297,7 @@ class ServiceAccount extends \sale\contract\Contract {
         return $result;
     }
 
-    public static function calcBalanceEstimated($self) {
+    protected static function calcBalanceEstimated($self) {
         $result = [];
         $self->read(['balance_effective']);
         foreach($self as $id => $service_account) {
@@ -317,7 +317,7 @@ class ServiceAccount extends \sale\contract\Contract {
         return $result;
     }
 
-    public static function calcLastEntryId($self) {
+    protected static function calcLastEntryId($self) {
         $result = [];
         foreach($self as $id => $service_account) {
             $line = ServiceAccountEntry::search([

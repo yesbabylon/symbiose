@@ -95,6 +95,12 @@ class Funding extends Model {
                 'description'       => "Share of the payment over the total due amount."
             ],
 
+            'order_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\order\Order',
+                'description'       => 'Order the funding relates to.'
+            ],
+
             'invoice_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\accounting\invoice\SaleInvoice',
@@ -111,7 +117,7 @@ class Funding extends Model {
         ];
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['due_amount', 'invoice_id' => ['name']]);
         foreach($self as $id => $funding) {
@@ -125,7 +131,7 @@ class Funding extends Model {
         return $result;
     }
 
-    public static function calcPaidAmount($self) {
+    protected static function calcPaidAmount($self) {
         $result = [];
         $self->read(['payments_ids' => ['amount']]);
         foreach($self as $id => $funding) {
@@ -137,7 +143,7 @@ class Funding extends Model {
         return $result;
     }
 
-    public static function calcIsPaid($self) {
+    protected static function calcIsPaid($self) {
         $result = [];
         $self->read(['due_amount', 'paid_amount']);
         foreach($self as $id => $funding) {

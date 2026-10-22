@@ -101,7 +101,7 @@ class PriceList extends Model {
         ];
     }
 
-    public static function calcDuration($self) {
+    protected static function calcDuration($self) {
         $result = [];
         $self->read(['date_from', 'date_to']);
         foreach($self as $id => $list) {
@@ -110,7 +110,7 @@ class PriceList extends Model {
         return $result;
     }
 
-    public static function calcIsActive($self) {
+    protected static function calcIsActive($self) {
         $result = [];
         $self->read(['prices_ids', 'date_from', 'date_to', 'status']);
         $now = time();
@@ -122,7 +122,7 @@ class PriceList extends Model {
     }
 
 
-    public static function calcPricesCount($self) {
+    protected static function calcPricesCount($self) {
         $result = [];
         $self->read(['prices_ids']);
         foreach($self as $id => $list) {

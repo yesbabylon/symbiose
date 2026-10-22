@@ -28,7 +28,6 @@ class OrderLine extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => OrderPayment::getType(),
                 'description'       => 'The payement the line relates to.',
-                'default'           => 0,
                 'ondelete'          => 'null'
             ],
 
@@ -85,7 +84,7 @@ class OrderLine extends Model {
                 'type'              => 'integer',
                 'usage'             => 'numeric/integer',
                 'description'       => 'Amount of units in this line.',
-                'default'           => 0.0,
+                'default'           => 0,
                 'onupdate'          => '_resetPrice'
             ],
 
@@ -156,7 +155,7 @@ class OrderLine extends Model {
         }
     }
 
-    public static function calcTotal($om, $ids, $lang) {
+    protected static function calcTotal($om, $ids, $lang) {
         $result = [];
         $lines = $om->read(__CLASS__, $ids, ['unit_price', 'qty', 'discount']);
         if($lines > 0) {
@@ -167,7 +166,7 @@ class OrderLine extends Model {
         return $result;
     }
 
-    public static function calcPrice($om, $ids, $lang) {
+    protected static function calcPrice($om, $ids, $lang) {
         $result = [];
         $lines = $om->read(__CLASS__, $ids, ['total', 'vat_rate']);
         if($lines > 0) {

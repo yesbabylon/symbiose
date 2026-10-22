@@ -125,7 +125,7 @@ class OrderPayment extends Model {
         }
     }
 
-    public static function calcTotalPaid($om, $ids, $lang) {
+    protected static function calcTotalPaid($om, $ids, $lang) {
         $result = [];
         $payments = $om->read(__CLASS__, $ids, ['order_payment_parts_ids.amount'], $lang);
         if($payments > 0) {
@@ -140,7 +140,7 @@ class OrderPayment extends Model {
         return $result;
     }
 
-    public static function calcTotalDue($om, $ids, $lang) {
+    protected static function calcTotalDue($om, $ids, $lang) {
         $result = [];
         $payments = $om->read(__CLASS__, $ids, ['order_lines_ids.price'], $lang);
         if($payments > 0) {
@@ -155,7 +155,7 @@ class OrderPayment extends Model {
         return $result;
     }
 
-    public static function calcTotalChange($om, $ids, $lang) {
+    protected static function calcTotalChange($om, $ids, $lang) {
         $result = [];
         $payments = $om->read(__CLASS__, $ids, ['total_due', 'total_paid'], $lang);
         if($payments > 0) {

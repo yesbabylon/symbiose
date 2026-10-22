@@ -159,6 +159,11 @@
             "description": "Organisation responsable de payer la facture.",
             "help": "Client ou organisation responsable de payer les biens et services liés à la vente."
         },
+        "order_id": {
+            "label": "Commande",
+            "description": "Commande à laquelle la facture est liée.",
+            "help": "Ce champ est renseigné lorsque la facture est générée depuis une commande."
+        },
         "invoice_purpose": {
             "label": "Objet",
             "description": "Objet de la facture (vente).",

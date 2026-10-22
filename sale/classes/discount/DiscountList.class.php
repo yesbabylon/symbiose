@@ -79,7 +79,7 @@ class DiscountList extends Model {
         $om->read(__CLASS__, $oids, ['rate_class_id']);
     }
 
-    public static function calcRateClassId($om, $oids, $lang) {
+    protected static function calcRateClassId($om, $oids, $lang) {
         $result = [];
         $lists = $om->read(__CLASS__, $oids, ['discount_class_id.rate_class_id']);
         foreach($lists as $oid => $list) {

@@ -96,6 +96,12 @@ class Contract extends Model {
                 'dependents'        => ['name']
             ],
 
+            'order_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\order\Order',
+                'description'       => 'Order the contract relates to.'
+            ],
+
             'contract_lines_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\contract\ContractLine',
@@ -139,7 +145,7 @@ class Contract extends Model {
         ];
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['customer_id' => ['name']]);
         foreach($self as $id => $contract) {
@@ -152,7 +158,7 @@ class Contract extends Model {
         return $result;
     }
 
-    public static function calcTotal($self): array {
+    protected static function calcTotal($self): array {
         $result = [];
         $self->read(['contract_lines_ids' => ['total']]);
         foreach($self as $id => $contract) {
@@ -164,7 +170,7 @@ class Contract extends Model {
         return $result;
     }
 
-    public static function calcPrice($self): array {
+    protected static function calcPrice($self): array {
         $result = [];
         $self->read(['contract_lines_ids' => ['price']]);
         foreach($self as $id => $contract) {

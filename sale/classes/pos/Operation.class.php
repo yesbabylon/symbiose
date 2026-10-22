@@ -68,7 +68,7 @@ class Operation extends Model {
     }
 
 
-    public static function calcName($om, $ids, $lang) {
+    protected static function calcName($om, $ids, $lang) {
         $result = [];
 
         $operations = $om->read(get_called_class(), $ids, ['cashdesk_id.name', 'type', 'amount'], $lang);
