@@ -67,7 +67,7 @@ class UserStatus extends Model
 		];
 	}
 
-	public function getUnique(): array
+	public function getUniques(): array
 	{
 		return [
 			[

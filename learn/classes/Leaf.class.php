@@ -91,7 +91,7 @@ class Leaf extends Model {
         ];
     }
 
-    public static function calcVisible($om, $oids, $lang) {
+    protected static function calcVisible($om, $oids, $lang) {
         $result = [];
 
         $leaves = $om->read(__CLASS__, $oids, ['identifier', 'visibility_rule'], $lang);

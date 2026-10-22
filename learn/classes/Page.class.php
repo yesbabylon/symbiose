@@ -75,7 +75,7 @@ class Page extends Model {
         ];
     }
 
-    public static function calcNextActive($om, $oids, $lang) {
+    protected static function calcNextActive($om, $oids, $lang) {
         $result = [];
 
         $pages = $om->read(__CLASS__, $oids, ['identifier', 'next_active_rule'], $lang);
