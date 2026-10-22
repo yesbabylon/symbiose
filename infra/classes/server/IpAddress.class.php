@@ -83,7 +83,7 @@ class IpAddress extends Model {
         ];
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['ip_v4', 'ip_v6']);
         foreach($self as $id => $address) {

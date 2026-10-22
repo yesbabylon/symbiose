@@ -125,7 +125,7 @@ class Server extends Model {
         ];
     }
 
-    public static function calcProductsCount($self): array {
+    protected static function calcProductsCount($self): array {
         $result = [];
         $self->read(['products_ids']);
         foreach($self as $id => $product) {
@@ -135,7 +135,7 @@ class Server extends Model {
         return $result;
     }
 
-    public static function calcInstancesCount($self): array {
+    protected static function calcInstancesCount($self): array {
         $result = [];
         $self->read(['instances_ids']);
         foreach($self as $id => $server) {

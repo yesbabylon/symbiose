@@ -59,7 +59,7 @@ class AlertTrigger extends Model {
 
             'alerts_ids' => [
                 'type'              => 'many2many',
-                'foreign_object'    => 'infra\server\Alert',
+                'foreign_object'    => 'infra\server\AlertPolicy',
                 'foreign_field'     => 'alert_triggers_ids',
                 'rel_table'         => 'infra_alert_rel_alert_trigger',
                 'rel_foreign_key'   => 'alert_id',
@@ -118,7 +118,7 @@ class AlertTrigger extends Model {
         ];
     }
 
-    public static function calcName($self): array {
+    protected static function calcName($self): array {
         $result = [];
         $self->read(['key', 'operator', 'value', 'repetition']);
         foreach($self as $id => $trigger) {

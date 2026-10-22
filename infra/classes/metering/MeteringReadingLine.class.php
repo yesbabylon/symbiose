@@ -100,7 +100,7 @@ class MeteringReadingLine extends Model {
         ];
     }
 
-    public function getUnique() {
+    public function getUniques(): array {
         return [
             ['metering_reading_id', 'metric_definition_id']
         ];
