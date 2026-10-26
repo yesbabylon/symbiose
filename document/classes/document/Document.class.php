@@ -32,6 +32,18 @@ class Document extends Model {
                 'dependents'        => ['hash', 'hash_sha256', 'content_type', 'content_size', 'extension', 'readable_size', 'preview_image']
             ],
 
+            'document_type_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'document\document\DocumentType',
+                'description'       => 'Type of the document, if any.'
+            ],
+
+            'document_subtype_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'document\document\DocumentSubtype',
+                'description'       => 'Sub type of the document, if any.'
+            ],
+
             'is_origin' => [
                 'type'              => 'boolean',
                 'default'           => false,

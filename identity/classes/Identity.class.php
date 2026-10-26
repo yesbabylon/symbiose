@@ -67,7 +67,7 @@ class Identity extends IdentityAbstract {
                 'type'           => 'many2one',
                 'foreign_object' => 'identity\IdentityType',
                 'default'        => 1,
-                'dependents'     => ['type', 'name', 'identity_slug', 'slug_hash'],
+                'dependents'     => ['type', 'name', /* not computed yet 'identity_slug', 'slug_hash'*/],
                 'description'    => 'Type of identity.'
             ],
 

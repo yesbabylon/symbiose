@@ -47,7 +47,7 @@ class TemplateAttachment extends Model {
         ];
     }
 
-    public static function calcLangId($self): array {
+    protected static function calcLangId($self): array {
         $result = [];
         $self->read(['document_id' => ['lang_id']]);
         foreach($self as $id => $attachment) {

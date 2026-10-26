@@ -14,7 +14,7 @@ class Group extends \core\Group {
 
             'server_alerts_ids' => [
                 'type'              => 'many2many',
-                'foreign_object'    => 'infra\server\Alert',
+                'foreign_object'    => 'infra\server\AlertPolicy',
                 'foreign_field'     => 'groups_ids',
                 'rel_table'         => 'infra_server_alert_rel_core_group',
                 'rel_foreign_key'   => 'alert_id',

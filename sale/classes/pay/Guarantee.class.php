@@ -74,7 +74,7 @@ class Guarantee extends Model {
     }
 
 
-    public static function calcName($orm, $ids, $lang) {
+    protected static function calcName($orm, $ids, $lang) {
         $result = [];
         $guarantees = $orm->read(self::getType(), $ids, ['mode', 'holder', 'card_type', 'card_expire'], $lang);
 

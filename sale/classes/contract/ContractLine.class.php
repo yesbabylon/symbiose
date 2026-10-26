@@ -105,7 +105,7 @@ class ContractLine extends Model {
         ];
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['product_id' => ['label']]);
         foreach($self as $id => $line) {
@@ -115,7 +115,7 @@ class ContractLine extends Model {
         return $result;
     }
 
-    public static function calcTotal($self) {
+    protected static function calcTotal($self) {
         $result = [];
         $self->read(['unit_price', 'qty', 'discount']);
         foreach($self as $id => $line) {
@@ -125,7 +125,7 @@ class ContractLine extends Model {
         return $result;
     }
 
-    public static function calcPrice($self) {
+    protected static function calcPrice($self) {
         $result = [];
         $self->read(['total', 'vat_rate']);
         foreach($self as $id => $line) {

@@ -36,7 +36,17 @@ class User extends \core\User {
                 'foreign_object'    => 'identity\Organization',
                 'description'       => 'The organization the user belongs to.',
                 'default'           => 1
-            ]
+            ],
+
+            'channels_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'communication\conversation\Channel',
+                'foreign_field'     => 'users_ids',
+                'rel_table'         => 'communication_channel_rel_core_user',
+                'rel_foreign_key'   => 'channel_id',
+                'rel_local_key'     => 'user_id',
+                'description'       => 'Channel\'s conversations the user can be part of.'
+            ],
 
         ];
     }

@@ -185,7 +185,7 @@ class Access extends Model {
         }
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['username', 'host']);
         foreach($self as $id => $access) {
@@ -194,7 +194,7 @@ class Access extends Model {
         return $result;
     }
 
-    public static function calcUrl($self) {
+    protected static function calcUrl($self) {
         $result = [];
         $self->read([
                 'port',

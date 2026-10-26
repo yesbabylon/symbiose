@@ -66,7 +66,7 @@ class DocumentType extends Model {
                     'external',
                     'public'
                 ],
-                'default'           => 'agency',
+                'default'           => 'organization',
                 'description'       => 'Defines who can access the document.',
                 'help'              => 'This field is synchronized with the node and updates automatically when the parent node visibility changes.'
             ],

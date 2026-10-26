@@ -66,14 +66,14 @@ class UserAccess extends Model
         ];
     }
 
-    public function getUnique()
+    public function getUniques(): array
     {
         return [
             ['course_id','user_id']
         ];
     }
 
-    public static function calcIsComplete($om, $oids, $lang)
+    protected static function calcIsComplete($om, $oids, $lang)
     {
         $result = [];
 
@@ -114,7 +114,7 @@ class UserAccess extends Model
     /**
      * Generate a unique pseudo-random value for the Course.
      */
-    public static function calcCode($om, $oids, $lang)
+    protected static function calcCode($om, $oids, $lang)
     {
         $result = [];
 
@@ -133,7 +133,7 @@ class UserAccess extends Model
      * Compute a alpha code of 4 chars (3 letters + 1 digit) based on numeric code (unique)
      * example : nMa1
      */
-    public static function calcCodeAlpha($om, $oids, $lang)
+    protected static function calcCodeAlpha($om, $oids, $lang)
     {
         $result = [];
         $accesses = $om->read(__CLASS__, $oids, ['code'], $lang);

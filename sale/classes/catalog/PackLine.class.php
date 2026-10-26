@@ -25,7 +25,7 @@ class PackLine extends Model {
 
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'sale\catalog\PackLine::calcName',
+                'function'          => 'calcName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the pack line.'
@@ -97,7 +97,7 @@ class PackLine extends Model {
         $om->update(__CLASS__, $oids, [ 'name' => null ], $lang);
     }
 
-    public static function calcName($om, $oids, $lang) {
+    protected static function calcName($om, $oids, $lang) {
         $result = [];
         $lines = $om->read(__CLASS__, $oids, ['child_product_model_id.name']);
         foreach($oids as $oid) {
@@ -106,7 +106,7 @@ class PackLine extends Model {
         return $result;
     }
 
-    public static function calcCanSell($om, $oids, $lang) {
+    protected static function calcCanSell($om, $oids, $lang) {
         $result = [];
         $lines = $om->read(__CLASS__, $oids, ['child_product_id.can_sell']);
         foreach($lines as $lid => $line) {
@@ -115,7 +115,7 @@ class PackLine extends Model {
         return $result;
     }
 
-    public function getUnique() {
+    public function getUniques(): array {
         return [
             ['parent_product_id', 'child_product_id']
         ];

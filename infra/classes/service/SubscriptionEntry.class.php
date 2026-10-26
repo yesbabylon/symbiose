@@ -32,7 +32,7 @@ class SubscriptionEntry extends SaleSubscriptionEntry {
                 'type'           => 'many2one',
                 'foreign_object' => 'infra\service\Subscription',
                 'description'    => 'Subscription from which the entry originates.',
-                'dependents'     => ['product_id', 'customer_id', 'service_provider']
+                'dependents'     => ['product_id', 'customer_id', 'service_provider_id']
             ],
 
             /**

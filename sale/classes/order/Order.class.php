@@ -153,7 +153,7 @@ class Order extends Model {
                     'external_impediment',      // cancellation due to external delivery failure (organisation, means of transport, ...)
                 ],
                 'description'       => "Reason for which the customer cancelled the order.",
-                'default'           => 'generic'
+                'default'           => 'other'
             ],
 
             'payment_status' => [
@@ -205,7 +205,7 @@ class Order extends Model {
         return $result;
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['id','modified', 'customer_id', 'customer_identity_id']);
         foreach($self as $id => $order) {
@@ -225,13 +225,13 @@ class Order extends Model {
     /**
      * Payment status tells if a given order is in order regarding the expected payment up to now.
      */
-    public static function calcPaymentStatus($self) {
+    protected static function calcPaymentStatus($self) {
         // #todo
         $result = [];
         return $result;
     }
 
-    public static function calcPrice($self): array {
+    protected static function calcPrice($self): array {
         $result = [];
         $self->read(['order_lines_groups_ids' => ['price']]);
         foreach($self as $id => $group) {
@@ -244,7 +244,7 @@ class Order extends Model {
     }
 
 
-    public static function calcTotal($self): array {
+    protected static function calcTotal($self): array {
         $result = [];
         $self->read(['order_lines_groups_ids' => ['total']]);
         foreach($self as $id => $group) {

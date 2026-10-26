@@ -126,7 +126,7 @@ class Price extends Model {
         ];
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['product_id' => ['id', 'sku'], 'price_list_id' => 'name']);
         foreach($self as $id => $product) {
@@ -135,7 +135,7 @@ class Price extends Model {
         return $result;
     }
 
-    public static function calcPriceVat($self) {
+    protected static function calcPriceVat($self) {
         $result = [];
         $self->read(['price', 'vat_rate']);
         foreach($self as $id => $price) {
@@ -144,7 +144,7 @@ class Price extends Model {
         return $result;
     }
 
-    public static function calcIsActive($self) {
+    protected static function calcIsActive($self) {
         $result = [];
         $self->read(['price_list_id' => 'is_active']);
         foreach($self as $id => $price) {
@@ -179,7 +179,7 @@ class Price extends Model {
         return $price_vat / (1.0 + $vat_rate);
     }
 
-    public function getUnique() {
+    public function getUniques(): array {
         return [
             ['product_id', 'price_list_id']
         ];

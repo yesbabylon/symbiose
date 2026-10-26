@@ -86,7 +86,7 @@ class DocumentSubtype extends Model {
         ];
     }
 
-    public function getUnique() {
+    public function getUniques(): array {
         return [
             ['document_type_id', 'code']
         ];

@@ -37,6 +37,11 @@
             "description": "Part du financement sur le prix total.",
             "help": ""
         },
+        "order_id": {
+            "label": "Commande",
+            "description": "La commande à laquelle le financement est lié.",
+            "help": "Ce champ est renseigné lorsque le financement est généré depuis une commande."
+        },
         "due_date": {
             "label": "Date d'échéance",
             "description": "Date limite avant laquelle le financement est attendu.",

@@ -39,6 +39,11 @@
             "description": "Le client auquel se rapporte le contrat.",
             "help": ""
         },
+        "order_id": {
+            "label": "Commande",
+            "description": "La commande à laquelle le contrat est lié.",
+            "help": "Ce champ est renseigné lorsque le contrat est généré depuis une commande."
+        },
         "price": {
             "label": "Prix TTC",
             "description": "Prix total TTC de la commande.",
