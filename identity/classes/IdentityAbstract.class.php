@@ -18,7 +18,7 @@ abstract class IdentityAbstract extends Model {
      *
      * Legacy roles keep partner_identity_id until their own package migration.
      */
-    protected const MAP_FIELDS_FACETS =  [
+    final protected const MAP_FIELDS_FACETS =  [
             'organization_id' => [
                 'class'          => 'identity\Organization',
             ],
