@@ -13,10 +13,25 @@
             "description": "Description de l'entrée.",
             "help": "Courte description de l'entrée, utilisée comme libellé dans les listes et sur les documents."
         },
+        "date": {
+            "label": "Date",
+            "description": "Date de l'entrée de vente.",
+            "help": "Cette date est reprise lors de la création de la créance associée."
+        },
         "detailed_description": {
             "label": "Description détaillée",
             "description": "Description détaillée de l'entrée.",
             "help": "Informations complémentaires sur l'entrée (contexte, conditions particulières, précisions utiles)."
+        },
+        "receivable_queue_id": {
+            "label": "File d'attente des créances",
+            "description": "File utilisée pour la créance générée par l'entrée.",
+            "help": "Sélectionnez une file liée au client lorsque celle-ci n'est pas déterminée automatiquement."
+        },
+        "invoice_group": {
+            "label": "Groupe de facturation",
+            "description": "Libellé utilisé pour regrouper les ventes sur les factures.",
+            "help": "Indiquez un même libellé pour les entrées qui doivent être regroupées sur une facture."
         },
         "has_receivable": {
             "label": "Créance ?",
@@ -32,6 +47,11 @@
             "label": "Facturable ?",
             "description": "Est-ce que l'entrée peut-être facturé au client.",
             "help": "Si cette option est désactivée, l'entrée ne sera pas incluse dans la facturation du client."
+        },
+        "is_internal": {
+            "label": "Interne",
+            "description": "L'entrée concerne l'organisation elle-même.",
+            "help": "Activez cette option pour une prestation interne qui ne concerne pas un client."
         },
         "customer_id": {
             "label": "Client",
@@ -53,6 +73,11 @@
             "description": "Prix unitaire des produits vendus.",
             "help": "Montant appliqué par unité vendue. S'il est renseigné, il est utilisé à la place du prix sélectionné."
         },
+        "vat_rate": {
+            "label": "Taux de TVA",
+            "description": "Taux de TVA appliqué à l'entrée de vente.",
+            "help": "Cette valeur est reprise automatiquement du prix sélectionné."
+        },
         "qty": {
             "label": "Quantité",
             "description": "Quantité de produits vendus.",
@@ -73,6 +98,11 @@
                 "charged": "Pris en charge"
             },
             "help": "Étape de traitement de l'entrée : en cours, à valider, approuvée, puis prise en charge."
+        },
+        "total": {
+            "label": "Total hors taxes",
+            "description": "Montant total hors taxes calculé pour l'entrée.",
+            "help": "Cette valeur est calculée à partir du prix unitaire, de la quantité et de la remise, ou mise à zéro si l'entrée n'est pas facturable."
         }
     },
     "view": {
