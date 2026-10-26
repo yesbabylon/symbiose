@@ -43,7 +43,7 @@ abstract class IdentityAbstract extends Model {
     /**
      * Fields whose canonical value is held by Identity.
      */
-    protected const COMMON_IDENTITY_FIELDS = [
+    final protected const COMMON_IDENTITY_FIELDS = [
         'type_id',
         'bank_account_iban', 'bank_account_bic', 'bank_country', 'bank_name',
         'legal_name', 'short_name', 'has_vat', 'vat_number', 'registration_number',
