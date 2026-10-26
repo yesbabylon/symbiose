@@ -9,6 +9,16 @@
             "description": "Nom de l'établissement.",
             "help": "Indiquez le nom usuel de l'établissement."
         },
+        "legal_name": {
+            "label": "Nom officiel",
+            "description": "Nom officiel de l'établissement affiché dans l'adresse.",
+            "help": "Indiquez le nom officiel complet de l'établissement."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Informations internes concernant l'établissement.",
+            "help": "Ajoutez les informations utiles aux communications internes."
+        },
         "organization_id": {
             "label": "Organisation",
             "description": "L'organisation à laquelle appartient l'établissement.",
@@ -18,6 +28,11 @@
             "label": "Téléphone",
             "description": "Numéro de téléphone de contact officiel.",
             "help": "Indiquez le numéro de téléphone officiel de l'établissement."
+        },
+        "fax": {
+            "label": "Fax",
+            "description": "Numéro de fax principal de l'établissement.",
+            "help": "Indiquez le numéro de fax officiel de l'établissement."
         },
         "email": {
             "label": "Email",
@@ -73,6 +88,11 @@
             "label":"Section analytique", 
             "description": "Code de la section analytique associée.",
             "help": "Sélectionnez la section analytique associée à l'établissement."
+        },
+        "signature": {
+            "label": "Signature",
+            "description": "Signature de l'établissement ajoutée aux communications.",
+            "help": "Saisissez la signature à ajouter aux communications de l'établissement."
         }
     },
     "view": {

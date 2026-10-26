@@ -1,0 +1,19 @@
+{
+    "name": "Rôle d'identité",
+    "plural": "Rôles d'identité",
+    "description": "Informations communes aux rôles associés à une identité canonique.",
+    "model": {
+        "organization_id": {
+            "label": "Organisation",
+            "description": "Organisation à laquelle le rôle d'identité est associé.",
+            "help": "Sélectionnez l'organisation à laquelle ce rôle est rattaché."
+        },
+        "identity_id": {
+            "label": "Identité canonique",
+            "description": "Identité canonique représentée par ce rôle.",
+            "help": "Sélectionnez l'identité dont les informations doivent être synchronisées avec ce rôle."
+        }
+    },
+    "view": {},
+    "error": {}
+}

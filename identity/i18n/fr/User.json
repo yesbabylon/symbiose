@@ -12,6 +12,16 @@
 			"label": "Identité",
 			"description": "Le contact lié à l'utilisateur.",
 			"help": "Sélectionnez l'identité dont le nom et la langue seront synchronisés."
+		},
+		"setting_values_ids": {
+			"label": "Valeurs de configuration",
+			"description": "Valeurs de configuration propres à l'utilisateur.",
+			"help": "Cette liste contient les préférences et réglages attribués à l'utilisateur."
+		},
+		"organization_id": {
+			"label": "Organisation",
+			"description": "Organisation à laquelle appartient l'utilisateur.",
+			"help": "Sélectionnez l'organisation à laquelle cet utilisateur est rattaché."
 		}
 	},
 	"view": {
