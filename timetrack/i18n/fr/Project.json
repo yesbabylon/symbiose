@@ -32,6 +32,16 @@
             "label": "File d'attente des créances",
             "description": "File d'attente des créances générées par les saisies du projet.",
             "help": "File d'attente dans laquelle sont placées les créances générées par les saisies de temps du projet, en vue de leur traitement."
+        },
+        "time_entries_ids": {
+            "label": "Prestations",
+            "description": "Saisies de temps rattachées au projet.",
+            "help": "Cette liste reprend les prestations enregistrées dans le cadre du projet."
+        },
+        "is_internal": {
+            "label": "Projet interne",
+            "description": "Les tâches du projet concernent l'organisation elle-même.",
+            "help": "Activez cette option pour un projet interne dont les prestations ne doivent pas être facturées à un client."
         }
     },
     "view": {

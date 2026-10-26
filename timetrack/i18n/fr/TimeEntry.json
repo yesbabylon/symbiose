@@ -8,6 +8,21 @@
             "description": "Brève description de l'entrée.",
             "help": "Résumé en une ligne de la prestation, utilisé comme libellé dans les listes et sur les documents."
         },
+        "project_id": {
+            "label": "Projet",
+            "description": "Projet à l'origine de la saisie de temps.",
+            "help": "Sélectionnez le projet pour reprendre automatiquement le client, le produit et les paramètres de vente associés."
+        },
+        "inventory_product_id": {
+            "label": "Produit inventorié",
+            "description": "Produit inventorié auquel la prestation se rapporte.",
+            "help": "Cette valeur est reprise automatiquement du produit associé au projet."
+        },
+        "has_sale_model": {
+            "label": "Modèle de vente appliqué",
+            "description": "Indique si le projet utilise un modèle de vente fixe.",
+            "help": "Cette valeur est reprise automatiquement de la configuration du projet."
+        },
         "detailed_description": {
             "label": "Description",
             "description": "Détails et description avancée de l'entrée (si nécessaire).",
@@ -28,6 +43,21 @@
             "description": "Heure de fin  de la prestation.",
             "help": "Heure à laquelle la prestation s'est terminée. Elle doit être postérieure à l'heure de début."
         },
+        "pause_time": {
+            "label": "Temps de pause",
+            "description": "Durée de pause associée à la prestation.",
+            "help": "Indiquez le temps de pause à déduire de la durée totale."
+        },
+        "travel_time": {
+            "label": "Temps de déplacement",
+            "description": "Durée de déplacement liée à la prestation.",
+            "help": "Indiquez le temps de déplacement nécessaire pour réaliser la prestation."
+        },
+        "on_site": {
+            "label": "Sur site",
+            "description": "Indique si la prestation nécessite un déplacement sur site.",
+            "help": "Activez cette option lorsque la prestation est réalisée sur le site du client."
+        },
         "is_full_day": {
             "label": "Jour entier",
             "description": "La prestation a pris la journée entière.",
@@ -37,6 +67,17 @@
             "label": "Durée prestée",
             "description": "Durée de la prestation liée à l'entrée.",
             "help": "Temps réellement passé sur la prestation. Il peut être calculé à partir des heures de début et de fin."
+        },
+        "priority": {
+            "label": "Priorité",
+            "description": "Niveau de priorité repris du ticket associé.",
+            "selection": {
+                "1": "Basse",
+                "2": "Moyenne",
+                "3": "Haute",
+                "4": "Critique"
+            },
+            "help": "Cette valeur indique la priorité de traitement, de basse à critique."
         },
         "billable_duration": {
             "label": "Durée facturable",
@@ -52,6 +93,11 @@
             "label": "Utilisateur",
             "description": "Utilisateur qui a réalisé l'entrée.",
             "help": "Personne qui a effectué la prestation."
+        },
+        "creation_delta": {
+            "label": "Délai d'encodage",
+            "description": "Délai entre la prestation et son enregistrement.",
+            "help": "Cette durée est calculée automatiquement à partir de la date de prestation et de la date de création."
         },
         "origin": {
             "label": "Origine",
