@@ -6,12 +6,12 @@
         "name": {
             "label": "Nom",
             "description": "Nom de l'accès.",
-            "help": ""
+            "help": "Indiquez un nom permettant d'identifier cet accès."
         },
         "description": {
             "label": "Description",
             "description": "Courte description de l'accès.",
-            "help": ""
+            "help": "Décrivez l'usage ou la destination de cet accès."
         },
         "access_type": {
             "label": "Type",
@@ -53,17 +53,17 @@
         "server_id": {
             "label": "Serveur",
             "description": "Serveur de l'accès.",
-            "help": ""
+            "help": "Sélectionnez le serveur concerné par cet accès."
         },
         "instance_id": {
             "label": "Instance",
             "description": "Instance de l'accès.",
-            "help": ""
+            "help": "Sélectionnez l'instance concernée par cet accès."
         },
         "software_id": {
             "label": "Logiciel",
             "description": "Logiciel de l'accès.",
-            "help": ""
+            "help": "Sélectionnez le logiciel concerné par cet accès."
         },
         "service_id": {
             "label": "Service",

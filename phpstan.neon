@@ -1,8 +1,15 @@
 parameters:
+    dynamicConstantNames:
+        DB_DBMS: string
+        E_USER_ERROR: int
+        EQ_REPORT_ERROR: int
+        QN_REPORT_ERROR: int
+        EQ_ERROR_INVALID_CONFIG: int
     paths:
         - ../packages/calendar
         - ../packages/communication
         - ../packages/document
+        - ../packages/exchange
         - ../packages/finance
         - ../packages/hr
         - ../packages/identity
@@ -19,6 +26,7 @@ parameters:
     scanDirectories:
         - ../lib
         - ../packages/core
-    scanFiles:
+    bootstrapFiles:
         - ../eq.lib.php
+    scanFiles:
         - ../run.php

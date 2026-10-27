@@ -15,12 +15,12 @@ use document\document\Document;
     'response' => [
         'accept-origin' => '*'
     ],
-    'providers' => ['context', 'orm', 'auth']
+    'providers' => ['context', 'auth']
 ]);
 
 /**
- * @var \equal\php\Context  $context
- * @var \equal\auth\AuthenticationManager
+ * @var \equal\php\Context                  $context
+ * @var \equal\auth\AuthenticationManager   $auth
  */
 ['context' => $context, 'auth' => $auth] = $providers;
 

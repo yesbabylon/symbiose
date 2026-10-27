@@ -313,8 +313,7 @@ try {
     $loader = new TwigFilesystemLoader(EQ_BASEDIR.'/packages/sale/views/accounting/invoice');
     $twig = new TwigEnvironment($loader);
 
-    /** @var ExtensionInterface $extension **/
-    $extension  = new IntlExtension();
+    $extension = new IntlExtension();
     $twig->addExtension($extension);
 
     // #todo - temp workaround against LOCALE mixups

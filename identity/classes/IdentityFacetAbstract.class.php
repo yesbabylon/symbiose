@@ -81,8 +81,8 @@ abstract class IdentityFacetAbstract extends IdentityAbstract {
                     $values[$field] = $parent_identity[$field];
                 }
             }
+            $orm_events = $orm->disableEvents();
             try {
-                $orm_events = $orm->disableEvents();
                 // trigger_error("APP::updating values to target object", EQ_REPORT_ERROR);
                 $facet_class::id($id)->update($values);
             }
@@ -152,7 +152,7 @@ abstract class IdentityFacetAbstract extends IdentityAbstract {
                 $identity_id = null;
 
                 // VAT number (strong identifier)
-                if(!$identity_id && !empty($identity_values['vat_number'])) {
+                if(!empty($identity_values['vat_number'])) {
                     $existing = Identity::search([
                         ['vat_number', '=', $identity_values['vat_number']]
                     ])

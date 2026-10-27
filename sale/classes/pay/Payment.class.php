@@ -197,6 +197,42 @@ class Payment extends FundingAllocation {
         return parent::candelete($self);
     }
 
+    /**
+     * Assign customer_id and invoice_id from invoice relating to funding, if any.
+     * Force recomputing of target funding computed fields (is_paid and paid_amount).
+     */
+    public static function onupdateFundingId($self, $values) {
+        trigger_error("ORM::calling sale\pay\Payment::onupdateFundingId", QN_REPORT_DEBUG);
+
+        $funding_fields = [
+            'funding_type',
+            'due_amount',
+            'invoice_id' => ['customer_id'],
+        ];
+
+        $fundings_ids = [];
+
+        $self->read(['funding_id', 'customer_id', 'funding_id' => $funding_fields, 'amount', 'statement_line_id']);
+        foreach($self as $id => $payment) {
+            if($payment['funding_id']) {
+                // make sure a customer_id is assigned to the payment
+                if(is_null($payment['customer_id']) && isset($payment['funding_id']['invoice_id'])) {
+                    self::id($id)->update([
+                        'customer_id' => $payment['funding_id']['invoice_id']['customer_id'],
+                        'invoice_id'  => $payment['funding_id']['invoice_id']['id'],
+                    ]);
+                }
+
+                self::id($id)->update(['is_paid' => null, 'paid_amount' => null]);
+                $fundings_ids[] = $payment['funding_id'];
+            }
+        }
+
+        if(!empty($fundings_ids)) {
+            Funding::ids($fundings_ids)->read(['is_paid', 'paid_amount']);
+        }
+    }
+
     public static function canupdate($self, $values) {
         $self->read([
             'status',

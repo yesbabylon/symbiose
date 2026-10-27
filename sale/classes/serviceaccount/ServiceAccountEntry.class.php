@@ -95,7 +95,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
 
             'pause' => [
                 'type'              => 'float',
-                'description'       => 'Pause or time offset expressed in hours. Negative values subtract time, positive values add time.',
+                'description'       => 'Pause or time offset in hours (neg. subtracts, positive adds).',
                 'default'           => 0.0,
                 'dependents'        => ['pause_time', 'duration']
             ],
@@ -212,14 +212,14 @@ class ServiceAccountEntry extends \equal\orm\Model {
 
             'is_orphan' => [
                 'type'              => 'boolean',
-                'description'       => 'Flag raised if the line is present in CT but has been deleted in AT.',
+                'description'       => 'Flag raised if the line is in CT but has been deleted in AT.',
                 'help'              => "Deleting a posted entry is supposed to be forbidden. This flag is used to prevent recurring error messages.",
                 'default'           => false
             ],
 
             'points' => [
                 'type'              => 'float',
-                'description'       => 'Number of points the line corresponds to (can be computed or set manually).',
+                'description'       => 'Number of points for the line (computed or set manually).',
                 'help'              => 'Points count is always a positive number. Points from Ticket and Task lines are used to decrement the related Report balance, and Credit and Correction lines are used to increment it.',
                 'default'           => 0.0,
                 'onupdate'          => 'onupdatePoints'
@@ -779,7 +779,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
             // compute final result
             $points = round($time / (15 * 60), 2);
 
-            if(!is_numeric($points) || is_nan($points)) {
+            if(is_nan($points)) {
                 // should not occur
                 $logs[] = "ERROR - result is not a number";
                 $updates[$id] = [
@@ -975,7 +975,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
     }
 
     /**
-     * Check wether an object can be updated, and perform some additional operations if necessary.
+     * Check whether an object can be updated, and perform some additional operations if necessary.
      * This method can be overridden to define a more precise set of tests.
      *
      * @param  \equal\orm\Collection    $self   Collection of objects of current class.

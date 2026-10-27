@@ -66,7 +66,7 @@ class SaleEntry extends Model {
 
             'invoice_group' => [
                 'type'              => 'string',
-                'description'       => 'Arbitrary name for grouping sales when invoicing (might be left unset).',
+                'description'       => 'Custom name to group sales on invoices (optional).',
             ],
 
             'has_receivable' => [

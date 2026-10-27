@@ -6,7 +6,7 @@
 		"name": {
 			"label": "Nom",
 			"description": "Nom de la propriété.",
-			"help": ""
+			"help": "Le nom complet de la propriété afin de la distinguer."
 		}
 	},
 	"view": {

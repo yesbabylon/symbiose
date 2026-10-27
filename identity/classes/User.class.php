@@ -107,8 +107,8 @@ class User extends \core\User {
                 continue;
             }
 
+            $orm_events = $orm->disableEvents();
             try {
-                $orm_events = $orm->disableEvents();
                 static::id($id)->update([
                     'firstname' => $identity['firstname'] ?? null,
                     'lastname'  => $identity['lastname'] ?? null,

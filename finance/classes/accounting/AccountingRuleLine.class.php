@@ -22,7 +22,7 @@ class AccountingRuleLine extends Model {
         return [
             'name' => [
                 'type'              => 'string',
-                'description'       => "Name of the accounting rule line",
+                'description'       => "Name of the accounting rule line.",
                 'required'          => true
             ],
 

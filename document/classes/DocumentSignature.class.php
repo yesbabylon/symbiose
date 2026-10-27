@@ -11,15 +11,6 @@ class DocumentSignature extends \core\security\Signature {
 
     public static function getColumns() {
         return [
-            'condo_id' => [
-                'type'              => 'computed',
-                'result_type'       => 'many2one',
-                'description'       => "The condominium the document belongs to.",
-                'foreign_object'    => 'realestate\property\Condominium',
-                'relation'          => ['document_id' => 'condo_id'],
-                'store'             => true,
-                'instant'           => true
-            ],
 
             'name' => [
                 'type'              => 'computed',

@@ -39,7 +39,7 @@ class BankAccount extends Model {
                 'function'          => 'calcBankCountry',
                 'result_type'       => 'string',
                 'usage'             => 'country/iso-3166:2',
-                'description'       => 'The country where the organization holds the bank account, specified using the ISO 3166-2 code.',
+                'description'       => 'ISO 3166-2 country code derived from the account IBAN.',
                 'store'             => true,
                 'instant'           => true,
                 'readonly'          => true
@@ -61,7 +61,7 @@ class BankAccount extends Model {
 
             'bank_account_bic' => [
                 'type'              => 'string',
-                'description'       => 'The BIC code of the bank related to the organization’s bank account.',
+                'description'       => 'BIC of the bank linked to the organization’s account.',
                 'onupdate'          => 'onupdateBankAccountBic'
             ]
 

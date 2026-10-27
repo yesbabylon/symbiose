@@ -48,7 +48,7 @@ class PriceList extends Model {
                 'function'          => 'calcDuration',
                 'store'             => true,
                 'instant'           => true,
-                'description'       => "Pricelist validity duration, in days."
+                'description'       => "Price list validity duration, in days."
             ],
 
             // #memo - once published, a pricelist shouldn't be editable
@@ -70,7 +70,7 @@ class PriceList extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
                 'function'          => 'calcIsActive',
-                'description'       => "Is the pricelist currently applicable? ",
+                'description'       => "Is the price list currently applicable?",
                 'help'              => "When this flag is set to true, it means the list is eligible for future bookings. i.e. with a 'date_to' in the future and 'published'.",
                 'store'             => true,
                 'readonly'          => true

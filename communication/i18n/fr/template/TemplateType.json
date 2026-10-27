@@ -1,0 +1,40 @@
+{
+    "name": "Type de modèle",
+    "plural": "Types de modèle",
+    "description": "Les types regroupent les modèles selon leur usage.",
+    "model": {
+        "name": {
+            "label": "Libellé",
+            "description": "Libellé court du type de modèle.",
+            "help": "Utilisez un libellé permettant d'identifier clairement le type de modèle."
+        },
+        "code": {
+            "label": "Code",
+            "description": "Code unique identifiant le type de modèle.",
+            "help": "Utilisez un code stable et unique, comme « email », « sms » ou « notification »."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Description courte du type et de son usage.",
+            "help": "Précisez le canal ou le contexte dans lequel les modèles de ce type sont utilisés."
+        },
+        "templates_ids": {
+            "label": "Modèles",
+            "description": "Modèles associés à ce type.",
+            "help": "Cette liste rassemble les modèles classés sous ce type."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Type de modèle",
+            "description": "Formulaire de modification d'un type de modèle.",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Types de modèle",
+            "description": "Liste des types de modèle.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

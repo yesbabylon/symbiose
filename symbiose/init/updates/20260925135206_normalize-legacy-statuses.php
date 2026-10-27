@@ -13,9 +13,7 @@ if(!$db) {
     throw new Exception('missing_database', EQ_ERROR_INVALID_CONFIG);
 }
 
-$dbms = strtoupper((string) constant('DB_DBMS'));
-
-if(!in_array($dbms, ['MYSQL', 'MARIADB'], true)) {
+if(!$db instanceof \equal\db\DBManipulatorMySQL) {
     throw new Exception('unsupported_dbms', EQ_ERROR_INVALID_CONFIG);
 }
 

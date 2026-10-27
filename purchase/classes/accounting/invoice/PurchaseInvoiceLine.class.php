@@ -19,7 +19,6 @@ class PurchaseInvoiceLine extends AccountingOperationLine {
                 'foreign_object'    => 'purchase\accounting\invoice\PurchaseInvoice',
                 'description'       => 'Invoice the line is related to.',
                 'required'          => true,
-                'onupdate'          => 'onupdateInvoiceId',
                 'ondelete'          => 'cascade'
             ]
         ];

@@ -40,7 +40,7 @@ class Group extends Model
             'row_span' => [
                 'type'        => 'integer',
                 'default'     => 1,
-                'description' => "Height of the group, in rows (default = 1, max = 8)"
+                'description' => "Height of the group, in rows (default = 1, max = 8)."
             ],
 
             'visible' => [

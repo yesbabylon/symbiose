@@ -56,7 +56,7 @@ class Funding extends Model {
                     'invoice'
                 ],
                 'default'           => 'invoice',
-                'description'       => "Type of funding, is it a simple installment or is it linked to an specific invoice."
+                'description'       => "Funding type: simple installment or linked to an invoice."
             ],
 
             'due_amount' => [
@@ -82,7 +82,7 @@ class Funding extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:2',
-                'description'       => "Total amount that has been received (can be greater than due_amount).",
+                'description'       => "Total amount received (may exceed due_amount).",
                 'function'          => 'calcPaidAmount',
                 'store'             => true,
                 'instant'           => true

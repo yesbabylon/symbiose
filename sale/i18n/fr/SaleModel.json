@@ -1,33 +1,33 @@
 {
-    "name": "Modele de vente",
-    "plural": "Modeles de vente",
-    "description": "Un modele de vente permet de definir quel produit, prix et prix unitaire fixes doivent etre appliques aux ventes concernees.",
+    "name": "Modèle de vente",
+    "plural": "Modèles de vente",
+    "description": "Un modèle de vente permet de définir quel produit, prix et prix unitaire fixes doivent être appliques aux ventes concernées.",
     "model": {
         "product_id": {
             "label": "Produit",
             "description": "Produit a assigner aux ventes.",
-            "help": ""
+            "help": "Le produit sélectionné est automatiquement associé à chaque vente créée à partir de ce modèle."
         },
         "price_id": {
             "label": "Prix",
             "description": "Prix a assigner aux ventes.",
-            "help": ""
+            "help": "Le prix sélectionné est appliqué aux ventes du modèle. Il peut être remplacé par un prix unitaire personnalisé."
         },
         "unit_price": {
             "label": "Prix unitaire",
             "description": "Prix unitaire a assigner aux ventes.",
-            "help": ""
+            "help": "Montant appliqué par unité vendue. S'il est renseigné, il est utilisé à la place du prix sélectionné ci-dessus."
         },
         "projects_ids": {
             "label": "Projets",
-            "description": "Projets appliquant le modele de vente.",
-            "help": ""
+            "description": "Projets appliquant le modèle de vente.",
+            "help": "Les ventes liées à l'un de ces projets utilisent ce modèle. Laissez vide pour ne l'appliquer à aucun projet."
         }
     },
     "view": {
         "form.default": {
-            "name": "Modele de vente",
-            "description": "Formulaire de modification par defaut d'un modele de vente.",
+            "name": "Modèle de vente",
+            "description": "Formulaire de modification par défaut d'un modèle de vente.",
             "layout": {
                 "section.projects": {
                     "label": "Projets",
@@ -40,8 +40,8 @@
             }
         },
         "list.default": {
-            "name": "Modeles de vente",
-            "description": "Liste des modeles de vente.",
+            "name": "Modèles de vente",
+            "description": "Liste des modèles de vente.",
             "layout": {}
         }
     },

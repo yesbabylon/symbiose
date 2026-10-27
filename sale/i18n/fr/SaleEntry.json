@@ -6,77 +6,62 @@
         "code": {
             "label": "Code",
             "description": "Code unique de l'entrée.",
-            "help": ""
+            "help": "Identifiant unique de l'entrée de vente. Il ne peut pas être partagé avec une autre entrée."
         },
         "description": {
             "label": "Description",
             "description": "Description de l'entrée.",
-            "help": ""
+            "help": "Courte description de l'entrée, utilisée comme libellé dans les listes et sur les documents."
         },
         "detailed_description": {
             "label": "Description détaillée",
             "description": "Description détaillée de l'entrée.",
-            "help": ""
+            "help": "Informations complémentaires sur l'entrée (contexte, conditions particulières, précisions utiles)."
         },
         "has_receivable": {
             "label": "Créance ?",
             "description": "L'entrée de vente est liée à un créance.",
-            "help": ""
+            "help": "Cochez cette case si l'entrée doit être rattachée à une créance existante."
         },
         "receivable_id": {
             "label": "Créance",
             "description": "Créance lié à l'entrée de vente.",
-            "help": ""
+            "help": "Sélectionnez la créance à laquelle cette entrée est rattachée."
         },
         "is_billable": {
             "label": "Facturable ?",
             "description": "Est-ce que l'entrée peut-être facturé au client.",
-            "help": ""
+            "help": "Si cette option est désactivée, l'entrée ne sera pas incluse dans la facturation du client."
         },
         "customer_id": {
             "label": "Client",
             "description": "Le client sujet de la vente.",
-            "help": ""
+            "help": "Client auquel la vente est destinée et auquel elle sera facturée."
         },
         "product_id": {
             "label": "Produit",
             "description": "Produit vendu.",
-            "help": ""
+            "help": "Produit ou service concerné par cette entrée de vente."
         },
         "price_id": {
             "label": "Prix",
             "description": "Prix de vente.",
-            "help": ""
+            "help": "Prix appliqué à l'entrée. Il peut être remplacé par un prix unitaire personnalisé."
         },
         "unit_price": {
             "label": "Prix unitaire",
             "description": "Prix unitaire des produits vendus.",
-            "help": ""
+            "help": "Montant appliqué par unité vendue. S'il est renseigné, il est utilisé à la place du prix sélectionné."
         },
         "qty": {
             "label": "Quantité",
             "description": "Quantité de produits vendus.",
-            "help": ""
-        },
-        "free_qty": {
-            "label": "Gratuités",
-            "description": "Quantité gratuite de produit.",
-            "help": ""
+            "help": "Nombre d'unités vendues, utilisé pour calculer le montant total de l'entrée."
         },
         "discount": {
             "label": "Remise",
             "description": "Montant total de la remise à appliquer, le cas échéant.",
-            "help": ""
-        },
-        "subscription_id": {
-            "label": "Abonnement",
-            "description": "Abonnement à l'origine de l'entrée.",
-            "help": ""
-        },
-        "project_id": {
-            "label": "Projet",
-            "description": "Projet à l'origine de l'entrée.",
-            "help": ""
+            "help": "Montant déduit du total de l'entrée. Laissez vide si aucune remise ne s'applique."
         },
         "status": {
             "label": "Status",
@@ -87,7 +72,7 @@
                 "approved": "Approuvé",
                 "charged": "Pris en charge"
             },
-            "help": ""
+            "help": "Étape de traitement de l'entrée : en cours, à valider, approuvée, puis prise en charge."
         }
     },
     "view": {

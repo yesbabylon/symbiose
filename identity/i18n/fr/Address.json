@@ -6,17 +6,17 @@
         "name": {
             "label": "Adresse",
             "description": "Adresse complète.",
-            "help": ""
+            "help": "Cette valeur est calculée à partir de la rue, du code postal et de la ville."
         },
         "display_name": {
             "label": "Adresse",
             "description": "Adresse complète.",
-            "help": ""
+            "help": "Cette valeur reprend le nom d'affichage calculé de l'adresse."
         },
         "identity_id": {
             "label": "Identité",
             "description": "L'identité à laquelle l'adresse se rapporte.",
-            "help": ""
+            "help": "Sélectionnez l'identité associée à cette adresse."
         },
         "role": {
             "label": "Role",
@@ -27,12 +27,12 @@
                 "delivery": "livraison",
                 "other": "autre"
             },
-            "help": ""
+            "help": "Sélectionnez l'usage principal pour lequel cette adresse doit être privilégiée."
         },
         "address_street": {
             "label": "Rue",
             "description": "Rue et numéro de l'adresse.",
-            "help": ""
+            "help": "Indiquez la rue et le numéro du bâtiment."
         },
         "address_dispatch": {
             "label": "Complément d'adresse",
@@ -42,22 +42,22 @@
         "address_city": {
             "label": "Ville",
             "description": "Ville de l'adresse (agglomération).",
-            "help": ""
+            "help": "Indiquez la ville ou la commune de l'adresse."
         },
         "address_zip": {
             "label": "CP",
             "description": "Code Postal.",
-            "help": ""
+            "help": "Indiquez le code postal correspondant à la ville."
         },
         "address_state": {
             "label": "Région",
             "description": "État, région, province, département.",
-            "help": ""
+            "help": "Indiquez l'état, la région, la province ou le département."
         },
         "address_country": {
             "label": "Pays",
             "description": "Code ISO 3166 du pays.",
-            "help": ""
+            "help": "Sélectionnez le pays correspondant à l'adresse."
         }
     },
     "view": {

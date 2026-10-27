@@ -1,13 +1,12 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2024
+    Some Rights Reserved, Yesbabylon SRL, 2020-2026
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
 namespace inventory\service;
 
-use identity\Identity;
 use purchase\supplier\Supplier;
 
 class ServiceProvider extends Supplier {
@@ -36,24 +35,8 @@ class ServiceProvider extends Supplier {
                 'foreign_object'    => 'inventory\service\Service',
                 'foreign_field'     => 'service_provider_id',
                 'description'       => 'Services of the provider.'
-            ],
+            ]
 
         ];
-    }
-
-    public static function onupdateLangId($self) {
-        Identity::onupdateLangId($self);
-    }
-
-    public static function onupdateEmail($self) {
-        Identity::onupdateEmail($self);
-    }
-
-    public static function onupdatePhone($self) {
-        Identity::onupdatePhone($self);
-    }
-
-    public static function onupdateMobile($self) {
-        Identity::onupdateMobile($self);
     }
 }

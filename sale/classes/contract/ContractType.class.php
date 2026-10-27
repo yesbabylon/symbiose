@@ -15,17 +15,19 @@ class ContractType extends Model {
 
             'name' => [
                 'type'              => 'string',
-                'required'          => true
+                'required'          => true,
+                'description'       => 'The name of the contract type.'
             ],
 
             'code' => [
                 'type'              => 'string',
                 'usage'             => 'text/plain:50',
-                'description'       => 'Mnemo code for identifying the contract type'
+                'description'       => 'Mnemo code for identifying the contract type.'
             ],
 
             'description' => [
-                'type'              => 'string'
+                'type'              => 'string',
+                'description'       => 'The description of teh contract type.'
             ]
 
         ];

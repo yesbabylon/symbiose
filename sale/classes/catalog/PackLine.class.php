@@ -56,7 +56,7 @@ class PackLine extends Model {
 
             'has_own_qty' => [
                 'type'              => 'boolean',
-                'description'       => "Does product have its own quantity (whatever the quantity applied to the parent product)?",
+                'description'       => "Does the product have its own quantity, apart from its parent?",
                 'default'           => false
             ],
 

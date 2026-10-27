@@ -282,8 +282,9 @@ class Identity extends IdentityAbstract {
         $sync_user = array_intersect(['firstname', 'lastname', 'lang_id', 'user_id'], array_keys($values));
 
         $self->read(array_merge(['user_id'], array_keys(self::MAP_FIELDS_FACETS)));
+        $events = $orm->disableEvents();
         try {
-            $events = $orm->disableEvents();
+
             foreach($self as $id => $identity) {
                 foreach(self::MAP_FIELDS_FACETS as $facet_field => $descriptor) {
                     if(!($identity[$facet_field] ?? null)) {
@@ -300,10 +301,9 @@ class Identity extends IdentityAbstract {
                     $descriptor['class']::id($identity[$facet_field])->update($map);
                     // update backlink if required
                     if(isset($values[$facet_field])) {
-                        $descriptor['class']::id($identity[$facet_field])->update(['identity_id' => $id]);
-                        if(is_subclass_of($descriptor['class'], IdentityFacetAbstract::class)) {
-                            $descriptor['class']::id($identity[$facet_field])->do('sync_from_identity');
-                        }
+                        $descriptor['class']::id($identity[$facet_field])
+                            ->update(['identity_id' => $id])
+                            ->do('sync_from_identity');
                     }
                 }
                 if($sync_user && ($identity['user_id'] ?? null)) {
@@ -352,16 +352,6 @@ class Identity extends IdentityAbstract {
             }
         }
 
-        if(isset($event['address_zip']) && isset($values['address_country'])) {
-            $list = self::computeCitiesByZip($event['address_zip'], $values['address_country'], $lang);
-            if($list) {
-                $result['address_city'] = [
-                    'value' => '',
-                    'selection' => $list
-                ];
-            }
-        }
-
         if(isset($event['citizen_identification'])) {
             // remove spacing chars
             $result['citizen_identification'] = preg_replace('/[^0-9]/i', '', $event['citizen_identification']);
@@ -386,10 +376,6 @@ class Identity extends IdentityAbstract {
         if(isset($event['bank_account_iban'])) {
             // remove spacing chars
             $result['bank_account_iban'] = preg_replace('/[^A-Z0-9]/i', '', $event['bank_account_iban']);
-            $bank_info = self::computeBankFromIban($result['bank_account_iban']);
-            if($bank_info) {
-                $result['bank_account_bic'] = $bank_info['bic'];
-            }
         }
 
         if(isset($event['phone'])) {
@@ -411,6 +397,7 @@ class Identity extends IdentityAbstract {
         return $result;
     }
 
+    /*
     private static function getCitiesByZip($zip, $country, $lang) {
         $result = null;
         $file = EQ_BASEDIR."/packages/identity/i18n/{$lang}/zipcodes/{$country}.json";
@@ -431,9 +418,10 @@ class Identity extends IdentityAbstract {
         }
         return $result;
     }
+    */
 
     /**
-     * Check wether an object can be updated, and perform some additional operations if necessary.
+     * Check whether an object can be updated, and perform some additional operations if necessary.
      * This method can be overridden to define a more precise set of tests.
      *
      * @param  object   $om         ObjectManager instance.

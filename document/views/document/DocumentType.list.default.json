@@ -1,0 +1,53 @@
+{
+    "name": "Document types",
+    "description": "List of document types.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "11%"
+            },
+            {
+                "type": "field",
+                "value": "uuid",
+                "width": "11%"
+            },
+            {
+                "type": "field",
+                "value": "object_class",
+                "width": "11%"
+            },
+            {
+                "type": "field",
+                "value": "code",
+                "width": "11%"
+            },
+            {
+                "type": "field",
+                "value": "folder_code",
+                "width": "11%"
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "11%"
+            },
+            {
+                "type": "field",
+                "value": "json_schema",
+                "width": "11%"
+            },
+            {
+                "type": "field",
+                "value": "document_visibility",
+                "width": "11%"
+            },
+            {
+                "type": "field",
+                "value": "has_subtype",
+                "width": "11%"
+            }
+        ]
+    }
+}

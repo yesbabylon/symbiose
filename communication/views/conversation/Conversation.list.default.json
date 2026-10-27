@@ -1,0 +1,33 @@
+{
+    "name": "Conversations",
+    "description": "List of conversations.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "channel_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "is_private",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "user1_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "user2_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            }
+        ]
+    }
+}

@@ -25,8 +25,7 @@ class Quiz extends Model {
             ],
 
             'quiz_code' => [
-                'type'              => 'integer',
-                'multilang'         => true
+                'type'              => 'integer'
             ],
 
             'course_id' => [

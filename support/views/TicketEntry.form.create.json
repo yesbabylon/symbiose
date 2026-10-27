@@ -109,6 +109,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "width": "100%",
                                                 "value": "attachments_ids"
                                             }
                                         ]

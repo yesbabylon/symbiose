@@ -1,4 +1,6 @@
 {
+    "name": "Contact",
+    "description": "Default form for displaying a contact.",
     "access": {
         "groups": ["users"]
     },
@@ -58,7 +60,8 @@
                                         "items": [
                                             {
                                                 "type": "label",
-                                                "value": ""
+                                                "value": "",
+                                                "width": "100%"
                                             }
                                         ]
                                     },
@@ -211,8 +214,8 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Owner Identity",
-                                                "value": "owner_identity_id",
+                                                "label": "Organization",
+                                                "value": "organization_id",
                                                 "width": "100%"
                                             }
                                         ]

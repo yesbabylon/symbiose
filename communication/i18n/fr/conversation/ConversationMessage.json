@@ -9,6 +9,17 @@
             "help": ""
         }
     },
-    "view": {},
+    "view": {
+        "form.default": {
+            "name": "Message de conversation",
+            "description": "Formulaire de modification d'un message de conversation.",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Messages de conversation",
+            "description": "Liste des messages de conversation.",
+            "layout": {}
+        }
+    },
     "error": {}
 }

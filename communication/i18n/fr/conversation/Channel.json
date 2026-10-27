@@ -24,6 +24,17 @@
             "help": ""
         }
     },
-    "view": {},
+    "view": {
+        "form.default": {
+            "name": "Canal de conversation",
+            "description": "Formulaire de modification d'un canal de conversation.",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Canaux de conversation",
+            "description": "Liste des canaux de conversation.",
+            "layout": {}
+        }
+    },
     "error": {}
 }

@@ -1,7 +1,7 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2024
+    Some Rights Reserved, Yesbabylon SRL, 2020-2026
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
@@ -23,13 +23,15 @@ class SubscriptionEntry extends SaleSubscriptionEntry {
              * Override Sale SubscriptionEntry columns
              */
 
+            'invoice_group' => [
+                'type'           => 'string',
+                'description'    => 'Optional group name used when creating invoices.'
+            ],
+
             'subscription_id' => [
-                'type'           => 'computed',
-                'result_type'    => 'many2one',
+                'type'           => 'many2one',
                 'foreign_object' => 'infra\service\Subscription',
-                'description'    => 'Identifier of the subscription the subscription entry originates from.',
-                'store'          => true,
-                'function'       => 'calcSubscriptionId',
+                'description'    => 'Subscription from which the entry originates.',
                 'dependents'     => ['product_id', 'customer_id', 'service_provider']
             ],
 
@@ -42,8 +44,8 @@ class SubscriptionEntry extends SaleSubscriptionEntry {
                 'result_type'       => 'boolean',
                 'description'       => 'The subscriptionEntry has external provider.',
                 'store'             => true,
-                'instance'          => true,
-                'function'          => 'calcHasExternalProvider'
+                'instant'           => true,
+                'relation'          => ['subscription_id' => 'has_external_provider']
             ],
 
             'service_provider_id' => [
@@ -52,22 +54,10 @@ class SubscriptionEntry extends SaleSubscriptionEntry {
                 'foreign_object' => 'inventory\service\ServiceProvider',
                 'description'    => 'The service provider to which the subscription belongs.',
                 'store'          => true,
-                'instance'       => true,
-                'function'       => 'calcServiceProviderId'
+                'instant'        => true,
+                'relation'       => ['subscription_id' => 'service_provider_id']
             ]
 
         ];
-    }
-
-    public static function calcHasExternalProvider($self): array {
-        return self::calcFromSubscription($self, 'has_external_provider');
-    }
-
-    public static function calcServiceProviderId($self): array {
-        return self::calcFromSubscription($self, 'service_provider_id');
-    }
-
-    public static function calcSubscriptionId($self): array {
-        return self::calcFromSubscription($self, 'subscription_id');
     }
 }

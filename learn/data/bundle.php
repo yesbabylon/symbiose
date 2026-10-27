@@ -31,7 +31,7 @@ list($context, $orm) = [ $providers['context'], $providers['orm'] ];
 /*
     Retrieve current user id
 */
-if(!isset($_COOKIE) || !isset($_COOKIE["wp_lms_user"]) || !is_numeric($_COOKIE["wp_lms_user"])) {
+if(!isset($_COOKIE["wp_lms_user"]) || !is_numeric($_COOKIE["wp_lms_user"])) {
     throw new Exception('unknown_user', QN_ERROR_NOT_ALLOWED);
 }
 
@@ -52,7 +52,7 @@ $search = Bundle::search(['id', '=', $params['id']]);
 if($user_id > 3) {
     // retrieve course_id
     $collection = $search->read(['course_id'])->get(true);
-    if(!$collection || !count($collection)) {
+    if(count($collection) === 0) {
         throw new Exception('unknown_module', QN_ERROR_INVALID_PARAM);
     }
     $instance = $collection[0];
@@ -112,10 +112,6 @@ else {
     header('Content-Length: ' . strlen($data));
     header('Content-Disposition: attachment; filename="'.$bundle['name'].'.zip"');
 }
-
-print($data);
-exit();
-
 
 $context->httpResponse()
         ->body($bundle)

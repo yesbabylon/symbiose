@@ -5,15 +5,13 @@
     "model": {
         "name": {
             "label": "Sujet",
-            "description": "Motif principal du ticket."
-        },
-        "created": {
-            "label": "Créé le",
-            "description": "Date de création du ticket."
+            "description": "Motif principal du ticket.",
+            "help": "Titre court et précis qui résume la demande, pour permettre son identification rapide dans les listes."
         },
         "type": {
             "label": "Type",
             "description": "Le type renseigne la nature de l'action requise.",
+            "help": "Précise s'il s'agit d'un incident à corriger, d'une question à laquelle répondre ou d'une demande d'évolution à étudier.",
             "selection": {
                 "incident": "Incident",
                 "question": "Question",
@@ -23,6 +21,7 @@
         "priority": {
             "label": "Priorité",
             "description": "Niveau d'importance du ticket.",
+            "help": "Détermine l'ordre de traitement du ticket, de basse à critique. Réservez le niveau critique aux situations bloquantes.",
             "selection": {
                 "1": "Basse",
                 "2": "Moyenne",
@@ -33,6 +32,7 @@
         "status": {
             "label": "Statut",
             "description": "Statut du ticket.",
+            "help": "Étape de traitement du ticket : brouillon, ouvert, en cours, puis résolu.",
             "selection": {
                 "draft": "Brouillon",
                 "open": "Ouvert",
@@ -42,15 +42,18 @@
         },
         "environment": {
             "label": "Environnement",
-            "description": "Environnement de utilisateur à l'origine du message."
+            "description": "Environnement de utilisateur à l'origine du message.",
+            "help": "Informations sur l'environnement de l'utilisateur au moment de la demande (appareil, navigateur, version de l'application), utiles pour reproduire un problème."
         },
         "assignee_id": {
             "label": "Assigné à",
-            "description": "Personne en charge du suivi du ticket."
+            "description": "Personne en charge du suivi du ticket.",
+            "help": "Personne qui répondra au ticket ou effectuera l'action requise."
         },
         "attachments_ids": {
             "label": "Pièces jointes",
-            "description": "Documents associés au ticket."
+            "description": "Documents associés au ticket.",
+            "help": "Fichiers joints au ticket pour donner du contexte ou illustrer le problème (captures d'écran, documents)."
         }
     },
     "view": {

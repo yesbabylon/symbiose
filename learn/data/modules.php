@@ -75,7 +75,7 @@ $modules = $data;
 
 foreach($modules as $index => $module) {
     $percent = 0;
-    $status = UserStatus::search([ ['module_id', '=', $module['id']], ['user_id', '=', $user_id] ])->read(['page_count', 'chapter_index', 'page_index', 'is_complete'])->first();
+    $status = UserStatus::search([ ['module_id', '=', $module['id']] /*, ['user_id', '=', $user_id]*/ ])->read(['page_count', 'chapter_index', 'page_index', 'is_complete'])->first();
     if($status && count($status)) {
         $percent = intval( (($status['page_count']+1) / $module['page_count']) *100 );
         $modules[$index]['status'] = 'in progress';
