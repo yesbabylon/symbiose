@@ -13,6 +13,11 @@
             "description": "Description du produit.",
             "help": "Décrivez la fonction et le périmètre du produit."
         },
+        "url": {
+            "label": "URL",
+            "description": "Adresse principale permettant d'accéder au produit.",
+            "help": "Indiquez l'URL complète du produit, si elle existe."
+        },
         "is_internal": {
             "label": "Interne",
             "description": "Le produit est interne à l'entreprise.",
@@ -42,6 +47,16 @@
             "label": "Logiciels",
             "description": "Logiciels qui composent le produit.",
             "help": "Sélectionnez les logiciels qui composent le produit."
+        },
+        "projects_ids": {
+            "label": "Projets",
+            "description": "Projets liés au produit.",
+            "help": "Ajoutez les projets de suivi du travail associés au produit."
+        },
+        "time_entries_ids": {
+            "label": "Prestations",
+            "description": "Prestations de travail liées au produit.",
+            "help": "Cette liste reprend les prestations enregistrées pour le produit."
         }
     },
     "view": {

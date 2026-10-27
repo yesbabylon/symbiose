@@ -8,10 +8,20 @@
 			"description": "Code abrégé de la catégorie d'unité locatif.",
 			"help": "Nom de la catégorie d'unité locative."
 		},
+        "code": {
+            "label": "Code",
+            "description": "Code court de la catégorie d'unité locative.",
+            "help": "Indiquez un code court permettant d'identifier la catégorie."
+        },
         "description": {
 			"label": "Description",
 			"description": "Raison de la catégorisation des logements locatifs.",
 			"help": "Raison de la catégorisation des logements locatifs."
+		},
+        "rental_units_ids": {
+            "label": "Unités locatives",
+            "description": "Unités locatives attribuées à cette catégorie.",
+            "help": "Ajoutez les unités locatives qui appartiennent à cette catégorie."
 		}
 	},
 	"view": {

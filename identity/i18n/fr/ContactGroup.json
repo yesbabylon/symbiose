@@ -13,6 +13,11 @@
             "description": "Finalité du groupe de contacts.",
             "help": "Précisez l'usage prévu pour ce groupe de contacts."
         },
+        "is_internal": {
+            "label": "Groupe interne",
+            "description": "Indique si le groupe de contacts est lié à l'organisation.",
+            "help": "Activez cette option pour réserver ce groupe aux contacts internes."
+        },
         "contacts_ids": {
             "label": "Contacts",
             "description": "Contacts appartenant au groupe.",

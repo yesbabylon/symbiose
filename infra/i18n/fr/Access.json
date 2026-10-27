@@ -30,6 +30,11 @@
             },
             "help": "Le protocole permet d'identifier le port par défaut à utiliser pour la connexion."
         },
+        "url": {
+            "label": "URL",
+            "description": "URL permettant d'établir la connexion.",
+            "help": "Cette valeur est calculée automatiquement à partir du protocole, de l'hôte et du port."
+        },
         "host": {
             "label": "Hôte",
             "description": "Hôte de l'accès.",

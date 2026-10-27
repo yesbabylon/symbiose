@@ -3,6 +3,43 @@
     "plural": "Organisations",
     "description": "Une organisation correspond à une des entités légales utilisant le logiciel.",
     "model": {
+        "type_id": {
+            "label": "Type",
+            "description": "Type attribué à l'organisation.",
+            "help": "Sélectionnez le type correspondant à l'organisation."
+        },
+        "type": {
+            "label": "Type",
+            "description": "Code du type d'identité de l'organisation.",
+            "selection": {
+                "IN": "Particulier",
+                "SE": "Travailleur indépendant",
+                "CO": "Entreprise",
+                "NP": "Association à but non lucratif",
+                "PA": "Administration publique"
+            },
+            "help": "Cette valeur est déterminée par le type d'identité sélectionné."
+        },
+        "bank_account_ids": {
+            "label": "Comptes bancaires",
+            "description": "Liste des comptes bancaires de l'organisation.",
+            "help": "Ajoutez ou gérez les comptes bancaires associés à l'organisation."
+        },
+        "bank_account_iban": {
+            "label": "IBAN",
+            "description": "Compte bancaire principal de l'organisation.",
+            "help": "Indiquez l'IBAN du compte bancaire principal."
+        },
+        "bank_account_bic": {
+            "label": "BIC",
+            "description": "Identifiant BIC lié au compte principal.",
+            "help": "Indiquez le code BIC de la banque liée au compte principal."
+        },
+        "organization_id": {
+            "label": "Organisation liée",
+            "description": "Champ inutilisé pour un rôle d'organisation.",
+            "help": "Cette valeur technique reste vide pour une organisation."
+        },
         "identity_id": {
             "label": "Identité canonique",
             "description": "Identité canonique représentée par ce rôle d'organisation.",

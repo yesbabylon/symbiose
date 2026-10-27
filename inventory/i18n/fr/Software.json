@@ -23,6 +23,11 @@
             "description": "Version du logiciel.",
             "help": "Indiquez la version installée du logiciel."
         },
+        "software_model_id": {
+            "label": "Modèle de logiciel",
+            "description": "Modèle dont proviennent les informations du logiciel.",
+            "help": "Sélectionnez un modèle pour reprendre automatiquement son nom, sa description, son édition et sa version."
+        },
         "customer_id": {
             "label": "Client",
             "description": "Client propriétaire du logiciel.",
