@@ -1,76 +1,151 @@
 {
     "name": "Paiement",
     "plural": "Paiements",
-    "description": "",
+    "description": "Paiement reçu d'un client ou enregistré à partir d'un mouvement bancaire.",
     "model": {
+        "organization_id": {
+            "label": "Organisation",
+            "description": "Organisation à laquelle appartient le paiement.",
+            "help": "Sélectionnez l'organisation dont relève le paiement."
+        },
+        "journal_id": {
+            "label": "Journal comptable",
+            "description": "Journal de banque et de caisse de l'organisation.",
+            "help": "Ce journal est déterminé automatiquement à partir de l'organisation."
+        },
         "customer_id": {
             "label": "Client",
-            "description": "Client associée au paiement.",
-            "help": ""
+            "description": "Client associé au paiement.",
+            "help": "Sélectionnez le client ayant effectué le paiement."
         },
         "amount": {
             "label": "Montant",
-            "description": "Montant assigné au paiement.",
-            "help": ""
+            "description": "Montant affecté au paiement.",
+            "help": "Saisissez le montant signé du paiement."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Alias de la communication associée au paiement.",
+            "help": "Ce nom est fourni pour rester compatible avec le modèle de référence."
         },
         "communication": {
             "label": "Communication",
-            "description": "Message du payeur.",
-            "help": ""
+            "description": "Communication ou description associée au paiement.",
+            "help": "Peut reprendre une communication de la contrepartie ou une description du mouvement comptable."
         },
         "receipt_date": {
             "label": "Date de réception",
-            "description": "Heure de réception du paiement.",
-            "help": ""
+            "description": "Date et heure de réception ou d'émission du paiement.",
+            "help": "Indiquez la date à laquelle le paiement a été reçu ou envoyé."
+        },
+        "receipt_bank_account_id": {
+            "label": "Compte bancaire de réception",
+            "description": "Compte bancaire sur lequel le paiement a été reçu ou envoyé.",
+            "help": "Ce compte peut différer du compte bancaire prévu par le financement."
         },
         "payment_origin": {
-            "label": "Origine de paiment",
+            "label": "Origine du paiement",
             "description": "Origine de l'argent reçu.",
+            "help": "Indiquez si le paiement provient de la caisse ou d'un compte bancaire.",
             "selection": {
                 "cashdesk": "Caisse",
                 "bank": "Banque"
-            },
-            "help": ""
+            }
         },
         "payment_method": {
             "label": "Mode de paiement",
-            "description": "Le mode de paiement utilisé.",
+            "description": "Mode utilisé pour effectuer le paiement.",
+            "help": "Sélectionnez le moyen utilisé pour effectuer le paiement.",
             "selection": {
-                "voucher": "Chèque cadeau (voucher)",
                 "cash": "Espèces",
                 "bank_card": "Carte bancaire",
+                "voucher": "Bon d'achat",
                 "wire_transfer": "Virement bancaire"
-            },
-            "help": ""
+            }
         },
         "operation_id": {
-            "label": "Operation",
-            "description": "L'opération à laquelle se rapporte le paiement.",
-            "help": ""
+            "label": "Opération de caisse",
+            "description": "Opération de caisse à laquelle se rapporte le paiement.",
+            "help": "Sélectionnez l'opération de caisse correspondante."
+        },
+        "origin_object_class": {
+            "label": "Classe de l'objet d'origine",
+            "description": "Classe de l'entité à l'origine du paiement.",
+            "help": "La classe est enregistrée avec son espace de noms complet."
+        },
+        "origin_object_id": {
+            "label": "Objet d'origine",
+            "description": "Identifiant de l'objet à l'origine du paiement.",
+            "help": "Cet identifiant complète la classe de l'objet d'origine."
+        },
+        "linked_payment_id": {
+            "label": "Affectation liée",
+            "description": "Affectation de financement liée au paiement.",
+            "help": "Utilisé pour les affectations symétriques entre deux financements."
+        },
+        "accounting_operation_id": {
+            "label": "Opération comptable",
+            "description": "Opération comptable ciblée par le paiement.",
+            "help": "Sélectionnez l'opération comptable liée au paiement, le cas échéant."
+        },
+        "purchase_invoice_id": {
+            "label": "Facture d'achat",
+            "description": "Facture d'achat ciblée par le paiement.",
+            "help": "Sélectionnez la facture d'achat concernée, le cas échéant."
+        },
+        "invoice_id": {
+            "label": "Facture de vente",
+            "description": "Facture de vente ciblée par le paiement.",
+            "help": "Sélectionnez la facture de vente concernée, le cas échéant."
+        },
+        "sale_invoice_id": {
+            "label": "Facture de vente",
+            "description": "Alias de la facture de vente ciblée par le paiement.",
+            "help": "Ce champ est un alias technique de la facture de vente."
+        },
+        "bank_statement_line_id": {
+            "label": "Ligne d'extrait bancaire",
+            "description": "Alias de la ligne d'extrait bancaire à l'origine du paiement.",
+            "help": "Ce nom est fourni pour rester compatible avec le modèle de référence."
         },
         "statement_line_id": {
-            "label": "Ligne d'extrait",
-            "description": "La ligne de relevé bancaire à laquelle se rapporte le paiement.",
-            "help": ""
+            "label": "Ligne d'extrait bancaire",
+            "description": "Ligne d'extrait bancaire à l'origine du paiement.",
+            "help": "Sélectionnez la ligne bancaire ayant généré le paiement."
         },
-        "voucher_ref": {
-            "label": "Référence du voucher",
-            "description": "La référence du chèque utilisé pour le paiement.",
-            "help": ""
+        "accounting_entry_id": {
+            "label": "Écriture comptable",
+            "description": "Écriture comptable générée pour le paiement.",
+            "help": "Sélectionnez l'écriture comptable générée pour le paiement."
+        },
+        "accounting_entry_line_id": {
+            "label": "Ligne d'écriture comptable",
+            "description": "Ligne d'écriture comptable ciblée par le paiement.",
+            "help": "Sélectionnez la ligne comptable ciblée par le paiement."
         },
         "funding_id": {
             "label": "Financement",
-            "description": "Financement de commande lié au paiement.",
-            "help": ""
+            "description": "Financement auquel le paiement est affecté.",
+            "help": "Sélectionnez le financement dont le solde doit être mis à jour."
+        },
+        "voucher_ref": {
+            "label": "Référence du bon",
+            "description": "Référence du bon utilisé pour le paiement.",
+            "help": "Saisissez la référence du bon utilisé."
+        },
+        "is_exported": {
+            "label": "Exporté",
+            "description": "Indique si le paiement a été exporté vers un autre système.",
+            "help": "Un paiement exporté ne peut plus être modifié."
         },
         "status": {
-            "label": "Status",
-            "description": "Status du paiement",
+            "label": "Statut",
+            "description": "Statut de comptabilisation du paiement.",
+            "help": "Le statut indique si le paiement est encore préparatoire ou déjà comptabilisé.",
             "selection": {
-                "pending": "En cours",
-                "paid": "Payé"
-            },
-            "help": ""
+                "proforma": "Pro forma",
+                "posted": "Comptabilisé"
+            }
         }
     },
     "view": {
@@ -101,7 +176,14 @@
     },
     "error": {
         "amount": {
-            "excessive_amount": "Le montant du paiement ne peut pas être supérieur à celui de la ligne d'extrait."
+            "incompatible_sign": "Le paiement et la ligne d'extrait bancaire doivent avoir le même signe.",
+            "excessive_amount": "Le montant du paiement ne peut pas dépasser le solde de la ligne d'extrait bancaire."
+        },
+        "is_exported": {
+            "non_editable": "Un paiement exporté ne peut plus être modifié."
+        },
+        "status": {
+            "non_removable": "Un paiement comptabilisé ne peut pas être supprimé manuellement."
         }
     }
 }

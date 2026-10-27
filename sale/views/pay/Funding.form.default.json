@@ -111,6 +111,11 @@
                                                 "type": "field",
                                                 "value": "payments_ids",
                                                 "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "funding_allocations_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }
