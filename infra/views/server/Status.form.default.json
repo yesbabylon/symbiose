@@ -83,7 +83,8 @@
                                                 "width": "100%",
                                                 "readonly": true,
                                                 "widget": {
-                                                    "usage": "text/json"
+                                                    "usage": "text/json",
+                                                    "height": 600
                                                 }
                                             }
                                         ]
