@@ -13,6 +13,16 @@
             "description": "Courte description de l'instance.",
             "help": ""
         },
+        "up": {
+            "label": "En ligne",
+            "description": "Est-ce que le serveur est en ligne.",
+            "help": ""
+        },
+        "synced": {
+            "label": "Dernière synchronisation",
+            "description": "Date de dernière synchronisation du status de l'instance.",
+            "help": ""
+        },
         "instance_type": {
             "label": "Type",
             "description": "Type d'instance.",
@@ -23,6 +33,16 @@
                 "replica": "Réplique"
             },
             "help": ""
+        },
+        "b2_instance_type": {
+            "label": "Type d'instance b2",
+            "selection": {
+                "equal": "eQual",
+                "symbiose": "Symbiose",
+                "wordpress": "WordPress",
+                "equalpress": "eQualPress",
+                "fmt": "FMT"
+            }
         },
         "version": {
             "label": "Version",
@@ -70,6 +90,11 @@
         "form.default": {
             "name": "Instance",
             "description": "Affiche le formulaire de modification d'une instance.",
+            "actions": {
+                "action.sync-status": {
+                    "label": "Synchroniser status"
+                }
+            },
             "layout": {
                 "section.details": {
                     "label": "Details"
@@ -82,6 +107,9 @@
                 },
                 "section.softwares": {
                     "label": "Logiciels"
+                },
+                "section.statuses": {
+                    "label": "Status"
                 }
             }
         },

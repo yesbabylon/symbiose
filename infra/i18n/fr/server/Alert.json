@@ -1,0 +1,48 @@
+{
+    "name": "Alerte",
+    "plural": "Alertes",
+    "description": "Notification de supervision concernant un serveur ou une instance.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom de l'alerte.",
+            "help": "Indiquez un nom concis pour l'alerte."
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut actuel d'envoi de l'alerte.",
+            "help": "Indique si l'alerte est en attente ou envoyée.",
+            "selection": {
+                "pending": "En attente",
+                "sent": "Envoyée"
+            }
+        },
+        "alert_policy_id": {
+            "label": "Politique d'alerte",
+            "description": "Politique ayant généré l'alerte.",
+            "help": "Sélectionnez la politique ayant généré cette alerte."
+        },
+        "server_id": {
+            "label": "Serveur",
+            "description": "Serveur concerné par l'alerte.",
+            "help": "Sélectionnez le serveur concerné par l'alerte."
+        },
+        "instance_id": {
+            "label": "Instance",
+            "description": "Instance concernée par l'alerte.",
+            "help": "Sélectionnez l'instance concernée par l'alerte."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Alerte",
+            "description": "Formulaire par défaut d'une alerte.",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Alertes",
+            "description": "Liste par défaut des alertes de supervision.",
+            "layout": {}
+        }
+    }
+}

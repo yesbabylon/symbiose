@@ -1,0 +1,48 @@
+{
+    "name": "Alert",
+    "plural": "Alerts",
+    "description": "Monitoring notification concerning a server or instance.",
+    "model": {
+        "name": {
+            "label": "Name",
+            "description": "Name of the alert.",
+            "help": "Enter a concise name for the alert."
+        },
+        "status": {
+            "label": "Status",
+            "description": "Current delivery status of the alert.",
+            "help": "Indicates whether the alert is pending or sent.",
+            "selection": {
+                "pending": "Pending",
+                "sent": "Sent"
+            }
+        },
+        "alert_policy_id": {
+            "label": "Alert policy",
+            "description": "Policy that generated the alert.",
+            "help": "Select the policy whose triggers generated this alert."
+        },
+        "server_id": {
+            "label": "Server",
+            "description": "Server concerned by the alert.",
+            "help": "Select the server concerned by the alert."
+        },
+        "instance_id": {
+            "label": "Instance",
+            "description": "Instance concerned by the alert.",
+            "help": "Select the instance concerned by the alert."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Alert",
+            "description": "Default form for an alert.",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Alerts",
+            "description": "Default list of monitoring alerts.",
+            "layout": {}
+        }
+    }
+}

@@ -1,6 +1,17 @@
 {
     "name": "Server",
     "description": "Default form for Server",
+    "actions": [
+        {
+            "id": "action.sync-status",
+            "label": "Synchronize status",
+            "controller": "infra_server_Server_sync-status",
+            "params": {
+                "sync_instances": true
+            },
+            "visible": ["server_type", "=", "b2"]
+        }
+    ],
     "layout": {
         "groups": [
             {

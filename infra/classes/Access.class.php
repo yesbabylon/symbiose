@@ -215,27 +215,24 @@ class Access extends Model {
     public static function onchange($event, $values) {
         $result = [];
 
+        if(isset($event['username']) || isset($event['host'])) {
+            $username = $event['username'] ?? $values['username'];
+            $host = $event['host'] ?? $values['host'];
+
+            $result['name'] = "$username@$host";
+        }
+
         if(isset($event['access_type'], self::MAP_PORTS[$event['access_type']])) {
             $result['port'] = self::MAP_PORTS[$event['access_type']];
         }
 
-        if( isset($event['access_type'])
-            || isset($event['username'])
-            || isset($event['password'])
-            || isset($event['host'])
-            || isset($event['port']) ) {
-
+        if(isset($event['access_type']) || isset($event['host']) || isset($event['port'])) {
             // #memo - result could still be invalid
             $result['url'] = self::computeUrl([
-                    'access_type'   => $event['access_type'] ?? $values['access_type'],
-                    /*
-                    // #memo - there is no practical use with this syntax
-                    'username'      => $event['username'] ?? $values['username'],
-                    'password'      => $event['password'] ?? $values['password'],
-                    */
-                    'host'          => $event['host'] ?? $values['host'],
-                    'port'          => $result['port'] ?? $event['port'] ?? $values['port']
-                ]);
+                'access_type'   => $event['access_type'] ?? $values['access_type'],
+                'host'          => $event['host'] ?? $values['host'],
+                'port'          => $result['port'] ?? $event['port'] ?? $values['port']
+            ]);
         }
 
         return $result;

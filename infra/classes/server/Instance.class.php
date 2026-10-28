@@ -48,6 +48,22 @@ class Instance extends Model {
                 'default'           => 'dev'
             ],
 
+            'server_type' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'relation'          => ['server_id' => 'server_type'],
+                'store'             => true,
+                'visible'           => false
+            ],
+
+            'b2_instance_type' => [
+                'type'              => 'string',
+                'selection'         => ['equal', 'wordpress', 'equalpress', 'symbiose', 'fmt'],
+                'description'       => 'Type of b2 instance.',
+                'default'           => null,
+                'visible'           => ['server_type', '=', 'b2']
+            ],
+
             'has_dns_record' => [
                 'type'              => 'boolean',
                 'description'       => 'Marks the instance as having or not DNS record.',
@@ -72,7 +88,7 @@ class Instance extends Model {
                 'description'       => 'Front-end home URL.'
             ],
 
-            'last_synced' => [
+            'synced' => [
                 'type'              => 'datetime',
                 'description'       => 'Date of last automatic status update.',
                 'help'              => 'The "up" field can be auto updated by the action "infra_server_fetch-status".'
@@ -102,6 +118,7 @@ class Instance extends Model {
                 'foreign_object'    => 'infra\server\Server',
                 'description'       => 'Server on which the instance runs.',
                 'ondelete'          => 'cascade',
+                'dependents'        => ['server_type'],
                 'required'          => true
             ],
 
@@ -130,7 +147,6 @@ class Instance extends Model {
     }
 
     protected static function oncreate($self, $orm) {
-        $self->read(['instance_type']);
         foreach($self as $id => $instance) {
             // generate a new UUID
             do {

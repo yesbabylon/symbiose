@@ -1,6 +1,17 @@
 {
     "name": "Instance",
     "description": "Default form for Instance",
+    "actions": [
+        {
+            "id": "action.sync-status",
+            "label": "Synchronize status",
+            "controller": "infra_server_Instance_sync-status",
+            "params": {
+                "scope": "all"
+            },
+            "visible": ["server_type", "=", "b2"]
+        }
+    ],
     "layout": {
         "groups": [
             {
@@ -14,6 +25,11 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "server_type",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "name",
                                                 "width": "66%",
                                                 "widget": {
@@ -24,6 +40,16 @@
                                                 "type": "field",
                                                 "label": "Type",
                                                 "value": "instance_type",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "value": "",
+                                                "width": "66%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "b2_instance_type",
                                                 "width": "33%"
                                             }
                                         ]
@@ -142,7 +168,7 @@
                     },
                     {
                         "label": "Accesses",
-                        "id": "section.instance_accesses",
+                        "id": "section.accesses",
                         "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
@@ -166,7 +192,7 @@
                     },
                     {
                         "label": "Softwares",
-                        "id": "section.instance_software",
+                        "id": "section.softwares",
                         "visible": ["state", "<>", "draft"],
                         "rows": [
                             {

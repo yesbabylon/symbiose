@@ -38,7 +38,8 @@ class Server extends Model {
                 'description'       => 'Type of the server.',
                 'selection'         => ['front', 'node', 'storage', 'b2', 'k2', 's2', 'admin'],
                 'default'           => 'front',
-                'onupdate'          => 'onupdateServerType'
+                'onupdate'          => 'onupdateServerType',
+                'dependents'        => ['instances_ids' => ['server_type']]
             ],
 
             'synced' => [

@@ -13,6 +13,16 @@
             "description": "Description du serveur.",
             "help": ""
         },
+        "up": {
+            "label": "En ligne",
+            "description": "Est-ce que le serveur est en ligne.",
+            "help": ""
+        },
+        "synced": {
+            "label": "Dernière synchronisation",
+            "description": "Date de dernière synchronisation du status du serveur.",
+            "help": ""
+        },
         "server_type": {
             "label": "Type",
             "description": "Type du serveur.",
@@ -67,6 +77,11 @@
         "form.default": {
             "name": "serveur",
             "description": "",
+            "actions": {
+                "action.sync-status": {
+                    "label": "Synchroniser status"
+                }
+            },
             "layout": {
                 "section.description": {
                     "label": "Description"
@@ -85,6 +100,9 @@
                 },
                 "section.softwares": {
                     "label": "Logiciels"
+                },
+                "section.statuses": {
+                    "label": "Status"
                 }
             }
         },

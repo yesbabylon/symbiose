@@ -1,0 +1,45 @@
+{
+    "name": "Server statuses",
+    "description": "Default listing of all server statuses.",
+    "order": "created",
+    "sort": "desc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "10%",
+                "sortable": true,
+                "visible": false
+            },
+            {
+                "type": "field",
+                "value": "created",
+                "with": "15%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "cpu_use",
+                "width": "15%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "ram_use",
+                "width": "15%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "dsk_use",
+                "width": "15%",
+                "sortable": true,
+                "readonly": true
+            }
+        ]
+    }
+}
