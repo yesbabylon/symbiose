@@ -37,6 +37,11 @@
             },
             "help": ""
         },
+        "send_alerts": {
+            "label": "Envoyer alertes",
+            "description": "Des alertes de surveillance sont-elles envoyées pour cette instance ?",
+            "help": ""
+        },
         "accesses_ids": {
             "label": "Accès",
             "description": "Accès au serveur.",

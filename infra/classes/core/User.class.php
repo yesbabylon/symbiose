@@ -7,7 +7,11 @@
 
 namespace infra\core;
 
+use equal\orm\traits\IsNotScoped;
+
 class User extends \identity\User {
+
+    use IsNotScoped;
 
     public static function getColumns() {
         return [

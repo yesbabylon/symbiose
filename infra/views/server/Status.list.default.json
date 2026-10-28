@@ -35,6 +35,13 @@
             },
             {
                 "type": "field",
+                "value": "up",
+                "width": "15%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
                 "value": "cpu_use",
                 "width": "15%",
                 "sortable": true,

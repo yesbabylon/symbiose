@@ -103,8 +103,8 @@ class AlertPolicy extends Model {
                     break 2;
                 }
 
-                $status_value = AlertTrigger::getAdaptedValue($trigger['key'], $value);
                 $trigger_value = AlertTrigger::getAdaptedValue($trigger['key'], $trigger['value']);
+                $status_value = is_bool($value) ? $value : AlertTrigger::getAdaptedValue($trigger['key'], (string) $value);
 
                 if(
                     !in_array($trigger['operator'], array_keys($comparison_methods))

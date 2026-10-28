@@ -48,8 +48,20 @@ if(!$server) {
     throw new Exception('unknown_server', EQ_ERROR_INVALID_PARAM);
 }
 
+$status = null;
 try {
     $status = eQual::run('get', 'infra_server_Server_status', ['id' => $server['id']]);
+}
+catch(Exception $e) {
+    trigger_error(
+        "APP::Unable to synchronize status for server {$server['id']}: {$e->getMessage()}",
+        EQ_REPORT_WARNING
+    );
+}
+
+if($status) {
+    // #memo - add state up in status_data for Alert
+    $status['state']['up'] = true;
 
     $ips_data = [];
     foreach(['ip_protected', 'ip_public', 'ip_private'] as $ip_key) {
@@ -63,6 +75,7 @@ try {
 
     ServerStatus::create([
         'server_id'     => $server['id'],
+        'up'            => true,
         'status_data'   => json_encode($status, JSON_PRETTY_PRINT),
         'dsk_use'       => (float) str_replace(['%', ','], ['', '.'], $status['instant']['dsk_use'] ?? 0) / 100,
         'cpu_use'       => (float) str_replace(['%', ','], ['', '.'], $status['instant']['cpu_use'] ?? 0) / 100,
@@ -79,11 +92,12 @@ try {
         }
     }
 }
-catch(Exception $e) {
-    trigger_error(
-        "APP::Unable to synchronize status for server {$server['id']}: {$e->getMessage()}",
-        EQ_REPORT_WARNING
-    );
+else {
+    ServerStatus::create([
+        'server_id'     => $server['id'],
+        'up'            => false,
+        'status_data'   => json_encode(['state' => ['up' => false]], JSON_PRETTY_PRINT)
+    ]);
 
     // server is down (will cascade to instances)
     Server::id($params['id'])->update(['up' => false, 'synced' => time()]);

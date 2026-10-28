@@ -29,6 +29,7 @@ class Status extends Model {
                 'description'       => "Instance concerned by the status.",
                 'help'              => "A status can either concern an instance or a server."
             ],
+
             /*
             // #todo - define possible values with related metric units
                 units
@@ -40,6 +41,14 @@ class Status extends Model {
                 bool
                 string
              */
+
+            'up' => [
+                'type'              => 'boolean',
+                'description'       => 'Whether the latest status check found the server reachable.',
+                'required'          => true,
+                'readonly'          => true
+            ],
+
             'status_data' => [
                 'type'              => 'string',
                 'usage'             => 'text/json',
@@ -68,7 +77,7 @@ class Status extends Model {
 
             'total_proc' => [
                 'type'              => 'integer',
-                'description'       => "Amount of currently runnin processes."
+                'description'       => "Amount of currently running processes."
             ]
 
         ];

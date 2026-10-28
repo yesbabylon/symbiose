@@ -65,6 +65,11 @@
             "description": "URL d'accueil du frontend.",
             "help": ""
         },
+        "send_alerts": {
+            "label": "Envoyer alertes",
+            "description": "Des alertes de surveillance sont-elles envoyées pour ce serveur ?",
+            "help": ""
+        },
         "server_id": {
             "label": "Serveur",
             "description": "Serveur sur lequel l'instance s'exécute.",

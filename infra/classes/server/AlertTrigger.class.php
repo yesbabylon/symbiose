@@ -110,7 +110,7 @@ class AlertTrigger extends Model {
             'repetition' => [
                 'type'              => 'integer',
                 'description'       => "Number of repetitions needed for the alert to be triggered.",
-                'help'              => "If repetition is 1, then the trigger must match twice in a row.",
+                'help'              => "If repetition is 2, then the trigger must match twice in a row.",
                 'default'           => 1,
                 'dependents'        => ['name']
             ]
@@ -154,11 +154,18 @@ class AlertTrigger extends Model {
     }
 
     public static function getAdaptedValue(string $key, string $value) {
-        if(!isset(self::MAP_STATUS_KEYS_TYPES[$key])) {
+        $map_status_keys_types = [];
+        foreach(self::MAP_STATUS_KEYS_TYPES as $type_map_status_keys_types) {
+            foreach($type_map_status_keys_types as $k => $t) {
+                $map_status_keys_types[$k] = $t;
+            }
+        }
+
+        if(!isset($map_status_keys_types[$key])) {
             return $value;
         }
 
-        switch(self::MAP_STATUS_KEYS_TYPES[$key]) {
+        switch($map_status_keys_types[$key]) {
             case 'boolean':
                 $value = in_array(strtolower($value), ['1', 'true', 'yes']);
                 break;
@@ -198,7 +205,7 @@ class AlertTrigger extends Model {
             'key' => [
                 'key_not_allowed_for_trigger_type' => [
                     'message'       => 'Not allowed for this trigger type.',
-                    'function'      => function ($key, $values) {
+                    'function'      => function($key, $values) {
                         if(!isset($values['trigger_type'])) {
                             return true;
                         }
@@ -209,6 +216,14 @@ class AlertTrigger extends Model {
                         $allowed_keys = array_merge($common_keys, $specific_keys);
 
                         return in_array($key, $allowed_keys);
+                    }
+                ]
+            ],
+            'repetition' => [
+                'repetition_min_is_one' => [
+                    'message'       => 'Min repetition is 1',
+                    'function'      => function($repetition, $values) {
+                        return $repetition > 0;
                     }
                 ]
             ]

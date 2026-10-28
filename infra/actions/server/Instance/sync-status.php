@@ -69,11 +69,24 @@ if($params['scope'] !== 'all' && !empty($instance['b2_instance_type'])) {
     $get_status_params['scope'] = $params['scope'];
 }
 
+$b2_instance_status = null;
 try {
     $b2_instance_status = eQual::run('get', 'infra_server_Instance_status', $get_status_params);
+}
+catch(Exception $e) {
+    trigger_error(
+        "APP::Unable to synchronize status for instance {$instance['id']}: {$e->getMessage()}",
+        EQ_REPORT_WARNING
+    );
+}
+
+if($b2_instance_status) {
+    // #memo - add state up in status_data for Alert
+    $b2_instance_status['state']['up'] = true;
 
     InstanceStatus::create([
         'instance_id'   => $instance['id'],
+        'up'            => true,
         'status_data'   => json_encode($b2_instance_status, JSON_PRETTY_PRINT),
         'dsk_use'       => (float) str_replace(['%', ','], ['', '.'], $b2_instance_status['instant']['dsk_use'] ?? 0) / 100,
         'cpu_use'       => (float) str_replace(['%', ','], ['', '.'], $b2_instance_status['instant']['cpu_use'] ?? 0) / 100,
@@ -95,11 +108,12 @@ try {
     // instance is up
     Instance::id($instance['id'])->update($instance_data);
 }
-catch(Exception $e) {
-    trigger_error(
-        "APP::Unable to synchronize status for instance {$instance['id']}: {$e->getMessage()}",
-        EQ_REPORT_WARNING
-    );
+else {
+    InstanceStatus::create([
+        'instance_id'   => $instance['id'],
+        'up'            => false,
+        'status_data'   => json_encode(['state' => ['up' => false]], JSON_PRETTY_PRINT)
+    ]);
 
     // instance is down
     Instance::id($instance['id'])->update(['up' => false]);
