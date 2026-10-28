@@ -89,7 +89,7 @@ try {
         $instance_data['b2_instance_type'] = $b2_instance_status['config']['type'];
     }
     if(!empty($b2_instance_status['config']['branches'])) {
-        $instance_data['branch'] = json_encode($b2_instance_status['config']['branches']);
+        $instance_data['branch'] = !empty($b2_instance_status['config']['branches']['packages']) ? json_encode($b2_instance_status['config']['branches']) : $b2_instance_status['config']['branches']['root'];
     }
 
     // instance is up
