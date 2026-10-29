@@ -47,7 +47,7 @@ $instance = Instance::id($params['id'])
     ->read(['name', 'server_id' => ['server_type']])
     ->first();
 
-if($instance['server_id']['server_type'] !== 'b2') {
+if(!in_array($instance['server_id']['server_type'], ['b2', 'k2', 's2', 'admin'])) {
     throw new Exception('server_type_not_handled', EQ_ERROR_NOT_ALLOWED);
 }
 

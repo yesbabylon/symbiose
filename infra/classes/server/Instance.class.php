@@ -138,9 +138,18 @@ class Instance extends Model {
 
             'statuses_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'infra\server\InstanceStatus',
-                'foreign_field'     => 'instance_id',
+                'foreign_object'    => 'infra\server\Status',
+                'foreign_field'     => 'object_id',
+                'domain'            => ['object_class', '=', Instance::class],
                 'description'       => 'Statuses of the instance.'
+            ],
+
+            'checks_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'infra\server\Check',
+                'foreign_field'     => 'object_id',
+                'domain'            => ['object_class', '=', Instance::class],
+                'description'       => 'Checks of the instance.'
             ]
 
         ];

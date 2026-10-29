@@ -27,6 +27,9 @@ use infra\server\Server;
     'providers'     => ['context']
 ]);
 
+/**
+ * @var \equal\php\Context $context
+ */
 ['context' => $context] = $providers;
 
 $server = Server::id($params['id'])
@@ -37,7 +40,7 @@ if(!$server) {
     throw new Exception('unknown_server', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
-if($server['server_type'] !== 'b2') {
+if(!in_array($server['server_type'], ['b2', 'k2', 's2', 'admin'])) {
     throw new Exception('server_type_not_handled', EQ_ERROR_NOT_ALLOWED);
 }
 
