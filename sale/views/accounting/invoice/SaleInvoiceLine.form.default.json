@@ -8,6 +8,11 @@
         "entity": "finance\\accounting\\InvoiceLine",
         "view": "form.default"
     },
+    "header": {
+        "actions": {
+            "ACTION.EDIT": true
+        }
+    },
     "layout": {
         "update": {
             "column.invoice_and_line_group": {
