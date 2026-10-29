@@ -36,6 +36,15 @@ class Status extends Model {
                 'readonly'          => true
             ],
 
+            'status_data_excerpt' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => "Excerpt of the Message (for display).",
+                'store'             => true,
+                'function'          => 'calcStatusDataExcerpt',
+                'readonly'          => true
+            ],
+
             'is_collection_ok' => [
                 'type'              => 'boolean',
                 'description'       => "Was the status collection process a success ?",
@@ -57,5 +66,39 @@ class Status extends Model {
                 ]
             ]
         ];
+    }
+
+    protected static function calcStatusDataExcerpt($self) {
+        $result = [];
+        $self->read(['status_data']);
+        foreach($self as $id => $status) {
+            $status_data = json_decode($status['status_data'], true);
+
+            $data = [];
+            if(isset($status_data['state']['up'])) {
+                $data['up'] = $status_data['state']['up'];
+            }
+            if(isset($status_data['instant']['ram_use'])) {
+                $data['ram_use'] = $status_data['instant']['ram_use'];
+            }
+            if(isset($status_data['instant']['cpu_use'])) {
+                $data['cpu_use'] = $status_data['instant']['cpu_use'];
+            }
+            if(isset($status_data['instant']['dsk_use'])) {
+                $data['dsk_use'] = $status_data['instant']['dsk_use'];
+            }
+            if(isset($status_data['instant']['total_proc'])) {
+                $data['total_proc'] = $status_data['instant']['total_proc'];
+            }
+
+            $excerpt = strip_tags(json_encode($data));
+            if(strlen($excerpt) > 100) {
+                $excerpt = substr(strip_tags(json_encode($data)), 0, 100) . '...';
+            }
+
+            $result[$id] = $excerpt;
+        }
+
+        return $result;
     }
 }
