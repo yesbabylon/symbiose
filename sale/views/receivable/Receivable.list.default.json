@@ -8,6 +8,12 @@
     "sort": "desc",
     "operations": {
         "total": {
+            "qty": {
+                "id": "operations.total.qty",
+                "label": "Total quantity",
+                "usage":"number/real:2",
+                "operation": "SUM"
+            },
             "total": {
                 "id": "operations.total.total",
                 "label": "Total without vat",
