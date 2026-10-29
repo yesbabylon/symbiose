@@ -58,7 +58,7 @@ class Instance extends Model {
 
             'b2_instance_type' => [
                 'type'              => 'string',
-                'selection'         => ['equal', 'wordpress', 'equalpress', 'symbiose', 'fmt'],
+                'selection'         => ['equal', 'wordpress', 'equalpress', 'symbiose', 'discope', 'fmt'],
                 'description'       => 'Type of b2 instance.',
                 'default'           => null,
                 'visible'           => ['server_type', '=', 'b2']
