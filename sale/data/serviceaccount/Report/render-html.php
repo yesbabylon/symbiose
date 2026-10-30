@@ -329,7 +329,9 @@ foreach($report['service_account_entries_ids'] as $line) {
         $start = (int) ($line['start'] ?? 0);
         $end = (int) ($line['end'] ?? 0);
 
-        $who = $line['employee_id']['firstname'] ?? '';
+        $firstname = $line['employee_id']['firstname'] ?? '';
+        $lastname = $line['employee_id']['lastname'] ?? '';
+
         $line_description = ($time_entry['detailed_description'] ?? $line['description'] ?? $description);
         $calculation_log = ($line['calculation_log'] ?? '');
 
@@ -339,7 +341,7 @@ foreach($report['service_account_entries_ids'] as $line) {
             'end'         => $format_time($end - strtotime('midnight', $end)),
             'pause'       => $format_time(floor(abs((float) $line['pause']) * 60) * 60),
             'on_site'     => !empty($line['on_site']) ? $labels['report.common.yes'] : $labels['report.common.no'],
-            'who'         => $who,
+            'who'         => trim($firstname . ' ' . (strlen($lastname) ? substr($lastname, 0, 1) . '.' : '')),
             'role'        => $line['role_id']['code'] ?? 'DEV',
             'type'        => $time_entry['origin'] ?? '',
             'project'     => $time_entry['project_id']['name'],
@@ -357,8 +359,8 @@ foreach($report['service_account_entries_ids'] as $line) {
             $description
         )));
 
-        $firstname = $line['creator']['firstname'] ?? '';
-        $lastname = $line['creator']['lastname'] ?? '';
+        $firstname = $line['employee_id']['firstname'] ?? '';
+        $lastname = $line['employee_id']['lastname'] ?? '';
 
         $map_tt_lines[] = [
             'description' => ucfirst(substr($description, 0, 128)),
