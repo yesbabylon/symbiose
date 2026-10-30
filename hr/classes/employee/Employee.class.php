@@ -44,6 +44,15 @@ class Employee extends IdentityFacetAbstract {
                 'description'       => 'Roles assigned to the employee.'
             ],
 
+            'user_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'identity\User',
+                'relation'          => ['identity_id' => 'user_id'],
+                'description'       => 'User associated with this identity, if any.',
+                'store'             => false
+            ],
+
             'employee_number' => [
                 'type'              => 'string',
                 'description'       => 'Internal number assigned to the employee.'

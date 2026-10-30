@@ -105,6 +105,11 @@
                                                 "visible": false
                                             },
                                             {
+                                                "type": "field",
+                                                "value": "user_id",
+                                                "visible": false
+                                            },
+                                            {
                                                 "id": "field.lang_id",
                                                 "type": "field",
                                                 "label": "Language",

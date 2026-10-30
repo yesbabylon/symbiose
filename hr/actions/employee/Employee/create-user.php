@@ -5,8 +5,6 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use hr\employee\Employee;
-
 [$params, $providers] = eQual::announce([
     'description'   => 'Create a User account for a single Employee or a group of Employees.',
     'params'        => [
