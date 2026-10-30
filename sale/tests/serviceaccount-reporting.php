@@ -337,9 +337,9 @@ $tests = [
             }
 
             return (float) $args['before']['balance_effective'] === 0.0
-                && (float) $args['before']['balance_estimated'] === 15.0
-                && (float) $account['balance_effective'] === 15.0
-                && (float) $account['balance_estimated'] === 15.0
+                && (float) $args['before']['balance_estimated'] === -15.0
+                && (float) $account['balance_effective'] === -15.0
+                && (float) $account['balance_estimated'] === -15.0
                 && $report['status'] === 'released'
                 && $entries[$args['entry_ids'][0]]['status'] === 'released'
                 && $entries[$args['entry_ids'][1]]['status'] === 'released'
@@ -514,6 +514,43 @@ $tests = [
             return (float) $receivable['qty'] === 2.5
                 && (float) $entry['points'] === 10.0
                 && strpos($entry['calculation_log'], 'Retrieved receivable quantity: 2.5') !== false;
+        },
+        'rollback'    => $rollback_fixture
+    ],
+    '0108' => [
+        'description' => 'Report totals classify entries by sign and include standalone sale entries.',
+        'arrange'     => function() use($create_fixture) {
+            $fixture = $create_fixture([]);
+            foreach([129.0, 4.0, -100.0] as $index => $points) {
+                $entry = ServiceAccountEntry::create([
+                        'service_account_id'  => $fixture['service_account_id'],
+                        'origin_object_class' => SaleEntry::class,
+                        'origin_object_id'    => $index + 1,
+                        'description'         => "Report sign test {$index}",
+                        'date'                => strtotime('2026-07-20'),
+                        'points'              => $points,
+                        'status'              => 'pending'
+                    ])
+                    ->read(['id'])
+                    ->first(true);
+                $fixture['entry_ids'][] = $entry['id'];
+            }
+            return $fixture;
+        },
+        'act'         => function($args) {
+            ServiceAccount::id($args['service_account_id'])->do('generate_report');
+            $args['report'] = Report::search([
+                    ['service_account_id', '=', $args['service_account_id']],
+                    ['status', '=', 'pending']
+                ])
+                ->read(['total_points', 'total_credits', 'balance_new'])
+                ->first(true);
+            return $args;
+        },
+        'assert'      => function($args) {
+            return (float) $args['report']['total_points'] === -133.0
+                && (float) $args['report']['total_credits'] === -100.0
+                && (float) $args['report']['balance_new'] === -33.0;
         },
         'rollback'    => $rollback_fixture
     ]

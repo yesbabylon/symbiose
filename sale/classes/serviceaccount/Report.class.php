@@ -111,7 +111,7 @@ class Report extends \equal\orm\Model {
                 'result_type'       => 'float',
                 'store'             => true,
                 'function'          => 'calcTotalPoints',
-                'description'       => 'Sum of all TT lines (negative value).'
+                'description'       => 'Sum of all positive service lines (negative value).'
             ],
 
             'total_credits' => [
@@ -119,7 +119,7 @@ class Report extends \equal\orm\Model {
                 'result_type'       => 'float',
                 'store'             => true,
                 'function'          => 'calcTotalCredits',
-                'description'       => 'Sum of all CC lines.'
+                'description'       => 'Sum of all negative credit and correction lines.'
             ],
 
             'balance_old' => [
@@ -372,12 +372,12 @@ class Report extends \equal\orm\Model {
 
     public static function calcTotalPoints($self) {
         $result = [];
-        $self->read(['service_account_entries_ids' => ['points', 'receivable_id' => ['origin_object_class']]]);
+        $self->read(['service_account_entries_ids' => ['points']]);
         foreach($self as $id => $report) {
             $total_points = 0.0;
             foreach($report['service_account_entries_ids'] as $line) {
-                // Time entries consume service account points, which are stored as positive values on entries.
-                if(($line['receivable_id']['origin_object_class'] ?? null) === 'timetrack\TimeEntry') {
+                if($line['points'] > 0) {
+                    // Service lines consume points and are displayed as negative values on reports.
                     $total_points -= $line['points'];
                 }
             }
@@ -389,12 +389,11 @@ class Report extends \equal\orm\Model {
 
     public static function calcTotalCredits($self) {
         $result = [];
-        $self->read(['service_account_entries_ids' => ['points', 'receivable_id' => ['origin_object_class']]]);
+        $self->read(['service_account_entries_ids' => ['points']]);
         foreach($self as $id => $report) {
             $total_credits = 0.0;
             foreach($report['service_account_entries_ids'] as $line) {
-                if(($line['receivable_id']['origin_object_class'] ?? null) !== 'timetrack\TimeEntry') {
-                    // Credits and corrections increment the service account balance.
+                if($line['points'] < 0) {
                     $total_credits += $line['points'];
                 }
             }
@@ -443,7 +442,7 @@ class Report extends \equal\orm\Model {
         $self->read(['balance_old', 'total_points', 'total_credits']);
         foreach($self as $id => $report) {
             $result[$id] = round(
-                (float) $report['balance_old'] + (float) $report['total_points'] + (float) $report['total_credits'],
+                (float) $report['balance_old'] + (float) $report['total_points'] - (float) $report['total_credits'],
                 2
             );
         }

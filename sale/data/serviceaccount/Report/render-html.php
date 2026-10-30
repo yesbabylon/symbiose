@@ -276,7 +276,20 @@ $map_cc_lines = [];
 foreach($report['service_account_entries_ids'] as $line) {
     $receivable = $line['receivable_id'] ?? [];
 
-    if(($receivable['origin_object_class'] ?? null) === 'timetrack\TimeEntry') {
+    if($line['points'] < 0) {
+        $firstname = $line['creator']['firstname'] ?? '';
+        $lastname = $line['creator']['lastname'] ?? '';
+        $who = trim($firstname.' '.(strlen($lastname) ? substr($lastname, 0, 1).'.' : ''));
+        $line_description = (string) ($line['description'] ?? '');
+
+        $map_cc_lines[] = [
+            'date'        => date('d/m/Y', (int) $line['date']),
+            'who'         => $who,
+            'description' => ucfirst(substr(str_replace(['<p>', '</p>', '<br />'], ['', '', ' ; '], $line_description), 0, 128)),
+            'points'      => number_format((float) round($line['points'], 2), 2, '.', '')
+        ];
+    }
+    elseif(($receivable['origin_object_class'] ?? null) === 'timetrack\TimeEntry') {
         $time_entry = $receivable['time_entry_id'] ?? [];
         $ticket_id = $time_entry['ticket_id'] ?? null;
         $parent_id = $ticket_id
@@ -332,32 +345,28 @@ foreach($report['service_account_entries_ids'] as $line) {
             'log'         => str_replace('<br />', ' ; ', $calculation_log)
         ];
     }
-    // other sale entries
-    elseif($line['points'] > 0) {
-        $firstname = $line['creator']['firstname'] ?? '';
-        $lastname = $line['creator']['lastname'] ?? '';
-        $who = trim($firstname.' '.(strlen($lastname) ? substr($lastname, 0, 1).'.' : ''));
-        $line_description = (string) ($line['description'] ?? '');
-
-        $map_tt_lines[] = [
-            'date'        => date('d/m/Y', (int) $line['date']),
-            'who'         => $who,
-            'description' => ucfirst(substr(str_replace(['<p>', '</p>', '<br />'], ['', '', ' ; '], $line_description), 0, 128)),
-            'points'      => number_format((float) round(-$line['points'], 2), 2, '.', '')
-        ];
-    }
-    // reversed sale entries / credits
     else {
         $firstname = $line['creator']['firstname'] ?? '';
         $lastname = $line['creator']['lastname'] ?? '';
         $who = trim($firstname.' '.(strlen($lastname) ? substr($lastname, 0, 1).'.' : ''));
         $line_description = (string) ($line['description'] ?? '');
 
-        $map_cc_lines[] = [
-            'date'        => date('d/m/Y', (int) $line['date']),
-            'who'         => $who,
+        $map_tt_lines[] = [
             'description' => ucfirst(substr(str_replace(['<p>', '</p>', '<br />'], ['', '', ' ; '], $line_description), 0, 128)),
-            'points'      => number_format((float) round($line['points'], 2), 2, '.', '')
+            'contact'     => '',
+            'lines'       => [[
+                'date'        => date('d/m/Y', (int) $line['date']),
+                'start'       => '',
+                'end'         => '',
+                'pause'       => '',
+                'who'         => $who,
+                'role'        => '',
+                'project'     => '',
+                'type'        => '',
+                'points'      => number_format((float) round(-$line['points'], 2), 2, '.', ''),
+                'description' => '',
+                'log'         => ''
+            ]]
         ];
     }
 }
