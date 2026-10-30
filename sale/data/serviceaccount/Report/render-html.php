@@ -312,7 +312,7 @@ foreach($report['service_account_entries_ids'] as $line) {
         $contact = (string) ($line['contact'] ?? '');
         if(!isset($map_tt_lines[$parent_id])) {
             $map_tt_lines[$parent_id] = [
-                'description' => substr($description, 0, 175),
+                'description' => ucfirst(substr($description, 0, 175)),
                 'contact'     => $contact,
                 'lines'       => []
             ];
