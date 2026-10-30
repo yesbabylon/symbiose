@@ -55,7 +55,7 @@
                     {
                         "id": "time_entries.submitted",
                         "type": "entry",
-                        "label": "To validate",
+                        "label": "To approve",
                         "icon": "task_alt",
                         "description": "Entries waiting to be validated.",
                         "context": {
@@ -69,7 +69,7 @@
                     {
                         "id": "time_entries.approved",
                         "type": "entry",
-                        "label": "Approved",
+                        "label": "To charge",
                         "icon": "payments",
                         "description": "Entries waiting to be invoiced.",
                         "context": {
