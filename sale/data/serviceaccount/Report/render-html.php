@@ -354,13 +354,19 @@ foreach($report['service_account_entries_ids'] as $line) {
             $description = trim($receivable['description'] ?? '');
         }
 
+        $description = trim(strip_tags(str_replace(
+            ['<br>', '<br/>', '<br />', '</p>'],
+            [' ; ', ' ; ', ' ; ', ' '],
+            $description
+        )));
+
         $firstname = $line['creator']['firstname'] ?? '';
         $lastname = $line['creator']['lastname'] ?? '';
         $who = trim($firstname . ' ' . (strlen($lastname) ? substr($lastname, 0, 1) . '.' : ''));
 
         $map_tt_lines[] = [
             // 'description' => ucfirst(substr(str_replace(['<p>', '</p>', '<br />'], ['', '', ' ; '], $description), 0, 128)),
-            'description' => '@@@',
+            'description' => '@@@'.ucfirst(substr($description, 0, 128)),
             'contact'     => '',
             'lines'       => [[
                 'date'        => date('d/m/Y', (int) $line['date']),
