@@ -342,7 +342,7 @@ foreach($report['service_account_entries_ids'] as $line) {
             'type'        => $time_entry['origin'] ?? '',
             'project'     => $time_entry['project_id']['name'],
             'points'      => number_format((float) round(-$line['points'], 2), 2, '.', ''),
-            'description' => ucfirst(substr(str_replace('<br />', ' ; ', strip_tags($line_description)), 0, 370)),
+            'description' => ucfirst(substr(str_replace('<br />', ' ; ', strip_tags($line_description)), 0, 370)) . '[…]',
             'log'         => str_replace('<br />', ' ; ', $calculation_log)
         ];
     }
@@ -365,7 +365,7 @@ foreach($report['service_account_entries_ids'] as $line) {
                 'project'     => '',
                 'type'        => '',
                 'points'      => number_format((float) round(-$line['points'], 2), 2, '.', ''),
-                'description' => '',
+                'description' => $description,
                 'log'         => ''
             ]]
         ];
