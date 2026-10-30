@@ -119,7 +119,7 @@ class Report extends \equal\orm\Model {
                 'result_type'       => 'float',
                 'store'             => true,
                 'function'          => 'calcTotalCredits',
-                'description'       => 'Sum of all negative credit and correction lines.'
+                'description'       => 'Sum of all credit and correction lines (positive value).'
             ],
 
             'balance_old' => [
@@ -394,7 +394,7 @@ class Report extends \equal\orm\Model {
             $total_credits = 0.0;
             foreach($report['service_account_entries_ids'] as $line) {
                 if($line['points'] < 0) {
-                    $total_credits += $line['points'];
+                    $total_credits -= $line['points'];
                 }
             }
             $result[$id] = $total_credits;
@@ -442,7 +442,7 @@ class Report extends \equal\orm\Model {
         $self->read(['balance_old', 'total_points', 'total_credits']);
         foreach($self as $id => $report) {
             $result[$id] = round(
-                (float) $report['balance_old'] + (float) $report['total_points'] - (float) $report['total_credits'],
+                (float) $report['balance_old'] + (float) $report['total_points'] + (float) $report['total_credits'],
                 2
             );
         }

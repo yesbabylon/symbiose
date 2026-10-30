@@ -557,7 +557,7 @@ $tests = [
         },
         'assert'      => function($args) {
             return (float) $args['report']['total_points'] === -133.0
-                && (float) $args['report']['total_credits'] === -100.0
+                && (float) $args['report']['total_credits'] === 100.0
                 && (float) $args['report']['balance_new'] === -33.0
                 && $args['positive_sale_entry_rendered']
                 && $args['credit_rendered'];
