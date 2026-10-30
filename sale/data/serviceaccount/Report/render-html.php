@@ -348,7 +348,11 @@ foreach($report['service_account_entries_ids'] as $line) {
         ];
     }
     else {
-        $description = $line['description'] ?? $receivable['description'];
+        $description = $line['description'] ?? '';
+
+        if(strlen($description) <= 0) {
+            $description = $receivable['description'] ?? '';
+        }
 
         $firstname = $line['creator']['firstname'] ?? '';
         $lastname = $line['creator']['lastname'] ?? '';
