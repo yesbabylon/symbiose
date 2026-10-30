@@ -281,12 +281,12 @@ foreach($report['service_account_entries_ids'] as $line) {
         $firstname = $line['creator']['firstname'] ?? '';
         $lastname = $line['creator']['lastname'] ?? '';
         $who = trim($firstname.' '.(strlen($lastname) ? substr($lastname, 0, 1).'.' : ''));
-        $line_description = (string) ($line['description'] ?? '');
+        $description = trim($line['description'] ?? '');
 
         $map_cc_lines[] = [
             'date'        => date('d/m/Y', (int) $line['date']),
             'who'         => $who,
-            'description' => ucfirst(substr(str_replace(['<p>', '</p>', '<br />'], ['', '', ' ; '], $line_description), 0, 128)),
+            'description' => ucfirst(substr(str_replace(['<p>', '</p>', '<br />'], ['', '', ' ; '], $description), 0, 128)),
             'points'      => number_format((float) round($line['points'], 2), 2, '.', '')
         ];
     }
@@ -348,15 +348,15 @@ foreach($report['service_account_entries_ids'] as $line) {
         ];
     }
     else {
-        $description = $line['description'] ?? '';
+        $description = trim($line['description'] ?? '');
 
         if(strlen($description) <= 0) {
-            $description = $receivable['description'] ?? '';
+            $description = trim($receivable['description'] ?? '');
         }
 
         $firstname = $line['creator']['firstname'] ?? '';
         $lastname = $line['creator']['lastname'] ?? '';
-        $who = trim($firstname.' '.(strlen($lastname) ? substr($lastname, 0, 1).'.' : ''));
+        $who = trim($firstname . ' ' . (strlen($lastname) ? substr($lastname, 0, 1) . '.' : ''));
 
         $map_tt_lines[] = [
             'description' => ucfirst(substr(str_replace(['<p>', '</p>', '<br />'], ['', '', ' ; '], $description), 0, 128)),
