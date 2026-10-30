@@ -32,15 +32,15 @@ use hr\employee\Employee;
         'visibility'    => 'protected',
         'groups'        => ['admins', 'operators']
     ],
-    'providers'     => ['context']
+    'providers'     => ['context', 'self']
 ]);
 
-/** @var \equal\php\Context $context */
-['context' => $context] = $providers;
+/** @var \equal\php\Context $context
+ *  @var \equal\orm\Collection $self
+*/
+['context' => $context, 'self' => $self] = $providers;
 
-$ids = array_merge((array) ($params['id'] ?? []), $params['ids'] ?? []);
-
-Employee::ids($ids)->do('create_user_account');
+$self->do('create_user_account');
 
 $context->httpResponse()
     ->status(201)
