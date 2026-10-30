@@ -19,9 +19,14 @@
             "help": "Renseignez le matricule utilisé pour identifier l'employé en interne."
         },
         "role_id": {
-            "label": "Rôle",
-            "description": "Rôle attribué à l'employé.",
-            "help": "Sélectionnez le rôle principal de l'employé."
+            "label": "Rôle principal",
+            "description": "Rôle principal calculé à partir des affectations de l'employé.",
+            "help": "Marquez une affectation comme principale pour mettre ce champ à jour."
+        },
+        "role_assignments_ids": {
+            "label": "Affectations de rôles",
+            "description": "Liste des rôles attribués à l'employé.",
+            "help": "Ajoutez les rôles de l'employé et désignez, si nécessaire, son rôle principal."
         },
         "owner_identity_id": {
             "label": "Employé par",
@@ -79,6 +84,9 @@
                 },
                 "section.employee": {
                     "label": "Employé"
+                },
+                "section.roles": {
+                    "label": "Rôles"
                 },
                 "section.absences": {
                     "label": "Absences"

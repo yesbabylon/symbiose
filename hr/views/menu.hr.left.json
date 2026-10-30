@@ -70,6 +70,32 @@
                             "order": "id",
                             "sort": "asc"
                         }
+                    },
+                    {
+                        "id": "item.roles",
+                        "type": "entry",
+                        "label": "Roles",
+                        "icon": "badge",
+                        "description": "",
+                        "context": {
+                            "entity": "hr\\role\\Role",
+                            "view": "list.default",
+                            "order": "name",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "item.role_assignments",
+                        "type": "entry",
+                        "label": "Role assignments",
+                        "icon": "assignment_ind",
+                        "description": "",
+                        "context": {
+                            "entity": "hr\\role\\RoleAssignment",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
                     }
                 ]
             }

@@ -1,0 +1,45 @@
+{
+    "name": "Role assignment",
+    "description": "Form for assigning a role to an employee.",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "id": "section.general",
+                        "label": "General",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "employee_id",
+                                                "width": "40%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "role_id",
+                                                "width": "40%",
+                                                "widget": {
+                                                    "limit": 100
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_primary",
+                                                "width": "20%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

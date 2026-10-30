@@ -103,6 +103,12 @@ class SaleEntry extends Model {
                 'description'       => 'The Customer to who refers the item.'
             ],
 
+            'employee_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'hr\employee\Employee',
+                'description'       => 'Employee who performed the work.'
+            ],
+
             'product_id'=> [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',

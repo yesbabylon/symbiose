@@ -68,6 +68,13 @@
                                                 "value": "date",
                                                 "label": "Customer",
                                                 "width": "25%"
+                                            },
+                                            {
+                                                "id": "item.employee_id",
+                                                "type": "field",
+                                                "value": "employee_id",
+                                                "label": "Employee",
+                                                "width": "50%"
                                             }
                                         ]
                                     },

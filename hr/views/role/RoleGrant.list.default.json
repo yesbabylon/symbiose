@@ -1,0 +1,26 @@
+{
+    "name": "Role permissions",
+    "description": "List of workflow permissions granted to roles.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "role_id",
+                "width": "30%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "class_name",
+                "width": "40%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "transition",
+                "width": "30%",
+                "sortable": true
+            }
+        ]
+    }
+}

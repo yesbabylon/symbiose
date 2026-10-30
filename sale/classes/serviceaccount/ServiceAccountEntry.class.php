@@ -179,7 +179,6 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'description'       => 'Employee who performed the work.'
             ],
 
-
             'contact' => [
                 'type'              => 'string',
                 'description'       => 'Contact name retrieved from the source system.'
@@ -268,6 +267,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'date',
                 'origin_object_class',
                 'origin_object_id',
+                'employee_id',
                 'service_account_entry_id',
                 'time_entry_id' => [
                     'date',
@@ -315,6 +315,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'date'                => $time_entry['date'] ?? $receivable['date'] ?? time(),
                 'origin_object_class' => $receivable['origin_object_class'] ?? null,
                 'origin_object_id'    => $receivable['origin_object_id'] ?? null,
+                'employee_id'         => $receivable['employee_id'] ?? null,
                 'travel_time'         => (int) ($time_entry['travel_time'] ?? 0),
                 'on_site'             => (bool) ($time_entry['on_site'] ?? false),
                 'helpdesk'            => (($time_entry['origin'] ?? null) === 'support'),

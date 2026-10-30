@@ -1,0 +1,34 @@
+{
+    "name": "Employee role assignments",
+    "description": "Roles assigned to the current employee.",
+    "header": {
+        "layout": "inline",
+        "actions": {
+            "ACTION.CREATE_INLINE": [
+                {
+                    "view": false
+                }
+            ]
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "employee_id",
+                "width": "1%",
+                "visible": false
+            },
+            {
+                "type": "field",
+                "value": "role_id",
+                "width": "70%"
+            },
+            {
+                "type": "field",
+                "value": "is_primary",
+                "width": "30%"
+            }
+        ]
+    }
+}

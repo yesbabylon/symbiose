@@ -38,6 +38,11 @@
             "description": "Le client sujet de la vente.",
             "help": "Client auquel la vente est destinée et auquel elle sera facturée."
         },
+        "employee_id": {
+            "label": "Employé",
+            "description": "Employé ayant réalisé la prestation.",
+            "help": "Sélectionnez l’employé à l’origine de cette entrée de vente."
+        },
         "product_id": {
             "label": "Produit",
             "description": "Produit vendu.",

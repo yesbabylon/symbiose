@@ -11,6 +11,7 @@ use sale\price\Price;
 use sale\price\PriceList;
 use core\setting\Setting;
 use equal\orm\Model;
+use identity\Identity;
 use sale\SaleModel;
 
 class TimeEntry extends SaleEntry {
@@ -234,7 +235,19 @@ class TimeEntry extends SaleEntry {
                 'type'           => 'many2one',
                 'foreign_object' => 'core\User',
                 'description'    => 'User the time entry was performed by.',
-                'default'        => 'defaultUserId'
+                'default'        => 'defaultUserId',
+                'dependents'     => ['employee_id']
+            ],
+
+            'employee_id' => [
+                'type'           => 'computed',
+                'result_type'    => 'many2one',
+                'foreign_object' => 'hr\employee\Employee',
+                'description'    => 'Employee who performed the work.',
+                'function'       => 'calcEmployeeId',
+                'store'          => true,
+                'instant'        => true,
+                'readonly'       => true
             ],
 
             'creation_delta' => [
@@ -869,6 +882,38 @@ class TimeEntry extends SaleEntry {
                     || $entry['duration'] <= 0 ) {
                 $result[$id] = false;
             }
+        }
+
+        return $result;
+    }
+
+    public static function calcEmployeeId($self): array {
+        $result = [];
+        $self->read(['user_id']);
+
+        $user_ids = [];
+        foreach($self as $id => $entry) {
+            $result[$id] = null;
+            if($entry['user_id']) {
+                $user_ids[] = $entry['user_id'];
+            }
+        }
+
+        if(!$user_ids) {
+            return $result;
+        }
+
+        $employee_ids_by_user = [];
+        $identities = Identity::search([
+                ['user_id', 'in', array_values(array_unique($user_ids))]
+            ])
+            ->read(['user_id', 'employee_id']);
+        foreach($identities as $identity) {
+            $employee_ids_by_user[$identity['user_id']] = $identity['employee_id'] ?? null;
+        }
+
+        foreach($self as $id => $entry) {
+            $result[$id] = $employee_ids_by_user[$entry['user_id']] ?? null;
         }
 
         return $result;

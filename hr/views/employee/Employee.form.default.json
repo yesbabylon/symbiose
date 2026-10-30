@@ -51,7 +51,8 @@
                                                 "type": "field",
                                                 "label": "Role",
                                                 "value": "role_id",
-                                                "width": "75%"
+                                                "width": "75%",
+                                                "readonly": true
                                             },
                                             {
                                                 "type": "field",
@@ -78,6 +79,29 @@
                                                 "type": "field",
                                                 "value": "contracts_ids",
                                                 "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.roles",
+                        "label": "Roles",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "role_assignments_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.employee"
+                                                }
                                             }
                                         ]
                                     }

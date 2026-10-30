@@ -24,11 +24,21 @@ class Employee extends IdentityFacetAbstract {
         return [
 
             'role_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'hr\employee\Role',
-                'description'       => 'Role assigned to the employee.'
-                // #memo - might not be assigned at creation
-                // 'required'          => true
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'hr\role\Role',
+                'description'       => 'Primary role assigned to the employee.',
+                'function'          => 'calcRoleId',
+                'store'             => true,
+                'instant'           => true,
+                'readonly'          => true
+            ],
+
+            'role_assignments_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'hr\role\RoleAssignment',
+                'foreign_field'     => 'employee_id',
+                'description'       => 'Roles assigned to the employee.'
             ],
 
             'employee_number' => [
@@ -85,6 +95,11 @@ class Employee extends IdentityFacetAbstract {
                 'description'       => 'Refresh the stored employment status and first employment date.',
                 'policies'          => [],
                 'function'          => 'doRefreshEmploymentStatus'
+            ],
+            'refresh_primary_role' => [
+                'description'       => 'Refresh the primary role from role assignments.',
+                'policies'          => [],
+                'function'          => 'doRefreshPrimaryRole'
             ]
         ]);
     }
@@ -139,10 +154,30 @@ class Employee extends IdentityFacetAbstract {
         return $result;
     }
 
+    public static function calcRoleId($self): array {
+        $result = [];
+        $self->read(['role_assignments_ids' => ['is_primary', 'role_id']]);
+        foreach($self as $id => $employee) {
+            $result[$id] = null;
+            foreach($employee['role_assignments_ids'] as $assignment) {
+                if($assignment['is_primary']) {
+                    $result[$id] = $assignment['role_id'];
+                    break;
+                }
+            }
+        }
+
+        return $result;
+    }
+
     protected static function doRefreshEmploymentStatus($self) {
         $self->update([
             'is_active'             => null,
             'first_employment_date' => null
         ]);
+    }
+
+    protected static function doRefreshPrimaryRole($self) {
+        $self->update(['role_id' => null]);
     }
 }

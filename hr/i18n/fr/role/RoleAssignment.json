@@ -1,0 +1,54 @@
+{
+    "name": "Affectation de rôle",
+    "plural": "Affectations de rôles",
+    "description": "Une affectation associe un employé à un rôle et permet d'identifier son rôle principal.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Description courte de l'affectation.",
+            "help": "Ce champ est calculé automatiquement."
+        },
+        "employee_id": {
+            "label": "Employé",
+            "description": "Employé auquel le rôle est attribué.",
+            "help": "Sélectionnez l'employé concerné par l'affectation."
+        },
+        "role_id": {
+            "label": "Rôle",
+            "description": "Rôle attribué à l'employé.",
+            "help": "Sélectionnez un rôle disponible."
+        },
+        "role_code": {
+            "label": "Code du rôle",
+            "description": "Code du rôle attribué.",
+            "help": "Ce champ est calculé automatiquement."
+        },
+        "is_primary": {
+            "label": "Rôle principal",
+            "description": "Identifie le rôle principal de l'employé.",
+            "help": "Une seule affectation principale est conservée par employé."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Affectation de rôle",
+            "description": "Formulaire d'affectation d'un rôle à un employé.",
+            "layout": {
+                "section.general": {
+                    "label": "Affectation"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Affectations de rôles",
+            "description": "Liste des rôles attribués aux employés.",
+            "layout": {}
+        },
+        "list.employee": {
+            "name": "Rôles de l'employé",
+            "description": "Liste des rôles attribués à l'employé courant.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

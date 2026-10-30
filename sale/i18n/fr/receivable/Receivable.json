@@ -3,6 +3,11 @@
     "plural": "Créances",
     "description": "Une créance représente un bien ou un service vendu à un client et dont le montant doit être reçu.",
     "model": {
+        "employee_id": {
+            "label": "Employé",
+            "description": "Employé ayant réalisé la prestation à l’origine de la créance.",
+            "help": "Cette valeur est copiée automatiquement depuis l’entrée de vente d’origine."
+        },
         "status": {
             "label": "Statut",
             "description": "Statut actuel de la créance.",

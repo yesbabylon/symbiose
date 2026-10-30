@@ -1,0 +1,39 @@
+{
+    "name": "Permission de rôle",
+    "plural": "Permissions de rôles",
+    "description": "Une permission autorise un rôle à exécuter une transition de workflow sur un modèle.",
+    "model": {
+        "role_id": {
+            "label": "Rôle",
+            "description": "Rôle auquel la permission s'applique.",
+            "help": "Sélectionnez le rôle bénéficiaire de la permission."
+        },
+        "class_name": {
+            "label": "Modèle",
+            "description": "Nom complet du modèle concerné par la permission.",
+            "help": "Saisissez le nom de classe complet, par exemple package\\namespace\\Entity."
+        },
+        "transition": {
+            "label": "Transition",
+            "description": "Transition de workflow autorisée.",
+            "help": "La liste est proposée à partir du workflow du modèle sélectionné."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Permission de rôle",
+            "description": "Formulaire de gestion d'une permission de rôle.",
+            "layout": {
+                "section.general": {
+                    "label": "Permission"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Permissions de rôles",
+            "description": "Liste des permissions accordées aux rôles.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

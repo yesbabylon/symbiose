@@ -76,7 +76,7 @@ class Receivable extends Model {
                 'description'       => 'Entity class that the Receivable originates from.',
                 'help'              => 'Sale entries can to extended by other classes to enrich logic behavior. This field is used to store the class name of the object. Selection is provided as a memo but is non-exhaustive.',
                 'default'           => 'sale\SaleEntry',
-                'dependents'        => ['name'],
+                'dependents'        => ['name', 'employee_id'],
                 'selection'         => [
                     'sale\SaleEntry',
                     'timetrack\TimeEntry',
@@ -88,7 +88,7 @@ class Receivable extends Model {
                 'type'              => 'integer',
                 'description'       => 'Object identifier, as a complement to `origin_object_class`.',
                 'help'              => 'Together origin_object_class and origin_object_id reference the accounting document the entry is linked to.',
-                'dependents'        => ['name', 'description', 'product_id', 'price_id', 'unit_price', 'vat_rate', 'qty', 'discount', 'total', 'price'],
+                'dependents'        => ['name', 'description', 'employee_id', 'product_id', 'price_id', 'unit_price', 'vat_rate', 'qty', 'discount', 'total', 'price'],
                 'required'          => true,
                 'readonly'          => true
             ],
@@ -134,6 +134,16 @@ class Receivable extends Model {
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => 'The Customer to who refers the item.',
                 'function'          => 'calcCustomerId',
+                'store'             => true,
+                'readonly'          => true
+            ],
+
+            'employee_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'hr\employee\Employee',
+                'description'       => 'Employee who performed the work.',
+                'function'          => 'calcEmployeeId',
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -533,6 +543,7 @@ class Receivable extends Model {
                 'origin_object_id',
                 'date',
                 'customer_id',
+                'employee_id',
                 'service_account_id',
                 'service_account_entry_id' => ['id', 'receivable_id', 'service_account_id'],
                 'time_entry_id' => [
@@ -616,6 +627,7 @@ class Receivable extends Model {
                 $serviceAccountEntry = ServiceAccountEntry::create([
                         'receivable_id'       => $id,
                         'service_account_id'  => $serviceAccount['id'],
+                        'employee_id'         => $receivable['employee_id'] ?? null,
                         'status'              => 'pending',
                         'posting_date'        => time(),
                         'travel_time'         => (int) ($timeEntry['travel_time'] ?? 0),
@@ -696,6 +708,23 @@ class Receivable extends Model {
             $saleEntry = SaleEntry::id($receivable['origin_object_id'])->read(['customer_id'])->first();
             if($saleEntry) {
                 $result[$id] = $saleEntry['customer_id'];
+            }
+        }
+
+        return $result;
+    }
+
+    protected static function calcEmployeeId($self): array {
+        $result = [];
+        $self->read(['origin_object_class', 'origin_object_id']);
+
+        foreach($self as $id => $receivable) {
+            $origin_object_class = $receivable['origin_object_class'] ?? SaleEntry::class;
+            $saleEntry = $origin_object_class::id($receivable['origin_object_id'])
+                ->read(['employee_id'])
+                ->first();
+            if($saleEntry) {
+                $result[$id] = $saleEntry['employee_id'];
             }
         }
 
