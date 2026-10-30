@@ -338,8 +338,8 @@ $tests = [
 
             return (float) $args['before']['balance_effective'] === 0.0
                 && (float) $args['before']['balance_estimated'] === -15.0
-                && (float) $account['balance_effective'] === -15.0
-                && (float) $account['balance_estimated'] === -15.0
+                && (float) $account['balance_effective'] === -8.0
+                && (float) $account['balance_estimated'] === -8.0
                 && $report['status'] === 'released'
                 && $entries[$args['entry_ids'][0]]['status'] === 'released'
                 && $entries[$args['entry_ids'][1]]['status'] === 'released'
@@ -377,7 +377,7 @@ $tests = [
             return is_null($entry['report_id'])
                 && $entry['status'] === 'pending'
                 && (float) $account['balance_effective'] === 0.0
-                && (float) $account['balance_estimated'] === 10.0;
+                && (float) $account['balance_estimated'] === -10.0;
         },
         'rollback'    => $rollback_fixture
     ],
@@ -543,14 +543,24 @@ $tests = [
                     ['service_account_id', '=', $args['service_account_id']],
                     ['status', '=', 'pending']
                 ])
-                ->read(['total_points', 'total_credits', 'balance_new'])
+                ->read(['id', 'total_points', 'total_credits', 'balance_new'])
                 ->first(true);
+            $html = eQual::run('get', 'sale_serviceaccount_Report_render-html', [
+                'id'      => $args['report']['id'],
+                'details' => true,
+                'logs'    => false,
+                'lang'    => 'en'
+            ]);
+            $args['positive_sale_entry_rendered'] = strpos($html, 'Report sign test 1') !== false;
+            $args['credit_rendered'] = strpos($html, 'Report sign test 2') !== false;
             return $args;
         },
         'assert'      => function($args) {
             return (float) $args['report']['total_points'] === -133.0
                 && (float) $args['report']['total_credits'] === -100.0
-                && (float) $args['report']['balance_new'] === -33.0;
+                && (float) $args['report']['balance_new'] === -33.0
+                && $args['positive_sale_entry_rendered']
+                && $args['credit_rendered'];
         },
         'rollback'    => $rollback_fixture
     ]

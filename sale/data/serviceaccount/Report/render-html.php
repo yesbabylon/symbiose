@@ -6,6 +6,7 @@
 */
 
 use sale\serviceaccount\Report;
+use symbiose\setting\Setting;
 use Twig\Environment as TwigEnvironment;
 use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
 
@@ -238,7 +239,7 @@ if(empty($report)) {
     throw new Exception('unknown_report', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
-$timezone = constant('L10N_TIMEZONE');
+$timezone = Setting::get_value('core', 'locale', 'time_zone', constant('L10N_TIMEZONE'));
 $tz = new DateTimeZone($timezone);
 
 $format_time = function($value) {
