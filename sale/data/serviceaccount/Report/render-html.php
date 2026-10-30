@@ -328,7 +328,7 @@ foreach($report['service_account_entries_ids'] as $line) {
         $end = (int) ($line['end'] ?? 0);
 
         $who = $line['employee_id']['firstname'] ?? '';
-        $line_description = ($line['detailed_description'] ?? $line['description'] ?? '');
+        $line_description = ($time_entry['detailed_description'] ?? $line['description'] ?? $description);
         $calculation_log = ($line['calculation_log'] ?? '');
 
         $map_tt_lines[$parent_id]['lines'][] = [
