@@ -222,7 +222,7 @@ $report = Report::id($params['id'])
             'points',
             'calculation_log',
             'creator'       => ['firstname', 'lastname'],
-            'employee_id'   => ['name'],
+            'employee_id'   => ['name', 'firstname', 'lastname'],
             'role_id'       => ['name'],
             'receivable_id' => [
                 'origin_object_class',
