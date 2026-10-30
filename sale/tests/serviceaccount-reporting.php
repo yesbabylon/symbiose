@@ -343,9 +343,11 @@ $tests = [
         'rollback'    => $rollback_fixture
     ],
     '0104' => [
-        'description' => 'Deleting a pending report detaches its entries and leaves them pending.',
+        'description' => 'Deleting a pending report detaches its entries and keeps them in the estimated balance.',
         'arrange'     => function() use($create_fixture) {
-            return $create_fixture([strtotime('2026-07-20')]);
+            $fixture = $create_fixture([strtotime('2026-07-20')]);
+            ServiceAccountEntry::id($fixture['entry_ids'][0])->update(['points' => 10.0]);
+            return $fixture;
         },
         'act'         => function($args) {
             ServiceAccount::id($args['service_account_id'])->do('generate_report');
@@ -368,7 +370,8 @@ $tests = [
 
             return is_null($entry['report_id'])
                 && $entry['status'] === 'pending'
-                && (float) $account['balance_effective'] === (float) $account['balance_estimated'];
+                && (float) $account['balance_effective'] === 0.0
+                && (float) $account['balance_estimated'] === 10.0;
         },
         'rollback'    => $rollback_fixture
     ],

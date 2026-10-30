@@ -199,22 +199,17 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'domain'            => [
                     ['service_account_id', '=', 'object.service_account_id'],
                     ['status', '=', 'pending']
-                ],
-                'visible'           => ['status', '=', 'pending']
+                ]
             ],
 
             'status' => [
                 'type'              => 'string',
-                'selection'         => ['pending', 'released'],
+                'selection'         => [
+                    'pending',
+                    'released'
+                ],
                 'description'       => 'Technical status controlling line edits.',
                 'default'           => 'pending'
-            ],
-
-            'is_orphan' => [
-                'type'              => 'boolean',
-                'description'       => 'Flag raised if the line is in CT but has been deleted in AT.',
-                'help'              => "Deleting a posted entry is supposed to be forbidden. This flag is used to prevent recurring error messages.",
-                'default'           => false
             ],
 
             'points' => [

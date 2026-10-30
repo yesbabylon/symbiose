@@ -64,7 +64,7 @@ class ServiceAccount extends \sale\contract\Contract {
 
             'balance_estimated' => [
                 'type'           => 'float',
-                'description'    => 'Balance including the current pending report.',
+                'description'    => 'Balance including all pending service account entries.',
                 'default'        => 0.0,
                 'readonly'       => true
             ],
@@ -157,7 +157,7 @@ class ServiceAccount extends \sale\contract\Contract {
 
     protected static function policyCanSetInitialBalance($self): array {
         $result = [];
-        $self->read(['reports_ids']);
+        $self->read(['reports_ids' => ['@domain' => ['status', '<>', 'pending']]]);
 
         foreach($self as $id => $service_account) {
             if(count($service_account['reports_ids'])) {
@@ -209,8 +209,8 @@ class ServiceAccount extends \sale\contract\Contract {
                         ->first();
                 }
                 else {
-                    $date_from = self::getNextPeriodStart($id, $service_account);
-                    $date_to = self::getPeriodEnd($date_from, $service_account['reporting_frequency'] ?? 'monthly');
+                    $date_from = self::computeNextPeriodStart($id, $service_account);
+                    $date_to = self::computePeriodEnd($date_from, $service_account['reporting_frequency'] ?? 'monthly');
 
                     $report = Report::create([
                             'date'               => $date_to,
@@ -297,18 +297,16 @@ class ServiceAccount extends \sale\contract\Contract {
                 ? (float) $report['balance_new']
                 : (float) $service_account['balance_effective'];
 
-            $pending_report = Report::search([
+            $pending_entries = ServiceAccountEntry::search([
                     ['service_account_id', '=', $id],
                     ['status', '=', 'pending']
-                ], [
-                    'sort'  => ['date' => 'desc', 'id' => 'desc'],
-                    'limit' => 1
                 ])
-                ->read(['balance_new'])
-                ->first();
-            $balance_estimated = $pending_report
-                ? (float) $pending_report['balance_new']
-                : $balance_effective;
+                ->read(['points', 'receivable_id' => ['origin_object_class']]);
+            $balance_estimated = $balance_effective;
+            foreach($pending_entries as $entry) {
+                $balance_estimated -= $entry['points'];
+            }
+            $balance_estimated = round($balance_estimated, 2);
 
             self::id($id)->write([
                 'balance_effective' => $balance_effective,
@@ -345,7 +343,7 @@ class ServiceAccount extends \sale\contract\Contract {
         return $result;
     }
 
-    private static function getNextPeriodStart(int $service_account_id, $service_account): int {
+    private static function computeNextPeriodStart(int $service_account_id, $service_account): int {
         $last_report = Report::search([
                 ['service_account_id', '=', $service_account_id],
                 ['status', '<>', 'pending']
@@ -367,23 +365,22 @@ class ServiceAccount extends \sale\contract\Contract {
         return strtotime('midnight', (int) $date_from);
     }
 
-    private static function getPeriodEnd(int $date_from, string $frequency): int {
+    private static function computePeriodEnd(int $date_from, string $frequency): int {
         if($frequency !== 'monthly') {
             throw new \Exception('unsupported_reporting_frequency', EQ_ERROR_INVALID_PARAM);
         }
 
-        $start = new \DateTimeImmutable('@'.$date_from);
-        $start = $start->setTimezone(new \DateTimeZone('UTC'));
-        $year = (int) $start->format('Y');
-        $month = (int) $start->format('n') + 1;
+        $year = (int) date('Y', $date_from);
+        $month = (int) date('n', $date_from) + 1;
         if($month === 13) {
             $month = 1;
             ++$year;
         }
-        $day = min((int) $start->format('j'), cal_days_in_month(CAL_GREGORIAN, $month, $year));
-        $next_start = $start->setDate($year, $month, $day);
+        $next_month = strtotime(sprintf('%04d-%02d-01', $year, $month));
+        $day = min((int) date('j', $date_from), (int) date('t', $next_month));
+        $next_start = strtotime(sprintf('%04d-%02d-%02d', $year, $month, $day));
 
-        return $next_start->modify('-1 day')->getTimestamp();
+        return strtotime('-1 day', $next_start);
     }
 
     private static function getReportComputedInvalidation(): array {
