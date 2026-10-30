@@ -324,7 +324,7 @@ class TimeEntry extends SaleEntry {
     private static function getTimeZoneCurrentHour(): int {
         $result = (int) date('H');
 
-        $time_zone = Setting::get_value('core', 'locale', 'time_zone');
+        $time_zone = Setting::get_value('core', 'locale', 'time.zone');
         if(!is_null($time_zone)) {
             try {
                 $timezone = new \DateTimeZone($time_zone);

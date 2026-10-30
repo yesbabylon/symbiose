@@ -239,8 +239,7 @@ if(empty($report)) {
     throw new Exception('unknown_report', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
-$timezone = Setting::get_value('core', 'locale', 'time_zone', constant('L10N_TIMEZONE'));
-$tz = new DateTimeZone($timezone);
+$timezone = Setting::get_value('core', 'locale', 'time.zone', constant('L10N_TIMEZONE'));
 
 $format_time = function($value) {
     $hours = floor($value / 3600);
@@ -326,15 +325,15 @@ foreach($report['service_account_entries_ids'] as $line) {
 
         $start = (int) ($line['start'] ?? 0);
         $end = (int) ($line['end'] ?? 0);
-        $tz_offset = $tz->getOffset(new DateTime('@'.$start));
+
         $who = $line['employee_id']['firstname'] ?? '';
         $line_description = (string) ($line['description'] ?? '');
         $calculation_log = (string) ($line['calculation_log'] ?? '');
 
         $map_tt_lines[$parent_id]['lines'][] = [
             'date'        => date('d/m/Y', (int) $line['date']),
-            'start'       => $format_time($start + $tz_offset - strtotime('midnight', $start)),
-            'end'         => $format_time($end + $tz_offset - strtotime('midnight', $end)),
+            'start'       => $format_time($start - strtotime('midnight', $start)),
+            'end'         => $format_time($end - strtotime('midnight', $end)),
             'pause'       => $format_time(floor(abs((float) $line['pause']) * 60) * 60),
             'on_site'     => !empty($line['on_site']) ? $labels['report.common.yes'] : $labels['report.common.no'],
             'who'         => $who,
