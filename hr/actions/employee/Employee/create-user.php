@@ -13,8 +13,7 @@ use hr\employee\Employee;
         'id' =>  [
             'type'              => 'many2one',
             'description'       => 'The specific Employee the request refers to.',
-            'foreign_object'    => 'hr\employee\Employee',
-            'required'          => true
+            'foreign_object'    => 'hr\employee\Employee'
         ],
         'ids' => [
             'type'              => 'one2many',
@@ -40,7 +39,22 @@ use hr\employee\Employee;
 */
 ['context' => $context, 'self' => $self] = $providers;
 
+trigger_error(
+    'APP::Create User account controller resolved Employee targets: '
+        .json_encode([
+            'id'       => $params['id'] ?? null,
+            'ids'      => $params['ids'] ?? [],
+            'self_ids' => $self->ids()
+        ]),
+    EQ_REPORT_DEBUG
+);
+
 $self->do('create_user_account');
+
+trigger_error(
+    'APP::Create User account controller completed for Employee IDs ['.implode(', ', $self->ids()).'].',
+    EQ_REPORT_DEBUG
+);
 
 $context->httpResponse()
     ->status(201)
