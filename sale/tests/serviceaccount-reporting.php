@@ -14,7 +14,7 @@ use sale\serviceaccount\ServiceAccountEntry;
 use sale\subscription\Subscription;
 use sale\subscription\SubscriptionEntry;
 
-$create_fixture = function(array $entry_dates = []) {
+$create_fixture = function(array $entry_dates = [], float $entry_qty = 1.0) {
     $suffix = uniqid();
     $customer = Customer::create([
             'name'                => "Test service account customer {$suffix}",
@@ -98,7 +98,8 @@ $create_fixture = function(array $entry_dates = []) {
         $subscription_entry = SubscriptionEntry::create([
                 'subscription_id' => $subscription['id'],
                 'date_from'       => $entry_date,
-                'date_to'         => strtotime('+1 month -1 day', $entry_date)
+                'date_to'         => strtotime('+1 month -1 day', $entry_date),
+                'qty'             => $entry_qty
             ])
             ->read(['id'])
             ->first(true);
@@ -204,7 +205,7 @@ $tests = [
         },
         'assert'      => function($args) {
             return (float) $args['before']['balance_effective'] === 100.0
-                && (float) $args['before']['balance_estimated'] === 100.0
+                && (float) $args['before']['balance_estimated'] === 96.0
                 && (float) $args['report']['balance_old'] === 100.0
                 && $args['second_initialization_rejected'];
         },
@@ -490,6 +491,29 @@ $tests = [
                 && (int) $entry['origin_object_id'] === 2
                 && $entry['status'] === 'pending'
                 && $args['released_update_rejected'];
+        },
+        'rollback'    => $rollback_fixture
+    ],
+    '0107' => [
+        'description' => 'A non-time receivable computes four service account points per quantity unit.',
+        'arrange'     => function() use($create_fixture) {
+            return $create_fixture([strtotime('2026-07-20')], 2.5);
+        },
+        'act'         => function($args) {
+            ServiceAccountEntry::id($args['entry_ids'][0])->do('compute_points');
+            return $args;
+        },
+        'assert'      => function($args) {
+            $receivable = Receivable::id($args['receivable_ids'][0])
+                ->read(['qty'])
+                ->first(true);
+            $entry = ServiceAccountEntry::id($args['entry_ids'][0])
+                ->read(['points', 'calculation_log'])
+                ->first(true);
+
+            return (float) $receivable['qty'] === 2.5
+                && (float) $entry['points'] === 10.0
+                && strpos($entry['calculation_log'], 'Retrieved receivable quantity: 2.5') !== false;
         },
         'rollback'    => $rollback_fixture
     ]

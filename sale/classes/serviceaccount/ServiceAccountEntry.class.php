@@ -445,6 +445,10 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'standby',
                 'priority',
                 'role_hourly_factor',
+                'receivable_id'         => [
+                    'origin_object_class',
+                    'qty'
+                ],
                 'role_id'               => ['name'],
                 'service_account_id'    => [
                     'id',
@@ -457,6 +461,25 @@ class ServiceAccountEntry extends \equal\orm\Model {
         foreach($self as $id => $line) {
 
             if($line['status'] !== 'pending') {
+                continue;
+            }
+
+            $receivable = $line['receivable_id'] ?? null;
+            if(
+                $receivable
+                && ($receivable['origin_object_class'] ?? null) !== 'timetrack\\TimeEntry'
+            ) {
+                $quantity = (float) ($receivable['qty'] ?? 0.0);
+                $points = $quantity * 4;
+                $updates[$id] = [
+                    'points'           => $points,
+                    'calculation_time' => time(),
+                    'calculation_log'  => "Retrieved receivable quantity: {$quantity}<br />Resulting final points: {$points}"
+                ];
+
+                if(isset($line['service_account_id']['id']) && $line['service_account_id']['id']) {
+                    $service_accounts_ids[] = $line['service_account_id']['id'];
+                }
                 continue;
             }
 
