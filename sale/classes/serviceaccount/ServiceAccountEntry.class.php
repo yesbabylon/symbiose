@@ -163,7 +163,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
 
             'role_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'hr\employee\Role',
+                'foreign_object'    => 'hr\role\Role',
                 'description'       => 'Role used to adapt points calculation, if configured.',
             ],
 

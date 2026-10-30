@@ -7,7 +7,10 @@
 
 namespace hr\employee;
 
+use core\Group;
+use identity\Identity;
 use identity\IdentityFacetAbstract;
+use identity\User;
 
 class Employee extends IdentityFacetAbstract {
 
@@ -100,6 +103,34 @@ class Employee extends IdentityFacetAbstract {
                 'description'       => 'Refresh the primary role from role assignments.',
                 'policies'          => [],
                 'function'          => 'doRefreshPrimaryRole'
+            ],
+            'create_user_account' => [
+                'description'       => 'Create a related User account.',
+                'policies'          => ['can_create_user_account'],
+                'function'          => 'doCreateUserAccount'
+            ],
+            'disable_user_account' => [
+                'description'       => 'Disable the related User account.',
+                'policies'          => ['can_manage_user_account'],
+                'function'          => 'doDisableUserAccount'
+            ],
+            'delete_user_account' => [
+                'description'       => 'Delete the related User account.',
+                'policies'          => ['can_manage_user_account'],
+                'function'          => 'doDeleteUserAccount'
+            ]
+        ]);
+    }
+
+    public static function getPolicies() {
+        return array_merge(parent::getPolicies(), [
+            'can_create_user_account' => [
+                'description'       => 'Checks that the current user can create the related User account.',
+                'function'          => 'policyCanCreateUserAccount'
+            ],
+            'can_manage_user_account' => [
+                'description'       => 'Checks that the current user can manage the related User account.',
+                'function'          => 'policyCanManageUserAccount'
             ]
         ]);
     }
@@ -179,5 +210,141 @@ class Employee extends IdentityFacetAbstract {
 
     protected static function doRefreshPrimaryRole($self) {
         $self->update(['role_id' => null]);
+    }
+
+    protected static function policyCanCreateUserAccount($self, $user_id, $access): array {
+        $result = [];
+        $is_allowed = $user_id === EQ_ROOT_USER_ID
+            || $access->userHasGroup($user_id, 'admins')
+            || $access->userHasGroup($user_id, 'operators');
+
+        if(!$is_allowed) {
+            foreach($self->ids() as $id) {
+                $result[$id]['not_allowed'] = 'Only administrators and operators can create User accounts.';
+            }
+        }
+
+        return $result;
+    }
+
+    protected static function policyCanManageUserAccount($self, $user_id, $access): array {
+        $result = [];
+        $is_allowed = $user_id === EQ_ROOT_USER_ID
+            || $access->userHasGroup($user_id, 'admins')
+            || $access->userHasGroup($user_id, 'operators');
+
+        $self->read(['identity_id' => ['user_id']]);
+        foreach($self as $id => $employee) {
+            if(!$is_allowed) {
+                $result[$id]['not_allowed'] = 'Only administrators and operators can manage User accounts.';
+            }
+            if(!($employee['identity_id']['user_id'] ?? null)) {
+                $result[$id]['missing_user_account'] = 'The Employee has no related User account.';
+            }
+        }
+
+        return $result;
+    }
+
+    protected static function doCreateUserAccount($self, $auth, $orm) {
+        $self->read(['identity_id' => ['id', 'name', 'email', 'user_id']]);
+
+        $groups_ids = Group::search(['name', '=', 'users'])->ids();
+        $current_user_id = $auth->userId();
+        $auth->su();
+
+        try {
+            foreach($self as $employee_id => $employee) {
+                $identity = $employee['identity_id'];
+                if(!$identity || $identity['user_id']) {
+                    continue;
+                }
+                if(!$identity['email']) {
+                    trigger_error(
+                        "APP::Ignored user creation for identity {$identity['name']} of employee [{$employee_id}] without email address.",
+                        EQ_REPORT_WARNING
+                    );
+                    continue;
+                }
+
+                $new_user_id = $orm->create(User::getType(), [
+                    // Capabilities for EQ_R_UPDATE are based on the creator context.
+                    'creator'       => $current_user_id,
+                    'login'         => $identity['email'],
+                    'language'      => 'fr',
+                    'validated'     => true,
+                    'groups_ids'    => $groups_ids
+                ]);
+
+                if($new_user_id <= 0) {
+                    trigger_error(
+                        "APP::Error while creating a User for identity {$identity['name']}.",
+                        EQ_REPORT_WARNING
+                    );
+                    continue;
+                }
+
+                User::id($new_user_id)
+                    ->update(['identity_id' => $identity['id']])
+                    ->do('sync_from_identity');
+            }
+        }
+        finally {
+            $auth->su($current_user_id);
+        }
+    }
+
+    protected static function doDisableUserAccount($self, $auth) {
+        $self->read(['identity_id' => ['user_id']]);
+
+        $users_ids = [];
+        foreach($self as $employee) {
+            $user_id = $employee['identity_id']['user_id'] ?? null;
+            if($user_id) {
+                $users_ids[] = $user_id;
+            }
+        }
+
+        if(empty($users_ids)) {
+            return;
+        }
+
+        $current_user_id = $auth->userId();
+        $auth->su();
+        try {
+            User::ids(array_values(array_unique($users_ids)))->do('suspend');
+        }
+        finally {
+            $auth->su($current_user_id);
+        }
+    }
+
+    protected static function doDeleteUserAccount($self, $auth) {
+        $self->read(['identity_id' => ['id', 'user_id']]);
+
+        $users_ids = [];
+        $identities_ids = [];
+        foreach($self as $employee) {
+            $identity = $employee['identity_id'];
+            if(!$identity || !$identity['user_id']) {
+                continue;
+            }
+            $users_ids[] = $identity['user_id'];
+            $identities_ids[] = $identity['id'];
+        }
+
+        if(empty($users_ids)) {
+            return;
+        }
+
+        $current_user_id = $auth->userId();
+        $auth->su();
+        try {
+            User::ids(array_values(array_unique($users_ids)))->delete(true);
+            Identity::ids(array_values(array_unique($identities_ids)))->update(['user_id' => null]);
+        }
+        finally {
+            $auth->su($current_user_id);
+        }
     }
 }
