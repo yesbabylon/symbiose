@@ -91,12 +91,24 @@
                 "section.absences": {
                     "label": "Absences"
                 }
+            },
+            "actions": {
+                "action.create_account": {
+                    "label": "Créer un compte utilisateur",
+                    "description": "Créer un compte utilisateur associé à l'employé."
+                }
             }
         },
         "list.default": {
             "name": "Employés",
             "description": "Liste de base des employés existants.",
-            "layout": {}
+            "layout": {},
+            "actions": {
+                "action.create_account": {
+                    "label": "Créer des comptes utilisateurs",
+                    "description": "Créer des comptes utilisateurs associés aux employés sélectionnés."
+                }
+            }
         }
     },
     "error": {}
