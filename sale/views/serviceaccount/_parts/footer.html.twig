@@ -1,6 +1,6 @@
 {% if organization %}
 <div class="footer">
-    <p style="text-align: center; padding-top: 10px; padding-right: 120px;">
+    <p style="text-align: center; padding-top: 10px; padding-right: 80px;">
         {% if organization.name %}<b>{{organization.name}}</b>{% endif %}
         {% if organization.registration_number %}
             {% if organization.name %} &middot; {% endif %}
@@ -30,10 +30,5 @@
             {% if organization.website %}{% if organization.phone or organization.email %} &middot; {% endif %}{{ labels['report.footer.website'] }} {{organization.website}}{% endif %}
         {% endif %}
     </p>
-    {% if organization.logo %}
-        <div style="position: absolute; top: 0px; right: 10px;">
-            <img src="{{organization.logo}}" style="max-width: 200px; max-height: 100px;" />
-        </div>
-    {% endif %}
 </div>
 {% endif %}
