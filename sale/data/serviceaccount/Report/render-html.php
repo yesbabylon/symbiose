@@ -229,6 +229,7 @@ $report = Report::id($params['id'])
             'receivable_id' => [
                 'origin_object_class',
                 'origin_object_id',
+                'description',
                 'time_entry_id' => ['origin', 'project_id' => ['name'], 'ticket_id', 'reference', 'description', 'detailed_description']
             ]
         ]
@@ -347,9 +348,7 @@ foreach($report['service_account_entries_ids'] as $line) {
         ];
     }
     else {
-        $time_entry = $receivable['time_entry_id'] ?? [];
-
-        $description = $line['description'] ?? '';
+        $description = $line['description'] ?? $receivable['description'];
 
         $firstname = $line['creator']['firstname'] ?? '';
         $lastname = $line['creator']['lastname'] ?? '';
