@@ -349,10 +349,7 @@ foreach($report['service_account_entries_ids'] as $line) {
     else {
         $time_entry = $receivable['time_entry_id'] ?? [];
 
-        $description = $time_entry['description']
-            ?? $time_entry['reference']
-            ?? $line['description']
-            ?? '';
+        $description = $line['description'] ?? '';
 
         $firstname = $line['creator']['firstname'] ?? '';
         $lastname = $line['creator']['lastname'] ?? '';
