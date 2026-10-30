@@ -449,7 +449,7 @@ $values = [
     'tickets'         => $map_tt_lines,
     'credits'         => $map_cc_lines,
     'total_tickets'   => number_format((float) round($report['total_points'], 2), 2, '.', ''),
-    'total_credits'   => (($report['total_credits'] >= 0) ? '+' : '').number_format((float) round($report['total_credits'], 2), 2, '.', ''),
+    'total_credits'   => '+'.number_format(abs((float) round($report['total_credits'], 2)), 2, '.', ''),
     'show_details'    => (bool) $params['details'],
     'show_logs'       => (bool) $params['logs'],
     'organization'    => $organization_data
