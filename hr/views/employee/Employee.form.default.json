@@ -4,10 +4,6 @@
     "access": {
         "groups": ["hr.default.users"]
     },
-    "extends": {
-        "entity": "identity\\Partner",
-        "view": "form.default"
-    },
     "actions": [
         {
             "id": "action.create_account",
@@ -20,25 +16,182 @@
         }
     ],
     "layout": {
-        "remove": [
-            "section.advanced",
-            "group.partner_info",
-            "field.type_id",
-            "field.has_vat"
-        ],
-        "update": {
-            "field.lang_id": {
-                "after": [
+        "groups": [
+            {
+                "sections": [
                     {
-                        "type": "field",
-                        "label": "Identity of Employee",
-                        "value": "partner_identity_id",
-                        "width": "100%"
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "legal_name",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": false
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "firstname",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "header": false
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "lastname",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "header": false
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "vat_number",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "column.middle-empty",
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "value": "",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "visible": false
+                                            },
+                                            {
+                                                "id": "field.lang_id",
+                                                "type": "field",
+                                                "label": "Language",
+                                                "value": "lang_id",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": false,
+                                                            "ACTION.OPEN": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             },
-            "section.identity_info": {
-                "after": [
+            {
+                "sections": [
+                    {
+                        "label": "Contact details",
+                        "id": "section.identity_info",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "address_street",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "address_dispatch",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "City",
+                                                "value": "address_city",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Zip",
+                                                "value": "address_zip",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "value": "",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "State",
+                                                "value": "address_state",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Country",
+                                                "value": "address_country",
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "value": "",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "email",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "phone",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "mobile",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Identity of Employee",
+                                                "value": "identity_id",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
                     {
                         "id": "section.employee",
                         "label": "Employee specifics",
@@ -79,7 +232,7 @@
                                                 "type": "field",
                                                 "value": "first_employment_date",
                                                 "width": "100%",
-                                                "readonly":  true
+                                                "readonly": true
                                             }
                                         ]
                                     },
@@ -151,6 +304,6 @@
                     }
                 ]
             }
-        }
+        ]
     }
 }
