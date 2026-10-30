@@ -116,10 +116,11 @@ hr {
                     <th width="7%" style="text-align: center; padding-right: 7px;">{{ labels['report.services.column.start'] }}</th>
                     <th width="7%" style="text-align: center; padding-right: 7px;">{{ labels['report.services.column.stop'] }}</th>
                     <th width="7%" style="text-align: right; padding-right: 7px;">{{ labels['report.services.column.pause'] }}</th>
-                    <th width="6%" style="text-align: right; padding-right: 7px;">{{ labels['report.services.column.on_site'] }}</th>
+                    <!--<th width="6%" style="text-align: right; padding-right: 7px;">{{ labels['report.services.column.on_site'] }}</th>-->
                     <th width="10%" style="text-align: right; padding-right: 7px;">{{ labels['report.services.column.who'] }}</th>
                     <th width="10%" style="text-align: right; padding-right: 7px;">{{ labels['report.services.column.role'] }}</th>
-                    <th width="20%" style="text-align: right; padding-right: 7px;">{{ labels['report.services.column.type'] }}</th>
+                    <th width="10%" style="text-align: right; padding-right: 7px;">{{ labels['report.services.column.project'] }}</th>
+                    <th width="10%" style="text-align: right; padding-right: 7px;">{{ labels['report.services.column.type'] }}</th>
                     <th width="8%" style="text-align: right; padding-right: 7px;">{{ labels['report.services.column.points'] }}</th>
                 </tr>
             </thead>
@@ -143,10 +144,10 @@ hr {
                                             <td width="7%" style="text-align: center;">{{line.start}}</td>
                                             <td width="7%" style="text-align: center; padding-right: 7px;">{{line.end}}</td>
                                             <td width="7%" style="text-align: right; padding-right: 7px;">{{line.pause}}</td>
-                                            <td width="6%" style="text-align: right; padding-right: 7px;">{{line.on_site}}</td>
-                                            <td width="10%" style="text-align: right; padding-right: 7px;">{{line.who}}</td>
+                                            <td width="16%" style="text-align: right; padding-right: 7px;">{{line.who}}</td>
                                             <td width="10%" style="text-align: right; padding-right: 7px;">{{line.role}}</td>
-                                            <td width="20%" style="text-align: right; padding-right: 7px;">{{line.type}}</td>
+                                            <td width="10%" style="text-align: right; padding-right: 7px;">{{line.project}}</td>
+                                            <td width="10%" style="text-align: right; padding-right: 7px;">{{line.type}}</td>
                                             <td width="8%" style="text-align: right; padding-right: 7px;">{{line.points}}</td>
                                         </tr>
                                         {% if show_details %}

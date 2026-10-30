@@ -99,6 +99,7 @@ $default_labels = [
     'report.services.column.who'          => 'Who',
     'report.services.column.role'         => 'Role',
     'report.services.column.type'         => 'Type',
+    'report.services.column.project'      => 'Project',
     'report.services.column.points'       => '#',
     'report.services.empty'               => 'No services for this period.',
     'report.services.total'               => 'Total services for period',
@@ -227,7 +228,7 @@ $report = Report::id($params['id'])
             'receivable_id' => [
                 'origin_object_class',
                 'origin_object_id',
-                'time_entry_id' => ['origin', 'ticket_id', 'reference', 'description']
+                'time_entry_id' => ['origin', 'project_id' => ['name'], 'ticket_id', 'reference', 'description']
             ]
         ]
     ], $lang)
@@ -325,6 +326,7 @@ foreach($report['service_account_entries_ids'] as $line) {
             'who'         => $who,
             'role'        => $line['role_id']['code'] ?? '',
             'type'        => $time_entry['origin'] ?? '',
+            'project'     => $time_entry['project_id']['name'],
             'points'      => number_format((float) round(-$line['points'], 2), 2, '.', ''),
             'description' => ucfirst(substr(str_replace('<br />', ' ; ', strip_tags($line_description)), 0, 370)),
             'log'         => str_replace('<br />', ' ; ', $calculation_log)
