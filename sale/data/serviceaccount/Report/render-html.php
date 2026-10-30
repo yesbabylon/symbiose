@@ -222,7 +222,7 @@ $report = Report::id($params['id'])
             'points',
             'calculation_log',
             'creator'       => ['firstname', 'lastname'],
-            'employee_id'   => ['name', 'partner_identity_id' => ['firstname', 'lastname']],
+            'employee_id'   => ['name'],
             'role_id'       => ['name'],
             'receivable_id' => [
                 'origin_object_class',
@@ -312,9 +312,7 @@ foreach($report['service_account_entries_ids'] as $line) {
         $start = (int) ($line['start'] ?? 0);
         $end = (int) ($line['end'] ?? 0);
         $tz_offset = $tz->getOffset(new DateTime('@'.$start));
-        $firstname = $line['employee_id']['partner_identity_id']['firstname'] ?? '';
-        $lastname = $line['employee_id']['partner_identity_id']['lastname'] ?? '';
-        $who = trim($firstname.' '.(strlen($lastname) ? substr($lastname, 0, 1).'.' : ''));
+        $who = $line['employee_id']['name'] ?? '';
         $line_description = (string) ($line['description'] ?? '');
         $calculation_log = (string) ($line['calculation_log'] ?? '');
 
