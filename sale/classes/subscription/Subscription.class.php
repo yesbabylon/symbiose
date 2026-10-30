@@ -47,7 +47,7 @@ class Subscription extends Model  {
                 'required'          => true,
                 'description'       => 'Start date of subscription.',
                 'default'           => function () { return time(); },
-                'dependents'        => ['price_id'],
+                'dependents'        => ['price_id', 'has_current_sale_entry'],
                 'onupdate'          => 'onupdateDateFrom'
             ],
 
@@ -56,7 +56,7 @@ class Subscription extends Model  {
                 'description'       => 'End date of subscription.',
                 'required'          => true,
                 'default'           => function () { return strtotime('+1 year'); },
-                'dependents'        => ['price_id', 'is_expired','has_upcoming_expiry']
+                'dependents'        => ['price_id', 'is_expired', 'has_upcoming_expiry', 'has_current_sale_entry']
             ],
 
             'duration' => [
@@ -171,7 +171,17 @@ class Subscription extends Model  {
                 'foreign_object'    => 'sale\subscription\SubscriptionEntry',
                 'foreign_field'     => 'subscription_id',
                 'ondetach'          => 'delete',
-                'description'       => 'Subscription entries of the subscription.'
+                'description'       => 'Subscription entries of the subscription.',
+                'dependents'        => ['has_current_sale_entry']
+            ],
+
+            'has_current_sale_entry' => [
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => 'The subscription has a sale entry for its current period.',
+                'function'          => 'calcHasCurrentSaleEntry',
+                'store'             => true,
+                'instant'           => true
             ]
 
         ];
@@ -376,6 +386,31 @@ class Subscription extends Model  {
             if(isset($subscription['date_to'])) {
                 $days_until_expiry = ($subscription['date_to'] - time()) / 86400;
                 $result[$id] = $days_until_expiry < 30;
+            }
+        }
+
+        return $result;
+    }
+
+    public static function calcHasCurrentSaleEntry($self): array {
+        $result = [];
+        $self->read([
+            'date_from',
+            'date_to',
+            'subscription_entries_ids' => ['date_from', 'date_to']
+        ]);
+
+        foreach($self as $id => $subscription) {
+            $result[$id] = false;
+
+            foreach($subscription['subscription_entries_ids'] as $subscription_entry) {
+                if(
+                    $subscription_entry['date_from'] === $subscription['date_from']
+                    && $subscription_entry['date_to'] === $subscription['date_to']
+                ) {
+                    $result[$id] = true;
+                    break;
+                }
             }
         }
 

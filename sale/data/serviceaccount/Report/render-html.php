@@ -324,7 +324,7 @@ foreach($report['service_account_entries_ids'] as $line) {
             'pause'       => $format_time(floor(abs((float) $line['pause']) * 60) * 60),
             'on_site'     => !empty($line['on_site']) ? $labels['report.common.yes'] : $labels['report.common.no'],
             'who'         => $who,
-            'role'        => $line['role_id']['code'] ?? '',
+            'role'        => $line['role_id']['code'] ?? 'DEV',
             'type'        => $time_entry['origin'] ?? '',
             'project'     => $time_entry['project_id']['name'],
             'points'      => number_format((float) round(-$line['points'], 2), 2, '.', ''),
@@ -332,6 +332,21 @@ foreach($report['service_account_entries_ids'] as $line) {
             'log'         => str_replace('<br />', ' ; ', $calculation_log)
         ];
     }
+    // other sale entries
+    elseif($line['points'] > 0) {
+        $firstname = $line['creator']['firstname'] ?? '';
+        $lastname = $line['creator']['lastname'] ?? '';
+        $who = trim($firstname.' '.(strlen($lastname) ? substr($lastname, 0, 1).'.' : ''));
+        $line_description = (string) ($line['description'] ?? '');
+
+        $map_tt_lines[] = [
+            'date'        => date('d/m/Y', (int) $line['date']),
+            'who'         => $who,
+            'description' => ucfirst(substr(str_replace(['<p>', '</p>', '<br />'], ['', '', ' ; '], $line_description), 0, 128)),
+            'points'      => number_format((float) round(-$line['points'], 2), 2, '.', '')
+        ];
+    }
+    // reversed sale entries / credits
     else {
         $firstname = $line['creator']['firstname'] ?? '';
         $lastname = $line['creator']['lastname'] ?? '';

@@ -250,11 +250,21 @@ class ServiceAccount extends \sale\contract\Contract {
                     ->ids();
 
                 if($entries_ids) {
-                    ServiceAccountEntry::ids($entries_ids)->update(['report_id' => $report_id]);
+                    ServiceAccountEntry::ids($entries_ids)
+                        ->write(['report_id' => $report_id]);
                 }
 
                 Report::id($report_id)
-                    ->update(self::getReportComputedInvalidation())
+                    ->write([
+                        'date_from'     => null,
+                        'has_lines'     => null,
+                        'is_empty'      => null,
+                        'total_points'  => null,
+                        'total_credits' => null,
+                        'balance_old'   => null,
+                        'balance_new'   => null,
+                        'is_sendable'   => null,
+                    ])
                     ->read([
                         'date_from',
                         'has_lines',
@@ -383,17 +393,4 @@ class ServiceAccount extends \sale\contract\Contract {
         return strtotime('-1 day', $next_start);
     }
 
-    private static function getReportComputedInvalidation(): array {
-        return [
-            'date_from'     => null,
-            'has_lines'     => null,
-            'is_empty'      => null,
-            'total_points'  => null,
-            'total_credits' => null,
-            'balance_old'   => null,
-            'balance_new'   => null,
-            'is_sendable'   => null,
-            'pdf_data'      => null
-        ];
-    }
 }

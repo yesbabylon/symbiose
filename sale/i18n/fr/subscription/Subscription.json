@@ -93,6 +93,11 @@
             "description": "Les entrées de vente relatives à l'abonnement.",
             "help": ""
         },
+        "has_current_sale_entry": {
+            "label": "Vente de la période courante",
+            "description": "Indique si une vente couvre la période courante.",
+            "help": "Ce contrôle conditionne l'accès à la période suivante."
+        },
         "is_auto_renew": {
             "label": "Renouvellement auto",
             "description": "L'abonnement doit-il être renouvelé automatiquement ?",

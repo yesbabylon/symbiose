@@ -7,12 +7,11 @@
 namespace sale\serviceaccount;
 use core\setting\Setting;
 use hr\holiday\Holiday;
+use sale\receivable\Receivable;
 
 class ServiceAccountEntry extends \equal\orm\Model {
 
     private static $status_transition_ids = [];
-    private static $previous_relations = [];
-    private static $deleted_relations = [];
 
     public static function getColumns() {
 
@@ -191,7 +190,6 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\serviceaccount\Report',
                 'ondelete'          => 'null',
-                'onupdate'          => 'onupdateReportId',
                 'description'       => 'Report to which the line is assigned, if any.',
                 'domain'            => [
                     ['service_account_id', '=', 'object.service_account_id'],
@@ -277,6 +275,11 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'description' => 'Irreversibly release entries whose report has been finalized.',
                 'policies'    => [],
                 'function'    => 'doRelease'
+            ],
+            'unpost' => [
+                'description' => 'Delete pending entries and reopen their originating receivables.',
+                'policies'    => ['is_pending'],
+                'function'    => 'doUnpost'
             ]
         ]);
     }
@@ -389,6 +392,39 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 unset(self::$status_transition_ids[$id]);
             }
         }
+    }
+
+    protected static function doUnpost($self) {
+        $Service_account_entries = $self
+            ->read(['service_account_id', 'report_id', 'receivable_id'])
+            ->toArray();
+
+        $self->delete(true);
+
+        foreach($Service_account_entries as $id => $entry) {
+            if($entry['receivable_id']) {
+                Receivable::id($entry['receivable_id'])
+                    ->update([
+                        'service_account_id'       => null,
+                        'service_account_entry_id' => null,
+                        'status'                   => 'open'
+                    ]);
+            }
+            if($entry['report_id']) {
+                Report::id($entry['report_id'])
+                    ->update([
+                        'has_lines'     => null,
+                        'is_empty'      => null,
+                        'total_points'  => null,
+                        'total_credits' => null,
+                        'balance_new'   => null,
+                    ]);
+            }
+            if($entry['service_account_id']) {
+                ServiceAccount::id($entry['service_account_id'])->do('sync_balance');
+            }
+        }
+
     }
 
     protected static function doComputePoints($self) {
@@ -852,22 +888,6 @@ class ServiceAccountEntry extends \equal\orm\Model {
         }
     }
 
-    public static function onupdateReportId($self, $values) {
-        $self->read(['service_account_id', 'report_id']);
-        foreach($self as $id => $line) {
-            $report_ids = array_filter([
-                self::$previous_relations[$id]['report_id'] ?? null,
-                $line['report_id'] ?? null
-            ]);
-            foreach(array_unique($report_ids) as $report_id) {
-                Report::id($report_id)->update(self::getReportComputedInvalidation());
-            }
-            if($line['service_account_id']) {
-                ServiceAccount::id($line['service_account_id'])->do('sync_balance');
-            }
-        }
-    }
-
     public static function calcStart($self) {
         $result = [];
         $self->read(['date', 'receivable_id' => ['time_entry_id' => ['time_start']]]);
@@ -993,7 +1013,13 @@ class ServiceAccountEntry extends \equal\orm\Model {
             }
             if($line['report_id']) {
                 Report::id($line['report_id'])
-                    ->update(self::getReportComputedInvalidation());
+                    ->update([
+                        'has_lines'     => null,
+                        'is_empty'      => null,
+                        'total_points'  => null,
+                        'total_credits' => null,
+                        'balance_new'   => null
+                    ]);
             }
         }
     }
@@ -1058,63 +1084,6 @@ class ServiceAccountEntry extends \equal\orm\Model {
         return parent::candelete($self);
     }
 
-    protected static function onbeforeupdate($self, $values) {
-        if(!array_intersect(['report_id', 'service_account_id'], array_keys($values))) {
-            return;
-        }
-        $self->read(['report_id', 'service_account_id']);
-        foreach($self as $id => $line) {
-            self::$previous_relations[$id] = [
-                'report_id'          => $line['report_id'],
-                'service_account_id' => $line['service_account_id']
-            ];
-        }
-    }
-
-    protected static function onafterupdate($self, $values) {
-        foreach($self->ids() as $id) {
-            unset(self::$previous_relations[$id]);
-        }
-    }
-
-    protected static function onbeforedelete($self) {
-        $self->read(['service_account_id', 'report_id', 'receivable_id']);
-        foreach($self as $id => $line) {
-            self::$deleted_relations[$id] = $line;
-            if($line['receivable_id']) {
-                \sale\receivable\Receivable::id($line['receivable_id'])
-                    ->update([
-                        'service_account_id'       => null,
-                        'service_account_entry_id' => null,
-                        'status'                   => 'open'
-                    ]);
-            }
-        }
-    }
-
-    protected static function onafterdelete($ids) {
-        foreach($ids as $id) {
-            $relations = self::$deleted_relations[$id] ?? [];
-            if(!empty($relations['report_id'])) {
-                Report::id($relations['report_id'])->update(self::getReportComputedInvalidation());
-            }
-            if(!empty($relations['service_account_id'])) {
-                ServiceAccount::id($relations['service_account_id'])->do('sync_balance');
-            }
-            unset(self::$deleted_relations[$id]);
-        }
-    }
-
-    private static function getReportComputedInvalidation(): array {
-        return [
-            'has_lines'     => null,
-            'is_empty'      => null,
-            'total_points'  => null,
-            'total_credits' => null,
-            'balance_new'   => null,
-            'pdf_data'      => null
-        ];
-    }
 
     /**
      * Returns the value of a moment (time as a string or as an integer) expressed as an integer amount of seconds.
