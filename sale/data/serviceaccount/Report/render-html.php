@@ -342,18 +342,24 @@ foreach($report['service_account_entries_ids'] as $line) {
             'type'        => $time_entry['origin'] ?? '',
             'project'     => $time_entry['project_id']['name'],
             'points'      => number_format((float) round(-$line['points'], 2), 2, '.', ''),
-            'description' => ucfirst(substr(str_replace('<br />', ' ; ', strip_tags($line_description)), 0, 370)) . '[…]',
+            'description' => ucfirst(substr(str_replace('<br />', ' ; ', strip_tags($line_description)), 0, 450)) . '[…]',
             'log'         => str_replace('<br />', ' ; ', $calculation_log)
         ];
     }
     else {
+        $time_entry = $receivable['time_entry_id'] ?? [];
+
+        $description = $time_entry['description']
+            ?? $time_entry['reference']
+            ?? $line['description']
+            ?? '';
+
         $firstname = $line['creator']['firstname'] ?? '';
         $lastname = $line['creator']['lastname'] ?? '';
         $who = trim($firstname.' '.(strlen($lastname) ? substr($lastname, 0, 1).'.' : ''));
-        $line_description = (string) ($line['description'] ?? '');
 
         $map_tt_lines[] = [
-            'description' => ucfirst(substr(str_replace(['<p>', '</p>', '<br />'], ['', '', ' ; '], $line_description), 0, 128)),
+            'description' => ucfirst(substr(str_replace(['<p>', '</p>', '<br />'], ['', '', ' ; '], $description), 0, 128)),
             'contact'     => '',
             'lines'       => [[
                 'date'        => date('d/m/Y', (int) $line['date']),
