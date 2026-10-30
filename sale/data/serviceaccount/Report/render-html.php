@@ -312,7 +312,7 @@ foreach($report['service_account_entries_ids'] as $line) {
         $start = (int) ($line['start'] ?? 0);
         $end = (int) ($line['end'] ?? 0);
         $tz_offset = $tz->getOffset(new DateTime('@'.$start));
-        $who = $line['employee_id']['name'] ?? '';
+        $who = $line['employee_id']['firstname'] ?? '';
         $line_description = (string) ($line['description'] ?? '');
         $calculation_log = (string) ($line['calculation_log'] ?? '');
 
