@@ -12,7 +12,35 @@
             "description": "Create a user account relating to the Employee.",
             "controller": "hr_employee_Employee_create-user",
             "confirm": false,
-            "visible": ["operators", "in", "user.groups"]
+            "visible": [["operators", "in", "user.groups"], ["user_id", "=", null]]
+        },
+        {
+            "id": "action.disable_user_account",
+            "label": "Disable User account",
+            "icon": "block",
+            "description": "Disable the User account relating to the Employee.",
+            "controller": "core_model_do",
+            "params": {
+                "entity": "hr\\employee\\Employee",
+                "action": "disable_user_account",
+                "ids": []
+            },
+            "confirm": true,
+            "visible": [["operators", "in", "user.groups"], ["user_id", "<>", null]]
+        },
+        {
+            "id": "action.delete_user_account",
+            "label": "Delete User account",
+            "icon": "delete",
+            "description": "Delete the User account relating to the Employee.",
+            "controller": "core_model_do",
+            "params": {
+                "entity": "hr\\employee\\Employee",
+                "action": "delete_user_account",
+                "ids": []
+            },
+            "confirm": true,
+            "visible": [["operators", "in", "user.groups"], ["user_id", "<>", null]]
         }
     ],
     "layout": {

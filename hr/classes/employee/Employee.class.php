@@ -247,64 +247,25 @@ class Employee extends IdentityFacetAbstract {
     }
 
     protected static function doCreateUserAccount($self, $auth, $orm) {
-        $requested_employee_ids = $self->ids();
-        trigger_error(
-            'APP::Starting User account creation for Employee IDs ['.implode(', ', $requested_employee_ids).'].',
-            EQ_REPORT_DEBUG
-        );
-
         $self->read(['identity_id' => ['id', 'name', 'email', 'user_id']]);
 
-        $loaded_employee_ids = $self->ids();
-        $missing_employee_ids = array_diff($requested_employee_ids, $loaded_employee_ids);
-        if(!empty($missing_employee_ids)) {
-            trigger_error(
-                'APP::Ignored non-existing Employee IDs ['.implode(', ', $missing_employee_ids).'].',
-                EQ_REPORT_WARNING
-            );
-        }
-
         $groups_ids = Group::search(['name', '=', 'users'])->ids();
-        if(empty($groups_ids)) {
-            trigger_error(
-                "APP::No Group named 'users' was found while creating User accounts.",
-                EQ_REPORT_WARNING
-            );
-        }
-
         $current_user_id = $auth->userId();
         $auth->su();
 
-        $created_user_ids = [];
         try {
             foreach($self as $employee_id => $employee) {
                 $identity = $employee['identity_id'];
-                if(!$identity) {
-                    trigger_error(
-                        "APP::Ignored User creation for Employee [{$employee_id}] without a related Identity.",
-                        EQ_REPORT_WARNING
-                    );
-                    continue;
-                }
-                if($identity['user_id']) {
-                    trigger_error(
-                        "APP::Ignored User creation for Employee [{$employee_id}]: Identity [{$identity['id']}] is already linked to User [{$identity['user_id']}].",
-                        EQ_REPORT_INFO
-                    );
+                if(!$identity || $identity['user_id']) {
                     continue;
                 }
                 if(!$identity['email']) {
                     trigger_error(
-                        "APP::Ignored User creation for Employee [{$employee_id}]: Identity [{$identity['id']}] has no email address.",
+                        "APP::Ignored user creation for identity {$identity['name']} of employee [{$employee_id}] without email address.",
                         EQ_REPORT_WARNING
                     );
                     continue;
                 }
-
-                trigger_error(
-                    "APP::Creating a User for Employee [{$employee_id}] and Identity [{$identity['id']}].",
-                    EQ_REPORT_DEBUG
-                );
 
                 $new_user_id = $orm->create(User::getType(), [
                     // Capabilities for EQ_R_UPDATE are based on the creator context.
@@ -317,7 +278,7 @@ class Employee extends IdentityFacetAbstract {
 
                 if($new_user_id <= 0) {
                     trigger_error(
-                        "APP::Error [{$new_user_id}] while creating a User for Employee [{$employee_id}] and Identity [{$identity['id']}]: {$orm->getLastError()}.",
+                        "APP::Error while creating a User for identity {$identity['name']}.",
                         EQ_REPORT_WARNING
                     );
                     continue;
@@ -326,23 +287,11 @@ class Employee extends IdentityFacetAbstract {
                 User::id($new_user_id)
                     ->update(['identity_id' => $identity['id']])
                     ->do('sync_from_identity');
-
-                $created_user_ids[] = $new_user_id;
-                trigger_error(
-                    "APP::Created User [{$new_user_id}] for Employee [{$employee_id}] and Identity [{$identity['id']}].",
-                    EQ_REPORT_INFO
-                );
             }
         }
         finally {
             $auth->su($current_user_id);
         }
-
-        trigger_error(
-            'APP::Completed User account creation for Employee IDs ['.implode(', ', $loaded_employee_ids)
-                .']; created User IDs ['.implode(', ', $created_user_ids).'].',
-            EQ_REPORT_DEBUG
-        );
     }
 
     protected static function doDisableUserAccount($self, $auth) {

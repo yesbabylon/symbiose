@@ -96,6 +96,14 @@
                 "action.create_account": {
                     "label": "Créer un compte utilisateur",
                     "description": "Créer un compte utilisateur associé à l'employé."
+                },
+                "action.disable_user_account": {
+                    "label": "Désactiver le compte utilisateur",
+                    "description": "Désactiver le compte utilisateur associé à l'employé."
+                },
+                "action.delete_user_account": {
+                    "label": "Supprimer le compte utilisateur",
+                    "description": "Supprimer définitivement le compte utilisateur associé à l'employé."
                 }
             }
         },
