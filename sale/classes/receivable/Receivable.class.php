@@ -323,6 +323,11 @@ class Receivable extends Model {
                     'product_model_id' => ['type']
                 ]
             ],
+            'sale_entry_id' => [
+                'product_id' => [
+                    'product_model_id' => ['type']
+                ]
+            ],
             'subscription_entry_id' => [
                 'id',
                 'product_id' => [
@@ -345,15 +350,19 @@ class Receivable extends Model {
                     'receivable_not_open' => 'Only open receivables can be posted to a service account.'
                 ];
             }
+            /*
             elseif(!in_array($receivable['origin_object_class'], ['timetrack\\TimeEntry', 'sale\\subscription\\SubscriptionEntry'], true)) {
                 $result[$id] = [
                     'non_supported_origin_class' => 'The receivable origin class is not supported for service account posting.'
                 ];
             }
+            */
             elseif(
-                ($receivable['origin_object_class'] === 'timetrack\\TimeEntry'
-                    ? ($receivable['time_entry_id']['product_id']['product_model_id']['type'] ?? null)
-                    : ($receivable['subscription_entry_id']['product_id']['product_model_id']['type'] ?? null)
+                (
+                    $receivable['time_entry_id']['product_id']['product_model_id']['type']
+                    ?? $receivable['subscription_entry_id']['product_id']['product_model_id']['type']
+                    ?? $receivable['sale_entry_id']['product_id']['product_model_id']['type']
+                    ?? null
                 ) !== 'service'
             ) {
                 $result[$id] = [

@@ -426,12 +426,15 @@ class SaleEntry extends Model {
 
     public static function calcName($self) {
         $result = [];
-        $self->read(['code', 'description']);
+        $self->read(['state', 'code', 'description']);
         foreach($self as $id => $entry) {
-            $result[$id] = '['.$entry['code'].']';
+            if($entry['state'] !== 'instance') {
+                continue;
+            }
+            $result[$id] = '[' . $entry['code'] . ']';
             if(isset($entry['description'])
                 && strlen($entry['description']) > 0) {
-                $result[$id] .= ' '.$entry['description'];
+                $result[$id] .= ' ' . $entry['description'];
             }
         }
         return $result;
