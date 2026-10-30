@@ -229,7 +229,7 @@ $report = Report::id($params['id'])
             'receivable_id' => [
                 'origin_object_class',
                 'origin_object_id',
-                'time_entry_id' => ['origin', 'project_id' => ['name'], 'ticket_id', 'reference', 'description']
+                'time_entry_id' => ['origin', 'project_id' => ['name'], 'ticket_id', 'reference', 'description', 'detailed_description']
             ]
         ]
     ], $lang)
@@ -295,6 +295,7 @@ foreach($report['service_account_entries_ids'] as $line) {
         $parent_id = $ticket_id
             ? 'ticket-'.$ticket_id
             : 'time-entry-'.($receivable['origin_object_id'] ?? 0);
+
         $description = $time_entry['description']
             ?? $time_entry['reference']
             ?? $line['description']
@@ -327,8 +328,8 @@ foreach($report['service_account_entries_ids'] as $line) {
         $end = (int) ($line['end'] ?? 0);
 
         $who = $line['employee_id']['firstname'] ?? '';
-        $line_description = (string) ($line['description'] ?? '');
-        $calculation_log = (string) ($line['calculation_log'] ?? '');
+        $line_description = ($line['detailed_description'] ?? $line['description'] ?? '');
+        $calculation_log = ($line['calculation_log'] ?? '');
 
         $map_tt_lines[$parent_id]['lines'][] = [
             'date'        => date('d/m/Y', (int) $line['date']),
