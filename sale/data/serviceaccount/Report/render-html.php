@@ -229,6 +229,7 @@ $report = Report::id($params['id'])
             'receivable_id' => [
                 'origin_object_class',
                 'origin_object_id',
+                'name',
                 'description',
                 'time_entry_id' => ['origin', 'project_id' => ['name'], 'ticket_id', 'reference', 'description', 'detailed_description']
             ]
@@ -348,11 +349,7 @@ foreach($report['service_account_entries_ids'] as $line) {
         ];
     }
     else {
-        $description = trim($line['description'] ?? '');
-
-        if(strlen($description) <= 0) {
-            $description = trim($receivable['description'] ?? '');
-        }
+        $description = trim($receivable['description'] ?? $receivable['name'] ?? '');
 
         $description = trim(strip_tags(str_replace(
             ['<br>', '<br/>', '<br />', '</p>'],
@@ -362,18 +359,16 @@ foreach($report['service_account_entries_ids'] as $line) {
 
         $firstname = $line['creator']['firstname'] ?? '';
         $lastname = $line['creator']['lastname'] ?? '';
-        $who = trim($firstname . ' ' . (strlen($lastname) ? substr($lastname, 0, 1) . '.' : ''));
 
         $map_tt_lines[] = [
-            // 'description' => ucfirst(substr(str_replace(['<p>', '</p>', '<br />'], ['', '', ' ; '], $description), 0, 128)),
-            'description' => '@@@'.ucfirst(substr($description, 0, 128)),
+            'description' => ucfirst(substr($description, 0, 128)),
             'contact'     => '',
             'lines'       => [[
                 'date'        => date('d/m/Y', (int) $line['date']),
                 'start'       => '',
                 'end'         => '',
                 'pause'       => '',
-                'who'         => $who,
+                'who'         => trim($firstname . ' ' . (strlen($lastname) ? substr($lastname, 0, 1) . '.' : '')),
                 'role'        => '',
                 'project'     => '',
                 'type'        => '',
