@@ -223,7 +223,7 @@ $report = Report::id($params['id'])
             'calculation_log',
             'creator'       => ['firstname', 'lastname'],
             'employee_id'   => ['name', 'firstname', 'lastname'],
-            'role_id'       => ['name'],
+            'role_id'       => ['name', 'code'],
             'receivable_id' => [
                 'origin_object_class',
                 'origin_object_id',
@@ -323,7 +323,7 @@ foreach($report['service_account_entries_ids'] as $line) {
             'pause'       => $format_time(floor(abs((float) $line['pause']) * 60) * 60),
             'on_site'     => !empty($line['on_site']) ? $labels['report.common.yes'] : $labels['report.common.no'],
             'who'         => $who,
-            'role'        => $line['role_id']['name'] ?? '',
+            'role'        => $line['role_id']['code'] ?? '',
             'type'        => $time_entry['origin'] ?? '',
             'points'      => number_format((float) round(-$line['points'], 2), 2, '.', ''),
             'description' => ucfirst(substr(str_replace('<br />', ' ; ', strip_tags($line_description)), 0, 370)),

@@ -27,22 +27,27 @@ class Role extends Model {
         return [
 
             'name' => [
-                'type'              => 'string',
+                'type'              => 'computed',
+                'result_type'       => 'string',
                 'description'       => 'Official name of the role.',
                 'multilang'         => true,
-                'required'          => true
+                'store'             => true,
+                'readonly'          => true,
+                'function'          => 'calcName'
             ],
 
             'code' => [
                 'type'              => 'string',
                 'description'       => 'Unique mnemonic code assigned to the role.',
                 'unique'            => true,
+                'dependents'        => ['name'],
                 'required'          => true
             ],
 
             'description' => [
                 'type'              => 'string',
                 'description'       => 'Details about the role.',
+                'dependents'        => ['name'],
                 'multilang'         => true
             ],
 
@@ -61,5 +66,14 @@ class Role extends Model {
             ]
 
         ];
+    }
+
+    protected static function calcName($self, $lang) {
+        $result = [];
+        $self->read(['code', 'description'], $lang);
+        foreach($self as $id => $role) {
+            $result[$id] = $role['code'] . ' - ' . $role['description'];
+        }
+        return $result;
     }
 }

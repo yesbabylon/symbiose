@@ -284,6 +284,26 @@
                         ]
                     },
                     {
+                        "id": "section.teams",
+                        "label": "Teams",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "teams_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
                         "id": "section.roles",
                         "label": "Roles",
                         "rows": [

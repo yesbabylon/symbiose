@@ -11,6 +11,7 @@ use core\Group;
 use identity\Identity;
 use identity\IdentityFacetAbstract;
 use identity\User;
+use hr\role\RoleAssignment;
 
 class Employee extends IdentityFacetAbstract {
 
@@ -42,6 +43,17 @@ class Employee extends IdentityFacetAbstract {
                 'foreign_object'    => 'hr\role\RoleAssignment',
                 'foreign_field'     => 'employee_id',
                 'description'       => 'Roles assigned to the employee.'
+            ],
+
+            'teams_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'hr\Team',
+                'foreign_field'     => 'employees_ids',
+                'rel_table'         => 'hr_rel_employee_team',
+                'rel_foreign_key'   => 'team_id',
+                'rel_local_key'     => 'employee_id',
+                'description'       => 'Teams the employee belongs to.',
+                'onupdate'          => 'onupdateTeamsIds'
             ],
 
             'user_id' => [
@@ -112,6 +124,11 @@ class Employee extends IdentityFacetAbstract {
                 'description'       => 'Refresh the primary role from role assignments.',
                 'policies'          => [],
                 'function'          => 'doRefreshPrimaryRole'
+            ],
+            'sync_from_teams' => [
+                'description'       => 'Assign roles inherited from the employee teams.',
+                'policies'          => [],
+                'function'          => 'doSyncFromTeams'
             ],
             'create_user_account' => [
                 'description'       => 'Create a related User account.',
@@ -219,6 +236,34 @@ class Employee extends IdentityFacetAbstract {
 
     protected static function doRefreshPrimaryRole($self) {
         $self->update(['role_id' => null]);
+    }
+
+    protected static function doSyncFromTeams($self) {
+        $self->read(['teams_ids' => ['role_id']]);
+        foreach($self as $id => $employee) {
+            foreach($employee['teams_ids'] as $team) {
+                if(!$team['role_id']) {
+                    continue;
+                }
+
+                $assignment = RoleAssignment::search([
+                    ['employee_id', '=', $id],
+                    ['role_id', '=', $team['role_id']]
+                ])->first();
+                if($assignment) {
+                    continue;
+                }
+
+                RoleAssignment::create([
+                    'employee_id'   => $id,
+                    'role_id'       => $team['role_id']
+                ]);
+            }
+        }
+    }
+
+    protected static function onupdateTeamsIds($self) {
+        $self->do('sync_from_teams');
     }
 
     protected static function policyCanCreateUserAccount($self, $user_id, $access): array {

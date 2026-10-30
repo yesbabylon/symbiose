@@ -14,7 +14,44 @@
                     "view": "list.default",
                     "order": "id",
                     "sort": "asc"
-                }
+                },
+                "children": [
+                    {
+                        "id": "item.employees.employees",
+                        "type": "entry",
+                        "label": "Employees",
+                        "icon": "person",
+                        "description": "List and manage employees.",
+                        "context": {
+                            "entity": "hr\\employee\\Employee",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.employees.teams",
+                        "type": "entry",
+                        "label": "Teams",
+                        "icon": "groups",
+                        "description": "Manage work teams and groups.",
+                        "context": {
+                            "entity": "hr\\Team",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.employees.role_assignments",
+                        "type": "entry",
+                        "label": "Role assignments",
+                        "icon": "assignment_ind",
+                        "description": "",
+                        "context": {
+                            "entity": "hr\\role\\RoleAssignment",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    }
+                ]
             },
             {
                 "id": "item.absence",
@@ -81,19 +118,6 @@
                             "entity": "hr\\role\\Role",
                             "view": "list.default",
                             "order": "name",
-                            "sort": "asc"
-                        }
-                    },
-                    {
-                        "id": "item.role_assignments",
-                        "type": "entry",
-                        "label": "Role assignments",
-                        "icon": "assignment_ind",
-                        "description": "",
-                        "context": {
-                            "entity": "hr\\role\\RoleAssignment",
-                            "view": "list.default",
-                            "order": "id",
                             "sort": "asc"
                         }
                     }

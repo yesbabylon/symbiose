@@ -28,6 +28,11 @@
             "description": "Liste des rôles attribués à l'employé.",
             "help": "Ajoutez les rôles de l'employé et désignez, si nécessaire, son rôle principal."
         },
+        "teams_ids": {
+            "label": "Équipes",
+            "description": "Équipes auxquelles appartient l'employé.",
+            "help": "Les rôles définis sur ces équipes sont ajoutés aux affectations de l'employé."
+        },
         "owner_identity_id": {
             "label": "Employé par",
             "description": "L'organisation dont l'identité ciblée est partenaire.",
@@ -84,6 +89,9 @@
                 },
                 "section.employee": {
                     "label": "Employé"
+                },
+                "section.teams": {
+                    "label": "Équipes"
                 },
                 "section.roles": {
                     "label": "Rôles"
