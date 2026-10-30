@@ -8,6 +8,10 @@ namespace identity;
 
 class User extends \core\User {
 
+    public static function getModelScope(): ?string {
+        return null;
+    }
+
     public static function getName() {
         return 'User';
     }
