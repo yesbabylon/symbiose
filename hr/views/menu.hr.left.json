@@ -5,16 +5,10 @@
         "items": [
             {
                 "id": "item.employees",
-                "type": "entry",
+                "type": "parent",
                 "label": "Employees",
                 "icon": "face",
                 "description": "",
-                "context": {
-                    "entity": "hr\\employee\\Employee",
-                    "view": "list.default",
-                    "order": "id",
-                    "sort": "asc"
-                },
                 "children": [
                     {
                         "id": "item.employees.employees",
