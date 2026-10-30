@@ -347,7 +347,7 @@ foreach($report['service_account_entries_ids'] as $line) {
             'type'        => $time_entry['origin'] ?? '',
             'project'     => $time_entry['project_id']['name'],
             'points'      => number_format((float) round(-$line['points'], 2), 2, '.', ''),
-            'description' => ucfirst(substr($formatted_line_description, 0, 450)) . (strlen($formatted_line_description) > 450 ? '[…]' : ''),
+            'description' => ucfirst(substr($formatted_line_description, 0, 500)) . (strlen($formatted_line_description) > 500 ? '[…]' : ''),
             'log'         => str_replace('<br />', ' ; ', $calculation_log)
         ];
     }
