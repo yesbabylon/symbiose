@@ -37,15 +37,13 @@ class ServiceAccountEntry extends \equal\orm\Model {
                     'sale\SaleEntry',
                     'timetrack\TimeEntry',
                     'sale\subscription\SubscriptionEntry'
-                ],
-                'readonly'          => true
+                ]
             ],
 
             'origin_object_id' => [
                 'type'              => 'integer',
                 'description'       => 'Object identifier, as a complement to origin_object_class.',
-                'dependents'        => ['date', 'start', 'end', 'pause_time', 'delta_time', 'duration'],
-                'readonly'          => true
+                'dependents'        => ['date', 'start', 'end', 'pause_time', 'delta_time', 'duration']
             ],
 
             'service_account_id' => [
@@ -231,6 +229,36 @@ class ServiceAccountEntry extends \equal\orm\Model {
             ]
 
         ];
+    }
+
+    public static function getPolicies(): array {
+        return array_merge(parent::getPolicies(), [
+            'is_pending' => [
+                'description' => 'Check that service account entries are still pending.',
+                'function'    => 'policyIsPending'
+            ]
+        ]);
+    }
+
+    public static function getOperationPolicies(): array {
+        return array_replace_recursive(parent::getOperationPolicies(), [
+            EQ_R_UPDATE => [
+                '*' => ['is_pending']
+            ]
+        ]);
+    }
+
+    protected static function policyIsPending($self): array {
+        $result = [];
+        $self->read(['status']);
+        foreach($self as $id => $entry) {
+            if($entry['status'] !== 'pending') {
+                $result[$id] = [
+                    'entry_released' => "Released service account entry [$id] cannot be updated."
+                ];
+            }
+        }
+        return $result;
     }
 
     public static function getActions() {
@@ -978,12 +1006,8 @@ class ServiceAccountEntry extends \equal\orm\Model {
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
     public static function canupdate($self, $values) {
-        $self->read(['status', 'date', 'receivable_id', 'service_account_id', 'report_id' => ['id', 'status']]);
+        $self->read(['date', 'receivable_id', 'service_account_id', 'report_id' => ['id', 'status']]);
         foreach($self as $id => $line) {
-            if($line['status'] === 'released') {
-                return ['status' => ['entry_released' => "Released service account entry [$id] cannot be updated."]];
-            }
-
             if(array_key_exists('status', $values) && !isset(self::$status_transition_ids[$id])) {
                 return ['status' => ['non_editable' => 'Entry status can only be changed by releasing its report.']];
             }

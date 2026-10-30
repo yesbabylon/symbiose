@@ -7,6 +7,7 @@ use sale\catalog\ProductModel;
 use sale\customer\Customer;
 use sale\receivable\Receivable;
 use sale\receivable\ReceivablesQueue;
+use sale\SaleEntry;
 use sale\serviceaccount\Report;
 use sale\serviceaccount\ServiceAccount;
 use sale\serviceaccount\ServiceAccountEntry;
@@ -226,12 +227,16 @@ $tests = [
             $entries = ServiceAccountEntry::search([
                     ['receivable_id', '=', $args['receivable_ids'][0]]
                 ])
-                ->read(['receivable_id'])
+                ->read(['receivable_id', 'origin_object_class', 'origin_object_id'])
                 ->get(true);
+
+            $entry = reset($entries);
 
             return count($entries) === 1
                 && (int) $receivable['service_account_entry_id'] === (int) $args['entry_ids'][0]
-                && (int) reset($entries)['receivable_id'] === (int) $args['receivable_ids'][0];
+                && (int) $entry['receivable_id'] === (int) $args['receivable_ids'][0]
+                && $entry['origin_object_class'] === SubscriptionEntry::class
+                && (int) $entry['origin_object_id'] === (int) $args['subscription_entry_ids'][0];
         },
         'rollback'    => $rollback_fixture
     ],
@@ -430,6 +435,61 @@ $tests = [
                 && $future['status'] === 'pending'
                 && $args['future_assignment_rejected']
                 && $args['second_draft_rejected'];
+        },
+        'rollback'    => $rollback_fixture
+    ],
+    '0106' => [
+        'description' => 'Only pending standalone entries can update their origin without a receivable.',
+        'arrange'     => function() use($create_fixture) {
+            $fixture = $create_fixture([]);
+            $pending_entry = ServiceAccountEntry::create([
+                    'service_account_id'  => $fixture['service_account_id'],
+                    'origin_object_class' => SaleEntry::class,
+                    'origin_object_id'    => 1,
+                    'date'                => strtotime('2026-07-20'),
+                    'status'              => 'pending'
+                ])
+                ->read(['id'])
+                ->first(true);
+            $released_entry = ServiceAccountEntry::create([
+                    'service_account_id'  => $fixture['service_account_id'],
+                    'origin_object_class' => SaleEntry::class,
+                    'origin_object_id'    => 1,
+                    'date'                => strtotime('2026-07-20'),
+                    'status'              => 'released'
+                ])
+                ->read(['id'])
+                ->first(true);
+            $fixture['entry_ids'][] = $pending_entry['id'];
+            $fixture['entry_ids'][] = $released_entry['id'];
+            return $fixture;
+        },
+        'act'         => function($args) {
+            ServiceAccountEntry::id($args['entry_ids'][0])
+                ->update([
+                    'origin_object_class' => SubscriptionEntry::class,
+                    'origin_object_id'    => 2
+                ]);
+            $args['released_update_rejected'] = false;
+            try {
+                ServiceAccountEntry::id($args['entry_ids'][1])
+                    ->update(['origin_object_id' => 2]);
+            }
+            catch(Throwable $throwable) {
+                $args['released_update_rejected'] = true;
+            }
+            return $args;
+        },
+        'assert'      => function($args) {
+            $entry = ServiceAccountEntry::id($args['entry_ids'][0])
+                ->read(['receivable_id', 'origin_object_class', 'origin_object_id', 'status'])
+                ->first(true);
+
+            return empty($entry['receivable_id'])
+                && $entry['origin_object_class'] === SubscriptionEntry::class
+                && (int) $entry['origin_object_id'] === 2
+                && $entry['status'] === 'pending'
+                && $args['released_update_rejected'];
         },
         'rollback'    => $rollback_fixture
     ]
