@@ -223,7 +223,7 @@ $report = Report::id($params['id'])
             'contact',
             'points',
             'calculation_log',
-            'creator'       => ['firstname', 'lastname'],
+            'creator'       => ['name', 'firstname', 'lastname'],
             'employee_id'   => ['name', 'firstname', 'lastname'],
             'role_id'       => ['name', 'code'],
             'receivable_id' => [
@@ -359,8 +359,8 @@ foreach($report['service_account_entries_ids'] as $line) {
             $description
         )));
 
-        $firstname = $line['employee_id']['firstname'] ?? '';
-        $lastname = $line['employee_id']['lastname'] ?? '';
+        $firstname = $line['employee_id']['firstname'] ?? $line['creator']['firstname'] ?? '';
+        $lastname = $line['employee_id']['lastname'] ?? $line['creator']['lastname'] ?? '';
 
         $map_tt_lines[] = [
             'description' => ucfirst(substr($description, 0, 128)),
