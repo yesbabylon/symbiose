@@ -284,7 +284,7 @@ class Report extends \equal\orm\Model {
                 if($entries_ids) {
                     ServiceAccountEntry::ids($entries_ids)->do('release');
                 }
-                ServiceAccount::id($service_account_id)->do('refresh_balances');
+                ServiceAccount::id($service_account_id)->do('sync_balance');
             }
             $db->sendQuery('COMMIT;');
         }
@@ -314,7 +314,7 @@ class Report extends \equal\orm\Model {
             foreach($self as $report) {
                 try {
                     if($report['service_account_id']) {
-                        ServiceAccount::id($report['service_account_id'])->do('refresh_balances');
+                        ServiceAccount::id($report['service_account_id'])->do('sync_balance');
                     }
                 }
                 catch(\Exception $e) {
@@ -410,10 +410,13 @@ class Report extends \equal\orm\Model {
      */
     public static function calcBalanceOld($self) {
         $result = [];
-        $self->read(['date', 'service_account_id']);
+        $self->read([
+            'date',
+            'service_account_id' => ['id', 'balance_effective']
+        ]);
         foreach($self as $id => $report) {
             $previous = self::search([
-                    ['service_account_id', '=', $report['service_account_id']],
+                    ['service_account_id', '=', $report['service_account_id']['id']],
                     ['status', '<>', 'pending'],
                     ['date', '<', $report['date']]
                 ], [
@@ -423,7 +426,9 @@ class Report extends \equal\orm\Model {
                 ->read(['balance_new'])
                 ->first();
             // balance_old is the balance_new of the most recent previous report, if any
-            $result[$id] = ($previous)?$previous['balance_new']:0.0;
+            $result[$id] = $previous
+                ? (float) $previous['balance_new']
+                : (float) ($report['service_account_id']['balance_effective'] ?? 0.0);
         }
         return $result;
     }
@@ -590,7 +595,7 @@ class Report extends \equal\orm\Model {
         foreach($ids as $id) {
             $service_account_id = self::$deleted_service_account_ids[$id] ?? null;
             if($service_account_id) {
-                ServiceAccount::id($service_account_id)->do('refresh_balances');
+                ServiceAccount::id($service_account_id)->do('sync_balance');
             }
             unset(self::$deleted_service_account_ids[$id]);
         }

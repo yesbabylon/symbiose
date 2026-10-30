@@ -169,6 +169,46 @@ $rollback_fixture = function(array $fixture) {
 };
 
 $tests = [
+    '0100' => [
+        'description' => 'The initial balance seeds the first report and cannot be changed after a report exists.',
+        'arrange'     => function() use($create_fixture) {
+            return $create_fixture([strtotime('2026-07-20')]);
+        },
+        'act'         => function($args) {
+            ServiceAccount::id($args['service_account_id'])
+                ->do('set_initial_balance', ['value' => 100.0]);
+
+            $args['before'] = ServiceAccount::id($args['service_account_id'])
+                ->read(['balance_effective', 'balance_estimated'])
+                ->first(true);
+
+            ServiceAccount::id($args['service_account_id'])->do('generate_report');
+            $args['report'] = Report::search([
+                    ['service_account_id', '=', $args['service_account_id']],
+                    ['status', '=', 'pending']
+                ])
+                ->read(['balance_old'])
+                ->first(true);
+
+            $args['second_initialization_rejected'] = false;
+            try {
+                ServiceAccount::id($args['service_account_id'])
+                    ->do('set_initial_balance', ['value' => 200.0]);
+            }
+            catch(Throwable $throwable) {
+                $args['second_initialization_rejected'] = true;
+            }
+
+            return $args;
+        },
+        'assert'      => function($args) {
+            return (float) $args['before']['balance_effective'] === 100.0
+                && (float) $args['before']['balance_estimated'] === 100.0
+                && (float) $args['report']['balance_old'] === 100.0
+                && $args['second_initialization_rejected'];
+        },
+        'rollback'    => $rollback_fixture
+    ],
     '0101' => [
         'description' => 'Posting a receivable creates one symmetric and idempotent service account entry.',
         'arrange'     => function() use($create_fixture) {

@@ -1,0 +1,23 @@
+{
+    "name": "Définition du solde initial",
+    "description": "Définir le solde effectif avant la création du premier rapport du compte de service.",
+    "model": {
+        "id": {
+            "label": "Compte de service",
+            "description": "Compte de service dont le solde initial doit être défini.",
+            "help": ""
+        },
+        "value": {
+            "label": "Solde initial",
+            "description": "Valeur du solde effectif avant le premier rapport.",
+            "help": "Les valeurs positives et négatives sont acceptées."
+        }
+    },
+    "error": {
+        "errors": {
+            "invalid_service_account": "Le compte de service ciblé est invalide.",
+            "reports_already_exist": "Le solde initial peut uniquement être défini avant la création du premier rapport.",
+            "invalid_initial_balance": "Le solde initial doit être une valeur numérique."
+        }
+    }
+}

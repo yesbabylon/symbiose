@@ -810,7 +810,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
 
         foreach(array_unique($service_accounts_ids) as $service_account_id) {
             ServiceAccount::id($service_account_id)
-                ->do('refresh_balances');
+                ->do('sync_balance');
         }
     }
 
@@ -823,7 +823,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
         foreach($self as $id => $line) {
             if($line['service_account_id']) {
                 ServiceAccount::id($line['service_account_id'])
-                    ->do('refresh_balances');
+                    ->do('sync_balance');
             }
         }
     }
@@ -839,7 +839,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 Report::id($report_id)->update(self::getReportComputedInvalidation());
             }
             if($line['service_account_id']) {
-                ServiceAccount::id($line['service_account_id'])->do('refresh_balances');
+                ServiceAccount::id($line['service_account_id'])->do('sync_balance');
             }
         }
     }
@@ -965,7 +965,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
 
             if($line['service_account_id']) {
                 ServiceAccount::id($line['service_account_id'])
-                    ->do('refresh_balances');
+                    ->do('sync_balance');
             }
             if($line['report_id']) {
                 Report::id($line['report_id'])
@@ -1079,7 +1079,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 Report::id($relations['report_id'])->update(self::getReportComputedInvalidation());
             }
             if(!empty($relations['service_account_id'])) {
-                ServiceAccount::id($relations['service_account_id'])->do('refresh_balances');
+                ServiceAccount::id($relations['service_account_id'])->do('sync_balance');
             }
             unset(self::$deleted_relations[$id]);
         }
