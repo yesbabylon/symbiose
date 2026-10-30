@@ -88,7 +88,7 @@ try {
 
     $canvas = $dompdf->getCanvas();
     $font = $dompdf->getFontMetrics()->getFont('helvetica', 'regular');
-    $canvas->page_text(750, $canvas->get_height() - 35, '{PAGE_NUM} / {PAGE_COUNT}', $font, 10, [0, 0, 0]);
+    $canvas->page_text(770, $canvas->get_height() - 35, 'p. {PAGE_NUM} / {PAGE_COUNT}', $font, 9, [0, 0, 0]);
 
     $output = $dompdf->output();
 }
