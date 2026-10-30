@@ -86,6 +86,9 @@ $default_labels = [
     'report.header.created_on'            => 'Created on',
     'report.header.previous_balance'      => 'Previous balance',
     'report.header.new_balance'           => 'New balance',
+    'report.header.customer_name'         => 'Name',
+    'report.header.customer_address'      => 'Address',
+    'report.header.customer_vat_number'   => 'VAT no.',
     'report.services.title'               => 'Services details',
     'report.services.column.ticket'       => 'Ticket',
     'report.services.column.day'          => 'Day',
@@ -182,6 +185,13 @@ $report = Report::id($params['id'])
                 'name',
                 'customer_external_ref',
                 'ref_account',
+                'address_street',
+                'address_dispatch',
+                'address_zip',
+                'address_city',
+                'address_country',
+                'has_vat',
+                'vat_number',
                 'organization_id' => [
                     'name',
                     'legal_name',
@@ -342,6 +352,16 @@ $customer = $service_account['customer_id'] ?? null;
 $customer_name = $customer['name'] ?? '';
 $customer_ref = $customer['customer_external_ref'] ?? ($customer['ref_account'] ?? '');
 $customer_label = $customer_name.(strlen($customer_ref) ? ' ['.$customer_ref.']' : '');
+$recipient_data = [
+    'name'             => $customer_name,
+    'address_street'   => $customer['address_street'] ?? '',
+    'address_dispatch' => $customer['address_dispatch'] ?? '',
+    'address_zip'      => $customer['address_zip'] ?? '',
+    'address_city'     => $customer['address_city'] ?? '',
+    'address_country'  => $customer['address_country'] ?? '',
+    'has_vat'          => (bool) ($customer['has_vat'] ?? false),
+    'vat_number'       => $customer['vat_number'] ?? ''
+];
 
 $organization_data = [];
 $organization = $customer['organization_id'] ?? null;
@@ -385,6 +405,7 @@ $values = [
     'balance_old'     => (($report['balance_old'] >= 0) ? '+' : '').number_format((float) round($report['balance_old'], 2), 2, '.', ''),
     'balance_new'     => (($report['balance_new'] >= 0) ? '+' : '').number_format((float) round($report['balance_new'], 2), 2, '.', ''),
     'customer'        => $customer_label,
+    'recipient'       => $recipient_data,
     'account_type'    => $service_account['contract_type_id']['name'] ?? '',
     'emission_date'   => date('d/m/Y', $report['created']),
     'period'          => $format_month($report['date']),
