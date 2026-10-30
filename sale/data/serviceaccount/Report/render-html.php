@@ -359,7 +359,8 @@ foreach($report['service_account_entries_ids'] as $line) {
         $who = trim($firstname . ' ' . (strlen($lastname) ? substr($lastname, 0, 1) . '.' : ''));
 
         $map_tt_lines[] = [
-            'description' => ucfirst(substr(str_replace(['<p>', '</p>', '<br />'], ['', '', ' ; '], $description), 0, 128)),
+            // 'description' => ucfirst(substr(str_replace(['<p>', '</p>', '<br />'], ['', '', ' ; '], $description), 0, 128)),
+            'description' => '@@@',
             'contact'     => '',
             'lines'       => [[
                 'date'        => date('d/m/Y', (int) $line['date']),
