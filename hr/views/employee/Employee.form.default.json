@@ -12,7 +12,7 @@
             "description": "Create a user account relating to the Employee.",
             "controller": "hr_employee_Employee_create-user",
             "confirm": false,
-            "visible": [["operators", "in", "user.groups"], ["user_id", "=", null]]
+            "visible": [["users", "in", "user.groups"], ["user_id", "=", null]]
         },
         {
             "id": "action.disable_user_account",
@@ -26,7 +26,7 @@
                 "ids": []
             },
             "confirm": true,
-            "visible": [["operators", "in", "user.groups"], ["user_id", "<>", null]]
+            "visible": [["users", "in", "user.groups"], ["user_id", "<>", null]]
         },
         {
             "id": "action.delete_user_account",
@@ -40,7 +40,7 @@
                 "ids": []
             },
             "confirm": true,
-            "visible": [["operators", "in", "user.groups"], ["user_id", "<>", null]]
+            "visible": [["users", "in", "user.groups"], ["user_id", "<>", null]]
         }
     ],
     "layout": {
