@@ -7,8 +7,6 @@
 namespace communication\email;
 
 use equal\orm\Model;
-use infra\metering\MeteringRecord;
-use infra\metering\MetricDefinition;
 
 class Email extends Model {
 
@@ -23,12 +21,6 @@ class Email extends Model {
 
     public static function getColumns() {
         return [
-            'condo_id' => [
-                'type'              => 'many2one',
-                'description'       => "The condominium the email relates to.",
-                'foreign_object'    => 'realestate\property\Condominium'
-            ],
-
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
@@ -60,20 +52,6 @@ class Email extends Model {
                 'visible'           => ['direction', '=', 'outgoing']
             ],
 
-            'ownership_id' => [
-                'type'              => 'many2one',
-                'description'       => "The ownership that the owner refers to.",
-                'foreign_object'    => 'realestate\ownership\Ownership',
-                'domain'            => ['condo_id', '=', 'object.condo_id']
-            ],
-
-            'suppliership_id' => [
-                'type'              => 'many2one',
-                'description'       => "The suppliership the email relates to, if any.",
-                'foreign_object'    => 'purchase\supplier\Suppliership',
-                'domain'            => ['condo_id', '=', 'object.condo_id']
-            ],
-
             'documents_ids' => [
                 'type'              => 'one2many',
                 'foreign_field'     => 'email_id',
@@ -102,12 +80,6 @@ class Email extends Model {
                 'description'       => 'Names of incoming email attachments ignored during import.',
                 'help'              => 'Contains one ignored attachment name per line.',
                 'visible'           => ['direction', '=', 'incoming']
-            ],
-
-            'case_file_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'tracking\CaseFile',
-                'description'       => 'Optional link to the related case file (incident, quote, etc.).',
             ],
 
             'date' => [
@@ -210,8 +182,7 @@ class Email extends Model {
                     'processed'
                 ],
                 'default'           => 'pending',
-                'description'       => 'Processing status of the email.',
-                'onupdate'          => 'onupdateStatus'
+                'description'       => 'Processing status of the email.'
             ]
 
         ];
@@ -286,29 +257,6 @@ class Email extends Model {
             }
         }
         return $result;
-    }
-
-    protected static function onupdateStatus($self) {
-        $self->read(['direction', 'status']);
-        foreach($self as $email) {
-            if($email['direction'] !== 'outgoing') {
-                continue;
-            }
-            if($email['status'] === 'processed') {
-                $metric_def = MetricDefinition::search(['code', '=', 'email.outbound.count'])
-                    ->read(['id'])
-                    ->first();
-
-                if($metric_def) {
-                    MeteringRecord::create([
-                        'metric_definition_id' => $metric_def['id']
-                    ]);
-                }
-                else {
-                    trigger_error('APP::Unable to retrieve metering record for email counter, missing metric definition "email.outbound.count".', EQ_REPORT_WARNING);
-                }
-            }
-        }
     }
 
 }
