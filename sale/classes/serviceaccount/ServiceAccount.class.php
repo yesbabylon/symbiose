@@ -311,7 +311,7 @@ class ServiceAccount extends \sale\contract\Contract {
                     ['service_account_id', '=', $id],
                     ['status', '=', 'pending']
                 ])
-                ->read(['points', 'receivable_id' => ['origin_object_class']]);
+                ->read(['points']);
             $balance_estimated = $balance_effective;
             foreach($pending_entries as $entry) {
                 $balance_estimated -= $entry['points'];

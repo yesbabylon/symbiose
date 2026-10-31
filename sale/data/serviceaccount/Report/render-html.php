@@ -7,6 +7,7 @@
 
 use sale\serviceaccount\Report;
 use symbiose\setting\Setting;
+use timetrack\TimeEntry;
 use Twig\Environment as TwigEnvironment;
 use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
 
@@ -214,6 +215,7 @@ $report = Report::id($params['id'])
             'contract_type_id' => ['name']
         ],
         'service_account_entries_ids' => [
+            'name',
             'date',
             'start',
             'end',
@@ -291,7 +293,7 @@ foreach($report['service_account_entries_ids'] as $line) {
             'points'      => number_format((float) round($line['points'], 2), 2, '.', '')
         ];
     }
-    elseif(($receivable['origin_object_class'] ?? null) === 'timetrack\TimeEntry') {
+    elseif(($receivable['origin_object_class'] ?? null) === TimeEntry::class) {
         $time_entry = $receivable['time_entry_id'] ?? [];
         $ticket_id = $time_entry['ticket_id'] ?? null;
         $parent_id = $ticket_id
@@ -352,7 +354,16 @@ foreach($report['service_account_entries_ids'] as $line) {
         ];
     }
     else {
-        $description = trim($receivable['description'] ?? $receivable['name'] ?? '');
+        $description = trim((string) ($receivable['description'] ?? ''));
+        if(strlen($description) <= 0) {
+            $description = trim((string) ($receivable['name'] ?? ''));
+        }
+        if(strlen($description) <= 0) {
+            $description = trim((string) ($line['description'] ?? ''));
+        }
+        if(strlen($description) <= 0) {
+            $description = trim((string) ($line['name'] ?? ''));
+        }
 
         $description = trim(strip_tags(str_replace(
             ['<br>', '<br/>', '<br />', '</p>'],

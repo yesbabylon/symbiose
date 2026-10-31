@@ -28,23 +28,6 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'ondelete'          => 'null'
             ],
 
-            'origin_object_class' => [
-                'type'              => 'string',
-                'description'       => 'Entity class that the service account entry originates from.',
-                'default'           => 'timetrack\TimeEntry',
-                'selection'         => [
-                    'sale\SaleEntry',
-                    'timetrack\TimeEntry',
-                    'sale\subscription\SubscriptionEntry'
-                ]
-            ],
-
-            'origin_object_id' => [
-                'type'              => 'integer',
-                'description'       => 'Object identifier, as a complement to origin_object_class.',
-                'dependents'        => ['date', 'start', 'end', 'pause_time', 'delta_time', 'duration']
-            ],
-
             'service_account_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\serviceaccount\ServiceAccount',
@@ -297,7 +280,6 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'description',
                 'date',
                 'origin_object_class',
-                'origin_object_id',
                 'employee_id',
                 'service_account_entry_id',
                 'time_entry_id' => [
@@ -344,13 +326,16 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'name'                => $receivable['name'] ?? '',
                 'description'         => $receivable['description'] ?? '',
                 'date'                => $time_entry['date'] ?? $receivable['date'] ?? time(),
-                'origin_object_class' => $receivable['origin_object_class'] ?? null,
-                'origin_object_id'    => $receivable['origin_object_id'] ?? null,
                 'employee_id'         => $receivable['employee_id'] ?? null,
                 'travel_time'         => (int) ($time_entry['travel_time'] ?? 0),
                 'on_site'             => (bool) ($time_entry['on_site'] ?? false),
                 'helpdesk'            => (($time_entry['origin'] ?? null) === 'support'),
-                'priority'            => (int) ($time_entry['priority'] ?? 2)
+                'priority'            => (int) ($time_entry['priority'] ?? 2),
+                'start'               => null,
+                'end'                 => null,
+                'pause_time'          => null,
+                'delta_time'          => null,
+                'duration'            => null
             ]);
 
             if(!$inverse_id) {
