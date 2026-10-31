@@ -204,7 +204,8 @@ class Document extends Model {
                 'usage'             => 'image/jpeg',
                 'function'          => 'calcPreviewImage',
                 'description'       => 'Thumbnail of the document.',
-                'store'             => true
+                'store'             => true,
+                'instant'           => false
             ],
 
             'template_attachments_ids' => [

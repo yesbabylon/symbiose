@@ -28,7 +28,7 @@ class Report extends \equal\orm\Model {
                 'type'              => 'date',
                 'description'       => 'Last calendar day of the reporting period.',
                 'help'              => 'This date is determined by the account reporting frequency.',
-                'default'           => time(),
+                'default'           => fn() => time(),
                 'dependents'        => ['name']
             ],
 
@@ -556,8 +556,13 @@ class Report extends \equal\orm\Model {
      */
     protected static function calcLink($self) {
         $result = [];
+        $self->read(['status', 'document_id' => ['hash']]);
         foreach($self as $id => $report) {
-            $result[$id] = '/?get=sale_serviceaccount_Report_render-pdf&id='.$id;
+            if($report['status'] === 'pending') {
+                $result[$id] = '/?get=sale_serviceaccount_Report_render-pdf&id='.$id;
+                continue;
+            }
+            $result[$id] = '/document/' . $report['document_id']['hash'];
         }
         return $result;
     }

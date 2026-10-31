@@ -1,108 +1,124 @@
 {
-    "description": "",
+    "description": "Menu des ventes.",
     "view": {
         "customers": {
             "label": "Clients",
             "help": ""
         },
-        "settings.customers.types": {
-            "label": "Types de client",
-            "help": ""
-        },
-        "settings.customers.natures": {
-            "label": "Natures de client",
-            "help": ""
-        },
-        "customers.new_customer": {
-            "label": "Nouveau client",
-            "help": ""
-        },
-        "customers.customers": {
+        "customers.all": {
             "label": "Tous les clients",
             "help": ""
         },
-        "fundings": {
-            "label": "Financements",
+        "customers.archived": {
+            "label": "Clients archivés",
             "help": ""
         },
-        "fundings.waiting": {
-            "label": "Paiements en attente",
+        "commercial_activity": {
+            "label": "Activité commerciale",
             "help": ""
         },
-        "fundings.overdue": {
-            "label": "Paiements en retard",
-            "help": ""
-        },
-        "invoices": {
-            "label": "Factures",
-            "help": ""
-        },
-        "invoices.invoices": {
-            "label": "Toutes les factures",
-            "help": ""
-        },
-        "invoices.overdue": {
-            "label": "Factures en retard",
-            "help": ""
-        },
-        "contracts": {
-            "label": "Contrats",
-            "help": ""
-        },
-        "contracts.contracts": {
-            "label": "Tous les contrats",
-            "help": ""
-        },
-        "contracts.serviceaccounts": {
-            "label": "Comptes de service",
-            "help": ""
-        },
-        "contracts.reports": {
-            "label": "Rapports",
-            "help": ""
-        },
-        "orders": {
+        "commercial_activity.orders": {
             "label": "Commandes",
             "help": ""
         },
-        "orders.new": {
-            "label": "Nouvelle",
+        "commercial_activity.contracts": {
+            "label": "Contrats",
             "help": ""
         },
-        "orders.all": {
-            "label": "Toutes",
+        "commercial_activity.subscriptions": {
+            "label": "Abonnements",
             "help": ""
         },
-        "receivables": {
+        "commercial_activity.service_accounts": {
+            "label": "Comptes de service",
+            "help": ""
+        },
+        "commercial_activity.sale_entries": {
+            "label": "Éléments de vente",
+            "help": ""
+        },
+        "billing": {
+            "label": "Facturation",
+            "help": ""
+        },
+        "billing.to_bill": {
+            "label": "À facturer",
+            "help": ""
+        },
+        "billing.queues": {
+            "label": "Files de facturation",
+            "help": ""
+        },
+        "billing.receivables": {
             "label": "Créances",
             "help": ""
         },
-        "receivables.queues": {
-            "label": "Files",
+        "billing.invoices": {
+            "label": "Factures",
             "help": ""
         },
-        "receivables.receivables": {
-            "label": "Toutes",
+        "billing.credit_notes": {
+            "label": "Avoirs",
             "help": ""
         },
-        "item.receivable.open": {
-            "label": "Ouvert",
+        "catalog": {
+            "label": "Catalogue",
             "help": ""
         },
-        "item.receivable.settled": {
-            "label": "Soldé",
+        "catalog.products": {
+            "label": "Produits",
             "help": ""
         },
-        "orders.group.all": {
-            "label": "Groupes",
+        "catalog.product_models": {
+            "label": "Modèles de produits",
             "help": ""
         },
-        "orders.group.line.all": {
-            "label": "Lignes",
+        "catalog.categories": {
+            "label": "Catégories",
             "help": ""
         },
-        "sales.sale_models": {
-            "label": "Modeles de vente",
+        "catalog.families": {
+            "label": "Familles",
+            "help": ""
+        },
+        "catalog.prices": {
+            "label": "Prix",
+            "help": ""
+        },
+        "catalog.price_lists": {
+            "label": "Listes de prix",
+            "help": ""
+        },
+        "catalog.sale_models": {
+            "label": "Modèles de vente",
+            "help": ""
+        },
+        "settings": {
+            "label": "Configuration",
+            "help": ""
+        },
+        "settings.customer_types": {
+            "label": "Types de clients",
+            "help": ""
+        },
+        "settings.customer_natures": {
+            "label": "Natures de clients",
+            "help": ""
+        },
+        "settings.payment_deadlines": {
+            "label": "Échéances de paiement",
+            "help": ""
+        },
+        "settings.payment_terms": {
+            "label": "Conditions de paiement",
+            "help": ""
+        },
+        "settings.funding_plans": {
+            "label": "Plans de financement",
+            "help": ""
+        },
+        "settings.terms": {
+            "label": "Conditions générales",
             "help": ""
         }
     }
