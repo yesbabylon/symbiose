@@ -200,6 +200,18 @@
                                                 "readonly": true
                                             }
                                         ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "document_id",
+                                                "label": "Published PDF",
+                                                "width": "100%",
+                                                "readonly": true
+                                            }
+                                        ]
                                     }
                                 ]
                             }

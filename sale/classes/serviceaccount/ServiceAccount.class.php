@@ -173,120 +173,100 @@ class ServiceAccount extends \sale\contract\Contract {
     protected static function doGenerateReport($self, $values = []) {
         $self->read(['is_active', 'reporting_from', 'reporting_frequency', 'date_from']);
 
-        ['db' => $db_connector] = \eQual::inject(['db']);
-        $db = $db_connector->connect();
-        if(!$db) {
-            throw new \Exception('missing_database', EQ_ERROR_INVALID_CONFIG);
-        }
 
-        $manage_transaction = !isset($values['manage_transaction']) || $values['manage_transaction'];
-        if($manage_transaction) {
-            $db->sendQuery('START TRANSACTION;');
-        }
-        try {
-            foreach($self as $id => $service_account) {
-                if(!$service_account['is_active']) {
-                    throw new \Exception('inactive_service_account', EQ_ERROR_INVALID_PARAM);
-                }
-
-                $pending_reports_ids = Report::search([
-                        ['service_account_id', '=', $id],
-                        ['status', '=', 'pending']
-                    ], [
-                        'sort'  => ['date' => 'desc', 'id' => 'desc'],
-                        'limit' => 2
-                    ])
-                    ->ids();
-
-                if(count($pending_reports_ids) > 1) {
-                    throw new \Exception('multiple_pending_reports', EQ_ERROR_INVALID_PARAM);
-                }
-
-                $report_id = reset($pending_reports_ids) ?: null;
-                if($report_id) {
-                    $report = Report::id($report_id)
-                        ->read(['id', 'date', 'date_from'])
-                        ->first();
-                }
-                else {
-                    $date_from = self::computeNextPeriodStart($id, $service_account);
-                    $date_to = self::computePeriodEnd($date_from, $service_account['reporting_frequency'] ?? 'monthly');
-
-                    $report = Report::create([
-                            'date'               => $date_to,
-                            'service_account_id' => $id,
-                            'status'             => 'pending'
-                        ])
-                        ->read(['id', 'date', 'date_from'])
-                        ->first();
-
-                    if(!$report) {
-                        throw new \Exception('report_creation_failed', EQ_ERROR_INVALID_PARAM);
-                    }
-                    $report_id = $report['id'];
-                }
-
-                $next_day = strtotime('+1 day', (int) $report['date']);
-
-                // Keep entries after the cut-off available for a later report.
-                $future_entries_ids = ServiceAccountEntry::search([
-                        ['report_id', '=', $report_id],
-                        ['status', '=', 'pending'],
-                        ['date', '>=', $next_day]
-                    ])
-                    ->ids();
-                if($future_entries_ids) {
-                    ServiceAccountEntry::ids($future_entries_ids)->update(['report_id' => null]);
-                }
-
-                $entries_ids = ServiceAccountEntry::search([
-                        ['service_account_id', '=', $id],
-                        ['status', '=', 'pending'],
-                        ['report_id', '=', null],
-                        ['date', '<', $next_day]
-                    ], [
-                        'sort' => ['date' => 'asc', 'id' => 'asc']
-                    ])
-                    ->ids();
-
-                if($entries_ids) {
-                    ServiceAccountEntry::ids($entries_ids)
-                        ->write(['report_id' => $report_id]);
-                }
-
-                Report::id($report_id)
-                    ->write([
-                        'date_from'     => null,
-                        'has_lines'     => null,
-                        'is_empty'      => null,
-                        'total_points'  => null,
-                        'total_credits' => null,
-                        'balance_old'   => null,
-                        'balance_new'   => null,
-                        'is_sendable'   => null,
-                    ])
-                    ->read([
-                        'date_from',
-                        'has_lines',
-                        'is_empty',
-                        'total_points',
-                        'total_credits',
-                        'balance_old',
-                        'balance_new',
-                        'is_sendable'
-                    ]);
-
-                self::id($id)->do('sync_balance');
+        foreach($self as $id => $service_account) {
+            if(!$service_account['is_active']) {
+                throw new \Exception('inactive_service_account', EQ_ERROR_INVALID_PARAM);
             }
-            if($manage_transaction) {
-                $db->sendQuery('COMMIT;');
+
+            $pending_reports_ids = Report::search([
+                    ['service_account_id', '=', $id],
+                    ['status', '=', 'pending']
+                ], [
+                    'sort'  => ['date' => 'desc', 'id' => 'desc'],
+                    'limit' => 2
+                ])
+                ->ids();
+
+            if(count($pending_reports_ids) > 1) {
+                throw new \Exception('multiple_pending_reports', EQ_ERROR_INVALID_PARAM);
             }
-        }
-        catch(\Throwable $throwable) {
-            if($manage_transaction) {
-                $db->sendQuery('ROLLBACK;');
+
+            $report_id = reset($pending_reports_ids) ?: null;
+            if($report_id) {
+                $report = Report::id($report_id)
+                    ->read(['id', 'date', 'date_from'])
+                    ->first();
             }
-            throw $throwable;
+            else {
+                $date_from = self::computeNextPeriodStart($id, $service_account);
+                $date_to = self::computePeriodEnd($date_from, $service_account['reporting_frequency'] ?? 'monthly');
+
+                $report = Report::create([
+                        'date'               => $date_to,
+                        'service_account_id' => $id,
+                        'status'             => 'pending'
+                    ])
+                    ->read(['id', 'date', 'date_from'])
+                    ->first();
+
+                if(!$report) {
+                    throw new \Exception('report_creation_failed', EQ_ERROR_INVALID_PARAM);
+                }
+                $report_id = $report['id'];
+            }
+
+            $next_day = strtotime('+1 day', (int) $report['date']);
+
+            // Keep entries after the cut-off available for a later report.
+            $future_entries_ids = ServiceAccountEntry::search([
+                    ['report_id', '=', $report_id],
+                    ['status', '=', 'pending'],
+                    ['date', '>=', $next_day]
+                ])
+                ->ids();
+            if($future_entries_ids) {
+                ServiceAccountEntry::ids($future_entries_ids)->update(['report_id' => null]);
+            }
+
+            $entries_ids = ServiceAccountEntry::search([
+                    ['service_account_id', '=', $id],
+                    ['status', '=', 'pending'],
+                    ['report_id', '=', null],
+                    ['date', '<', $next_day]
+                ], [
+                    'sort' => ['date' => 'asc', 'id' => 'asc']
+                ])
+                ->ids();
+
+            if($entries_ids) {
+                ServiceAccountEntry::ids($entries_ids)
+                    ->write(['report_id' => $report_id]);
+            }
+
+            Report::id($report_id)
+                ->write([
+                    'date_from'     => null,
+                    'has_lines'     => null,
+                    'is_empty'      => null,
+                    'total_points'  => null,
+                    'total_credits' => null,
+                    'balance_old'   => null,
+                    'balance_new'   => null,
+                    'is_sendable'   => null,
+                ])
+                ->read([
+                    'date_from',
+                    'has_lines',
+                    'is_empty',
+                    'total_points',
+                    'total_credits',
+                    'balance_old',
+                    'balance_new',
+                    'is_sendable'
+                ]);
+
+            self::id($id)->do('sync_balance');
         }
     }
 

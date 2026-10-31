@@ -11,8 +11,6 @@ use sale\receivable\Receivable;
 
 class ServiceAccountEntry extends \equal\orm\Model {
 
-    private static $status_transition_ids = [];
-
     public static function getColumns() {
 
         return [
@@ -254,11 +252,6 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'policies'    => [],
                 'function'    => 'doComputePoints'
             ],
-            'release' => [
-                'description' => 'Irreversibly release entries whose report has been finalized.',
-                'policies'    => [],
-                'function'    => 'doRelease'
-            ],
             'unpost' => [
                 'description' => 'Delete pending entries and reopen their originating receivables.',
                 'policies'    => ['is_pending'],
@@ -347,35 +340,6 @@ class ServiceAccountEntry extends \equal\orm\Model {
 
         if($synced_ids) {
             self::ids($synced_ids)->do('compute_points');
-        }
-    }
-
-    protected static function doRelease($self) {
-        $self->read(['status', 'report_id']);
-        $release_ids = [];
-        foreach($self as $id => $line) {
-            if($line['status'] === 'released') {
-                continue;
-            }
-            $report = $line['report_id']
-                ? Report::id($line['report_id'])->read(['status'])->first(true)
-                : null;
-            if(!$report || $report['status'] === 'pending') {
-                throw new \Exception('entry_report_not_released', EQ_ERROR_NOT_ALLOWED);
-            }
-            self::$status_transition_ids[$id] = true;
-            $release_ids[] = $id;
-        }
-
-        try {
-            foreach($release_ids as $id) {
-                self::id($id)->update(['status' => 'released']);
-            }
-        }
-        finally {
-            foreach($self->ids() as $id) {
-                unset(self::$status_transition_ids[$id]);
-            }
         }
     }
 
@@ -1042,7 +1006,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
     public static function canupdate($self, $values) {
         $self->read(['date', 'receivable_id', 'service_account_id', 'report_id' => ['id', 'status']]);
         foreach($self as $id => $line) {
-            if(array_key_exists('status', $values) && !isset(self::$status_transition_ids[$id])) {
+            if(array_key_exists('status', $values)) {
                 return ['status' => ['non_editable' => 'Entry status can only be changed by releasing its report.']];
             }
 

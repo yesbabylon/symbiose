@@ -8,6 +8,11 @@
             "description": "Identifiant lisible du rapport.",
             "help": "Identifiant généré automatiquement à partir de l'année et du numéro du rapport."
         },
+        "document_id": {
+            "label": "PDF publié",
+            "description": "Document PDF généré lors de la validation du rapport.",
+            "help": "Ce document conserve la version définitive du rapport validé."
+        },
         "is_sendable": {
             "label": "Envoyable",
             "description": "Indique si le rapport est prêt à être envoyé au client.",
@@ -75,7 +80,8 @@
             "entry_after_period": "Le rapport contient une ligne postérieure à sa date de fin.",
             "unknown_report": "Le rapport demandé est introuvable.",
             "report_rendering_failed": "Le rapport HTML n’a pas pu être généré.",
-            "report_generation_failed": "Le rapport PDF n’a pas pu être généré."
+            "report_generation_failed": "Le rapport PDF n’a pas pu être généré.",
+            "report_document_creation_failed": "Le document PDF du rapport n’a pas pu être créé."
         }
     }
 }

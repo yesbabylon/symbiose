@@ -1,5 +1,6 @@
 <?php
 
+use document\document\Document;
 use sale\contract\ContractType;
 use sale\catalog\Family;
 use sale\catalog\Product;
@@ -141,15 +142,21 @@ $rollback_fixture = function(array $fixture) {
         $db->sendQuery("DELETE FROM `sale_serviceaccount_serviceaccountentry` WHERE id IN ({$safe_entry_ids});");
     }
 
-    $report_ids = Report::search([
+    $reports = Report::search([
             ['service_account_id', '=', $fixture['service_account_id']]
         ])
-        ->ids();
+        ->read(['document_id'])
+        ->toArray();
+    $report_ids = array_column($reports, 'id');
+    $document_ids = array_values(array_filter(array_column($reports, 'document_id')));
     if($report_ids) {
         ['db' => $db_connector] = eQual::inject(['db']);
         $db = $db_connector->connect();
         $safe_report_ids = implode(',', array_map('intval', $report_ids));
         $db->sendQuery("DELETE FROM `sale_serviceaccount_report` WHERE id IN ({$safe_report_ids});");
+    }
+    if($document_ids) {
+        Document::ids($document_ids)->delete(true);
     }
 
     if(!empty($fixture['receivable_ids'])) {
@@ -357,7 +364,7 @@ $tests = [
         'rollback'    => $rollback_fixture
     ],
     '0104' => [
-        'description' => 'Deleting a pending report detaches its entries and keeps them in the estimated balance.',
+        'description' => 'A pending report with entries cannot be deleted.',
         'arrange'     => function() use($create_fixture) {
             $fixture = $create_fixture([strtotime('2026-07-20')]);
             ServiceAccountEntry::id($fixture['entry_ids'][0])->update(['points' => 10.0]);
@@ -371,10 +378,23 @@ $tests = [
                 ])
                 ->read(['id'])
                 ->first(true);
-            Report::id($report['id'])->delete(true);
+
+            $deletion_rejected = false;
+            try {
+                Report::id($report['id'])->delete(true);
+            }
+            catch(Throwable $throwable) {
+                $deletion_rejected = true;
+            }
+
+            $args['report_id'] = $report['id'];
+            $args['deletion_rejected'] = $deletion_rejected;
             return $args;
         },
         'assert'      => function($args) {
+            $report = Report::id($args['report_id'])
+                ->read(['status'])
+                ->first(true);
             $entry = ServiceAccountEntry::id($args['entry_ids'][0])
                 ->read(['report_id', 'status'])
                 ->first(true);
@@ -382,7 +402,9 @@ $tests = [
                 ->read(['balance_effective', 'balance_estimated'])
                 ->first(true);
 
-            return is_null($entry['report_id'])
+            return $args['deletion_rejected']
+                && $report['status'] === 'pending'
+                && (int) $entry['report_id'] === (int) $args['report_id']
                 && $entry['status'] === 'pending'
                 && (float) $account['balance_effective'] === 0.0
                 && (float) $account['balance_estimated'] === -10.0;
@@ -408,6 +430,7 @@ $tests = [
 
             $future_assignment_rejected = false;
             $second_draft_rejected = false;
+            $invalid_status_rejected = false;
             try {
                 ServiceAccountEntry::id($args['entry_ids'][1])->update(['report_id' => $report['id']]);
             }
@@ -424,10 +447,21 @@ $tests = [
             catch(Throwable $throwable) {
                 $second_draft_rejected = true;
             }
+            try {
+                Report::create([
+                    'service_account_id' => $args['service_account_id'],
+                    'date'               => $report['date'],
+                    'status'             => 'released'
+                ]);
+            }
+            catch(Throwable $throwable) {
+                $invalid_status_rejected = true;
+            }
 
             $args['report_id'] = $report['id'];
             $args['future_assignment_rejected'] = $future_assignment_rejected;
             $args['second_draft_rejected'] = $second_draft_rejected;
+            $args['invalid_status_rejected'] = $invalid_status_rejected;
             return $args;
         },
         'assert'      => function($args) {
@@ -443,7 +477,8 @@ $tests = [
                 && empty($future['report_id'])
                 && $future['status'] === 'pending'
                 && $args['future_assignment_rejected']
-                && $args['second_draft_rejected'];
+                && $args['second_draft_rejected']
+                && $args['invalid_status_rejected'];
         },
         'rollback'    => $rollback_fixture
     ],
@@ -639,5 +674,39 @@ $tests = [
             Project::id($args['project_id'])->delete(true);
             $rollback_fixture($args);
         }
+    ],
+    '0110' => [
+        'description' => 'Releasing a report stores its final PDF as a referenced document.',
+        'arrange'     => function() use($create_fixture) {
+            return $create_fixture([strtotime('2026-07-20')]);
+        },
+        'act'         => function($args) {
+            ServiceAccount::id($args['service_account_id'])->do('generate_report');
+            $report = Report::search([
+                    ['service_account_id', '=', $args['service_account_id']],
+                    ['status', '=', 'pending']
+                ])
+                ->read(['id'])
+                ->first(true);
+
+            Report::id($report['id'])->do('release');
+            $args['report'] = Report::id($report['id'])
+                ->read([
+                    'status',
+                    'document_id' => ['name', 'content_type', 'content_size']
+                ])
+                ->first(true);
+            return $args;
+        },
+        'assert'      => function($args) {
+            $document = $args['report']['document_id'] ?? null;
+
+            return $args['report']['status'] === 'released'
+                && !empty($document['id'])
+                && str_ends_with($document['name'], '.pdf')
+                && $document['content_type'] === 'application/pdf'
+                && (int) $document['content_size'] > 0;
+        },
+        'rollback'    => $rollback_fixture
     ]
 ];
