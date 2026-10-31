@@ -23,7 +23,8 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\receivable\Receivable',
                 'description'       => 'Receivable from which the accounting snapshot originates.',
-                'ondelete'          => 'null'
+                'ondelete'          => 'null',
+                'readonly'          => true
             ],
 
             'service_account_id' => [
@@ -31,7 +32,8 @@ class ServiceAccountEntry extends \equal\orm\Model {
                 'foreign_object'    => 'sale\serviceaccount\ServiceAccount',
                 'description'       => 'The service account the line belongs to.',
                 'onupdate'          => 'onupdateServiceAccountId',
-                'dependents'        => ['customer_id']
+                'dependents'        => ['customer_id'],
+                'readonly'          => true
             ],
 
             'customer_id' => [
@@ -215,6 +217,10 @@ class ServiceAccountEntry extends \equal\orm\Model {
             'is_pending' => [
                 'description' => 'Check that service account entries are still pending.',
                 'function'    => 'policyIsPending'
+            ],
+            'is_within_report_period' => [
+                'description' => 'Check that service account entries remain within their report period.',
+                'function'    => 'policyIsWithinReportPeriod'
             ]
         ]);
     }
@@ -222,7 +228,9 @@ class ServiceAccountEntry extends \equal\orm\Model {
     public static function getOperationPolicies(): array {
         return array_replace_recursive(parent::getOperationPolicies(), [
             EQ_R_UPDATE => [
-                '*' => ['is_pending']
+                '*'             => ['is_pending', 'is_within_report_period'],
+                'report_id'     => ['is_pending', 'is_within_report_period'],
+                'status'        => ['is_pending']
             ]
         ]);
     }
@@ -238,6 +246,39 @@ class ServiceAccountEntry extends \equal\orm\Model {
             }
         }
         return $result;
+    }
+
+    protected static function policyIsWithinReportPeriod($self, $values): array {
+        $self->read(['date', 'report_id' => ['id']]);
+        foreach($self as $id => $line) {
+            $target_report_id = array_key_exists('report_id', $values)
+                ? $values['report_id']
+                : ($line['report_id']['id'] ?? null);
+            if(
+                !$target_report_id
+                || !array_intersect(['report_id', 'service_account_id', 'date'], array_keys($values))
+            ) {
+                continue;
+            }
+
+            $report = Report::id($target_report_id)
+                ->read(['date'])
+                ->first();
+
+            if(!$report) {
+                continue;
+            }
+
+            $date = $values['date'] ?? $line['date'];
+            if($date && (int) $date >= strtotime('+1 day', (int) $report['date'])) {
+                return [
+                    $id => [
+                        'date_after_period' => 'The entry date is after the report period end.'
+                    ]
+                ];
+            }
+        }
+        return [];
     }
 
     public static function getActions() {
@@ -994,56 +1035,6 @@ class ServiceAccountEntry extends \equal\orm\Model {
                     ]);
             }
         }
-    }
-
-    /**
-     * Check whether an object can be updated, and perform some additional operations if necessary.
-     * This method can be overridden to define a more precise set of tests.
-     *
-     * @param  \equal\orm\Collection    $self   Collection of objects of current class.
-     * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
-     */
-    public static function canupdate($self, $values) {
-        $self->read(['date', 'receivable_id', 'service_account_id', 'report_id' => ['id', 'status']]);
-        foreach($self as $id => $line) {
-            if(array_key_exists('status', $values)) {
-                return ['status' => ['non_editable' => 'Entry status can only be changed by releasing its report.']];
-            }
-
-            if(
-                array_key_exists('receivable_id', $values)
-                && $line['receivable_id']
-                && (int) $values['receivable_id'] !== (int) $line['receivable_id']
-            ) {
-                return ['receivable_id' => ['non_editable' => 'The originating receivable cannot be replaced.']];
-            }
-
-            $target_report_id = array_key_exists('report_id', $values)
-                ? $values['report_id']
-                : ($line['report_id']['id'] ?? null);
-            if(
-                $target_report_id
-                && array_intersect(['report_id', 'service_account_id', 'date'], array_keys($values))
-            ) {
-                $report = Report::id($target_report_id)
-                    ->read(['id', 'status', 'service_account_id', 'date'])
-                    ->first();
-                if(!$report || $report['status'] !== 'pending') {
-                    return ['report_id' => ['report_not_pending' => 'The target report must be pending.']];
-                }
-
-                $service_account_id = $values['service_account_id'] ?? $line['service_account_id'];
-                if((int) $report['service_account_id'] !== (int) $service_account_id) {
-                    return ['report_id' => ['account_mismatch' => 'The report and entry must belong to the same service account.']];
-                }
-
-                $date = $values['date'] ?? $line['date'];
-                if($date && (int) $date >= strtotime('+1 day', (int) $report['date'])) {
-                    return ['report_id' => ['date_after_period' => 'The entry date is after the report period end.']];
-                }
-            }
-        }
-        return parent::canupdate($self, $values);
     }
 
     public static function candelete($self) {
