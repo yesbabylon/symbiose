@@ -1,0 +1,125 @@
+{
+    "name": "Mailbox",
+    "description": "Review incoming and outgoing emails for a mailbox.",
+    "routes": [
+        {
+            "id": "item.config",
+            "label": "Settings",
+            "description": "Configure the mailbox.",
+            "icon": "settings",
+            "visible": ["admins", "in", "user.groups"],
+            "context": {
+                "entity": "communication\\email\\Mailbox",
+                "view": "form.config",
+                "domain": ["id", "=", "object.id"]
+            }
+        }
+    ],
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "67%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "email",
+                                                "width": "100%",
+                                                "readonly": true,
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "50%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date_last_sync",
+                                                "width": "50%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "can_send",
+                                                "width": "50%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "can_receive",
+                                                "width": "50%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.incoming",
+                        "label": "Inbox",
+                        "visible": ["can_receive", "=", true],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "incoming_emails_ids",
+                                                "width": "100%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.outgoing",
+                        "label": "Outbox",
+                        "visible": ["can_send", "=", true],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "outgoing_emails_ids",
+                                                "width": "100%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

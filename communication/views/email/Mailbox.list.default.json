@@ -1,0 +1,47 @@
+{
+    "name": "Mailboxes",
+    "description": "List of configured mailboxes.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "email",
+                "width": "30%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "auth_type",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "auth_provider",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "can_send",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "can_receive",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "date_last_sync",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "15%",
+                "sortable": true
+            }
+        ]
+    }
+}

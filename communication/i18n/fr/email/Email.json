@@ -1,0 +1,164 @@
+{
+    "name": "Email",
+    "plural": "Emails",
+    "description": "Messages électroniques entrants et sortants.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom de l'email, calculé à partir de son objet.",
+            "help": ""
+        },
+        "message_id": {
+            "label": "Identifiant du message",
+            "description": "Identifiant Internet unique du message.",
+            "help": "Valeur Message-ID définie par la RFC 5322."
+        },
+        "mailbox_id": {
+            "label": "Boîte mail",
+            "description": "Boîte mail utilisée pour envoyer ou recevoir ce message.",
+            "help": ""
+        },
+        "outgoing_attachment_documents_ids": {
+            "label": "Pièces jointes à envoyer",
+            "description": "Documents joints à ce message sortant.",
+            "help": "Un même document peut être joint à plusieurs emails sortants."
+        },
+        "incoming_attachment_documents_ids": {
+            "label": "Pièces jointes reçues",
+            "description": "Documents importés depuis les pièces jointes de ce message entrant.",
+            "help": "Ces documents référencent cet email comme objet source."
+        },
+        "incoming_attachment_import_status": {
+            "label": "Import des pièces jointes reçues",
+            "description": "Résultat de l'import des pièces jointes du message entrant.",
+            "help": "Les images intégrées au corps du message, comme les signatures, peuvent être ignorées.",
+            "selection": {
+                "pending": "En attente",
+                "complete": "Complet",
+                "unsupported": "Format non pris en charge",
+                "missing": "Aucune pièce jointe"
+            }
+        },
+        "incoming_attachment_import_log": {
+            "label": "Journal d'import des pièces jointes reçues",
+            "description": "Noms des pièces jointes ignorées lors de l'import.",
+            "help": "Une pièce jointe ignorée est affichée par ligne."
+        },
+        "date": {
+            "label": "Date",
+            "description": "Date et heure du message.",
+            "help": ""
+        },
+        "direction": {
+            "label": "Sens",
+            "description": "Indique si le message est entrant ou sortant.",
+            "help": "",
+            "selection": {
+                "outgoing": "Sortant",
+                "incoming": "Entrant"
+            }
+        },
+        "thread_hash": {
+            "label": "Identifiant de conversation",
+            "description": "Empreinte de l'objet normalisé servant à regrouper les conversations.",
+            "help": "Les préfixes de réponse et de transfert sont ignorés."
+        },
+        "to": {
+            "label": "Destinataire(s)",
+            "description": "Adresses principales des destinataires.",
+            "help": ""
+        },
+        "from": {
+            "label": "Expéditeur",
+            "description": "Adresse ayant envoyé le message.",
+            "help": ""
+        },
+        "reply_to": {
+            "label": "Répondre à",
+            "description": "Adresse à utiliser pour répondre au message.",
+            "help": ""
+        },
+        "cc": {
+            "label": "Copie",
+            "description": "Adresses en copie du message.",
+            "help": "Séparez plusieurs adresses par des virgules."
+        },
+        "bcc": {
+            "label": "Copie cachée",
+            "description": "Adresses en copie cachée du message.",
+            "help": "Séparez plusieurs adresses par des virgules."
+        },
+        "subject": {
+            "label": "Objet",
+            "description": "Objet du message.",
+            "help": ""
+        },
+        "body": {
+            "label": "Corps",
+            "description": "Contenu HTML du message.",
+            "help": ""
+        },
+        "object_class": {
+            "label": "Classe de l'objet source",
+            "description": "Classe de l'objet métier à l'origine de l'email.",
+            "help": "Ce champ est utilisé avec l'identifiant de l'objet source."
+        },
+        "object_id": {
+            "label": "Identifiant de l'objet source",
+            "description": "Identifiant de l'objet métier à l'origine de l'email.",
+            "help": "Ce champ est utilisé avec la classe de l'objet source."
+        },
+        "has_error": {
+            "label": "Erreur d'envoi",
+            "description": "Indique si le serveur SMTP a retourné une erreur.",
+            "help": ""
+        },
+        "response_status": {
+            "label": "Code SMTP",
+            "description": "Code de réponse retourné par le serveur SMTP.",
+            "help": ""
+        },
+        "response": {
+            "label": "Réponse SMTP",
+            "description": "Réponse retournée par le serveur lors de l'envoi.",
+            "help": ""
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut de traitement de l'email.",
+            "help": "",
+            "selection": {
+                "pending": "En attente",
+                "processed": "Traité"
+            }
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Email",
+            "description": "Consulter ou composer un email entrant ou sortant.",
+            "layout": {
+                "section.message": {
+                    "label": "Message"
+                },
+                "section.attachments": {
+                    "label": "Pièces jointes"
+                },
+                "section.attachment_import": {
+                    "label": "Import des pièces jointes"
+                },
+                "section.delivery": {
+                    "label": "Envoi"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Emails",
+            "description": "Liste des emails entrants et sortants."
+        }
+    },
+    "error": {
+        "invalid_direction": "Seuls les emails entrants peuvent être marqués manuellement comme complets.",
+        "invalid_attachment_import_status": "Seul un import contenant des pièces jointes non prises en charge peut être marqué manuellement comme complet."
+    }
+}
