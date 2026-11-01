@@ -181,7 +181,8 @@ try {
             'name'                  => sprintf('%s(%d).xlsx', $source_basename, $statement_index + 1),
             'data'                  => $buildStatementXlsx($statement),
             'origin_document_id'    => $import['document_id']['id'],
-            'origin_relation_type'  => 'segment'
+            'origin_relation_type'  => 'segment',
+            'source'                => 'processing'
         ];
         if($document_type) {
             $document_values['document_type_id'] = $document_type['id'];

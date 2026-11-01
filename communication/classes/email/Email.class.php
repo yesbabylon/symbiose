@@ -40,9 +40,9 @@ class Email extends Model {
                 'foreign_object'    => 'communication\email\Mailbox'
             ],
 
-            'attachment_documents_ids' => [
+            'outgoing_attachment_documents_ids' => [
                 'type'              => 'many2many',
-                'foreign_object'    => 'documents\Document',
+                'foreign_object'    => 'document\document\Document',
                 'foreign_field'     => 'attached_emails_ids',
                 'rel_table'         => 'communication_email_rel_documents',
                 'rel_foreign_key'   => 'document_id',
@@ -52,16 +52,19 @@ class Email extends Model {
                 'visible'           => ['direction', '=', 'outgoing']
             ],
 
-            'documents_ids' => [
+            'incoming_attachment_documents_ids' => [
                 'type'              => 'one2many',
-                'foreign_field'     => 'email_id',
-                'foreign_object'    => 'documents\Document',
-                'description'       => 'Documents attached to the email.',
-                'help'              => 'Document that was created when importing attachment from the email message.',
+                'foreign_object'    => 'document\document\Document',
+                'foreign_field'     => 'source_object_id',
+                'domain'            => [
+                    ['source_object_class', '=', 'communication\email\Email'],
+                    ['source', '=', 'email']
+                ],
+                'description'       => 'Documents imported from incoming email attachments.',
                 'visible'           => ['direction', '=', 'incoming']
             ],
 
-            'attachment_import_status' => [
+            'incoming_attachment_import_status' => [
                 'type'              => 'string',
                 'selection'         => [
                     'pending',
@@ -74,7 +77,7 @@ class Email extends Model {
                 'visible'           => ['direction', '=', 'incoming']
             ],
 
-            'ignored_attachments_log' => [
+            'incoming_attachment_import_log' => [
                 'type'              => 'string',
                 'usage'             => 'text/plain',
                 'description'       => 'Names of incoming email attachments ignored during import.',

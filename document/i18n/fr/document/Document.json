@@ -13,15 +13,41 @@
             "description": "Données binaires brutes du document.",
             "help": ""
         },
+        "source": {
+            "label": "Source",
+            "description": "Mode d'ajout du document dans la base de données.",
+            "help": "Indique si le document a été téléversé, reçu par email, généré ou produit par un traitement.",
+            "selection": {
+                "upload": "Téléversement",
+                "email": "Email",
+                "generated": "Génération interne",
+                "processing": "Traitement"
+            }
+        },
+        "source_object_class": {
+            "label": "Classe de l'objet source",
+            "description": "Nom de classe complet de l'objet ayant créé le document.",
+            "help": "Ce champ est utilisé avec l'identifiant de l'objet source pour retrouver l'objet d'origine éventuel."
+        },
+        "source_object_id": {
+            "label": "Identifiant de l'objet source",
+            "description": "Identifiant de l'objet ayant créé le document.",
+            "help": "Ce champ est utilisé avec la classe de l'objet source pour retrouver l'objet d'origine éventuel."
+        },
         "is_origin": {
             "label": "Document d'origine",
-            "description": "Indique que le document est à l'origine de traitements.",
+            "description": "Indique que le document ne dérive d'aucun autre document.",
             "help": "Le document est une pièce primaire conservée telle quelle avec les données binaires originales importées ou générées."
         },
         "origin_document_id": {
             "label": "Document d'origine",
             "description": "Document importé à l'origine, le cas échéant.",
             "help": "Lien facultatif vers le document original dont ce document est dérivé."
+        },
+        "derived_documents_ids": {
+            "label": "Documents dérivés",
+            "description": "Documents qui dérivent directement de ce document.",
+            "help": "Cette relation contient uniquement les descendants directs dont le document d'origine pointe vers ce document."
         },
         "origin_relation_type": {
             "label": "Relation à l'origine",

@@ -406,8 +406,9 @@ class Report extends \equal\orm\Model {
 
             try {
                 $document = Document::create([
-                        'name' => self::computeName($id, $report['date'], 'released') . '.pdf',
-                        'data' => \eQual::run('get', 'sale_serviceaccount_Report_render-pdf', ['id' => $id])
+                        'name'   => self::computeName($id, $report['date'], 'released') . '.pdf',
+                        'data'   => \eQual::run('get', 'sale_serviceaccount_Report_render-pdf', ['id' => $id]),
+                        'source' => 'generated'
                     ])
                     ->first();
             }
