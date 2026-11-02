@@ -120,8 +120,23 @@ foreach($self as $id => $instance) {
         if(!empty($b2_instance_status['config']['type'])) {
             $instance_data['b2_instance_type'] = $b2_instance_status['config']['type'];
         }
-        if(!empty($b2_instance_status['config']['branches'])) {
-            $instance_data['branch'] = !empty($b2_instance_status['config']['branches']['packages']) ? json_encode($b2_instance_status['config']['branches']) : $b2_instance_status['config']['branches']['root'];
+        $branches = [];
+        foreach($b2_instance_status['config']['sources'] ?? [] as $source) {
+            if(!is_array($source) || empty($source['repository']) || empty($source['branch'])) {
+                continue;
+            }
+
+            $repository_path = parse_url($source['repository'], PHP_URL_PATH) ?: $source['repository'];
+            $repository_name = preg_replace('/\.git$/i', '', basename(rtrim($repository_path, '/')));
+            if(empty($repository_name)) {
+                continue;
+            }
+
+            $branches[$repository_name] = $source['branch'];
+        }
+
+        if(!empty($branches)) {
+            $instance_data['branch'] = json_encode($branches);
         }
 
         // instance is up
