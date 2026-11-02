@@ -94,7 +94,7 @@
             "description": "",
             "actions": {
                 "action.sync-status": {
-                    "label": "Synchroniser status"
+                    "label": "Synchroniser statut"
                 }
             },
             "layout": {
@@ -117,7 +117,10 @@
                     "label": "Logiciels"
                 },
                 "section.statuses": {
-                    "label": "Status"
+                    "label": "Statuts"
+                },
+                "section.checks": {
+                    "label": "Contrôles"
                 }
             }
         },

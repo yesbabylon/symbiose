@@ -50,7 +50,7 @@ class Check extends Model {
 
             'status_path' => [
                 'type'              => 'string',
-                'description'       => 'The path of the status_data used for the check.',
+                'description'       => "The path of the status_data used for the check.",
                 'required'          => true,
                 'dependents'        => ['name']
             ],

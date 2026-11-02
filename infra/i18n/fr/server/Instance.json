@@ -107,12 +107,12 @@
             "description": "Affiche le formulaire de modification d'une instance.",
             "actions": {
                 "action.sync-status": {
-                    "label": "Synchroniser status"
+                    "label": "Synchroniser statut"
                 }
             },
             "layout": {
                 "section.details": {
-                    "label": "Details"
+                    "label": "Détails"
                 },
                 "section.description": {
                     "label": "Description"
@@ -124,7 +124,10 @@
                     "label": "Logiciels"
                 },
                 "section.statuses": {
-                    "label": "Status"
+                    "label": "Statuts"
+                },
+                "section.checks": {
+                    "label": "Contrôles"
                 }
             }
         },

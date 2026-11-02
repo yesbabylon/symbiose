@@ -218,6 +218,7 @@
                     {
                         "id": "section.statuses",
                         "label": "Statuses",
+                        "visible": ["server_type", "in", ["b2", "k2", "s2", "admin"]],
                         "rows": [
                             {
                                 "columns": [
@@ -229,6 +230,28 @@
                                                 "value": "statuses_ids",
                                                 "width": "100%",
                                                 "label": "Statuses"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.checks",
+                        "label": "Checks",
+                        "visible": ["server_type", "in", ["b2", "k2", "s2", "admin"]],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "checks_ids",
+                                                "width": "100%",
+                                                "label": "Checks"
                                             }
                                         ]
                                     }
