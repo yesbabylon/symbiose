@@ -27,7 +27,7 @@
         ]
     ],
     'access'        => [
-        'visibility'    => 'private'
+        'visibility'    => 'protected'
     ],
     'response'      => [
         'content-type'  => 'application/json',

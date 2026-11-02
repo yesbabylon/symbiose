@@ -11,7 +11,7 @@ use infra\server\Server;
     'description'   => "Evaluate all servers checks and instances checks against latest statuses.",
     'params'        => [],
     'access'        => [
-        'visibility'    => 'private'
+        'visibility'    => 'protected'
     ],
     'response'      => [
         'content-type'  => 'application/json',
