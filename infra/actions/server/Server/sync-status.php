@@ -206,7 +206,7 @@ foreach($self as $id => $server) {
         ]);
 
         // server is down (will cascade to instances)
-        Server::id($params['id'])->update([
+        Server::id($id)->update([
             'up'        => false,
             'synced'    => time()
         ]);
@@ -218,6 +218,11 @@ foreach($self as $id => $server) {
                     'object_id'         => $instance_id,
                     'status_data'       => json_encode($status, JSON_PRETTY_PRINT),
                     'is_collection_ok'  => false
+                ]);
+
+                Instance::id($instance_id)->update([
+                    'up'        => false,
+                    'synced'    => time()
                 ]);
             }
         }
