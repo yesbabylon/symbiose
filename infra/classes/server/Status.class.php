@@ -90,8 +90,8 @@ class Status extends Model {
             if(isset($status_data['instant']['total_proc'])) {
                 $data['total_proc'] = $status_data['instant']['total_proc'];
             }
-            if(isset($status_data['error']['message'])) {
-                $data['error'] = $status_data['error']['message'];
+            if(isset($status_data['error'])) {
+                $data['error'] = $status_data['error'];
             }
 
             $excerpt = strip_tags(json_encode($data));

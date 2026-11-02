@@ -5,6 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
+use infra\server\Instance;
 use infra\server\IpAddress;
 use infra\server\Server;
 use infra\server\Status;
@@ -64,7 +65,12 @@ foreach($self as $id => $server) {
     try {
         $map_servers_statuses = eQual::run('get', 'infra_server_Server_status', ['id' => $id]);
 
-        $status = $map_servers_statuses[$id];
+        if(!empty($map_servers_statuses[$id]['error'])) {
+            $error = $map_servers_statuses[$id]['error'];
+        }
+        else {
+            $status = $map_servers_statuses[$id];
+        }
     }
     catch(Exception $e) {
         trigger_error(
@@ -72,10 +78,7 @@ foreach($self as $id => $server) {
             EQ_REPORT_WARNING
         );
 
-        $error = [
-            'code'      => $e->getCode(),
-            'message'   => $e->getMessage()
-        ];
+        $error = $e->getMessage();
     }
 
     if($status) {
@@ -203,10 +206,26 @@ foreach($self as $id => $server) {
         ]);
 
         // server is down (will cascade to instances)
-        Server::id($params['id'])->update([
+        Server::id($id)->update([
             'up'        => false,
             'synced'    => time()
         ]);
+
+        if($params['sync_instances']) {
+            foreach($server['instances_ids'] as $instance_id) {
+                Status::create([
+                    'object_class'      => Instance::class,
+                    'object_id'         => $instance_id,
+                    'status_data'       => json_encode($status, JSON_PRETTY_PRINT),
+                    'is_collection_ok'  => false
+                ]);
+
+                Instance::id($instance_id)->update([
+                    'up'        => false,
+                    'synced'    => time()
+                ]);
+            }
+        }
     }
 
     if(!empty($server['checks_ids'])) {

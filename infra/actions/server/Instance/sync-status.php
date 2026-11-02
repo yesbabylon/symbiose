@@ -82,9 +82,14 @@ foreach($self as $id => $instance) {
     $b2_instance_status = null;
     $error = null;
     try {
-        $map_servers_statuses = eQual::run('get', 'infra_server_Instance_status', $get_status_params);
+        $map_instances_statuses = eQual::run('get', 'infra_server_Instance_status', $get_status_params);
 
-        $b2_instance_status = $map_servers_statuses[$id];
+        if(!empty($map_instances_statuses[$id]['error'])) {
+            $error = $map_instances_statuses[$id]['error'];
+        }
+        else {
+            $b2_instance_status = $map_instances_statuses[$id];
+        }
     }
     catch(Exception $e) {
         trigger_error(
@@ -92,10 +97,7 @@ foreach($self as $id => $instance) {
             EQ_REPORT_WARNING
         );
 
-        $error = [
-            'code'      => $e->getCode(),
-            'message'   => $e->getMessage()
-        ];
+        $error = $e->getMessage();
     }
 
     if($b2_instance_status) {
