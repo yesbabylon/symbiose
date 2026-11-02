@@ -22,7 +22,8 @@ class Check extends Model {
             ],
 
             'name' => [
-                'type'              => 'string',
+                'type'              => 'computed',
+                'result_type'       => 'string',
                 'description'       => 'Name of the check.',
                 'function'          => 'calcName',
                 'store'             => true
@@ -105,8 +106,8 @@ class Check extends Model {
     public static function calcName($self): array {
         $result = [];
         $self->read(['status_path', 'operator', 'check_value']);
-        foreach($self as $id => $trigger) {
-            $result[$id] = "{$trigger['status_path']} {$trigger['operator']} {$trigger['check_value']}";
+        foreach($self as $id => $check) {
+            $result[$id] = "{$check['status_path']} {$check['operator']} {$check['check_value']}";
         }
 
         return $result;

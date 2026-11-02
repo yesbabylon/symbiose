@@ -89,9 +89,6 @@
                 },
                 "section.result": {
                     "label": "Dernier résultat"
-                },
-                "section.alert-triggers": {
-                    "label": "Déclencheurs d'alerte"
                 }
             }
         },

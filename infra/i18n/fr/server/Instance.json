@@ -108,6 +108,10 @@
             "actions": {
                 "action.sync-status": {
                     "label": "Synchroniser statut"
+                },
+                "action.add-check": {
+                    "label": "Ajouter un contrôle",
+                    "description": "Créer un contrôle d'instance modifiable à partir d'un exemple."
                 }
             },
             "layout": {

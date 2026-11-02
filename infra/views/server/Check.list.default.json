@@ -50,6 +50,7 @@
                 "type": "field",
                 "value": "object_class",
                 "width": "20%",
+                "visible": false,
                 "sortable": true,
                 "readonly": true
             },
@@ -57,6 +58,7 @@
                 "type": "field",
                 "value": "object_id",
                 "width": "10%",
+                "visible": false,
                 "sortable": true,
                 "readonly": true
             }

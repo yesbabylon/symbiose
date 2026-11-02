@@ -40,7 +40,7 @@ use infra\Access;
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context']
+    'providers'     => ['context', 'self']
 ]);
 
 /**
@@ -48,6 +48,10 @@ use infra\Access;
  * @var \equal\orm\Collection   $self
  */
 ['context' => $context, 'self' => $self] = $providers;
+
+if(empty($params['ids']) && $params['id'] <= 0) {
+    throw new Exception('missing_check', EQ_ERROR_MISSING_PARAM);
+}
 
 $self->read(['name', 'server_id' => ['server_type']]);
 

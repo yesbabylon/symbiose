@@ -112,26 +112,6 @@
                                 ]
                             }
                         ]
-                    },
-                    {
-                        "id": "section.alert-triggers",
-                        "label": "Alert triggers",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "alert_triggers_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
                     }
                 ]
             }

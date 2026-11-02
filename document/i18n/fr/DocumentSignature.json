@@ -1,0 +1,105 @@
+{
+    "name": "Signature de document",
+    "plural": "Signatures de document",
+    "description": "Les signatures garantissent l'intégrité et l'origine d'un document.",
+    "model": {
+        "name": {
+            "label": "Libellé",
+            "description": "Libellé calculé de la signature.",
+            "help": "Cette valeur combine le signataire, le document et la date de signature."
+        },
+        "data_digest": {
+            "label": "Empreinte du document",
+            "description": "Empreinte SHA-256 du document signé.",
+            "help": "Seule l'empreinte du document est signée ; le document complet reste inchangé."
+        },
+        "sig_method": {
+            "label": "Niveau de signature",
+            "description": "Niveau de signature électronique eIDAS.",
+            "help": "Sélectionnez une signature simple, avancée ou qualifiée selon le niveau de garantie requis.",
+            "selection": {
+                "ses": "Signature électronique simple",
+                "aes": "Signature électronique avancée",
+                "qes": "Signature électronique qualifiée"
+            }
+        },
+        "has_certificate": {
+            "label": "Certificat présent",
+            "description": "Indique si un certificat accompagne la signature.",
+            "help": "Cette valeur est calculée automatiquement à partir du certificat ou de la signature manuscrite."
+        },
+        "sig_drawn": {
+            "label": "Signature manuscrite",
+            "description": "Image PNG de la signature manuscrite.",
+            "help": "Ce champ est utilisé pour une signature électronique simple dessinée."
+        },
+        "sig_json_cms": {
+            "label": "CMS JSON",
+            "description": "Représentation CMS de la signature au format JSON.",
+            "help": "Cette valeur technique est calculée pour les signatures avancées et qualifiées."
+        },
+        "sig_cert": {
+            "label": "Certificat",
+            "description": "Certificat X.509 du signataire au format DER.",
+            "help": "Le certificat permet de vérifier les signatures avancées et qualifiées."
+        },
+        "sig_hash": {
+            "label": "Signature cryptographique",
+            "description": "Empreinte signée encodée en base64.",
+            "help": "Cette valeur contient la signature cryptographique RSA ou ECDSA."
+        },
+        "sig_algo_oid": {
+            "label": "OID de l'algorithme",
+            "description": "Identifiant OID de l'algorithme de signature.",
+            "help": "L'OID détermine automatiquement l'algorithme, le remplissage et la fonction de hachage."
+        },
+        "sig_algo": {
+            "label": "Algorithme",
+            "description": "Algorithme cryptographique de la signature.",
+            "help": "Cette valeur est calculée automatiquement à partir de l'OID de l'algorithme."
+        },
+        "sig_hash_func": {
+            "label": "Fonction de hachage",
+            "description": "Fonction de hachage utilisée par la signature.",
+            "help": "Cette valeur est calculée automatiquement à partir de l'OID de l'algorithme."
+        },
+        "sig_padding": {
+            "label": "Remplissage",
+            "description": "Schéma de remplissage de la clé publique.",
+            "help": "Cette valeur est requise pour RSA et calculée automatiquement à partir de l'OID."
+        },
+        "sig_timestamp": {
+            "label": "Date de signature",
+            "description": "Date et heure de création de la signature.",
+            "help": "Cette valeur est renseignée automatiquement lors de la création de la signature."
+        },
+        "is_valid": {
+            "label": "Signature valide",
+            "description": "Résultat de la vérification cryptographique.",
+            "help": "La validité est calculée à partir de l'empreinte signée et de la clé publique du certificat."
+        },
+        "document_id": {
+            "label": "Document",
+            "description": "Version immuable du document signé.",
+            "help": "Sélectionnez le document dont l'empreinte doit être liée à la signature."
+        },
+        "signer_identity_id": {
+            "label": "Signataire",
+            "description": "Identité de la personne ayant signé le document.",
+            "help": "Pour une signature avancée ou qualifiée, cette identité sert à vérifier le certificat du signataire."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Signature de document",
+            "description": "Formulaire de consultation d'une signature de document.",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Signatures de document",
+            "description": "Liste des signatures de document.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}
