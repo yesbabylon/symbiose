@@ -25,7 +25,7 @@ use infra\server\Status;
         ]
     ],
     'access'        => [
-        'visibility'    => 'private'
+        'visibility'    => 'protected'
     ],
     'response'      => [
         'content-type'  => 'application/json',
@@ -110,10 +110,15 @@ foreach($self as $id => $check) {
 
     $status_data = $status_data_by_target[$target_key];
     if(!array_key_exists($check['status_path'], $status_data)) {
+        /*
+        #memo - if the key doesn't exist then ignore (scope was probably not loaded)
+        #memo - note: the key "state.up" is always present
+
         Check::id($id)->update([
             'is_success'    => false,
             'failure_count' => $check['failure_count'] + 1
         ]);
+        */
         continue;
     }
 
