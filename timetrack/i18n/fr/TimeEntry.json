@@ -98,10 +98,11 @@
             "label": "Délai d'encodage",
             "description": "Délai entre la prestation et son enregistrement.",
             "help": "Cette durée est calculée automatiquement à partir de la date de prestation et de la date de création."
+        },
         "employee_id": {
             "label": "Employé",
-            "description": "Employé correspondant à l’utilisateur qui a réalisé la prestation.",
-            "help": "Cette valeur est déterminée automatiquement à partir de l’utilisateur sélectionné."
+            "description": "Employé correspondant à l'utilisateur qui a réalisé la prestation.",
+            "help": "Cette valeur est déterminée automatiquement à partir de l'utilisateur sélectionné."
         },
         "origin": {
             "label": "Origine",
