@@ -61,7 +61,9 @@ foreach($self as $id => $server) {
     $status = null;
     $error = null;
     try {
-        $status = eQual::run('get', 'infra_server_Server_status', ['id' => $id]);
+        $map_servers_statuses = eQual::run('get', 'infra_server_Server_status', ['id' => $id]);
+
+        $status = $map_servers_statuses[$id];
     }
     catch(Exception $e) {
         trigger_error(

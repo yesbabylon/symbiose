@@ -66,6 +66,10 @@ $flatten = function($array, $prefix = '') use(&$flatten) {
  * Action
  */
 
+if(empty($params['ids']) && $params['id'] <= 0) {
+    throw new Exception('missing_check', EQ_ERROR_MISSING_PARAM);
+}
+
 $self->read([
     'object_class',
     'object_id',

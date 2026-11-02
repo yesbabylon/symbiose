@@ -1,0 +1,33 @@
+{
+    "name": "Status",
+    "plural": "Statuses",
+    "description": "Status data collected for a server or instance.",
+    "model": {
+        "object_class": {
+            "label": "Target class",
+            "description": "Class of the server or instance associated with this status.",
+            "help": "Assigned automatically when the status is collected."
+        },
+        "object_id": {
+            "label": "Target ID",
+            "description": "Identifier of the server or instance associated with this status.",
+            "help": "Assigned automatically when the status is collected."
+        },
+        "status_data": {
+            "label": "Status data",
+            "description": "JSON data containing the collected state and statistics.",
+            "help": "Contains the complete response returned by the monitoring endpoint."
+        },
+        "status_data_excerpt": {
+            "label": "Status summary",
+            "description": "Summary of the latest collected status data.",
+            "help": "Displays the principal state and resource usage values."
+        },
+        "is_collection_ok": {
+            "label": "Collection successful",
+            "description": "Whether the status collection completed successfully.",
+            "help": "Disabled when the monitoring endpoint could not be reached or returned an error."
+        }
+    },
+    "view": {}
+}

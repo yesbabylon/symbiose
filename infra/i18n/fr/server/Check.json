@@ -1,0 +1,104 @@
+{
+    "name": "Contrôle",
+    "plural": "Contrôles",
+    "description": "Condition de supervision évaluée sur le dernier statut d'un serveur ou d'une instance.",
+    "model": {
+        "code": {
+            "label": "Code",
+            "description": "Code unique identifiant le contrôle.",
+            "help": ""
+        },
+        "name": {
+            "label": "Nom",
+            "description": "Condition générée à partir du chemin du statut, de l'opérateur et de la valeur attendue.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Courte description du contrôle.",
+            "help": ""
+        },
+        "object_class": {
+            "label": "Classe cible",
+            "description": "Classe du serveur ou de l'instance évalué par le contrôle.",
+            "help": "Assignée automatiquement à partir de la cible liée."
+        },
+        "object_id": {
+            "label": "ID cible",
+            "description": "Identifiant du serveur ou de l'instance évalué par le contrôle.",
+            "help": "Assigné automatiquement à partir de la cible liée."
+        },
+        "status_path": {
+            "label": "Chemin du statut",
+            "description": "Chemin, séparé par des points, de la valeur dans les données de statut collectées.",
+            "help": "Par exemple : state.up ou instant.cpu_use."
+        },
+        "operator": {
+            "label": "Opérateur",
+            "description": "Comparaison appliquée à la valeur collectée.",
+            "help": "",
+            "selection": {
+                "eq": "Égal à",
+                "ne": "Différent de",
+                "gt": "Supérieur à",
+                "gte": "Supérieur ou égal à",
+                "lt": "Inférieur à",
+                "lte": "Inférieur ou égal à",
+                "contains": "Contient",
+                "does_not_contain": "Ne contient pas",
+                "in": "Est dans",
+                "not_in": "N'est pas dans"
+            }
+        },
+        "check_value": {
+            "label": "Valeur attendue",
+            "description": "Valeur à laquelle la valeur de statut collectée est comparée.",
+            "help": "Pour les opérateurs d'appartenance, utilisez un tableau JSON ou des valeurs séparées par des virgules."
+        },
+        "value": {
+            "label": "Valeur actuelle",
+            "description": "Valeur lue lors de la dernière évaluation.",
+            "help": ""
+        },
+        "is_success": {
+            "label": "Réussi",
+            "description": "Indique si la dernière évaluation correspond à la condition attendue.",
+            "help": ""
+        },
+        "failure_count": {
+            "label": "Échecs consécutifs",
+            "description": "Nombre d'évaluations consécutives ayant échoué.",
+            "help": ""
+        },
+        "alert_triggers_ids": {
+            "label": "Déclencheurs d'alerte",
+            "description": "Déclencheurs d'alerte qui utilisent ce contrôle.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Contrôle",
+            "description": "Créer ou modifier un contrôle de supervision.",
+            "layout": {
+                "section.general": {
+                    "label": "Général"
+                },
+                "section.condition": {
+                    "label": "Condition"
+                },
+                "section.result": {
+                    "label": "Dernier résultat"
+                },
+                "section.alert-triggers": {
+                    "label": "Déclencheurs d'alerte"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Contrôles",
+            "description": "Liste des contrôles de supervision.",
+            "layout": {}
+        }
+    }
+}
