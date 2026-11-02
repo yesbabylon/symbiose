@@ -112,21 +112,27 @@
                     "label": "Nouveau",
                     "help": ""
                 },
-                "action.transition.submit": {
-                    "label": "Soumettre",
-                    "help": ""
-                },
                 "action.transition.refuse": {
                     "label": "Refuser",
                     "help": ""
-                },
-                "action.transition.approve": {
-                    "label": "Approuver",
-                    "help": ""
-                },
-                "action.transition.charge": {
-                    "label": "Prendre en charge",
-                    "help": ""
+                }
+            },
+            "header": {
+                "selection": {
+                    "actions": {
+                        "action.transition.submit": {
+                            "label": "Soumettre",
+                            "description": "Soumettre les saisies de temps sélectionnées pour validation."
+                        },
+                        "action.transition.approve": {
+                            "label": "Approuver",
+                            "description": "Approuver les saisies de temps sélectionnées."
+                        },
+                        "action.transition.charge": {
+                            "label": "Prendre en charge",
+                            "description": "Créer une créance pour les saisies de temps sélectionnées."
+                        }
+                    }
                 }
             },
             "layout": {}
