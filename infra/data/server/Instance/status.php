@@ -99,7 +99,7 @@ foreach($self as $id => $instance) {
 
     $response = $request->send();
 
-    $result = $response->body();
+    $result[$id] = $response->body();
 }
 
 $context
