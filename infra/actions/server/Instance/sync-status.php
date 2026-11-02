@@ -135,7 +135,10 @@ foreach($self as $id => $instance) {
             $branches[$repository_name] = $source['branch'];
         }
 
-        if(!empty($branches)) {
+        if(count($branches) === 1) {
+            $instance_data['branch'] = array_values($branches)[0];
+        }
+        elseif(count($branches) > 1) {
             $instance_data['branch'] = json_encode($branches);
         }
 
