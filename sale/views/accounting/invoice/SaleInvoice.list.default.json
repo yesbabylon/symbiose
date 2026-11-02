@@ -60,7 +60,10 @@
             {
                 "type": "field",
                 "value": "status",
-                "width": "20%"
+                "width": "20%",
+                "widget": {
+                    "sortable": true
+                }
             },
             {
                 "type": "field",

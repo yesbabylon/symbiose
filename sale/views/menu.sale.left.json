@@ -140,24 +140,11 @@
                     {
                         "id": "billing.queues",
                         "type": "entry",
-                        "label": "Billing queues",
+                        "label": "Receivables queues",
                         "icon": "queue",
                         "description": "Display all receivables queues.",
                         "context": {
                             "entity": "sale\\receivable\\ReceivablesQueue",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
-                        "id": "billing.receivables",
-                        "type": "entry",
-                        "label": "Receivables",
-                        "icon": "payments",
-                        "description": "Display all receivables.",
-                        "context": {
-                            "entity": "sale\\receivable\\Receivable",
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc"

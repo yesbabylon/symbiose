@@ -30,11 +30,11 @@
             "help": ""
         },
         "commercial_activity.service_accounts": {
-            "label": "Comptes de service",
+            "label": "Comptes de Service",
             "help": ""
         },
         "commercial_activity.sale_entries": {
-            "label": "Éléments de vente",
+            "label": "Entrées de vente",
             "help": ""
         },
         "billing": {
@@ -46,7 +46,7 @@
             "help": ""
         },
         "billing.queues": {
-            "label": "Files de facturation",
+            "label": "Files de créances",
             "help": ""
         },
         "billing.receivables": {

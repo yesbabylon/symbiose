@@ -85,7 +85,8 @@ class Instance extends Model {
             'url' => [
                 'type'              => 'string',
                 'usage'             => 'uri/url',
-                'description'       => 'Front-end home URL.'
+                'description'       => 'Front-end home URL.',
+                'help'              => 'This URL is the root access of the hosted main App (not an URL to be accessed through API).'
             ],
 
             'synced' => [
