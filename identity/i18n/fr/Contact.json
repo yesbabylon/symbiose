@@ -3,6 +3,21 @@
     "plural": "Contacts",
     "description": "Les contacts regroupent des informations concernant des personnes liées à une identité spécifique.",
     "model": {
+        "relationship": {
+            "label": "Relation",
+            "description": "Nature de la relation entre le contact et l'organisation.",
+            "help": "La relation doit rester définie comme contact."
+        },
+        "position": {
+            "label": "Fonction",
+            "description": "Fonction occupée par le contact au sein de l'organisation.",
+            "help": "Indiquez la fonction ou le poste du contact."
+        },
+        "is_internal": {
+            "label": "Contact interne",
+            "description": "Indique si le contact appartient à l'organisation.",
+            "help": "Activez cette option pour un contact interne à l'organisation."
+        },
         "contact_groups_ids": {
             "label": "Groupes de contacts",
             "description": "Groupes de contacts auxquels appartient l'identité.",

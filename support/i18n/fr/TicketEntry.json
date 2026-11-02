@@ -3,6 +3,30 @@
     "plural": "Messages de tickets",
     "description": "",
     "model": {
+        "status": {
+            "label": "Statut",
+            "description": "Statut du message.",
+            "help": "Un message en brouillon peut encore être modifié. Une fois envoyé, il est transmis au destinataire.",
+            "selection": {
+                "draft": "Brouillon",
+                "sent": "envoyé"
+            }
+        },
+        "description": {
+            "label": "Message",
+            "description": "Contenu du message associé au ticket.",
+            "help": "Rédigez la demande ou la réponse à transmettre dans le ticket."
+        },
+        "environment": {
+            "label": "Environnement",
+            "description": "Environnement de utilisateur à l'origine du message.",
+            "help": "Informations sur l'environnement de l'utilisateur au moment où il a envoyé le message (appareil, navigateur, version de l'application), utiles pour reproduire un problème."
+        },
+        "excerpt": {
+            "label": "Extrait",
+            "description": "Court extrait du message utilisé pour l'affichage.",
+            "help": "Cette valeur est générée automatiquement à partir des premiers caractères du message."
+        },
         "type": {
             "label": "Type",
             "description": "Niveau d'importance du ticket.",
@@ -12,24 +36,15 @@
                 "response": "Réponse"
             }
         },
-        "environment": {
-            "label": "Environnement",
-            "description": "Environnement de utilisateur à l'origine du message.",
-            "help": "Informations sur l'environnement de l'utilisateur au moment où il a envoyé le message (appareil, navigateur, version de l'application), utiles pour reproduire un problème."
+        "ticket_id": {
+            "label": "Ticket",
+            "description": "Ticket auquel le message est rattaché.",
+            "help": "Sélectionnez le ticket dans lequel ce message doit apparaître."
         },
         "attachments_ids": {
             "label": "Pièces jointes",
             "description": "Documents associés au ticket.",
             "help": "Fichiers joints au message pour donner du contexte ou illustrer le problème (captures d'écran, documents)."
-        },
-        "status": {
-            "label": "Statut",
-            "description": "Statut du message.",
-            "help": "Un message en brouillon peut encore être modifié. Une fois envoyé, il est transmis au destinataire.",
-            "selection": {
-                "draft": "Brouillon",
-                "sent": "envoyé"
-            }
         }
     },
     "view": {
