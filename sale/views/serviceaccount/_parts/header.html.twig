@@ -1,4 +1,41 @@
 <div class="header">
+    <div class="recipient-header">
+        <div class="organization-logo">
+            {% if organization.logo|length > 0 %}
+                <img src="{{ organization.logo }}" alt="Company logo" />
+            {% endif %}
+        </div>
+        <div class="recipient-info">
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td><b>{{ labels['report.header.customer_name'] }}:</b></td>
+                    <td>{{ recipient.name }}</td>
+                </tr>
+                <tr>
+                    <td><b>{{ labels['report.header.customer_address'] }}:</b></td>
+                    <td>
+                        {% if recipient.address_street|length > 0 %}
+                            <div>{{ recipient.address_street }}</div>
+                        {% endif %}
+                        {% if recipient.address_dispatch|length > 0 %}
+                            <div>{{ recipient.address_dispatch }}</div>
+                        {% endif %}
+                        <div>{{ recipient.address_city }} {{ recipient.address_zip }} {{ recipient.address_country }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>{{ labels['report.header.customer_vat_number'] }}:</b></td>
+                    <td>
+                        {% if recipient.has_vat and recipient.vat_number|length > 0 %}
+                            {{ recipient.vat_number }}
+                        {% else %}
+                            {{ labels['report.footer.not_applicable'] }}
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
     <table cellpadding="0" cellspacing="0">
         <tr valign="middle">
             <td colspan="2" style="font-size: 20px; border-bottom: solid 1px black; height: 20px; padding: 0 20px;">{{ labels['report.title'] }}</td>

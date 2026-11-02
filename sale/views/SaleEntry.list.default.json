@@ -21,6 +21,14 @@
             },
             {
                 "type": "field",
+                "value": "employee_id",
+                "label": "Employee",
+                "width": "15%",
+                "readonly": true,
+                "sortable": true
+            },
+            {
+                "type": "field",
                 "value": "product_id",
                 "label": "Product (Catalog)",
                 "width": "20%",

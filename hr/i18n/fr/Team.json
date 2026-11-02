@@ -1,0 +1,52 @@
+{
+    "name": "Équipe",
+    "plural": "Équipes",
+    "description": "Une équipe regroupe des employés et peut leur attribuer un rôle commun.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom officiel de l'équipe.",
+            "help": "Saisissez un nom clair permettant d'identifier l'équipe."
+        },
+        "organization_id": {
+            "label": "Organisation",
+            "description": "Organisation à laquelle appartient l'équipe.",
+            "help": "Les employés proposés comme membres appartiennent à cette organisation."
+        },
+        "employees_ids": {
+            "label": "Membres",
+            "description": "Employés membres de l'équipe.",
+            "help": "Sélectionnez les employés qui composent l'équipe."
+        },
+        "members_count": {
+            "label": "Nombre de membres",
+            "description": "Nombre d'employés dans l'équipe.",
+            "help": "Cette valeur est calculée automatiquement."
+        },
+        "role_id": {
+            "label": "Rôle",
+            "description": "Rôle attribué aux membres de l'équipe.",
+            "help": "Le rôle est ajouté aux affectations de chaque membre de l'équipe."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Équipe",
+            "description": "Formulaire de gestion d'une équipe et de ses membres.",
+            "layout": {
+                "section.general": {
+                    "label": "Informations générales"
+                },
+                "section.members": {
+                    "label": "Membres"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Équipes",
+            "description": "Liste des équipes d'employés.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

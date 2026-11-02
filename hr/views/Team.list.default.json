@@ -1,0 +1,31 @@
+{
+    "name": "Teams",
+    "description": "List of employee teams.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "30%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "organization_id",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "role_id",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "members_count",
+                "width": "20%"
+            }
+        ]
+    }
+}

@@ -29,11 +29,6 @@ class Alert extends Model {
                 'default'           => 'pending'
             ],
 
-            'alert_policy_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'infra\server\AlertPolicy'
-            ],
-
             'server_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'infra\server\Server',

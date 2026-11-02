@@ -4,5 +4,8 @@
     "report.header.report": "Rapport",
     "report.header.created_on": "Créé le",
     "report.header.previous_balance": "Solde précédent",
-    "report.header.new_balance": "Nouveau solde"
+    "report.header.new_balance": "Nouveau solde",
+    "report.header.customer_name": "Nom",
+    "report.header.customer_address": "Adresse",
+    "report.header.customer_vat_number": "N° de TVA"
 }

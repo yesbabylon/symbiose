@@ -1,6 +1,23 @@
 {
     "name": "Server",
     "description": "Default form for Server",
+    "actions": [
+        {
+            "id": "action.sync-status",
+            "label": "Synchronize status",
+            "controller": "infra_server_Server_sync-status",
+            "params": {
+                "sync_instances": true
+            },
+            "visible": ["server_type", "=", "b2"]
+        },
+        {
+            "id": "action.add-check",
+            "label": "Add check from example",
+            "controller": "infra_server_add-server-check",
+            "visible": ["server_type", "in", ["b2", "k2", "s2", "admin"]]
+        }
+    ],
     "layout": {
         "groups": [
             {
@@ -214,7 +231,7 @@
                     {
                         "id": "section.statuses",
                         "label": "Statuses",
-                        "visible": ["server_type", "in", ["b2", "tapu_backups", "sapu_stats", "seru_admin"]],
+                        "visible": ["server_type", "in", ["b2", "k2", "s2", "admin"]],
                         "rows": [
                             {
                                 "columns": [
@@ -226,6 +243,28 @@
                                                 "value": "statuses_ids",
                                                 "width": "100%",
                                                 "label": "Statuses"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.checks",
+                        "label": "Checks",
+                        "visible": ["server_type", "in", ["b2", "k2", "s2", "admin"]],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "checks_ids",
+                                                "width": "100%",
+                                                "label": "Checks"
                                             }
                                         ]
                                     }

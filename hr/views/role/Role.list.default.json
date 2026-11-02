@@ -1,0 +1,25 @@
+{
+    "name": "Roles",
+    "description": "List of employee roles.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "code",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "30%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "50%"
+            }
+        ]
+    }
+}

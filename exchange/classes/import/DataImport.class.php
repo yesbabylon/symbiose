@@ -235,7 +235,8 @@ class DataImport extends Model {
                     'name'              => $dataImport['name'],
                     'data'              => $dataImport['data'],
                     'document_type_id'  => $documentType['id'],
-                    'is_origin'         => true
+                    'is_origin'         => true,
+                    'source'            => 'upload'
                 ])
                 ->first();
 

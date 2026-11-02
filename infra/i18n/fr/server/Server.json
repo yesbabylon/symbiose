@@ -13,6 +13,16 @@
             "description": "Description du serveur.",
             "help": ""
         },
+        "up": {
+            "label": "En ligne",
+            "description": "Est-ce que le serveur est en ligne.",
+            "help": ""
+        },
+        "synced": {
+            "label": "Dernière synchronisation",
+            "description": "Date de dernière synchronisation du status du serveur.",
+            "help": ""
+        },
         "server_type": {
             "label": "Type",
             "description": "Type du serveur.",
@@ -25,6 +35,11 @@
                 "s2": "Stats (s2)",
                 "admin": "Admin"
             },
+            "help": ""
+        },
+        "send_alerts": {
+            "label": "Envoyer alertes",
+            "description": "Des alertes de surveillance sont-elles envoyées pour cette instance ?",
             "help": ""
         },
         "accesses_ids": {
@@ -61,12 +76,31 @@
             "label": "Logiciels",
             "description": "Logiciels installé sur le serveur.",
             "help": ""
+        },
+        "statuses_ids": {
+            "label": "Statuts",
+            "description": "Historique des statuts de supervision de l'instance.",
+            "help": "Consultez les données de supervision collectées pour cette instance."
+        },
+        "checks_ids": {
+            "label": "Contrôles",
+            "description": "Contrôles évalués à partir du dernier statut de l'instance.",
+            "help": "Configurez les valeurs de statut attendues pour cette instance."
         }
     },
     "view": {
         "form.default": {
             "name": "serveur",
             "description": "",
+            "actions": {
+                "action.sync-status": {
+                    "label": "Synchroniser statut"
+                },
+                "action.add-check": {
+                    "label": "Ajouter un contrôle",
+                    "description": "Créer un contrôle de serveur modifiable à partir d'un exemple."
+                }
+            },
             "layout": {
                 "section.description": {
                     "label": "Description"
@@ -85,6 +119,12 @@
                 },
                 "section.softwares": {
                     "label": "Logiciels"
+                },
+                "section.statuses": {
+                    "label": "Statuts"
+                },
+                "section.checks": {
+                    "label": "Contrôles"
                 }
             }
         },

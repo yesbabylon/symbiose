@@ -1,0 +1,55 @@
+{
+    "name": "Rôle",
+    "plural": "Rôles",
+    "description": "Un rôle décrit un ensemble de responsabilités pouvant être attribuées aux employés.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Intitulé officiel du rôle.",
+            "help": "Saisissez un intitulé clair et compréhensible."
+        },
+        "code": {
+            "label": "Code",
+            "description": "Code mnémotechnique unique attribué au rôle.",
+            "help": "Utilisez un code court et stable."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Détails sur les responsabilités associées au rôle.",
+            "help": "Décrivez le périmètre et les responsabilités du rôle."
+        },
+        "role_assignments_ids": {
+            "label": "Affectations",
+            "description": "Employés auxquels le rôle est attribué.",
+            "help": "Consultez ou modifiez les affectations de ce rôle."
+        },
+        "role_permissions_ids": {
+            "label": "Permissions",
+            "description": "Transitions de workflow autorisées pour ce rôle.",
+            "help": "Définissez les transitions que ce rôle peut exécuter."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Rôle",
+            "description": "Formulaire de gestion d'un rôle.",
+            "layout": {
+                "section.general": {
+                    "label": "Informations générales"
+                },
+                "section.assignments": {
+                    "label": "Affectations"
+                },
+                "section.permissions": {
+                    "label": "Permissions"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Rôles",
+            "description": "Liste des rôles disponibles pour les employés.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

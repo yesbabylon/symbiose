@@ -6,8 +6,7 @@
             "id": "action.shift-subscription",
             "label": "Shift Period",
             "controller": "sale_subscription_shift-period",
-            "visible_1": ["is_auto_renew", "=", false],
-            "visible_help": "#todo - should be available only is there is no sale entry yet for current period",
+            "visible": ["has_current_sale_entry", "=", true],
             "confirm": true
         },
         {

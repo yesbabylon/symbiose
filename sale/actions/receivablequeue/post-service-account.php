@@ -74,7 +74,6 @@ if(isset($params['service_account_id']) && $params['service_account_id'] > 0) {
 foreach($receivables_queues as $receivables_queue) {
     $receivables_ids = Receivable::search([
             ['receivables_queue_id', '=', $receivables_queue['id']],
-            ['origin_object_class', '=', 'timetrack\\TimeEntry'],
             ['status', '=', 'open']
         ])
         ->ids();

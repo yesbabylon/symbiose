@@ -41,6 +41,14 @@ class Funding extends Model {
                 'dependents'        => ['paid_amount', 'is_paid']
             ],
 
+            'funding_allocations_ids' => [
+                'type'           => 'one2many',
+                'foreign_object' => 'sale\pay\FundingAllocation',
+                'foreign_field'  => 'funding_id',
+                'description'    => 'Accounting movements allocated to the funding.',
+                'dependents'     => ['paid_amount', 'is_paid']
+            ],
+
             'funding_type' => [
                 'type'              => 'string',
                 'selection'         => [
@@ -127,11 +135,18 @@ class Funding extends Model {
 
     public static function calcPaidAmount($self) {
         $result = [];
-        $self->read(['payments_ids' => ['amount']]);
+        $self->read([
+            'payments_ids'            => ['amount'],
+            'funding_allocations_ids' => ['amount']
+        ]);
         foreach($self as $id => $funding) {
-            $result[$id] = array_reduce($funding['payments_ids']->get(true), function ($c, $a) {
-                return $c + $a['amount'];
-            }, 0);
+            $result[$id] = 0.0;
+            foreach($funding['payments_ids'] as $payment) {
+                $result[$id] += $payment['amount'];
+            }
+            foreach($funding['funding_allocations_ids'] as $allocation) {
+                $result[$id] += $allocation['amount'];
+            }
         }
 
         return $result;
@@ -170,9 +185,20 @@ class Funding extends Model {
     }
 
     public static function candelete($self) {
-        $self->read(['is_paid', 'paid_amount', 'invoice_id' => ['status', 'invoice_type'], 'payments_ids']);
+        $self->read([
+            'is_paid',
+            'paid_amount',
+            'invoice_id' => ['status', 'invoice_type'],
+            'payments_ids',
+            'funding_allocations_ids'
+        ]);
         foreach($self as $funding) {
-            if($funding['is_paid'] || $funding['paid_amount'] != 0 || count($funding['payments_ids']) > 0) {
+            if(
+                $funding['is_paid']
+                || $funding['paid_amount'] != 0
+                || count($funding['payments_ids']) > 0
+                || count($funding['funding_allocations_ids']) > 0
+            ) {
                 return ['payments_ids' => ['non_removable_funding' => 'Funding paid or partially paid cannot be deleted.']];
             }
             if(isset($funding['invoice_id']['status']) && $funding['invoice_id']['status'] == 'posted' && $funding['invoice_id']['invoice_type'] == 'invoice') {

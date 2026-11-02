@@ -1,0 +1,127 @@
+{
+    "name": "Affectation de financement",
+    "plural": "Affectations de financement",
+    "description": "Affectation d'un mouvement comptable à un financement.",
+    "model": {
+        "organization_id": {
+            "label": "Organisation",
+            "description": "Organisation à laquelle appartient l'affectation.",
+            "help": "Sélectionnez l'organisation dont relève le mouvement comptable."
+        },
+        "journal_id": {
+            "label": "Journal comptable",
+            "description": "Journal de banque et de caisse de l'organisation.",
+            "help": "Ce journal est déterminé automatiquement à partir de l'organisation."
+        },
+        "payment_origin": {
+            "label": "Origine",
+            "description": "Origine du montant affecté.",
+            "help": "Cette valeur est définie automatiquement pour une affectation de financement.",
+            "selection": {
+                "funding_allocation": "Affectation de financement"
+            }
+        },
+        "amount": {
+            "label": "Montant",
+            "description": "Montant affecté au financement.",
+            "help": "Saisissez le montant signé qui doit être imputé au financement."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Alias de la communication associée à l'affectation.",
+            "help": "Ce nom est fourni pour rester compatible avec le modèle de référence."
+        },
+        "communication": {
+            "label": "Communication",
+            "description": "Communication ou description associée à l'affectation.",
+            "help": "Peut reprendre une communication de la contrepartie ou une description du mouvement comptable."
+        },
+        "receipt_date": {
+            "label": "Date de réception",
+            "description": "Date et heure de réception ou de paiement du montant affecté.",
+            "help": "Indiquez la date à laquelle le mouvement a été reçu ou payé."
+        },
+        "origin_object_class": {
+            "label": "Classe de l'objet d'origine",
+            "description": "Classe de l'entité à l'origine de l'affectation.",
+            "help": "La classe est enregistrée avec son espace de noms complet."
+        },
+        "origin_object_id": {
+            "label": "Objet d'origine",
+            "description": "Identifiant de l'objet à l'origine de l'affectation.",
+            "help": "Cet identifiant complète la classe de l'objet d'origine."
+        },
+        "linked_payment_id": {
+            "label": "Affectation liée",
+            "description": "Affectation de financement liée à l'affectation courante.",
+            "help": "Utilisé pour les affectations symétriques entre deux financements."
+        },
+        "accounting_operation_id": {
+            "label": "Opération comptable",
+            "description": "Opération comptable ciblée par l'affectation.",
+            "help": "Sélectionnez l'opération comptable à l'origine de l'affectation, le cas échéant."
+        },
+        "purchase_invoice_id": {
+            "label": "Facture d'achat",
+            "description": "Facture d'achat ciblée par l'affectation.",
+            "help": "Sélectionnez la facture d'achat concernée, le cas échéant."
+        },
+        "invoice_id": {
+            "label": "Facture de vente",
+            "description": "Facture de vente ciblée par l'affectation.",
+            "help": "Sélectionnez la facture de vente concernée, le cas échéant."
+        },
+        "sale_invoice_id": {
+            "label": "Facture de vente",
+            "description": "Alias de la facture de vente ciblée par l'affectation.",
+            "help": "Ce champ est un alias technique de la facture de vente."
+        },
+        "bank_statement_line_id": {
+            "label": "Ligne d'extrait bancaire",
+            "description": "Alias de la ligne d'extrait bancaire à l'origine de l'affectation.",
+            "help": "Ce nom est fourni pour rester compatible avec le modèle de référence."
+        },
+        "statement_line_id": {
+            "label": "Ligne d'extrait bancaire",
+            "description": "Ligne d'extrait bancaire à l'origine de l'affectation.",
+            "help": "Sélectionnez la ligne bancaire ayant généré le mouvement."
+        },
+        "accounting_entry_line_id": {
+            "label": "Ligne d'écriture comptable",
+            "description": "Ligne d'écriture comptable ciblée par l'affectation.",
+            "help": "Sélectionnez la ligne comptable sur laquelle le montant est affecté."
+        },
+        "funding_id": {
+            "label": "Financement",
+            "description": "Financement auquel le montant est affecté.",
+            "help": "Sélectionnez le financement dont le solde doit être mis à jour."
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut de l'affectation.",
+            "help": "Le statut est défini automatiquement lors de la création de l'affectation.",
+            "selection": {
+                "posted": "Comptabilisée"
+            }
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Affectation de financement",
+            "description": "Formulaire d'affectation d'un mouvement comptable à un financement.",
+            "layout": {
+                "section.general": {
+                    "label": "Informations générales"
+                },
+                "section.origin": {
+                    "label": "Origine"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Affectations de financement",
+            "description": "Liste des mouvements comptables affectés aux financements.",
+            "layout": {}
+        }
+    }
+}

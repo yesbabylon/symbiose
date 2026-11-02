@@ -1,0 +1,22 @@
+{
+    "name": "Add an instance check",
+    "description": "Create an editable instance check from an example.",
+    "model": {
+        "id": {
+            "label": "Instance",
+            "description": "Instance to which the check will be added.",
+            "help": ""
+        },
+        "check_id": {
+            "label": "Example check",
+            "description": "Example whose condition will be copied to the instance.",
+            "help": "Only instance examples that are not assigned to an object are available."
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_instance": "The instance was not found.",
+            "unknown_check_template": "The selected instance check example was not found."
+        }
+    }
+}

@@ -1,6 +1,23 @@
 {
     "name": "Instance",
     "description": "Default form for Instance",
+    "actions": [
+        {
+            "id": "action.sync-status",
+            "label": "Synchronize status",
+            "controller": "infra_server_Instance_sync-status",
+            "params": {
+                "scope": "all"
+            },
+            "visible": ["server_type", "=", "b2"]
+        },
+        {
+            "id": "action.add-check",
+            "label": "Add check from example",
+            "controller": "infra_server_add-instance-check",
+            "visible": ["server_type", "in", ["b2", "k2", "s2", "admin"]]
+        }
+    ],
     "layout": {
         "groups": [
             {
@@ -14,6 +31,11 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "server_type",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "name",
                                                 "width": "66%",
                                                 "widget": {
@@ -24,6 +46,16 @@
                                                 "type": "field",
                                                 "label": "Type",
                                                 "value": "instance_type",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "value": "",
+                                                "width": "66%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "b2_instance_type",
                                                 "width": "33%"
                                             }
                                         ]
@@ -142,7 +174,7 @@
                     },
                     {
                         "label": "Accesses",
-                        "id": "section.instance_accesses",
+                        "id": "section.accesses",
                         "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
@@ -166,7 +198,7 @@
                     },
                     {
                         "label": "Softwares",
-                        "id": "section.instance_software",
+                        "id": "section.softwares",
                         "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
@@ -192,6 +224,7 @@
                     {
                         "id": "section.statuses",
                         "label": "Statuses",
+                        "visible": ["server_type", "in", ["b2", "k2", "s2", "admin"]],
                         "rows": [
                             {
                                 "columns": [
@@ -203,6 +236,28 @@
                                                 "value": "statuses_ids",
                                                 "width": "100%",
                                                 "label": "Statuses"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.checks",
+                        "label": "Checks",
+                        "visible": ["server_type", "in", ["b2", "k2", "s2", "admin"]],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "checks_ids",
+                                                "width": "100%",
+                                                "label": "Checks"
                                             }
                                         ]
                                     }

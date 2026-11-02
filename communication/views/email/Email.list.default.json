@@ -1,0 +1,97 @@
+{
+    "name": "Emails",
+    "description": "List of incoming and outgoing emails.",
+    "sort": "desc",
+    "order": "date",
+    "header": {
+        "actions": {
+            "ACTION.CREATE": false
+        },
+        "selection": {
+            "default": false
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "date",
+                "width": "15%",
+                "sortable": true,
+                "widget": {
+                    "usage": "date/plain"
+                }
+            },
+            {
+                "type": "field",
+                "value": "direction",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "from",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "to",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "subject",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "mailbox_id",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "incoming_attachment_import_status",
+                "width": "15%",
+                "readonly": true,
+                "widget": {
+                    "styles": [
+                        {
+                            "apply": {
+                                "text_weight": "500",
+                                "text_align": "center",
+                                "text_padding": "4px",
+                                "border_radius": "5px"
+                            }
+                        },
+                        {
+                            "visible": ["complete", "=", "object.incoming_attachment_import_status"],
+                            "apply": {
+                                "background_color": "#dcfce7"
+                            }
+                        },
+                        {
+                            "visible": ["unsupported", "=", "object.incoming_attachment_import_status"],
+                            "apply": {
+                                "background_color": "#f5e4b5"
+                            }
+                        },
+                        {
+                            "visible": ["missing", "=", "object.incoming_attachment_import_status"],
+                            "apply": {
+                                "background_color": "#f5b5b5"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "10%",
+                "sortable": true
+            }
+        ]
+    }
+}

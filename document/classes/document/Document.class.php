@@ -32,19 +32,54 @@ class Document extends Model {
                 'dependents'        => ['hash', 'hash_sha256', 'content_type', 'content_size', 'extension', 'readable_size', 'preview_image']
             ],
 
+            'source' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'upload',       // manually uploaded
+                    'email',        // received as email attachment
+                    'generated',    // internally generated
+                    'processing'    // or extracted as part of a processing operation
+                ],
+                'description'       => 'Info about the way the document was added to the database.',
+            ],
+
+            'source_object_class' => [
+                'type'              => 'string',
+                'description'       => 'Fully qualified class name of the object that created the document.',
+                'help'              => 'Used with source_object_id to identify the optional source object.'
+            ],
+
+            'source_object_id' => [
+                'type'              => 'integer',
+                'description'       => 'Identifier of the object that created the document.',
+                'help'              => 'Used with source_object_class to identify the optional source object.'
+            ],
+
             'is_origin' => [
-                'type'              => 'boolean',
-                'default'           => false,
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
                 'readonly'          => true,
-                'description'       => 'Document is the origin of one or more processing.',
-                'help'              => 'Document is a primary attachment stored as-is with the original imported (or generated) binary data.'
+                'description'       => 'The Document does not derive from another Document.',
+                'help'              => 'Document is a primary attachment stored as-is with the original imported (or generated) binary data.',
+                'function'          => 'calcIsOrigin',
+                'store'             => true,
+                'instant'           => true
             ],
 
             'origin_document_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'document\document\Document',
                 'description'       => 'Targets the originally imported document, if any.',
-                'help'              => 'Optional link to an original document the document derives from.'
+                'help'              => 'Optional link to an original document the document derives from.',
+                'dependents'        => ['is_origin']
+            ],
+
+            'derived_documents_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'document\document\Document',
+                'foreign_field'     => 'origin_document_id',
+                'description'       => 'Documents that derive directly from the document.',
+                'help'              => 'Contains the direct descendants whose origin_document_id points to the document.'
             ],
 
             'origin_relation_type' => [
@@ -53,7 +88,7 @@ class Document extends Model {
                 'readonly'          => true,
                 'description'       => 'Role of this document relative to its origin document.',
                 'help'              => 'A rendering is generated for displaying the origin document. An attachment is extracted from the origin document.',
-                'visible'           => ['origin_document_id', '<>', null]
+                'visible'           => [['origin_document_id', '<>', null], ['is_origin', '=', false]]
             ],
 
             'content_type' => [
@@ -204,7 +239,8 @@ class Document extends Model {
                 'usage'             => 'image/jpeg',
                 'function'          => 'calcPreviewImage',
                 'description'       => 'Thumbnail of the document.',
-                'store'             => true
+                'store'             => true,
+                'instant'           => false
             ],
 
             'template_attachments_ids' => [
@@ -417,6 +453,16 @@ class Document extends Model {
         foreach($self as $id => $document) {
             $tags = implode(', ', array_column($document['tags_ids']->get(true), 'name'));
             $result[$id] = strlen($tags) > 50 ? (substr($tags, 0, 50) . '...') : $tags;
+        }
+
+        return $result;
+    }
+
+    protected static function calcIsOrigin($self) {
+        $result = [];
+        $self->read(['origin_document_id']);
+        foreach($self as $id => $document) {
+            $result[$id] = empty($document['origin_document_id']);
         }
 
         return $result;

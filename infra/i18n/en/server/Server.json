@@ -67,6 +67,12 @@
         "form.default": {
             "name": "server",
             "description": "",
+            "actions": {
+                "action.add-check": {
+                    "label": "Add check",
+                    "description": "Create an editable server check from an example."
+                }
+            },
             "layout": {
                 "section.description": {
                     "label": "Description"

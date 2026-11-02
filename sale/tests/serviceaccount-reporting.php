@@ -1,5 +1,6 @@
 <?php
 
+use document\document\Document;
 use sale\contract\ContractType;
 use sale\catalog\Family;
 use sale\catalog\Product;
@@ -12,8 +13,10 @@ use sale\serviceaccount\ServiceAccount;
 use sale\serviceaccount\ServiceAccountEntry;
 use sale\subscription\Subscription;
 use sale\subscription\SubscriptionEntry;
+use timetrack\Project;
+use timetrack\TimeEntry;
 
-$create_fixture = function(array $entry_dates = []) {
+$create_fixture = function(array $entry_dates = [], float $entry_qty = 1.0) {
     $suffix = uniqid();
     $customer = Customer::create([
             'name'                => "Test service account customer {$suffix}",
@@ -97,7 +100,8 @@ $create_fixture = function(array $entry_dates = []) {
         $subscription_entry = SubscriptionEntry::create([
                 'subscription_id' => $subscription['id'],
                 'date_from'       => $entry_date,
-                'date_to'         => strtotime('+1 month -1 day', $entry_date)
+                'date_to'         => strtotime('+1 month -1 day', $entry_date),
+                'qty'             => $entry_qty
             ])
             ->read(['id'])
             ->first(true);
@@ -138,15 +142,21 @@ $rollback_fixture = function(array $fixture) {
         $db->sendQuery("DELETE FROM `sale_serviceaccount_serviceaccountentry` WHERE id IN ({$safe_entry_ids});");
     }
 
-    $report_ids = Report::search([
+    $reports = Report::search([
             ['service_account_id', '=', $fixture['service_account_id']]
         ])
-        ->ids();
+        ->read(['document_id'])
+        ->toArray();
+    $report_ids = array_column($reports, 'id');
+    $document_ids = array_values(array_filter(array_column($reports, 'document_id')));
     if($report_ids) {
         ['db' => $db_connector] = eQual::inject(['db']);
         $db = $db_connector->connect();
         $safe_report_ids = implode(',', array_map('intval', $report_ids));
         $db->sendQuery("DELETE FROM `sale_serviceaccount_report` WHERE id IN ({$safe_report_ids});");
+    }
+    if($document_ids) {
+        Document::ids($document_ids)->delete(true);
     }
 
     if(!empty($fixture['receivable_ids'])) {
@@ -169,6 +179,46 @@ $rollback_fixture = function(array $fixture) {
 };
 
 $tests = [
+    '0100' => [
+        'description' => 'The initial balance seeds the first report and cannot be changed after a report exists.',
+        'arrange'     => function() use($create_fixture) {
+            return $create_fixture([strtotime('2026-07-20')]);
+        },
+        'act'         => function($args) {
+            ServiceAccount::id($args['service_account_id'])
+                ->do('set_initial_balance', ['value' => 100.0]);
+
+            $args['before'] = ServiceAccount::id($args['service_account_id'])
+                ->read(['balance_effective', 'balance_estimated'])
+                ->first(true);
+
+            ServiceAccount::id($args['service_account_id'])->do('generate_report');
+            $args['report'] = Report::search([
+                    ['service_account_id', '=', $args['service_account_id']],
+                    ['status', '=', 'pending']
+                ])
+                ->read(['balance_old'])
+                ->first(true);
+
+            $args['second_initialization_rejected'] = false;
+            try {
+                ServiceAccount::id($args['service_account_id'])
+                    ->do('set_initial_balance', ['value' => 200.0]);
+            }
+            catch(Throwable $throwable) {
+                $args['second_initialization_rejected'] = true;
+            }
+
+            return $args;
+        },
+        'assert'      => function($args) {
+            return (float) $args['before']['balance_effective'] === 100.0
+                && (float) $args['before']['balance_estimated'] === 96.0
+                && (float) $args['report']['balance_old'] === 100.0
+                && $args['second_initialization_rejected'];
+        },
+        'rollback'    => $rollback_fixture
+    ],
     '0101' => [
         'description' => 'Posting a receivable creates one symmetric and idempotent service account entry.',
         'arrange'     => function() use($create_fixture) {
@@ -186,12 +236,23 @@ $tests = [
             $entries = ServiceAccountEntry::search([
                     ['receivable_id', '=', $args['receivable_ids'][0]]
                 ])
-                ->read(['receivable_id'])
+                ->read([
+                    'receivable_id' => [
+                        'id',
+                        'origin_object_class',
+                        'origin_object_id'
+                    ]
+                ])
                 ->get(true);
+
+            $entry = reset($entries);
+            $entry_receivable = $entry['receivable_id'] ?? [];
 
             return count($entries) === 1
                 && (int) $receivable['service_account_entry_id'] === (int) $args['entry_ids'][0]
-                && (int) reset($entries)['receivable_id'] === (int) $args['receivable_ids'][0];
+                && (int) ($entry_receivable['id'] ?? 0) === (int) $args['receivable_ids'][0]
+                && ($entry_receivable['origin_object_class'] ?? null) === SubscriptionEntry::class
+                && (int) ($entry_receivable['origin_object_id'] ?? 0) === (int) $args['subscription_entry_ids'][0];
         },
         'rollback'    => $rollback_fixture
     ],
@@ -291,9 +352,9 @@ $tests = [
             }
 
             return (float) $args['before']['balance_effective'] === 0.0
-                && (float) $args['before']['balance_estimated'] === 15.0
-                && (float) $account['balance_effective'] === 15.0
-                && (float) $account['balance_estimated'] === 15.0
+                && (float) $args['before']['balance_estimated'] === -15.0
+                && (float) $account['balance_effective'] === -8.0
+                && (float) $account['balance_estimated'] === -8.0
                 && $report['status'] === 'released'
                 && $entries[$args['entry_ids'][0]]['status'] === 'released'
                 && $entries[$args['entry_ids'][1]]['status'] === 'released'
@@ -303,9 +364,11 @@ $tests = [
         'rollback'    => $rollback_fixture
     ],
     '0104' => [
-        'description' => 'Deleting a pending report detaches its entries and leaves them pending.',
+        'description' => 'A pending report with entries cannot be deleted.',
         'arrange'     => function() use($create_fixture) {
-            return $create_fixture([strtotime('2026-07-20')]);
+            $fixture = $create_fixture([strtotime('2026-07-20')]);
+            ServiceAccountEntry::id($fixture['entry_ids'][0])->update(['points' => 10.0]);
+            return $fixture;
         },
         'act'         => function($args) {
             ServiceAccount::id($args['service_account_id'])->do('generate_report');
@@ -315,10 +378,23 @@ $tests = [
                 ])
                 ->read(['id'])
                 ->first(true);
-            Report::id($report['id'])->delete(true);
+
+            $deletion_rejected = false;
+            try {
+                Report::id($report['id'])->delete(true);
+            }
+            catch(Throwable $throwable) {
+                $deletion_rejected = true;
+            }
+
+            $args['report_id'] = $report['id'];
+            $args['deletion_rejected'] = $deletion_rejected;
             return $args;
         },
         'assert'      => function($args) {
+            $report = Report::id($args['report_id'])
+                ->read(['status'])
+                ->first(true);
             $entry = ServiceAccountEntry::id($args['entry_ids'][0])
                 ->read(['report_id', 'status'])
                 ->first(true);
@@ -326,9 +402,12 @@ $tests = [
                 ->read(['balance_effective', 'balance_estimated'])
                 ->first(true);
 
-            return is_null($entry['report_id'])
+            return $args['deletion_rejected']
+                && $report['status'] === 'pending'
+                && (int) $entry['report_id'] === (int) $args['report_id']
                 && $entry['status'] === 'pending'
-                && (float) $account['balance_effective'] === (float) $account['balance_estimated'];
+                && (float) $account['balance_effective'] === 0.0
+                && (float) $account['balance_estimated'] === -10.0;
         },
         'rollback'    => $rollback_fixture
     ],
@@ -351,6 +430,7 @@ $tests = [
 
             $future_assignment_rejected = false;
             $second_draft_rejected = false;
+            $invalid_status_rejected = false;
             try {
                 ServiceAccountEntry::id($args['entry_ids'][1])->update(['report_id' => $report['id']]);
             }
@@ -367,10 +447,21 @@ $tests = [
             catch(Throwable $throwable) {
                 $second_draft_rejected = true;
             }
+            try {
+                Report::create([
+                    'service_account_id' => $args['service_account_id'],
+                    'date'               => $report['date'],
+                    'status'             => 'released'
+                ]);
+            }
+            catch(Throwable $throwable) {
+                $invalid_status_rejected = true;
+            }
 
             $args['report_id'] = $report['id'];
             $args['future_assignment_rejected'] = $future_assignment_rejected;
             $args['second_draft_rejected'] = $second_draft_rejected;
+            $args['invalid_status_rejected'] = $invalid_status_rejected;
             return $args;
         },
         'assert'      => function($args) {
@@ -386,7 +477,235 @@ $tests = [
                 && empty($future['report_id'])
                 && $future['status'] === 'pending'
                 && $args['future_assignment_rejected']
-                && $args['second_draft_rejected'];
+                && $args['second_draft_rejected']
+                && $args['invalid_status_rejected'];
+        },
+        'rollback'    => $rollback_fixture
+    ],
+    '0106' => [
+        'description' => 'Standalone entries need no polymorphic origin and only pending entries remain editable.',
+        'arrange'     => function() use($create_fixture) {
+            $fixture = $create_fixture([]);
+            $pending_entry = ServiceAccountEntry::create([
+                    'service_account_id' => $fixture['service_account_id'],
+                    'description'        => 'Pending standalone entry',
+                    'date'               => strtotime('2026-07-20'),
+                    'status'             => 'pending'
+                ])
+                ->read(['id'])
+                ->first(true);
+            $released_entry = ServiceAccountEntry::create([
+                    'service_account_id' => $fixture['service_account_id'],
+                    'description'        => 'Released standalone entry',
+                    'date'               => strtotime('2026-07-20'),
+                    'status'             => 'released'
+                ])
+                ->read(['id'])
+                ->first(true);
+            $fixture['entry_ids'][] = $pending_entry['id'];
+            $fixture['entry_ids'][] = $released_entry['id'];
+            return $fixture;
+        },
+        'act'         => function($args) {
+            ServiceAccountEntry::id($args['entry_ids'][0])
+                ->update(['description' => 'Updated pending standalone entry']);
+            $args['released_update_rejected'] = false;
+            try {
+                ServiceAccountEntry::id($args['entry_ids'][1])
+                    ->update(['description' => 'Updated released standalone entry']);
+            }
+            catch(Throwable $throwable) {
+                $args['released_update_rejected'] = true;
+            }
+            return $args;
+        },
+        'assert'      => function($args) {
+            $entry = ServiceAccountEntry::id($args['entry_ids'][0])
+                ->read(['receivable_id', 'description', 'status'])
+                ->first(true);
+
+            return empty($entry['receivable_id'])
+                && $entry['description'] === 'Updated pending standalone entry'
+                && $entry['status'] === 'pending'
+                && $args['released_update_rejected'];
+        },
+        'rollback'    => $rollback_fixture
+    ],
+    '0107' => [
+        'description' => 'A non-time receivable computes four service account points per quantity unit.',
+        'arrange'     => function() use($create_fixture) {
+            return $create_fixture([strtotime('2026-07-20')], 2.5);
+        },
+        'act'         => function($args) {
+            ServiceAccountEntry::id($args['entry_ids'][0])->do('compute_points');
+            return $args;
+        },
+        'assert'      => function($args) {
+            $receivable = Receivable::id($args['receivable_ids'][0])
+                ->read(['qty'])
+                ->first(true);
+            $entry = ServiceAccountEntry::id($args['entry_ids'][0])
+                ->read(['points', 'calculation_log'])
+                ->first(true);
+
+            return (float) $receivable['qty'] === 2.5
+                && (float) $entry['points'] === 10.0
+                && strpos($entry['calculation_log'], 'Retrieved receivable quantity: 2.5') !== false;
+        },
+        'rollback'    => $rollback_fixture
+    ],
+    '0108' => [
+        'description' => 'Report totals classify entries by sign and render standalone entry snapshots.',
+        'arrange'     => function() use($create_fixture) {
+            $fixture = $create_fixture([]);
+            foreach([129.0, 4.0, -100.0] as $index => $points) {
+                $entry = ServiceAccountEntry::create([
+                        'service_account_id' => $fixture['service_account_id'],
+                        'description'        => "Report sign test {$index}",
+                        'date'               => strtotime('2026-07-20'),
+                        'points'             => $points,
+                        'status'             => 'pending'
+                    ])
+                    ->read(['id'])
+                    ->first(true);
+                $fixture['entry_ids'][] = $entry['id'];
+            }
+            return $fixture;
+        },
+        'act'         => function($args) {
+            ServiceAccount::id($args['service_account_id'])->do('generate_report');
+            $args['report'] = Report::search([
+                    ['service_account_id', '=', $args['service_account_id']],
+                    ['status', '=', 'pending']
+                ])
+                ->read(['id', 'total_points', 'total_credits', 'balance_new'])
+                ->first(true);
+            $html = eQual::run('get', 'sale_serviceaccount_Report_render-html', [
+                'id'      => $args['report']['id'],
+                'details' => true,
+                'logs'    => false,
+                'lang'    => 'en'
+            ]);
+            $args['positive_sale_entry_rendered'] = strpos($html, 'Report sign test 1') !== false;
+            $args['credit_rendered'] = strpos($html, 'Report sign test 2') !== false;
+            return $args;
+        },
+        'assert'      => function($args) {
+            return (float) $args['report']['total_points'] === -133.0
+                && (float) $args['report']['total_credits'] === 100.0
+                && (float) $args['report']['balance_new'] === -33.0
+                && $args['positive_sale_entry_rendered']
+                && $args['credit_rendered'];
+        },
+        'rollback'    => $rollback_fixture
+    ],
+    '0109' => [
+        'description' => 'Synchronizing a time-entry receivable invalidates times, duration and points.',
+        'arrange'     => function() use($create_fixture) {
+            $fixture = $create_fixture([]);
+            $entry_date = strtotime('2026-07-20');
+
+            $project = Project::create([
+                    'name'                => 'Test service account project '.uniqid(),
+                    'customer_id'         => $fixture['customer_id'],
+                    'receivable_queue_id' => $fixture['receivables_queue_id']
+                ])
+                ->read(['id'])
+                ->first(true);
+
+            $time_entry = TimeEntry::create([
+                    'project_id'  => $project['id'],
+                    'date'        => $entry_date,
+                    'time_start'  => 9 * 3600,
+                    'time_end'    => 10 * 3600,
+                    'pause_time'  => 0,
+                    'description' => 'Service account synchronization test',
+                    'origin'      => 'project',
+                    'priority'    => 2
+                ])
+                ->read(['id'])
+                ->first(true);
+
+            $receivable = Receivable::create([
+                    'receivables_queue_id' => $fixture['receivables_queue_id'],
+                    'origin_object_class'  => TimeEntry::class,
+                    'origin_object_id'     => $time_entry['id'],
+                    'date'                 => $entry_date
+                ])
+                ->read(['id'])
+                ->first(true);
+
+            $service_account_entry = ServiceAccountEntry::create([
+                    'receivable_id'      => $receivable['id'],
+                    'service_account_id' => $fixture['service_account_id'],
+                    'status'             => 'pending'
+                ])
+                ->read(['id', 'start', 'end', 'duration', 'points'])
+                ->first(true);
+
+            $fixture['project_id'] = $project['id'];
+            $fixture['time_entry_id'] = $time_entry['id'];
+            $fixture['receivable_ids'][] = $receivable['id'];
+            $fixture['entry_ids'][] = $service_account_entry['id'];
+            $fixture['before_sync'] = $service_account_entry;
+            return $fixture;
+        },
+        'act'         => function($args) {
+            TimeEntry::id($args['time_entry_id'])
+                ->update([
+                    'time_start' => 10 * 3600,
+                    'time_end'   => 12 * 3600
+                ]);
+
+            $args['after_sync'] = ServiceAccountEntry::id($args['entry_ids'][0])
+                ->do('sync_from_receivable')
+                ->read(['start', 'end', 'duration', 'points'])
+                ->first(true);
+            return $args;
+        },
+        'assert'      => function($args) {
+            return (int) $args['after_sync']['start'] !== (int) $args['before_sync']['start']
+                && (int) $args['after_sync']['end'] !== (int) $args['before_sync']['end']
+                && (int) $args['after_sync']['duration'] === 2 * 3600
+                && (float) $args['after_sync']['points'] > (float) $args['before_sync']['points'];
+        },
+        'rollback'    => function($args) use($rollback_fixture) {
+            TimeEntry::id($args['time_entry_id'])->delete(true);
+            Project::id($args['project_id'])->delete(true);
+            $rollback_fixture($args);
+        }
+    ],
+    '0110' => [
+        'description' => 'Releasing a report stores its final PDF as a referenced document.',
+        'arrange'     => function() use($create_fixture) {
+            return $create_fixture([strtotime('2026-07-20')]);
+        },
+        'act'         => function($args) {
+            ServiceAccount::id($args['service_account_id'])->do('generate_report');
+            $report = Report::search([
+                    ['service_account_id', '=', $args['service_account_id']],
+                    ['status', '=', 'pending']
+                ])
+                ->read(['id'])
+                ->first(true);
+
+            Report::id($report['id'])->do('release');
+            $args['report'] = Report::id($report['id'])
+                ->read([
+                    'status',
+                    'document_id' => ['name', 'content_type', 'content_size']
+                ])
+                ->first(true);
+            return $args;
+        },
+        'assert'      => function($args) {
+            $document = $args['report']['document_id'] ?? null;
+
+            return $args['report']['status'] === 'released'
+                && !empty($document['id'])
+                && str_ends_with($document['name'], '.pdf')
+                && $document['content_type'] === 'application/pdf'
+                && (int) $document['content_size'] > 0;
         },
         'rollback'    => $rollback_fixture
     ]

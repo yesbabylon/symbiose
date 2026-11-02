@@ -23,13 +23,13 @@
             "label": "Aperçu mois"
         },
         "time_entries.submitted": {
-            "label": "A valider"
+            "label": "À approuver"
         },
         "time_entries.approved": {
-            "label": "Validé"
+            "label": "À prendre en charge"
         },
         "time_entries.charged": {
-            "label": "Pris en charge"
+            "label": "Prises en charge"
         },
         "time_entries.archived": {
             "label": "Archivées"

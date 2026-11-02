@@ -13,6 +13,16 @@
             "description": "Courte description de l'instance.",
             "help": ""
         },
+        "up": {
+            "label": "En ligne",
+            "description": "Est-ce que le serveur est en ligne.",
+            "help": ""
+        },
+        "synced": {
+            "label": "Dernière synchronisation",
+            "description": "Date de dernière synchronisation du status de l'instance.",
+            "help": ""
+        },
         "instance_type": {
             "label": "Type",
             "description": "Type d'instance.",
@@ -23,6 +33,16 @@
                 "replica": "Réplique"
             },
             "help": ""
+        },
+        "b2_instance_type": {
+            "label": "Type d'instance b2",
+            "selection": {
+                "equal": "eQual",
+                "symbiose": "Symbiose",
+                "wordpress": "WordPress",
+                "equalpress": "eQualPress",
+                "fmt": "FMT"
+            }
         },
         "version": {
             "label": "Version",
@@ -45,6 +65,11 @@
             "description": "URL d'accueil du frontend.",
             "help": ""
         },
+        "send_alerts": {
+            "label": "Envoyer alertes",
+            "description": "Des alertes de surveillance sont-elles envoyées pour ce serveur ?",
+            "help": ""
+        },
         "server_id": {
             "label": "Serveur",
             "description": "Serveur sur lequel l'instance s'exécute.",
@@ -64,15 +89,34 @@
             "label": "Logiciels",
             "description": "Informations sur les logiciels exécutés sur l'instance.",
             "help": ""
+        },
+        "statuses_ids": {
+            "label": "Statuts",
+            "description": "Historique des statuts de supervision de l'instance.",
+            "help": "Consultez les données de supervision collectées pour cette instance."
+        },
+        "checks_ids": {
+            "label": "Contrôles",
+            "description": "Contrôles évalués à partir du dernier statut de l'instance.",
+            "help": "Configurez les valeurs de statut attendues pour cette instance."
         }
     },
     "view": {
         "form.default": {
             "name": "Instance",
             "description": "Affiche le formulaire de modification d'une instance.",
+            "actions": {
+                "action.sync-status": {
+                    "label": "Synchroniser statut"
+                },
+                "action.add-check": {
+                    "label": "Ajouter un contrôle",
+                    "description": "Créer un contrôle d'instance modifiable à partir d'un exemple."
+                }
+            },
             "layout": {
                 "section.details": {
-                    "label": "Details"
+                    "label": "Détails"
                 },
                 "section.description": {
                     "label": "Description"
@@ -82,6 +126,12 @@
                 },
                 "section.softwares": {
                     "label": "Logiciels"
+                },
+                "section.statuses": {
+                    "label": "Statuts"
+                },
+                "section.checks": {
+                    "label": "Contrôles"
                 }
             }
         },

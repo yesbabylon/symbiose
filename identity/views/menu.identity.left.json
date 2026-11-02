@@ -45,6 +45,17 @@
                         }
                     },
                     {
+                        "id": "item.organization.employees",
+                        "type": "entry",
+                        "label": "Employees",
+                        "icon": "badge",
+                        "description": "People with an employee role.",
+                        "context": {
+                            "entity": "hr\\employee\\Employee",
+                            "view": "list.default"
+                        }
+                    },
+                    {
                         "id": "item.organization.internal_contacts",
                         "label": "Internal contacts",
                         "description": "Employees and contact groups of the organization.",
@@ -59,17 +70,6 @@
                                 "description": "All contacts.",
                                 "context": {
                                     "entity": "identity\\Contact",
-                                    "view": "list.default"
-                                }
-                            },
-                            {
-                                "id": "item.organization.internal_contacts.employees",
-                                "type": "entry",
-                                "label": "Employees",
-                                "icon": "badge",
-                                "description": "People with an employee role.",
-                                "context": {
-                                    "entity": "hr\\employee\\Employee",
                                     "view": "list.default"
                                 }
                             },

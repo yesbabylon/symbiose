@@ -1,0 +1,22 @@
+{
+    "name": "Ajouter un contrôle à une instance",
+    "description": "Créer un contrôle d'instance modifiable à partir d'un exemple.",
+    "model": {
+        "id": {
+            "label": "Instance",
+            "description": "Instance à laquelle le contrôle sera ajouté.",
+            "help": ""
+        },
+        "check_id": {
+            "label": "Modèle de contrôle",
+            "description": "Exemple dont la condition sera copiée vers l'instance.",
+            "help": "Seuls les exemples pour instance qui ne sont pas attribués à un objet sont disponibles."
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_instance": "L'instance n'a pas été trouvée.",
+            "unknown_check_template": "L'exemple de contrôle d'instance sélectionné n'a pas été trouvé."
+        }
+    }
+}

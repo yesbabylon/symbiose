@@ -6,6 +6,8 @@
 */
 
 use sale\serviceaccount\Report;
+use symbiose\setting\Setting;
+use timetrack\TimeEntry;
 use Twig\Environment as TwigEnvironment;
 use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
 
@@ -86,6 +88,9 @@ $default_labels = [
     'report.header.created_on'            => 'Created on',
     'report.header.previous_balance'      => 'Previous balance',
     'report.header.new_balance'           => 'New balance',
+    'report.header.customer_name'         => 'Name',
+    'report.header.customer_address'      => 'Address',
+    'report.header.customer_vat_number'   => 'VAT no.',
     'report.services.title'               => 'Services details',
     'report.services.column.ticket'       => 'Ticket',
     'report.services.column.day'          => 'Day',
@@ -96,6 +101,7 @@ $default_labels = [
     'report.services.column.who'          => 'Who',
     'report.services.column.role'         => 'Role',
     'report.services.column.type'         => 'Type',
+    'report.services.column.project'      => 'Project',
     'report.services.column.points'       => '#',
     'report.services.empty'               => 'No services for this period.',
     'report.services.total'               => 'Total services for period',
@@ -182,6 +188,13 @@ $report = Report::id($params['id'])
                 'name',
                 'customer_external_ref',
                 'ref_account',
+                'address_street',
+                'address_dispatch',
+                'address_zip',
+                'address_city',
+                'address_country',
+                'has_vat',
+                'vat_number',
                 'organization_id' => [
                     'name',
                     'legal_name',
@@ -202,6 +215,7 @@ $report = Report::id($params['id'])
             'contract_type_id' => ['name']
         ],
         'service_account_entries_ids' => [
+            'name',
             'date',
             'start',
             'end',
@@ -211,13 +225,15 @@ $report = Report::id($params['id'])
             'contact',
             'points',
             'calculation_log',
-            'creator'       => ['firstname', 'lastname'],
-            'employee_id'   => ['name', 'partner_identity_id' => ['firstname', 'lastname']],
-            'role_id'       => ['name'],
+            'creator'       => ['name', 'firstname', 'lastname'],
+            'employee_id'   => ['name', 'firstname', 'lastname'],
+            'role_id'       => ['name', 'code'],
             'receivable_id' => [
                 'origin_object_class',
                 'origin_object_id',
-                'time_entry_id' => ['origin', 'ticket_id', 'reference', 'description']
+                'name',
+                'description',
+                'time_entry_id' => ['origin', 'project_id' => ['name'], 'ticket_id', 'reference', 'description', 'detailed_description']
             ]
         ]
     ], $lang)
@@ -227,8 +243,7 @@ if(empty($report)) {
     throw new Exception('unknown_report', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
-$timezone = constant('L10N_TIMEZONE');
-$tz = new DateTimeZone($timezone);
+$timezone = Setting::get_value('core', 'locale', 'time.zone', constant('L10N_TIMEZONE'));
 
 $format_time = function($value) {
     $hours = floor($value / 3600);
@@ -265,12 +280,26 @@ $map_cc_lines = [];
 foreach($report['service_account_entries_ids'] as $line) {
     $receivable = $line['receivable_id'] ?? [];
 
-    if(($receivable['origin_object_class'] ?? null) === 'timetrack\TimeEntry') {
+    if($line['points'] < 0) {
+        $firstname = $line['creator']['firstname'] ?? '';
+        $lastname = $line['creator']['lastname'] ?? '';
+        $who = trim($firstname.' '.(strlen($lastname) ? substr($lastname, 0, 1).'.' : ''));
+        $description = trim($line['description'] ?? '');
+
+        $map_cc_lines[] = [
+            'date'        => date('d/m/Y', (int) $line['date']),
+            'who'         => $who,
+            'description' => ucfirst(substr(str_replace(['<p>', '</p>', '<br />'], ['', '', ' ; '], $description), 0, 128)),
+            'points'      => number_format((float) round($line['points'], 2), 2, '.', '')
+        ];
+    }
+    elseif(($receivable['origin_object_class'] ?? null) === TimeEntry::class) {
         $time_entry = $receivable['time_entry_id'] ?? [];
         $ticket_id = $time_entry['ticket_id'] ?? null;
         $parent_id = $ticket_id
             ? 'ticket-'.$ticket_id
             : 'time-entry-'.($receivable['origin_object_id'] ?? 0);
+
         $description = $time_entry['description']
             ?? $time_entry['reference']
             ?? $line['description']
@@ -285,7 +314,7 @@ foreach($report['service_account_entries_ids'] as $line) {
         $contact = (string) ($line['contact'] ?? '');
         if(!isset($map_tt_lines[$parent_id])) {
             $map_tt_lines[$parent_id] = [
-                'description' => substr($description, 0, 175),
+                'description' => ucfirst(substr($description, 0, 175)),
                 'contact'     => $contact,
                 'lines'       => []
             ];
@@ -301,38 +330,66 @@ foreach($report['service_account_entries_ids'] as $line) {
 
         $start = (int) ($line['start'] ?? 0);
         $end = (int) ($line['end'] ?? 0);
-        $tz_offset = $tz->getOffset(new DateTime('@'.$start));
-        $firstname = $line['employee_id']['partner_identity_id']['firstname'] ?? '';
-        $lastname = $line['employee_id']['partner_identity_id']['lastname'] ?? '';
-        $who = trim($firstname.' '.(strlen($lastname) ? substr($lastname, 0, 1).'.' : ''));
-        $line_description = (string) ($line['description'] ?? '');
-        $calculation_log = (string) ($line['calculation_log'] ?? '');
+
+        $firstname = $line['employee_id']['firstname'] ?? '';
+        $lastname = $line['employee_id']['lastname'] ?? '';
+
+        $line_description = ($time_entry['detailed_description'] ?? $line['description'] ?? $description);
+        $formatted_line_description = str_replace('<br />', ' ; ', strip_tags($line_description));
+        $calculation_log = ($line['calculation_log'] ?? '');
 
         $map_tt_lines[$parent_id]['lines'][] = [
             'date'        => date('d/m/Y', (int) $line['date']),
-            'start'       => $format_time($start + $tz_offset - strtotime('midnight', $start)),
-            'end'         => $format_time($end + $tz_offset - strtotime('midnight', $end)),
+            'start'       => $format_time($start - strtotime('midnight', $start)),
+            'end'         => $format_time($end - strtotime('midnight', $end)),
             'pause'       => $format_time(floor(abs((float) $line['pause']) * 60) * 60),
             'on_site'     => !empty($line['on_site']) ? $labels['report.common.yes'] : $labels['report.common.no'],
-            'who'         => $who,
-            'role'        => $line['role_id']['name'] ?? '',
+            'who'         => trim($firstname . ' ' . (strlen($lastname) ? substr($lastname, 0, 1) . '.' : '')),
+            'role'        => $line['role_id']['code'] ?? 'DEV',
             'type'        => $time_entry['origin'] ?? '',
+            'project'     => $time_entry['project_id']['name'],
             'points'      => number_format((float) round(-$line['points'], 2), 2, '.', ''),
-            'description' => ucfirst(substr(str_replace('<br />', ' ; ', strip_tags($line_description)), 0, 370)),
+            'description' => ucfirst(substr($formatted_line_description, 0, 500)) . (strlen($formatted_line_description) > 500 ? '[…]' : ''),
             'log'         => str_replace('<br />', ' ; ', $calculation_log)
         ];
     }
     else {
-        $firstname = $line['creator']['firstname'] ?? '';
-        $lastname = $line['creator']['lastname'] ?? '';
-        $who = trim($firstname.' '.(strlen($lastname) ? substr($lastname, 0, 1).'.' : ''));
-        $line_description = (string) ($line['description'] ?? '');
+        $description = trim((string) ($receivable['description'] ?? ''));
+        if(strlen($description) <= 0) {
+            $description = trim((string) ($receivable['name'] ?? ''));
+        }
+        if(strlen($description) <= 0) {
+            $description = trim((string) ($line['description'] ?? ''));
+        }
+        if(strlen($description) <= 0) {
+            $description = trim((string) ($line['name'] ?? ''));
+        }
 
-        $map_cc_lines[] = [
-            'date'        => date('d/m/Y', (int) $line['date']),
-            'who'         => $who,
-            'description' => ucfirst(substr(str_replace(['<p>', '</p>', '<br />'], ['', '', ' ; '], $line_description), 0, 128)),
-            'points'      => number_format((float) round($line['points'], 2), 2, '.', '')
+        $description = trim(strip_tags(str_replace(
+            ['<br>', '<br/>', '<br />', '</p>'],
+            [' ; ', ' ; ', ' ; ', ' '],
+            $description
+        )));
+
+        $firstname = $line['employee_id']['firstname'] ?? $line['creator']['firstname'] ?? '';
+        $lastname = $line['employee_id']['lastname'] ?? $line['creator']['lastname'] ?? '';
+
+        $map_tt_lines[] = [
+            'description' => ucfirst(substr($description, 0, 128)),
+            'contact'     => '',
+            'lines'       => [[
+                'date'        => date('d/m/Y', (int) $line['date']),
+                'start'       => '',
+                'end'         => '',
+                'pause'       => '',
+                'who'         => trim($firstname . ' ' . (strlen($lastname) ? substr($lastname, 0, 1) . '.' : '')),
+                'role'        => '',
+                'project'     => '',
+                'type'        => '',
+                'points'      => number_format((float) round(-$line['points'], 2), 2, '.', ''),
+                'description' => $description,
+                'log'         => ''
+            ]]
         ];
     }
 }
@@ -342,6 +399,16 @@ $customer = $service_account['customer_id'] ?? null;
 $customer_name = $customer['name'] ?? '';
 $customer_ref = $customer['customer_external_ref'] ?? ($customer['ref_account'] ?? '');
 $customer_label = $customer_name.(strlen($customer_ref) ? ' ['.$customer_ref.']' : '');
+$recipient_data = [
+    'name'             => $customer_name,
+    'address_street'   => $customer['address_street'] ?? '',
+    'address_dispatch' => $customer['address_dispatch'] ?? '',
+    'address_zip'      => $customer['address_zip'] ?? '',
+    'address_city'     => $customer['address_city'] ?? '',
+    'address_country'  => $customer['address_country'] ?? '',
+    'has_vat'          => (bool) ($customer['has_vat'] ?? false),
+    'vat_number'       => $customer['vat_number'] ?? ''
+];
 
 $organization_data = [];
 $organization = $customer['organization_id'] ?? null;
@@ -382,9 +449,10 @@ $values = [
     'labels'          => $labels,
     'name'            => $report['name'],
     'service_account' => $service_account['name'] ?? '',
-    'balance_old'     => (($report['balance_old'] >= 0) ? '+' : '').number_format((float) round($report['balance_old'], 2), 2, '.', ''),
-    'balance_new'     => (($report['balance_new'] >= 0) ? '+' : '').number_format((float) round($report['balance_new'], 2), 2, '.', ''),
+    'balance_old'     => (($report['balance_old'] >= 0) ? '+' : '') . number_format((float) round($report['balance_old'], 2), 2, '.', ''),
+    'balance_new'     => (($report['balance_new'] >= 0) ? '+' : '') . number_format((float) round($report['balance_new'], 2), 2, '.', ''),
     'customer'        => $customer_label,
+    'recipient'       => $recipient_data,
     'account_type'    => $service_account['contract_type_id']['name'] ?? '',
     'emission_date'   => date('d/m/Y', $report['created']),
     'period'          => $format_month($report['date']),
@@ -392,7 +460,7 @@ $values = [
     'tickets'         => $map_tt_lines,
     'credits'         => $map_cc_lines,
     'total_tickets'   => number_format((float) round($report['total_points'], 2), 2, '.', ''),
-    'total_credits'   => (($report['total_credits'] >= 0) ? '+' : '').number_format((float) round($report['total_credits'], 2), 2, '.', ''),
+    'total_credits'   => (($report['total_credits'] >= 0) ? '+' : '') . number_format((float) round($report['total_credits'], 2), 2, '.', ''),
     'show_details'    => (bool) $params['details'],
     'show_logs'       => (bool) $params['logs'],
     'organization'    => $organization_data

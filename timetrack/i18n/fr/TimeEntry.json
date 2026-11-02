@@ -98,6 +98,10 @@
             "label": "Délai d'encodage",
             "description": "Délai entre la prestation et son enregistrement.",
             "help": "Cette durée est calculée automatiquement à partir de la date de prestation et de la date de création."
+        "employee_id": {
+            "label": "Employé",
+            "description": "Employé correspondant à l’utilisateur qui a réalisé la prestation.",
+            "help": "Cette valeur est déterminée automatiquement à partir de l’utilisateur sélectionné."
         },
         "origin": {
             "label": "Origine",
@@ -148,31 +152,25 @@
         "list.default": {
             "name": "Saisies de temps",
             "description": "Liste des saisies de temps.",
-            "header": {
-                "selection": {
-                    "actions": {
-                        "action.transition.submit": {
-                            "label": "Soumettre",
-                            "help": ""
-                        },
-                        "action.transition.refuse": {
-                            "label": "Refuser",
-                            "help": ""
-                        },
-                        "action.transition.approve": {
-                            "label": "Approuver",
-                            "help": ""
-                        },
-                        "action.transition.charge": {
-                            "label": "Prendre en charge",
-                            "help": ""
-                        }
-                    }
-                }
-            },
             "actions": {
                 "action.create-empty": {
                     "label": "Nouveau",
+                    "help": ""
+                },
+                "action.transition.submit": {
+                    "label": "Soumettre",
+                    "help": ""
+                },
+                "action.transition.refuse": {
+                    "label": "Refuser",
+                    "help": ""
+                },
+                "action.transition.approve": {
+                    "label": "Approuver",
+                    "help": ""
+                },
+                "action.transition.charge": {
+                    "label": "Prendre en charge",
                     "help": ""
                 }
             },

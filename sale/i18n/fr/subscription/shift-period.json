@@ -1,0 +1,17 @@
+{
+    "name": "Passage à la période suivante",
+    "description": "Décale les dates de l'abonnement en fonction de sa durée.",
+    "model": {
+        "id": {
+            "label": "Abonnement",
+            "description": "Identifiant de l'abonnement à décaler.",
+            "help": "La période courante doit déjà comporter une vente."
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_subscription": "L'abonnement n'a pas été trouvé.",
+            "missing_sale_entry_for_current_period": "Une vente doit exister pour la période courante avant de passer à la période suivante."
+        }
+    }
+}

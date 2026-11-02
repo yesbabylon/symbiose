@@ -6,7 +6,7 @@
 */
 
 use core\Mail;
-use equal\email\Email;
+use equal\email\EmailMessage;
 use infra\server\Alert;
 use infra\server\Server;
 use infra\server\Instance;
@@ -27,7 +27,6 @@ use infra\server\Instance;
  */
 ['context' => $context] = $providers;
 
-
 /**
  * Sends the given alert to all users link for given server
  *
@@ -37,8 +36,8 @@ use infra\server\Instance;
  * @throws Exception
  */
 $sendAlert = function(array $alert, string $alert_email_subject) {
-    $users_emails = array_column($alert['users_ids'], 'login');
-    foreach($alert['groups_ids'] as $group) {
+    $users_emails = array_column($alert['alert_policy_id']['users_ids'], 'login');
+    foreach($alert['alert_policy_id']['groups_ids'] as $group) {
         $users_emails = array_merge($users_emails, array_column($group['users_ids'], 'login'));
     }
     $users_emails = array_unique($users_emails);
@@ -48,15 +47,16 @@ $sendAlert = function(array $alert, string $alert_email_subject) {
 
     $body = "<div>Alert triggers:</div>";
     $body .= "<ul>";
-    foreach($alert['alert_triggers_ids'] as $trigger) {
+    foreach($alert['alert_policy_id']['alert_triggers_ids'] as $trigger) {
         $body .= "<li>{$trigger['name']}</li>";
     }
     $body .= "</ul>";
 
     foreach($users_emails as $email) {
-        $message = new Email();
+        $message = new EmailMessage();
 
-        $message->setTo($email)
+        $message
+            ->setTo($email)
             ->setSubject($alert_email_subject)
             ->setContentType("text/html")
             ->setBody($body);
@@ -67,9 +67,9 @@ $sendAlert = function(array $alert, string $alert_email_subject) {
 
 
 $servers = Server::search([
-        ['server_type', 'in', ['b2', 'k2', 's2', 'admin']],
-        ['send_alerts', '=', true]
-    ])
+    ['server_type', 'in', ['b2', 'k2', 's2', 'admin']],
+    ['send_alerts', '=', true]
+])
     ->read([
         'name',
         'server_type',
@@ -79,11 +79,10 @@ $servers = Server::search([
 
 $alerts = Alert::search(['status', '=', 'pending'])
     ->read([
-        'id',
         'name',
-        'server_id' => ['id', 'name'],
-        'instance_id' => ['id', 'name'],
-        'alert_policy_id' => [
+        'server_id'         => ['name'],
+        'instance_id'       => ['name'],
+        'alert_policy_id'   => [
             'alert_type',
             'users_ids'             => ['login'],
             'groups_ids'            => ['users_ids' => ['login']],
@@ -94,29 +93,34 @@ $alerts = Alert::search(['status', '=', 'pending'])
 
 foreach($alerts as $id => $alert) {
     if($alert['server_id']) {
-        $server = Server::id($alert['server_id']['id'])->read(['send_alerts'])->first();
+        $server = Server::id($alert['server_id']['id'])
+            ->read(['send_alerts'])
+            ->first();
+
         if($server['send_alerts']) {
             $sendAlert(
-                $alert['alert_policy_id'],
+                $alert,
                 "Alert \"{$alert['name']}\" for server {$alert['server_id']['name']}"
             );
         }
-
     }
-    else if($alert['instance_id']) {
-        $instance = Instance::id($alert['instance_id']['id'])->read(['send_alerts'])->first();
+    elseif($alert['instance_id']) {
+        $instance = Instance::id($alert['instance_id']['id'])
+            ->read(['send_alerts'])
+            ->first();
 
         if($instance['send_alerts']) {
             $sendAlert(
-                $alert['alert_policy_id'],
+                $alert,
                 "Alert \"{$alert['name']}\" for instance {$alert['instance_id']['name']}"
             );
         }
     }
+
     Alert::id($id)->update(['status' => 'sent']);
 }
 
-
-$context->httpResponse()
-        ->status(204)
-        ->send();
+$context
+    ->httpResponse()
+    ->status(204)
+    ->send();

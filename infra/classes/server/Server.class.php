@@ -38,7 +38,8 @@ class Server extends Model {
                 'description'       => 'Type of the server.',
                 'selection'         => ['front', 'node', 'storage', 'b2', 'k2', 's2', 'admin'],
                 'default'           => 'front',
-                'onupdate'          => 'onupdateServerType'
+                'onupdate'          => 'onupdateServerType',
+                'dependents'        => ['instances_ids' => ['server_type']]
             ],
 
             'synced' => [
@@ -117,9 +118,18 @@ class Server extends Model {
 
             'statuses_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'infra\server\ServerStatus',
-                'foreign_field'     => 'server_id',
+                'foreign_object'    => 'infra\server\Status',
+                'foreign_field'     => 'object_id',
+                'domain'            => ['object_class', '=', Server::class],
                 'description'       => 'Statuses of the server.'
+            ],
+
+            'checks_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'infra\server\Check',
+                'foreign_field'     => 'object_id',
+                'domain'            => ['object_class', '=', Server::class],
+                'description'       => 'Checks of the server.'
             ]
 
         ];

@@ -13,6 +13,11 @@
             "description": "Liste de paiements.",
             "help": ""
         },
+        "funding_allocations_ids": {
+            "label": "Affectations",
+            "description": "Mouvements comptables affectés au financement.",
+            "help": "Consultez les mouvements comptables pris en compte dans le montant payé."
+        },
         "funding_type": {
             "label": "Type",
             "description": "Les délais sont échelonnés sauf le dernier : facture définitive.",
@@ -77,7 +82,7 @@
                     "label": "Détails"
                 },
                 "section.payments_section": {
-                    "label": "Paiments"
+                    "label": "Paiements et affectations"
                 }
             }
         },

@@ -21,7 +21,7 @@
     "report.miscellaneous.empty": "Aucun crédit ni correction pour cette période.",
     "report.miscellaneous.total": "Total des crédits et corrections pour la période",
     "report.balance.title": "Solde du compte de service",
-    "report.balance.initial": "Solde initial",
+    "report.balance.initial": "Solde précédent",
     "report.balance.services": "Total des services pour la période (détails aux pages précédentes)",
     "report.balance.credits": "Total des crédits et corrections pour la période",
     "report.balance.new": "Nouveau solde",

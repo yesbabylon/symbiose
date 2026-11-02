@@ -191,7 +191,7 @@
             "description": "",
             "actions": {
                 "action.post": {
-                    "label": "Comptabiliser",
+                    "label": "Émettre la facture",
                     "description": "Attribuer le numéro définitif et générer les écritures comptables."
                 },
                 "action.cancel": {

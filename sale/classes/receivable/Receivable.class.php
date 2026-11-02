@@ -76,7 +76,7 @@ class Receivable extends Model {
                 'description'       => 'Entity class that the Receivable originates from.',
                 'help'              => 'Sale entries can to extended by other classes to enrich logic behavior. This field is used to store the class name of the object. Selection is provided as a memo but is non-exhaustive.',
                 'default'           => 'sale\SaleEntry',
-                'dependents'        => ['name'],
+                'dependents'        => ['name', 'employee_id'],
                 'selection'         => [
                     'sale\SaleEntry',
                     'timetrack\TimeEntry',
@@ -88,7 +88,7 @@ class Receivable extends Model {
                 'type'              => 'integer',
                 'description'       => 'Object identifier, as a complement to `origin_object_class`.',
                 'help'              => 'Together origin_object_class and origin_object_id reference the accounting document the entry is linked to.',
-                'dependents'        => ['name', 'description', 'product_id', 'price_id', 'unit_price', 'vat_rate', 'qty', 'discount', 'total', 'price'],
+                'dependents'        => ['name', 'description', 'employee_id', 'product_id', 'price_id', 'unit_price', 'vat_rate', 'qty', 'discount', 'total', 'price'],
                 'required'          => true,
                 'readonly'          => true
             ],
@@ -134,6 +134,16 @@ class Receivable extends Model {
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => 'The Customer to who refers the item.',
                 'function'          => 'calcCustomerId',
+                'store'             => true,
+                'readonly'          => true
+            ],
+
+            'employee_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'hr\employee\Employee',
+                'description'       => 'Employee who performed the work.',
+                'function'          => 'calcEmployeeId',
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -313,6 +323,11 @@ class Receivable extends Model {
                     'product_model_id' => ['type']
                 ]
             ],
+            'sale_entry_id' => [
+                'product_id' => [
+                    'product_model_id' => ['type']
+                ]
+            ],
             'subscription_entry_id' => [
                 'id',
                 'product_id' => [
@@ -335,15 +350,19 @@ class Receivable extends Model {
                     'receivable_not_open' => 'Only open receivables can be posted to a service account.'
                 ];
             }
+            /*
             elseif(!in_array($receivable['origin_object_class'], ['timetrack\\TimeEntry', 'sale\\subscription\\SubscriptionEntry'], true)) {
                 $result[$id] = [
                     'non_supported_origin_class' => 'The receivable origin class is not supported for service account posting.'
                 ];
             }
+            */
             elseif(
-                ($receivable['origin_object_class'] === 'timetrack\\TimeEntry'
-                    ? ($receivable['time_entry_id']['product_id']['product_model_id']['type'] ?? null)
-                    : ($receivable['subscription_entry_id']['product_id']['product_model_id']['type'] ?? null)
+                (
+                    $receivable['time_entry_id']['product_id']['product_model_id']['type']
+                    ?? $receivable['subscription_entry_id']['product_id']['product_model_id']['type']
+                    ?? $receivable['sale_entry_id']['product_id']['product_model_id']['type']
+                    ?? null
                 ) !== 'service'
             ) {
                 $result[$id] = [
@@ -533,6 +552,7 @@ class Receivable extends Model {
                 'origin_object_id',
                 'date',
                 'customer_id',
+                'employee_id',
                 'service_account_id',
                 'service_account_entry_id' => ['id', 'receivable_id', 'service_account_id'],
                 'time_entry_id' => [
@@ -543,106 +563,126 @@ class Receivable extends Model {
                 ]
             ]);
 
-        ['db' => $db_connector] = \eQual::inject(['db']);
-        $db = $db_connector->connect();
-        if(!$db) {
-            throw new \Exception('missing_database', EQ_ERROR_INVALID_CONFIG);
-        }
-
-        $defaultServiceAccount = null;
+        $serviceAccount = null;
         if(isset($values['service_account_id']) && $values['service_account_id'] > 0) {
-            $defaultServiceAccount = ServiceAccount::id($values['service_account_id'])
+            $serviceAccount = ServiceAccount::id($values['service_account_id'])
                 ->read(['id', 'customer_id', 'is_active'])
                 ->first();
 
-            if(!isset($defaultServiceAccount)) {
+            if(!isset($serviceAccount)) {
                 throw new \Exception('unknown_service_account', EQ_ERROR_UNKNOWN_OBJECT);
             }
         }
 
-        $db->sendQuery('START TRANSACTION;');
-        try {
-            foreach($self as $id => $receivable) {
-                if(!empty($receivable['service_account_entry_id']['id'])) {
-                    if((int) ($receivable['service_account_entry_id']['receivable_id'] ?? 0) !== (int) $id) {
-                        throw new \Exception('service_account_entry_mismatch', EQ_ERROR_CONFLICT_OBJECT);
+        $service_account_id = $serviceAccount['id'] ?? null;
+
+        // Resolve one Service Account for the whole collection before creating any entry.
+        foreach($self as $receivable) {
+            $receivable_service_account_id = $receivable['service_account_id'] ?? null;
+            $entry_service_account_id = $receivable['service_account_entry_id']['service_account_id'] ?? null;
+
+            if(
+                $receivable_service_account_id
+                && $entry_service_account_id
+                && (int) $receivable_service_account_id !== (int) $entry_service_account_id
+            ) {
+                throw new \Exception('service_account_entry_account_mismatch', EQ_ERROR_CONFLICT_OBJECT);
+            }
+
+            $linked_service_account_id = $entry_service_account_id ?: $receivable_service_account_id;
+            if(
+                $linked_service_account_id
+                && $service_account_id
+                && (int) $linked_service_account_id !== (int) $service_account_id
+            ) {
+                throw new \Exception('service_account_entry_account_mismatch', EQ_ERROR_CONFLICT_OBJECT);
+            }
+
+            if(!$serviceAccount) {
+                if($linked_service_account_id) {
+                    $serviceAccount = ServiceAccount::id($linked_service_account_id)
+                        ->read(['id', 'customer_id', 'is_active'])
+                        ->first();
+
+                    if(!$serviceAccount) {
+                        throw new \Exception('unknown_service_account', EQ_ERROR_UNKNOWN_OBJECT);
                     }
-                    if(
-                        $defaultServiceAccount
-                        && (int) $receivable['service_account_entry_id']['service_account_id'] !== (int) $defaultServiceAccount['id']
-                    ) {
-                        throw new \Exception('service_account_entry_account_mismatch', EQ_ERROR_CONFLICT_OBJECT);
-                    }
-                    continue;
                 }
-
-                $existing_entries_ids = ServiceAccountEntry::search([
-                        ['receivable_id', '=', $id]
-                    ], [
-                        'limit' => 2
-                    ])
-                    ->ids();
-                if($existing_entries_ids) {
-                    throw new \Exception('receivable_already_linked', EQ_ERROR_CONFLICT_OBJECT);
-                }
-
-                $serviceAccount = $defaultServiceAccount;
-
-                if(!$serviceAccount) {
+                else {
                     $serviceAccount = ServiceAccount::search([
-                        ['customer_id', '=', $receivable['customer_id']],
-                        ['is_active', '=', true]
-                    ])
-                    ->read(['id', 'customer_id', 'is_active'])
-                    ->first();
+                            ['customer_id', '=', $receivable['customer_id']],
+                            ['is_active', '=', true]
+                        ])
+                        ->read(['id', 'customer_id', 'is_active'])
+                        ->first();
 
                     if(!$serviceAccount) {
                         throw new \Exception('missing_service_account', EQ_ERROR_INVALID_PARAM);
                     }
                 }
 
-                if(!isset($serviceAccount['customer_id']) || (int) $serviceAccount['customer_id'] !== (int) $receivable['customer_id']) {
-                    throw new \Exception('service_account_customer_mismatch', EQ_ERROR_INVALID_PARAM);
-                }
-
-                if(!isset($serviceAccount['is_active']) || !$serviceAccount['is_active']) {
-                    throw new \Exception('inactive_service_account', EQ_ERROR_INVALID_PARAM);
-                }
-
-                $timeEntry = $receivable['origin_object_class'] === 'timetrack\\TimeEntry'
-                    ? ($receivable['time_entry_id'] ?? [])
-                    : [];
-
-                $serviceAccountEntry = ServiceAccountEntry::create([
-                        'receivable_id'       => $id,
-                        'service_account_id'  => $serviceAccount['id'],
-                        'status'              => 'pending',
-                        'posting_date'        => time(),
-                        'travel_time'         => (int) ($timeEntry['travel_time'] ?? 0),
-                        'on_site'             => (bool) ($timeEntry['on_site'] ?? false),
-                        'helpdesk'            => (($timeEntry['origin'] ?? null) === 'support'),
-                        'priority'            => (int) ($timeEntry['priority'] ?? 2)
-                    ])
-                    ->read(['id', 'points'])
-                    ->first();
-
-                if(!$serviceAccountEntry) {
-                    throw new \Exception('service_account_entry_creation_failed', EQ_ERROR_INVALID_PARAM);
-                }
-
-                self::id($receivable['id'])
-                    ->update([
-                        'service_account_id'       => $serviceAccount['id'],
-                        'service_account_entry_id' => $serviceAccountEntry['id'],
-                        'status'                   => 'settled'
-                    ]);
+                $service_account_id = $serviceAccount['id'];
             }
-            $db->sendQuery('COMMIT;');
+
+            if(!isset($serviceAccount['customer_id']) || (int) $serviceAccount['customer_id'] !== (int) $receivable['customer_id']) {
+                throw new \Exception('service_account_customer_mismatch', EQ_ERROR_INVALID_PARAM);
+            }
+
+            if(!isset($serviceAccount['is_active']) || !$serviceAccount['is_active']) {
+                throw new \Exception('inactive_service_account', EQ_ERROR_INVALID_PARAM);
+            }
         }
-        catch(\Throwable $throwable) {
-            $db->sendQuery('ROLLBACK;');
-            throw $throwable;
+
+        if(!$service_account_id) {
+            throw new \Exception('missing_service_account', EQ_ERROR_INVALID_PARAM);
         }
+
+        foreach($self as $id => $receivable) {
+            if(!empty($receivable['service_account_entry_id']['id'])) {
+                continue;
+            }
+
+            $existing_entries_ids = ServiceAccountEntry::search([
+                    ['receivable_id', '=', $id]
+                ], [
+                    'limit' => 2
+                ])
+                ->ids();
+            if($existing_entries_ids) {
+                throw new \Exception('receivable_already_linked', EQ_ERROR_CONFLICT_OBJECT);
+            }
+
+            $timeEntry = $receivable['origin_object_class'] === 'timetrack\\TimeEntry'
+                ? ($receivable['time_entry_id'] ?? [])
+                : [];
+
+            $serviceAccountEntry = ServiceAccountEntry::create([
+                    'receivable_id'       => $id,
+                    'service_account_id'  => $service_account_id,
+                    'employee_id'         => $receivable['employee_id'] ?? null,
+                    'status'              => 'pending',
+                    'posting_date'        => time(),
+                    'travel_time'         => ($timeEntry['travel_time'] ?? 0),
+                    'on_site'             => ($timeEntry['on_site'] ?? false),
+                    'helpdesk'            => (($timeEntry['origin'] ?? null) === 'support'),
+                    'priority'            => ($timeEntry['priority'] ?? 2)
+                ])
+                ->read(['id', 'points'])
+                ->first();
+
+            if(!$serviceAccountEntry) {
+                throw new \Exception('service_account_entry_creation_failed', EQ_ERROR_INVALID_PARAM);
+            }
+
+            self::id($receivable['id'])
+                ->update([
+                    'service_account_id'       => $service_account_id,
+                    'service_account_entry_id' => $serviceAccountEntry['id'],
+                    'status'                   => 'settled'
+                ]);
+        }
+
+        ServiceAccount::id($service_account_id)->do('sync_balance');
     }
 
     protected static function calcName($self): array {
@@ -696,6 +736,23 @@ class Receivable extends Model {
             $saleEntry = SaleEntry::id($receivable['origin_object_id'])->read(['customer_id'])->first();
             if($saleEntry) {
                 $result[$id] = $saleEntry['customer_id'];
+            }
+        }
+
+        return $result;
+    }
+
+    protected static function calcEmployeeId($self): array {
+        $result = [];
+        $self->read(['origin_object_class', 'origin_object_id']);
+
+        foreach($self as $id => $receivable) {
+            $origin_object_class = $receivable['origin_object_class'] ?? SaleEntry::class;
+            $saleEntry = $origin_object_class::id($receivable['origin_object_id'])
+                ->read(['employee_id'])
+                ->first();
+            if($saleEntry) {
+                $result[$id] = $saleEntry['employee_id'];
             }
         }
 

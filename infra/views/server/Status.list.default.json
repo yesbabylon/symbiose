@@ -21,36 +21,15 @@
             },
             {
                 "type": "field",
-                "value": "server_id",
-                "with": "20%",
-                "sortable": true,
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "instance_id",
-                "with": "20%",
-                "sortable": true,
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "cpu_use",
+                "value": "is_collection_ok",
                 "width": "15%",
                 "sortable": true,
                 "readonly": true
             },
             {
                 "type": "field",
-                "value": "ram_use",
-                "width": "15%",
-                "sortable": true,
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "dsk_use",
-                "width": "15%",
+                "value": "status_data_excerpt",
+                "width": "60%",
                 "sortable": true,
                 "readonly": true
             }

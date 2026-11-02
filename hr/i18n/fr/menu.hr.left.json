@@ -4,6 +4,18 @@
         "item.employees": {
             "label": "Employés",
             "help": ""
+        },
+        "item.employees.teams": {
+            "label": "Équipes",
+            "help": "Gérer les équipes et leurs membres."
+        },
+        "item.roles": {
+            "label": "Rôles",
+            "help": "Gérer les rôles disponibles pour les employés."
+        },
+        "item.role_assignments": {
+            "label": "Affectations de rôles",
+            "help": "Consulter et gérer les rôles attribués aux employés."
         }
     }
 }

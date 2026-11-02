@@ -15,12 +15,12 @@ if(!$db) {
     throw new Exception('missing_database', EQ_ERROR_INVALID_CONFIG);
 }
 
-$today = strtotime(date('Y-m-d'));
+$today = date('Y-m-d');
 $db->sendQuery(
     "UPDATE `hr_employee_contract`
      SET `model` = 'hr\\\\employee\\\\EmploymentContract',
          `status` = CASE
-             WHEN `date_end` IS NOT NULL AND `date_end` < {$today} THEN 'ended'
+             WHEN `date_end` IS NOT NULL AND `date_end` < '{$today}' THEN 'ended'
              ELSE 'active'
          END
      WHERE `model` = 'hr\\\\employee\\\\Contract';"

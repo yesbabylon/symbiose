@@ -19,9 +19,19 @@
             "help": "Renseignez le matricule utilisé pour identifier l'employé en interne."
         },
         "role_id": {
-            "label": "Rôle",
-            "description": "Rôle attribué à l'employé.",
-            "help": "Sélectionnez le rôle principal de l'employé."
+            "label": "Rôle principal",
+            "description": "Rôle principal calculé à partir des affectations de l'employé.",
+            "help": "Marquez une affectation comme principale pour mettre ce champ à jour."
+        },
+        "role_assignments_ids": {
+            "label": "Affectations de rôles",
+            "description": "Liste des rôles attribués à l'employé.",
+            "help": "Ajoutez les rôles de l'employé et désignez, si nécessaire, son rôle principal."
+        },
+        "teams_ids": {
+            "label": "Équipes",
+            "description": "Équipes auxquelles appartient l'employé.",
+            "help": "Les rôles définis sur ces équipes sont ajoutés aux affectations de l'employé."
         },
         "owner_identity_id": {
             "label": "Employé par",
@@ -80,15 +90,41 @@
                 "section.employee": {
                     "label": "Employé"
                 },
+                "section.teams": {
+                    "label": "Équipes"
+                },
+                "section.roles": {
+                    "label": "Rôles"
+                },
                 "section.absences": {
                     "label": "Absences"
+                }
+            },
+            "actions": {
+                "action.create_account": {
+                    "label": "Créer un compte utilisateur",
+                    "description": "Créer un compte utilisateur associé à l'employé."
+                },
+                "action.disable_user_account": {
+                    "label": "Désactiver le compte utilisateur",
+                    "description": "Désactiver le compte utilisateur associé à l'employé."
+                },
+                "action.delete_user_account": {
+                    "label": "Supprimer le compte utilisateur",
+                    "description": "Supprimer définitivement le compte utilisateur associé à l'employé."
                 }
             }
         },
         "list.default": {
             "name": "Employés",
             "description": "Liste de base des employés existants.",
-            "layout": {}
+            "layout": {},
+            "actions": {
+                "action.create_account": {
+                    "label": "Créer des comptes utilisateurs",
+                    "description": "Créer des comptes utilisateurs associés aux employés sélectionnés."
+                }
+            }
         }
     },
     "error": {}

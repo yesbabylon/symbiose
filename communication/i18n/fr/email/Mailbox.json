@@ -1,0 +1,165 @@
+{
+    "name": "Boîte mail",
+    "plural": "Boîtes mail",
+    "description": "Comptes de messagerie utilisés pour envoyer et recevoir des emails.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom de la boîte mail, calculé à partir de son adresse.",
+            "help": ""
+        },
+        "can_send": {
+            "label": "Envoi autorisé",
+            "description": "Indique si la boîte mail peut envoyer des emails.",
+            "help": ""
+        },
+        "can_receive": {
+            "label": "Réception autorisée",
+            "description": "Indique si la boîte mail peut recevoir et importer des emails.",
+            "help": ""
+        },
+        "email": {
+            "label": "Adresse",
+            "description": "Adresse principale de la boîte mail.",
+            "help": ""
+        },
+        "signature": {
+            "label": "Signature",
+            "description": "Signature ajoutée aux communications envoyées depuis cette boîte.",
+            "help": ""
+        },
+        "login": {
+            "label": "Identifiant",
+            "description": "Identifiant utilisé pour l'authentification basique.",
+            "help": ""
+        },
+        "password": {
+            "label": "Mot de passe",
+            "description": "Mot de passe utilisé pour l'authentification basique.",
+            "help": ""
+        },
+        "imap_server": {
+            "label": "Serveur IMAP",
+            "description": "Nom d'hôte du serveur utilisé pour recevoir les emails.",
+            "help": ""
+        },
+        "imap_port": {
+            "label": "Port IMAP",
+            "description": "Port réseau utilisé pour la connexion IMAP.",
+            "help": ""
+        },
+        "smtp_server": {
+            "label": "Serveur SMTP",
+            "description": "Nom d'hôte du serveur utilisé pour envoyer les emails.",
+            "help": ""
+        },
+        "smtp_port": {
+            "label": "Port SMTP",
+            "description": "Port réseau utilisé pour la connexion SMTP.",
+            "help": ""
+        },
+        "auth_type": {
+            "label": "Type d'authentification",
+            "description": "Méthode d'authentification utilisée par la boîte mail.",
+            "help": "",
+            "selection": {
+                "basic": "Basique",
+                "oauth": "OAuth"
+            }
+        },
+        "auth_provider": {
+            "label": "Fournisseur OAuth",
+            "description": "Fournisseur utilisé pour l'authentification OAuth.",
+            "help": "",
+            "selection": {
+                "google": "Google",
+                "microsoft": "Microsoft"
+            }
+        },
+        "access_token": {
+            "label": "Jeton d'accès",
+            "description": "Jeton OAuth2 utilisé pour accéder à la boîte mail.",
+            "help": ""
+        },
+        "refresh_token": {
+            "label": "Jeton de rafraîchissement",
+            "description": "Jeton OAuth2 permettant de renouveler l'accès.",
+            "help": ""
+        },
+        "access_token_expiry": {
+            "label": "Expiration du jeton d'accès",
+            "description": "Date et heure d'expiration du jeton d'accès.",
+            "help": ""
+        },
+        "refresh_token_expiry": {
+            "label": "Expiration du jeton de rafraîchissement",
+            "description": "Date et heure d'expiration du jeton de rafraîchissement.",
+            "help": ""
+        },
+        "date_last_sync": {
+            "label": "Dernière synchronisation",
+            "description": "Date et heure de la dernière récupération des emails.",
+            "help": ""
+        },
+        "emails_ids": {
+            "label": "Emails",
+            "description": "Tous les emails associés à cette boîte mail.",
+            "help": ""
+        },
+        "incoming_emails_ids": {
+            "label": "Emails entrants",
+            "description": "Emails reçus dans cette boîte mail.",
+            "help": ""
+        },
+        "outgoing_emails_ids": {
+            "label": "Emails sortants",
+            "description": "Emails envoyés depuis cette boîte mail.",
+            "help": ""
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut de validation de la boîte mail.",
+            "help": "",
+            "selection": {
+                "pending": "En attente",
+                "validated": "Validée"
+            }
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Boîte mail",
+            "description": "Consulter les emails entrants et sortants d'une boîte mail.",
+            "routes": {
+                "item.config": {
+                    "label": "Paramètres",
+                    "description": "Configurer la boîte mail."
+                }
+            },
+            "layout": {
+                "section.incoming": {
+                    "label": "Boîte de réception"
+                },
+                "section.outgoing": {
+                    "label": "Boîte d'envoi"
+                }
+            }
+        },
+        "form.config": {
+            "name": "Paramètres de la boîte mail",
+            "description": "Configurer l'identité, les serveurs et l'authentification de la boîte mail.",
+            "layout": {
+                "section.general": {
+                    "label": "Général"
+                },
+                "section.connection": {
+                    "label": "Connexion"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Boîtes mail",
+            "description": "Liste des boîtes mail configurées."
+        }
+    }
+}
