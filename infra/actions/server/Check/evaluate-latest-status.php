@@ -79,6 +79,7 @@ $self->read([
     'failure_count'
 ]);
 
+$status_id_by_target = [];
 $status_data_by_target = [];
 foreach($self as $id => $check) {
     $target_key = "{$check['object_class']}:{$check['object_id']}";
@@ -105,6 +106,7 @@ foreach($self as $id => $check) {
             throw new Exception('invalid_status_data', EQ_ERROR_INVALID_PARAM);
         }
 
+        $status_id_by_target[$target_key] = $latest_status['id'];
         $status_data_by_target[$target_key] = $flatten($decoded_status_data);
     }
 
@@ -200,9 +202,10 @@ foreach($self as $id => $check) {
     }
 
     Check::id($id)->update([
-        'value'         => is_string($value) ? $value : json_encode($value),
-        'is_success'    => $is_success,
-        'failure_count' => $is_success ? 0 : $check['failure_count'] + 1
+        'value'             => is_string($value) ? $value : json_encode($value),
+        'is_success'        => $is_success,
+        'failure_count'     => $is_success ? 0 : $check['failure_count'] + 1,
+        'last_status_id'    => $status_id_by_target[$target_key]
     ]);
 }
 

@@ -90,6 +90,12 @@ class Check extends Model {
                 'default'           => 0
             ],
 
+            'last_status_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'infra\server\Status',
+                'description'       => 'Last status the check was evaluated on.'
+            ],
+
             'alert_triggers_ids' => [
                 'type'              => 'many2many',
                 'foreign_object'    => 'infra\server\AlertTrigger',
