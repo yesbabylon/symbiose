@@ -60,6 +60,7 @@ if(empty($params['ids']) && $params['id'] <= 0) {
 $self->read([
     'url',
     'b2_instance_type',
+    'checks_ids',
     'server_id' => [
         'server_type'
     ]
@@ -144,6 +145,10 @@ foreach($self as $id => $instance) {
             'up'        => false,
             'synced'    => time()
         ]);
+    }
+
+    if(!empty($instance['checks_ids'])) {
+        eQual::run('do', 'infra_server_Check_evaluate-latest-status', ['ids' => $instance['checks_ids']]);
     }
 }
 

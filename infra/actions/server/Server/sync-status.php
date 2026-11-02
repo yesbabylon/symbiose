@@ -54,6 +54,7 @@ if(empty($params['ids']) && $params['id'] <= 0) {
 
 $self->read([
     'instances_ids',
+    'checks_ids',
     'ip_address_ids' => ['ip_v4', 'ip_v6', 'visibility', 'exposure']
 ]);
 
@@ -181,7 +182,10 @@ foreach($self as $id => $server) {
 
         if($params['sync_instances']) {
             foreach($server['instances_ids'] as $instance_id) {
-                eQual::run('do', 'infra_server_Instance_sync-status', ['id' => $instance_id, 'scope' => 'instant']);
+                eQual::run('do', 'infra_server_Instance_sync-status', [
+                    'id'    => $instance_id,
+                    'scope' => 'instant'
+                ]);
             }
         }
     }
@@ -203,6 +207,10 @@ foreach($self as $id => $server) {
             'up'        => false,
             'synced'    => time()
         ]);
+    }
+
+    if(!empty($server['checks_ids'])) {
+        eQual::run('do', 'infra_server_Check_evaluate-latest-status', ['ids' => $server['checks_ids']]);
     }
 }
 
