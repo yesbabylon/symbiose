@@ -5,8 +5,9 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
+use infra\server\IpAddress;
 use infra\server\Server;
-use infra\server\ServerStatus;
+use infra\server\Status;
 
 [$params, $providers] = eQual::announce([
     'description'   => "Fetches and saves statuses for a given server.",
@@ -15,8 +16,14 @@ use infra\server\ServerStatus;
         'id' => [
             'type'              => 'many2one',
             'foreign_object'    => 'infra\server\Server',
-            'description'       => 'Identifier of the targeted server',
-            'required'          => true
+            'description'       => 'Identifier of the targeted server.',
+            'default'           => 0
+        ],
+        'ids' => [
+            'type'              => 'one2many',
+            'foreign_object'    => 'infra\server\Server',
+            'description'       => 'Identifiers of the targeted servers.',
+            'default'           => []
         ],
         'sync_instances' => [
             'type'              => 'boolean',
@@ -32,75 +39,179 @@ use infra\server\ServerStatus;
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context']
+    'providers'     => ['context', 'self']
 ]);
 
 /**
- * @var \equal\php\Context $context
+ * @var \equal\php\Context      $context
+ * @var \equal\orm\Collection   $self
  */
-['context' => $context] = $providers;
+['context' => $context, 'self' => $self] = $providers;
 
-$server = Server::id($params['id'])
-    ->read(['instances_ids'])
-    ->first();
-
-if(!$server) {
-    throw new Exception('unknown_server', EQ_ERROR_INVALID_PARAM);
+if(empty($params['ids']) && $params['id'] <= 0) {
+    throw new Exception('missing_check', EQ_ERROR_MISSING_PARAM);
 }
 
-$status = null;
-try {
-    $status = eQual::run('get', 'infra_server_Server_status', ['id' => $server['id']]);
-}
-catch(Exception $e) {
-    trigger_error(
-        "APP::Unable to synchronize status for server {$server['id']}: {$e->getMessage()}",
-        EQ_REPORT_WARNING
-    );
-}
+$self->read([
+    'instances_ids',
+    'checks_ids',
+    'ip_address_ids' => ['ip_v4', 'ip_v6', 'visibility', 'exposure']
+]);
 
-if($status) {
-    // #memo - add state up in status_data for Alert
-    $status['state']['up'] = true;
+foreach($self as $id => $server) {
+    $status = null;
+    $error = null;
+    try {
+        $map_servers_statuses = eQual::run('get', 'infra_server_Server_status', ['id' => $id]);
 
-    $ips_data = [];
-    foreach(['ip_protected', 'ip_public', 'ip_private'] as $ip_key) {
-        if(!empty($status['config'][$ip_key])) {
-            $ips_data[$ip_key] = $status['config'][$ip_key];
+        $status = $map_servers_statuses[$id];
+    }
+    catch(Exception $e) {
+        trigger_error(
+            "APP::Unable to synchronize status for server {$id}: {$e->getMessage()}",
+            EQ_REPORT_WARNING
+        );
+
+        $error = [
+            'code'      => $e->getCode(),
+            'message'   => $e->getMessage()
+        ];
+    }
+
+    if($status) {
+        // #memo - add state up in status_data for Alert
+        $status['state']['up'] = true;
+
+        $existing_ip_addresses = [];
+        foreach($server['ip_address_ids'] as $ip_address) {
+            foreach(['ip_v4', 'ip_v6'] as $ip_field) {
+                if(!empty($ip_address[$ip_field])) {
+                    $existing_ip_addresses[$ip_address[$ip_field]] = [
+                        'id'            => $ip_address['id'],
+                        'visibility'    => $ip_address['visibility'],
+                        'exposure'      => $ip_address['exposure']
+                    ];
+                }
+            }
+        }
+
+        $ip_config = [
+            'ip_public' => [
+                'visibility'    => 'public',
+                'exposure'      => 'public'
+            ],
+            'ip_protected' => [
+                'visibility'    => 'protected',
+                'exposure'      => 'public'
+            ],
+            'ip_private' => [
+                'visibility'    => 'private',
+                'exposure'      => 'private'
+            ]
+        ];
+
+        foreach($ip_config as $config_key => $ip_values) {
+            if(empty($status['config'][$config_key])) {
+                continue;
+            }
+
+            $addresses = is_array($status['config'][$config_key])
+                ? $status['config'][$config_key]
+                : [$status['config'][$config_key]];
+
+            foreach($addresses as $address) {
+                if(!is_string($address) || trim($address) === '') {
+                    continue;
+                }
+
+                $address = trim($address);
+                $address_without_prefix = explode('/', $address)[0];
+                if(filter_var($address_without_prefix, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+                    $ip_field = 'ip_v4';
+                }
+                elseif(filter_var($address_without_prefix, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+                    $ip_field = 'ip_v6';
+                }
+                else {
+                    trigger_error("APP::Ignoring invalid IP address '{$address}' for server {$id}.", EQ_REPORT_WARNING);
+                    continue;
+                }
+
+                if(isset($existing_ip_addresses[$address])) {
+                    $existing_ip_address = $existing_ip_addresses[$address];
+                    $updates = [];
+                    foreach($ip_values as $field => $value) {
+                        if($existing_ip_address[$field] !== $value) {
+                            $updates[$field] = $value;
+                        }
+                    }
+                    if($updates) {
+                        IpAddress::id($existing_ip_address['id'])->update($updates);
+                        $existing_ip_addresses[$address] = array_merge($existing_ip_address, $updates);
+                    }
+                    continue;
+                }
+
+                $ip_address = IpAddress::create(array_merge(
+                    [
+                        'server_id' => $id,
+                        $ip_field   => $address
+                    ],
+                    $ip_values
+                ))
+                    ->first();
+
+                $existing_ip_addresses[$address] = array_merge(
+                    ['id' => $ip_address['id']],
+                    $ip_values
+                );
+            }
+        }
+
+        Status::create([
+            'object_class'  => Server::class,
+            'object_id'     => $id,
+            'status_data'   => json_encode($status, JSON_PRETTY_PRINT)
+        ]);
+
+        // server is up
+        Server::id($id)->update([
+            'up'        => true,
+            'synced'    => time()
+        ]);
+
+        if($params['sync_instances']) {
+            foreach($server['instances_ids'] as $instance_id) {
+                eQual::run('do', 'infra_server_Instance_sync-status', [
+                    'id'    => $instance_id,
+                    'scope' => 'instant'
+                ]);
+            }
         }
     }
-    if(!empty($ips_data)) {
-        Server::id($server['id'])->update($ips_data);
-    }
-
-    ServerStatus::create([
-        'server_id'     => $server['id'],
-        'up'            => true,
-        'status_data'   => json_encode($status, JSON_PRETTY_PRINT),
-        'dsk_use'       => (float) str_replace(['%', ','], ['', '.'], $status['instant']['dsk_use'] ?? 0) / 100,
-        'cpu_use'       => (float) str_replace(['%', ','], ['', '.'], $status['instant']['cpu_use'] ?? 0) / 100,
-        'ram_use'       => (float) str_replace(['%', ','], ['', '.'], $status['instant']['ram_use'] ?? 0) / 100,
-        'total_proc'    => intval($status['instant']['total_proc'] ?? 0)
-    ]);
-
-    // server is up
-    Server::id($server['id'])->update(['up' => true, 'synced' => time()]);
-
-    if($params['sync_instances']) {
-        foreach($server['instances_ids'] as $instance_id) {
-            eQual::run('do', 'infra_server_Instance_sync-status', ['id' => $instance_id, 'scope' => 'instant']);
+    else {
+        $status = ['state' => ['up' => false]];
+        if(!empty($error)) {
+            $status['error'] = $error;
         }
-    }
-}
-else {
-    ServerStatus::create([
-        'server_id'     => $server['id'],
-        'up'            => false,
-        'status_data'   => json_encode(['state' => ['up' => false]], JSON_PRETTY_PRINT)
-    ]);
 
-    // server is down (will cascade to instances)
-    Server::id($params['id'])->update(['up' => false, 'synced' => time()]);
+        Status::create([
+            'object_class'      => Server::class,
+            'object_id'         => $id,
+            'status_data'       => json_encode($status, JSON_PRETTY_PRINT),
+            'is_collection_ok'  => false
+        ]);
+
+        // server is down (will cascade to instances)
+        Server::id($params['id'])->update([
+            'up'        => false,
+            'synced'    => time()
+        ]);
+    }
+
+    if(!empty($server['checks_ids'])) {
+        eQual::run('do', 'infra_server_Check_evaluate-latest-status', ['ids' => $server['checks_ids']]);
+    }
 }
 
 $context

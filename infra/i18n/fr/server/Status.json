@@ -1,0 +1,33 @@
+{
+    "name": "Statut",
+    "plural": "Statuts",
+    "description": "Données de statut collectées pour un serveur ou une instance.",
+    "model": {
+        "object_class": {
+            "label": "Classe cible",
+            "description": "Classe du serveur ou de l'instance associé à ce statut.",
+            "help": "Assignée automatiquement lors de la collecte du statut."
+        },
+        "object_id": {
+            "label": "ID cible",
+            "description": "Identifiant du serveur ou de l'instance associé à ce statut.",
+            "help": "Assigné automatiquement lors de la collecte du statut."
+        },
+        "status_data": {
+            "label": "Données du statut",
+            "description": "Données JSON contenant l'état et les statistiques collectés.",
+            "help": "Contient la réponse complète renvoyée par le point d'accès de supervision."
+        },
+        "status_data_excerpt": {
+            "label": "Résumé du statut",
+            "description": "Résumé des dernières données de statut collectées.",
+            "help": "Affiche les principales valeurs d'état et d'utilisation des ressources."
+        },
+        "is_collection_ok": {
+            "label": "Collecte réussie",
+            "description": "Indique si la collecte du statut s'est terminée correctement.",
+            "help": "Désactivé lorsque le point d'accès de supervision est inaccessible ou renvoie une erreur."
+        }
+    },
+    "view": {}
+}

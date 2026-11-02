@@ -1,0 +1,80 @@
+{
+    "name": "Type de document",
+    "plural": "Types de document",
+    "description": "Les types définissent le classement et les règles générales des documents.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom du type de document.",
+            "help": "Utilisez un nom permettant d'identifier clairement le type de document."
+        },
+        "uuid": {
+            "label": "UUID",
+            "description": "Identifiant unique fourni par l'instance globale.",
+            "help": "Cette valeur technique permet de synchroniser le type entre les instances."
+        },
+        "object_class": {
+            "label": "Classe d'objet",
+            "description": "Classe des objets auxquels le type de document s'applique.",
+            "help": "Indiquez la classe métier dont les objets peuvent être liés à ce type de document."
+        },
+        "code": {
+            "label": "Code",
+            "description": "Code unique du type de document.",
+            "help": "Utilisez un code stable permettant d'identifier le type dans les traitements."
+        },
+        "folder_code": {
+            "label": "Code du dossier",
+            "description": "Code du dossier associé aux documents de ce type.",
+            "help": "Indiquez le code du nœud de dossier dans lequel ces documents doivent être classés."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Description de l'objectif et de l'usage du type.",
+            "help": "Précisez les documents auxquels ce type doit être appliqué."
+        },
+        "json_schema": {
+            "label": "Schéma JSON",
+            "description": "Identifiant URN du schéma JSON associé au type.",
+            "help": "Indiquez le schéma utilisé pour valider les données structurées de ce type de document."
+        },
+        "document_visibility": {
+            "label": "Visibilité",
+            "description": "Définit les personnes autorisées à consulter le document.",
+            "help": "Sélectionnez une visibilité limitée à l'organisation, aux utilisateurs externes ou au public.",
+            "selection": {
+                "organization": "Organisation",
+                "external": "Utilisateurs externes",
+                "public": "Public"
+            }
+        },
+        "has_subtype": {
+            "label": "Possède des sous-types",
+            "description": "Indique si le type comporte plusieurs sous-types.",
+            "help": "Activez cette option lorsque les documents doivent être classés dans des sous-types distincts."
+        },
+        "documents_ids": {
+            "label": "Documents",
+            "description": "Documents associés à ce type.",
+            "help": "Cette liste rassemble les documents classés sous ce type."
+        },
+        "document_subtypes_ids": {
+            "label": "Sous-types",
+            "description": "Sous-types associés à ce type de document.",
+            "help": "Cette liste rassemble les sous-types disponibles pour ce type."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Type de document",
+            "description": "Formulaire de modification d'un type de document.",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Types de document",
+            "description": "Liste des types de document.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

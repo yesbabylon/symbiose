@@ -76,6 +76,16 @@
             "label": "Logiciels",
             "description": "Logiciels installé sur le serveur.",
             "help": ""
+        },
+        "statuses_ids": {
+            "label": "Statuts",
+            "description": "Historique des statuts de supervision de l'instance.",
+            "help": "Consultez les données de supervision collectées pour cette instance."
+        },
+        "checks_ids": {
+            "label": "Contrôles",
+            "description": "Contrôles évalués à partir du dernier statut de l'instance.",
+            "help": "Configurez les valeurs de statut attendues pour cette instance."
         }
     },
     "view": {
@@ -84,7 +94,11 @@
             "description": "",
             "actions": {
                 "action.sync-status": {
-                    "label": "Synchroniser status"
+                    "label": "Synchroniser statut"
+                },
+                "action.add-check": {
+                    "label": "Ajouter un contrôle",
+                    "description": "Créer un contrôle de serveur modifiable à partir d'un exemple."
                 }
             },
             "layout": {
@@ -107,7 +121,10 @@
                     "label": "Logiciels"
                 },
                 "section.statuses": {
-                    "label": "Status"
+                    "label": "Statuts"
+                },
+                "section.checks": {
+                    "label": "Contrôles"
                 }
             }
         },

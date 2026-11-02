@@ -1,0 +1,72 @@
+{
+    "name": "Sous-type de document",
+    "plural": "Sous-types de document",
+    "description": "Les sous-types précisent le classement des documents d'un même type.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom du sous-type de document.",
+            "help": "Utilisez un nom permettant d'identifier clairement le sous-type."
+        },
+        "uuid": {
+            "label": "UUID",
+            "description": "Identifiant unique fourni par l'instance globale.",
+            "help": "Cette valeur technique permet de synchroniser le sous-type entre les instances."
+        },
+        "code": {
+            "label": "Code",
+            "description": "Code unique du sous-type de document.",
+            "help": "Utilisez un code stable au sein du type de document parent."
+        },
+        "folder_code": {
+            "label": "Code du dossier",
+            "description": "Code du dossier associé aux documents de ce sous-type.",
+            "help": "Indiquez le code du nœud de dossier dans lequel ces documents doivent être classés."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Description de l'objectif et de l'usage du sous-type.",
+            "help": "Précisez les documents auxquels ce sous-type doit être appliqué."
+        },
+        "document_type_id": {
+            "label": "Type de document",
+            "description": "Type de document auquel appartient le sous-type.",
+            "help": "Sélectionnez le type parent sous lequel ce sous-type doit être proposé."
+        },
+        "document_type_uuid": {
+            "label": "UUID du type",
+            "description": "Identifiant global du type de document parent.",
+            "help": "Cette valeur est synchronisée automatiquement depuis le type de document associé."
+        },
+        "documents_ids": {
+            "label": "Documents",
+            "description": "Documents associés à ce sous-type.",
+            "help": "Cette liste rassemble les documents classés sous ce sous-type."
+        },
+        "document_visibility": {
+            "label": "Visibilité",
+            "description": "Définit les personnes autorisées à consulter le document.",
+            "help": "Sélectionnez la portée correspondant aux copropriétaires, fournisseurs ou employés concernés.",
+            "selection": {
+                "condo": "Copropriété",
+                "ownership": "Lot",
+                "owner": "Propriétaire",
+                "suppliership": "Fournisseur",
+                "agency": "Agence"
+            }
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Sous-type de document",
+            "description": "Formulaire de modification d'un sous-type de document.",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Sous-types de document",
+            "description": "Liste des sous-types de document.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

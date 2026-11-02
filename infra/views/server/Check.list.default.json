@@ -1,0 +1,67 @@
+{
+    "name": "Checks",
+    "description": "Default listing of monitoring checks.",
+    "order": "name",
+    "sort": "asc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "5%",
+                "sortable": true,
+                "visible": false,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "code",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "30%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "value",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "is_success",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "failure_count",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "object_class",
+                "width": "20%",
+                "visible": false,
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "object_id",
+                "width": "10%",
+                "visible": false,
+                "sortable": true,
+                "readonly": true
+            }
+        ]
+    }
+}

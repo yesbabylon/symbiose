@@ -17,11 +17,6 @@
                 "sent": "Sent"
             }
         },
-        "alert_policy_id": {
-            "label": "Alert policy",
-            "description": "Policy that generated the alert.",
-            "help": "Select the policy whose triggers generated this alert."
-        },
         "server_id": {
             "label": "Server",
             "description": "Server concerned by the alert.",

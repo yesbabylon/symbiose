@@ -1,0 +1,101 @@
+{
+    "name": "Check",
+    "plural": "Checks",
+    "description": "Monitoring condition evaluated against the latest status of a server or instance.",
+    "model": {
+        "code": {
+            "label": "Code",
+            "description": "Unique code identifying the check.",
+            "help": ""
+        },
+        "name": {
+            "label": "Name",
+            "description": "Condition generated from the status path, operator, and expected value.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Short description of the check.",
+            "help": ""
+        },
+        "object_class": {
+            "label": "Target class",
+            "description": "Class of the server or instance evaluated by the check.",
+            "help": "Automatically assigned from the related target."
+        },
+        "object_id": {
+            "label": "Target ID",
+            "description": "Identifier of the server or instance evaluated by the check.",
+            "help": "Automatically assigned from the related target."
+        },
+        "status_path": {
+            "label": "Status path",
+            "description": "Dot-separated path of the value in the collected status data.",
+            "help": "For example: state.up or instant.cpu_use."
+        },
+        "operator": {
+            "label": "Operator",
+            "description": "Comparison applied to the collected value.",
+            "help": "",
+            "selection": {
+                "eq": "Equals",
+                "ne": "Does not equal",
+                "gt": "Greater than",
+                "gte": "Greater than or equal to",
+                "lt": "Less than",
+                "lte": "Less than or equal to",
+                "contains": "Contains",
+                "does_not_contain": "Does not contain",
+                "in": "Is in",
+                "not_in": "Is not in"
+            }
+        },
+        "check_value": {
+            "label": "Expected value",
+            "description": "Value against which the collected status value is compared.",
+            "help": "For membership operators, use a JSON array or comma-separated values."
+        },
+        "value": {
+            "label": "Current value",
+            "description": "Value read during the latest evaluation.",
+            "help": ""
+        },
+        "is_success": {
+            "label": "Successful",
+            "description": "Whether the latest evaluation matched the expected condition.",
+            "help": ""
+        },
+        "failure_count": {
+            "label": "Consecutive failures",
+            "description": "Number of consecutive failed evaluations.",
+            "help": ""
+        },
+        "alert_triggers_ids": {
+            "label": "Alert triggers",
+            "description": "Alert triggers that use this check.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Check",
+            "description": "Create or edit a monitoring check.",
+            "layout": {
+                "section.general": {
+                    "label": "General"
+                },
+                "section.condition": {
+                    "label": "Condition"
+                },
+                "section.result": {
+                    "label": "Latest result"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Checks",
+            "description": "List of monitoring checks.",
+            "layout": {}
+        }
+    }
+}

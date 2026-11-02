@@ -7,16 +7,21 @@
 
 use equal\http\HttpRequest;
 use infra\Access;
-use infra\server\Instance;
 
 [$params, $providers] = eQual::announce([
-    'description'   => 'Fetches instant status of a given instance.',
+    'description'   => 'Fetches instant status of instances.',
     'params'        => [
         'id' => [
             'type'              => 'many2one',
             'foreign_object'    => 'infra\server\Instance',
-            'description'       => 'Identifier of the targeted instance',
-            'required'          => true
+            'description'       => 'Identifier of the targeted instance.',
+            'default'           => 0
+        ],
+        'ids' => [
+            'type'              => 'one2many',
+            'foreign_object'    => 'infra\server\Instance',
+            'description'       => 'Identifiers of the targeted instances.',
+            'default'           => []
         ],
         'scope' => [
             'type'              => 'string',
@@ -35,58 +40,71 @@ use infra\server\Instance;
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context']
+    'providers'     => ['context', 'self']
 ]);
 
 /**
- * @var \equal\php\Context $context
+ * @var \equal\php\Context      $context
+ * @var \equal\orm\Collection   $self
  */
-['context' => $context] = $providers;
+['context' => $context, 'self' => $self] = $providers;
 
-$instance = Instance::id($params['id'])
-    ->read(['name', 'server_id' => ['server_type']])
-    ->first();
-
-if($instance['server_id']['server_type'] !== 'b2') {
-    throw new Exception('server_type_not_handled', EQ_ERROR_NOT_ALLOWED);
+if(empty($params['ids']) && $params['id'] <= 0) {
+    throw new Exception('missing_check', EQ_ERROR_MISSING_PARAM);
 }
 
-$accesses = Access::search([
-    ['server_id', '=', $instance['server_id']['id']],
-    ['access_type', 'in', ['https', 'http']]
-])
-    ->read(['port', 'url', 'password'])
-    ->get(true);
+$self->read(['name', 'server_id' => ['server_type']]);
 
-$access = null;
-foreach($accesses as $ac) {
-    if($ac['port'] === '8000') {
-        $access = $ac;
+$map_instances_accesses = [];
+foreach($self as $id => $instance) {
+    if(!in_array($instance['server_id']['server_type'], ['b2', 'k2', 's2', 'admin'])) {
+        throw new Exception('server_type_not_handled', EQ_ERROR_NOT_ALLOWED);
     }
+
+    $accesses = Access::search([
+        ['server_id', '=', $instance['server_id']['id']],
+        ['access_type', 'in', ['https', 'http']]
+    ])
+        ->read(['port', 'url', 'password'])
+        ->get(true);
+
+    $access = null;
+    foreach($accesses as $ac) {
+        if($ac['port'] === '8000') {
+            $access = $ac;
+        }
+    }
+
+    // #memo - fallback on first https if not found with port 8000
+    if(!$access) {
+        $access = $accesses[0];
+    }
+
+    if(!$access) {
+        throw new Exception('missing_b2_host_access');
+    }
+
+    $map_instances_accesses[$id] = $access;
 }
 
-// #memo - fallback on first https if not found with port 8000
-if(!$access) {
-    $access = $accesses[0];
+$result = [];
+foreach($self as $id => $instance) {
+    $access = $map_instances_accesses[$id];
+
+    $request_params = ['instance' => $instance['name']];
+    if($params['scope'] !== 'all') {
+        $request_params['scope'] = $params['scope'];
+    }
+
+    $request = new HttpRequest("GET {$access['url']}/instance/status?".http_build_query($request_params));
+
+    $credentials = base64_encode("root:{$access['password']}");
+    $request->setHeader('Authorization', "Basic $credentials");
+
+    $response = $request->send();
+
+    $result[$id] = $response->body();
 }
-
-if(!$access) {
-    throw new Exception('missing_b2_host_access');
-}
-
-$request_params = ['instance' => $instance['name']];
-if($params['scope'] !== 'all') {
-    $request_params['scope'] = $params['scope'];
-}
-
-$request = new HttpRequest("GET {$access['url']}/instance/status?".http_build_query($request_params));
-
-$credentials = base64_encode("root:{$access['password']}");
-$request->setHeader('Authorization', "Basic $credentials");
-
-$response = $request->send();
-
-$result = $response->body();
 
 $context
     ->httpResponse()

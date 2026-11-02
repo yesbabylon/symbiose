@@ -17,11 +17,6 @@
                 "sent": "Envoyée"
             }
         },
-        "alert_policy_id": {
-            "label": "Politique d'alerte",
-            "description": "Politique ayant généré l'alerte.",
-            "help": "Sélectionnez la politique ayant généré cette alerte."
-        },
         "server_id": {
             "label": "Serveur",
             "description": "Serveur concerné par l'alerte.",
