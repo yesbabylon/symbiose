@@ -58,7 +58,6 @@ if(empty($params['ids']) && $params['id'] <= 0) {
 }
 
 $self->read([
-    'url',
     'b2_instance_type',
     'checks_ids',
     'server_id' => [
@@ -67,10 +66,6 @@ $self->read([
 ]);
 
 foreach($self as $id => $instance) {
-    if(empty($instance['url'])) {
-        throw new Exception('missing_api_url', EQ_ERROR_INVALID_PARAM);
-    }
-
     if($instance['server_id']['server_type'] !== 'b2') {
         throw new Exception('server_type_not_handled', EQ_ERROR_INVALID_PARAM);
     }
