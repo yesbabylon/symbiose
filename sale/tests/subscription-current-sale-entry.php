@@ -37,20 +37,20 @@ $tests = [
             Subscription::id($args['subscription_id'])
                 ->update(['date_from' => strtotime('2026-01-01')]);
 
-            $overlapping_result = Subscription::calcHasCurrentSaleEntry(
-                Subscription::id($args['subscription_id'])
-            );
+            $overlapping_subscription = Subscription::id($args['subscription_id'])
+                ->read(['has_current_sale_entry'])
+                ->first(true);
 
             Subscription::id($args['subscription_id'])
                 ->update(['date_from' => strtotime('2026-03-01')]);
 
-            $separate_result = Subscription::calcHasCurrentSaleEntry(
-                Subscription::id($args['subscription_id'])
-            );
+            $separate_subscription = Subscription::id($args['subscription_id'])
+                ->read(['has_current_sale_entry'])
+                ->first(true);
 
             return array_merge($args, [
-                'has_overlapping_entry' => $overlapping_result[$args['subscription_id']] ?? false,
-                'has_separate_entry'    => $separate_result[$args['subscription_id']] ?? false
+                'has_overlapping_entry' => $overlapping_subscription['has_current_sale_entry'] ?? false,
+                'has_separate_entry'    => $separate_subscription['has_current_sale_entry'] ?? false
             ]);
         },
         'assert'      => function($args) {
@@ -93,12 +93,12 @@ $tests = [
             ];
         },
         'act'         => function($args) {
-            $result = Subscription::calcHasCurrentSaleEntry(
-                Subscription::id($args['subscription_id'])
-            );
+            $subscription = Subscription::id($args['subscription_id'])
+                ->read(['has_current_sale_entry'])
+                ->first(true);
 
             return array_merge($args, [
-                'has_current_entry' => $result[$args['subscription_id']] ?? false
+                'has_current_entry' => $subscription['has_current_sale_entry'] ?? false
             ]);
         },
         'assert'      => function($args) {
