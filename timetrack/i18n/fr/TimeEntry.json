@@ -101,7 +101,7 @@
         },
         "employee_id": {
             "label": "Employé",
-            "description": "Employé correspondant à l'utilisateur qui a réalisé la prestation.",
+            "description": "Employé qui a réalisé la prestation.",
             "help": "Cette valeur est déterminée automatiquement à partir de l'utilisateur sélectionné."
         },
         "origin": {
