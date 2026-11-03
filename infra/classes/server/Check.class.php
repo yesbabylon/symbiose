@@ -59,7 +59,20 @@ class Check extends Model {
             'operator' => [
                 'type'              => 'string',
                 'description'       => "Operator used for the check.",
-                'selection'         => ['eq', 'ne', 'gt', 'gte', 'lt', 'lte', 'contains', 'does_not_contain', 'in', 'not_in'],
+                'selection'         => [
+                    'eq',
+                    'ne',
+                    'gt',
+                    'gte',
+                    'lt',
+                    'lte',
+                    'contains',
+                    'does_not_contain',
+                    'in',
+                    'not_in',
+                    'exists',
+                    'not_exists'
+                ],
                 'default'           => 'eq',
                 'required'          => true,
                 'dependents'        => ['name']

@@ -111,7 +111,20 @@ foreach($self as $id => $check) {
     }
 
     $status_data = $status_data_by_target[$target_key];
-    if(!array_key_exists($check['status_path'], $status_data)) {
+    $status_path_exists = array_key_exists($check['status_path'], $status_data);
+    if(in_array($check['operator'], ['exists', 'not_exists'], true)) {
+        $is_success = $check['operator'] === 'exists' ? $status_path_exists : !$status_path_exists;
+
+        Check::id($id)->update([
+            'value'             => json_encode($status_path_exists),
+            'is_success'        => $is_success,
+            'failure_count'     => $is_success ? 0 : $check['failure_count'] + 1,
+            'last_status_id'    => $status_id_by_target[$target_key]
+        ]);
+        continue;
+    }
+
+    if(!$status_path_exists) {
         /*
         #memo - if the key doesn't exist then ignore (scope was probably not loaded)
         #memo - note: the key "state.up" is always present

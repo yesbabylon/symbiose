@@ -47,7 +47,9 @@
                 "contains": "Contains",
                 "does_not_contain": "Does not contain",
                 "in": "Is in",
-                "not_in": "Is not in"
+                "not_in": "Is not in",
+                "exists": "Exists",
+                "not_exists": "Does not exist"
             }
         },
         "check_value": {

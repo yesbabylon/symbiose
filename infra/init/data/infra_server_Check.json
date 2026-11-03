@@ -13,6 +13,15 @@
                 "value": ""
             },
             {
+                "code": "server-b2-api-error",
+                "description": "Example B2 server check: the API response must not contain an error.",
+                "object_class": "infra\\server\\Server",
+                "status_path": "error",
+                "operator": "not_exists",
+                "check_value": "",
+                "value": ""
+            },
+            {
                 "code": "server-total-processes",
                 "description": "Example server check: adapt the maximum process count to the server workload.",
                 "object_class": "infra\\server\\Server",
@@ -122,11 +131,20 @@
             },
             {
                 "code": "instance-up",
-                "description": "Example instance check: the instance must be reachable.",
+                "description": "Example instance check: the server must be reachable and the instance running.",
                 "object_class": "infra\\server\\Instance",
                 "status_path": "state.up",
                 "operator": "eq",
                 "check_value": "true",
+                "value": ""
+            },
+            {
+                "code": "instance-b2-api-error",
+                "description": "Example B2 instance check: the API response must not contain an error.",
+                "object_class": "infra\\server\\Instance",
+                "status_path": "error",
+                "operator": "not_exists",
+                "check_value": "",
                 "value": ""
             },
             {
