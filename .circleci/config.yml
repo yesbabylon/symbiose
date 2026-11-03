@@ -50,8 +50,8 @@ jobs:
       # Run package consistency check
       - run: php run.php --do=test_package-consistency --package=calendar --level=*
       - run: php run.php --do=test_package-consistency --package=communication --level=*
-      - run: php run.php --do=test_package-consistency --package=document --level=error
-      - run: php run.php --do=test_package-consistency --package=exchange --level=error
+      - run: php run.php --do=test_package-consistency --package=document --level=*
+      - run: php run.php --do=test_package-consistency --package=exchange --level=*
       - run: php run.php --do=test_package-consistency --package=finance --level=error
       - run: php run.php --do=test_package-consistency --package=hr --level=error
       - run: php run.php --do=test_package-consistency --package=identity --level=error
