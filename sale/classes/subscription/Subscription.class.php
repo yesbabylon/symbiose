@@ -187,6 +187,34 @@ class Subscription extends Model  {
         ];
     }
 
+    public static function getPolicies(): array {
+        return array_merge(parent::getPolicies(), [
+            'period_shiftable' => [
+                'description' => 'Check that the current subscription period has an approved sale entry.',
+                'function'    => 'policyPeriodShiftable'
+            ],
+            'renewal_schedulable' => [
+                'description' => 'Check that an auto-renew subscription has a period end date.',
+                'function'    => 'policyRenewalSchedulable'
+            ]
+        ]);
+    }
+
+    public static function getActions(): array {
+        return array_merge(parent::getActions(), [
+            'shift_period' => [
+                'description' => 'Advance the subscription to the period following its current approved sale entry.',
+                'policies'    => ['period_shiftable'],
+                'function'    => 'doShiftPeriod'
+            ],
+            'schedule_renewal' => [
+                'description' => 'Refresh the automatic renewal task for the current subscription period.',
+                'policies'    => ['renewal_schedulable'],
+                'function'    => 'doScheduleRenewal'
+            ]
+        ]);
+    }
+
     protected static function onupdateDateFrom($self) {
         $self->read(['date_from', 'duration']);
         foreach($self as $id => $subscription) {
@@ -403,10 +431,17 @@ class Subscription extends Model  {
         foreach($self as $id => $subscription) {
             $result[$id] = false;
 
+            if(!isset($subscription['date_from'], $subscription['date_to'])) {
+                continue;
+            }
+
+            $current_period_midpoint = $subscription['date_from'] + intdiv($subscription['date_to'] - $subscription['date_from'], 2);
+
             foreach($subscription['subscription_entries_ids'] as $subscription_entry) {
                 if(
-                    $subscription_entry['date_from'] === $subscription['date_from']
-                    && $subscription_entry['date_to'] === $subscription['date_to']
+                    isset($subscription_entry['date_from'], $subscription_entry['date_to'])
+                    && $subscription_entry['date_from'] <= $current_period_midpoint
+                    && $subscription_entry['date_to'] >= $current_period_midpoint
                 ) {
                     $result[$id] = true;
                     break;
@@ -417,17 +452,90 @@ class Subscription extends Model  {
         return $result;
     }
 
-    /**
-     *
-     * @param  \equal\orm\ObjectManager     $om
-     * @param  array                        $ids
-     * @return void
-     */
-    public static function onupdateIsAutoRenew($om, $ids, $values, $lang) {
-        $subscriptions = $om->read(self::getType(), $ids, ['date_to','is_auto_renew']);
-        $cron = $om->getContainer()->get('cron');
+    protected static function policyPeriodShiftable($self, $values = []): array {
+        $result = [];
+        $self->read([
+            'date_from',
+            'date_to',
+            'subscription_entries_ids' => ['date_from', 'date_to', 'status']
+        ]);
 
-        foreach($subscriptions as $id => $subscription) {
+        foreach($self as $id => $subscription) {
+            if(!isset($subscription['date_from'], $subscription['date_to'])) {
+                $result[$id] = [
+                    'date_to' => [
+                        'missing_period_dates' => 'The subscription period dates are required.'
+                    ]
+                ];
+                continue;
+            }
+
+            $current_period_midpoint = $subscription['date_from']
+                + intdiv($subscription['date_to'] - $subscription['date_from'], 2);
+            $has_approved_entry = false;
+
+            foreach($subscription['subscription_entries_ids'] as $subscription_entry) {
+                if(
+                    isset($subscription_entry['date_from'], $subscription_entry['date_to'])
+                    && $subscription_entry['date_from'] <= $current_period_midpoint
+                    && $subscription_entry['date_to'] >= $current_period_midpoint
+                    && in_array($subscription_entry['status'], ['approved', 'charged'], true)
+                ) {
+                    $has_approved_entry = true;
+                    break;
+                }
+            }
+
+            if(!$has_approved_entry) {
+                $result[$id] = [
+                    'subscription_entries_ids' => [
+                        'missing_approved_entry' => 'An approved sale entry is required for the current subscription period.'
+                    ]
+                ];
+            }
+        }
+
+        return $result;
+    }
+
+    protected static function policyRenewalSchedulable($self): array {
+        $result = [];
+        $self->read(['date_to', 'is_auto_renew']);
+
+        foreach($self as $id => $subscription) {
+            if($subscription['is_auto_renew'] && !isset($subscription['date_to'])) {
+                $result[$id] = [
+                    'date_to' => [
+                        'missing_period_end' => 'An auto-renew subscription requires a period end date.'
+                    ]
+                ];
+            }
+        }
+
+        return $result;
+    }
+
+    protected static function doShiftPeriod($self, $values = []): void {
+        $self->read(['date_to']);
+        $subscription_ids = [];
+
+        foreach($self as $id => $subscription) {
+            self::id($id)->update([
+                // Updating date_from also recalculates date_to from the subscription duration.
+                'date_from' => strtotime('+1 day', $subscription['date_to'])
+            ]);
+            $subscription_ids[] = $id;
+        }
+
+        if($subscription_ids) {
+            self::ids($subscription_ids)->do('schedule_renewal');
+        }
+    }
+
+    protected static function doScheduleRenewal($self, $cron): void {
+        $self->read(['date_to', 'is_auto_renew']);
+
+        foreach($self as $id => $subscription) {
             $cron->cancel("subscription.{$id}.renew");
             $cron->cancel("subscription.{$id}.create.subscriptionEntry");
 
@@ -436,10 +544,20 @@ class Subscription extends Model  {
                     "subscription.{$id}.renew",
                     $subscription['date_to'],
                     'sale_subscription_renew',
-                    [ 'id' => $id ]
+                    ['id' => $id]
                 );
             }
         }
+    }
+
+    /**
+     *
+     * @param  \equal\orm\ObjectManager     $om
+     * @param  array                        $ids
+     * @return void
+     */
+    public static function onupdateIsAutoRenew($om, $ids, $values, $lang) {
+        self::ids($ids)->do('schedule_renewal');
     }
 
 }

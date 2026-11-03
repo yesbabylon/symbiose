@@ -28,6 +28,15 @@
             "help": ""
         }
     },
+    "error": {
+        "subscription_id": {
+            "missing_subscription": "Un abonnement est requis pour approuver cette vente.",
+            "missing_period_dates": "Les dates de la période de l'abonnement sont requises."
+        },
+        "date_from": {
+            "outside_current_period": "Cette vente ne correspond pas à la période courante de l'abonnement."
+        }
+    },
     "view": {
         "form.default": {
             "name": "Entrée d'abonnement",

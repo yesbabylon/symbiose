@@ -46,7 +46,7 @@ $subscription = Subscription::id($params['id'])
     ->first();
 
 if(!$subscription) {
-    throw new Exception('unknown_subscription', QN_ERROR_UNKNOWN_OBJECT);
+    throw new Exception('unknown_subscription', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
 if($subscription['is_internal'] || empty($subscription['customer_id'])) {
@@ -93,7 +93,7 @@ if(!$subscriptionEntry) {
             ->first();
 
         if(!isset($price['price'])) {
-            throw new Exception('price_missing_from_subscription', QN_ERROR_INVALID_PARAM);
+            throw new Exception('price_missing_from_subscription', EQ_ERROR_INVALID_PARAM);
         }
 
         $unit_price = $price['price'];

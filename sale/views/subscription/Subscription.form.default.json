@@ -3,16 +3,10 @@
     "description": "This form holds the fields for modifying a Subscription.",
     "actions": [
         {
-            "id": "action.shift-subscription",
-            "label": "Shift Period",
-            "controller": "sale_subscription_shift-period",
-            "visible": ["has_current_sale_entry", "=", true],
-            "confirm": true
-        },
-        {
             "id": "action.add-subscription-entry",
             "label": "Create Entry",
-            "controller": "sale_subscription_add-subscriptionentry"
+            "controller": "sale_subscription_add-subscriptionentry",
+            "visible": ["has_current_sale_entry", "=", false]
         }
     ],
     "layout": {

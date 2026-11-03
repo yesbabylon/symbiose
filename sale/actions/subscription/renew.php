@@ -8,7 +8,7 @@
 use sale\subscription\Subscription;
 
 list($params, $providers) = eQual::announce([
-    'description' => 'Renew a subscription by creating missing subscription entries and shifting its period.',
+    'description' => 'Renew a subscription by creating the sale entry for its current period.',
     'params'      => [
         'id' =>  [
             'description' => 'ID of the subscription.',
@@ -21,14 +21,13 @@ list($params, $providers) = eQual::announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'   => ['context', 'cron']
+    'providers'   => ['context']
 ]);
 
 /**
- * @var \equal\php\Context      $context
- * @var \equal\cron\Scheduler   $cron
+ * @var \equal\php\Context $context
  */
-list($context, $cron) = [$providers['context'], $providers['cron']];
+$context = $providers['context'];
 
 $subscription = Subscription::id($params['id'])
     ->read(['id', 'date_to', 'is_auto_renew'])
@@ -49,44 +48,13 @@ if(!isset($subscription['date_to'])) {
     throw new Exception('missing_date_to', QN_ERROR_INVALID_PARAM);
 }
 
-$today = strtotime(date('Y-m-d'));
-$renewals_count = 0;
-$max_renewals_count = 120;
-
-while($renewals_count < $max_renewals_count) {
-    eQual::run('do', 'sale_subscription_add-subscriptionentry', ['id' => $subscription['id']]);
-
-    if($subscription['date_to'] >= $today) {
-        break;
-    }
-
-    eQual::run('do', 'sale_subscription_shift-period', ['id' => $subscription['id']]);
-
-    $subscription = Subscription::id($subscription['id'])
-        ->read(['id', 'date_to', 'is_auto_renew'])
-        ->first(true);
-
-    ++$renewals_count;
-}
-
-if($renewals_count >= $max_renewals_count) {
-    throw new Exception('too_many_renewals', QN_ERROR_INVALID_PARAM);
-}
+eQual::run('do', 'sale_subscription_add-subscriptionentry', ['id' => $subscription['id']]);
 
 Subscription::id($subscription['id'])
     ->update([
         'is_expired'          => null,
         'has_upcoming_expiry' => null
     ]);
-
-$cron->cancel("subscription.{$subscription['id']}.renew");
-$cron->cancel("subscription.{$subscription['id']}.create.subscriptionEntry");
-$cron->schedule(
-    "subscription.{$subscription['id']}.renew",
-    $subscription['date_to'],
-    'sale_subscription_renew',
-    ['id' => $subscription['id']]
-);
 
 $context->httpResponse()
     ->status(204)

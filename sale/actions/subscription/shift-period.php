@@ -6,7 +6,6 @@
 */
 
 use sale\subscription\Subscription;
-use sale\subscription\SubscriptionEntry;
 
 list($params, $providers) = eQual::announce([
     'description' => 'Shift subscription dates depending on duration.',
@@ -31,35 +30,14 @@ list($params, $providers) = eQual::announce([
 $context = $providers['context'];
 
 $subscription = Subscription::id($params['id'])
-    ->read([
-        'id',
-        'date_from',
-        'date_to',
-        'duration'
-    ])
+    ->read(['id'])
     ->first();
 
 if(!$subscription) {
     throw new Exception('unknown_subscription', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
-$subscription_entry = SubscriptionEntry::search([
-        ['subscription_id', '=', $subscription['id']],
-        ['date_from', '=', $subscription['date_from']],
-        ['date_to', '=', $subscription['date_to']]
-    ])
-    ->read(['id'])
-    ->first();
-
-if(!$subscription_entry) {
-    throw new Exception('missing_sale_entry_for_current_period', EQ_ERROR_NOT_ALLOWED);
-}
-
-Subscription::id($subscription['id'])
-    ->update([
-        // #memo - this triggers an update of `date_to` based on `duration`
-        'date_from' => strtotime('+1day', $subscription['date_to'])
-    ]);
+Subscription::id($subscription['id'])->do('shift_period');
 
 $context->httpResponse()
         ->status(204)

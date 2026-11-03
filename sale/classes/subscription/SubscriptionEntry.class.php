@@ -108,6 +108,110 @@ class SubscriptionEntry extends SaleEntry {
         ];
     }
 
+    public static function getPolicies(): array {
+        return array_merge(parent::getPolicies(), [
+            'can_shift_subscription_period' => [
+                'description' => 'Check that the sale entry belongs to the current subscription period.',
+                'function'    => 'policyCanShiftSubscriptionPeriod'
+            ]
+        ]);
+    }
+
+    public static function getWorkflow() {
+        return array_merge_recursive(parent::getWorkflow(), [
+            'pending' => [
+                'transitions' => [
+                    'approve' => [
+                        'description'   => 'Approve the Subscription Entry.',
+                        'policies'      => ['can_shift_subscription_period'],
+                        'onafter'       => 'onafterApprove',
+                        'status'        => 'approved'
+                    ]
+                ]
+            ],
+            'submitted' => [
+                'transitions' => [
+                    'approve' => [
+                        'description'   => 'Approve the Subscription Entry.',
+                        'policies'      => ['can_approve', 'can_shift_subscription_period'],
+                        'onafter'       => 'onafterApprove',
+                        'status'        => 'approved'
+                    ]
+                ]
+            ]
+        ]);
+    }
+
+    protected static function policyCanShiftSubscriptionPeriod($self): array {
+        $result = [];
+        $self->read([
+            'date_from',
+            'date_to',
+            'subscription_id' => ['date_from', 'date_to']
+        ]);
+
+        foreach($self as $id => $subscription_entry) {
+            if(!$subscription_entry['subscription_id']) {
+                $result[$id] = [
+                    'subscription_id' => [
+                        'missing_subscription' => 'A subscription is required to approve the sale entry.'
+                    ]
+                ];
+                continue;
+            }
+
+            if(!isset(
+                $subscription_entry['subscription_id']['date_from'],
+                $subscription_entry['subscription_id']['date_to']
+            )) {
+                $result[$id] = [
+                    'subscription_id' => [
+                        'missing_period_dates' => 'The subscription period dates are required.'
+                    ]
+                ];
+                continue;
+            }
+
+            $current_period_midpoint = $subscription_entry['subscription_id']['date_from']
+                + intdiv($subscription_entry['subscription_id']['date_to'] - $subscription_entry['subscription_id']['date_from'], 2);
+
+            if(
+                !isset($subscription_entry['date_from'], $subscription_entry['date_to'])
+                || $subscription_entry['date_from'] > $current_period_midpoint
+                || $subscription_entry['date_to'] < $current_period_midpoint
+            ) {
+                $result[$id] = [
+                    'date_from' => [
+                        'outside_current_period' => 'The sale entry does not belong to the current subscription period.'
+                    ]
+                ];
+            }
+        }
+
+        return $result;
+    }
+
+    protected static function onafterApprove($self): void {
+        $self->read(['subscription_id' => ['date_to']]);
+
+        $map_subscription_ids = [];
+        foreach($self as $id => $subscription_entry) {
+            if(!$subscription_entry['subscription_id']['id']) {
+                continue;
+            }
+            $subscription_id = $subscription_entry['subscription_id']['id'];
+
+            // force alignment of date_to to current subscription period end
+            self::id($id)->write(['date_to' => $subscription_entry['subscription_id']['date_to']]);
+
+            if(!isset($map_subscription_ids[$subscription_id])) {
+                Subscription::id($subscription_id)->do('shift_period');
+            }
+            $map_subscription_ids[$subscription_id] = true;
+        }
+
+    }
+
     public static function calcName($self): array {
         $result = [];
         $self->read(['subscription_id' => ['name'], 'date_from', 'date_to']);

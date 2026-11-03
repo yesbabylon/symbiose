@@ -9,7 +9,7 @@ use sale\subscription\SubscriptionEntry;
 
 $tests = [
     '0101' => [
-        'description' => 'Tests that bulk-expirations renews expired auto-renew subscriptions with an existing current entry',
+        'description' => 'Tests that bulk-expirations creates one approved entry and advances an expired auto-renew subscription by one period',
         'arrange'     => function() {
             $suffix = uniqid();
 
@@ -38,8 +38,8 @@ $tests = [
                 ->read(['id'])
                 ->first(true);
 
-            $date_from = strtotime('-2 months');
-            $date_to = strtotime('-1 month');
+            $date_from = strtotime('-3 months');
+            $date_to = strtotime('-2 months');
 
             $subscription = Subscription::create([
                     'name'          => "Test auto renew subscription {$suffix}",
@@ -57,35 +57,36 @@ $tests = [
                 ->read(['id'])
                 ->first(true);
 
-            SubscriptionEntry::create([
-                'subscription_id' => $subscription['id'],
-                'date_from'       => $date_from,
-                'date_to'         => $date_to
-            ]);
-
             return [
                 'customer_id'     => $customer['id'],
                 'price_list_id'   => $price_list['id'],
                 'price_id'        => $price['id'],
                 'subscription_id' => $subscription['id'],
-                'date_from'       => $date_from
+                'date_from'       => $date_from,
+                'date_to'         => $date_to
             ];
         },
         'act'         => function($args) {
             eQual::run('do', 'sale_subscription_bulk-expirations', ['ids' => [$args['subscription_id']]]);
 
-            return $args;
-        },
-        'assert'      => function($args) {
-            $subscription_entries_ids = SubscriptionEntry::search(['subscription_id', '=', $args['subscription_id']])
-                ->ids();
+            $subscription_entries = SubscriptionEntry::search(['subscription_id', '=', $args['subscription_id']])
+                ->read(['status', 'date_from', 'date_to']);
 
             $subscription = Subscription::id($args['subscription_id'])
-                ->read(['date_from'])
+                ->read(['date_from', 'date_to'])
                 ->first(true);
 
-            return count($subscription_entries_ids) > 1
-                && $subscription['date_from'] > $args['date_from'];
+            return array_merge($args, [
+                'subscription_entries'  => $subscription_entries->toArray(),
+                'current_date_from'     => $subscription['date_from'],
+                'current_date_to'       => $subscription['date_to']
+            ]);
+        },
+        'assert'      => function($args) {
+            return count($args['subscription_entries']) === 1
+                && $args['subscription_entries'][0]['status'] === 'approved'
+                && $args['subscription_entries'][0]['date_to'] === $args['date_to']
+                && $args['current_date_from'] === strtotime('+1 day', $args['date_to']);
         },
         'rollback'    => function($args) {
             SubscriptionEntry::search(['subscription_id', '=', $args['subscription_id']])
