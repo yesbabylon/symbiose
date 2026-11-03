@@ -93,7 +93,7 @@ class AccountingEntry extends Model {
         ];
     }
 
-    public static function calcIsBalanced($self) {
+    protected static function calcIsBalanced($self) {
         $result = [];
         $self->read(['credit', 'debit']);
         foreach($self as $id => $entry) {
@@ -102,7 +102,7 @@ class AccountingEntry extends Model {
         return $result;
     }
 
-    public static function calcDebit($self) {
+    protected static function calcDebit($self) {
         $result = [];
         $self->read(['entry_lines_ids' => ['debit']]);
         foreach($self as $id => $entry) {
@@ -114,7 +114,7 @@ class AccountingEntry extends Model {
         return $result;
     }
 
-    public static function calcCredit($self) {
+    protected static function calcCredit($self) {
         $result = [];
         $self->read(['entry_lines_ids' => ['credit']]);
         foreach($self as $id => $entry) {
@@ -126,7 +126,7 @@ class AccountingEntry extends Model {
         return $result;
     }
 
-    public static function calcEntryNumber($self) {
+    protected static function calcEntryNumber($self) {
         $result = [];
         $self->read(['journal_id' => ['code', 'organization_id']]);
 

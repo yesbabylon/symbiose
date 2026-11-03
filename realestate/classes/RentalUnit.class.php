@@ -148,7 +148,7 @@ class RentalUnit extends Model {
         ];
     }
 
-    public static function calcHasParent($om, $oids, $lang) {
+    protected static function calcHasParent($om, $oids, $lang) {
         $result = [];
         $units = $om->read(__CLASS__, $oids, ['parent_id'], $lang);
         foreach($units as $uid => $unit) {

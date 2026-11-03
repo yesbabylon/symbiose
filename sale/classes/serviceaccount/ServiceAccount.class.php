@@ -315,7 +315,7 @@ class ServiceAccount extends \sale\contract\Contract {
             ->do('sync_balance');
     }
 
-    public static function calcLastEntryId($self) {
+    protected static function calcLastEntryId($self) {
         $result = [];
         foreach($self as $id => $service_account) {
             $line = ServiceAccountEntry::search([

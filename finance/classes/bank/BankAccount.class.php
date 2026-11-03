@@ -117,7 +117,7 @@ class BankAccount extends Model {
         return $result;
     }
 
-    public static function calcBankCountry($self) {
+    protected static function calcBankCountry($self) {
         $result = [];
         $self->read(['bank_account_iban']);
         foreach($self as $id => $bankAccount) {
@@ -126,7 +126,7 @@ class BankAccount extends Model {
         return $result;
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['organization_id', 'bank_account_iban']);
         foreach($self as $id => $bankAccount) {

@@ -42,7 +42,7 @@ class RentalUnitCategory extends Model {
         ];
     }
 
-    public static function calcName($om, $ids, $lang) {
+    protected static function calcName($om, $ids, $lang) {
         $result = [];
         $categories = $om->read(self::getType(), $ids, ['code', 'description'], $lang);
         foreach($categories as $cid => $category) {

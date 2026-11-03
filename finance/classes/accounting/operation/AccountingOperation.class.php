@@ -172,6 +172,18 @@ class AccountingOperation extends Model {
                 'readonly'    => true
             ],
 
+            'total' => [
+                'type'        => 'float',
+                'usage'       => 'amount/money:2',
+                'description' => 'Total tax-excluded amount of the operation.'
+            ],
+
+            'price' => [
+                'type'        => 'float',
+                'usage'       => 'amount/money:2',
+                'description' => 'Final tax-included amount of the operation.'
+            ],
+
             'status' => [
                 'type'        => 'string',
                 'description' => 'Current lifecycle status of the accounting operation.',
@@ -197,7 +209,7 @@ class AccountingOperation extends Model {
         ];
     }
 
-    public function getUnique() {
+    public function getUniques(): array {
         return [
             ['organization_id', 'journal_id', 'fiscal_year', 'operation_number']
         ];

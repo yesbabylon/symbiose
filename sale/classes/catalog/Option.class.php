@@ -49,7 +49,7 @@ class Option extends Model {
         ];
     }
 
-    public function getUnique() {
+    public function getUniques(): array {
         return [
             ['name', 'product_model_id']
         ];

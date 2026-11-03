@@ -107,7 +107,7 @@ class Module extends Model
 	/**
 	 * @throws Exception
 	 */
-	public static function calcLink(Collection $self, ObjectManager $om, $lang): array
+	protected static function calcLink(Collection $self, ObjectManager $om, $lang): array
 	{
 		$result = [];
 
@@ -123,7 +123,7 @@ class Module extends Model
 	}
 
 
-	public static function calcPageCount($om, $oids, $lang): array
+	protected static function calcPageCount($om, $oids, $lang): array
 	{
 		$result = [];
 
@@ -140,7 +140,7 @@ class Module extends Model
 		return $result;
 	}
 
-	public static function calcChapterCount(Collection $self)
+	protected static function calcChapterCount(Collection $self)
 	{
 		$result = [];
 
@@ -160,7 +160,7 @@ class Module extends Model
 		$orm->read(__CLASS__, $oids, ['chapter_count'], $lang);
 	}
 
-	public static function calcChaptersDuration($self): array
+	protected static function calcChaptersDuration($self): array
 	{
 		$result = [];
 		/** @var $self Collection */

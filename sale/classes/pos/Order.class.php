@@ -205,7 +205,7 @@ class Order extends Model {
         }
     }
 
-    public static function calcName($om, $ids, $lang) {
+    protected static function calcName($om, $ids, $lang) {
         $result = [];
         $orders = $om->read(get_called_class(), $ids, ['sequence', 'session_id', 'session_id.cashdesk_id'], $lang);
         if($orders > 0) {
@@ -217,7 +217,7 @@ class Order extends Model {
     }
 
     #todo - store sequence number in parent session
-    public static function calcSequence($om, $ids, $lang) {
+    protected static function calcSequence($om, $ids, $lang) {
         trigger_error("ORM::calling sale\pos\Order:calcSequence", QN_REPORT_DEBUG);
         $result = [];
         $orders = $om->read(self::getType(), $ids, ['session_id'], $lang);
@@ -234,7 +234,7 @@ class Order extends Model {
         return $result;
     }
 
-    public static function calcTotal($om, $ids, $lang) {
+    protected static function calcTotal($om, $ids, $lang) {
         $result = [];
         $orders = $om->read(__CLASS__, $ids, ['order_lines_ids.total']);
         if($orders > 0) {
@@ -251,7 +251,7 @@ class Order extends Model {
         return $result;
     }
 
-    public static function calcPrice($om, $ids, $lang) {
+    protected static function calcPrice($om, $ids, $lang) {
         $result = [];
         $orders = $om->read(__CLASS__, $ids, ['order_lines_ids.price']);
         if($orders > 0) {
@@ -268,7 +268,7 @@ class Order extends Model {
         return $result;
     }
 
-    public static function calcTotalPaid($om, $ids, $lang) {
+    protected static function calcTotalPaid($om, $ids, $lang) {
         $result = [];
         $orders = $om->read(__CLASS__, $ids, ['order_payments_ids.total_paid']);
         if($orders > 0) {

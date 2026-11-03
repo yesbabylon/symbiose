@@ -901,7 +901,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
         }
     }
 
-    public static function calcStart($self) {
+    protected static function calcStart($self) {
         $result = [];
         $self->read(['date', 'receivable_id' => ['time_entry_id' => ['time_start']]]);
         foreach($self as $id => $line) {
@@ -914,7 +914,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
         return $result;
     }
 
-    public static function calcEnd($self) {
+    protected static function calcEnd($self) {
         $result = [];
         $self->read(['date', 'receivable_id' => ['time_entry_id' => ['time_start', 'time_end']]]);
         foreach($self as $id => $line) {
@@ -939,7 +939,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
      * Converts pause to an amount of seconds.
      * Sign is inverted (original offset is negative). By default, pause is subtracted from time entry (but the other way around is possible).
      */
-    public static function calcPauseTime($om, $oids, $lang) {
+    protected static function calcPauseTime($om, $oids, $lang) {
         $result = [];
         $lines = self::ids($oids)->read(['pause', 'receivable_id' => ['time_entry_id' => ['pause_time']]]);
         foreach($lines as $oid => $line) {
@@ -956,7 +956,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
     /**
      * Computes the difference between end time and start time.
      */
-    public static function calcDeltaTime($om, $oids, $lang) {
+    protected static function calcDeltaTime($om, $oids, $lang) {
         $result = [];
         $lines = self::ids($oids)->read(['start', 'end']);
         foreach($lines as $oid => $line) {
@@ -972,7 +972,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
      * Computes the duration of the time entry.
      * Duration is the time spent working, minus the pause, rounded to the quarter and expressed in seconds.
      */
-    public static function calcDuration($om, $oids, $lang) {
+    protected static function calcDuration($om, $oids, $lang) {
         $result = [];
         $lines = self::ids($oids)->read([
                 'start',

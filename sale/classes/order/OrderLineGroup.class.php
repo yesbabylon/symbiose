@@ -72,7 +72,7 @@ class OrderLineGroup extends Model {
         ];
     }
 
-    public static function calcTotal($self): array {
+    protected static function calcTotal($self): array {
         $result = [];
         $self->read(['order_id','order_lines_ids' => ['total']]);
         foreach($self as $id => $group) {
@@ -84,7 +84,7 @@ class OrderLineGroup extends Model {
         return $result;
     }
 
-    public static function calcPrice($self): array {
+    protected static function calcPrice($self): array {
         $result = [];
         $self->read(['order_lines_ids' => ['price']]);
         foreach($self as $id => $group) {
@@ -95,7 +95,7 @@ class OrderLineGroup extends Model {
         return $result;
     }
 
-    public static function calcFareBenefit($self): array {
+    protected static function calcFareBenefit($self): array {
         $result = [];
         $self->read(['order_lines_ids' => ['fare_benefit']]);
         foreach($self as $id => $group) {

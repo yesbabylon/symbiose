@@ -184,7 +184,7 @@ class Service extends Model {
 
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['service_model_id', 'product_id']);
         foreach($self as $id => $service) {
@@ -218,7 +218,7 @@ class Service extends Model {
         return $name;
     }
 
-    public static function calcIsInternal($self) {
+    protected static function calcIsInternal($self) {
         $result = [];
         $self->read(['product_id' => ['is_internal']]);
         foreach($self as $id => $service) {
@@ -227,7 +227,7 @@ class Service extends Model {
         return $result;
     }
 
-    public static function calcCustomerId($self) {
+    protected static function calcCustomerId($self) {
         $result = [];
         $self->read(['product_id' => ['customer_id']]);
         foreach($self as $id => $service) {

@@ -128,23 +128,23 @@ class Subscription extends SaleSubscription  {
         }
     }
 
-    public static function calcIsInternal($self): array {
+    protected static function calcIsInternal($self): array {
         return self::calcFromService($self, 'is_internal');
     }
 
-    public static function calcIsBillable($self): array {
+    protected static function calcIsBillable($self): array {
         return self::calcFromService($self, 'is_billable');
     }
 
-    public static function calcHasExternalProvider($self): array {
+    protected static function calcHasExternalProvider($self): array {
         return self::calcFromService($self, 'has_external_provider');
     }
 
-    public static function calcServiceProviderId($self): array {
+    protected static function calcServiceProviderId($self): array {
         return self::calcFromService($self, 'service_provider_id');
     }
 
-    public static function calcCustomerId($self): array {
+    protected static function calcCustomerId($self): array {
         return self::calcFromService($self, 'customer_id');
     }
 

@@ -69,7 +69,7 @@ class ReceivablesQueue extends Model {
         ];
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['customer_id' => ['name']]);
         foreach($self as $id => $receivables_queue) {
@@ -78,7 +78,7 @@ class ReceivablesQueue extends Model {
         return $result;
     }
 
-    public static function calcPendingReceivablesCount($self): array {
+    protected static function calcPendingReceivablesCount($self): array {
         $result = [];
         $self->read(['pending_receivables_ids']);
 

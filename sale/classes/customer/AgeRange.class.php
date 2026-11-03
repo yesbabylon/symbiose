@@ -77,7 +77,7 @@ class AgeRange extends Model {
         ];
     }
 
-    public function getUnique() {
+    public function getUniques(): array {
         return [
             ['age_from', 'age_to']
         ];

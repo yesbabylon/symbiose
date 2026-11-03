@@ -81,7 +81,7 @@ class Chapter extends Model {
         ];
     }
 
-    public static function calcPageCount($om, $oids, $lang) {
+    protected static function calcPageCount($om, $oids, $lang) {
         $result = [];
 
         $chapters = $om->read(__CLASS__, $oids, ['pages_ids'], $lang);

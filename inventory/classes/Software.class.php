@@ -72,8 +72,7 @@ class Software extends Model {
             'service_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\service\Service',
-                'description'       => 'Service used by the software.',
-                'dependents'        => ['product_id'],
+                'description'       => 'Service used by the software.'
             ],
 
             'customer_id'=> [
@@ -125,7 +124,7 @@ class Software extends Model {
         return $result;
     }
 
-    public static function calcEdition($self) {
+    protected static function calcEdition($self) {
         $result = [];
         $self->read(['software_model_id' => ['edition']]);
         foreach($self as $id => $software) {
@@ -134,7 +133,7 @@ class Software extends Model {
         return $result;
     }
 
-    public static function calcVersion($self) {
+    protected static function calcVersion($self) {
         $result = [];
         $self->read(['software_model_id' => ['version']]);
         foreach($self as $id => $software) {

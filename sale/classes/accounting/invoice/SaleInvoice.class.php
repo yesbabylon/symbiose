@@ -93,15 +93,6 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
                 'sort'           => 'desc'
             ],
 
-            'operation_lines_ids' => [
-                'type'           => 'computed',
-                'result_type'    => 'one2many',
-                'foreign_object' => 'finance\accounting\operation\AccountingOperationLine',
-                'description'    => 'Generic operation lines are unused by sale invoices.',
-                'function'       => 'calcOperationLines',
-                'readonly'       => true
-            ],
-
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
@@ -318,17 +309,6 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
             $result[$id] = $invoice['invoice_type'] === 'credit_note'
                 ? 'sale_credit_note'
                 : 'sale_invoice';
-        }
-
-        return $result;
-    }
-
-    protected static function calcOperationLines($self): array {
-        $result = [];
-
-        $self->read(['id']);
-        foreach($self as $id => $invoice) {
-            $result[$id] = [];
         }
 
         return $result;

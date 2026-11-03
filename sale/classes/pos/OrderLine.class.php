@@ -156,7 +156,7 @@ class OrderLine extends Model {
         }
     }
 
-    public static function calcTotal($om, $ids, $lang) {
+    protected static function calcTotal($om, $ids, $lang) {
         $result = [];
         $lines = $om->read(__CLASS__, $ids, ['unit_price', 'qty', 'discount']);
         if($lines > 0) {
@@ -167,7 +167,7 @@ class OrderLine extends Model {
         return $result;
     }
 
-    public static function calcPrice($om, $ids, $lang) {
+    protected static function calcPrice($om, $ids, $lang) {
         $result = [];
         $lines = $om->read(__CLASS__, $ids, ['total', 'vat_rate']);
         if($lines > 0) {

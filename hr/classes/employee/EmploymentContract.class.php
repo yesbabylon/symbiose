@@ -268,7 +268,7 @@ class EmploymentContract extends Model {
         }
     }
 
-    public static function calcCurrentSalary($self): array {
+    protected static function calcCurrentSalary($self): array {
         $result = [];
         $today = strtotime(date('Y-m-d'));
         $self->read([

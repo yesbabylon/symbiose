@@ -416,7 +416,7 @@ class SaleEntry extends Model {
         return $result;
     }
 
-    public static function calcCode($self) {
+    protected static function calcCode($self) {
         $result = [];
         foreach($self->ids() as $id) {
             $result[$id] = str_pad($id, 5, '0', STR_PAD_LEFT);
@@ -424,7 +424,7 @@ class SaleEntry extends Model {
         return $result;
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['state', 'code', 'description']);
         foreach($self as $id => $entry) {
@@ -440,7 +440,7 @@ class SaleEntry extends Model {
         return $result;
     }
 
-    public static function calcTotal($self) {
+    protected static function calcTotal($self) {
         $result = [];
         // #memo - qty is based on billable_duration
         $self->read(['is_billable', 'qty', 'unit_price', 'discount']);

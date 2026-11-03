@@ -119,7 +119,7 @@ class Funding extends Model {
         ];
     }
 
-    public static function calcName($self) {
+    protected static function calcName($self) {
         $result = [];
         $self->read(['due_amount', 'invoice_id' => ['name']]);
         foreach($self as $id => $funding) {
@@ -133,7 +133,7 @@ class Funding extends Model {
         return $result;
     }
 
-    public static function calcPaidAmount($self) {
+    protected static function calcPaidAmount($self) {
         $result = [];
         $self->read([
             'payments_ids'            => ['amount'],
@@ -152,7 +152,7 @@ class Funding extends Model {
         return $result;
     }
 
-    public static function calcIsPaid($self) {
+    protected static function calcIsPaid($self) {
         $result = [];
         $self->read(['due_amount', 'paid_amount']);
         foreach($self as $id => $funding) {

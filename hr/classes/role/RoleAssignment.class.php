@@ -83,7 +83,7 @@ class RoleAssignment extends Model {
         return [['employee_id', 'role_id']];
     }
 
-    public static function calcName($self): array {
+    protected static function calcName($self): array {
         $result = [];
         $self->read([
             'employee_id' => ['name'],

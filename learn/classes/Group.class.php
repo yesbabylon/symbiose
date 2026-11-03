@@ -100,7 +100,7 @@ class Group extends Model
     }
 
 
-    public static function calcVisible($om, $oids, $lang)
+    protected static function calcVisible($om, $oids, $lang)
     {
         $result = [];
 

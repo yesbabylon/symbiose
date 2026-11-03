@@ -45,7 +45,7 @@ class Holiday extends \equal\orm\Model {
         $orm->update(self::getType(), $oids, ['year' => null], $lang);
     }
 
-    public static function calcYear($orm, $oids, $lang) {
+    protected static function calcYear($orm, $oids, $lang) {
         $result = [];
         $res = $orm->read(self::getType(), $oids, ['date'], $lang);
         foreach($res as $oid => $odata) {

@@ -122,7 +122,7 @@ class Check extends Model {
         ];
     }
 
-    public static function calcName($self): array {
+    protected static function calcName($self): array {
         $result = [];
         $self->read(['status_path', 'operator', 'check_value']);
         foreach($self as $id => $check) {

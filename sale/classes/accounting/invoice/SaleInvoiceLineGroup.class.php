@@ -83,7 +83,7 @@ class SaleInvoiceLineGroup extends Model {
         ];
     }
 
-    public static function calcTotal($self) {
+    protected static function calcTotal($self) {
         $result = [];
         $self->read(['invoice_lines_ids' => ['total']]);
         foreach($self as $id => $group) {
@@ -99,7 +99,7 @@ class SaleInvoiceLineGroup extends Model {
         return $result;
     }
 
-    public static function calcPrice($self) {
+    protected static function calcPrice($self) {
         $result = [];
         $self->read(['invoice_lines_ids' => ['total', 'vat_rate']]);
         $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision');

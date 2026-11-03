@@ -67,7 +67,7 @@ class ProductAttribute extends Model {
         return $result;
     }
 
-    public static function calcProductModelId($self): array {
+    protected static function calcProductModelId($self): array {
         $result = [];
         $self->read(['product_id' => ['product_model_id']]);
         foreach($self as $id => $product_attribute) {
@@ -77,7 +77,7 @@ class ProductAttribute extends Model {
         return $result;
     }
 
-    public function getUnique() {
+    public function getUniques(): array {
         return [
             ['product_id', 'option_id']
         ];

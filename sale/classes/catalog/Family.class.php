@@ -28,12 +28,13 @@ class Family extends Model {
                 'required'          => true,
                 'multilang'         => true,
                 'unique'            => true,
+                'onupdate'          => 'onupdateName',
                 'dependents'        => ['path']
             ],
 
-            'children_ids' => [ 
-                'type'              => 'one2many', 
-                'foreign_object'    => 'sale\catalog\Family', 
+            'children_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\catalog\Family',
                 'foreign_field'     => 'parent_id',
                 'description'       => 'Product families that belongs to current family, if any.'
             ],
@@ -43,6 +44,7 @@ class Family extends Model {
                 'foreign_object'    => 'sale\catalog\Family',
                 'description'       => "Product Family which current family belongs to, if any.",
                 'dependents'        => ['path'],
+                'onupdate'          => 'onupdateParentId',
                 'domain'            => ['id', '<>', 'object.id']
             ],
 
@@ -65,7 +67,51 @@ class Family extends Model {
         ];
     }
 
-    public static function calcPath($self): array {
+    public static function getActions(): array {
+        return [
+            'refresh_descendant_paths' => [
+                'description' => 'Invalidate the stored path of all descendant families.',
+                'policies'    => [],
+                'function'    => 'doRefreshDescendantPaths'
+            ]
+        ];
+    }
+
+    protected static function onupdateName($self): void {
+        $self->do('refresh_descendant_paths');
+    }
+
+    protected static function onupdateParentId($self): void {
+        $self->do('refresh_descendant_paths');
+    }
+
+    protected static function doRefreshDescendantPaths($self): void {
+        $root_ids = $self->ids();
+        $pending_ids = $root_ids;
+        $visited_ids = array_fill_keys($root_ids, true);
+        $descendant_ids = [];
+
+        while(!empty($pending_ids)) {
+            $children_ids = self::search(['parent_id', 'in', $pending_ids])->ids();
+            $pending_ids = [];
+
+            foreach($children_ids as $child_id) {
+                if(isset($visited_ids[$child_id])) {
+                    continue;
+                }
+
+                $visited_ids[$child_id] = true;
+                $descendant_ids[] = $child_id;
+                $pending_ids[] = $child_id;
+            }
+        }
+
+        if(!empty($descendant_ids)) {
+            self::ids($descendant_ids)->update(['path' => null]);
+        }
+    }
+
+    protected static function calcPath($self): array {
         $result = [];
         $self->read(['name', 'parent_id']);
         foreach($self as $id => $family) {
