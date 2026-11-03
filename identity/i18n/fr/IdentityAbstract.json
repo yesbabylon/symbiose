@@ -1,0 +1,218 @@
+{
+    "name": "Identité",
+    "plural": "Identités",
+    "description": "Informations communes aux identités et à leurs rôles.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom d'affichage de l'identité.",
+            "help": "Cette valeur est calculée à partir du nom légal ou du prénom et du nom."
+        },
+        "type_id": {
+            "label": "Type",
+            "description": "Type attribué à l'identité.",
+            "help": "Sélectionnez le type correspondant à la personne ou à l'organisation."
+        },
+        "type": {
+            "label": "Type",
+            "description": "Code du type d'identité.",
+            "selection": {
+                "IN": "Particulier",
+                "SE": "Travailleur indépendant",
+                "CO": "Entreprise",
+                "NP": "Association à but non lucratif",
+                "PA": "Administration publique"
+            },
+            "help": "Cette valeur est déterminée par le type d'identité sélectionné."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Contexte permettant d'identifier la personne ou l'organisation.",
+            "help": "Ajoutez les informations utiles pour reconnaître cette identité."
+        },
+        "bank_account_iban": {
+            "label": "IBAN",
+            "description": "Numéro du compte bancaire principal de l'identité.",
+            "help": "Indiquez l'IBAN du compte bancaire principal."
+        },
+        "bank_account_bic": {
+            "label": "BIC",
+            "description": "Identifiant BIC lié au compte bancaire principal.",
+            "help": "Indiquez le code BIC de la banque liée au compte principal."
+        },
+        "bank_country": {
+            "label": "Pays de la banque",
+            "description": "Pays dans lequel le compte bancaire est détenu.",
+            "help": "Cette valeur est déterminée à partir du compte bancaire principal."
+        },
+        "bank_name": {
+            "label": "Nom de la banque",
+            "description": "Nom de la banque qui détient le compte principal.",
+            "help": "Indiquez le nom de la banque liée au compte principal."
+        },
+        "legal_name": {
+            "label": "Nom légal",
+            "description": "Nom légal complet de l'identité.",
+            "help": "Indiquez le nom légal complet pour une personne morale."
+        },
+        "short_name": {
+            "label": "Nom usuel",
+            "description": "Nom usuel ou abrégé de l'organisation.",
+            "help": "Indiquez un nom court facilitant l'identification de l'organisation."
+        },
+        "has_vat": {
+            "label": "Assujetti TVA",
+            "description": "Indique si l'organisation possède un numéro de TVA.",
+            "help": "Activez cette option lorsque l'organisation dispose d'un numéro de TVA."
+        },
+        "vat_number": {
+            "label": "Numéro de TVA",
+            "description": "Numéro d'identification à la TVA.",
+            "help": "Indiquez le numéro de TVA officiel de l'organisation."
+        },
+        "registration_number": {
+            "label": "Numéro d'entreprise",
+            "description": "Numéro d'enregistrement officiel de l'organisation.",
+            "help": "Indiquez le numéro officiel d'enregistrement de l'organisation."
+        },
+        "citizen_identification": {
+            "label": "Numéro de registre national",
+            "description": "Numéro d'identification national de la personne.",
+            "help": "Indiquez le numéro d'identification national, si nécessaire."
+        },
+        "nationality": {
+            "label": "Nationalité",
+            "description": "Pays dont la personne possède la nationalité.",
+            "help": "Sélectionnez le pays de nationalité de la personne."
+        },
+        "firstname": {
+            "label": "Prénom",
+            "description": "Prénom de la personne physique.",
+            "help": "Indiquez le prénom de la personne physique."
+        },
+        "lastname": {
+            "label": "Nom",
+            "description": "Nom de famille de la personne physique.",
+            "help": "Indiquez le nom de famille de la personne physique."
+        },
+        "gender": {
+            "label": "Genre",
+            "description": "Genre de la personne physique.",
+            "selection": {
+                "M": "Masculin",
+                "F": "Féminin",
+                "X": "Non-binaire"
+            },
+            "help": "Sélectionnez le genre de la personne, si cette information est utile."
+        },
+        "title": {
+            "label": "Titre",
+            "description": "Titre de civilité de la personne physique.",
+            "selection": {
+                "Dr": "Docteur",
+                "Ms": "Mademoiselle",
+                "Mrs": "Madame",
+                "Mr": "Monsieur",
+                "Pr": "Professeur"
+            },
+            "help": "Sélectionnez le titre de civilité de la personne."
+        },
+        "date_of_birth": {
+            "label": "Date de naissance",
+            "description": "Date de naissance de la personne.",
+            "help": "Indiquez la date de naissance de la personne."
+        },
+        "lang_id": {
+            "label": "Langue",
+            "description": "Langue de communication préférée de l'identité.",
+            "help": "Sélectionnez la langue de communication préférée."
+        },
+        "address_street": {
+            "label": "Rue",
+            "description": "Rue et numéro de l'adresse principale.",
+            "help": "Indiquez la rue et le numéro de l'adresse principale."
+        },
+        "address_dispatch": {
+            "label": "Complément d'adresse",
+            "description": "Informations complémentaires pour l'envoi du courrier.",
+            "help": "Indiquez l'appartement, la boîte ou l'étage, si nécessaire."
+        },
+        "address_city": {
+            "label": "Ville",
+            "description": "Ville de l'adresse principale.",
+            "help": "Indiquez la ville de l'adresse principale."
+        },
+        "address_zip": {
+            "label": "Code postal",
+            "description": "Code postal de l'adresse principale.",
+            "help": "Indiquez le code postal de l'adresse principale."
+        },
+        "address_state": {
+            "label": "État ou région",
+            "description": "État ou région de l'adresse principale.",
+            "help": "Indiquez l'état, la région, la province ou le département."
+        },
+        "address_country": {
+            "label": "Pays",
+            "description": "Pays de l'adresse principale.",
+            "help": "Sélectionnez le pays de l'adresse principale."
+        },
+        "address": {
+            "label": "Adresse",
+            "description": "Adresse principale complète de l'identité.",
+            "help": "Cette valeur est calculée à partir des données de l'adresse principale."
+        },
+        "email": {
+            "label": "Email",
+            "description": "Adresse e-mail principale.",
+            "help": "Indiquez l'adresse e-mail principale de l'identité."
+        },
+        "email_alt": {
+            "label": "Email secondaire",
+            "description": "Adresse e-mail secondaire.",
+            "help": "Indiquez une autre adresse e-mail permettant de joindre l'identité."
+        },
+        "phone": {
+            "label": "Numéro de téléphone",
+            "description": "Numéro de téléphone principal.",
+            "help": "Indiquez le numéro de téléphone principal de l'identité."
+        },
+        "phone_alt": {
+            "label": "Téléphone secondaire",
+            "description": "Numéro de téléphone secondaire.",
+            "help": "Indiquez un autre numéro de téléphone permettant de joindre l'identité."
+        },
+        "mobile": {
+            "label": "Téléphone mobile",
+            "description": "Numéro de téléphone mobile.",
+            "help": "Indiquez le numéro de téléphone mobile de l'identité."
+        },
+        "fax": {
+            "label": "Fax",
+            "description": "Numéro de fax principal.",
+            "help": "Indiquez le numéro de fax principal de l'identité."
+        },
+        "website": {
+            "label": "Site Web officiel",
+            "description": "Adresse du site Web officiel.",
+            "help": "Indiquez l'URL complète du site officiel de l'organisation."
+        },
+        "image_document_id": {
+            "label": "Image ou logo",
+            "description": "Logo ou photo représentant l'identité.",
+            "help": "Sélectionnez le logo de l'organisation ou la photo de la personne."
+        },
+        "signature": {
+            "label": "Signature",
+            "description": "Signature ajoutée aux communications de l'identité.",
+            "help": "Saisissez la signature à ajouter aux communications."
+        },
+        "is_active": {
+            "label": "Actif",
+            "description": "Indique si l'identité ou son rôle est actif.",
+            "help": "Désactivez cette option pour retirer l'identité des choix courants tout en conservant son historique."
+        }
+    },
+    "view": {},
+    "error": {}
+}

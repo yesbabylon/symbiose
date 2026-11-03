@@ -12,7 +12,12 @@
             "label": "Année",
             "description": "Année civile couverte par la liste d'éphémérides.",
             "help": "Les congés et jours fériés rattachés à cette liste s'appliquent à cette année."
-        }        
+        },
+        "holidays_ids": {
+            "label": "Congés et jours fériés",
+            "description": "Liste des congés scolaires et jours fériés de l'année.",
+            "help": "Ajoutez les congés scolaires et jours fériés applicables à cette année."
+        }
     },
     "view": {       
     },

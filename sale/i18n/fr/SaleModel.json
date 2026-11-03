@@ -8,6 +8,11 @@
             "description": "Produit a assigner aux ventes.",
             "help": "Le produit sélectionné est automatiquement associé à chaque vente créée à partir de ce modèle."
         },
+        "has_price": {
+            "label": "Prix fixe",
+            "description": "Indique si le modèle applique un prix fixe aux ventes.",
+            "help": "Activez cette option pour définir le prix et le prix unitaire appliqués par ce modèle."
+        },
         "price_id": {
             "label": "Prix",
             "description": "Prix a assigner aux ventes.",

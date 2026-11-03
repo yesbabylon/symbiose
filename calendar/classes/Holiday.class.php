@@ -14,7 +14,7 @@ class Holiday extends Model {
     }
 
     public static function getDescription() {
-        return "Holidays allow to list public holidays and school vacations occuring within a given year.";
+        return "Holidays allow to list public holidays and school vacations occurring within a given year.";
     }
 
     public static function getColumns() {

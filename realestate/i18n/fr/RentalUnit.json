@@ -13,6 +13,16 @@
             "description": "Valeur arbitraire pour ordonner les unités locatives.",
             "help": "Définir un ordre de priorité de l'unité locative."
         },
+        "code": {
+            "label": "Code",
+            "description": "Code court permettant d'identifier l'unité locative.",
+            "help": "Indiquez un code court et distinctif pour cette unité."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Courte description de l'unité locative.",
+            "help": "Décrivez brièvement les caractéristiques de l'unité."
+        },
         "type": {
             "label": "Type",
             "description": "Type d'unité locative (en lien avec la capacité).",
@@ -26,6 +36,15 @@
                 "FFE": "Mobilier, accessoires et équipement"
             },
             "help": "Type de l'unité locative permettant de la distinguer."
+        },
+        "category": {
+            "label": "Mode d'hébergement",
+            "description": "Mode de location de l'unité locative.",
+            "selection": {
+                "hostel": "Auberge",
+                "lodge": "Gîte"
+            },
+            "help": "Sélectionnez le mode d'hébergement correspondant aux services proposés avec l'unité."
         },
         "rental_unit_category_id": {
             "label": "Catégorie",

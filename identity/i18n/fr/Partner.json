@@ -8,6 +8,16 @@
             "description": "Nom affiché du partenaire (lié au nom de l'identité).",
             "help": "Cette valeur reprend automatiquement le nom de l'identité partenaire."
         },
+        "organization_id": {
+            "label": "Organisation",
+            "description": "Organisation actuelle à laquelle appartient le partenaire.",
+            "help": "Sélectionnez l'organisation à laquelle ce partenaire est rattaché."
+        },
+        "is_internal": {
+            "label": "Partenaire interne",
+            "description": "Indique si la relation concerne l'organisation actuelle.",
+            "help": "Activez cette option lorsque le partenaire appartient à l'organisation actuelle."
+        },
         "owner_identity_id": {
             "label": "Organisation",
             "description": "L'organisation dont l'identité ciblée est partenaire.",
@@ -73,6 +83,23 @@
             "description": "Nom.",
             "help": "Indiquez le nom de famille lorsque le partenaire est une personne physique."
         },
+        "gender": {
+            "label": "Genre",
+            "description": "Genre de la personne physique.",
+            "selection": {"M": "Masculin", "F": "Féminin", "X": "Non-binaire"},
+            "help": "Sélectionnez le genre de la personne, si cette information est utile."
+        },
+        "title": {
+            "label": "Titre",
+            "description": "Titre de civilité de la personne physique.",
+            "selection": {"Dr": "Docteur", "Ms": "Mademoiselle", "Mrs": "Madame", "Mr": "Monsieur", "Pr": "Professeur"},
+            "help": "Sélectionnez le titre de civilité de la personne."
+        },
+        "date_of_birth": {
+            "label": "Date de naissance",
+            "description": "Date de naissance de la personne.",
+            "help": "Indiquez la date de naissance de la personne."
+        },
         "legal_name": {
             "label": "Nom légal",
             "description": "Nom complet de l'Identité.",
@@ -117,6 +144,21 @@
             "label": "Numéro de téléphone",
             "description": "Numéro de téléphone.",
             "help": "Indiquez le numéro de téléphone principal du partenaire."
+        },
+        "mobile": {
+            "label": "Téléphone mobile",
+            "description": "Numéro de téléphone mobile du partenaire.",
+            "help": "Indiquez le numéro de téléphone mobile du partenaire."
+        },
+        "fax": {
+            "label": "Fax",
+            "description": "Numéro de fax principal du partenaire.",
+            "help": "Indiquez le numéro de fax du partenaire."
+        },
+        "is_active": {
+            "label": "Actif",
+            "description": "Indique si le partenaire est toujours actif.",
+            "help": "Désactivez cette option pour retirer le partenaire des choix courants tout en conservant son historique."
         }
     },
     "view": {

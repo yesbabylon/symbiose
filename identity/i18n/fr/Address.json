@@ -13,6 +13,16 @@
             "description": "Adresse complète.",
             "help": "Cette valeur reprend le nom d'affichage calculé de l'adresse."
         },
+        "owner_identity_id": {
+            "label": "Identité propriétaire",
+            "description": "Identité à laquelle cette adresse appartient.",
+            "help": "Sélectionnez l'identité propriétaire de cette adresse."
+        },
+        "is_primary": {
+            "label": "Adresse principale",
+            "description": "Indique si cette adresse est l'adresse principale de l'identité.",
+            "help": "Les modifications apportées à l'adresse principale sont répercutées sur l'identité associée."
+        },
         "identity_id": {
             "label": "Identité",
             "description": "L'identité à laquelle l'adresse se rapporte.",

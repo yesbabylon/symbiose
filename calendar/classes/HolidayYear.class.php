@@ -36,7 +36,7 @@ class HolidayYear extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'calendar\Holiday',
                 'foreign_field'     => 'holiday_year_id',
-                'description'       => 'List of holidays occuring during the year.'
+                'description'       => 'List of holidays occurring during the year.'
             ]
         ];
     }
