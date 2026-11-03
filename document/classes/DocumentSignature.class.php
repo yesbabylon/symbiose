@@ -24,7 +24,7 @@ class DocumentSignature extends \core\security\Signature {
                 'foreign_object'    => 'document\document\Document',
                 'required'          => true,
                 'description'       => 'Reference version of the document (immutable).',
-                'dependents'        => ['data_digest', 'condo_id']
+                'dependents'        => ['data_digest']
             ],
 
             'data_digest' => [

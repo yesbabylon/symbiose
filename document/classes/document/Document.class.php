@@ -45,8 +45,8 @@ class Document extends Model {
 
             'source_object_class' => [
                 'type'              => 'string',
-                'description'       => 'Fully qualified class name of the object that created the document.',
-                'help'              => 'Used with source_object_id to identify the optional source object.'
+                'description'       => 'Class name of the object that created the document.',
+                'help'              => 'Used with source_object_id to identify the optional source object (with fully qualified class name).'
             ],
 
             'source_object_id' => [
@@ -241,6 +241,18 @@ class Document extends Model {
                 'description'       => 'Thumbnail of the document.',
                 'store'             => true,
                 'instant'           => false
+            ],
+
+            'document_type_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'document\document\DocumentType',
+                'description'       => 'Type of the document, if any.'
+            ],
+
+            'document_subtype_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'document\document\DocumentSubtype',
+                'description'       => 'Sub type of the document, if any.'
             ],
 
             'template_attachments_ids' => [
