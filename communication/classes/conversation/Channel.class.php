@@ -30,7 +30,7 @@ class Channel extends Model {
 
             'users_ids' => [
                 'type'              => 'many2many',
-                'foreign_object'    => 'core\User',
+                'foreign_object'    => 'identity\User',
                 'foreign_field'     => 'channels_ids',
                 'rel_table'         => 'communication_channel_rel_core_user',
                 'rel_foreign_key'   => 'user_id',

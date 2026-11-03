@@ -71,7 +71,7 @@ class Holiday extends Model {
         ];
     }
 
-    public static function calcYear($orm, $oids, $lang) {
+    protected static function calcYear($orm, $oids, $lang) {
         $result = [];
         $res = $orm->read(__CLASS__, $oids, ['holiday_year_id.year'], $lang);
         foreach($res as $oid => $odata) {
@@ -80,11 +80,11 @@ class Holiday extends Model {
         return $result;
     }
 
-    public static function onupdateHolidayYearId($orm, $oids, $values, $lang) {
+    protected static function onupdateHolidayYearId($orm, $oids, $values, $lang) {
         $orm->update(__CLASS__, $oids, ['year' => null]);
     }
 
-    public static function onupdateDateFrom($orm, $oids, $values, $lang) {
+    protected static function onupdateDateFrom($orm, $oids, $values, $lang) {
         $res = $orm->read(__CLASS__, $oids, ['date_from', 'is_single_day'], $lang);
 
         if($res > 0 && count($res)) {
