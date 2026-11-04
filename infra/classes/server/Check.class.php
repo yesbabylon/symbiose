@@ -31,7 +31,8 @@ class Check extends Model {
 
             'description' => [
                 'type'              => 'string',
-                'description'       => "Short description of check."
+                'description'       => "Short description of check.",
+                'multilang'         => true
             ],
 
             'object_class' => [
@@ -106,7 +107,13 @@ class Check extends Model {
             'last_status_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'infra\server\Status',
-                'description'       => 'Last status the check was evaluated on.'
+                'description'       => 'Last status the check was evaluated on.',
+                'dependents'        => ['checked']
+            ],
+
+            'checked' => [
+                'type'              => 'datetime',
+                'description'       => 'Date of last status evaluation.'
             ],
 
             'alert_triggers_ids' => [

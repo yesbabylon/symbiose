@@ -1,12 +1,8 @@
 {
     "name": "Alert Triggers",
     "description": "Default listing of all alert triggers.",
-    "group_by": [
-        {
-            "field": "trigger_type",
-            "open":  true
-        }
-    ],
+    "order": "name",
+    "sort": "asc",
     "layout": {
         "items": [
             {
@@ -14,37 +10,49 @@
                 "value": "id",
                 "width": "5%",
                 "sortable": true,
+                "visible": false,
                 "readonly": true
             },
             {
                 "type": "field",
-                "value": "key",
-                "width": "20%",
-                "sortable": true
-            },
-            {
-                "type": "field",
-                "value": "operator",
-                "width": "20%",
-                "sortable": true
-            },
-            {
-                "type": "field",
-                "value": "value",
-                "width": "20%",
-                "sortable": true
+                "value": "name",
+                "width": "40%",
+                "sortable": true,
+                "readonly": true
             },
             {
                 "type": "field",
                 "value": "repetition",
-                "width": "20%",
+                "width": "10%",
                 "sortable": true
             },
             {
                 "type": "field",
-                "value": "trigger_type",
-                "width": "20%",
+                "value": "user_id",
+                "width": "15%",
                 "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "group_id",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "object_class",
+                "width": "20%",
+                "visible": false,
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "object_id",
+                "width": "10%",
+                "visible": false,
+                "sortable": true,
+                "readonly": true
             }
         ]
     }

@@ -44,8 +44,8 @@ class Server extends Model {
 
             'synced' => [
                 'type'              => 'datetime',
-                'description'       => 'Date of last automatic status update.',
-                'help'              => 'The "up" field can be auto updated by the action "infra_server_fetch-status".'
+                'description'       => 'Date of last status update.',
+                'help'              => 'The "up" field can be auto updated by the action "infra_server_Server_sync-status".'
             ],
 
             'up' => [
@@ -120,7 +120,7 @@ class Server extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'infra\server\Status',
                 'foreign_field'     => 'object_id',
-                'domain'            => ['object_class', '=', Server::class],
+                'domain'            => ['object_class', '=', 'infra\server\Server'],
                 'description'       => 'Statuses of the server.'
             ],
 
@@ -128,8 +128,16 @@ class Server extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'infra\server\Check',
                 'foreign_field'     => 'object_id',
-                'domain'            => ['object_class', '=', Server::class],
+                'domain'            => ['object_class', '=', 'infra\server\Server'],
                 'description'       => 'Checks of the server.'
+            ],
+
+            'alert_triggers_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'infra\server\AlertTrigger',
+                'foreign_field'     => 'object_id',
+                'domain'            => ['object_class', '=', 'infra\server\Server'],
+                'description'       => 'Alert triggers of the server.'
             ]
 
         ];

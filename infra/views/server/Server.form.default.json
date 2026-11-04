@@ -16,6 +16,12 @@
             "label": "Add check from example",
             "controller": "infra_server_add-server-check",
             "visible": ["server_type", "in", ["b2", "k2", "s2", "admin"]]
+        },
+        {
+            "id": "action.add-alert-trigger",
+            "label": "Add alert trigger from example",
+            "controller": "infra_server_add-server-alert-trigger",
+            "visible": ["server_type", "in", ["b2", "k2", "s2", "admin"]]
         }
     ],
     "layout": {
@@ -265,6 +271,28 @@
                                                 "value": "checks_ids",
                                                 "width": "100%",
                                                 "label": "Checks"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.alert-triggers",
+                        "label": "Alert triggers",
+                        "visible": ["server_type", "in", ["b2", "k2", "s2", "admin"]],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "alert_triggers_ids",
+                                                "width": "100%",
+                                                "label": "Alert triggers"
                                             }
                                         ]
                                     }

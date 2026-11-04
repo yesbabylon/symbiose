@@ -91,8 +91,8 @@ class Instance extends Model {
 
             'synced' => [
                 'type'              => 'datetime',
-                'description'       => 'Date of last automatic status update.',
-                'help'              => 'The "up" field can be auto updated by the action "infra_server_fetch-status".'
+                'description'       => 'Date of last status update.',
+                'help'              => 'The "up" field can be auto updated by the action "infra_server_Instance_sync-status".'
             ],
 
             'up' => [
@@ -151,6 +151,14 @@ class Instance extends Model {
                 'foreign_field'     => 'object_id',
                 'domain'            => ['object_class', '=', Instance::class],
                 'description'       => 'Checks of the instance.'
+            ],
+
+            'alert_triggers_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'infra\server\AlertTrigger',
+                'foreign_field'     => 'object_id',
+                'domain'            => ['object_class', '=', 'infra\server\Instance'],
+                'description'       => 'Alert triggers of the instance.'
             ]
 
         ];

@@ -112,6 +112,10 @@
                 "action.add-check": {
                     "label": "Ajouter un contrôle",
                     "description": "Créer un contrôle d'instance modifiable à partir d'un exemple."
+                },
+                "action.add-alert-trigger": {
+                    "label": "Ajouter un déclencheur d'alerte",
+                    "description": "Créer un déclencheur d'alerte d'instance et ses contrôles à partir d'un exemple."
                 }
             },
             "layout": {
@@ -132,6 +136,9 @@
                 },
                 "section.checks": {
                     "label": "Contrôles"
+                },
+                "section.alert-triggers": {
+                    "label": "Déclencheurs d'alertes"
                 }
             }
         },

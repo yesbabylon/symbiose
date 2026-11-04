@@ -106,19 +106,6 @@
                                 "description": "",
                                 "children": [
                                     {
-                                        "id": "item.advanced.servers.alerts.alerts",
-                                        "type": "entry",
-                                        "label": "Alerts",
-                                        "icon": "notifications",
-                                        "description": "",
-                                        "context": {
-                                            "entity": "infra\\server\\AlertPolicy",
-                                            "view": "list.default",
-                                            "order": "id",
-                                            "sort": "asc"
-                                        }
-                                    },
-                                    {
                                         "id": "item.advanced.servers.alerts.alert-triggers",
                                         "type": "entry",
                                         "label": "Alert Triggers",

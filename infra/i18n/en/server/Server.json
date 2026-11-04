@@ -71,6 +71,10 @@
                 "action.add-check": {
                     "label": "Add check",
                     "description": "Create an editable server check from an example."
+                },
+                "action.add-alert-trigger": {
+                    "label": "Add alert trigger",
+                    "description": "Create a server alert trigger and its checks from an example."
                 }
             },
             "layout": {

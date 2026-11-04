@@ -56,6 +56,7 @@ if(empty($params['ids']) && $params['id'] <= 0) {
 $self->read([
     'instances_ids',
     'checks_ids',
+    'alert_triggers_ids',
     'ip_address_ids' => ['ip_v4', 'ip_v6', 'visibility', 'exposure']
 ]);
 
@@ -230,6 +231,10 @@ foreach($self as $id => $server) {
 
     if(!empty($server['checks_ids'])) {
         eQual::run('do', 'infra_server_Check_evaluate-latest-status', ['ids' => $server['checks_ids']]);
+
+        if(!empty($server['alert_triggers_ids'])) {
+            eQual::run('do', 'infra_server_AlertTrigger_process', ['ids' => $server['alert_triggers_ids']]);
+        }
     }
 }
 
