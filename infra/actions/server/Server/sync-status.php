@@ -76,9 +76,18 @@ $scopes = array_keys($map_scopes);
 
 $self->read([
     'instances_ids',
-    'checks_ids',
-    'alert_triggers_ids',
-    'ip_address_ids' => ['ip_v4', 'ip_v6', 'visibility', 'exposure']
+    'checks_ids' => [
+        'scope'
+    ],
+    'alert_triggers_ids' => [
+        'scope'
+    ],
+    'ip_address_ids' => [
+        'ip_v4',
+        'ip_v6',
+        'visibility',
+        'exposure'
+    ]
 ]);
 
 foreach($self as $id => $server) {
@@ -258,11 +267,25 @@ foreach($self as $id => $server) {
         }
     }
 
-    if(!empty($server['checks_ids'])) {
-        eQual::run('do', 'infra_server_Check_evaluate-latest-status', ['ids' => $server['checks_ids']]);
+    $scopes_checks_ids = [];
+    foreach($server['checks_ids'] as $check_id => $check) {
+        if(empty($scopes) || in_array($check['scope'], $scopes)) {
+            $scopes_checks_ids[] = $check_id;
+        }
+    }
 
-        if(!empty($server['alert_triggers_ids'])) {
-            eQual::run('do', 'infra_server_AlertTrigger_process', ['ids' => $server['alert_triggers_ids']]);
+    if(!empty($scopes_checks_ids)) {
+        eQual::run('do', 'infra_server_Check_evaluate-latest-status', ['ids' => $scopes_checks_ids]);
+
+        $scopes_alert_triggers_ids = [];
+        foreach($server['alert_triggers_ids'] as $trigger_id => $trigger) {
+            if(empty($scopes) || in_array($trigger['scope'], $scopes)) {
+                $scopes_alert_triggers_ids[] = $trigger_id;
+            }
+        }
+
+        if(!empty($scopes_alert_triggers_ids)) {
+            eQual::run('do', 'infra_server_AlertTrigger_process', ['ids' => $scopes_alert_triggers_ids]);
         }
     }
 }
