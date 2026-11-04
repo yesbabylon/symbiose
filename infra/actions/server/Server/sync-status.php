@@ -12,7 +12,7 @@ use infra\server\Status;
 
 [$params, $providers] = eQual::announce([
     'description'   => "Fetches and saves statuses for a given server.",
-    'help'          => "Calls hosts API to fetch 'instant' statuses and updates server 'up' field accordingly.",
+    'help'          => "Calls hosts API to fetch statuses and updates server 'up' field accordingly.",
     'params'        => [
         'id' => [
             'type'              => 'many2one',
@@ -24,6 +24,12 @@ use infra\server\Status;
             'type'              => 'one2many',
             'foreign_object'    => 'infra\server\Server',
             'description'       => 'Identifiers of the targeted servers.',
+            'default'           => []
+        ],
+        'scopes' => [
+            'type'              => 'array',
+            'description'       => 'The scopes of data that needs to be returned.',
+            'help'              => 'Scopes are `instant`, `state` or `config`.',
             'default'           => []
         ],
         'sync_instances' => [
@@ -53,6 +59,21 @@ if(empty($params['ids']) && $params['id'] <= 0) {
     throw new Exception('missing_check', EQ_ERROR_MISSING_PARAM);
 }
 
+$allowed_scopes = ['instant', 'state', 'config'];
+$map_scopes = [];
+foreach($params['scopes'] as $scope) {
+    if(!is_string($scope) || !in_array($scope, $allowed_scopes, true)) {
+        throw new Exception('invalid_scope', EQ_ERROR_INVALID_PARAM);
+    }
+
+    $map_scopes[$scope] = true;
+}
+
+if(!empty($map_scopes)) {
+    $map_scopes['state'] = true;
+}
+$scopes = array_keys($map_scopes);
+
 $self->read([
     'instances_ids',
     'checks_ids',
@@ -64,7 +85,12 @@ foreach($self as $id => $server) {
     $status = null;
     $error = null;
     try {
-        $map_servers_statuses = eQual::run('get', 'infra_server_Server_status', ['id' => $id]);
+        $get_status_params = ['id' => $id];
+        if(!empty($scopes)) {
+            $get_status_params['scopes'] = $scopes;
+        }
+
+        $map_servers_statuses = eQual::run('get', 'infra_server_Server_status', $get_status_params);
 
         if(!empty($map_servers_statuses[$id]['error'])) {
             $error = $map_servers_statuses[$id]['error'];
@@ -187,8 +213,8 @@ foreach($self as $id => $server) {
         if($params['sync_instances']) {
             foreach($server['instances_ids'] as $instance_id) {
                 eQual::run('do', 'infra_server_Instance_sync-status', [
-                    'id'    => $instance_id,
-                    'scope' => 'instant'
+                    'id'        => $instance_id,
+                    'scopes'    => ['instant']
                 ]);
             }
         }

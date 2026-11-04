@@ -9,6 +9,9 @@ use infra\server\Instance;
 use infra\server\Status;
 
 [$params, $providers] = eQual::announce([
+    'type'          => 'do',
+    'name'          => 'sync-status',
+    'package_name'  => 'infra',
     'description'   => "Fetches and saves statuses for a given instance.",
     'help'          => "Calls hosts API to fetch statuses and updates instance 'up' field accordingly.",
     'params'        => [
@@ -24,16 +27,11 @@ use infra\server\Status;
             'description'       => 'Identifiers of the targeted instances.',
             'default'           => []
         ],
-        'scope' => [
-            'type'              => 'string',
-            'description'       => 'The scope of data that needs to be returned.',
-            'selection'         => [
-                'all',
-                'instant',
-                'state',
-                'config'
-            ],
-            'default'           => 'all'
+        'scopes' => [
+            'type'              => 'array',
+            'description'       => 'The scopes of data that needs to be returned.',
+            'help'              => 'Scopes are `instant`, `state` or `config`.',
+            'default'           => []
         ]
     ],
     'access'        => [
@@ -57,6 +55,21 @@ if(empty($params['ids']) && $params['id'] <= 0) {
     throw new Exception('missing_check', EQ_ERROR_MISSING_PARAM);
 }
 
+$allowed_scopes = ['instant', 'state', 'config'];
+$map_scopes = [];
+foreach($params['scopes'] as $scope) {
+    if(!is_string($scope) || !in_array($scope, $allowed_scopes, true)) {
+        throw new Exception('invalid_scope', EQ_ERROR_INVALID_PARAM);
+    }
+
+    $map_scopes[$scope] = true;
+}
+
+if(!empty($map_scopes)) {
+    $map_scopes['state'] = true;
+}
+$scopes = array_keys($map_scopes);
+
 $self->read([
     'b2_instance_type',
     'checks_ids',
@@ -76,8 +89,8 @@ foreach($self as $id => $instance) {
     $get_status_params = [
         'id' => $instance['id']
     ];
-    if($params['scope'] !== 'all' && !empty($instance['b2_instance_type'])) {
-        $get_status_params['scope'] = $params['scope'];
+    if(!empty($scopes) && !empty($instance['b2_instance_type'])) {
+        $get_status_params['scopes'] = $scopes;
     }
 
     $b2_instance_status = null;

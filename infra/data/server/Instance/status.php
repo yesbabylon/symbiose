@@ -9,7 +9,7 @@ use equal\http\HttpRequest;
 use infra\Access;
 
 [$params, $providers] = eQual::announce([
-    'description'   => 'Fetches instant status of instances.',
+    'description'   => 'Fetches statuses of instances.',
     'params'        => [
         'id' => [
             'type'              => 'many2one',
@@ -23,16 +23,11 @@ use infra\Access;
             'description'       => 'Identifiers of the targeted instances.',
             'default'           => []
         ],
-        'scope' => [
-            'type'              => 'string',
-            'description'       => 'The scope of data that needs to be returned.',
-            'selection'         => [
-                'all',
-                'instant',
-                'state',
-                'config'
-            ],
-            'default'           => 'all'
+        'scopes' => [
+            'type'              => 'array',
+            'description'       => 'The scopes of data that needs to be returned.',
+            'help'              => 'Scopes are `instant`, `state` or `config`.',
+            'default'           => []
         ]
     ],
     'response'      => [
@@ -52,6 +47,21 @@ use infra\Access;
 if(empty($params['ids']) && $params['id'] <= 0) {
     throw new Exception('missing_check', EQ_ERROR_MISSING_PARAM);
 }
+
+$allowed_scopes = ['instant', 'state', 'config'];
+$map_scopes = [];
+foreach($params['scopes'] as $scope) {
+    if(!is_string($scope) || !in_array($scope, $allowed_scopes, true)) {
+        throw new Exception('invalid_scope', EQ_ERROR_INVALID_PARAM);
+    }
+
+    $map_scopes[$scope] = true;
+}
+
+if(!empty($map_scopes)) {
+    $map_scopes['state'] = true;
+}
+$scopes = array_keys($map_scopes);
 
 $self->read(['name', 'server_id' => ['server_type']]);
 
@@ -92,8 +102,8 @@ foreach($self as $id => $instance) {
     $access = $map_instances_accesses[$id];
 
     $request_params = ['instance' => $instance['name']];
-    if($params['scope'] !== 'all') {
-        $request_params['scope'] = $params['scope'];
+    if(!empty($scopes)) {
+        $request_params['scopes'] = $scopes;
     }
 
     $request = new HttpRequest("GET {$access['url']}/instance/status?".http_build_query($request_params));
