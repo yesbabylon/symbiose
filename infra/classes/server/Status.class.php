@@ -50,6 +50,14 @@ class Status extends Model {
                 'description'       => "Was the status collection process a success ?",
                 'default'           => true,
                 'readonly'          => true
+            ],
+
+            'scopes' => [
+                'type'              => 'string',
+                'usage'             => 'text/json',
+                'description'       => 'JSON representation of the scopes of data that where fetched.',
+                'help'              => 'Scopes are `instant`, `state` or `config`.',
+                'required'          => true
             ]
 
         ];
@@ -62,6 +70,26 @@ class Status extends Model {
                     'message'   => 'Object class must be infra\server\Server or infra\server\Instance.',
                     'function'  => function ($object_class, $values) {
                         return in_array($object_class, [Server::class, Instance::class]);
+                    }
+                ]
+            ],
+            'scopes' => [
+                'invalid_scopes' => [
+                    'message'   => 'Scopes cannot be empty and must be an array of `instant`, `state` and/or `config`.',
+                    'function'  => function ($scopes, $values) {
+                        $scopes = json_decode($scopes, true);
+
+                        if(empty($scopes) || !array_is_list($scopes)) {
+                            return false;
+                        }
+
+                        foreach($scopes as $scope) {
+                            if(!in_array($scope, ['instant', 'state', 'config'], true)) {
+                                return false;
+                            }
+                        }
+
+                        return true;
                     }
                 ]
             ]

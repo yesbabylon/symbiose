@@ -32,6 +32,16 @@
                 "width": "60%",
                 "sortable": true,
                 "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "scopes",
+                "with": "25%",
+                "sortable": true,
+                "readonly": true,
+                "widget": {
+                    "usage": "string"
+                }
             }
         ]
     }

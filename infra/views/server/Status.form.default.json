@@ -36,6 +36,21 @@
                             {
                                 "columns": [
                                     {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "scopes",
+                                                "width": "25%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
                                         "width": "66%",
                                         "items": [
                                             {

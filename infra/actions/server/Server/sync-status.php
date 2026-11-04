@@ -201,7 +201,8 @@ foreach($self as $id => $server) {
         Status::create([
             'object_class'  => Server::class,
             'object_id'     => $id,
-            'status_data'   => json_encode($status, JSON_PRETTY_PRINT)
+            'status_data'   => json_encode($status, JSON_PRETTY_PRINT),
+            'scopes'        => json_encode(empty($scopes) ? $allowed_scopes : $scopes)
         ]);
 
         // server is up
@@ -229,7 +230,8 @@ foreach($self as $id => $server) {
             'object_class'      => Server::class,
             'object_id'         => $id,
             'status_data'       => json_encode($status, JSON_PRETTY_PRINT),
-            'is_collection_ok'  => false
+            'is_collection_ok'  => false,
+            'scopes'            => json_encode(empty($scopes) ? $allowed_scopes : $scopes)
         ]);
 
         // server is down (will cascade to instances)
@@ -244,7 +246,8 @@ foreach($self as $id => $server) {
                     'object_class'      => Instance::class,
                     'object_id'         => $instance_id,
                     'status_data'       => json_encode($status, JSON_PRETTY_PRINT),
-                    'is_collection_ok'  => false
+                    'is_collection_ok'  => false,
+                    'scopes'            => json_encode(empty($scopes) ? $allowed_scopes : $scopes)
                 ]);
 
                 Instance::id($instance_id)->update([

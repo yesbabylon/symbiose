@@ -118,7 +118,8 @@ foreach($self as $id => $instance) {
         Status::create([
             'object_class'  => Instance::class,
             'object_id'     => $instance['id'],
-            'status_data'   => json_encode($b2_instance_status, JSON_PRETTY_PRINT)
+            'status_data'   => json_encode($b2_instance_status, JSON_PRETTY_PRINT),
+            'scopes'        => json_encode(empty($scopes) ? $allowed_scopes : $scopes)
         ]);
 
         $instance_data = [
@@ -163,7 +164,8 @@ foreach($self as $id => $instance) {
             'object_class'      => Instance::class,
             'object_id'         => $instance['id'],
             'status_data'       => json_encode($status, JSON_PRETTY_PRINT),
-            'is_collection_ok'  => false
+            'is_collection_ok'  => false,
+            'scopes'            => json_encode(empty($scopes) ? $allowed_scopes : $scopes)
         ]);
 
         // instance is down
