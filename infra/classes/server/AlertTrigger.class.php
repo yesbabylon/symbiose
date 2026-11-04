@@ -39,6 +39,17 @@ class AlertTrigger extends Model {
                 'readonly'          => true
             ],
 
+            'scope' => [
+                'type'              => 'string',
+                'description'       => 'The scope of data that the alert trigger needs.',
+                'selection'         => [
+                    'instant',
+                    'state',
+                    'config'
+                ],
+                'required'          => true
+            ],
+
             'repetition' => [
                 'type'              => 'integer',
                 'description'       => "Number of repetitions needed for the alert to be triggered.",
@@ -53,7 +64,12 @@ class AlertTrigger extends Model {
                 'rel_table'         => 'infra_check_rel_alert_trigger',
                 'rel_foreign_key'   => 'check_id',
                 'rel_local_key'     => 'alert_trigger_id',
-                'description'       => "Checks used to trigger the alert."
+                'description'       => "Checks used to trigger the alert.",
+                'domain'            => [
+                    ['object_class', '=', 'object.object_class'],
+                    ['object_id', '=', 'object.object_id'],
+                    ['scope', '=', 'object.scope']
+                ]
             ],
 
             'user_id' => [

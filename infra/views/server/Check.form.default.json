@@ -63,7 +63,13 @@
                                             {
                                                 "type": "field",
                                                 "value": "status_path",
-                                                "width": "40%"
+                                                "width": "30%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "scope",
+                                                "width": "15%",
+                                                "readonly": true
                                             },
                                             {
                                                 "type": "field",
@@ -73,7 +79,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "check_value",
-                                                "width": "40%"
+                                                "width": "35%"
                                             }
                                         ]
                                     }

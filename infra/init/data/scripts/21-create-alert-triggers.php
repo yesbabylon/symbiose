@@ -27,6 +27,7 @@ $definitions = [
         'object_class'      => Server::class,
         'check_codes'       => ['server-up'],
         'remove_check_codes'=> ['server-b2-api-error'],
+        'scope'             => 'state',
         'repetition'        => 2
     ],
     [
@@ -43,6 +44,7 @@ $definitions = [
         ],
         'object_class'      => Server::class,
         'check_codes'       => ['server-b2-api-error'],
+        'scope'             => 'state',
         'repetition'        => 5
     ],
     [
@@ -70,6 +72,7 @@ $definitions = [
             'server-ram-usage',
             'server-total-processes'
         ],
+        'scope'             => 'instant',
         'repetition'        => 2
     ],
     [
@@ -87,6 +90,7 @@ $definitions = [
         'object_class'      => Instance::class,
         'check_codes'       => ['instance-up'],
         'remove_check_codes'=> ['instance-b2-api-error'],
+        'scope'             => 'state',
         'repetition'        => 2
     ],
     [
@@ -103,6 +107,7 @@ $definitions = [
         ],
         'object_class'      => Instance::class,
         'check_codes'       => ['instance-b2-api-error'],
+        'scope'             => 'state',
         'repetition'        => 5
     ],
     [
@@ -130,6 +135,7 @@ $definitions = [
             'instance-ram-usage',
             'instance-total-processes'
         ],
+        'scope'             => 'instant',
         'repetition'        => 2
     ]
 ];
@@ -139,12 +145,14 @@ foreach($definitions as $definition) {
     $object_class = $definition['object_class'];
     $check_codes = $definition['check_codes'];
     $remove_check_codes = $definition['remove_check_codes'] ?? [];
+    $scope = $definition['scope'];
     $repetition = $definition['repetition'];
     unset(
         $definition['translations'],
         $definition['object_class'],
         $definition['check_codes'],
         $definition['remove_check_codes'],
+        $definition['scope'],
         $definition['repetition']
     );
 
@@ -189,6 +197,7 @@ foreach($definitions as $definition) {
     ]);
     $alert_trigger_data = [
         'object_class'      => $object_class,
+        'scope'             => $scope,
         'repetition'        => $repetition,
         'checks_ids'        => $checks_ids,
         'message_model_id'  => $message_model_id

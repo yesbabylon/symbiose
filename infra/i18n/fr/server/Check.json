@@ -33,6 +33,11 @@
             "description": "Chemin, séparé par des points, de la valeur dans les données de statut collectées.",
             "help": "Par exemple : state.up ou instant.cpu_use."
         },
+        "scope": {
+            "label": "Périmètre",
+            "description": "Périmètre des données de statut déduit du chemin du statut.",
+            "help": "Utilisé pour déterminer les données de statut à collecter pour ce contrôle."
+        },
         "operator": {
             "label": "Opérateur",
             "description": "Comparaison appliquée à la valeur collectée.",

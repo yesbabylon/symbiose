@@ -29,6 +29,11 @@
                                                 "type": "field",
                                                 "value": "repetition",
                                                 "width": "15%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "scope",
+                                                "width": "15%"
                                             }
                                         ]
                                     }

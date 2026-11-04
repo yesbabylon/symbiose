@@ -62,6 +62,7 @@ $template = AlertTrigger::search([
         ['object_id', '=', null]
     ])
     ->read([
+        'scope',
         'repetition',
         'user_id',
         'group_id',
@@ -133,6 +134,7 @@ foreach($template['checks_ids'] as $check_template) {
 AlertTrigger::create([
     'object_class'      => Server::class,
     'object_id'         => $server['id'],
+    'scope'             => $template['scope'],
     'repetition'        => $template['repetition'],
     'checks_ids'        => $checks_ids,
     'user_id'           => $template['user_id'],

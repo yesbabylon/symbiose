@@ -28,6 +28,13 @@
             },
             {
                 "type": "field",
+                "value": "scope",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
                 "value": "value",
                 "width": "15%",
                 "sortable": true
