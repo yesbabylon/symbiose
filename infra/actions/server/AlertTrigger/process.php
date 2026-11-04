@@ -97,6 +97,7 @@ foreach($self as $id => $alertTrigger) {
     }
 
     if(!$last_failed_check) {
+        $dispatch->cancel($alertTrigger['message_model_id']['name'], $alertTrigger['object_class'], $alertTrigger['object_id']);
         continue;
     }
 

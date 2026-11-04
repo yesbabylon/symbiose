@@ -28,13 +28,6 @@
             },
             {
                 "type": "field",
-                "value": "status_data_excerpt",
-                "width": "60%",
-                "sortable": true,
-                "readonly": true
-            },
-            {
-                "type": "field",
                 "value": "scopes",
                 "with": "25%",
                 "sortable": true,
@@ -42,6 +35,13 @@
                 "widget": {
                     "usage": "string"
                 }
+            },
+            {
+                "type": "field",
+                "value": "status_data_excerpt",
+                "width": "33%",
+                "sortable": true,
+                "readonly": true
             }
         ]
     }
