@@ -48,6 +48,17 @@
             "description": "Groupe concerné par l'alerte générée, le cas échéant.",
             "help": ""
         },
+        "severity": {
+            "label": "Sévérité",
+            "description": "Sévérité attribuée aux alertes générées par ce déclencheur.",
+            "selection": {
+                "notice": "Information",
+                "warning": "Avertissement",
+                "important": "Important",
+                "urgent": "Urgent"
+            },
+            "help": "Détermine la priorité affichée aux destinataires de l'alerte."
+        },
         "message_model_id": {
             "label": "Modèle de message",
             "description": "Modèle de message utilisé pour générer l'alerte.",

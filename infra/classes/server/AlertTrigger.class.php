@@ -84,6 +84,18 @@ class AlertTrigger extends Model {
                 'description'       => 'Group concerned by the alert, if any.'
             ],
 
+            'severity' => [
+                'type'              => 'string',
+                'description'       => "Severity of the created alerts.",
+                'selection'         => [
+                    'notice',
+                    'warning',
+                    'important',
+                    'urgent'
+                ],
+                'default'           => 'warning'
+            ],
+
             'message_model_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'core\alert\MessageModel',

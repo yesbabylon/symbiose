@@ -47,7 +47,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "object_class",
-                                                "width": "30%",
+                                                "width": "25%",
                                                 "readonly": true
                                             },
                                             {
@@ -59,12 +59,17 @@
                                             {
                                                 "type": "field",
                                                 "value": "user_id",
-                                                "width": "25%"
+                                                "width": "20%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "group_id",
-                                                "width": "25%"
+                                                "width": "20%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "severity",
+                                                "width": "20%"
                                             }
                                         ]
                                     }

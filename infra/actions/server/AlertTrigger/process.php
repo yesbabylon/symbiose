@@ -70,6 +70,7 @@ $self->read([
     'object_id',
     'user_id',
     'group_id',
+    'severity',
     'repetition',
     'checks_ids' => [
         'is_success',
@@ -109,7 +110,7 @@ foreach($self as $id => $alertTrigger) {
     }
 
     $dispatch->emit($alertTrigger['message_model_id']['name'], $alertTrigger['object_class'], $alertTrigger['object_id'], [
-        'severity'  => 'important',
+        'severity'  => $alertTrigger['severity'],
         'user_id'   => $alertTrigger['user_id'],
         'group_id'  => $alertTrigger['group_id'],
         'values'    => $values

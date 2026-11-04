@@ -34,6 +34,12 @@
             },
             {
                 "type": "field",
+                "value": "severity",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
                 "value": "user_id",
                 "width": "15%",
                 "sortable": true
