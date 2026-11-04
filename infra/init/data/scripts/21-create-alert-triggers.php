@@ -135,11 +135,11 @@ $definitions = [
 ];
 
 foreach($definitions as $definition) {
-    $translations = $definition['translations'] ?? [];
-    $object_class = $definition['object_class'] ?? null;
-    $check_codes = $definition['check_codes'] ?? [];
+    $translations = $definition['translations'];
+    $object_class = $definition['object_class'];
+    $check_codes = $definition['check_codes'];
     $remove_check_codes = $definition['remove_check_codes'] ?? [];
-    $repetition = $definition['repetition'] ?? 1;
+    $repetition = $definition['repetition'];
     unset(
         $definition['translations'],
         $definition['object_class'],

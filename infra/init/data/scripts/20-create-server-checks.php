@@ -349,7 +349,7 @@ $definitions = [
 ];
 
 foreach($definitions as $definition) {
-    $translations = $definition['translations'] ?? [];
+    $translations = $definition['translations'];
     unset($definition['translations']);
 
     $check = Check::search(['code', '=', $definition['code']]);
