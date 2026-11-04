@@ -29,7 +29,7 @@ use infra\server\Status;
         'scopes' => [
             'type'              => 'array',
             'description'       => 'The scopes of data that needs to be returned.',
-            'help'              => 'Scopes are `instant`, `state` or `config`.',
+            'help'              => 'Scopes are `instant`, `state` or `config`. If empty all scopes loaded.',
             'default'           => []
         ],
         'sync_instances' => [

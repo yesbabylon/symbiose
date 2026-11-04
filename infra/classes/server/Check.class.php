@@ -54,7 +54,15 @@ class Check extends Model {
                 'type'              => 'string',
                 'description'       => "The path of the status_data used for the check.",
                 'required'          => true,
-                'dependents'        => ['name']
+                'dependents'        => ['name', 'scope']
+            ],
+
+            'scope' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => 'The scope of the status path that is needed to get the check data.',
+                'store'             => true,
+                'function'          => 'calcScope'
             ],
 
             'operator' => [
@@ -134,6 +142,16 @@ class Check extends Model {
         $self->read(['status_path', 'operator', 'check_value']);
         foreach($self as $id => $check) {
             $result[$id] = "{$check['status_path']} {$check['operator']} {$check['check_value']}";
+        }
+
+        return $result;
+    }
+
+    protected static function calcScope($self): array {
+        $result = [];
+        $self->read(['status_path']);
+        foreach($self as $id => $check) {
+            $result[$id] = explode('.', $check['status_path'])[0];
         }
 
         return $result;
