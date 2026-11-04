@@ -60,7 +60,7 @@ class Check extends Model {
             'scope' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'description'       => 'The scope of the status path that is needed to get the check data.',
+                'description'       => 'The status path scope needed to retrieve check data.',
                 'store'             => true,
                 'function'          => 'calcScope'
             ],
