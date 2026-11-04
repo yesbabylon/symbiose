@@ -34,9 +34,14 @@
             "help": "Par exemple : state.up ou instant.cpu_use."
         },
         "scope": {
-            "label": "Périmètre",
-            "description": "Périmètre des données de statut déduit du chemin du statut.",
-            "help": "Utilisé pour déterminer les données de statut à collecter pour ce contrôle."
+            "label": "Scope",
+            "description": "Périmètre des données de statut requis pour évaluer ce déclencheur d'alerte.",
+            "selection": {
+                "instant": "instant",
+                "state": "state",
+                "config": "config"
+            },
+            "help": "Seuls les contrôles utilisant ce périmètre peuvent être associés au déclencheur d'alerte."
         },
         "operator": {
             "label": "Opérateur",

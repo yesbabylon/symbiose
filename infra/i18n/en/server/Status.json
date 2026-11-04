@@ -27,6 +27,11 @@
             "label": "Collection successful",
             "description": "Whether the status collection completed successfully.",
             "help": "Disabled when the monitoring endpoint could not be reached or returned an error."
+        },
+        "scopes": {
+            "label": "Scopes",
+            "description": "Status-data scopes fetched during collection.",
+            "help": "Possible scopes are instant, state, and config."
         }
     },
     "view": {}

@@ -27,6 +27,11 @@
             "label": "Collecte réussie",
             "description": "Indique si la collecte du statut s'est terminée correctement.",
             "help": "Désactivé lorsque le point d'accès de supervision est inaccessible ou renvoie une erreur."
+        },
+        "scopes": {
+            "label": "Scopes",
+            "description": "Périmètres des données de statut récupérés lors de la collecte.",
+            "help": "Les périmètres possibles sont instant, state et config."
         }
     },
     "view": {}
