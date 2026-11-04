@@ -214,7 +214,7 @@ foreach($self as $id => $server) {
             foreach($server['instances_ids'] as $instance_id) {
                 eQual::run('do', 'infra_server_Instance_sync-status', [
                     'id'        => $instance_id,
-                    'scopes'    => ['instant']
+                    'scopes'    => $scopes
                 ]);
             }
         }

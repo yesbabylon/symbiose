@@ -10,11 +10,11 @@ use infra\server\Server;
 [$params, $providers] = eQual::announce([
     'description'   => "Fetches and saves statuses for b2, k2, s2 and admin servers.",
     'params'        => [
-        'id' => [
-            'type'              => 'many2one',
-            'foreign_object'    => 'infra\server\Server',
-            'description'       => 'Identifier of the targeted server',
-            'required'          => true
+        'scopes' => [
+            'type'              => 'array',
+            'description'       => 'The scopes of data that needs to be returned.',
+            'help'              => 'Scopes are `instant`, `state` or `config`.',
+            'default'           => []
         ]
     ],
     'access'        => [
@@ -33,15 +33,30 @@ use infra\server\Server;
  */
 ['context' => $context] = $providers;
 
-$servers = Server::search([
+$allowed_scopes = ['instant', 'state', 'config'];
+$map_scopes = [];
+foreach($params['scopes'] as $scope) {
+    if(!is_string($scope) || !in_array($scope, $allowed_scopes, true)) {
+        throw new Exception('invalid_scope', EQ_ERROR_INVALID_PARAM);
+    }
+
+    $map_scopes[$scope] = true;
+}
+
+if(!empty($map_scopes)) {
+    $map_scopes['state'] = true;
+}
+$scopes = array_keys($map_scopes);
+
+$servers_ids = Server::search([
     ['server_type', 'in', ['b2', 'k2', 's2', 'admin']]
 ])
-    ->read(['server_type', 'instances_ids'])
-    ->get();
+    ->ids();
 
-foreach($servers as $id => $server) {
+foreach($servers_ids as $id) {
     eQual::run('do', 'infra_server_Server_sync-status', [
         'id'                => $id,
+        'scopes'            => $scopes,
         'sync_instances'    => true
     ]);
 }

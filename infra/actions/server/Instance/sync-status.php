@@ -9,9 +9,6 @@ use infra\server\Instance;
 use infra\server\Status;
 
 [$params, $providers] = eQual::announce([
-    'type'          => 'do',
-    'name'          => 'sync-status',
-    'package_name'  => 'infra',
     'description'   => "Fetches and saves statuses for a given instance.",
     'help'          => "Calls hosts API to fetch statuses and updates instance 'up' field accordingly.",
     'params'        => [
