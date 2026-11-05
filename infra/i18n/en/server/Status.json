@@ -3,6 +3,11 @@
     "plural": "Statuses",
     "description": "Status data collected for a server or instance.",
     "model": {
+        "name": {
+            "label": "Name",
+            "description": "Display name identifying the target and collection time.",
+            "help": "Generated automatically from the target class, target ID, and creation time."
+        },
         "object_class": {
             "label": "Target class",
             "description": "Class of the server or instance associated with this status.",
@@ -27,6 +32,11 @@
             "label": "Collection successful",
             "description": "Whether the status collection completed successfully.",
             "help": "Disabled when the monitoring endpoint could not be reached or returned an error."
+        },
+        "scopes": {
+            "label": "Scopes",
+            "description": "Status-data scopes fetched during collection.",
+            "help": "Possible scopes are instant, state, and config."
         }
     },
     "view": {}

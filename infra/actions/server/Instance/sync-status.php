@@ -10,7 +10,7 @@ use infra\server\Status;
 
 [$params, $providers] = eQual::announce([
     'description'   => "Fetches and saves statuses for a given instance.",
-    'help'          => "Calls hosts API to fetch statuses and updates instance 'up' field accordingly.",
+    'help'          => "Calls b2 hosts API to fetch statuses and updates instance 'up' field accordingly. Update concerned checks and process concerned alert triggers.",
     'params'        => [
         'id' => [
             'type'              => 'many2one',
@@ -24,16 +24,11 @@ use infra\server\Status;
             'description'       => 'Identifiers of the targeted instances.',
             'default'           => []
         ],
-        'scope' => [
-            'type'              => 'string',
-            'description'       => 'The scope of data that needs to be returned.',
-            'selection'         => [
-                'all',
-                'instant',
-                'state',
-                'config'
-            ],
-            'default'           => 'all'
+        'scopes' => [
+            'type'              => 'array',
+            'description'       => 'The scopes of data that needs to be returned.',
+            'help'              => 'Scopes are `instant`, `state` or `config`. If empty all scopes loaded.',
+            'default'           => []
         ]
     ],
     'access'        => [
@@ -57,9 +52,29 @@ if(empty($params['ids']) && $params['id'] <= 0) {
     throw new Exception('missing_check', EQ_ERROR_MISSING_PARAM);
 }
 
+$allowed_scopes = ['instant', 'state', 'config'];
+$map_scopes = [];
+foreach($params['scopes'] as $scope) {
+    if(!is_string($scope) || !in_array($scope, $allowed_scopes, true)) {
+        throw new Exception('invalid_scope', EQ_ERROR_INVALID_PARAM);
+    }
+
+    $map_scopes[$scope] = true;
+}
+
+if(!empty($map_scopes)) {
+    $map_scopes['state'] = true;
+}
+$scopes = array_keys($map_scopes);
+
 $self->read([
     'b2_instance_type',
-    'checks_ids',
+    'checks_ids' => [
+        'scope'
+    ],
+    'alert_triggers_ids' => [
+        'scope'
+    ],
     'server_id' => [
         'server_type'
     ]
@@ -75,8 +90,8 @@ foreach($self as $id => $instance) {
     $get_status_params = [
         'id' => $instance['id']
     ];
-    if($params['scope'] !== 'all' && !empty($instance['b2_instance_type'])) {
-        $get_status_params['scope'] = $params['scope'];
+    if(!empty($scopes) && !empty($instance['b2_instance_type'])) {
+        $get_status_params['scopes'] = $scopes;
     }
 
     $b2_instance_status = null;
@@ -107,7 +122,8 @@ foreach($self as $id => $instance) {
         Status::create([
             'object_class'  => Instance::class,
             'object_id'     => $instance['id'],
-            'status_data'   => json_encode($b2_instance_status, JSON_PRETTY_PRINT)
+            'status_data'   => json_encode($b2_instance_status, JSON_PRETTY_PRINT),
+            'scopes'        => json_encode(empty($scopes) ? $allowed_scopes : $scopes)
         ]);
 
         $instance_data = [
@@ -152,7 +168,8 @@ foreach($self as $id => $instance) {
             'object_class'      => Instance::class,
             'object_id'         => $instance['id'],
             'status_data'       => json_encode($status, JSON_PRETTY_PRINT),
-            'is_collection_ok'  => false
+            'is_collection_ok'  => false,
+            'scopes'            => json_encode(empty($scopes) ? $allowed_scopes : $scopes)
         ]);
 
         // instance is down
@@ -162,8 +179,28 @@ foreach($self as $id => $instance) {
         ]);
     }
 
-    if(!empty($instance['checks_ids'])) {
-        eQual::run('do', 'infra_server_Check_evaluate-latest-status', ['ids' => $instance['checks_ids']]);
+    $scopes_checks_ids = [];
+    foreach($instance['checks_ids'] as $check_id => $check) {
+        // #memo - if scope `none`, then always checked
+        if($check['scope'] === 'none' || empty($scopes) || in_array($check['scope'], $scopes, true)) {
+            $scopes_checks_ids[] = $check_id;
+        }
+    }
+
+    if(!empty($scopes_checks_ids)) {
+        eQual::run('do', 'infra_server_Check_evaluate-latest-status', ['ids' => $scopes_checks_ids]);
+
+        $scopes_alert_triggers_ids = [];
+        foreach($instance['alert_triggers_ids'] as $trigger_id => $trigger) {
+            // #memo - if scope `none`, then always process trigger
+            if($trigger['scope'] === 'none' || empty($scopes) || in_array($trigger['scope'], $scopes, true)) {
+                $scopes_alert_triggers_ids[] = $trigger_id;
+            }
+        }
+
+        if(!empty($scopes_alert_triggers_ids)) {
+            eQual::run('do', 'infra_server_AlertTrigger_process', ['ids' => $scopes_alert_triggers_ids]);
+        }
     }
 }
 

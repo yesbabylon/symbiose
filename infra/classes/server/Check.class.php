@@ -31,7 +31,8 @@ class Check extends Model {
 
             'description' => [
                 'type'              => 'string',
-                'description'       => "Short description of check."
+                'description'       => "Short description of check.",
+                'multilang'         => true
             ],
 
             'object_class' => [
@@ -53,7 +54,22 @@ class Check extends Model {
                 'type'              => 'string',
                 'description'       => "The path of the status_data used for the check.",
                 'required'          => true,
-                'dependents'        => ['name']
+                'dependents'        => ['name', 'scope']
+            ],
+
+            'scope' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => "The status path scope needed to retrieve check data.",
+                'help'              => "The check with scope none is always checked, else it can be checked only against a status that loaded the status data scope.",
+                'store'             => true,
+                'selection'         => [
+                    'instant',
+                    'state',
+                    'config',
+                    'none'
+                ],
+                'function'          => 'calcScope'
             ],
 
             'operator' => [
@@ -106,7 +122,13 @@ class Check extends Model {
             'last_status_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'infra\server\Status',
-                'description'       => 'Last status the check was evaluated on.'
+                'description'       => 'Last status the check was evaluated on.',
+                'dependents'        => ['checked']
+            ],
+
+            'checked' => [
+                'type'              => 'datetime',
+                'description'       => 'Date of last status evaluation.'
             ],
 
             'alert_triggers_ids' => [
@@ -127,6 +149,23 @@ class Check extends Model {
         $self->read(['status_path', 'operator', 'check_value']);
         foreach($self as $id => $check) {
             $result[$id] = "{$check['status_path']} {$check['operator']} {$check['check_value']}";
+        }
+
+        return $result;
+    }
+
+    protected static function calcScope($self): array {
+        $result = [];
+        $self->read(['status_path']);
+        foreach($self as $id => $check) {
+            $status_path_items = explode('.', $check['status_path']);
+
+            $scope = 'none';
+            if(count($status_path_items) > 1) {
+                $scope = $status_path_items[0];
+            }
+
+            $result[$id] = $scope;
         }
 
         return $result;

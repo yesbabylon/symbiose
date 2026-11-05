@@ -14,6 +14,14 @@
             },
             {
                 "type": "field",
+                "value": "name",
+                "width": "25%",
+                "sortable": true,
+                "readonly": true,
+                "visible": false
+            },
+            {
+                "type": "field",
                 "value": "created",
                 "with": "15%",
                 "sortable": true,
@@ -28,8 +36,18 @@
             },
             {
                 "type": "field",
+                "value": "scopes",
+                "with": "25%",
+                "sortable": true,
+                "readonly": true,
+                "widget": {
+                    "usage": "string"
+                }
+            },
+            {
+                "type": "field",
                 "value": "status_data_excerpt",
-                "width": "60%",
+                "width": "33%",
                 "sortable": true,
                 "readonly": true
             }

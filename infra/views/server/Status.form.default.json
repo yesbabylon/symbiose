@@ -19,6 +19,12 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "created",
                                                 "width": "25%",
                                                 "readonly": true
@@ -26,6 +32,21 @@
                                             {
                                                 "type": "field",
                                                 "value": "is_collection_ok",
+                                                "width": "25%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "scopes",
                                                 "width": "25%",
                                                 "readonly": true
                                             }

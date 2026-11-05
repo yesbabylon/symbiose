@@ -3,6 +3,11 @@
     "plural": "Statuts",
     "description": "Données de statut collectées pour un serveur ou une instance.",
     "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom d'affichage identifiant la cible et l'heure de collecte.",
+            "help": "Généré automatiquement à partir de la classe cible, de l'ID cible et de l'heure de création."
+        },
         "object_class": {
             "label": "Classe cible",
             "description": "Classe du serveur ou de l'instance associé à ce statut.",
@@ -27,6 +32,11 @@
             "label": "Collecte réussie",
             "description": "Indique si la collecte du statut s'est terminée correctement.",
             "help": "Désactivé lorsque le point d'accès de supervision est inaccessible ou renvoie une erreur."
+        },
+        "scopes": {
+            "label": "Scopes",
+            "description": "Périmètres des données de statut récupérés lors de la collecte.",
+            "help": "Les périmètres possibles sont instant, state et config."
         }
     },
     "view": {}

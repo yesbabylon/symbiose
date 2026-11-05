@@ -17,13 +17,22 @@
                 "type": "field",
                 "value": "code",
                 "width": "15%",
-                "sortable": true
+                "sortable": true,
+                "visible": false
             },
             {
                 "type": "field",
                 "value": "name",
                 "width": "30%",
                 "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "scope",
+                "width": "10%",
+                "sortable": true,
+                "visible": false,
                 "readonly": true
             },
             {
@@ -44,6 +53,21 @@
                 "value": "failure_count",
                 "width": "10%",
                 "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "checked",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "last_status_id",
+                "width": "10%",
+                "sortable": true,
+                "visible": false,
                 "readonly": true
             },
             {

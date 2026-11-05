@@ -1,35 +1,39 @@
 {
     "name": "Alert Trigger",
-    "description": "Default form for Alert Trigger",
+    "description": "Default form for a monitoring alert trigger.",
     "layout": {
         "groups": [
             {
                 "sections": [
                     {
+                        "id": "section.general",
+                        "label": "General",
                         "rows": [
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "trigger_type",
-                                                "width": "33%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "25%",
-                                        "items": []
-                                    },
-                                    {
-                                        "width": "25%",
-                                        "items": [
+                                                "value": "name",
+                                                "width": "35%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "message_model_id",
+                                                "width": "35%"
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "repetition",
-                                                "width": "100%"
+                                                "width": "15%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "scope",
+                                                "width": "15%"
                                             }
                                         ]
                                     }
@@ -42,18 +46,71 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "key",
-                                                "width": "33%"
+                                                "value": "object_class",
+                                                "width": "25%",
+                                                "readonly": true
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "operator",
-                                                "width": "33%"
+                                                "value": "object_id",
+                                                "width": "15%",
+                                                "readonly": true
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "value",
-                                                "width": "33%"
+                                                "value": "user_id",
+                                                "width": "20%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "group_id",
+                                                "width": "20%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "severity",
+                                                "width": "20%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.checks",
+                        "label": "Checks",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "checks_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.alert-messages",
+                        "label": "Alert messages",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "alert_messages_ids",
+                                                "width": "100%",
+                                                "readonly": true
                                             }
                                         ]
                                     }

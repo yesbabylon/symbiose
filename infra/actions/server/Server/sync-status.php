@@ -12,7 +12,7 @@ use infra\server\Status;
 
 [$params, $providers] = eQual::announce([
     'description'   => "Fetches and saves statuses for a given server.",
-    'help'          => "Calls hosts API to fetch 'instant' statuses and updates server 'up' field accordingly.",
+    'help'          => "Calls b2 hosts API to fetch statuses and updates server 'up' field accordingly. Update concerned checks and process concerned alert triggers.",
     'params'        => [
         'id' => [
             'type'              => 'many2one',
@@ -24,6 +24,12 @@ use infra\server\Status;
             'type'              => 'one2many',
             'foreign_object'    => 'infra\server\Server',
             'description'       => 'Identifiers of the targeted servers.',
+            'default'           => []
+        ],
+        'scopes' => [
+            'type'              => 'array',
+            'description'       => 'The scopes of data that needs to be returned.',
+            'help'              => 'Scopes are `instant`, `state` or `config`. If empty all scopes loaded.',
             'default'           => []
         ],
         'sync_instances' => [
@@ -53,17 +59,47 @@ if(empty($params['ids']) && $params['id'] <= 0) {
     throw new Exception('missing_check', EQ_ERROR_MISSING_PARAM);
 }
 
+$allowed_scopes = ['instant', 'state', 'config'];
+$map_scopes = [];
+foreach($params['scopes'] as $scope) {
+    if(!is_string($scope) || !in_array($scope, $allowed_scopes, true)) {
+        throw new Exception('invalid_scope', EQ_ERROR_INVALID_PARAM);
+    }
+
+    $map_scopes[$scope] = true;
+}
+
+if(!empty($map_scopes)) {
+    $map_scopes['state'] = true;
+}
+$scopes = array_keys($map_scopes);
+
 $self->read([
     'instances_ids',
-    'checks_ids',
-    'ip_address_ids' => ['ip_v4', 'ip_v6', 'visibility', 'exposure']
+    'checks_ids' => [
+        'scope'
+    ],
+    'alert_triggers_ids' => [
+        'scope'
+    ],
+    'ip_address_ids' => [
+        'ip_v4',
+        'ip_v6',
+        'visibility',
+        'exposure'
+    ]
 ]);
 
 foreach($self as $id => $server) {
     $status = null;
     $error = null;
     try {
-        $map_servers_statuses = eQual::run('get', 'infra_server_Server_status', ['id' => $id]);
+        $get_status_params = ['id' => $id];
+        if(!empty($scopes)) {
+            $get_status_params['scopes'] = $scopes;
+        }
+
+        $map_servers_statuses = eQual::run('get', 'infra_server_Server_status', $get_status_params);
 
         if(!empty($map_servers_statuses[$id]['error'])) {
             $error = $map_servers_statuses[$id]['error'];
@@ -174,7 +210,8 @@ foreach($self as $id => $server) {
         Status::create([
             'object_class'  => Server::class,
             'object_id'     => $id,
-            'status_data'   => json_encode($status, JSON_PRETTY_PRINT)
+            'status_data'   => json_encode($status, JSON_PRETTY_PRINT),
+            'scopes'        => json_encode(empty($scopes) ? $allowed_scopes : $scopes)
         ]);
 
         // server is up
@@ -186,8 +223,8 @@ foreach($self as $id => $server) {
         if($params['sync_instances']) {
             foreach($server['instances_ids'] as $instance_id) {
                 eQual::run('do', 'infra_server_Instance_sync-status', [
-                    'id'    => $instance_id,
-                    'scope' => 'instant'
+                    'id'        => $instance_id,
+                    'scopes'    => $scopes
                 ]);
             }
         }
@@ -202,7 +239,8 @@ foreach($self as $id => $server) {
             'object_class'      => Server::class,
             'object_id'         => $id,
             'status_data'       => json_encode($status, JSON_PRETTY_PRINT),
-            'is_collection_ok'  => false
+            'is_collection_ok'  => false,
+            'scopes'            => json_encode(empty($scopes) ? $allowed_scopes : $scopes)
         ]);
 
         // server is down (will cascade to instances)
@@ -217,7 +255,8 @@ foreach($self as $id => $server) {
                     'object_class'      => Instance::class,
                     'object_id'         => $instance_id,
                     'status_data'       => json_encode($status, JSON_PRETTY_PRINT),
-                    'is_collection_ok'  => false
+                    'is_collection_ok'  => false,
+                    'scopes'            => json_encode(empty($scopes) ? $allowed_scopes : $scopes)
                 ]);
 
                 Instance::id($instance_id)->update([
@@ -228,8 +267,28 @@ foreach($self as $id => $server) {
         }
     }
 
-    if(!empty($server['checks_ids'])) {
-        eQual::run('do', 'infra_server_Check_evaluate-latest-status', ['ids' => $server['checks_ids']]);
+    $scopes_checks_ids = [];
+    foreach($server['checks_ids'] as $check_id => $check) {
+        // #memo - if scope `none`, then always checked
+        if($check['scope'] === 'none' || empty($scopes) || in_array($check['scope'], $scopes, true)) {
+            $scopes_checks_ids[] = $check_id;
+        }
+    }
+
+    if(!empty($scopes_checks_ids)) {
+        eQual::run('do', 'infra_server_Check_evaluate-latest-status', ['ids' => $scopes_checks_ids]);
+
+        $scopes_alert_triggers_ids = [];
+        foreach($server['alert_triggers_ids'] as $trigger_id => $trigger) {
+            // #memo - if scope `none`, then always process trigger
+            if($trigger['scope'] === 'none' || empty($scopes) || in_array($trigger['scope'], $scopes, true)) {
+                $scopes_alert_triggers_ids[] = $trigger_id;
+            }
+        }
+
+        if(!empty($scopes_alert_triggers_ids)) {
+            eQual::run('do', 'infra_server_AlertTrigger_process', ['ids' => $scopes_alert_triggers_ids]);
+        }
     }
 }
 
