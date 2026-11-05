@@ -230,35 +230,59 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "50%",
                                         "items": [
                                             {
-                                                "type": "field",
-                                                "value": "statuses_ids",
-                                                "width": "100%",
-                                                "label": "Statuses"
+                                                "id": "label.checks",
+                                                "type": "label",
+                                                "value": "Checks",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "id": "label.statuses",
+                                                "type": "label",
+                                                "value": "Statuses",
+                                                "width": "100%"
                                             }
                                         ]
                                     }
                                 ]
-                            }
-                        ]
-                    },
-                    {
-                        "id": "section.checks",
-                        "label": "Checks",
-                        "visible": ["server_type", "in", ["b2", "k2", "s2", "admin"]],
-                        "rows": [
+                            },
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "checks_ids",
                                                 "width": "100%",
                                                 "label": "Checks"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "statuses_ids",
+                                                "width": "100%",
+                                                "label": "Statuses",
+                                                "widget": {
+                                                    "limit": 10,
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
                                             }
                                         ]
                                     }

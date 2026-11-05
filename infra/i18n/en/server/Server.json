@@ -95,6 +95,12 @@
                 },
                 "section.softwares": {
                     "label": "Software"
+                },
+                "label.checks": {
+                    "label": "Checks"
+                },
+                "label.statuses": {
+                    "label": "Statuses"
                 }
             }
         },

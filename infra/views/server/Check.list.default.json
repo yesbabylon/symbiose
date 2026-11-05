@@ -17,7 +17,8 @@
                 "type": "field",
                 "value": "code",
                 "width": "15%",
-                "sortable": true
+                "sortable": true,
+                "visible": false
             },
             {
                 "type": "field",
@@ -31,6 +32,7 @@
                 "value": "scope",
                 "width": "10%",
                 "sortable": true,
+                "visible": false,
                 "readonly": true
             },
             {
@@ -65,6 +67,7 @@
                 "value": "last_status_id",
                 "width": "10%",
                 "sortable": true,
+                "visible": false,
                 "readonly": true
             },
             {

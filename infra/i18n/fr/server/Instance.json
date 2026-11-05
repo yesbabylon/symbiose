@@ -129,8 +129,11 @@
                 "section.statuses": {
                     "label": "Statuts"
                 },
-                "section.checks": {
+                "label.checks": {
                     "label": "Contrôles"
+                },
+                "label.statuses": {
+                    "label": "Statuts"
                 },
                 "section.alert-triggers": {
                     "label": "Déclencheurs d'alertes"
