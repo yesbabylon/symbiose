@@ -4,6 +4,27 @@
     "layout": {
         "items": [
             {
+                "id": "item.alerts",
+                "type": "entry",
+                "label": "Alerts",
+                "icon": "notification_important",
+                "description": "Active alerts for servers and instances.",
+                "context": {
+                    "entity": "core\\alert\\Message",
+                    "view": "list.dashboard",
+                    "order": "created",
+                    "sort": "desc",
+                    "domain": [
+                        "object_class",
+                        "in",
+                        [
+                            "infra\\server\\Server",
+                            "infra\\server\\Instance"
+                        ]
+                    ]
+                }
+            },
+            {
                 "id": "item.product",
                 "type": "entry",
                 "label": "Products",

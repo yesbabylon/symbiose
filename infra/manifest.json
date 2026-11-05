@@ -28,6 +28,21 @@
                 "menus": {
                     "left": "infra.left",
                     "top": "infra.top"
+                },
+                "context": {
+                    "description": "Active alerts for servers and instances.",
+                    "entity": "core\\alert\\Message",
+                    "view": "list.dashboard",
+                    "order": "created",
+                    "sort": "desc",
+                    "domain": [
+                        "object_class",
+                        "in",
+                        [
+                            "infra\\server\\Server",
+                            "infra\\server\\Instance"
+                        ]
+                    ]
                 }
             }
         }
