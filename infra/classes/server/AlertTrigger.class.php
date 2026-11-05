@@ -41,11 +41,12 @@ class AlertTrigger extends Model {
 
             'scope' => [
                 'type'              => 'string',
-                'description'       => 'The scope of data that the alert trigger needs.',
+                'description'       => "The scope of data that the alert trigger needs.",
                 'selection'         => [
                     'instant',
                     'state',
-                    'config'
+                    'config',
+                    'none'
                 ],
                 'required'          => true
             ],

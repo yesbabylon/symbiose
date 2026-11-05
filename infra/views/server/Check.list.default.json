@@ -55,6 +55,20 @@
             },
             {
                 "type": "field",
+                "value": "checked",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "last_status_id",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
                 "value": "object_class",
                 "width": "20%",
                 "visible": false,

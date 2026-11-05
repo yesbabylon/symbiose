@@ -60,8 +60,15 @@ class Check extends Model {
             'scope' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'description'       => 'The status path scope needed to retrieve check data.',
+                'description'       => "The status path scope needed to retrieve check data.",
+                'help'              => "The check with scope none is always checked, else it can be checked only against a status that loaded the status data scope.",
                 'store'             => true,
+                'selection'         => [
+                    'instant',
+                    'state',
+                    'config',
+                    'none'
+                ],
                 'function'          => 'calcScope'
             ],
 
@@ -151,7 +158,14 @@ class Check extends Model {
         $result = [];
         $self->read(['status_path']);
         foreach($self as $id => $check) {
-            $result[$id] = explode('.', $check['status_path'])[0];
+            $status_path_items = explode('.', $check['status_path']);
+
+            $scope = 'none';
+            if(count($status_path_items) > 1) {
+                $scope = $status_path_items[0];
+            }
+
+            $result[$id] = $scope;
         }
 
         return $result;

@@ -181,7 +181,8 @@ foreach($self as $id => $instance) {
 
     $scopes_checks_ids = [];
     foreach($instance['checks_ids'] as $check_id => $check) {
-        if(empty($scopes) || in_array($check['scope'], $scopes)) {
+        // #memo - if scope `none`, then always checked
+        if($check['scope'] === 'none' || empty($scopes) || in_array($check['scope'], $scopes, true)) {
             $scopes_checks_ids[] = $check_id;
         }
     }
@@ -191,7 +192,8 @@ foreach($self as $id => $instance) {
 
         $scopes_alert_triggers_ids = [];
         foreach($instance['alert_triggers_ids'] as $trigger_id => $trigger) {
-            if(empty($scopes) || in_array($trigger['scope'], $scopes)) {
+            // #memo - if scope `none`, then always process trigger
+            if($trigger['scope'] === 'none' || empty($scopes) || in_array($trigger['scope'], $scopes, true)) {
                 $scopes_alert_triggers_ids[] = $trigger_id;
             }
         }

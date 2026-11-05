@@ -74,6 +74,7 @@ $self->read([
     'object_class',
     'object_id',
     'status_path',
+    'scope',
     'operator',
     'check_value',
     'failure_count'
@@ -82,7 +83,7 @@ $self->read([
 $status_by_target = [];
 foreach($self as $id => $check) {
     $target_key = "{$check['object_class']}:{$check['object_id']}";
-    if(!isset($status_data_by_target[$target_key])) {
+    if(!isset($status_by_target[$target_key])) {
         $latest_status = Status::search(
             [
                 ['object_class', '=', $check['object_class']],
@@ -93,7 +94,7 @@ foreach($self as $id => $check) {
                 'limit' => 1
             ]
         )
-            ->read(['created', 'status_data'])
+            ->read(['created', 'is_collection_ok', 'status_data', 'scopes'])
             ->first(true);
 
         if(!$latest_status) {
@@ -113,23 +114,45 @@ foreach($self as $id => $check) {
 
     $status = $status_by_target[$target_key];
 
+    if(!$status['is_collection_ok'] && !in_array($check['status_path'], ['state.up', 'error'])) {
+        // #memo - if collection error only `state.up` and `error` can be checkable
+        continue;
+    }
+
+    $status_scopes = json_decode($status['scopes'], true);
+    if($check['scope'] !== 'none' && !in_array($check['scope'], $status_scopes)) {
+        // #memo - the check cannot be tested because the status is missing the needed scope
+        continue;
+    }
+
     $status_path_exists = array_key_exists($check['status_path'], $status['flatten_status_data']);
     if(in_array($check['operator'], ['exists', 'not_exists'], true)) {
+        // #memo - handle `exists` and `not_exists` operators
         $is_success = $check['operator'] === 'exists' ? $status_path_exists : !$status_path_exists;
 
         Check::id($id)->update([
             'value'             => json_encode($status_path_exists),
             'is_success'        => $is_success,
             'failure_count'     => $is_success ? 0 : $check['failure_count'] + 1,
-            'last_status_id'    => $status_by_target[$target_key]['id']
+            'last_status_id'    => $status_by_target[$target_key]['id'],
+            'checked'           => $status['created']
         ]);
         continue;
     }
 
     if(!$status_path_exists) {
-        // #memo - if the key doesn't exist then ignore (scope was probably not loaded) (note: the key "state.up" is always present)
+        // #memo - data is supposed to be present because scope is loaded, but it is not
+        Check::id($id)->update([
+            'value'             => null,
+            'is_success'        => false,
+            'failure_count'     => $check['failure_count'] + 1,
+            'last_status_id'    => $status['id'],
+            'checked'           => $status['created']
+        ]);
         continue;
     }
+
+    // #memo - from here we know that the value is present and can be checked against the `check_value`
 
     $value = $status['flatten_status_data'][$check['status_path']];
     $check_value = $check['check_value'];

@@ -44,7 +44,7 @@ $definitions = [
         ],
         'object_class'      => Server::class,
         'check_codes'       => ['server-b2-api-error'],
-        'scope'             => 'state',
+        'scope'             => 'none',
         'repetition'        => 5
     ],
     [
@@ -107,7 +107,7 @@ $definitions = [
         ],
         'object_class'      => Instance::class,
         'check_codes'       => ['instance-b2-api-error'],
-        'scope'             => 'state',
+        'scope'             => 'none',
         'repetition'        => 5
     ],
     [

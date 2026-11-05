@@ -24,7 +24,8 @@
             "selection": {
                 "instant": "instant",
                 "state": "state",
-                "config": "config"
+                "config": "config",
+                "none": "aucun"
             },
             "help": "Seuls les contrôles utilisant ce périmètre peuvent être associés au déclencheur d'alerte."
         },

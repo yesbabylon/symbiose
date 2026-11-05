@@ -14,6 +14,15 @@ class Status extends Model {
     public static function getColumns(): array {
         return [
 
+            'name' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => 'Display name of the collected status.',
+                'store'             => true,
+                'function'          => 'calcName',
+                'readonly'          => true
+            ],
+
             'object_class' => [
                 'type'              => 'string',
                 'usage'             => 'text/plain:128',
@@ -56,11 +65,35 @@ class Status extends Model {
                 'type'              => 'string',
                 'usage'             => 'text/json',
                 'description'       => 'JSON representation of the scopes of data that where fetched.',
-                'help'              => 'Scopes are `instant`, `state` or `config`.',
+                'help'              => 'Allowed scopes are `instant`, `state` and `config`.',
                 'required'          => true
             ]
 
         ];
+    }
+
+    protected static function calcName($self): array {
+        $result = [];
+        $self->read(['object_class', 'object_id', 'created']);
+        foreach($self as $id => $status) {
+            $object = $status['object_class']::id($status['object_id'])
+                ->read(['name'])
+                ->first();
+
+            $object_name = $object['name'] ?? '';
+            if(empty($object_name)) {
+                $class_parts = explode('\\', $status['object_class']);
+                $target_class = end($class_parts);
+
+                $object_name = "{$target_class} #{$status['object_id']}";
+            }
+
+            $created = date('Y-m-d H:i:s', $status['created']);
+
+            $result[$id] = "$object_name - {$created}";
+        }
+
+        return $result;
     }
 
     public static function getConstraints() {

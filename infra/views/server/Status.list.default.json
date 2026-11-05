@@ -14,6 +14,14 @@
             },
             {
                 "type": "field",
+                "value": "name",
+                "width": "25%",
+                "sortable": true,
+                "readonly": true,
+                "visible": false
+            },
+            {
+                "type": "field",
                 "value": "created",
                 "with": "15%",
                 "sortable": true,

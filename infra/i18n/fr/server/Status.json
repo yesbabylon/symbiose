@@ -3,6 +3,11 @@
     "plural": "Statuts",
     "description": "Données de statut collectées pour un serveur ou une instance.",
     "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom d'affichage identifiant la cible et l'heure de collecte.",
+            "help": "Généré automatiquement à partir de la classe cible, de l'ID cible et de l'heure de création."
+        },
         "object_class": {
             "label": "Classe cible",
             "description": "Classe du serveur ou de l'instance associé à ce statut.",

@@ -39,7 +39,8 @@
             "selection": {
                 "instant": "instant",
                 "state": "state",
-                "config": "config"
+                "config": "config",
+                "none": "aucun"
             },
             "help": "Seuls les contrôles utilisant ce périmètre peuvent être associés au déclencheur d'alerte."
         },
@@ -80,6 +81,16 @@
         "failure_count": {
             "label": "Échecs consécutifs",
             "description": "Nombre d'évaluations consécutives ayant échoué.",
+            "help": ""
+        },
+        "last_status_id": {
+            "label": "Dernier statut",
+            "description": "Statut utilisé lors de la dernière évaluation.",
+            "help": ""
+        },
+        "checked": {
+            "label": "Contrôlé le",
+            "description": "Date et heure de la dernière évaluation du statut.",
             "help": ""
         },
         "alert_triggers_ids": {
