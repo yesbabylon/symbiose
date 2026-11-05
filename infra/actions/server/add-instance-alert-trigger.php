@@ -10,9 +10,6 @@ use infra\server\Check;
 use infra\server\Instance;
 
 [$params, $providers] = eQual::announce([
-    'type'          => 'do',
-    'name'          => 'add-instance-alert-trigger',
-    'package_name'  => 'infra',
     'description'   => 'Create an instance alert trigger and its checks from an example.',
     'params'        => [
         'id' => [

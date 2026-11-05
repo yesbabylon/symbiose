@@ -10,9 +10,6 @@ use infra\server\Check;
 use infra\server\Server;
 
 [$params, $providers] = eQual::announce([
-    'type'          => 'do',
-    'name'          => 'add-server-alert-trigger',
-    'package_name'  => 'infra',
     'description'   => 'Create a server alert trigger and its checks from an example.',
     'params'        => [
         'id' => [

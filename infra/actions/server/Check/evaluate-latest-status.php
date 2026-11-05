@@ -134,7 +134,7 @@ foreach($self as $id => $check) {
             'value'             => json_encode($status_path_exists),
             'is_success'        => $is_success,
             'failure_count'     => $is_success ? 0 : $check['failure_count'] + 1,
-            'last_status_id'    => $status_by_target[$target_key]['id'],
+            'last_status_id'    => $status['id'],
             'checked'           => $status['created']
         ]);
         continue;

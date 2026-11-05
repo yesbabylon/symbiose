@@ -12,7 +12,7 @@ use infra\server\Status;
 
 [$params, $providers] = eQual::announce([
     'description'   => "Fetches and saves statuses for a given server.",
-    'help'          => "Calls hosts API to fetch statuses and updates server 'up' field accordingly.",
+    'help'          => "Calls b2 hosts API to fetch statuses and updates server 'up' field accordingly. Update concerned checks and process concerned alert triggers.",
     'params'        => [
         'id' => [
             'type'              => 'many2one',
