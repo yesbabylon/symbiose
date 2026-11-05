@@ -16,7 +16,8 @@
     "error": {
         "errors": {
             "unknown_server": "The server was not found.",
-            "unknown_check_template": "The selected server check example was not found."
+            "unknown_check_template": "The selected server check example was not found.",
+            "check_template_already_implemented": "This check example has already been added to the server."
         }
     }
 }

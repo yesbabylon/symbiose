@@ -88,6 +88,15 @@ foreach($template['checks_ids'] as $check_template) {
     }
 }
 
+$existing_alert_trigger = AlertTrigger::search([
+    ['object_class', '=', Instance::class],
+    ['object_id', '=', $instance['id']],
+    ['message_model_id', '=', $template['message_model_id']]
+]);
+if($existing_alert_trigger->count() > 0) {
+    throw new Exception('alert_trigger_template_already_implemented', EQ_ERROR_CONFLICT_OBJECT);
+}
+
 $checks_ids = [];
 foreach($template['checks_ids'] as $check_template) {
     $base_code = "{$check_template['code']}-instance-{$instance['id']}";

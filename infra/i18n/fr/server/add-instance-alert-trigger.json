@@ -18,7 +18,8 @@
             "unknown_instance": "L'instance n'a pas été trouvée.",
             "unknown_alert_trigger_template": "L'exemple de déclencheur d'alerte d'instance sélectionné n'a pas été trouvé.",
             "empty_alert_trigger_template": "L'exemple de déclencheur d'alerte d'instance sélectionné ne contient aucun contrôle.",
-            "invalid_alert_trigger_template": "L'exemple de déclencheur d'alerte d'instance sélectionné contient un contrôle incompatible."
+            "invalid_alert_trigger_template": "L'exemple de déclencheur d'alerte d'instance sélectionné contient un contrôle incompatible.",
+            "alert_trigger_template_already_implemented": "Cet exemple de déclencheur d'alerte a déjà été ajouté à l'instance."
         }
     }
 }

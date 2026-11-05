@@ -16,7 +16,8 @@
     "error": {
         "errors": {
             "unknown_instance": "L'instance n'a pas été trouvée.",
-            "unknown_check_template": "L'exemple de contrôle d'instance sélectionné n'a pas été trouvé."
+            "unknown_check_template": "L'exemple de contrôle d'instance sélectionné n'a pas été trouvé.",
+            "check_template_already_implemented": "Cet exemple de contrôle a déjà été ajouté à l'instance."
         }
     }
 }
