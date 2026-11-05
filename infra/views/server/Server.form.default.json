@@ -71,11 +71,6 @@
                                             {
                                                 "type": "label",
                                                 "width": "75%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "send_alerts",
-                                                "width": "25%"
                                             }
                                         ]
                                     }

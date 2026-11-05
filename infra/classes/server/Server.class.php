@@ -55,14 +55,6 @@ class Server extends Model {
                 'onupdate'          => 'onupdateUp'
             ],
 
-            'send_alerts' => [
-                'type'              => 'boolean',
-                'description'       => "Are monitoring alerts sent for that server.",
-                'default'           => true,
-                'visible'           => ['server_type', 'in', ['b2', 'k2', 's2', 'admin']],
-                'onupdate'          => 'onupdateSendAlerts'
-            ],
-
             'accesses_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'infra\Access',
@@ -178,16 +170,6 @@ class Server extends Model {
         foreach($self as $server) {
             if($server['server_type'] === 'b2' && !$server['up']) {
                 Instance::ids($server['instances_ids'])->update(['up' => false]);
-            }
-        }
-    }
-
-    public static function onupdateSendAlerts($self) {
-        $self->read(['send_alerts', 'server_type', 'instances_ids']);
-        foreach($self as $server) {
-            if($server['server_type'] === 'b2' && !$server['send_alerts']) {
-                Instance::ids($server['instances_ids'])
-                    ->update(['send_alerts' => false]);
             }
         }
     }
