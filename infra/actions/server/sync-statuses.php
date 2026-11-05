@@ -43,9 +43,6 @@ foreach($params['scopes'] as $scope) {
     $map_scopes[$scope] = true;
 }
 
-if(!empty($map_scopes)) {
-    $map_scopes['state'] = true;
-}
 $scopes = array_keys($map_scopes);
 
 $servers_ids = Server::search([
