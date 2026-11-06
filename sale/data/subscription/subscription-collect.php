@@ -43,12 +43,14 @@ list($params, $providers) = eQual::announce([
         'is_expired' => [
             'type'              => 'string',
             'selection'         => ['all','yes', 'no'],
+            'default'           => 'all',
             'description'       => 'The subscription is expired'
         ],
 
         'has_upcoming_expiry' => [
             'type'              => 'string',
             'selection'         => ['all','yes', 'no'],
+            'default'           => 'all',
             'description'       => 'The subscription is  up coming expiry.'
         ],
 

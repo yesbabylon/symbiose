@@ -23,9 +23,9 @@
                     {
                         "id": "time_entries.user",
                         "type": "entry",
-                        "label": "My overview",
+                        "label": "My entries",
                         "icon": "person",
-                        "description": "Entries for current user.",
+                        "description": "Entries of the current user.",
                         "context": {
                             "entity": "timetrack\\TimeEntry",
                             "view": "list.default",

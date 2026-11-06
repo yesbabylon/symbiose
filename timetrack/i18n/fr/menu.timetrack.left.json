@@ -17,7 +17,7 @@
             "label": "Par jour et utilisateur"
         },
         "time_entries.user": {
-            "label": "Mon aperçu"
+            "label": "Mes entrées"
         },
         "time_entries.month_overview": {
             "label": "Aperçu mois"

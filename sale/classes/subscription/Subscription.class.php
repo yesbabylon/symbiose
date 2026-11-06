@@ -628,6 +628,10 @@ class Subscription extends Model  {
                 continue;
             }
 
+            if(!isset($subscription['customer_id'])) {
+                continue;
+            }
+
             $inventorySubscription = InfraSubscription::search([
                     ['product_id', '=', $subscription['product_id']],
                     ['customer_id', '=', $subscription['customer_id']]
