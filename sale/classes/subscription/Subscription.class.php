@@ -618,6 +618,7 @@ class Subscription extends Model  {
             'is_auto_renew',
             'ref_order',
             'license_key',
+            'customer_id',
             'product_id',
             'inventory_subscription_id'
         ]);
@@ -627,15 +628,15 @@ class Subscription extends Model  {
                 continue;
             }
 
-            $inventory_subscription = InfraSubscription::search([
-                    ['name', '=', $subscription['name']],
-                    ['state', 'in', ['draft', 'instance']]
+            $inventorySubscription = InfraSubscription::search([
+                    ['product_id', '=', $subscription['product_id']],
+                    ['customer_id', '=', $subscription['customer_id']]
                 ])
                 ->read(['id'])
                 ->first();
 
-            if(!$inventory_subscription) {
-                $inventory_subscription = InfraSubscription::draft([
+            if(!$inventorySubscription) {
+                $inventorySubscription = InfraSubscription::create([
                         'name'                   => $subscription['name'],
                         'description'            => $subscription['description'] ?? null,
                         'date_from'              => $subscription['date_from'],
@@ -646,12 +647,13 @@ class Subscription extends Model  {
                         'is_auto_renew'          => $subscription['is_auto_renew'] ?? false,
                         'ref_order'              => $subscription['ref_order'] ?? null,
                         'license_key'            => $subscription['license_key'] ?? null,
-                        'product_id'             => $subscription['product_id'] ?? null
+                        'product_id'             => $subscription['product_id'] ?? null,
+                        'customer_id'            => $subscription['customer_id'] ?? null
                     ])
                     ->first();
             }
 
-            self::id($id)->update(['inventory_subscription_id' => $inventory_subscription['id']]);
+            self::id($id)->update(['inventory_subscription_id' => $inventorySubscription['id']]);
         }
     }
 
