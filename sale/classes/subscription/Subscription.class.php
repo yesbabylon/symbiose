@@ -651,8 +651,7 @@ class Subscription extends Model  {
                         'is_auto_renew'          => $subscription['is_auto_renew'] ?? false,
                         'ref_order'              => $subscription['ref_order'] ?? null,
                         'license_key'            => $subscription['license_key'] ?? null,
-                        'product_id'             => $subscription['product_id'] ?? null,
-                        'customer_id'            => $subscription['customer_id'] ?? null
+                        'product_id'             => $subscription['product_id'] ?? null
                     ])
                     ->first();
             }
