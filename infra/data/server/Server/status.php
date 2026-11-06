@@ -22,6 +22,12 @@ use infra\Access;
             'foreign_object'    => 'infra\server\Server',
             'description'       => 'Identifiers of the targeted servers.',
             'default'           => []
+        ],
+        'scopes' => [
+            'type'              => 'array',
+            'description'       => 'The scopes of data that needs to be returned.',
+            'help'              => 'Scopes are `instant`, `state` or `config`.',
+            'default'           => []
         ]
     ],
     'response'      => [
@@ -41,6 +47,21 @@ use infra\Access;
 if(empty($params['ids']) && $params['id'] <= 0) {
     throw new Exception('missing_check', EQ_ERROR_MISSING_PARAM);
 }
+
+$allowed_scopes = ['instant', 'state', 'config'];
+$map_scopes = [];
+foreach($params['scopes'] as $scope) {
+    if(!is_string($scope) || !in_array($scope, $allowed_scopes, true)) {
+        throw new Exception('invalid_scope', EQ_ERROR_INVALID_PARAM);
+    }
+
+    $map_scopes[$scope] = true;
+}
+
+if(!empty($map_scopes)) {
+    $map_scopes['state'] = true;
+}
+$scopes = array_keys($map_scopes);
 
 $self->read(['server_type', 'accesses_ids']);
 
@@ -80,7 +101,12 @@ $result = [];
 foreach($self as $id => $server) {
     $access = $map_servers_accesses[$id];
 
-    $request = new HttpRequest("GET {$access['url']}/status");
+    $url = "{$access['url']}/status";
+    if(!empty($scopes)) {
+        $url .= '?'.http_build_query(['scopes' => $scopes]);
+    }
+
+    $request = new HttpRequest("GET $url");
 
     $credentials = base64_encode("root:{$access['password']}");
     $request->setHeader('Authorization', "Basic $credentials");

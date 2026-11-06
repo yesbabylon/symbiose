@@ -1,0 +1,25 @@
+{
+    "name": "Ajouter un déclencheur d'alerte à un serveur",
+    "description": "Créer un déclencheur d'alerte de serveur et ses contrôles à partir d'un exemple.",
+    "model": {
+        "id": {
+            "label": "Serveur",
+            "description": "Serveur auquel le déclencheur d'alerte sera ajouté.",
+            "help": ""
+        },
+        "alert_trigger_id": {
+            "label": "Exemple de déclencheur d'alerte",
+            "description": "Exemple dont les contrôles et la configuration d'alerte seront copiés vers le serveur.",
+            "help": "Seuls les exemples pour serveur qui ne sont pas attribués à un objet sont disponibles."
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_server": "Le serveur n'a pas été trouvé.",
+            "unknown_alert_trigger_template": "L'exemple de déclencheur d'alerte de serveur sélectionné n'a pas été trouvé.",
+            "empty_alert_trigger_template": "L'exemple de déclencheur d'alerte de serveur sélectionné ne contient aucun contrôle.",
+            "invalid_alert_trigger_template": "L'exemple de déclencheur d'alerte de serveur sélectionné contient un contrôle incompatible.",
+            "alert_trigger_template_already_implemented": "Cet exemple de déclencheur d'alerte a déjà été ajouté au serveur."
+        }
+    }
+}

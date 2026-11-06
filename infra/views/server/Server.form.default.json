@@ -16,6 +16,12 @@
             "label": "Add check from example",
             "controller": "infra_server_add-server-check",
             "visible": ["server_type", "in", ["b2", "k2", "s2", "admin"]]
+        },
+        {
+            "id": "action.add-alert-trigger",
+            "label": "Add alert trigger from example",
+            "controller": "infra_server_add-server-alert-trigger",
+            "visible": ["server_type", "in", ["b2", "k2", "s2", "admin"]]
         }
     ],
     "layout": {
@@ -65,11 +71,6 @@
                                             {
                                                 "type": "label",
                                                 "width": "75%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "send_alerts",
-                                                "width": "25%"
                                             }
                                         ]
                                     }
@@ -236,13 +237,59 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "id": "label.checks",
+                                                "type": "label",
+                                                "value": "Checks",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "id": "label.statuses",
+                                                "type": "label",
+                                                "value": "Statuses",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "checks_ids",
+                                                "width": "100%",
+                                                "label": "Checks"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "statuses_ids",
                                                 "width": "100%",
-                                                "label": "Statuses"
+                                                "label": "Statuses",
+                                                "widget": {
+                                                    "limit": 10,
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
                                             }
                                         ]
                                     }
@@ -251,8 +298,8 @@
                         ]
                     },
                     {
-                        "id": "section.checks",
-                        "label": "Checks",
+                        "id": "section.alert-triggers",
+                        "label": "Alert triggers",
                         "visible": ["server_type", "in", ["b2", "k2", "s2", "admin"]],
                         "rows": [
                             {
@@ -262,9 +309,9 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "checks_ids",
+                                                "value": "alert_triggers_ids",
                                                 "width": "100%",
-                                                "label": "Checks"
+                                                "label": "Alert triggers"
                                             }
                                         ]
                                     }

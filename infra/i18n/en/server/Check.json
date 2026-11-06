@@ -33,6 +33,17 @@
             "description": "Dot-separated path of the value in the collected status data.",
             "help": "For example: state.up or instant.cpu_use."
         },
+        "scope": {
+            "label": "Scope",
+            "description": "Status-data scope derived from the status path.",
+            "selection": {
+                "instant": "instant",
+                "state": "state",
+                "config": "config",
+                "none": "none"
+            },
+            "help": "Used to determine which status data must be collected for this check."
+        },
         "operator": {
             "label": "Operator",
             "description": "Comparison applied to the collected value.",
@@ -70,6 +81,16 @@
         "failure_count": {
             "label": "Consecutive failures",
             "description": "Number of consecutive failed evaluations.",
+            "help": ""
+        },
+        "last_status_id": {
+            "label": "Last status",
+            "description": "Status used for the latest evaluation.",
+            "help": ""
+        },
+        "checked": {
+            "label": "Checked at",
+            "description": "Date and time of the latest status evaluation.",
             "help": ""
         },
         "alert_triggers_ids": {

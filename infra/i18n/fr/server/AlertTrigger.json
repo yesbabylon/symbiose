@@ -1,0 +1,96 @@
+{
+    "name": "Déclencheur d'alerte",
+    "plural": "Déclencheurs d'alerte",
+    "description": "Alerte générée lorsqu'un des contrôles de supervision associés échoue de manière répétée.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom d'affichage hérité du modèle de message d'alerte.",
+            "help": ""
+        },
+        "object_class": {
+            "label": "Classe cible",
+            "description": "Classe du serveur ou de l'instance supervisé par le déclencheur d'alerte.",
+            "help": "Assignée automatiquement depuis la cible associée. Vide pour les exemples."
+        },
+        "object_id": {
+            "label": "ID cible",
+            "description": "Identifiant du serveur ou de l'instance supervisé par le déclencheur d'alerte.",
+            "help": "Assigné automatiquement depuis la cible associée. Vide pour les exemples."
+        },
+        "scope": {
+            "label": "Scope",
+            "description": "Périmètre des données de statut requis pour évaluer ce déclencheur d'alerte.",
+            "selection": {
+                "instant": "instant",
+                "state": "state",
+                "config": "config",
+                "none": "aucun"
+            },
+            "help": "Seuls les contrôles utilisant ce périmètre peuvent être associés au déclencheur d'alerte."
+        },
+        "repetition": {
+            "label": "Répétitions",
+            "description": "Nombre d'évaluations consécutives en échec requises avant de générer une alerte.",
+            "help": "Par exemple, 2 exige que le contrôle échoue deux fois de suite."
+        },
+        "checks_ids": {
+            "label": "Contrôles",
+            "description": "Contrôles de supervision pouvant activer ce déclencheur d'alerte.",
+            "help": ""
+        },
+        "user_id": {
+            "label": "Utilisateur",
+            "description": "Utilisateur concerné par l'alerte générée, le cas échéant.",
+            "help": ""
+        },
+        "group_id": {
+            "label": "Groupe",
+            "description": "Groupe concerné par l'alerte générée, le cas échéant.",
+            "help": ""
+        },
+        "severity": {
+            "label": "Sévérité",
+            "description": "Sévérité attribuée aux alertes générées par ce déclencheur.",
+            "selection": {
+                "notice": "Information",
+                "warning": "Avertissement",
+                "important": "Important",
+                "urgent": "Urgent"
+            },
+            "help": "Détermine la priorité affichée aux destinataires de l'alerte."
+        },
+        "message_model_id": {
+            "label": "Modèle de message",
+            "description": "Modèle de message utilisé pour générer l'alerte.",
+            "help": "Son libellé traduit est utilisé comme nom du déclencheur d'alerte."
+        },
+        "alert_messages_ids": {
+            "label": "Messages d'alerte",
+            "description": "Messages générés par ce déclencheur d'alerte.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Déclencheur d'alerte",
+            "description": "Créer ou modifier un déclencheur d'alerte.",
+            "layout": {
+                "section.general": {
+                    "label": "Général"
+                },
+                "section.checks": {
+                    "label": "Contrôles"
+                },
+                "section.alert-messages": {
+                    "label": "Messages d'alerte"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Déclencheurs d'alerte",
+            "description": "Liste des déclencheurs d'alerte de supervision.",
+            "layout": {}
+        }
+    }
+}

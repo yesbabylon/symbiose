@@ -4,6 +4,27 @@
     "layout": {
         "items": [
             {
+                "id": "item.alerts",
+                "type": "entry",
+                "label": "Alerts",
+                "icon": "notification_important",
+                "description": "Active alerts for servers and instances.",
+                "context": {
+                    "entity": "core\\alert\\Message",
+                    "view": "list.dashboard",
+                    "order": "created",
+                    "sort": "desc",
+                    "domain": [
+                        "object_class",
+                        "in",
+                        [
+                            "infra\\server\\Server",
+                            "infra\\server\\Instance"
+                        ]
+                    ]
+                }
+            },
+            {
                 "id": "item.product",
                 "type": "entry",
                 "label": "Products",
@@ -105,19 +126,6 @@
                                 "icon": "notification_important",
                                 "description": "",
                                 "children": [
-                                    {
-                                        "id": "item.advanced.servers.alerts.alerts",
-                                        "type": "entry",
-                                        "label": "Alerts",
-                                        "icon": "notifications",
-                                        "description": "",
-                                        "context": {
-                                            "entity": "infra\\server\\AlertPolicy",
-                                            "view": "list.default",
-                                            "order": "id",
-                                            "sort": "asc"
-                                        }
-                                    },
                                     {
                                         "id": "item.advanced.servers.alerts.alert-triggers",
                                         "type": "entry",

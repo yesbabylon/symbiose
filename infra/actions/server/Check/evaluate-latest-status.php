@@ -74,16 +74,16 @@ $self->read([
     'object_class',
     'object_id',
     'status_path',
+    'scope',
     'operator',
     'check_value',
     'failure_count'
 ]);
 
-$status_id_by_target = [];
-$status_data_by_target = [];
+$status_by_target = [];
 foreach($self as $id => $check) {
     $target_key = "{$check['object_class']}:{$check['object_id']}";
-    if(!isset($status_data_by_target[$target_key])) {
+    if(!isset($status_by_target[$target_key])) {
         $latest_status = Status::search(
             [
                 ['object_class', '=', $check['object_class']],
@@ -94,8 +94,8 @@ foreach($self as $id => $check) {
                 'limit' => 1
             ]
         )
-            ->read(['status_data'])
-            ->first();
+            ->read(['created', 'is_collection_ok', 'status_data', 'scopes'])
+            ->first(true);
 
         if(!$latest_status) {
             throw new Exception('unknown_status', EQ_ERROR_INVALID_PARAM);
@@ -106,38 +106,55 @@ foreach($self as $id => $check) {
             throw new Exception('invalid_status_data', EQ_ERROR_INVALID_PARAM);
         }
 
-        $status_id_by_target[$target_key] = $latest_status['id'];
-        $status_data_by_target[$target_key] = $flatten($decoded_status_data);
+        $status_by_target[$target_key] = array_merge(
+            $latest_status,
+            ['flatten_status_data' => $flatten($decoded_status_data)]
+        );
     }
 
-    $status_data = $status_data_by_target[$target_key];
-    $status_path_exists = array_key_exists($check['status_path'], $status_data);
+    $status = $status_by_target[$target_key];
+
+    if(!$status['is_collection_ok'] && !in_array($check['status_path'], ['state.up', 'error'])) {
+        // #memo - if collection error only `state.up` and `error` can be checkable
+        continue;
+    }
+
+    $status_scopes = json_decode($status['scopes'], true);
+    if($check['scope'] !== 'none' && !in_array($check['scope'], $status_scopes)) {
+        // #memo - the check cannot be tested because the status is missing the needed scope
+        continue;
+    }
+
+    $status_path_exists = array_key_exists($check['status_path'], $status['flatten_status_data']);
     if(in_array($check['operator'], ['exists', 'not_exists'], true)) {
+        // #memo - handle `exists` and `not_exists` operators
         $is_success = $check['operator'] === 'exists' ? $status_path_exists : !$status_path_exists;
 
         Check::id($id)->update([
             'value'             => json_encode($status_path_exists),
             'is_success'        => $is_success,
             'failure_count'     => $is_success ? 0 : $check['failure_count'] + 1,
-            'last_status_id'    => $status_id_by_target[$target_key]
+            'last_status_id'    => $status['id'],
+            'checked'           => $status['created']
         ]);
         continue;
     }
 
     if(!$status_path_exists) {
-        /*
-        #memo - if the key doesn't exist then ignore (scope was probably not loaded)
-        #memo - note: the key "state.up" is always present
-
+        // #memo - data is supposed to be present because scope is loaded, but it is not
         Check::id($id)->update([
-            'is_success'    => false,
-            'failure_count' => $check['failure_count'] + 1
+            'value'             => null,
+            'is_success'        => false,
+            'failure_count'     => $check['failure_count'] + 1,
+            'last_status_id'    => $status['id'],
+            'checked'           => $status['created']
         ]);
-        */
         continue;
     }
 
-    $value = $status_data[$check['status_path']];
+    // #memo - from here we know that the value is present and can be checked against the `check_value`
+
+    $value = $status['flatten_status_data'][$check['status_path']];
     $check_value = $check['check_value'];
     switch(gettype($value)) {
         case 'integer':
@@ -218,7 +235,8 @@ foreach($self as $id => $check) {
         'value'             => is_string($value) ? $value : json_encode($value),
         'is_success'        => $is_success,
         'failure_count'     => $is_success ? 0 : $check['failure_count'] + 1,
-        'last_status_id'    => $status_id_by_target[$target_key]
+        'last_status_id'    => $status['id'],
+        'checked'           => $status['created']
     ]);
 }
 

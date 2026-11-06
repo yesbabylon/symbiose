@@ -37,11 +37,6 @@
             },
             "help": ""
         },
-        "send_alerts": {
-            "label": "Envoyer alertes",
-            "description": "Des alertes de surveillance sont-elles envoyées pour cette instance ?",
-            "help": ""
-        },
         "accesses_ids": {
             "label": "Accès",
             "description": "Accès au serveur.",
@@ -99,6 +94,10 @@
                 "action.add-check": {
                     "label": "Ajouter un contrôle",
                     "description": "Créer un contrôle de serveur modifiable à partir d'un exemple."
+                },
+                "action.add-alert-trigger": {
+                    "label": "Ajouter un déclencheur d'alerte",
+                    "description": "Créer un déclencheur d'alerte de serveur et ses contrôles à partir d'un exemple."
                 }
             },
             "layout": {
@@ -123,8 +122,14 @@
                 "section.statuses": {
                     "label": "Statuts"
                 },
-                "section.checks": {
+                "section.alert-triggers": {
+                    "label": "Déclencheurs d'alertes"
+                },
+                "label.checks": {
                     "label": "Contrôles"
+                },
+                "label.statuses": {
+                    "label": "Statuts"
                 }
             }
         },

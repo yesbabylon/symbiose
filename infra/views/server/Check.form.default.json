@@ -63,7 +63,13 @@
                                             {
                                                 "type": "field",
                                                 "value": "status_path",
-                                                "width": "40%"
+                                                "width": "30%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "scope",
+                                                "width": "15%",
+                                                "readonly": true
                                             },
                                             {
                                                 "type": "field",
@@ -73,7 +79,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "check_value",
-                                                "width": "40%"
+                                                "width": "35%"
                                             }
                                         ]
                                     }
@@ -93,18 +99,39 @@
                                             {
                                                 "type": "field",
                                                 "value": "value",
-                                                "width": "40%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "is_success",
-                                                "width": "20%",
+                                                "width": "33%",
                                                 "readonly": true
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "failure_count",
-                                                "width": "20%",
+                                                "width": "33%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "last_status_id",
+                                                "width": "25%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "checked",
+                                                "width": "25%",
                                                 "readonly": true
                                             }
                                         ]

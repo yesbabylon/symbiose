@@ -1,6 +1,10 @@
 {
     "description": "",
     "view": {
+        "item.alerts": {
+            "label": "Alertes",
+            "help": "Alertes actives pour les serveurs et les instances."
+        },
         "item.product": {
             "label": "Produits",
             "help": ""

@@ -33,6 +33,17 @@
             "description": "Chemin, séparé par des points, de la valeur dans les données de statut collectées.",
             "help": "Par exemple : state.up ou instant.cpu_use."
         },
+        "scope": {
+            "label": "Scope",
+            "description": "Périmètre des données de statut requis pour évaluer ce déclencheur d'alerte.",
+            "selection": {
+                "instant": "instant",
+                "state": "state",
+                "config": "config",
+                "none": "aucun"
+            },
+            "help": "Seuls les contrôles utilisant ce périmètre peuvent être associés au déclencheur d'alerte."
+        },
         "operator": {
             "label": "Opérateur",
             "description": "Comparaison appliquée à la valeur collectée.",
@@ -70,6 +81,16 @@
         "failure_count": {
             "label": "Échecs consécutifs",
             "description": "Nombre d'évaluations consécutives ayant échoué.",
+            "help": ""
+        },
+        "last_status_id": {
+            "label": "Dernier statut",
+            "description": "Statut utilisé lors de la dernière évaluation.",
+            "help": ""
+        },
+        "checked": {
+            "label": "Contrôlé le",
+            "description": "Date et heure de la dernière évaluation du statut.",
             "help": ""
         },
         "alert_triggers_ids": {

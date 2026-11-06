@@ -1,0 +1,25 @@
+{
+    "name": "Ajouter un déclencheur d'alerte à une instance",
+    "description": "Créer un déclencheur d'alerte d'instance et ses contrôles à partir d'un exemple.",
+    "model": {
+        "id": {
+            "label": "Instance",
+            "description": "Instance à laquelle le déclencheur d'alerte sera ajouté.",
+            "help": ""
+        },
+        "alert_trigger_id": {
+            "label": "Exemple de déclencheur d'alerte",
+            "description": "Exemple dont les contrôles et la configuration d'alerte seront copiés vers l'instance.",
+            "help": "Seuls les exemples pour instance qui ne sont pas attribués à un objet sont disponibles."
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_instance": "L'instance n'a pas été trouvée.",
+            "unknown_alert_trigger_template": "L'exemple de déclencheur d'alerte d'instance sélectionné n'a pas été trouvé.",
+            "empty_alert_trigger_template": "L'exemple de déclencheur d'alerte d'instance sélectionné ne contient aucun contrôle.",
+            "invalid_alert_trigger_template": "L'exemple de déclencheur d'alerte d'instance sélectionné contient un contrôle incompatible.",
+            "alert_trigger_template_already_implemented": "Cet exemple de déclencheur d'alerte a déjà été ajouté à l'instance."
+        }
+    }
+}

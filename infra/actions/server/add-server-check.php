@@ -70,12 +70,14 @@ if(!$template) {
     throw new Exception('unknown_check_template', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
-$base_code = "{$template['code']}-server-{$server['id']}";
-$code = $base_code;
-$suffix = 2;
-while(Check::search(['code', '=', $code])->count() > 0) {
-    $code = "{$base_code}-{$suffix}";
-    ++$suffix;
+$code = "{$template['code']}-server-{$server['id']}";
+$existing_check = Check::search([
+    ['object_class', '=', Server::class],
+    ['object_id', '=', $server['id']],
+    ['code', 'like', "{$code}%"]
+]);
+if($existing_check->count() > 0) {
+    throw new Exception('check_template_already_implemented', EQ_ERROR_CONFLICT_OBJECT);
 }
 
 $check = Check::create([

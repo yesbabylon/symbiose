@@ -16,7 +16,8 @@
     "error": {
         "errors": {
             "unknown_instance": "The instance was not found.",
-            "unknown_check_template": "The selected instance check example was not found."
+            "unknown_check_template": "The selected instance check example was not found.",
+            "check_template_already_implemented": "This check example has already been added to the instance."
         }
     }
 }
