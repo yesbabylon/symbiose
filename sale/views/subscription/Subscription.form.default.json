@@ -7,6 +7,19 @@
             "label": "Create Entry",
             "controller": "sale_subscription_add-subscriptionentry",
             "visible": ["has_current_sale_entry", "=", false]
+        },
+        {
+            "id": "action.create-inventory-subscription",
+            "label": "Create inventory subscription",
+            "description": "Create a corresponding inventory subscription that can then be linked to a service.",
+            "controller": "core_model_do",
+            "params": {
+                "entity": "sale\\subscription\\Subscription",
+                "action": "create_inventory_subscription",
+                "ids": []
+            },
+            "confirm": true,
+            "visible": [["model", "=", "sale\\subscription\\Subscription"], ["inventory_subscription_id", "=", null]]
         }
     ],
     "layout": {
@@ -27,6 +40,11 @@
                                                 "widget": {
                                                     "heading": true
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "model",
+                                                "visible": false
                                             }
                                         ]
                                     },
@@ -109,6 +127,13 @@
                                                 "value": "ref_order",
                                                 "label": "Reference",
                                                 "width": "75%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "inventory_subscription_id",
+                                                "width": "75%",
+                                                "readonly": true,
+                                                "visible": ["model", "=", "sale\\subscription\\Subscription"]
                                             },
                                             {
                                                 "type": "label",

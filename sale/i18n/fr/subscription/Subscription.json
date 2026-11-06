@@ -63,6 +63,11 @@
             "description": "Clé de license pour l'activation de l'abonnement.",
             "help": ""
         },
+        "inventory_subscription_id": {
+            "label": "Abonnement d'inventaire",
+            "description": "Abonnement d'inventaire créé à partir de cet abonnement de vente.",
+            "help": "Ouvrez cet abonnement pour le rattacher manuellement à un service."
+        },
         "customer_id": {
             "label": "Client",
             "description": "Le client à qui est destiné cet abonnement.",
@@ -108,10 +113,20 @@
         "date_to": {
             "missing_period_dates": "Les dates de la période de l'abonnement sont requises.",
             "missing_period_end": "Une date de fin est requise pour planifier le renouvellement automatique.",
-            "period_changed": "La période de l'abonnement a changé avant de pouvoir passer à la suivante."
+            "period_changed": "La période de l'abonnement a changé avant de pouvoir passer à la suivante.",
+            "missing_inventory_subscription_value": "La date de fin est requise pour créer l'abonnement d'inventaire correspondant."
+        },
+        "date_from": {
+            "missing_inventory_subscription_value": "La date de début est requise pour créer l'abonnement d'inventaire correspondant."
+        },
+        "name": {
+            "missing_inventory_subscription_value": "Le nom est requis pour créer l'abonnement d'inventaire correspondant."
         },
         "subscription_entries_ids": {
             "missing_approved_entry": "Une vente approuvée est requise pour la période courante avant de passer à la suivante."
+        },
+        "model": {
+            "unsupported_subscription_model": "Seuls les abonnements de vente peuvent créer un abonnement d'inventaire correspondant."
         }
     },
     "view": {
@@ -122,6 +137,10 @@
                 "action.add-subscription-entry": {
                     "label": "Créer une vente",
                     "description": "Créer une entrée de vente à partir de cet abonnement."
+                },
+                "action.create-inventory-subscription": {
+                    "label": "Créer l'abonnement d'inventaire",
+                    "description": "Créer un abonnement d'inventaire correspondant qui pourra ensuite être lié à un service."
                 }
             },
             "layout": {

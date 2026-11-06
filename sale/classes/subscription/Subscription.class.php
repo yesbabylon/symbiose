@@ -8,6 +8,7 @@
 namespace sale\subscription;
 
 use equal\orm\Model;
+use infra\service\Subscription as InfraSubscription;
 use sale\price\Price;
 use sale\price\PriceList;
 
@@ -127,6 +128,12 @@ class Subscription extends Model  {
                 'description'       => 'Subscription license key.'
             ],
 
+            'inventory_subscription_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'infra\service\Subscription',
+                'description'       => 'Inventory subscription created from this sale subscription.'
+            ],
+
             'customer_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
@@ -196,6 +203,10 @@ class Subscription extends Model  {
             'renewal_schedulable' => [
                 'description' => 'Check that an auto-renew subscription has a period end date.',
                 'function'    => 'policyRenewalSchedulable'
+            ],
+            'can_create_inventory_subscription' => [
+                'description' => 'Check that a corresponding inventory subscription can be created.',
+                'function'    => 'policyCanCreateInventorySubscription'
             ]
         ]);
     }
@@ -211,6 +222,11 @@ class Subscription extends Model  {
                 'description' => 'Refresh the automatic renewal task for the current subscription period.',
                 'policies'    => ['renewal_schedulable'],
                 'function'    => 'doScheduleRenewal'
+            ],
+            'create_inventory_subscription' => [
+                'description' => 'Create a corresponding inventory subscription when none exists yet.',
+                'policies'    => ['can_create_inventory_subscription'],
+                'function'    => 'doCreateInventorySubscription'
             ]
         ]);
     }
@@ -515,6 +531,46 @@ class Subscription extends Model  {
         return $result;
     }
 
+    protected static function policyCanCreateInventorySubscription($self): array {
+        $result = [];
+        $self->read(['model', 'name', 'date_from', 'date_to', 'inventory_subscription_id']);
+
+        foreach($self as $id => $subscription) {
+            if($subscription['model'] !== self::class) {
+                $result[$id] = [
+                    'model' => [
+                        'unsupported_subscription_model' => 'Only sale subscriptions can create a corresponding inventory subscription.'
+                    ]
+                ];
+                continue;
+            }
+
+            if(isset($subscription['inventory_subscription_id'])) {
+                continue;
+            }
+
+            if(isset($subscription['name'])) {
+                $inventory_subscription = InfraSubscription::search([
+                    ['name', '=', $subscription['name']],
+                    ['state', 'in', ['draft', 'instance']]
+                ]);
+                if($inventory_subscription->count() > 0) {
+                    continue;
+                }
+            }
+
+            foreach(['name', 'date_from', 'date_to'] as $field) {
+                if(!isset($subscription[$field])) {
+                    $result[$id][$field] = [
+                        'missing_inventory_subscription_value' => 'This value is required to create the corresponding inventory subscription.'
+                    ];
+                }
+            }
+        }
+
+        return $result;
+    }
+
     protected static function doShiftPeriod($self, $values = []): void {
         $self->read(['date_to']);
         $subscription_ids = [];
@@ -547,6 +603,55 @@ class Subscription extends Model  {
                     ['id' => $id]
                 );
             }
+        }
+    }
+
+    protected static function doCreateInventorySubscription($self): void {
+        $self->read([
+            'name',
+            'description',
+            'date_from',
+            'date_to',
+            'duration',
+            'pricing_mode',
+            'qty',
+            'is_auto_renew',
+            'ref_order',
+            'license_key',
+            'product_id',
+            'inventory_subscription_id'
+        ]);
+
+        foreach($self as $id => $subscription) {
+            if(isset($subscription['inventory_subscription_id'])) {
+                continue;
+            }
+
+            $inventory_subscription = InfraSubscription::search([
+                    ['name', '=', $subscription['name']],
+                    ['state', 'in', ['draft', 'instance']]
+                ])
+                ->read(['id'])
+                ->first();
+
+            if(!$inventory_subscription) {
+                $inventory_subscription = InfraSubscription::draft([
+                        'name'                   => $subscription['name'],
+                        'description'            => $subscription['description'] ?? null,
+                        'date_from'              => $subscription['date_from'],
+                        'date_to'                => $subscription['date_to'],
+                        'duration'               => $subscription['duration'] ?? 'yearly',
+                        'pricing_mode'           => $subscription['pricing_mode'] ?? 'fixed',
+                        'qty'                    => $subscription['qty'] ?? 1.0,
+                        'is_auto_renew'          => $subscription['is_auto_renew'] ?? false,
+                        'ref_order'              => $subscription['ref_order'] ?? null,
+                        'license_key'            => $subscription['license_key'] ?? null,
+                        'product_id'             => $subscription['product_id'] ?? null
+                    ])
+                    ->first();
+            }
+
+            self::id($id)->update(['inventory_subscription_id' => $inventory_subscription['id']]);
         }
     }
 
