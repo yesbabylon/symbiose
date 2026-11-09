@@ -599,13 +599,16 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
     }
 
     public static function onbeforePost($self) {
-        $self->read(['organization_id']);
+        $self->read(['organization_id', 'invoice_type']);
         // Try to generate the accounting entries according to the invoices lines.
         $self->do('generate_accounting_entries');
         foreach($self as $id => $invoice) {
             $format = Setting::get_value('sale', 'accounting', 'invoice.sequence_format', '%2d{year}-%05d{sequence}', ['organization_id' => $invoice['organization_id']]);
             $year = Setting::get_value('finance', 'accounting', 'fiscal_year', date('Y'), ['organization_id' => $invoice['organization_id']]);
-            $sequence = Setting::fetch_and_add('sale', 'accounting', 'invoice.sequence', 1, ['organization_id' => $invoice['organization_id']]);
+            $sequence_code = $invoice['invoice_type'] === 'credit_note'
+                ? 'credit_note.sequence'
+                : 'invoice.sequence';
+            $sequence = Setting::fetch_and_add('sale', 'accounting', $sequence_code, 1, ['organization_id' => $invoice['organization_id']]);
             if(!$sequence) {
                 throw new \Exception('APP::unable to retrieve sequence for invoice', EQ_ERROR_INVALID_CONFIG);
             }

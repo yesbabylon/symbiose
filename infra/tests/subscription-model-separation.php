@@ -13,10 +13,13 @@ $tests = [
             $service_subscription = new ReflectionClass(Subscription::class);
             $sale_subscription = new ReflectionClass(SaleSubscription::class);
 
-            return $service_subscription->isSubclassOf(SubscriptionAbstract::class)
-                && $sale_subscription->isSubclassOf(SubscriptionAbstract::class)
-                && !$service_subscription->isSubclassOf(SaleSubscription::class)
-                && !$sale_subscription->isSubclassOf(Subscription::class);
+            $service_parent = $service_subscription->getParentClass();
+            $sale_parent = $sale_subscription->getParentClass();
+
+            return $service_parent !== false
+                && $sale_parent !== false
+                && $service_parent->getName() === SubscriptionAbstract::class
+                && $sale_parent->getName() === SubscriptionAbstract::class;
         }
     ],
     '0102' => [
