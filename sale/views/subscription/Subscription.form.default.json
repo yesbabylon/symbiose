@@ -77,8 +77,7 @@
                                     {
                                         "width": "50%",
                                         "items": [
-                                            {"type": "field", "value": "ref_order", "label": "Reference", "width": "50%"},
-                                            {"type": "field", "value": "license_key", "width": "50%"}
+                                            {"type": "field", "value": "ref_order", "label": "Reference", "width": "50%"}
                                         ]
                                     },
                                     {

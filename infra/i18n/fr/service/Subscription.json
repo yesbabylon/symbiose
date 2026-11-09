@@ -99,7 +99,7 @@
             "help": "Cette projection est disponible pour les entrées de facturation liées au service."
         },
         "subscription_entries_ids": {
-            "label": "Entrées",
+            "label": "Entrées de souscription",
             "description": "Entrées historiques associées à l'abonnement de service.",
             "help": "Ces entrées sont conservées pour assurer la continuité des données existantes."
         }
@@ -113,7 +113,7 @@
                     "label": "Détails"
                 },
                 "section.entries": {
-                    "label": "Entrées"
+                    "label": "Entrées de souscription"
                 }
             }
         },

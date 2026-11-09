@@ -69,48 +69,33 @@
                                     {
                                         "width": "50%",
                                         "items": [
-                                            {"type": "field", "value": "service_id", "width": "100%"}
+                                            {"type": "field", "value": "service_id", "width": "50%"},
+                                            {"type": "field", "value": "license_key", "width": "50%"}
                                         ]
                                     },
                                     {
                                         "width": "50%",
                                         "items": [
-                                            {"type": "field", "value": "sale_subscription_id", "width": "100%", "readonly": true}
+                                            {"type": "field", "value": "is_billable", "width": "50%", "readonly": true},
+                                            {"type": "field", "value": "sale_subscription_id", "width": "50%", "readonly": true, "visible": ["is_billable", "=", true]}
                                         ]
                                     }
                                 ]
                             },
                             {
                                 "columns": [
-                                    {
-                                        "width": "50%",
-                                        "items": [
-                                            {"type": "field", "value": "is_internal", "width": "50%", "readonly": true},
-                                            {"type": "field", "value": "customer_id", "width": "50%", "readonly": true}
-                                        ]
-                                    },
                                     {
                                         "width": "50%",
                                         "items": [
                                             {"type": "field", "value": "has_external_provider", "width": "50%", "readonly": true},
                                             {"type": "field", "value": "service_provider_id", "width": "50%", "readonly": true}
                                         ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "50%",
-                                        "items": [
-                                            {"type": "field", "value": "is_billable", "width": "50%", "readonly": true}
-                                        ]
                                     },
                                     {
                                         "width": "50%",
                                         "items": [
-                                            {"type": "field", "value": "product_id", "width": "66%", "readonly": true},
-                                            {"type": "field", "value": "pricing_mode", "width": "33%", "readonly": true}
+                                            {"type": "field", "value": "is_internal", "width": "50%", "readonly": true},
+                                            {"type": "field", "value": "customer_id", "width": "50%", "readonly": true}
                                         ]
                                     }
                                 ]
