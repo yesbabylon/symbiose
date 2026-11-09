@@ -33,7 +33,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "organization_id",
-                                                "width": "100%",
+                                                "width": "50%",
                                                 "required": true
                                             },
                                             {

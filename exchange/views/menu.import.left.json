@@ -17,7 +17,7 @@
             {
                 "id": "item.create-contacts-import",
                 "type": "entry",
-                "label": "New contacts",
+                "label": "Contacts",
                 "icon": "contacts",
                 "description": "Create an import of contacts.",
                 "context": {
@@ -29,12 +29,24 @@
             {
                 "id": "item.create-bank-statements-import",
                 "type": "entry",
-                "label": "New bank statements",
+                "label": "Bank statements",
                 "icon": "account_balance",
                 "description": "Create an import of bank statements.",
                 "context": {
                     "view": "form.import",
                     "entity": "exchange\\import\\finance\\BankStatementImport",
+                    "purpose": "create"
+                }
+            },
+            {
+                "id": "item.create-bank-statements-import",
+                "type": "entry",
+                "label": "Document",
+                "icon": "document",
+                "description": "Create an import documents.",
+                "context": {
+                    "view": "form.import",
+                    "entity": "exchange\\import\\document\\DocumentImport",
                     "purpose": "create"
                 }
             }
