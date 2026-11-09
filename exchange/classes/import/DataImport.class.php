@@ -201,12 +201,6 @@ class DataImport extends Model {
         $self->delete(true);
     }
 
-    protected static function onafterinstantiate($self) {
-        if($self->getClass() !== self::class) {
-            $self->do('process');
-        }
-    }
-
     protected static function doProcess($self) {
         try {
             $self
@@ -222,8 +216,8 @@ class DataImport extends Model {
      * Handle data update (i.e. file upload).
      * This method is used to create the document based on received data, and start the processing.
      */
-    protected static function onbeforeinstantiate($self) {
-        $self->read(['name', 'data', 'import_type']);
+    protected static function onafterinstantiate($self) {
+        $self->read(['name', 'data', 'import_type', 'organization_id']);
 
         foreach($self as $id => $dataImport) {
             if(!$dataImport['data']) {
@@ -233,6 +227,7 @@ class DataImport extends Model {
             $documentType = DocumentType::search(['code', '=', $dataImport['import_type']])->first();
 
             $document = Document::create([
+                    'organization_id'   => $dataImport['organization_id'],
                     'name'              => $dataImport['name'],
                     'data'              => $dataImport['data'],
                     'document_type_id'  => $documentType['id'],
@@ -248,6 +243,11 @@ class DataImport extends Model {
                     'data'          => null
                 ]);
         }
+
+        if($self->getClass() !== self::class) {
+            $self->do('process');
+        }
+
     }
 
     public static function onchange($event, $values) {

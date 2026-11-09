@@ -5,7 +5,7 @@
         "actions": {
             "ACTION.SAVE": [
                 {
-                    "id": "SAVE_AND_CLOSE",
+                    "id": "SAVE_AND_VIEW",
                     "visible": true
                 }
             ],

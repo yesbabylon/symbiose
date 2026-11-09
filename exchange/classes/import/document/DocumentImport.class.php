@@ -22,13 +22,6 @@ class DocumentImport extends DataImport {
 
     public static function getColumns() {
         return [
-            'data' => [
-                'type'        => 'binary',
-                'description' => 'Raw binary data of the uploaded document.',
-                'help'        => 'The data is moved to the created document once the import is confirmed.',
-                'required'    => true
-            ],
-
             'organization_id' => [
                 'type'           => 'many2one',
                 'foreign_object' => 'identity\Organization',
@@ -147,30 +140,21 @@ class DocumentImport extends DataImport {
     protected static function doImport($self) {
         $self->read([
             'name',
-            'data',
-            'organization_id',
+            'document_id',
             'document_type_id',
             'document_subtype_id',
             'document_visibility'
         ]);
 
         foreach($self as $id => $documentImport) {
-            $document = Document::create([
+            Document::id($documentImport['document_id'])
+            ->update([
                     'name'                => $documentImport['name'],
-                    'data'                => $documentImport['data'],
-                    'organization_id'     => $documentImport['organization_id'],
                     'document_type_id'    => $documentImport['document_type_id'],
                     'document_subtype_id' => $documentImport['document_subtype_id'],
                     'document_visibility' => $documentImport['document_visibility'],
-                    'is_origin'           => true,
-                    'source'              => 'upload'
                 ])
                 ->first();
-
-            self::id($id)->write([
-                'document_id' => $document['id'],
-                'data'        => null
-            ]);
         }
 
         $self->transition('mark_imported');
