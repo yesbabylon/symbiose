@@ -8,6 +8,7 @@
 namespace exchange\import\document;
 
 use document\document\Document;
+use document\document\DocumentType;
 use exchange\import\DataImport;
 
 class DocumentImport extends DataImport {
@@ -66,97 +67,37 @@ class DocumentImport extends DataImport {
         ];
     }
 
-    public static function getActions(): array {
-        return array_merge(parent::getActions(), [
-            'check' => [
-                'description' => 'Check the document import data.',
-                'policies'    => ['can_check', 'is_document_importable'],
-                'function'    => 'doCheck'
-            ],
-            'import' => [
-                'description' => 'Create a document from the checked import data.',
-                'policies'    => ['can_import', 'is_document_importable'],
-                'function'    => 'doImport'
-            ]
-        ]);
-    }
+    protected static function onafterinstantiate($self) {
+        $self->read(['name', 'data', 'document_type_id', 'document_subtype_id', 'organization_id']);
 
-    public static function getPolicies(): array {
-        return array_merge(parent::getPolicies(), [
-            'is_document_importable' => [
-                'description' => 'Check whether the document import has valid data and metadata.',
-                'function'    => 'policyIsDocumentImportable'
-            ]
-        ]);
-    }
-
-    protected static function policyIsDocumentImportable($self): array {
-        $result = [];
-
-        $self->read([
-            'data',
-            'organization_id',
-            'document_type_id',
-            'document_subtype_id' => ['document_type_id']
-        ]);
-
-        foreach($self as $id => $documentImport) {
-            $errors = [];
-
-            if(empty($documentImport['data'])) {
-                $errors['missing_data'] = 'The document data is required.';
-            }
-            if(empty($documentImport['organization_id'])) {
-                $errors['missing_organization'] = 'The organization is required.';
-            }
-            if(empty($documentImport['document_type_id'])) {
-                $errors['missing_document_type'] = 'The document type is required.';
-            }
-            if(
-                !empty($documentImport['document_subtype_id'])
-                && $documentImport['document_subtype_id']['document_type_id'] !== $documentImport['document_type_id']
-            ) {
-                $errors['invalid_document_subtype'] = 'The document subtype must belong to the selected document type.';
+        foreach($self as $id => $dataImport) {
+            if(!$dataImport['data']) {
+                continue;
             }
 
-            if(!empty($errors)) {
-                $result[$id] = $errors;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Document creation is deferred to the import action so all selected metadata can be applied.
-     */
-    protected static function onbeforeinstantiate($self) {
-    }
-
-    protected static function doCheck($self) {
-        $self->transition('mark_ready');
-    }
-
-    protected static function doImport($self) {
-        $self->read([
-            'name',
-            'document_id',
-            'document_type_id',
-            'document_subtype_id',
-            'document_visibility'
-        ]);
-
-        foreach($self as $id => $documentImport) {
-            Document::id($documentImport['document_id'])
-            ->update([
-                    'name'                => $documentImport['name'],
-                    'document_type_id'    => $documentImport['document_type_id'],
-                    'document_subtype_id' => $documentImport['document_subtype_id'],
-                    'document_visibility' => $documentImport['document_visibility'],
+            $document = Document::create([
+                    'organization_id'       => $dataImport['organization_id'],
+                    'name'                  => $dataImport['name'],
+                    'data'                  => $dataImport['data'],
+                    'document_type_id'      => $dataImport['document_type_id'] ?? null,
+                    'document_subtype_id'   => $dataImport['document_subtype_id'] ?? null,
+                    'is_origin'             => true,
+                    'source'                => 'upload'
                 ])
                 ->first();
+
+            self::id($id)->write([
+                    // attach document
+                    'document_id'   => $document['id'],
+                    // remove current object data (pointless after successful import)
+                    'data'          => null
+                ]);
         }
 
-        $self->transition('mark_imported');
+        $self
+            ->transition('mark_ready')
+            ->transition('mark_imported');
+
     }
+
 }

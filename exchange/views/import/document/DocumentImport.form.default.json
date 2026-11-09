@@ -73,7 +73,7 @@
                                                     "type": "upload",
                                                     "autosave": false,
                                                     "required": true,
-                                                    "height": "600"
+                                                    "height": "500"
                                                 }
                                             }
                                         ]
