@@ -1,0 +1,27 @@
+{
+    "name": "Cloud project",
+    "plural": "Cloud projects",
+    "description": "Project hosted by a cloud provider.",
+    "model": {
+        "name": {
+            "label": "Name",
+            "description": "Human-readable name of the cloud project.",
+            "help": "Use the name by which the project is commonly identified."
+        },
+        "extref_project_id": {
+            "label": "External project ID",
+            "description": "Project identifier assigned by the cloud provider.",
+            "help": "Enter the provider's project identifier, such as an OVHcloud or Google Cloud project ID."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Cloud project",
+            "description": "Displays and edits a cloud project."
+        },
+        "list.default": {
+            "name": "Cloud projects",
+            "description": "Lists cloud projects."
+        }
+    }
+}

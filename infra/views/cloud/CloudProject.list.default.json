@@ -1,0 +1,21 @@
+{
+    "name": "Cloud Projects",
+    "description": "Default list of cloud projects.",
+    "order": "name",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "50%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "extref_project_id",
+                "width": "50%",
+                "sortable": true
+            }
+        ]
+    }
+}

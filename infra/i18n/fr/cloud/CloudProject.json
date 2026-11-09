@@ -1,0 +1,27 @@
+{
+    "name": "Projet cloud",
+    "plural": "Projets cloud",
+    "description": "Projet hébergé chez un fournisseur cloud.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom lisible du projet cloud.",
+            "help": "Utilisez le nom sous lequel le projet est habituellement identifié."
+        },
+        "extref_project_id": {
+            "label": "Identifiant externe du projet",
+            "description": "Identifiant du projet attribué par le fournisseur cloud.",
+            "help": "Indiquez l'identifiant du projet chez le fournisseur, tel qu'un project_id OVHcloud ou Google Cloud."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Projet cloud",
+            "description": "Affiche et modifie un projet cloud."
+        },
+        "list.default": {
+            "name": "Projets cloud",
+            "description": "Liste les projets cloud."
+        }
+    }
+}

@@ -309,18 +309,18 @@ class Document extends Model {
     public static function getRoles() {
         return [
             "owner" => [
-                "description" => "Creator of the document. Has full control over it.",
-                "rights" => EQ_R_READ | EQ_R_WRITE | EQ_R_DELETE | EQ_R_MANAGE
+                "description"   => "Creator of the document. Has full control over it.",
+                "rights"        => EQ_R_READ | EQ_R_WRITE | EQ_R_DELETE | EQ_R_MANAGE
             ],
             "editor" => [
-                "description" => "Editor of the document. Has read and write access on it. Cannot remove it.",
-                "rights" => EQ_R_READ | EQ_R_WRITE,
-                "implied_by" => ['owner']
+                "description"   => "Editor of the document. Has read and write access on it. Cannot remove it.",
+                "rights"        => EQ_R_READ | EQ_R_WRITE,
+                "implied_by"    => ['owner']
             ],
             "viewer" => [
-                "description" => "Viewer of the document. Cannot edit the content.",
-                "rights" => EQ_R_READ,
-                "implied_by" => ['editor']
+                "description"   => "Viewer of the document. Cannot edit the content.",
+                "rights"        => EQ_R_READ,
+                "implied_by"    => ['editor']
             ]
         ];
     }

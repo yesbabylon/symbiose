@@ -42,6 +42,13 @@ class Server extends Model {
                 // 'required'          => true
             ],
 
+            'cloud_project_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'infra\cloud\CloudProject',
+                'description'       => 'Cloud project hosting the Server.',
+                // 'required'          => true
+            ],
+
             'region_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'infra\cloud\Region',
