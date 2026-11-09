@@ -7,27 +7,33 @@
         "name": {
             "label": "Nom",
             "description": "Nom de l'abonnement.",
-            "help": ""
+            "help": "Saisissez un nom permettant d'identifier l'abonnement."
         },
         "description": {
             "label": "Description",
             "description": "Description de l'abonnement.",
-            "help": ""
+            "help": "Ajoutez les informations utiles au suivi de l'abonnement."
         },
         "date_from": {
             "label": "Du",
             "description": "Date de début.",
-            "help": ""
+            "help": "Indiquez le premier jour de la période commerciale."
         },
         "date_to": {
             "label": "Au",
             "description": "Date de fin.",
-            "help": ""
+            "help": "Cette date est calculée à partir du début et de la durée."
         },
         "duration": {
             "label": "Durée",
             "description": "Type de durée.",
-            "help": ""
+            "help": "Sélectionnez la fréquence de la période commerciale.",
+            "selection": {
+                "monthly": "Mensuelle",
+                "quarterly": "Trimestrielle",
+                "half-yearly": "Semestrielle",
+                "yearly": "Annuelle"
+            }
         },
         "pricing_mode": {
             "label": "Mode de tarification",
@@ -46,47 +52,47 @@
         "is_expired": {
             "label": "Expiré",
             "description": "L'abonnement est-il expiré.",
-            "help": ""
+            "help": "Cette valeur est calculée à partir de la date de fin."
         },
         "has_upcoming_expiry": {
             "label": "Prochainement expiré",
-            "description": "L'abonnement va-t-il arriver à expiriration.",
-            "help": ""
+            "description": "L'abonnement va-t-il arriver à expiration.",
+            "help": "Cette valeur indique une échéance dans les trente prochains jours."
         },
         "ref_order": {
             "label": "Référence de commande",
             "description": "Information à propos de la commande.",
-            "help": ""
+            "help": "Saisissez la référence de commande communiquée par le client."
         },
         "license_key": {
-            "label": "Clé de license",
-            "description": "Clé de license pour l'activation de l'abonnement.",
-            "help": ""
+            "label": "Clé de licence",
+            "description": "Clé de licence pour l'activation de l'abonnement.",
+            "help": "Saisissez la clé associée à l'abonnement lorsqu'elle existe."
         },
-        "inventory_subscription_id": {
-            "label": "Abonnement d'inventaire",
-            "description": "Abonnement d'inventaire créé à partir de cet abonnement de vente.",
-            "help": "Ouvrez cet abonnement pour le rattacher manuellement à un service."
+        "infra_subscription_id": {
+            "label": "Abonnement de service",
+            "description": "Abonnement de service associé à l'abonnement commercial, lorsqu'il existe.",
+            "help": "Ce lien réciproque est géré indépendamment du lien porté par l'abonnement de service."
         },
         "customer_id": {
             "label": "Client",
             "description": "Le client à qui est destiné cet abonnement.",
-            "help": ""
+            "help": "Sélectionnez le client auquel l'abonnement est facturé."
         },
         "is_billable": {
             "label": "Facturable ?",
             "description": "L'abonnement peut-il être facturé au client.",
-            "help": ""
+            "help": "Désactivez cette option pour exclure l'abonnement de la facturation."
         },
         "product_id": {
             "label": "Produit (Catalogue)",
             "description": "Le produit du catalogue lié à l'abonnement.",
-            "help": ""
+            "help": "Sélectionnez le produit commercial couvert par l'abonnement."
         },
         "price_id": {
             "label": "Prix",
             "description": "Le prix du produit lié à l'abonnement.",
-            "help": ""
+            "help": "Le prix applicable est déterminé à partir du produit et de la période."
         },
         "price": {
             "label": "Prix",
@@ -96,7 +102,7 @@
         "subscription_entries_ids": {
             "label": "Ventes",
             "description": "Les entrées de vente relatives à l'abonnement.",
-            "help": ""
+            "help": "Consultez les ventes générées pour les différentes périodes."
         },
         "has_current_sale_entry": {
             "label": "Vente de la période courante",
@@ -106,27 +112,17 @@
         "is_auto_renew": {
             "label": "Renouvellement auto",
             "description": "L'abonnement doit-il être renouvelé automatiquement ?",
-            "help": ""
+            "help": "Activez cette option pour planifier le renouvellement à l'échéance."
         }
     },
     "error": {
         "date_to": {
             "missing_period_dates": "Les dates de la période de l'abonnement sont requises.",
             "missing_period_end": "Une date de fin est requise pour planifier le renouvellement automatique.",
-            "period_changed": "La période de l'abonnement a changé avant de pouvoir passer à la suivante.",
-            "missing_inventory_subscription_value": "La date de fin est requise pour créer l'abonnement d'inventaire correspondant."
-        },
-        "date_from": {
-            "missing_inventory_subscription_value": "La date de début est requise pour créer l'abonnement d'inventaire correspondant."
-        },
-        "name": {
-            "missing_inventory_subscription_value": "Le nom est requis pour créer l'abonnement d'inventaire correspondant."
+            "period_changed": "La période de l'abonnement a changé avant de pouvoir passer à la suivante."
         },
         "subscription_entries_ids": {
             "missing_approved_entry": "Une vente approuvée est requise pour la période courante avant de passer à la suivante."
-        },
-        "model": {
-            "unsupported_subscription_model": "Seuls les abonnements de vente peuvent créer un abonnement d'inventaire correspondant."
         }
     },
     "view": {
@@ -137,10 +133,6 @@
                 "action.add-subscription-entry": {
                     "label": "Créer une vente",
                     "description": "Créer une entrée de vente à partir de cet abonnement."
-                },
-                "action.create-inventory-subscription": {
-                    "label": "Créer l'abonnement d'inventaire",
-                    "description": "Créer un abonnement d'inventaire correspondant qui pourra ensuite être lié à un service."
                 }
             },
             "layout": {

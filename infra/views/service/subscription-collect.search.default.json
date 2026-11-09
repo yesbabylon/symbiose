@@ -1,22 +1,37 @@
 {
-    "name": "Subscriptions search",
-    "description": "Advanced collector for Subscriptions",
-    "extends": {
-        "entity": "sale\\subscription\\subscription-collect",
-        "view": "search.default"
-    },
+    "name": "Service subscriptions search",
+    "description": "Advanced collector for service subscriptions.",
     "layout": {
-        "update": {
-            "item.expired": {
-                "after": [
+        "groups": [
+            {
+                "sections": [
                     {
-                        "type": "field",
-                        "value": "service_id",
-                        "label": "Service",
-                        "width": "25%"
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {"type": "field", "value": "service_id", "width": "25%"},
+                                            {"type": "field", "value": "inventory_product_id", "width": "25%"},
+                                            {"type": "field", "value": "date_from", "width": "25%"},
+                                            {"type": "field", "value": "is_expired", "width": "25%"}
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {"type": "field", "value": "customer_id", "width": "25%"},
+                                            {"type": "field", "value": "date_to", "width": "25%"},
+                                            {"type": "field", "value": "has_upcoming_expiry", "width": "25%"}
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }
-        }
+        ]
     }
 }

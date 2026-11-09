@@ -1,0 +1,8 @@
+{
+    "name": "business",
+    "description": "Provides low-level business abstractions shared by domain packages.",
+    "version": "1.0",
+    "authors": ["Yesbabylon"],
+    "license": "LGPL-3",
+    "depends_on": ["core"]
+}

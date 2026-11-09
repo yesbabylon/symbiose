@@ -32,9 +32,16 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "service_subscription_id",
+                                                "readonly": true,
+                                                "label": "Service subscription",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "subscription_id",
                                                 "readonly": true,
-                                                "label": "Subscription",
+                                                "label": "Commercial subscription",
                                                 "width": "100%"
                                             },
                                             {
@@ -74,13 +81,6 @@
                                                 "value": "unit_price",
                                                 "label": "Price amount",
                                                 "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "is_billable",
-                                                "label": "is Billable",
-                                                "width": "50%",
-                                                "readonly": true
                                             },
                                             {
                                                 "type": "field",

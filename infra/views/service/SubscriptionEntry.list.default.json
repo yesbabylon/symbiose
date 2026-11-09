@@ -27,8 +27,14 @@
             },
             {
                 "type": "field",
+                "value": "service_subscription_id",
+                "label": "Service subscription",
+                "width": "10%"
+            },
+            {
+                "type": "field",
                 "value": "subscription_id",
-                "label": "Subscription",
+                "label": "Commercial subscription",
                 "width": "10%"
             },
             {

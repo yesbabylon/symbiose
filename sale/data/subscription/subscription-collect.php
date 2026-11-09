@@ -7,7 +7,7 @@
 
 use equal\orm\Domain;
 
-list($params, $providers) = eQual::announce([
+[$params, $providers] = eQual::announce([
     'description'   => 'Advanced search for Subscriptions: returns a collection of Subscriptions according to extra parameters.',
     'extends'       => 'core_model_collect',
     'params'        => [

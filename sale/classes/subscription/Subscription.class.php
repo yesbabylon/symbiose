@@ -7,24 +7,15 @@
 
 namespace sale\subscription;
 
-use equal\orm\Model;
-use infra\service\Subscription as InfraSubscription;
+use business\subscription\SubscriptionAbstract;
 use sale\price\Price;
 use sale\price\PriceList;
 
-class Subscription extends Model  {
+class Subscription extends SubscriptionAbstract {
 
     public static function getDescription() {
-        return 'A subscription is a recurring payment model where a customer pays regularly, typically monthly or annually, to access a product or service.'
-            .' An internal subscription is used by your business, so it can\'t be invoiced to customers.';
+        return 'A commercial subscription defines the recurring pricing and billing terms agreed with a customer.';
     }
-
-    const MAP_DURATION_OFFSETS = [
-        'monthly'      => '+1 month',
-        'quarterly'    => '+3 month',
-        'half-yearly'  => '+6 month',
-        'yearly'       => '+1 year'
-    ];
 
     public static function getColumns(): array
     {
@@ -34,12 +25,6 @@ class Subscription extends Model  {
                 'required'          => true,
                 'description'       => 'Name of the subscription.',
                 'dependents'        => ['subscription_entries_ids' => ['name']]
-            ],
-
-            'description' => [
-                'type'              => 'string',
-                'usage'             => 'text/plain',
-                'description'       => 'Information about a subscription.'
             ],
 
             'date_from' => [
@@ -57,19 +42,6 @@ class Subscription extends Model  {
                 'required'          => true,
                 'default'           => function () { return strtotime('+1 year'); },
                 'dependents'        => ['price_id', 'is_expired', 'has_upcoming_expiry', 'has_current_sale_entry']
-            ],
-
-            'duration' => [
-                'type'              => 'string',
-                'selection'         => [
-                    'monthly'     => 'Monthly',
-                    'quarterly'   => 'Quarterly',
-                    'half-yearly' => 'Half-yearly',
-                    'yearly'      => 'Yearly'
-                ],
-                'description'       => 'Duration of the subscription.',
-                'help'              => 'If not auto renewable, no sale entries will be generated after `date_to`.',
-                'default'           => 'yearly'
             ],
 
             'pricing_mode' => [
@@ -99,24 +71,6 @@ class Subscription extends Model  {
                 'onupdate'          =>'onupdateIsAutoRenew'
             ],
 
-            'is_expired' => [
-                'type'              => 'computed',
-                'result_type'       => 'boolean',
-                'description'       => 'The subscription is expired.',
-                'function'          => 'calcIsExpired',
-                'store'             => true,
-                'instant'           => true
-            ],
-
-            'has_upcoming_expiry' => [
-                'type'              => 'computed',
-                'description'       => 'The subscription is  upcoming expiry.',
-                'result_type'       => 'boolean',
-                'function'          => 'calcUpcomingExpiry',
-                'store'             => true,
-                'instant'           => true
-            ],
-
             'ref_order' => [
                 'type'              => 'string',
                 'description'       => 'Subscription reference number.'
@@ -127,10 +81,11 @@ class Subscription extends Model  {
                 'description'       => 'Subscription license key.'
             ],
 
-            'inventory_subscription_id' => [
+            'infra_subscription_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'infra\service\Subscription',
-                'description'       => 'Inventory subscription created from this sale subscription.'
+                'description'       => 'Linked service subscription, when applicable.',
+                'readonly'          => true
             ],
 
             'customer_id' => [
@@ -193,6 +148,12 @@ class Subscription extends Model  {
         ];
     }
 
+    public function getUniques(): array {
+        return array_merge(parent::getUniques(), [
+            ['infra_subscription_id']
+        ]);
+    }
+
     public static function getPolicies(): array {
         return array_merge(parent::getPolicies(), [
             'period_shiftable' => [
@@ -202,10 +163,6 @@ class Subscription extends Model  {
             'renewal_schedulable' => [
                 'description' => 'Check that an auto-renew subscription has a period end date.',
                 'function'    => 'policyRenewalSchedulable'
-            ],
-            'can_create_inventory_subscription' => [
-                'description' => 'Check that a corresponding inventory subscription can be created.',
-                'function'    => 'policyCanCreateInventorySubscription'
             ]
         ]);
     }
@@ -221,44 +178,16 @@ class Subscription extends Model  {
                 'description' => 'Refresh the automatic renewal task for the current subscription period.',
                 'policies'    => ['renewal_schedulable'],
                 'function'    => 'doScheduleRenewal'
-            ],
-            'create_inventory_subscription' => [
-                'description' => 'Create a corresponding inventory subscription when none exists yet.',
-                'policies'    => ['can_create_inventory_subscription'],
-                'function'    => 'doCreateInventorySubscription'
             ]
         ]);
     }
 
-    protected static function onupdateDateFrom($self) {
-        $self->read(['date_from', 'duration']);
-        foreach($self as $id => $subscription) {
-            $date_to = null;
-            if($subscription['date_from']) {
-                $date_to = strtotime('-1 day', strtotime(self::MAP_DURATION_OFFSETS[$subscription['duration']], $subscription['date_from']));
-            }
-            self::id($id)->update(['date_to' => $date_to]);
-        }
-    }
-
     public static function onchange($event, $values): array {
-        $result = [];
+        $result = parent::onchange($event, $values);
 
         $duration = $event['duration'] ?? $values['duration'] ?? 'yearly';
         $date_from =  $event['date_from'] ?? $values['date_from'] ?? null;
-        $date_to = $date_from
-            ? strtotime('-1 day', strtotime(self::MAP_DURATION_OFFSETS[$duration], $date_from))
-            : null;
-
-        if( isset($event['date_from']) || isset($event['duration']) ) {
-            $now = time();
-
-            $days_until_expiry = ($date_to - $now) / 86400;
-
-            $result['date_to'] = $date_to;
-            $result['is_expired'] = $now > $date_to;
-            $result['has_upcoming_expiry'] = $days_until_expiry < 30;
-        }
+        $date_to = $result['date_to'] ?? $event['date_to'] ?? $values['date_to'] ?? null;
 
         $pricing_mode = $event['pricing_mode'] ?? $values['pricing_mode'] ?? 'fixed';
         $qty = $event['qty'] ?? $values['qty'] ?? 1.0;
@@ -410,31 +339,6 @@ class Subscription extends Model  {
         return $result;
     }
 
-    protected static function calcIsExpired($self): array {
-        $result = [];
-        $self->read(['date_to']);
-        foreach($self as $id => $subscription) {
-            if(isset($subscription['date_to'])) {
-                $result[$id] = (time() > $subscription['date_to']);
-            }
-        }
-
-        return $result;
-    }
-
-    protected static function calcUpcomingExpiry($self): array {
-        $result = [];
-        $self->read(['date_to']);
-        foreach($self as $id => $subscription) {
-            if(isset($subscription['date_to'])) {
-                $days_until_expiry = ($subscription['date_to'] - time()) / 86400;
-                $result[$id] = $days_until_expiry < 30;
-            }
-        }
-
-        return $result;
-    }
-
     protected static function calcHasCurrentSaleEntry($self): array {
         $result = [];
         $self->read([
@@ -530,46 +434,6 @@ class Subscription extends Model  {
         return $result;
     }
 
-    protected static function policyCanCreateInventorySubscription($self): array {
-        $result = [];
-        $self->read(['model', 'name', 'date_from', 'date_to', 'inventory_subscription_id']);
-
-        foreach($self as $id => $subscription) {
-            if($subscription['model'] !== self::class) {
-                $result[$id] = [
-                    'model' => [
-                        'unsupported_subscription_model' => 'Only sale subscriptions can create a corresponding inventory subscription.'
-                    ]
-                ];
-                continue;
-            }
-
-            if(isset($subscription['inventory_subscription_id'])) {
-                continue;
-            }
-
-            if(isset($subscription['name'])) {
-                $inventory_subscription = InfraSubscription::search([
-                    ['name', '=', $subscription['name']],
-                    ['state', 'in', ['draft', 'instance']]
-                ]);
-                if($inventory_subscription->count() > 0) {
-                    continue;
-                }
-            }
-
-            foreach(['name', 'date_from', 'date_to'] as $field) {
-                if(!isset($subscription[$field])) {
-                    $result[$id][$field] = [
-                        'missing_inventory_subscription_value' => 'This value is required to create the corresponding inventory subscription.'
-                    ];
-                }
-            }
-        }
-
-        return $result;
-    }
-
     protected static function doShiftPeriod($self, $values = []): void {
         $self->read(['date_to']);
         $subscription_ids = [];
@@ -602,60 +466,6 @@ class Subscription extends Model  {
                     ['id' => $id]
                 );
             }
-        }
-    }
-
-    protected static function doCreateInventorySubscription($self): void {
-        $self->read([
-            'name',
-            'description',
-            'date_from',
-            'date_to',
-            'duration',
-            'pricing_mode',
-            'qty',
-            'is_auto_renew',
-            'ref_order',
-            'license_key',
-            'customer_id',
-            'product_id',
-            'inventory_subscription_id'
-        ]);
-
-        foreach($self as $id => $subscription) {
-            if(isset($subscription['inventory_subscription_id'])) {
-                continue;
-            }
-
-            if(!isset($subscription['customer_id'])) {
-                continue;
-            }
-
-            $inventorySubscription = InfraSubscription::search([
-                    ['product_id', '=', $subscription['product_id']],
-                    ['customer_id', '=', $subscription['customer_id']]
-                ])
-                ->read(['id'])
-                ->first();
-
-            if(!$inventorySubscription) {
-                $inventorySubscription = InfraSubscription::create([
-                        'name'                   => $subscription['name'],
-                        'description'            => $subscription['description'] ?? null,
-                        'date_from'              => $subscription['date_from'],
-                        'date_to'                => $subscription['date_to'],
-                        'duration'               => $subscription['duration'] ?? 'yearly',
-                        'pricing_mode'           => $subscription['pricing_mode'] ?? 'fixed',
-                        'qty'                    => $subscription['qty'] ?? 1.0,
-                        'is_auto_renew'          => $subscription['is_auto_renew'] ?? false,
-                        'ref_order'              => $subscription['ref_order'] ?? null,
-                        'license_key'            => $subscription['license_key'] ?? null,
-                        'product_id'             => $subscription['product_id'] ?? null
-                    ])
-                    ->first();
-            }
-
-            self::id($id)->update(['inventory_subscription_id' => $inventorySubscription['id']]);
         }
     }
 

@@ -1,0 +1,50 @@
+{
+    "name": "Entrée d'abonnement de service",
+    "plural": "Entrées d'abonnement de service",
+    "description": "Entrée commerciale rattachée à un abonnement de service.",
+    "model": {
+        "invoice_group": {
+            "label": "Groupe de facturation",
+            "description": "Groupe facultatif utilisé lors de la création des factures.",
+            "help": "Utilisez une même valeur pour regrouper plusieurs entrées sur une facture."
+        },
+        "service_subscription_id": {
+            "label": "Abonnement de service",
+            "description": "Abonnement de service à l'origine de l'entrée.",
+            "help": "Ce lien conserve le contexte opérationnel de l'entrée commerciale."
+        },
+        "has_external_provider": {
+            "label": "Fournisseur externe",
+            "description": "Indique si le service dépend d'un fournisseur externe.",
+            "help": "Cette valeur provient de l'abonnement de service."
+        },
+        "service_provider_id": {
+            "label": "Fournisseur",
+            "description": "Fournisseur externe associé au service.",
+            "help": "Cette valeur provient de l'abonnement de service."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Entrée d'abonnement de service",
+            "description": "Détails opérationnels et commerciaux de l'entrée.",
+            "actions": {
+                "action.transition.charge": {
+                    "label": "Prendre en charge",
+                    "description": "Créer une créance pour cette entrée."
+                }
+            }
+        },
+        "list.default": {
+            "name": "Entrées d'abonnement de service",
+            "description": "Liste des entrées liées aux abonnements de service.",
+            "layout": {}
+        },
+        "list.selection": {
+            "name": "Entrées sélectionnées",
+            "description": "Liste des entrées sélectionnées.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

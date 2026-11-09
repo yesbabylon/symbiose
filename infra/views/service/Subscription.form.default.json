@@ -1,23 +1,163 @@
-
 {
-    "name": "Subscription",
-    "description": "This form holds the fields for creating a new Subscription.",
-    "actions": [
-        {
-            "id": "action.shift-subscription",
-            "label": "Shift Period",
-            "controller": "infra_service_subscription_shift-period"
-        },
-        {
-            "id": "action.add-subscription-entry",
-            "label": "Create Entry",
-            "controller": "infra_service_subscription_add-subscriptionentry"
-        }
-    ],
-    "extends": {
-        "entity": "sale\\subscription\\Subscription",
-        "view": "form.default"
-    },
+    "name": "Service subscription",
+    "description": "This form holds the operational lifecycle of a service subscription.",
     "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "75%",
+                                                "widget": {"heading": true}
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "model",
+                                                "visible": false
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {"type": "field", "value": "date_from", "width": "33%"},
+                                            {"type": "field", "value": "duration", "width": "33%"},
+                                            {"type": "field", "value": "date_to", "width": "33%", "readonly": true}
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {"type": "field", "value": "is_auto_renew", "width": "33%"}
+                                        ]
+                                    },
+                                    {
+                                        "id": "row.expirations",
+                                        "width": "50%",
+                                        "items": [
+                                            {"type": "label", "value": "", "width": "33%"},
+                                            {"type": "field", "value": "has_upcoming_expiry", "width": "33%", "readonly": true},
+                                            {"type": "field", "value": "is_expired", "width": "33%", "readonly": true}
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.details",
+                        "label": "Details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {"type": "field", "value": "service_id", "width": "100%"}
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {"type": "field", "value": "sale_subscription_id", "width": "100%", "readonly": true}
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {"type": "field", "value": "is_internal", "width": "50%", "readonly": true},
+                                            {"type": "field", "value": "customer_id", "width": "50%", "readonly": true}
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {"type": "field", "value": "has_external_provider", "width": "50%", "readonly": true},
+                                            {"type": "field", "value": "service_provider_id", "width": "50%", "readonly": true}
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {"type": "field", "value": "is_billable", "width": "50%", "readonly": true}
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {"type": "field", "value": "product_id", "width": "66%", "readonly": true},
+                                            {"type": "field", "value": "pricing_mode", "width": "33%", "readonly": true}
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {"type": "field", "value": "description", "width": "100%"}
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.entries",
+                        "label": "Entries",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "subscription_entries_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.selection",
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
     }
 }

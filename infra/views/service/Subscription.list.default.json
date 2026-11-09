@@ -1,24 +1,13 @@
 {
-    "name": "Subscriptions",
-    "description": "Selected listing of all subscriptions.",
+    "name": "Service subscriptions",
+    "description": "Selected listing of all service subscriptions.",
     "controller": "infra_service_subscription-collect",
     "order": "date_from,date_to,name",
     "sort": "asc",
-    "domain": ["service_id", "<>", null],
-    "operations": {
-        "total": {
-            "price": {
-                "id": "operations.total.price",
-                "label": "Total price",
-                "usage": "amount/money:2",
-                "operation": "SUM"
-            }
-        }
-    },
     "header": {
         "selection": {
             "default": false,
-            "actions" : [
+            "actions": [
                 {
                     "id": "action.bulk_expiration",
                     "label": "Update expiration columns",
@@ -32,43 +21,23 @@
             "ACTION.CREATE": [
                 {
                     "view_id": "form.create",
-                    "description": "Overload form to use for subscription creation."
+                    "description": "Use the dedicated service subscription creation form."
                 }
             ]
         }
     },
-    "extends": {
-        "entity": "sale\\subscription\\Subscription",
-        "view": "list.default"
-    },
     "layout": {
-        "update": {
-            "item.customer": {
-                "before": [
-                    {
-                        "type": "field",
-                        "value": "service_id",
-                        "label": "Service",
-                        "width": "30%"
-                    },
-                    {
-                        "type": "field",
-                        "value": "has_external_provider",
-                        "label": "Has external provider",
-                        "width": "20%",
-                        "readonly": true,
-                        "sortable": true
-                    },
-                    {
-                        "type": "field",
-                        "value": "service_provider_id",
-                        "label": "Provider",
-                        "width": "20%",
-                        "readonly": true,
-                        "sortable": true
-                    }
-                ]
-            }
-        }
+        "items": [
+            {"type": "field", "value": "name", "width": "25%", "sortable": true},
+            {"type": "field", "value": "service_id", "width": "25%", "sortable": true},
+            {"type": "field", "value": "date_from", "width": "12%", "sortable": true, "readonly": true},
+            {"type": "field", "value": "date_to", "width": "12%", "sortable": true, "readonly": true},
+            {"type": "field", "value": "is_auto_renew", "width": "10%", "sortable": true},
+            {"type": "field", "value": "is_expired", "width": "10%", "sortable": true, "readonly": true},
+            {"type": "field", "value": "has_external_provider", "width": "12%", "sortable": true, "readonly": true},
+            {"type": "field", "value": "service_provider_id", "width": "20%", "sortable": true, "readonly": true},
+            {"type": "field", "value": "customer_id", "width": "20%", "sortable": true, "readonly": true},
+            {"type": "field", "value": "sale_subscription_id", "width": "20%", "sortable": true, "readonly": true}
+        ]
     }
 }

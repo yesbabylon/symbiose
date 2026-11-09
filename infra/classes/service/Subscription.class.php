@@ -7,19 +7,27 @@
 
 namespace infra\service;
 
+use business\subscription\SubscriptionAbstract;
 use inventory\service\Service;
 use inventory\service\ServiceProvider;
 use sale\customer\Customer;
-use sale\subscription\Subscription as SaleSubscription;
 
-class Subscription extends SaleSubscription  {
+class Subscription extends SubscriptionAbstract {
 
     public static function getDescription() {
-        return 'The Subscription contains the relationship with a specific service, indicating whether it is for internal use or with an external provider, as well as billing information and the associated customer.';
+        return 'A service subscription describes how a service is obtained, who provides it, and its operational lifecycle.';
     }
 
     public static function getColumns(): array {
         return [
+            'sale_subscription_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\subscription\Subscription',
+                'description'       => 'Linked commercial subscription, when applicable.',
+                'readonly'          => true,
+                'dependents'        => ['pricing_mode', 'product_id']
+            ],
+
             'customer_id' => [
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
@@ -47,7 +55,7 @@ class Subscription extends SaleSubscription  {
             'subscription_entries_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'infra\service\SubscriptionEntry',
-                'foreign_field'     => 'subscription_id',
+                'foreign_field'     => 'service_subscription_id',
                 'ondetach'          => 'delete',
                 'description'       => 'Subscription entries of the subscription.'
             ],
@@ -89,9 +97,40 @@ class Subscription extends SaleSubscription  {
                 'visible'           => ['has_external_provider', '=', true],
                 'store'             => true,
                 'function'          => 'calcServiceProviderId'
+            ],
+
+            'pricing_mode' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'selection'         => [
+                    'fixed'       => 'Fixed',
+                    'consumption' => 'Consumption'
+                ],
+                'description'       => 'Pricing mode from the linked commercial subscription.',
+                'relation'          => ['sale_subscription_id' => 'pricing_mode'],
+                'store'             => true,
+                'instant'           => true,
+                'readonly'          => true
+            ],
+
+            'product_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'sale\catalog\Product',
+                'description'       => 'Catalog product from the linked commercial subscription.',
+                'relation'          => ['sale_subscription_id' => 'product_id'],
+                'store'             => true,
+                'instant'           => true,
+                'readonly'          => true
             ]
 
         ];
+    }
+
+    public function getUniques(): array {
+        return array_merge(parent::getUniques(), [
+            ['sale_subscription_id']
+        ]);
     }
 
     public static function onchange($event, $values): array {

@@ -28,11 +28,11 @@ class SubscriptionEntry extends SaleSubscriptionEntry {
                 'description'    => 'Optional group name used when creating invoices.'
             ],
 
-            'subscription_id' => [
+            'service_subscription_id' => [
                 'type'           => 'many2one',
                 'foreign_object' => 'infra\service\Subscription',
-                'description'    => 'Subscription from which the entry originates.',
-                'dependents'     => ['product_id', 'customer_id', 'service_provider']
+                'description'    => 'Service subscription from which the entry originates.',
+                'dependents'     => ['has_external_provider', 'service_provider_id']
             ],
 
             /**
@@ -45,7 +45,7 @@ class SubscriptionEntry extends SaleSubscriptionEntry {
                 'description'       => 'The subscriptionEntry has external provider.',
                 'store'             => true,
                 'instant'           => true,
-                'relation'          => ['subscription_id' => 'has_external_provider']
+                'relation'          => ['service_subscription_id' => 'has_external_provider']
             ],
 
             'service_provider_id' => [
@@ -55,7 +55,7 @@ class SubscriptionEntry extends SaleSubscriptionEntry {
                 'description'    => 'The service provider to which the subscription belongs.',
                 'store'          => true,
                 'instant'        => true,
-                'relation'       => ['subscription_id' => 'service_provider_id']
+                'relation'       => ['service_subscription_id' => 'service_provider_id']
             ]
 
         ];

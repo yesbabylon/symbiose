@@ -1,35 +1,141 @@
-
 {
-    "name": "Abonnement",
-    "plural": "Abonnements",
-    "description": "Vue par défaut pour la liste des abonnements.",
+    "name": "Abonnement de service",
+    "plural": "Abonnements de service",
+    "description": "Cycle de vie opérationnel de la souscription d'un service.",
     "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom permettant d'identifier l'abonnement de service.",
+            "help": "Saisissez un nom court et explicite."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Informations complémentaires sur l'abonnement de service.",
+            "help": "Ajoutez les informations opérationnelles utiles."
+        },
+        "date_from": {
+            "label": "Du",
+            "description": "Date de début de la période courante.",
+            "help": "Indiquez le premier jour de la période couverte."
+        },
+        "date_to": {
+            "label": "Au",
+            "description": "Date de fin de la période courante.",
+            "help": "Cette date est recalculée à partir de la date de début et de la durée."
+        },
+        "duration": {
+            "label": "Durée",
+            "description": "Durée nominale d'une période d'abonnement.",
+            "help": "Sélectionnez la fréquence correspondant au renouvellement opérationnel.",
+            "selection": {
+                "monthly": "Mensuelle",
+                "quarterly": "Trimestrielle",
+                "half-yearly": "Semestrielle",
+                "yearly": "Annuelle"
+            }
+        },
+        "is_auto_renew": {
+            "label": "Renouvellement automatique",
+            "description": "Indique si le service doit être renouvelé automatiquement.",
+            "help": "Cette valeur décrit l'intention de renouvellement sans déclencher un workflow commercial."
+        },
+        "is_expired": {
+            "label": "Expiré",
+            "description": "Indique si la période courante est terminée.",
+            "help": "Cette valeur est calculée à partir de la date de fin."
+        },
+        "has_upcoming_expiry": {
+            "label": "Échéance proche",
+            "description": "Indique si la période se termine dans les trente prochains jours.",
+            "help": "Cette valeur est calculée à partir de la date de fin."
+        },
+        "sale_subscription_id": {
+            "label": "Abonnement commercial",
+            "description": "Abonnement commercial associé au service, lorsqu'il existe.",
+            "help": "Un abonnement commercial ne peut être lié qu'à un seul abonnement de service."
+        },
         "service_id": {
             "label": "Service",
-            "description": "Serivce lié à l'abonnement.",
-            "help": ""
+            "description": "Service concerné par l'abonnement.",
+            "help": "Sélectionnez le service dont le cycle de vie est suivi."
+        },
+        "customer_id": {
+            "label": "Client",
+            "description": "Client associé au service souscrit.",
+            "help": "Cette valeur provient du service."
+        },
+        "is_billable": {
+            "label": "Facturable",
+            "description": "Indique si le service peut être facturé au client.",
+            "help": "Cette valeur provient du service."
         },
         "is_internal": {
-            "label": "Est interne",
-            "description": "L'abonnement utilisé par l'entreprise en interne.",
-            "help": ""
+            "label": "Interne",
+            "description": "Indique si le service est utilisé par l'organisation.",
+            "help": "Cette valeur provient du service."
         },
         "has_external_provider": {
             "label": "Fournisseur externe",
-            "description": "L'abonnement a un fournisseur externe.",
-            "help": ""
+            "description": "Indique si le service dépend d'un fournisseur externe.",
+            "help": "Cette valeur provient du service."
         },
-        "service_provider_id":{
+        "service_provider_id": {
             "label": "Fournisseur",
-            "description": "Fournisseur de service.",
-            "help": ""
+            "description": "Fournisseur externe du service.",
+            "help": "Cette valeur provient du service."
+        },
+        "pricing_mode": {
+            "label": "Mode de tarification",
+            "description": "Mode de tarification repris de l'abonnement commercial associé.",
+            "help": "Cette projection est disponible pour les entrées de facturation liées au service.",
+            "selection": {
+                "fixed": "Forfait",
+                "consumption": "Quantité prestée"
+            }
+        },
+        "product_id": {
+            "label": "Produit du catalogue",
+            "description": "Produit repris de l'abonnement commercial associé.",
+            "help": "Cette projection est disponible pour les entrées de facturation liées au service."
+        },
+        "subscription_entries_ids": {
+            "label": "Entrées",
+            "description": "Entrées historiques associées à l'abonnement de service.",
+            "help": "Ces entrées sont conservées pour assurer la continuité des données existantes."
         }
     },
     "view": {
         "form.default": {
-            "name": "Abonnement",
-            "description": "",
+            "name": "Abonnement de service",
+            "description": "Cycle de vie et rattachements d'un abonnement de service.",
+            "layout": {
+                "section.details": {
+                    "label": "Détails"
+                },
+                "section.entries": {
+                    "label": "Entrées"
+                }
+            }
+        },
+        "form.create": {
+            "name": "Nouvel abonnement de service",
+            "description": "Créer un abonnement de service."
+        },
+        "list.default": {
+            "name": "Abonnements de service",
+            "description": "Liste des abonnements de service.",
+            "actions": {
+                "action.bulk_expiration": {
+                    "label": "Actualiser les échéances",
+                    "description": "Recalculer les indicateurs d'expiration sélectionnés."
+                }
+            },
             "layout": {}
+        },
+        "search.default": {
+            "name": "Recherche d'abonnements de service",
+            "description": "Filtrer les abonnements par service, client et période."
         }
-    }
+    },
+    "error": {}
 }

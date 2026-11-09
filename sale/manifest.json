@@ -6,10 +6,10 @@
     "license": "LGPL-3",
     "depends_on": [
         "core",
+        "business",
         "document",
         "identity",
         "finance",
-        "infra",
         "inventory"
     ],
     "requires": {
