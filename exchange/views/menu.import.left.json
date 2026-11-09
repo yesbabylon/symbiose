@@ -39,10 +39,10 @@
                 }
             },
             {
-                "id": "item.create-bank-statements-import",
+                "id": "item.create-documents-import",
                 "type": "entry",
                 "label": "Document",
-                "icon": "document",
+                "icon": "file",
                 "description": "Create an import documents.",
                 "context": {
                     "view": "form.import",

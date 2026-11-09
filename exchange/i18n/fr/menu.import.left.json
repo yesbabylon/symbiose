@@ -12,6 +12,10 @@
         "item.create-bank-statements-import": {
             "label": "Extraits bancaires",
             "help": ""
+        },
+        "item.create-documents-import": {
+            "label": "Documents",
+            "help": ""
         }
     }
 }
