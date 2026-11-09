@@ -1,0 +1,21 @@
+{
+    "name": "Cloud Providers",
+    "description": "Default list of cloud providers.",
+    "order": "name",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "code",
+                "width": "30%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "70%",
+                "sortable": true
+            }
+        ]
+    }
+}

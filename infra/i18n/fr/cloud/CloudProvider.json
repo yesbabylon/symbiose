@@ -1,0 +1,32 @@
+{
+    "name": "Fournisseur cloud",
+    "plural": "Fournisseurs cloud",
+    "description": "Fournisseur exploitant une infrastructure cloud répartie entre plusieurs régions géographiques.",
+    "model": {
+        "code": {
+            "label": "Code",
+            "description": "Code technique unique du fournisseur cloud.",
+            "help": "Utilisez un code stable adapté aux intégrations et aux imports."
+        },
+        "name": {
+            "label": "Nom",
+            "description": "Nom lisible du fournisseur cloud.",
+            "help": "Utilisez le nom sous lequel le fournisseur est habituellement reconnu."
+        },
+        "regions_ids": {
+            "label": "Régions",
+            "description": "Régions géographiques exploitées par le fournisseur cloud.",
+            "help": "Gérez les différentes régions cloud du fournisseur."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Fournisseur cloud",
+            "description": "Affiche et modifie un fournisseur cloud et ses régions."
+        },
+        "list.default": {
+            "name": "Fournisseurs cloud",
+            "description": "Liste les fournisseurs cloud disponibles."
+        }
+    }
+}

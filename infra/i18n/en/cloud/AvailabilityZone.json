@@ -1,0 +1,32 @@
+{
+    "name": "Availability zone",
+    "plural": "Availability zones",
+    "description": "Failure-isolated cloud location within a region.",
+    "model": {
+        "code": {
+            "label": "Code",
+            "description": "Technical code unique within the region.",
+            "help": "Use the availability zone code published by the provider when available."
+        },
+        "name": {
+            "label": "Name",
+            "description": "Human-readable name of the availability zone.",
+            "help": "Use a name that distinguishes the zone from other zones in the region."
+        },
+        "region_id": {
+            "label": "Region",
+            "description": "Cloud region containing the availability zone.",
+            "help": "Select the region to which this availability zone belongs."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Availability zone",
+            "description": "Displays and edits an availability zone."
+        },
+        "list.default": {
+            "name": "Availability zones",
+            "description": "Lists availability zones by region."
+        }
+    }
+}

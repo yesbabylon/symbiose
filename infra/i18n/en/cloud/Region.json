@@ -1,0 +1,37 @@
+{
+    "name": "Cloud region",
+    "plural": "Cloud regions",
+    "description": "Geographically distinct cloud location operated by a provider.",
+    "model": {
+        "code": {
+            "label": "Code",
+            "description": "Technical code unique within the cloud provider.",
+            "help": "Use the region code published by the provider when available."
+        },
+        "name": {
+            "label": "Name",
+            "description": "Human-readable name of the cloud region.",
+            "help": "Use a name that clearly identifies the geographic location."
+        },
+        "cloud_provider_id": {
+            "label": "Cloud provider",
+            "description": "Cloud provider operating the region.",
+            "help": "Select the provider to which this region belongs."
+        },
+        "zones_ids": {
+            "label": "Availability zones",
+            "description": "Availability zones located within the region.",
+            "help": "Manage the failure-isolated zones available in this region."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Cloud region",
+            "description": "Displays and edits a cloud region and its availability zones."
+        },
+        "list.default": {
+            "name": "Cloud regions",
+            "description": "Lists cloud regions by provider."
+        }
+    }
+}

@@ -29,7 +29,25 @@
                 "type": "field",
                 "label": "Type",
                 "value": "server_type",
-                "width": "33%",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "cloud_provider_id",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "region_id",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "zone_id",
+                "width": "15%",
                 "sortable": true
             },
             {

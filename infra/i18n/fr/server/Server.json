@@ -13,6 +13,21 @@
             "description": "Description du serveur.",
             "help": ""
         },
+        "cloud_provider_id": {
+            "label": "Fournisseur cloud",
+            "description": "Fournisseur cloud qui héberge le serveur.",
+            "help": "Sélectionnez le fournisseur avant de sélectionner une région."
+        },
+        "region_id": {
+            "label": "Région",
+            "description": "Région cloud géographique qui héberge le serveur.",
+            "help": "Seules les régions du fournisseur sélectionné sont proposées."
+        },
+        "zone_id": {
+            "label": "Zone de disponibilité",
+            "description": "Zone de disponibilité qui héberge le serveur.",
+            "help": "Ce champ est facultatif et ne propose que les zones de la région sélectionnée."
+        },
         "up": {
             "label": "En ligne",
             "description": "Est-ce que le serveur est en ligne.",
@@ -101,6 +116,9 @@
                 }
             },
             "layout": {
+                "section.location": {
+                    "label": "Localisation cloud"
+                },
                 "section.description": {
                     "label": "Description"
                 },
@@ -137,6 +155,18 @@
             "name": "Serveurs",
             "description": "Liste des serveurs.",
             "layout": {}
+        }
+    },
+    "error": {
+        "region_id": {
+            "invalid_cloud_provider": "La région doit appartenir au fournisseur cloud sélectionné."
+        },
+        "zone_id": {
+            "invalid_region": "La zone de disponibilité doit appartenir à la région sélectionnée."
+        },
+        "errors": {
+            "invalid_cloud_provider": "Un fournisseur cloud et l'une de ses régions sont requis, et la région doit appartenir à ce fournisseur.",
+            "invalid_region": "La zone de disponibilité doit appartenir à la région sélectionnée."
         }
     }
 }

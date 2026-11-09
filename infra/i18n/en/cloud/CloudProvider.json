@@ -1,0 +1,32 @@
+{
+    "name": "Cloud provider",
+    "plural": "Cloud providers",
+    "description": "Provider operating cloud infrastructure across geographic regions.",
+    "model": {
+        "code": {
+            "label": "Code",
+            "description": "Unique technical code of the cloud provider.",
+            "help": "Use a stable code suitable for integrations and imports."
+        },
+        "name": {
+            "label": "Name",
+            "description": "Human-readable name of the cloud provider.",
+            "help": "Use the provider's commonly recognized name."
+        },
+        "regions_ids": {
+            "label": "Regions",
+            "description": "Geographic regions operated by the cloud provider.",
+            "help": "Manage the provider's distinct cloud regions."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Cloud provider",
+            "description": "Displays and edits a cloud provider and its regions."
+        },
+        "list.default": {
+            "name": "Cloud providers",
+            "description": "Lists the available cloud providers."
+        }
+    }
+}

@@ -13,6 +13,21 @@
             "description": "Description of server.",
             "help": ""
         },
+        "cloud_provider_id": {
+            "label": "Cloud provider",
+            "description": "Cloud provider hosting the server.",
+            "help": "Select the provider before selecting a region."
+        },
+        "region_id": {
+            "label": "Region",
+            "description": "Geographic cloud region hosting the server.",
+            "help": "Only regions belonging to the selected provider are available."
+        },
+        "zone_id": {
+            "label": "Availability zone",
+            "description": "Availability zone hosting the server, when known.",
+            "help": "This field is optional and only lists zones from the selected region."
+        },
         "server_type": {
             "label": "Type",
             "description": "Server type.",
@@ -78,6 +93,9 @@
                 }
             },
             "layout": {
+                "section.location": {
+                    "label": "Cloud location"
+                },
                 "section.description": {
                     "label": "Description"
                 },
@@ -108,6 +126,18 @@
             "name": "Servers",
             "description": "List of servers.",
             "layout": {}
+        }
+    },
+    "error": {
+        "region_id": {
+            "invalid_cloud_provider": "The region must belong to the selected cloud provider."
+        },
+        "zone_id": {
+            "invalid_region": "The availability zone must belong to the selected region."
+        },
+        "errors": {
+            "invalid_cloud_provider": "A cloud provider and one of its regions are required, and the region must belong to that provider.",
+            "invalid_region": "The availability zone must belong to the selected region."
         }
     }
 }

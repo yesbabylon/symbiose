@@ -9,6 +9,8 @@ namespace infra\server;
 
 use equal\orm\Model;
 use infra\Access;
+use infra\cloud\AvailabilityZone;
+use infra\cloud\Region;
 
 class Server extends Model {
 
@@ -31,6 +33,28 @@ class Server extends Model {
                 'type'              => 'string',
                 'usage'             => 'text/plain',
                 'description'       => 'Short description of the Server.',
+            ],
+
+            'cloud_provider_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'infra\cloud\CloudProvider',
+                'description'       => 'Cloud provider hosting the server.',
+                // 'required'          => true
+            ],
+
+            'region_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'infra\cloud\Region',
+                'description'       => 'Geographic region hosting the server.',
+                'domain'            => ['cloud_provider_id', '=', 'object.cloud_provider_id'],
+                // 'required'          => true
+            ],
+
+            'zone_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'infra\cloud\AvailabilityZone',
+                'description'       => 'Availability zone hosting the server, when known.',
+                'domain'            => ['region_id', '=', 'object.region_id']
             ],
 
             'server_type' => [
@@ -133,6 +157,123 @@ class Server extends Model {
             ]
 
         ];
+    }
+
+    public static function getConstraints(): array {
+        return [
+            'region_id' => [
+                'invalid_cloud_provider' => [
+                    'message'       => 'Region must belong to the selected cloud provider.',
+                    'function'      => function($region_id, $values) {
+                        if(empty($region_id)) {
+                            return false;
+                        }
+                        if(!array_key_exists('cloud_provider_id', $values)) {
+                            return true;
+                        }
+                        if(empty($values['cloud_provider_id'])) {
+                            return false;
+                        }
+
+                        $region = Region::id($region_id)
+                            ->read(['cloud_provider_id'])
+                            ->first();
+
+                        return $region
+                            && (int) $region['cloud_provider_id'] === (int) $values['cloud_provider_id'];
+                    }
+                ]
+            ],
+            'zone_id' => [
+                'invalid_region' => [
+                    'message'       => 'Availability zone must belong to the selected region.',
+                    'function'      => function($zone_id, $values) {
+                        if(empty($zone_id)) {
+                            return true;
+                        }
+                        if(!array_key_exists('region_id', $values)) {
+                            return true;
+                        }
+                        if(empty($values['region_id'])) {
+                            return false;
+                        }
+
+                        $zone = AvailabilityZone::id($zone_id)
+                            ->read(['region_id'])
+                            ->first();
+
+                        return $zone
+                            && (int) $zone['region_id'] === (int) $values['region_id'];
+                    }
+                ]
+            ]
+        ];
+    }
+
+    public static function getPolicies(): array {
+        return array_merge(parent::getPolicies(), [
+            'valid_cloud_location' => [
+                'description'       => 'Ensure the cloud region and availability zone belong to their selected parents.',
+                'function'          => 'policyValidCloudLocation'
+            ]
+        ]);
+    }
+
+    public static function getOperationPolicies(): array {
+        return array_replace_recursive(parent::getOperationPolicies(), [
+            EQ_R_UPDATE => [
+                '*'                 => true,
+                'cloud_provider_id' => ['valid_cloud_location'],
+                'region_id'         => ['valid_cloud_location'],
+                'zone_id'           => ['valid_cloud_location']
+            ]
+        ]);
+    }
+
+    protected static function policyValidCloudLocation($self, $values): array {
+        $self->read(['state', 'cloud_provider_id', 'region_id', 'zone_id']);
+
+        $result = [];
+        foreach($self as $id => $server) {
+            $cloud_provider_id = array_key_exists('cloud_provider_id', $values)
+                ? $values['cloud_provider_id']
+                : $server['cloud_provider_id'];
+            $region_id = array_key_exists('region_id', $values)
+                ? $values['region_id']
+                : $server['region_id'];
+            $zone_id = array_key_exists('zone_id', $values)
+                ? $values['zone_id']
+                : $server['zone_id'];
+
+            if(empty($cloud_provider_id) || empty($region_id)) {
+                if($server['state'] === 'draft') {
+                    continue;
+                }
+                $result[$id]['invalid_cloud_provider'] = 'A cloud provider and one of its regions are required.';
+                continue;
+            }
+
+            $region = Region::id($region_id)
+                ->read(['cloud_provider_id'])
+                ->first();
+            if(!$region || (int) $region['cloud_provider_id'] !== (int) $cloud_provider_id) {
+                $result[$id]['invalid_cloud_provider'] = 'Region must belong to the selected cloud provider.';
+                continue;
+            }
+
+            if(empty($zone_id)) {
+                continue;
+            }
+
+            $zone = AvailabilityZone::id($zone_id)
+                ->read(['region_id'])
+                ->first();
+            if(!$zone || (int) $zone['region_id'] !== (int) $region_id) {
+                $result[$id]['invalid_region'] = 'Availability zone must belong to the selected region.';
+            }
+        }
+
+        return $result;
     }
 
     protected static function calcProductsCount($self): array {

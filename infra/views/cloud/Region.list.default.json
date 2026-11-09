@@ -1,0 +1,27 @@
+{
+    "name": "Cloud Regions",
+    "description": "Default list of cloud regions.",
+    "order": "name",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "cloud_provider_id",
+                "width": "30%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "code",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "45%",
+                "sortable": true
+            }
+        ]
+    }
+}
