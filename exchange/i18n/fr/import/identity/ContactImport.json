@@ -1,0 +1,37 @@
+{
+    "name": "Import de contacts",
+    "plural": "Imports de contacts",
+    "description": "Importe des contacts à partir d'un fichier.",
+    "model": {
+        "organization_id": {
+            "label": "Organisation",
+            "description": "Organisation à laquelle appartiennent les contacts importés.",
+            "help": "Sélectionnez l'organisation concernée par cet import de contacts."
+        }
+    },
+    "view": {
+        "form.import": {
+            "name": "Nouvel import de contacts",
+            "description": "Sélectionner une organisation et un fichier à importer.",
+            "layout": {},
+            "actions": {}
+        },
+        "form.default": {
+            "name": "Import de contacts",
+            "description": "Contrôle et résultat de l'import de contacts.",
+            "layout": {},
+            "actions": {
+                "action.check": {"label": "Contrôler"},
+                "action.import": {"label": "Importer"},
+                "action.remove": {"label": "Supprimer"}
+            }
+        },
+        "list.default": {
+            "name": "Imports de contacts",
+            "description": "Liste des imports de contacts.",
+            "layout": {},
+            "actions": {}
+        }
+    },
+    "error": {}
+}

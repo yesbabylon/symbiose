@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:4.0
+N:Vcard;Vivian;;;
+FN:Vivian Vcard
+EMAIL;PREF=1:mailto:contact-import-vcard@example.com
+TEL;TYPE=voice;PREF=1:tel:+32-2-555-02-02
+TEL;TYPE=cell;PREF=1:tel:+32-471-22-33-44
+ADR;TYPE=home;LANGUAGE=en:;Apartment 4;30 Card Street;Brussels;Brussels;1000;Belgium
+END:VCARD

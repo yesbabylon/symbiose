@@ -45,6 +45,7 @@ class DataImport extends Model {
             'import_type' => [
                 'type'              => 'string',
                 'selection'         => [
+                    'document',
                     'banks_import',
                     'contacts_import',
                     'customers_import',

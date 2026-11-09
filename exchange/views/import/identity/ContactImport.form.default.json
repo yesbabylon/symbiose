@@ -58,6 +58,12 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "organization_id",
+                                                "width": "34%",
+                                                "required": true
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "import_type",
                                                 "width": "50%"
                                             },

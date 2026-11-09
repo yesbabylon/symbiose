@@ -6,11 +6,11 @@
             "help": ""
         },
         "item.create-contacts-import": {
-            "label": "Nouveaux contacts",
+            "label": "Contacts",
             "help": ""
         },
         "item.create-bank-statements-import": {
-            "label": "Nouveaux extraits bancaires",
+            "label": "Extraits bancaires",
             "help": ""
         }
     }

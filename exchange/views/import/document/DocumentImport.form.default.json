@@ -1,0 +1,89 @@
+{
+    "name": "Document Import",
+    "description": "Document import.",
+    "header": {
+        "actions": {
+            "ACTION.SAVE": [
+                {
+                    "id": "SAVE_AND_CLOSE",
+                    "visible": true
+                }
+            ],
+            "ACTION.CANCEL": false
+        }
+    },
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "document_type_id",
+                                                "width": "100%",
+                                                "required": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "document_subtype_id",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "organization_id",
+                                                "width": "100%",
+                                                "required": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "document_visibility",
+                                                "width": "100%",
+                                                "required": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "data",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "type": "upload",
+                                                    "autosave": false,
+                                                    "required": true,
+                                                    "height": "600"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

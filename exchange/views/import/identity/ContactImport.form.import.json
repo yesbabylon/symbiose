@@ -32,6 +32,12 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "organization_id",
+                                                "width": "100%",
+                                                "required": true
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "data",
                                                 "width": "100%",
                                                 "widget": {

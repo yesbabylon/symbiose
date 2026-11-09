@@ -10,6 +10,11 @@
             },
             {
                 "type": "field",
+                "value": "organization_id",
+                "width": "25%"
+            },
+            {
+                "type": "field",
                 "value": "document_id",
                 "width": "16%"
             },

@@ -22,6 +22,14 @@ class BankStatement extends Model {
 
     public static function getColumns() {
         return [
+            'organization_id' => [
+                'type'           => 'many2one',
+                'foreign_object' => 'identity\Organization',
+                'description'    => 'Organization the accounting operation belongs to.',
+                'required'       => true,
+                'default'        => 1
+            ],
+
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',

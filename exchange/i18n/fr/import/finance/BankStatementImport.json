@@ -13,6 +13,11 @@
             "description": "Fichier CODA ou XLSX à importer.",
             "help": "Formats acceptés : CODA (.cod, .coda, .txt) et XLSX."
         },
+        "organization_id": {
+            "label": "Organisation",
+            "description": "Organisation à laquelle appartiennent les opérations comptables importées.",
+            "help": "Sélectionnez l'organisation concernée par cet import bancaire."
+        },
         "document_id": {
             "label": "Document source",
             "description": "Document conservé comme source de l'import.",

@@ -1,0 +1,2 @@
+firstname,lastname,email,phone,mobile,address_street,address_dispatch,address_city,address_zip,address_state,address_country
+Celia,Comma,contact-import-csv@example.com,"+32 2 555 01 01","+32 470 11 22 33","10 CSV Street","Floor 2",Brussels,1000,Brussels,BE

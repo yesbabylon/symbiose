@@ -1,0 +1,85 @@
+{
+    "name": "Import de document",
+    "plural": "Imports de documents",
+    "description": "Crée un document à partir d'un fichier et de ses métadonnées.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom du document importé.",
+            "help": "Reprend le nom du fichier sélectionné lors de la création."
+        },
+        "data": {
+            "label": "Fichier",
+            "description": "Fichier à importer comme document.",
+            "help": "Le contenu est transféré dans le document créé après validation de l'import."
+        },
+        "organization_id": {
+            "label": "Organisation",
+            "description": "Organisation pour laquelle le document est importé.",
+            "help": "Sélectionnez l'organisation concernée par ce document."
+        },
+        "document_type_id": {
+            "label": "Type de document",
+            "description": "Type attribué au document importé.",
+            "help": "Le type permet de classer le document."
+        },
+        "document_subtype_id": {
+            "label": "Sous-type de document",
+            "description": "Sous-type facultatif attribué au document importé.",
+            "help": "Seuls les sous-types du type de document sélectionné sont proposés."
+        },
+        "document_visibility": {
+            "label": "Visibilité",
+            "description": "Définit qui peut accéder au document importé.",
+            "help": "La visibilité est appliquée au document lors de sa création.",
+            "selection": {
+                "organization": "Organisation",
+                "external": "Externe",
+                "public": "Public"
+            }
+        },
+        "document_id": {
+            "label": "Document créé",
+            "description": "Document créé par l'import.",
+            "help": "Ce lien est renseigné automatiquement après l'import."
+        },
+        "import_type": {
+            "label": "Type d'import",
+            "description": "Type technique de l'import.",
+            "help": "Cette valeur identifie un import de document.",
+            "selection": {
+                "document": "Document"
+            }
+        },
+        "logs": {
+            "label": "Journal",
+            "description": "Résultat détaillé du traitement.",
+            "help": "Présente les informations produites pendant l'import."
+        },
+        "status": {
+            "label": "Statut",
+            "description": "État courant de l'import.",
+            "help": "Le document est créé lorsque l'import atteint le statut importé.",
+            "selection": {
+                "pending": "À contrôler",
+                "ready": "Prêt",
+                "failing": "En erreur",
+                "imported": "Importé"
+            }
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Importer un document",
+            "description": "Sélectionner un fichier et renseigner ses métadonnées.",
+            "layout": {},
+            "actions": {}
+        }
+    },
+    "error": {
+        "missing_data": "Le fichier à importer est requis.",
+        "missing_organization": "L'organisation est requise.",
+        "missing_document_type": "Le type de document est requis.",
+        "invalid_document_subtype": "Le sous-type doit appartenir au type de document sélectionné."
+    }
+}
