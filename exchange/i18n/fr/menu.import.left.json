@@ -2,7 +2,7 @@
     "description": "Menu des imports",
     "view": {
         "item.imports": {
-            "label": "Imports",
+            "label": "Tous les imports",
             "help": ""
         },
         "item.create-contacts-import": {

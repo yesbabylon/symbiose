@@ -6,7 +6,7 @@
             {
                 "id": "item.imports",
                 "type": "entry",
-                "label": "Imports",
+                "label": "All imports",
                 "icon": "view_list",
                 "description": "Listing of imports.",
                 "context": {
@@ -42,7 +42,7 @@
                 "id": "item.create-documents-import",
                 "type": "entry",
                 "label": "Document",
-                "icon": "file",
+                "icon": "description",
                 "description": "Create an import documents.",
                 "context": {
                     "view": "form.import",

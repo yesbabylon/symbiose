@@ -33,7 +33,8 @@ class DocumentImport extends DataImport {
                 'type'           => 'many2one',
                 'foreign_object' => 'identity\Organization',
                 'description'    => 'Organization for which the document is imported.',
-                'required'       => true
+                'required'       => true,
+                'default'        => 1
             ],
 
             'document_type_id' => [
