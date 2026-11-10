@@ -31,8 +31,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "document_type_id",
-                                                "width": "100%",
-                                                "required": true
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",

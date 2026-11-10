@@ -15,7 +15,7 @@
       "id": "import",
       "name": "Import",
       "extends": "app",
-      "description": "Application import",
+      "description": "Import data from external sources.",
       "icon": "upload",
       "color": "#dd7c52",
       "access": {
