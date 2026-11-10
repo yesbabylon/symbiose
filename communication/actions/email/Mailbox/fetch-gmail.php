@@ -390,7 +390,7 @@ foreach($message_refs as $message_ref) {
         }
 
         $data = $attachment['data'];
-        if(!$data && $attachment['attachmentId']) {
+        if(!$data) {
             $data = $getAttachment($mailbox['access_token'], $message_id, $attachment['attachmentId']);
         }
 

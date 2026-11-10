@@ -153,7 +153,7 @@ if(empty($to_recipients)) {
 $message = new EmailMessage();
 $message
     ->setId($email['id'])
-    ->setTo($to_recipients)
+    ->setTo($to_recipients[0])
     ->setSubject((string) ($email['subject'] ?: '(no subject)'))
     ->setContentType('text/html')
     ->setBody((string) ($email['body'] ?? ''));

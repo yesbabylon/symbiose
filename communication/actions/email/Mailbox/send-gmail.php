@@ -242,7 +242,7 @@ if(!empty($reply_to_recipients)) {
 
 $body = (string) ($email['body'] ?? '');
 
-if(empty($documents)) {
+if($documents->count() === 0) {
     $raw_message = implode("\r\n", array_merge($headers, [
         'Content-Type: text/html; charset=UTF-8',
         'Content-Transfer-Encoding: base64',
