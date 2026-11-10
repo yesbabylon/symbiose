@@ -1,6 +1,25 @@
 {
     "name": "Email",
     "description": "Compose or review an incoming or outgoing email message.",
+    "actions": [
+        {
+            "id": "action.force_attachment_import_complete",
+            "label": "Mark attachment import as complete",
+            "icon": "check_circle",
+            "description": "Mark ignored attachments as manually reviewed.",
+            "controller": "core_model_do",
+            "params": {
+                "entity": "communication\\email\\Email",
+                "action": "force_attachment_import_complete",
+                "ids": []
+            },
+            "confirm": true,
+            "visible": [
+                ["direction", "=", "incoming"],
+                ["incoming_attachment_import_status", "=", "unsupported"]
+            ]
+        }
+    ],
     "layout": {
         "groups": [
             {

@@ -213,7 +213,7 @@ class Email extends Model {
     protected static function policyCanForceAttachmentImportComplete($self): array {
         $result = [];
 
-        $self->read(['direction', 'attachment_import_status']);
+        $self->read(['direction', 'incoming_attachment_import_status']);
         foreach($self as $id => $email) {
             if($email['direction'] !== 'incoming') {
                 $result[$id] = [
@@ -222,7 +222,7 @@ class Email extends Model {
                 continue;
             }
 
-            if($email['attachment_import_status'] !== 'unsupported') {
+            if($email['incoming_attachment_import_status'] !== 'unsupported') {
                 $result[$id] = [
                     'invalid_attachment_import_status' => 'Only an unsupported attachment import can be manually completed.'
                 ];
@@ -233,7 +233,7 @@ class Email extends Model {
     }
 
     protected static function doForceAttachmentImportComplete($self) {
-        $self->update(['attachment_import_status' => 'complete']);
+        $self->update(['incoming_attachment_import_status' => 'complete']);
     }
 
     protected static function calcHasError($self) {

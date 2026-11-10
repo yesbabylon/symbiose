@@ -1,6 +1,22 @@
 {
     "name": "Mailbox settings",
     "description": "Configure mailbox identity, servers and authentication.",
+    "actions": [
+        {
+            "id": "action.connect",
+            "inline": true,
+            "label": "OAuth connect",
+            "icon": "login",
+            "description": "Provide authentication info for connection.",
+            "visible": ["auth_type", "=", "oauth"],
+            "component": {
+                "name": "communicationAddMailbox",
+                "data": {
+                    "mailbox_id": "object.id"
+                }
+            }
+        }
+    ],
     "layout": {
         "groups": [
             {

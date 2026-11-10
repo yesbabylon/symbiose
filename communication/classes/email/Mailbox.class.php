@@ -171,4 +171,46 @@ class Mailbox extends Model {
         ];
     }
 
+    public static function getPolicies(): array {
+        return array_merge(parent::getPolicies(), [
+            'can_remove' => [
+                'description' => 'Checks that the mailbox has no pending outgoing emails.',
+                'function'    => 'policyCanRemove'
+            ]
+        ]);
+    }
+
+    public static function getActions(): array {
+        return array_merge(parent::getActions(), [
+            'remove' => [
+                'description' => 'Remove the mailbox.',
+                'policies'    => ['can_remove'],
+                'function'    => 'doRemove'
+            ]
+        ]);
+    }
+
+    protected static function policyCanRemove($self): array {
+        $result = [];
+
+        $pending_emails = Email::search([
+                ['mailbox_id', 'in', $self->ids()],
+                ['direction', '=', 'outgoing'],
+                ['status', '=', 'pending']
+            ])
+            ->read(['mailbox_id']);
+
+        foreach($pending_emails as $email) {
+            $result[$email['mailbox_id']] = [
+                'pending_outgoing_emails' => 'The mailbox cannot be removed while outgoing emails are pending.'
+            ];
+        }
+
+        return $result;
+    }
+
+    protected static function doRemove($self) {
+        $self->delete(true);
+    }
+
 }

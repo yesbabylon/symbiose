@@ -137,6 +137,12 @@
         "form.default": {
             "name": "Email",
             "description": "Consulter ou composer un email entrant ou sortant.",
+            "actions": {
+                "action.force_attachment_import_complete": {
+                    "label": "Marquer l'import comme complet",
+                    "description": "Confirmer après vérification manuelle que les pièces jointes ignorées ont été examinées."
+                }
+            },
             "layout": {
                 "section.message": {
                     "label": "Message"

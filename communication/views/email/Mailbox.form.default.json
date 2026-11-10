@@ -1,6 +1,38 @@
 {
     "name": "Mailbox",
     "description": "Review incoming and outgoing emails for a mailbox.",
+    "actions": [
+        {
+            "id": "action.fetch_emails",
+            "inline": true,
+            "label": "Receive",
+            "icon": "sync",
+            "description": "Fetch latest emails and import attachments.",
+            "controller": "communication_email_Mailbox_fetch",
+            "params": {
+                "id": "object.id"
+            },
+            "visible": [
+                ["can_receive", "=", true],
+                ["validated", "=", "object.status"]
+            ]
+        },
+        {
+            "id": "action.flush_emails",
+            "inline": true,
+            "label": "Send",
+            "icon": "sync",
+            "description": "Send pending outgoing emails.",
+            "controller": "communication_email_Mailbox_flush",
+            "params": {
+                "id": "object.id"
+            },
+            "visible": [
+                ["can_send", "=", true],
+                ["validated", "=", "object.status"]
+            ]
+        }
+    ],
     "routes": [
         {
             "id": "item.config",

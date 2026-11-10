@@ -1,0 +1,26 @@
+{
+    "name": "communication",
+    "description": "Symbiose communication App.",
+    "version": "1.0",
+    "authors": ["Cedric Francoys"],
+    "license": "LGPL-3",
+    "repository": "https://github.com/yesbabylon/apps-communication-communication.git",
+    "url": "/communication",
+    "icon": "mail",
+    "color": "#a12f56",
+    "access": {
+        "groups": [
+            "users"
+        ]
+    },
+    "params": {
+        "menus": {
+            "left": "communication.left"
+        },
+        "context": {
+            "entity": "communication\\template\\Template",
+            "view": "list.default"
+        }
+    },
+    "show_in_apps": true
+}

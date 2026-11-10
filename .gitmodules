@@ -14,3 +14,7 @@
 	path = doc
 	url = https://github.com/yesbabylon/symbiose-doc
     ignore = untracked
+[submodule "communication/apps/communication/source"]
+	path = communication/apps/communication/source
+	url = https://github.com/yesbabylon/apps-communication-communication
+    ignore = untracked

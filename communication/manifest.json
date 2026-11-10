@@ -4,32 +4,12 @@
     "version": "1.0",
     "authors": ["Yesbabylon"],
     "license": "LGPL-3",
+    "requires": {
+        "webklex/php-imap": "~4.1.2"
+    },
     "depends_on": [
         "core",
         "document"
     ],
-    "apps": [
-        {
-            "id": "communication",
-            "name": "Communication",
-            "extends": "app",
-            "description": "Application communication",
-            "icon": "mail",
-            "color": "#a12f56",
-            "access": {
-                "groups": [
-                    "users"
-                ]
-            },
-            "params": {
-                "menus": {
-                    "left": "communication.left"
-                },
-                "context": {
-                    "entity": "communication\\template\\Template",
-                    "view": "list.default"
-                }
-            }
-        }
-    ]
+    "apps": ["communication" ]
 }

@@ -1,6 +1,65 @@
 {
     "name": "Mailboxes",
     "description": "List of configured mailboxes.",
+    "header": {
+        "actions": {
+            "ACTION.CREATE": false
+        },
+        "selection": {
+            "default": false,
+            "actions": [
+                {
+                    "id": "action.remove",
+                    "label": "Remove",
+                    "icon": "delete",
+                    "description": "Remove the selected mailboxes.",
+                    "controller": "core_model_do",
+                    "confirm": true,
+                    "params": {
+                        "entity": "communication\\email\\Mailbox",
+                        "action": "remove",
+                        "ids": []
+                    }
+                }
+            ]
+        }
+    },
+    "actions": [
+        {
+            "id": "action.add_mailbox",
+            "label": "Add mailbox",
+            "description": "Add a new mailbox for emails fetching automation.",
+            "component": {
+                "name": "communicationAddMailbox"
+            }
+        },
+        {
+            "id": "action.connect",
+            "inline": true,
+            "label": "OAuth connect",
+            "icon": "login",
+            "description": "Provide authentication info for connection.",
+            "component": {
+                "name": "communicationAddMailbox",
+                "data": {
+                    "mailbox_id": "object.id"
+                }
+            },
+            "visible": ["pending", "=", "object.status"]
+        },
+        {
+            "id": "action.fetch_emails",
+            "inline": true,
+            "label": "Download",
+            "icon": "sync",
+            "description": "Fetch latest emails and import attachments.",
+            "controller": "communication_email_Mailbox_fetch",
+            "params": {
+                "id": "object.id"
+            },
+            "visible": ["validated", "=", "object.status"]
+        }
+    ],
     "layout": {
         "items": [
             {

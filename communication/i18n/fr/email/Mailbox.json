@@ -130,6 +130,16 @@
         "form.default": {
             "name": "Boîte mail",
             "description": "Consulter les emails entrants et sortants d'une boîte mail.",
+            "actions": {
+                "action.fetch_emails": {
+                    "label": "Recevoir",
+                    "description": "Récupérer les derniers emails et importer les pièces jointes."
+                },
+                "action.flush_emails": {
+                    "label": "Envoyer",
+                    "description": "Envoyer les emails sortants en attente."
+                }
+            },
             "routes": {
                 "item.config": {
                     "label": "Paramètres",
@@ -148,6 +158,12 @@
         "form.config": {
             "name": "Paramètres de la boîte mail",
             "description": "Configurer l'identité, les serveurs et l'authentification de la boîte mail.",
+            "actions": {
+                "action.connect": {
+                    "label": "Connexion OAuth",
+                    "description": "Fournir les informations d'authentification pour établir la connexion."
+                }
+            },
             "layout": {
                 "section.general": {
                     "label": "Général"
@@ -159,7 +175,28 @@
         },
         "list.default": {
             "name": "Boîtes mail",
-            "description": "Liste des boîtes mail configurées."
+            "description": "Liste des boîtes mail configurées.",
+            "actions": {
+                "action.add_mailbox": {
+                    "label": "Ajouter une boîte mail",
+                    "description": "Ajouter une boîte mail pour automatiser la récupération des emails."
+                },
+                "action.connect": {
+                    "label": "Connexion OAuth",
+                    "description": "Fournir les informations d'authentification pour établir la connexion."
+                },
+                "action.fetch_emails": {
+                    "label": "Télécharger",
+                    "description": "Récupérer les derniers emails et importer les pièces jointes."
+                },
+                "action.remove": {
+                    "label": "Supprimer",
+                    "description": "Supprimer les boîtes mail sélectionnées."
+                }
+            }
         }
+    },
+    "error": {
+        "pending_outgoing_emails": "La boîte mail ne peut pas être supprimée tant que des emails sortants sont en attente d'envoi."
     }
 }
