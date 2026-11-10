@@ -97,7 +97,7 @@
                         "label": "Journals",
                         "description": "",
                         "context": {
-                            "entity": "finance\\accounting\\AccountingJournal",
+                            "entity": "finance\\accounting\\Journal",
                             "view": "list.default"
                         }
                     },

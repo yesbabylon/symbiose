@@ -97,7 +97,7 @@ class AccountingOperation extends Model {
 
             'journal_id' => [
                 'type'           => 'many2one',
-                'foreign_object' => 'finance\accounting\AccountingJournal',
+                'foreign_object' => 'finance\accounting\Journal',
                 'description'    => 'Accounting journal used for the operation.',
                 'required'       => true,
                 'domain'         => [

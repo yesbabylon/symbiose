@@ -45,7 +45,7 @@ class AccountingEntryLine extends Model {
             'journal_id' => [
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
-                'foreign_object'    => 'finance\accounting\AccountingJournal',
+                'foreign_object'    => 'finance\accounting\Journal',
                 'description'       => "Accounting journal the entry relates to.",
                 'relation'          => ['accounting_entry_id' => 'journal_id'],
                 'store'             => true

@@ -10,7 +10,7 @@ use symbiose\setting\Setting;
 use finance\accounting\Account;
 use finance\accounting\AccountingEntry;
 use finance\accounting\AccountingEntryLine;
-use finance\accounting\AccountingJournal;
+use finance\accounting\Journal;
 use sale\customer\Customer;
 use sale\pay\Funding;
 use sale\receivable\Receivable;
@@ -68,7 +68,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
 
             'journal_id' => [
                 'type'           => 'many2one',
-                'foreign_object' => 'finance\accounting\AccountingJournal',
+                'foreign_object' => 'finance\accounting\Journal',
                 'description'    => 'Accounting journal used to post the invoice.',
                 'domain'         => [
                     ['organization_id', '=', 'object.organization_id']
@@ -848,7 +848,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
         $self->read(['id', 'organization_id', 'accounting_entries_ids' => ['id', 'entry_lines_ids']]);
 
         foreach($self as $id => $invoice) {
-            $journal = AccountingJournal::search([['organization_id', '=', $invoice['organization_id']], ['journal_type', '=', 'SALE']])->read(['id'])->first();
+            $journal = Journal::search([['organization_id', '=', $invoice['organization_id']], ['journal_type', '=', 'SALE']])->read(['id'])->first();
 
             if(!$journal) {
                 throw new \Exception('missing_mandatory_journal', EQ_ERROR_INVALID_CONFIG);

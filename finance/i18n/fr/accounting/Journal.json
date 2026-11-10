@@ -1,0 +1,93 @@
+{
+    "name": "Journal comptable",
+    "plural": "Journaux comptables",
+    "description": "Un journal comptable regroupe les écritures selon leur nature et les dirige vers la catégorie comptable appropriée.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom du journal.",
+            "help": "Le nom est calculé à partir du mnémonique, du code, de la description et du type."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Description du rôle du journal.",
+            "help": "Décrivez brièvement les opérations destinées à ce journal."
+        },
+        "mnemo": {
+            "label": "Mnémonique",
+            "description": "Préfixe court utilisé dans le nom du journal.",
+            "help": "Saisissez une abréviation permettant d'identifier rapidement le journal."
+        },
+        "code": {
+            "label": "Code du journal",
+            "description": "Code unique du journal au sein de son organisation.",
+            "help": "Ce code peut également servir à faire correspondre le journal dans un outil externe."
+        },
+        "organization_id": {
+            "label": "Organisation",
+            "description": "Organisation à laquelle appartient le journal.",
+            "help": "Sélectionnez l'organisation qui utilise ce journal."
+        },
+        "journal_type": {
+            "label": "Type",
+            "selection": {
+                "LEDG": "Grand livre",
+                "SALE": "Ventes",
+                "PURC": "Achats",
+                "BANK": "Banque",
+                "CASH": "Caisse",
+                "PAYR": "Paies",
+                "ASST": "Immobilisations",
+                "OPEN": "Ouverture et report à nouveau",
+                "MISC": "Opérations diverses"
+            },
+            "description": "Nature des opérations regroupées dans le journal.",
+            "help": "Sélectionnez le type correspondant à l'usage comptable du journal."
+        },
+        "is_visible": {
+            "label": "Visible",
+            "description": "Indique si le journal est visible pour les utilisateurs.",
+            "help": "Désactivez cette option pour masquer le journal sans le supprimer."
+        },
+        "accounting_entries_ids": {
+            "label": "Écritures comptables",
+            "description": "Écritures comptables rattachées au journal.",
+            "help": "Consultez les écritures enregistrées dans ce journal."
+        },
+        "has_parent": {
+            "label": "Sous-journal",
+            "description": "Indique si ce journal dépend d'un journal parent.",
+            "help": "Cette valeur est calculée automatiquement à partir du journal parent."
+        },
+        "parent_journal_id": {
+            "label": "Journal parent",
+            "description": "Journal principal auquel ce sous-journal est rattaché.",
+            "help": "Sélectionnez un journal principal de la même organisation et du même type."
+        },
+        "sub_journals_ids": {
+            "label": "Sous-journaux",
+            "description": "Sous-journaux rattachés à ce journal principal.",
+            "help": "Créez ou consultez les sous-journaux de ce journal."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Journal comptable",
+            "description": "Gestion d'un journal comptable et de ses sous-journaux.",
+            "layout": {
+                "section.accounting_entries_section": {
+                    "label": "Écritures comptables"
+                },
+                "section.sub_journals": {
+                    "label": "Sous-journaux"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Journaux comptables",
+            "description": "Liste des journaux comptables et de leurs sous-journaux.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

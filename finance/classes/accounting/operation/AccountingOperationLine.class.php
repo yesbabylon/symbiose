@@ -97,7 +97,7 @@ class AccountingOperationLine extends Model {
             'journal_id' => [
                 'type'           => 'computed',
                 'result_type'    => 'many2one',
-                'foreign_object' => 'finance\accounting\AccountingJournal',
+                'foreign_object' => 'finance\accounting\Journal',
                 'description'    => 'Accounting journal inherited from the operation.',
                 'relation'       => ['accounting_operation_id' => 'journal_id'],
                 'store'          => true,

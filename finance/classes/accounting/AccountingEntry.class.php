@@ -24,7 +24,7 @@ class AccountingEntry extends Model {
 
             'journal_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\AccountingJournal',
+                'foreign_object'    => 'finance\accounting\Journal',
                 'description'       => "Accounting journal the entry relates to.",
                 'required'          => true
             ],

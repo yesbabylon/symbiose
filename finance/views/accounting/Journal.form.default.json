@@ -1,6 +1,6 @@
 {
-    "name": "Invoice Accounting Entry",
-    "description": "Invoice Accounting Entries.",
+    "name": "Accounting journal",
+    "description": "Manage an accounting journal and its sub-journals.",
     "access": {
         "groups": ["finance.default.users"]
     },
@@ -18,10 +18,15 @@
                                             {
                                                 "type": "field",
                                                 "value": "description",
-                                                "width": "100%",
+                                                "width": "50%",
                                                 "widget": {
                                                     "heading": true
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "mnemo",
+                                                "width": "50%"
                                             }
                                         ]
                                     },
@@ -46,6 +51,21 @@
                                                 "type": "field",
                                                 "value": "journal_type",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_visible",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_parent",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "parent_journal_id",
+                                                "width": "100%"
                                             }
                                         ]
                                     }
@@ -78,6 +98,30 @@
                         ]
                     }
 
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "label": "Sub-journals",
+                        "id": "section.sub_journals",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "sub_journals_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 ]
             }
         ]

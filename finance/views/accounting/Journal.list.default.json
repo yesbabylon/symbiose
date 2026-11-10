@@ -1,0 +1,47 @@
+{
+    "name": "Accounting journals",
+    "description": "List of accounting journals and sub-journals.",
+    "access": {
+        "groups": ["finance.default.users"]
+    },
+    "limit": 100,
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "code",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "mnemo",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "journal_type",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "organization_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "is_visible",
+                "width": "5%"
+            }
+        ]
+    }
+}

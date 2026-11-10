@@ -8,7 +8,7 @@
 namespace sale\pay;
 
 use equal\orm\Model;
-use finance\accounting\AccountingJournal;
+use finance\accounting\Journal;
 use finance\bank\BankStatementLine;
 
 /**
@@ -38,7 +38,7 @@ class FundingAllocation extends Model {
             'journal_id' => [
                 'type'           => 'computed',
                 'result_type'    => 'many2one',
-                'foreign_object' => 'finance\accounting\AccountingJournal',
+                'foreign_object' => 'finance\accounting\Journal',
                 'function'       => 'calcJournalId',
                 'description'    => 'Bank and cash accounting journal of the organization.',
                 'readonly'       => true,
@@ -207,7 +207,7 @@ class FundingAllocation extends Model {
             if(!$allocation['organization_id']) {
                 continue;
             }
-            $journal = AccountingJournal::search([
+            $journal = Journal::search([
                     ['organization_id', '=', $allocation['organization_id']],
                     ['journal_type', '=', 'CASH']
                 ])

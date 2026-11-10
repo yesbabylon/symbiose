@@ -1,6 +1,6 @@
 [
     {
-        "name": "finance\\accounting\\AccountingJournal",
+        "name": "finance\\accounting\\Journal",
         "lang": "en",
         "data": [
             {
@@ -13,7 +13,7 @@
         ]
     },
     {
-        "name": "finance\\accounting\\AccountingJournal",
+        "name": "finance\\accounting\\Journal",
         "lang": "fr",
         "data": [
             {
@@ -24,7 +24,7 @@
         ]
     },
     {
-        "name": "finance\\accounting\\AccountingJournal",
+        "name": "finance\\accounting\\Journal",
         "lang": "nl",
         "data": [
             {
