@@ -12,16 +12,56 @@
             "label": "External project ID",
             "description": "Project identifier assigned by the cloud provider.",
             "help": "Enter the provider's project identifier, such as an OVHcloud or Google Cloud project ID."
+        },
+        "cloud_provider_code": {
+            "label": "Cloud provider code",
+            "description": "Technical code of the cloud provider hosting the project.",
+            "help": "This value is derived from the selected cloud provider."
+        },
+        "servers_ids": {
+            "label": "Servers",
+            "description": "Servers hosted in the cloud project.",
+            "help": "Lists the servers associated with this cloud project."
+        },
+        "provider_catalog": {
+            "label": "Provider catalog",
+            "description": "Provider-specific resources available to this cloud project.",
+            "help": "Synchronize the catalog to refresh regional flavors, images, SSH keys and networks."
         }
     },
     "view": {
         "form.default": {
             "name": "Cloud project",
-            "description": "Displays and edits a cloud project."
+            "description": "Displays and edits a cloud project.",
+            "actions": {
+                "action.create-ovh-server": {
+                    "label": "Create OVHcloud server",
+                    "description": "Creates a server in this OVHcloud project."
+                },
+                "action.sync-provider-catalog": {
+                    "label": "Synchronize provider catalog",
+                    "description": "Refreshes the regional resources available to this cloud project."
+                }
+            }
         },
         "list.default": {
             "name": "Cloud projects",
             "description": "Lists cloud projects."
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_cloud_project": "The cloud project was not found.",
+            "unsupported_catalog_provider": "Catalog synchronization is not supported for this cloud provider.",
+            "missing_extref_project_id": "The cloud project has no external provider identifier.",
+            "missing_api_credentials": "The cloud project has no API credentials.",
+            "invalid_api_credentials": "The cloud project's API credentials are invalid.",
+            "failed_retrieving_ovh_time": "The OVHcloud API time could not be retrieved.",
+            "invalid_ovh_time_response": "OVHcloud returned an invalid API time response.",
+            "failed_retrieving_ovh_catalog": "The OVHcloud resource catalog could not be retrieved.",
+            "invalid_ovh_catalog_response": "OVHcloud returned an invalid resource catalog response.",
+            "missing_provider_catalog_regions": "No configured region is available to synchronize for this cloud project.",
+            "invalid_provider_catalog": "The provider catalog could not be encoded."
         }
     }
 }

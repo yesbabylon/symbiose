@@ -1,6 +1,20 @@
 {
     "name": "Cloud Project",
     "description": "Default form for cloud projects.",
+    "actions": [
+        {
+            "id": "action.sync-provider-catalog",
+            "label": "Synchronize provider catalog",
+            "controller": "infra_cloud_CloudProject_sync-provider-catalog",
+            "visible": ["cloud_provider_code", "=", "ovh"]
+        },
+        {
+            "id": "action.create-ovh-server",
+            "label": "Create OVHcloud server",
+            "controller": "infra_cloud_CloudProject_create-ovh-server",
+            "visible": ["cloud_provider_code", "=", "ovh"]
+        }
+    ],
     "layout": {
         "groups": [
             {
@@ -19,8 +33,53 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "cloud_provider_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "cloud_provider_code",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "extref_project_id",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "api_credentials",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "provider_catalog",
+                                                "width": "100%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.servers",
+                        "label": "Servers",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "servers_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

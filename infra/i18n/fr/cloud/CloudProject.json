@@ -12,16 +12,56 @@
             "label": "Identifiant externe du projet",
             "description": "Identifiant du projet attribué par le fournisseur cloud.",
             "help": "Indiquez l'identifiant du projet chez le fournisseur, tel qu'un project_id OVHcloud ou Google Cloud."
+        },
+        "cloud_provider_code": {
+            "label": "Code du fournisseur cloud",
+            "description": "Code technique du fournisseur cloud qui héberge le projet.",
+            "help": "Cette valeur est déduite du fournisseur cloud sélectionné."
+        },
+        "servers_ids": {
+            "label": "Serveurs",
+            "description": "Serveurs hébergés dans le projet cloud.",
+            "help": "Liste les serveurs associés à ce projet cloud."
+        },
+        "provider_catalog": {
+            "label": "Catalogue du fournisseur",
+            "description": "Ressources propres au fournisseur disponibles pour ce projet cloud.",
+            "help": "Synchronisez le catalogue pour actualiser les types d'instances, images, clés SSH et réseaux régionaux."
         }
     },
     "view": {
         "form.default": {
             "name": "Projet cloud",
-            "description": "Affiche et modifie un projet cloud."
+            "description": "Affiche et modifie un projet cloud.",
+            "actions": {
+                "action.create-ovh-server": {
+                    "label": "Créer un serveur OVHcloud",
+                    "description": "Crée un serveur dans ce projet OVHcloud."
+                },
+                "action.sync-provider-catalog": {
+                    "label": "Synchroniser le catalogue du fournisseur",
+                    "description": "Actualise les ressources régionales disponibles pour ce projet cloud."
+                }
+            }
         },
         "list.default": {
             "name": "Projets cloud",
             "description": "Liste les projets cloud."
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_cloud_project": "Le projet cloud est introuvable.",
+            "unsupported_catalog_provider": "La synchronisation du catalogue n'est pas prise en charge pour ce fournisseur cloud.",
+            "missing_extref_project_id": "Le projet cloud ne possède aucun identifiant externe chez le fournisseur.",
+            "missing_api_credentials": "Le projet cloud ne possède aucun identifiant d'API.",
+            "invalid_api_credentials": "Les identifiants d'API du projet cloud sont invalides.",
+            "failed_retrieving_ovh_time": "L'heure de l'API OVHcloud n'a pas pu être récupérée.",
+            "invalid_ovh_time_response": "OVHcloud a renvoyé une réponse d'heure d'API invalide.",
+            "failed_retrieving_ovh_catalog": "Le catalogue de ressources OVHcloud n'a pas pu être récupéré.",
+            "invalid_ovh_catalog_response": "OVHcloud a renvoyé une réponse de catalogue de ressources invalide.",
+            "missing_provider_catalog_regions": "Aucune région configurée n'est disponible pour synchroniser ce projet cloud.",
+            "invalid_provider_catalog": "Le catalogue du fournisseur n'a pas pu être encodé."
         }
     }
 }

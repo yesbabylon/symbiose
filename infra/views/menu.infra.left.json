@@ -144,6 +144,37 @@
                         ]
                     },
                     {
+                        "id": "item.advanced.cloud",
+                        "type": "parent",
+                        "label": "Cloud",
+                        "icon": "cloud",
+                        "description": "",
+                        "children": [
+                            {
+                                "id": "item.advanced.cloud.providers",
+                                "type": "entry",
+                                "label": "Cloud providers",
+                                "icon": "",
+                                "description": "",
+                                "context": {
+                                    "entity": "infra\\cloud\\CloudProvider",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "item.advanced.cloud.projects",
+                                "type": "entry",
+                                "label": "Cloud projects",
+                                "icon": "",
+                                "description": "",
+                                "context": {
+                                    "entity": "infra\\cloud\\CloudProject",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
+                    },
+                    {
                         "id": "item.advanced.softwares",
                         "type": "entry",
                         "label": "Softwares",
