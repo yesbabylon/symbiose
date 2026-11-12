@@ -9,7 +9,7 @@
             "visible": ["cloud_provider_code", "=", "ovh"]
         },
         {
-            "id": "action.create-ovh-server",
+            "id": "action.create-server",
             "label": "Create OVHcloud server",
             "controller": "infra_cloud_ovh_create-server",
             "visible": ["cloud_provider_code", "=", "ovh"]

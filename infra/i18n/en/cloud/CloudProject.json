@@ -44,7 +44,7 @@
             "name": "Cloud project",
             "description": "Displays and edits a cloud project.",
             "actions": {
-                "action.create-ovh-server": {
+                "action.create-server": {
                     "label": "Create OVHcloud server",
                     "description": "Creates a server in this OVHcloud project."
                 },
