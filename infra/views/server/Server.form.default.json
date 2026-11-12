@@ -103,6 +103,12 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "extref_server_id",
+                                                "width": "50%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "region_id",
                                                 "width": "50%"
                                             },
