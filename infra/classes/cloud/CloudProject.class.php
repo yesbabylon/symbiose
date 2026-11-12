@@ -50,14 +50,14 @@ class CloudProject extends Model {
                 'type'        => 'string',
                 'usage'       => 'text/json',
                 'default'     => '{}',
-                'description' => 'JSON object containing credentials used to authenticate with the cloud provider APIs.'
+                'description' => 'JSON object with credentials for cloud provider APIs.'
             ],
 
             'provider_catalog' => [
                 'type'        => 'string',
                 'usage'       => 'text/json',
                 'default'     => '{}',
-                'description' => 'Provider-specific JSON catalog of resources available to the cloud project.'
+                'description' => 'Provider-specific JSON catalog of cloud project resources.'
             ],
 
             'servers_ids' => [
