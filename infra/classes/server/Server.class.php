@@ -49,6 +49,12 @@ class Server extends Model {
                 // 'required'          => true
             ],
 
+            'extref_server_id' => [
+                'type'              => 'string',
+                'usage'             => 'text/plain:128',
+                'description'       => 'Server identifier assigned by the external cloud provider.'
+            ],
+
             'region_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'infra\cloud\Region',

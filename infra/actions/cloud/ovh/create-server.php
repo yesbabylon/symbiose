@@ -77,13 +77,14 @@ use infra\server\Server;
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context']
+    'providers'     => ['context', 'cron']
 ]);
 
 /**
- * @var \equal\php\Context $context
+ * @var \equal\php\Context      $context
+ * @var \equal\cron\Scheduler   $cron
  */
-['context' => $context] = $providers;
+['context' => $context, 'cron' => $cron] = $providers;
 
 /**
  * Methods
@@ -413,6 +414,18 @@ Access::create([
     'username'      => 'root',
     'password'      => $password,
 ]);
+
+$cron->schedule(
+    "infra.ovh-server.{$server['id']}.sync-provisioning",
+    strtotime('+5 minutes'),
+    'infra_cloud_ovh_sync-server',
+    [
+        'server_id'        => $server['id'],
+        'operation_id'     => $response_data['id'],
+        'attempt'          => 1,
+        'retry_on_failure' => true
+    ]
+);
 
 $context
     ->httpResponse()

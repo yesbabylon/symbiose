@@ -18,6 +18,11 @@
             "description": "Cloud provider hosting the server.",
             "help": "Select the provider before selecting a region."
         },
+        "extref_server_id": {
+            "label": "External server ID",
+            "description": "Server identifier assigned by the external cloud provider.",
+            "help": "This value is synchronized automatically after cloud provisioning."
+        },
         "region_id": {
             "label": "Region",
             "description": "Geographic cloud region hosting the server.",

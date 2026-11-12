@@ -61,7 +61,13 @@
             "failed_retrieving_ovh_catalog": "The OVHcloud resource catalog could not be retrieved.",
             "invalid_ovh_catalog_response": "OVHcloud returned an invalid resource catalog response.",
             "missing_provider_catalog_regions": "No configured region is available to synchronize for this cloud project.",
-            "invalid_provider_catalog": "The provider catalog could not be encoded."
+            "invalid_provider_catalog": "The provider catalog could not be encoded.",
+            "unknown_server": "The server was not found.",
+            "missing_operation_id": "The OVHcloud creation operation identifier is required while the server has no external identifier.",
+            "failed_retrieving_ovh_server": "The OVHcloud server provisioning status could not be retrieved.",
+            "invalid_ovh_server_response": "OVHcloud returned an invalid server provisioning response.",
+            "ovh_server_creation_failed": "OVHcloud could not complete the server creation operation.",
+            "ovh_server_sync_timeout": "The OVHcloud server did not become ready before synchronization timed out."
         }
     }
 }
