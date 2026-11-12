@@ -367,6 +367,45 @@ $body = [
     'userData'          => $getUserData($name, $password) // #memo - script that configures, installs and starts the b2-server
 ];
 
+/*
+
+Example of possible options:
+
+{
+  "availabilityZone": null,
+  "bootFrom": {
+    "imageId": "62b2bb6b-d5bd-46c0-a23f-fd673f595bdc",
+    "imageRegionName": "GRA11",
+    "volumeId": null
+  },
+  "bulk": 1,
+  "flavor": {
+    "id": "c6e9b74f-c419-426c-b24c-85aa0ce73495"
+  },
+  "name": "d2-2-2026_11_12-10-56",
+  "network": {
+    "private": {
+      "floatingIp": null,
+      "floatingIpCreate": null,
+      "gatewayCreate": null,
+      "network": {
+        "id": "0351b90e-b104-4c3a-8709-3148dc2f4fa4",
+        "subnetId": "b5e46838-1dc3-42fa-a25a-8fe6413276d4"
+      },
+      "networkCreate": null
+    },
+    "public": true
+  },
+  "sshKey": {
+    "name": "lucas-Vivobook-ASUSLaptop"
+  },
+  "sshKeyCreate": null,
+  "billingPeriod": "hourly",
+  "autobackup": null,
+  "userData": null
+}
+*/
+
 $raw_body = $encodeBody($body);
 
 $timestamp = $getOvhTimestamp();
