@@ -173,8 +173,6 @@ if(empty($configured_region_codes)) {
 $flavors = $get_ovh_collection("$base_path/flavor");
 $images = $get_ovh_collection("$base_path/image", ['osType' => 'linux']);
 $ssh_keys = $get_ovh_collection("$base_path/sshkey");
-$public_networks = $get_ovh_collection("$base_path/network/public");
-$private_networks = $get_ovh_collection("$base_path/network/private");
 
 $catalog = [
     'provider'  => 'ovh',
@@ -190,6 +188,34 @@ foreach(array_keys($configured_region_codes) as $region_code) {
         'public_networks'  => [],
         'private_networks' => []
     ];
+
+    $regional_networks = $get_ovh_collection(
+        "$base_path/region/".rawurlencode($region_code).'/network'
+    );
+    foreach($regional_networks as $network) {
+        $visibility = $network['visibility'] ?? null;
+        if(
+            !in_array($visibility, ['public', 'private'], true)
+            || empty($network['id'])
+            || ($network['status'] ?? null) !== 'ACTIVE'
+        ) {
+            continue;
+        }
+
+        $catalog_key = $visibility.'_networks';
+        $network_data = [
+            'id'   => $network['id'],
+            'name' => $network['name'] ?? $network['id']
+        ];
+        if($visibility === 'private') {
+            $network_data['subnet_ids'] = array_values(array_filter(
+                $network['subnetIds'] ?? [],
+                fn($subnet_id) => is_string($subnet_id) && $subnet_id !== ''
+            ));
+        }
+
+        $catalog['regions'][$region_code][$catalog_key][$network['id']] = $network_data;
+    }
 }
 
 $allowed_flavor_names = ['d2-2', 'd2-4', 'b3-8'];
@@ -245,32 +271,6 @@ foreach($ssh_keys as $ssh_key) {
         ];
     }
 }
-
-$append_networks = function(array $networks, string $catalog_key) use (&$catalog, $configured_region_codes) {
-    foreach($networks as $network) {
-        if(empty($network['id']) || ($network['status'] ?? null) !== 'ACTIVE') {
-            continue;
-        }
-
-        foreach($network['regions'] ?? [] as $network_region) {
-            $region_code = $network_region['region'] ?? null;
-            if(
-                !isset($configured_region_codes[$region_code])
-                || ($network_region['status'] ?? null) !== 'ACTIVE'
-            ) {
-                continue;
-            }
-
-            $catalog['regions'][$region_code][$catalog_key][$network['id']] = [
-                'id'    => $network['id'],
-                'name'  => $network['name'] ?? $network['id']
-            ];
-        }
-    }
-};
-
-$append_networks($public_networks, 'public_networks');
-$append_networks($private_networks, 'private_networks');
 
 foreach($catalog['regions'] as &$region_catalog) {
     foreach($region_catalog as &$resources) {

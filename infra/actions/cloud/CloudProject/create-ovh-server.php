@@ -6,6 +6,7 @@
 */
 
 use equal\http\HttpRequest;
+use infra\Access;
 use infra\cloud\AvailabilityZone;
 use infra\cloud\CloudProject;
 use infra\cloud\Region;
@@ -46,7 +47,8 @@ use infra\server\Server;
                 'd2-2',
                 'd2-4',
                 'b3-8'
-            ]
+            ],
+            'default'           => 'd2-2'
         ],
         'image' => [
             'type'              => 'string',
@@ -54,7 +56,17 @@ use infra\server\Server;
             'selection'         => [
                 'Ubuntu 26.04 - UEFI',
                 'Ubuntu 24.04 - UEFI'
-            ]
+            ],
+            'default'           => 'Ubuntu 26.04 - UEFI'
+        ],
+        'billing_period' => [
+            'type'              => 'string',
+            'description'       => 'The billing period of the server to create.',
+            'selection'         => [
+                'monthly',
+                'hourly'
+            ],
+            'default'           => 'monthly'
         ]
     ],
     'access'        => [
@@ -77,8 +89,21 @@ use infra\server\Server;
  * Methods
  */
 
-$getUserData = function(string $name) {
-    $userData = <<<'YAML'
+$randomStr = function(int $length = 16): string {
+    $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*';
+    $str = '';
+    $max = mb_strlen($keyspace, '8bit') - 1;
+    if($max < 1) {
+        throw new Exception('$keyspace must be at least two characters long');
+    }
+    for ($i = 0; $i < $length; ++$i) {
+        $str .= $keyspace[random_int(0, $max)];
+    }
+    return $str;
+};
+
+$getUserData = function(string $name, string $password): string {
+    $user_data = <<<'YAML'
 #cloud-config
 package_update: true
 packages:
@@ -89,12 +114,12 @@ write_files:
   - path: /root/b2-bootstrap.env
     permissions: '0600'
     content: |
-      HOSTNAME='__HOSTNAME__'
+      HOSTNAME=__HOSTNAME__
       BACKUP_HOST='backup.example.internal'
       PUBLIC_IP=''
       PRIVATE_IP=''
-      GPG_PASSPHRASE='test123456'
-      ROOT_PASSWORD='test123456'
+      GPG_PASSPHRASE=__PASSWORD__
+      ROOT_PASSWORD=__PASSWORD__
 
 runcmd:
   - |
@@ -131,12 +156,13 @@ runcmd:
     install -m 600 /root/b2-bootstrap.env /root/b2/.env
     rm /root/b2-bootstrap.env
     ./install.sh
+    systemctl start b2-listener.service
     BASH
 YAML;
 
-    $userData = str_replace('__HOSTNAME__', escapeshellarg($name), $userData);
+    $user_data = str_replace('__HOSTNAME__', escapeshellarg($name), $user_data);
 
-    return $userData;
+    return str_replace('__PASSWORD__', escapeshellarg($password), $user_data);
 };
 
 $encodeBody = function($body): ?string {
@@ -298,48 +324,47 @@ if(!$image) {
     throw new Exception('invalid_image', EQ_ERROR_INVALID_PARAM);
 }
 
-$public_network = null;
-foreach($region_catalog['public_networks'] as $pub_net) {
-    if($pub_net['name'] === 'Ext-Net') {
-        $public_network = $pub_net;
-        break;
-    }
-}
-if(!$public_network) {
-    throw new Exception('invalid_image', EQ_ERROR_INVALID_PARAM);
-}
-
 $ssh_key = $region_catalog['ssh_keys'][0] ?? null;
 if(!$ssh_key) {
     throw new Exception('missing_ssh_key', EQ_ERROR_INVALID_PARAM);
 }
 
 $private_network = $region_catalog['private_networks'][0] ?? null;
-if(!$private_network) {
+if(
+    !$private_network
+    || empty($private_network['id'])
+    || empty($private_network['subnet_ids'][0])
+) {
     throw new Exception('missing_private_network', EQ_ERROR_INVALID_PARAM);
 }
 
+$project_id = rawurlencode($cloudProject['extref_project_id']);
+$region_code = rawurlencode($region['code']);
+$base_url = "https://eu.api.ovh.com/1.0/cloud/project/$project_id";
+
+$password = $randomStr();
+
 $method = 'POST';
-$url = "https://eu.api.ovh.com/1.0/cloud/project/{$cloudProject['extref_project_id']}/instance";
-$body = [
-    'flavorId' => $flavor['id'],
-    'imageId' => $image['id'],
-    'monthlyBilling' => false,
-    'name' => $name,
-    'region' => $region['code'],
-    'sshKeyId' => $ssh_key['id'],
-    'networks' => [
-        ['networkId' => $public_network['id']],
-        ['networkId' => $private_network['id']]
+$url = "$base_url/region/$region_code/instance";
+$network = [
+    'private' => [
+        'network' => [
+            'id'        => $private_network['id'],
+            'subnetId'  => $private_network['subnet_ids'][0]]
     ],
-    'userData' => $getUserData($name)
+    'public' => true
 ];
-
-if($zone) {
-    $body['availabilityZone'] = $zone['code'];
-}
-
-file_put_contents(QN_LOG_STORAGE_DIR.'/tmp.log', json_encode($body).PHP_EOL, FILE_APPEND | LOCK_EX);
+$body = [
+    'availabilityZone'  => $zone ? $zone['code'] : null,
+    'bootFrom'          => ['imageId' => $image['id'], 'imageRegionName' => $region['code']],
+    'bulk'              => 1,
+    'flavor'            => ['id' => $flavor['id']],
+    'name'              => $name,
+    'network'           => $network,
+    'sshKey'            => ['name' => $ssh_key['name']],
+    'billingPeriod'     => $params['billing_period'],
+    'userData'          => $getUserData($name, $password) // #memo - script that configures, installs and starts the b2-server
+];
 
 $raw_body = $encodeBody($body);
 
@@ -358,27 +383,38 @@ $request = (new HttpRequest("$method $url"))
 $response = $request->send();
 
 if($response->getStatusCode() !== 200) {
-    file_put_contents(QN_LOG_STORAGE_DIR.'/tmp.log', json_encode($response->body()).PHP_EOL, FILE_APPEND | LOCK_EX);
     throw new \Exception('failed_creating_ovh_server', EQ_ERROR_UNKNOWN);
 }
 
 $response_data = $response->body();
+if(isset($response_data['value']) && is_array($response_data['value'])) {
+    $response_data = $response_data['value'];
+}
 
-file_put_contents(QN_LOG_STORAGE_DIR.'/tmp.log', $response->status().PHP_EOL, FILE_APPEND | LOCK_EX);
-file_put_contents(QN_LOG_STORAGE_DIR.'/tmp.log', json_encode($response_data).PHP_EOL, FILE_APPEND | LOCK_EX);
+if(empty($response_data['id'])) {
+    throw new \Exception('failed_creating_ovh_server', EQ_ERROR_UNKNOWN);
+}
 
-Server::create([
+$server = Server::create([
     'name'              => $name,
     'server_type'       => 'b2',
     'cloud_provider_id' => $cloudProject['cloud_provider_id']['id'],
     'cloud_project_id'  => $cloudProject['id'],
-    'region_id'         => $region['id'],
-    'extref_server_id'  => $response_data['id']
+    'region_id'         => $region['id']
+])
+    ->first();
+
+Access::create([
+    'server_id'     => $server['id'],
+    'description'   => 'Created by action create-ovh-server.',
+    'access_type'   => 'http',
+    'host'          => $name,
+    'port'          => '8000',
+    'username'      => 'root',
+    'password'      => $password,
 ]);
-
-// TODO: create access and save root password
-
 
 $context
     ->httpResponse()
+    ->body($response_data)
     ->send();
