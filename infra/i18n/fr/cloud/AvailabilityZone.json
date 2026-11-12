@@ -13,6 +13,11 @@
             "description": "Nom lisible de la zone de disponibilité.",
             "help": "Utilisez un nom qui distingue cette zone des autres zones de la région."
         },
+        "cloud_provider_id": {
+            "label": "Fournisseur cloud",
+            "description": "Fournisseur cloud qui exploite la zone de disponibilité.",
+            "help": "Sélectionnez le fournisseur cloud avant de sélectionner la région."
+        },
         "region_id": {
             "label": "Région",
             "description": "Région cloud contenant la zone de disponibilité.",

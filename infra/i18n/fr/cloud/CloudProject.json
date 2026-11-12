@@ -8,6 +8,11 @@
             "description": "Nom lisible du projet cloud.",
             "help": "Utilisez le nom sous lequel le projet est habituellement identifié."
         },
+        "cloud_provider_id": {
+            "label": "Fournisseur cloud",
+            "description": "Fournisseur cloud qui héberge le projet.",
+            "help": "Sélectionnez le fournisseur qui détient et exploite ce projet cloud."
+        },
         "extref_project_id": {
             "label": "Identifiant externe du projet",
             "description": "Identifiant du projet attribué par le fournisseur cloud.",
@@ -27,6 +32,11 @@
             "label": "Catalogue du fournisseur",
             "description": "Ressources propres au fournisseur disponibles pour ce projet cloud.",
             "help": "Synchronisez le catalogue pour actualiser les types d'instances, images, clés SSH et réseaux régionaux."
+        },
+        "api_credentials": {
+            "label": "Identifiants API",
+            "description": "Identifiants utilisés pour authentifier les requêtes auprès de l'API du fournisseur cloud.",
+            "help": "Saisissez un objet JSON valide. Pour OVHcloud, indiquez application_key, application_secret et consumer_key. Gardez ces identifiants secrets et accordez uniquement les permissions nécessaires."
         }
     },
     "view": {
@@ -38,9 +48,17 @@
                     "label": "Créer un serveur OVHcloud",
                     "description": "Crée un serveur dans ce projet OVHcloud."
                 },
-                "action.sync-provider-catalog": {
-                    "label": "Synchroniser le catalogue du fournisseur",
+                "action.sync-ovh-provider-catalog": {
+                    "label": "Synchroniser le catalogue OVH",
                     "description": "Actualise les ressources régionales disponibles pour ce projet cloud."
+                }
+            },
+            "layout": {
+                "section.servers": {
+                    "label": "Serveurs"
+                },
+                "section.provider-catalog": {
+                    "label": "Catalogue fournisseur"
                 }
             }
         },
@@ -52,10 +70,14 @@
     "error": {
         "errors": {
             "unknown_cloud_project": "Le projet cloud est introuvable.",
+            "wrong_cloud_provider": "Cette action n'est pas prise en charge par le fournisseur du projet cloud.",
             "unsupported_catalog_provider": "La synchronisation du catalogue n'est pas prise en charge pour ce fournisseur cloud.",
             "missing_extref_project_id": "Le projet cloud ne possède aucun identifiant externe chez le fournisseur.",
             "missing_api_credentials": "Le projet cloud ne possède aucun identifiant d'API.",
             "invalid_api_credentials": "Les identifiants d'API du projet cloud sont invalides.",
+            "invalid_application_key": "La clé d'application OVHcloud est manquante ou invalide.",
+            "invalid_application_secret": "Le secret d'application OVHcloud est manquant ou invalide.",
+            "invalid_consumer_key": "La clé consommateur OVHcloud est manquante ou invalide.",
             "failed_retrieving_ovh_time": "L'heure de l'API OVHcloud n'a pas pu être récupérée.",
             "invalid_ovh_time_response": "OVHcloud a renvoyé une réponse d'heure d'API invalide.",
             "failed_retrieving_ovh_catalog": "Le catalogue de ressources OVHcloud n'a pas pu être récupéré.",
@@ -63,7 +85,17 @@
             "missing_provider_catalog_regions": "Aucune région configurée n'est disponible pour synchroniser ce projet cloud.",
             "invalid_provider_catalog": "Le catalogue du fournisseur n'a pas pu être encodé.",
             "unknown_server": "Le serveur est introuvable.",
+            "invalid_name": "Le nom du serveur est invalide.",
+            "unknown_region": "La région cloud est introuvable.",
+            "invalid_region": "La région sélectionnée n'est pas disponible pour ce projet cloud.",
+            "unknown_zone": "La zone de disponibilité est introuvable.",
+            "invalid_zone": "La zone de disponibilité sélectionnée n'appartient pas à la région sélectionnée.",
+            "invalid_flavor": "Le type d'instance sélectionné n'est pas disponible dans cette région.",
+            "invalid_image": "L'image de serveur sélectionnée n'est pas disponible dans cette région.",
+            "missing_ssh_key": "Aucune clé SSH n'est disponible pour ce projet cloud et cette région.",
+            "missing_private_network": "Aucun réseau privé avec un sous-réseau n'est disponible pour ce projet cloud et cette région.",
             "missing_operation_id": "L'identifiant de l'opération de création OVHcloud est requis tant que le serveur n'a pas d'identifiant externe.",
+            "failed_creating_ovh_server": "OVHcloud a rejeté la requête de création du serveur.",
             "failed_retrieving_ovh_server": "Le statut de provisionnement du serveur OVHcloud n'a pas pu être récupéré.",
             "invalid_ovh_server_response": "OVHcloud a renvoyé une réponse de provisionnement de serveur invalide.",
             "ovh_server_creation_failed": "OVHcloud n'a pas pu terminer l'opération de création du serveur.",

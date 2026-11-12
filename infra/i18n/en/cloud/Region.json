@@ -27,7 +27,12 @@
     "view": {
         "form.default": {
             "name": "Cloud region",
-            "description": "Displays and edits a cloud region and its availability zones."
+            "description": "Displays and edits a cloud region and its availability zones.",
+            "layout": {
+                "section.zones": {
+                    "label": "Availability zones"
+                }
+            }
         },
         "list.default": {
             "name": "Cloud regions",

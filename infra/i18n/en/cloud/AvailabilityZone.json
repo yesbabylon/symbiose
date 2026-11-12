@@ -13,6 +13,11 @@
             "description": "Human-readable name of the availability zone.",
             "help": "Use a name that distinguishes the zone from other zones in the region."
         },
+        "cloud_provider_id": {
+            "label": "Cloud provider",
+            "description": "Cloud provider operating the availability zone.",
+            "help": "Select the cloud provider before selecting the region."
+        },
         "region_id": {
             "label": "Region",
             "description": "Cloud region containing the availability zone.",

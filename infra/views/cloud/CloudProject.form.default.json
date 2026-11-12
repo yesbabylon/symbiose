@@ -3,7 +3,7 @@
     "description": "Default form for cloud projects.",
     "actions": [
         {
-            "id": "action.sync-provider-catalog",
+            "id": "action.sync-ovh-provider-catalog",
             "label": "Synchronize provider catalog",
             "controller": "infra_cloud_ovh_sync-provider-catalog",
             "visible": ["cloud_provider_code", "=", "ovh"]
