@@ -36,6 +36,8 @@ $region_definitions = [
     ['code' => 'SBG5',        'name' => 'Strasbourg (SBG5)'],
     ['code' => 'SBG7',        'name' => 'Strasbourg (SBG7)'],
     ['code' => 'RBX-A',       'name' => 'Roubaix (RBX-A)'],
+    ['code' => 'EU-WEST-RBX', 'name' => 'Roubaix (EU-WEST-RBX)'],
+    ['code' => 'UK1',         'name' => 'London (UK1)'],
     ['code' => 'WAW1',        'name' => 'Warsaw (WAW1)'],
     [
         'code'               => 'EU-WEST-PAR',
@@ -43,9 +45,18 @@ $region_definitions = [
         'availability_zones' => [
             'EU-WEST-PAR-A',
             'EU-WEST-PAR-B',
-            'EU-WEST-PAR-C'
-        ]
-    ]
+            'EU-WEST-PAR-C',
+        ],
+    ],
+    [
+        'code'               => 'EU-SOUTH-MIL',
+        'name'               => 'Milan (EU-SOUTH-MIL)',
+        'availability_zones' => [
+            'EU-SOUTH-MIL-A',
+            'EU-SOUTH-MIL-B',
+            'EU-SOUTH-MIL-C',
+        ],
+    ],
 ];
 
 foreach($region_definitions as $region_definition) {
