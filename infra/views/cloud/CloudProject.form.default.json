@@ -50,12 +50,6 @@
                                                 "type": "field",
                                                 "value": "api_credentials",
                                                 "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "provider_catalog",
-                                                "width": "100%",
-                                                "readonly": true
                                             }
                                         ]
                                     }
@@ -80,6 +74,30 @@
                                                 "type": "field",
                                                 "value": "servers_ids",
                                                 "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.provider-catalog",
+                        "label": "Provider catalog",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "provider_catalog",
+                                                "width": "100%",
+                                                "readonly": true,
+                                                "widget": {
+                                                    "height": 500
+                                                }
                                             }
                                         ]
                                     }
