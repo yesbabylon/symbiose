@@ -35,6 +35,89 @@ use infra\cloud\Region;
  */
 ['context' => $context] = $providers;
 
+/**
+ * Methods
+ */
+
+$getOvhTimestamp = function(): int {
+    $request = new HttpRequest('GET https://eu.api.ovh.com/1.0/auth/time');
+    $request->header('Accept', 'application/json');
+
+    $response = $request->send();
+    if($response->getStatusCode() !== 200) {
+        throw new Exception('failed_retrieving_ovh_time', EQ_ERROR_UNKNOWN);
+    }
+
+    $body = $response->body();
+    if(is_array($body) && isset($body['value'])) {
+        $body = $body['value'];
+    }
+
+    if(!is_numeric($body)) {
+        throw new Exception('invalid_ovh_time_response', EQ_ERROR_UNKNOWN);
+    }
+
+    return (int) $body;
+};
+
+$signOvhRequest = function(array $api_credentials, string $method, string $url, int $timestamp): string {
+    $fingerprint = $api_credentials['application_secret']
+        . '+'
+        . $api_credentials['consumer_key']
+        . '+'
+        . strtoupper($method)
+        . '+'
+        . $url
+        . '++'
+        . $timestamp;
+
+    return '$1$' . sha1($fingerprint);
+};
+
+$getOvhCollection = function(array $api_credentials, string $path, array $query = []) use($getOvhTimestamp, $signOvhRequest): array {
+    $method = 'GET';
+    $base_url = 'https://eu.api.ovh.com/1.0' . $path;
+    $query_string = http_build_query($query);
+    // HttpRequest::send() rebuilds every GET URL from its body, including the
+    // trailing question mark when the body is empty. Sign that effective URL.
+    $url = $base_url . '?' . $query_string;
+    $timestamp = $getOvhTimestamp();
+    $signature = $signOvhRequest($api_credentials, $method, $url, $timestamp);
+
+    $request = (new HttpRequest("$method $base_url"))
+        ->header('Accept', 'application/json')
+        ->header('X-Ovh-Application', $api_credentials['application_key'])
+        ->header('X-Ovh-Consumer', $api_credentials['consumer_key'])
+        ->header('X-Ovh-Timestamp', (string) $timestamp)
+        ->header('X-Ovh-Signature', $signature)
+        ->body($query);
+
+    $response = $request->send();
+    if($response->getStatusCode() !== 200) {
+        trigger_error(
+            'APP::Unable to retrieve an OVHcloud provider catalog resource.',
+            EQ_REPORT_WARNING
+        );
+        file_put_contents(QN_LOG_STORAGE_DIR.'/tmp.log', json_encode($response->body()).PHP_EOL, FILE_APPEND | LOCK_EX);
+        throw new Exception('failed_retrieving_ovh_catalog', EQ_ERROR_UNKNOWN);
+    }
+
+    $body = $response->body();
+    if(isset($body['value']) && is_array($body['value'])) {
+        $body = $body['value'];
+    }
+
+    if(!is_array($body)) {
+        throw new Exception('invalid_ovh_catalog_response', EQ_ERROR_UNKNOWN);
+    }
+
+    return $body;
+};
+
+/**
+ * Action
+ */
+
 $cloud_project = CloudProject::id($params['id'])
     ->read([
         'extref_project_id',
@@ -72,85 +155,10 @@ if(
     throw new Exception('invalid_api_credentials', EQ_ERROR_INVALID_PARAM);
 }
 
-$get_ovh_timestamp = function(): int {
-    $request = new HttpRequest('GET https://eu.api.ovh.com/1.0/auth/time');
-    $request->header('Accept', 'application/json');
-
-    $response = $request->send();
-    if($response->getStatusCode() !== 200) {
-        throw new Exception('failed_retrieving_ovh_time', EQ_ERROR_UNKNOWN);
-    }
-
-    $body = $response->body();
-    if(is_array($body) && isset($body['value'])) {
-        $body = $body['value'];
-    }
-
-    if(!is_numeric($body)) {
-        throw new Exception('invalid_ovh_time_response', EQ_ERROR_UNKNOWN);
-    }
-
-    return (int) $body;
-};
-
-$sign_ovh_request = function(string $method, string $url, int $timestamp) use ($api_credentials): string {
-    $fingerprint = $api_credentials['application_secret']
-        . '+'
-        . $api_credentials['consumer_key']
-        . '+'
-        . strtoupper($method)
-        . '+'
-        . $url
-        . '++'
-        . $timestamp;
-
-    return '$1$' . sha1($fingerprint);
-};
-
-$get_ovh_collection = function(string $path, array $query = []) use ($api_credentials, $get_ovh_timestamp, $sign_ovh_request): array {
-    $method = 'GET';
-    $base_url = 'https://eu.api.ovh.com/1.0' . $path;
-    $query_string = http_build_query($query);
-    // HttpRequest::send() rebuilds every GET URL from its body, including the
-    // trailing question mark when the body is empty. Sign that effective URL.
-    $url = $base_url . '?' . $query_string;
-    $timestamp = $get_ovh_timestamp();
-    $signature = $sign_ovh_request($method, $url, $timestamp);
-
-    $request = (new HttpRequest("$method $base_url"))
-        ->header('Accept', 'application/json')
-        ->header('X-Ovh-Application', $api_credentials['application_key'])
-        ->header('X-Ovh-Consumer', $api_credentials['consumer_key'])
-        ->header('X-Ovh-Timestamp', (string) $timestamp)
-        ->header('X-Ovh-Signature', $signature)
-        ->body($query);
-
-    $response = $request->send();
-    if($response->getStatusCode() !== 200) {
-        trigger_error(
-            'APP::Unable to retrieve an OVHcloud provider catalog resource.',
-            EQ_REPORT_WARNING
-        );
-        file_put_contents(QN_LOG_STORAGE_DIR.'/tmp.log', json_encode($response->body()).PHP_EOL, FILE_APPEND | LOCK_EX);
-        throw new Exception('failed_retrieving_ovh_catalog', EQ_ERROR_UNKNOWN);
-    }
-
-    $body = $response->body();
-    if(isset($body['value']) && is_array($body['value'])) {
-        $body = $body['value'];
-    }
-
-    if(!is_array($body)) {
-        throw new Exception('invalid_ovh_catalog_response', EQ_ERROR_UNKNOWN);
-    }
-
-    return $body;
-};
-
 $project_id = rawurlencode($cloud_project['extref_project_id']);
 $base_path = "/cloud/project/$project_id";
 
-$ovh_region_codes = $get_ovh_collection("$base_path/region");
+$ovh_region_codes = $getOvhCollection($api_credentials, "$base_path/region");
 $ovh_region_codes = array_fill_keys(
     array_filter($ovh_region_codes, fn($code) => is_string($code) && $code !== ''),
     true
@@ -170,9 +178,9 @@ if(empty($configured_region_codes)) {
     throw new Exception('missing_provider_catalog_regions', EQ_ERROR_INVALID_PARAM);
 }
 
-$flavors = $get_ovh_collection("$base_path/flavor");
-$images = $get_ovh_collection("$base_path/image", ['osType' => 'linux']);
-$ssh_keys = $get_ovh_collection("$base_path/sshkey");
+$flavors = $getOvhCollection($api_credentials, "$base_path/flavor");
+$images = $getOvhCollection($api_credentials, "$base_path/image", ['osType' => 'linux']);
+$ssh_keys = $getOvhCollection($api_credentials, "$base_path/sshkey");
 
 $catalog = [
     'provider'  => 'ovh',
@@ -189,7 +197,8 @@ foreach(array_keys($configured_region_codes) as $region_code) {
         'private_networks' => []
     ];
 
-    $regional_networks = $get_ovh_collection(
+    $regional_networks = $getOvhCollection(
+        $api_credentials,
         "$base_path/region/".rawurlencode($region_code).'/network'
     );
     foreach($regional_networks as $network) {

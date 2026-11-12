@@ -80,7 +80,7 @@ $getOvhTimestamp = function(): int {
     return (int) $body;
 };
 
-$getOvhResource = function(array $api_credentials, string $url, array $query = []) use ($getOvhTimestamp): array {
+$getOvhResource = function(array $api_credentials, string $url, array $query = []) use($getOvhTimestamp): array {
     $method = 'GET';
     $effective_url = $url.'?'.http_build_query($query);
     $timestamp = $getOvhTimestamp();
@@ -120,7 +120,7 @@ $getOvhResource = function(array $api_credentials, string $url, array $query = [
     return $body;
 };
 
-$scheduleRetry = function() use ($cron, $params): void {
+$scheduleRetry = function() use($cron, $params): void {
     if($params['attempt'] >= 6) {
         throw new Exception('ovh_server_sync_timeout', EQ_ERROR_UNKNOWN);
     }
@@ -142,7 +142,7 @@ $scheduleRetry = function() use ($cron, $params): void {
     );
 };
 
-$findResourceId = function(array $operation) use (&$findResourceId): ?string {
+$findResourceId = function(array $operation) use(&$findResourceId): ?string {
     if(!empty($operation['resourceId'])) {
         return $operation['resourceId'];
     }
@@ -372,8 +372,6 @@ catch(Throwable $throwable) {
         ->send();
     return;
 }
-
-
 
 $context
     ->httpResponse()
