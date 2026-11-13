@@ -15,13 +15,6 @@ class DeploymentZone extends Model {
         return 'Provider-specific deployment target located within a geographic cloud region.';
     }
 
-    /**
-     * Keep the existing storage table so the entity rename preserves all rows and identifiers.
-     */
-    public static function getModelTable(): string {
-        return 'infra_cloud_availabilityzone';
-    }
-
     public static function getColumns(): array {
         return [
 
