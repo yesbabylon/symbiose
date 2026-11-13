@@ -169,6 +169,10 @@ $server = Server::id($params['server_id'])
     ->read([
         'cloud_project_id',
         'region_id',
+        'deployment_zone_id' => [
+            'code',
+            'type'
+        ],
         'extref_server_id',
         'ip_address_ids' => [
             'ip_v4',
@@ -205,6 +209,14 @@ $region = Region::id($server['region_id'])
 
 if(!$region) {
     throw new Exception('unknown_region', EQ_ERROR_UNKNOWN_OBJECT);
+}
+
+$ovh_region_code = $region['code'];
+if(
+    $server['deployment_zone_id']
+    && $server['deployment_zone_id']['type'] === 'provider_region'
+) {
+    $ovh_region_code = $server['deployment_zone_id']['code'];
 }
 
 $api_credentials = is_array($cloud_project['api_credentials'])
@@ -257,7 +269,7 @@ try {
         Server::id($server['id'])->update(['extref_server_id' => $instance_id]);
     }
 
-    $region_code = rawurlencode($region['code']);
+    $region_code = rawurlencode($ovh_region_code);
     $instance = $getOvhResource(
         $api_credentials,
         "$base_url/region/$region_code/instance/".rawurlencode($instance_id),

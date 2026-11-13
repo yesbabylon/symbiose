@@ -9,7 +9,7 @@ namespace infra\server;
 
 use equal\orm\Model;
 use infra\Access;
-use infra\cloud\AvailabilityZone;
+use infra\cloud\DeploymentZone;
 use infra\cloud\Region;
 
 class Server extends Model {
@@ -63,11 +63,19 @@ class Server extends Model {
                 // 'required'          => true
             ],
 
+            'deployment_zone_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'infra\cloud\DeploymentZone',
+                'description'       => 'Provider deployment target hosting the server.',
+                'domain'            => ['region_id', '=', 'object.region_id']
+            ],
+
             'zone_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'infra\cloud\AvailabilityZone',
-                'description'       => 'Availability zone hosting the server, when known.',
-                'domain'            => ['region_id', '=', 'object.region_id']
+                'foreign_object'    => 'infra\cloud\DeploymentZone',
+                'description'       => 'Legacy deployment target reference retained for data migration.',
+                'visible'           => false,
+                'deprecated'        => true
             ],
 
             'server_type' => [
@@ -197,11 +205,11 @@ class Server extends Model {
                     }
                 ]
             ],
-            'zone_id' => [
+            'deployment_zone_id' => [
                 'invalid_region' => [
-                    'message'       => 'Availability zone must belong to the selected region.',
-                    'function'      => function($zone_id, $values) {
-                        if(empty($zone_id)) {
+                    'message'       => 'Deployment zone must belong to the selected region.',
+                    'function'      => function($deployment_zone_id, $values) {
+                        if(empty($deployment_zone_id)) {
                             return true;
                         }
                         if(!array_key_exists('region_id', $values)) {
@@ -211,7 +219,7 @@ class Server extends Model {
                             return false;
                         }
 
-                        $zone = AvailabilityZone::id($zone_id)
+                        $zone = DeploymentZone::id($deployment_zone_id)
                             ->read(['region_id'])
                             ->first();
 
@@ -226,7 +234,7 @@ class Server extends Model {
     public static function getPolicies(): array {
         return array_merge(parent::getPolicies(), [
             'valid_cloud_location' => [
-                'description'       => 'Ensure the cloud region and availability zone belong to their selected parents.',
+                'description'       => 'Ensure the cloud region and deployment zone belong to their selected parents.',
                 'function'          => 'policyValidCloudLocation'
             ]
         ]);
@@ -238,13 +246,13 @@ class Server extends Model {
                 '*'                 => true,
                 'cloud_provider_id' => ['valid_cloud_location'],
                 'region_id'         => ['valid_cloud_location'],
-                'zone_id'           => ['valid_cloud_location']
+                'deployment_zone_id' => ['valid_cloud_location']
             ]
         ]);
     }
 
     protected static function policyValidCloudLocation($self, $values): array {
-        $self->read(['state', 'cloud_provider_id', 'region_id', 'zone_id']);
+        $self->read(['state', 'cloud_provider_id', 'region_id', 'deployment_zone_id']);
 
         $result = [];
         foreach($self as $id => $server) {
@@ -254,9 +262,9 @@ class Server extends Model {
             $region_id = array_key_exists('region_id', $values)
                 ? $values['region_id']
                 : $server['region_id'];
-            $zone_id = array_key_exists('zone_id', $values)
-                ? $values['zone_id']
-                : $server['zone_id'];
+            $deployment_zone_id = array_key_exists('deployment_zone_id', $values)
+                ? $values['deployment_zone_id']
+                : $server['deployment_zone_id'];
 
             if(empty($cloud_provider_id) || empty($region_id)) {
                 if($server['state'] === 'draft') {
@@ -274,15 +282,15 @@ class Server extends Model {
                 continue;
             }
 
-            if(empty($zone_id)) {
+            if(empty($deployment_zone_id)) {
                 continue;
             }
 
-            $zone = AvailabilityZone::id($zone_id)
+            $zone = DeploymentZone::id($deployment_zone_id)
                 ->read(['region_id'])
                 ->first();
             if(!$zone || (int) $zone['region_id'] !== (int) $region_id) {
-                $result[$id]['invalid_region'] = 'Availability zone must belong to the selected region.';
+                $result[$id]['invalid_region'] = 'Deployment zone must belong to the selected region.';
             }
         }
 

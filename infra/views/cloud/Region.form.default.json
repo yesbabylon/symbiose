@@ -38,8 +38,8 @@
             {
                 "sections": [
                     {
-                        "id": "section.zones",
-                        "label": "Zones",
+                        "id": "section.deployment-zones",
+                        "label": "Deployment zones",
                         "rows": [
                             {
                                 "columns": [
@@ -48,7 +48,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "zones_ids",
+                                                "value": "deployment_zones_ids",
                                                 "width": "100%"
                                             }
                                         ]

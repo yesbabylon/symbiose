@@ -28,10 +28,15 @@
             "description": "Geographic cloud region hosting the server.",
             "help": "Only regions belonging to the selected provider are available."
         },
+        "deployment_zone_id": {
+            "label": "Deployment zone",
+            "description": "Provider-specific deployment target hosting the server.",
+            "help": "Only deployment targets from the selected geographic region are available."
+        },
         "zone_id": {
-            "label": "Availability zone",
-            "description": "Availability zone hosting the server, when known.",
-            "help": "This field is optional and only lists zones from the selected region."
+            "label": "Legacy deployment zone",
+            "description": "Legacy deployment target reference retained for data migration.",
+            "help": "This hidden field is copied to the current deployment zone during package initialization."
         },
         "server_type": {
             "label": "Type",
@@ -137,12 +142,12 @@
         "region_id": {
             "invalid_cloud_provider": "The region must belong to the selected cloud provider."
         },
-        "zone_id": {
-            "invalid_region": "The availability zone must belong to the selected region."
+        "deployment_zone_id": {
+            "invalid_region": "The deployment zone must belong to the selected region."
         },
         "errors": {
             "invalid_cloud_provider": "A cloud provider and one of its regions are required, and the region must belong to that provider.",
-            "invalid_region": "The availability zone must belong to the selected region."
+            "invalid_region": "The deployment zone must belong to the selected region."
         }
     }
 }

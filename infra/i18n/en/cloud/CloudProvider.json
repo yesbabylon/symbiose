@@ -18,6 +18,11 @@
             "description": "Geographic regions operated by the cloud provider.",
             "help": "Manage the provider's distinct cloud regions."
         },
+        "deployment_zones_ids": {
+            "label": "Deployment zones",
+            "description": "Deployment targets exposed by the cloud provider.",
+            "help": "Lists the provider-specific targets attached to geographic regions."
+        },
         "projects_ids": {
             "label": "Cloud projects",
             "description": "Cloud projects hosted by the provider.",

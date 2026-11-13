@@ -18,19 +18,19 @@
             "description": "Cloud provider operating the region.",
             "help": "Select the provider to which this region belongs."
         },
-        "zones_ids": {
-            "label": "Availability zones",
-            "description": "Availability zones located within the region.",
-            "help": "Manage the failure-isolated zones available in this region."
+        "deployment_zones_ids": {
+            "label": "Deployment zones",
+            "description": "Provider-specific deployment targets located within the region.",
+            "help": "Manage the deployment targets exposed in this geographic region."
         }
     },
     "view": {
         "form.default": {
             "name": "Cloud region",
-            "description": "Displays and edits a cloud region and its availability zones.",
+            "description": "Displays and edits a geographic cloud region and its deployment zones.",
             "layout": {
-                "section.zones": {
-                    "label": "Availability zones"
+                "section.deployment-zones": {
+                    "label": "Deployment zones"
                 }
             }
         },

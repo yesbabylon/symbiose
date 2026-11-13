@@ -7,8 +7,8 @@
 
 use equal\http\HttpRequest;
 use infra\Access;
-use infra\cloud\AvailabilityZone;
 use infra\cloud\CloudProject;
+use infra\cloud\DeploymentZone;
 use infra\cloud\Region;
 use infra\server\Server;
 
@@ -32,10 +32,11 @@ use infra\server\Server;
             'description'       => 'Identifier of the region where the server should be added.',
             'required'          => true
         ],
-        'availability_zone_id' => [
+        'deployment_zone_id' => [
             'type'              => 'many2one',
-            'foreign_object'    => 'infra\cloud\AvailabilityZone',
-            'description'       => 'Identifier of the availability zone where the server should be added.',
+            'foreign_object'    => 'infra\cloud\DeploymentZone',
+            'description'       => 'Identifier of the deployment target where the server should be added.',
+            'required'          => true,
             'domain'            => [
                 ['region_id', '=', 'object.region_id']
             ]
@@ -266,38 +267,54 @@ if(empty($name)) {
 }
 
 $region = Region::id($params['region_id'])
-    ->read(['code'])
-    ->first(true);
+    ->read(['code', 'cloud_provider_id'])
+    ->first();
 
 if(!$region) {
     throw new Exception('unknown_region', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
-$zone = null;
-if(!empty($params['availability_zone_id'])) {
-    $zone = AvailabilityZone::id($params['availability_zone_id'])
-        ->read(['code', 'region_id'])
-        ->first();
+$deployment_zone = DeploymentZone::id($params['deployment_zone_id'])
+    ->read(['code', 'type', 'region_id', 'cloud_provider_id'])
+    ->first();
 
-    if(!$zone) {
-        throw new Exception('unknown_zone', EQ_ERROR_UNKNOWN_OBJECT);
-    }
-
-    if($zone['region_id'] !== $region['id']) {
-        throw new Exception('invalid_zone', EQ_ERROR_INVALID_PARAM);
-    }
+if(!$deployment_zone) {
+    throw new Exception('unknown_deployment_zone', EQ_ERROR_UNKNOWN_OBJECT);
 }
+
+if(
+    (int) $region['cloud_provider_id'] !== (int) $cloudProject['cloud_provider_id']['id']
+    || (int) $deployment_zone['cloud_provider_id'] !== (int) $cloudProject['cloud_provider_id']['id']
+    || (int) $deployment_zone['region_id'] !== (int) $region['id']
+) {
+    throw new Exception('invalid_deployment_zone', EQ_ERROR_INVALID_PARAM);
+}
+
+$ovh_region_code = $deployment_zone['type'] === 'provider_region'
+    ? $deployment_zone['code']
+    : $region['code'];
+
+$ovh_availability_zone = $deployment_zone['type'] === 'availability_zone'
+    ? $deployment_zone['code']
+    : null;
 
 if(empty($cloudProject['provider_catalog'])) {
     throw new Exception('invalid_provider_catalog', EQ_ERROR_INVALID_PARAM);
 }
 
 $provider_catalog = json_decode($cloudProject['provider_catalog'], true);
+if(!is_array($provider_catalog)) {
+    throw new Exception('invalid_provider_catalog', EQ_ERROR_INVALID_PARAM);
+}
 
-$region_catalog = $provider_catalog['regions'][$region['code']] ?? null;
+$region_catalog = $provider_catalog['regions'][$ovh_region_code] ?? null;
 if(!$region_catalog) {
-    // #memo - the region is not part of the project and cannot be used
+    // #memo - the provider region is not part of the project and cannot be used
     throw new Exception('invalid_region', EQ_ERROR_INVALID_PARAM);
+}
+
+if(!in_array($deployment_zone['code'], $region_catalog['deployment_zones'] ?? [], true)) {
+    throw new Exception('invalid_deployment_zone', EQ_ERROR_INVALID_PARAM);
 }
 
 $flavor = null;
@@ -337,7 +354,7 @@ if(
 }
 
 $project_id = rawurlencode($cloudProject['extref_project_id']);
-$region_code = rawurlencode($region['code']);
+$region_code = rawurlencode($ovh_region_code);
 $base_url = "https://eu.api.ovh.com/1.0/cloud/project/$project_id";
 
 $password = $randomStr();
@@ -353,8 +370,8 @@ $network = [
     'public' => true
 ];
 $body = [
-    'availabilityZone'  => $zone ? $zone['code'] : null,
-    'bootFrom'          => ['imageId' => $image['id'], 'imageRegionName' => $region['code']],
+    'availabilityZone'  => $ovh_availability_zone,
+    'bootFrom'          => ['imageId' => $image['id'], 'imageRegionName' => $ovh_region_code],
     'bulk'              => 1,
     'flavor'            => ['id' => $flavor['id']],
     'name'              => $name,
@@ -433,11 +450,12 @@ if(empty($response_data['id'])) {
 }
 
 $server = Server::create([
-    'name'              => $name,
-    'server_type'       => 'b2',
-    'cloud_provider_id' => $cloudProject['cloud_provider_id']['id'],
-    'cloud_project_id'  => $cloudProject['id'],
-    'region_id'         => $region['id']
+    'name'               => $name,
+    'server_type'        => 'b2',
+    'cloud_provider_id'  => $cloudProject['cloud_provider_id']['id'],
+    'cloud_project_id'   => $cloudProject['id'],
+    'region_id'          => $region['id'],
+    'deployment_zone_id' => $deployment_zone['id']
 ])
     ->first();
 

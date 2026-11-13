@@ -46,7 +46,7 @@
             },
             {
                 "type": "field",
-                "value": "zone_id",
+                "value": "deployment_zone_id",
                 "width": "15%",
                 "sortable": true
             },

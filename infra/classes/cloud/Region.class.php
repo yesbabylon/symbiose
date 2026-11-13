@@ -38,11 +38,11 @@ class Region extends Model {
                 'required'          => true
             ],
 
-            'zones_ids' => [
+            'deployment_zones_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'infra\cloud\AvailabilityZone',
+                'foreign_object'    => 'infra\cloud\DeploymentZone',
                 'foreign_field'     => 'region_id',
-                'description'       => 'Availability zones located in the region.'
+                'description'       => 'Provider-specific deployment targets located in the region.'
             ]
 
         ];

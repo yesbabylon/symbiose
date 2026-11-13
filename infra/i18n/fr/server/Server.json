@@ -28,10 +28,15 @@
             "description": "Région cloud géographique qui héberge le serveur.",
             "help": "Seules les régions du fournisseur sélectionné sont proposées."
         },
+        "deployment_zone_id": {
+            "label": "Zone de déploiement",
+            "description": "Cible de déploiement qui héberge le serveur.",
+            "help": "Seules les cibles de déploiement de la région géographique sélectionnée sont proposées."
+        },
         "zone_id": {
-            "label": "Zone de disponibilité",
-            "description": "Zone de disponibilité qui héberge le serveur.",
-            "help": "Ce champ est facultatif et ne propose que les zones de la région sélectionnée."
+            "label": "Ancienne zone de déploiement",
+            "description": "Ancienne cible conservée pour la migration des données.",
+            "help": "Ce champ masqué est copié vers la zone de déploiement actuelle lors de l'initialisation du package."
         },
         "up": {
             "label": "En ligne",
@@ -166,12 +171,12 @@
         "region_id": {
             "invalid_cloud_provider": "La région doit appartenir au fournisseur cloud sélectionné."
         },
-        "zone_id": {
-            "invalid_region": "La zone de disponibilité doit appartenir à la région sélectionnée."
+        "deployment_zone_id": {
+            "invalid_region": "La zone de déploiement doit appartenir à la région sélectionnée."
         },
         "errors": {
             "invalid_cloud_provider": "Un fournisseur cloud et l'une de ses régions sont requis, et la région doit appartenir à ce fournisseur.",
-            "invalid_region": "La zone de disponibilité doit appartenir à la région sélectionnée."
+            "invalid_region": "La zone de déploiement doit appartenir à la région sélectionnée."
         }
     }
 }

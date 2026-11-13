@@ -18,6 +18,11 @@
             "description": "Régions géographiques exploitées par le fournisseur cloud.",
             "help": "Gérez les différentes régions cloud du fournisseur."
         },
+        "deployment_zones_ids": {
+            "label": "Zones de déploiement",
+            "description": "Cibles de déploiement exposées par le fournisseur cloud.",
+            "help": "Liste les cibles propres au fournisseur rattachées aux régions géographiques."
+        },
         "projects_ids": {
             "label": "Projets cloud",
             "description": "Projets cloud hébergés par le fournisseur.",

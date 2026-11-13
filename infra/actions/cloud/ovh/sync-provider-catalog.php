@@ -7,7 +7,7 @@
 
 use equal\http\HttpRequest;
 use infra\cloud\CloudProject;
-use infra\cloud\Region;
+use infra\cloud\DeploymentZone;
 
 [$params, $providers] = eQual::announce([
     'description'   => 'Synchronize the provider resource catalog of a cloud project.',
@@ -165,12 +165,20 @@ $ovh_region_codes = array_fill_keys(
 );
 
 $configured_region_codes = [];
-$configured_regions = Region::search([
+$configured_deployment_zones = DeploymentZone::search([
     ['cloud_provider_id', '=', $cloud_project['cloud_provider_id']['id']]
-])->read(['code']);
-foreach($configured_regions as $configured_region) {
-    if(isset($ovh_region_codes[$configured_region['code']])) {
-        $configured_region_codes[$configured_region['code']] = true;
+])->read([
+    'code',
+    'type',
+    'region_id' => ['code']
+]);
+foreach($configured_deployment_zones as $deployment_zone) {
+    $region_code = $deployment_zone['type'] === 'provider_region'
+        ? $deployment_zone['code']
+        : $deployment_zone['region_id']['code'];
+
+    if(isset($ovh_region_codes[$region_code])) {
+        $configured_region_codes[$region_code][$deployment_zone['code']] = $deployment_zone['type'];
     }
 }
 
@@ -189,7 +197,38 @@ $catalog = [
 ];
 
 foreach(array_keys($configured_region_codes) as $region_code) {
+    $region_info = $getOvhCollection(
+        $api_credentials,
+        "$base_path/region/".rawurlencode($region_code)
+    );
+
+    $reported_availability_zones = array_fill_keys(
+        array_filter(
+            $region_info['availabilityZones'] ?? [],
+            fn($code) => is_string($code) && $code !== ''
+        ),
+        true
+    );
+    $available_deployment_zones = [];
+    foreach($configured_region_codes[$region_code] as $deployment_zone_code => $deployment_zone_type) {
+        if(
+            ($deployment_zone_type === 'provider_region' && $deployment_zone_code === $region_code)
+            || (
+                $deployment_zone_type === 'availability_zone'
+                && isset($reported_availability_zones[$deployment_zone_code])
+            )
+        ) {
+            $available_deployment_zones[] = $deployment_zone_code;
+        }
+    }
+
+    if(empty($available_deployment_zones)) {
+        unset($configured_region_codes[$region_code]);
+        continue;
+    }
+
     $catalog['regions'][$region_code] = [
+        'deployment_zones'  => $available_deployment_zones,
         'flavors'          => [],
         'images'           => [],
         'ssh_keys'         => [],
@@ -225,6 +264,10 @@ foreach(array_keys($configured_region_codes) as $region_code) {
 
         $catalog['regions'][$region_code][$catalog_key][$network['id']] = $network_data;
     }
+}
+
+if(empty($catalog['regions'])) {
+    throw new Exception('missing_provider_catalog_regions', EQ_ERROR_INVALID_PARAM);
 }
 
 $allowed_flavor_names = ['d2-2', 'd2-4', 'b3-8'];
@@ -282,7 +325,11 @@ foreach($ssh_keys as $ssh_key) {
 }
 
 foreach($catalog['regions'] as &$region_catalog) {
-    foreach($region_catalog as &$resources) {
+    foreach($region_catalog as $resource_type => &$resources) {
+        if($resource_type === 'deployment_zones') {
+            sort($resources);
+            continue;
+        }
         $resources = array_values($resources);
         usort($resources, fn($a, $b) => strcasecmp($a['name'], $b['name']));
     }

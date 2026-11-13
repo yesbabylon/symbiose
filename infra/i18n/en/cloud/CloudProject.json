@@ -31,7 +31,7 @@
         "provider_catalog": {
             "label": "Provider catalog",
             "description": "Provider-specific resources available to this cloud project.",
-            "help": "Synchronize the catalog to refresh regional flavors, images, SSH keys and networks."
+            "help": "Synchronize the catalog to refresh deployment zones, regional flavors, images, SSH keys and networks."
         },
         "api_credentials": {
             "label": "API credentials",
@@ -88,8 +88,8 @@
             "invalid_name": "The server name is invalid.",
             "unknown_region": "The cloud region was not found.",
             "invalid_region": "The selected region is not available for this cloud project.",
-            "unknown_zone": "The availability zone was not found.",
-            "invalid_zone": "The selected availability zone does not belong to the selected region.",
+            "unknown_deployment_zone": "The deployment zone was not found.",
+            "invalid_deployment_zone": "The selected deployment zone is not available for this project and region.",
             "invalid_flavor": "The selected server flavor is not available in this region.",
             "invalid_image": "The selected server image is not available in this region.",
             "missing_ssh_key": "No SSH key is available for this cloud project and region.",

@@ -18,19 +18,19 @@
             "description": "Fournisseur cloud qui exploite la région.",
             "help": "Sélectionnez le fournisseur auquel cette région appartient."
         },
-        "zones_ids": {
-            "label": "Zones de disponibilité",
-            "description": "Zones de disponibilité situées dans la région.",
-            "help": "Gérez les zones isolées des défaillances disponibles dans cette région."
+        "deployment_zones_ids": {
+            "label": "Zones de déploiement",
+            "description": "Cibles de déploiement situées dans la région.",
+            "help": "Gérez les cibles de déploiement exposées dans cette région géographique."
         }
     },
     "view": {
         "form.default": {
             "name": "Région cloud",
-            "description": "Affiche et modifie une région cloud et ses zones de disponibilité.",
+            "description": "Affiche et modifie une région cloud géographique et ses zones de déploiement.",
             "layout": {
-                "section.zones": {
-                    "label": "Zones de disponibilité"
+                "section.deployment-zones": {
+                    "label": "Zones de déploiement"
                 }
             }
         },

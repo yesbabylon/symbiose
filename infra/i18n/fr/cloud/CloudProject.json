@@ -31,7 +31,7 @@
         "provider_catalog": {
             "label": "Catalogue du fournisseur",
             "description": "Ressources propres au fournisseur disponibles pour ce projet cloud.",
-            "help": "Synchronisez le catalogue pour actualiser les types d'instances, images, clés SSH et réseaux régionaux."
+            "help": "Synchronisez le catalogue pour actualiser les zones de déploiement, types d'instances, images, clés SSH et réseaux régionaux."
         },
         "api_credentials": {
             "label": "Identifiants API",
@@ -88,8 +88,8 @@
             "invalid_name": "Le nom du serveur est invalide.",
             "unknown_region": "La région cloud est introuvable.",
             "invalid_region": "La région sélectionnée n'est pas disponible pour ce projet cloud.",
-            "unknown_zone": "La zone de disponibilité est introuvable.",
-            "invalid_zone": "La zone de disponibilité sélectionnée n'appartient pas à la région sélectionnée.",
+            "unknown_deployment_zone": "La zone de déploiement est introuvable.",
+            "invalid_deployment_zone": "La zone de déploiement sélectionnée n'est pas disponible pour ce projet et cette région.",
             "invalid_flavor": "Le type d'instance sélectionné n'est pas disponible dans cette région.",
             "invalid_image": "L'image de serveur sélectionnée n'est pas disponible dans cette région.",
             "missing_ssh_key": "Aucune clé SSH n'est disponible pour ce projet cloud et cette région.",
