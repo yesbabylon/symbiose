@@ -1,0 +1,46 @@
+{
+    "name": "Zone de déploiement",
+    "plural": "Zones de déploiement",
+    "description": "Cible de déploiement propre au fournisseur au sein d'une région cloud géographique.",
+    "model": {
+        "code": {
+            "label": "Code",
+            "description": "Code technique de la cible de déploiement propre au fournisseur.",
+            "help": "Utilisez l'identifiant attendu par l'API du fournisseur cloud."
+        },
+        "name": {
+            "label": "Nom",
+            "description": "Nom lisible de la cible de déploiement.",
+            "help": "Utilisez un nom qui distingue cette cible dans sa région géographique."
+        },
+        "type": {
+            "label": "Type",
+            "description": "Interprétation de la cible de déploiement par le fournisseur.",
+            "help": "Indiquez si la cible est une zone de disponibilité ou une région technique du fournisseur.",
+            "selection": {
+                "availability_zone": "Zone de disponibilité",
+                "provider_region": "Région du fournisseur"
+            }
+        },
+        "cloud_provider_id": {
+            "label": "Fournisseur cloud",
+            "description": "Fournisseur cloud qui expose la cible de déploiement.",
+            "help": "Sélectionnez le fournisseur avant la région géographique."
+        },
+        "region_id": {
+            "label": "Région",
+            "description": "Région géographique contenant la cible de déploiement.",
+            "help": "Sélectionnez la région géographique à laquelle cette cible appartient."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Zone de déploiement",
+            "description": "Affiche et modifie une zone de déploiement."
+        },
+        "list.default": {
+            "name": "Zones de déploiement",
+            "description": "Liste les cibles de déploiement par région géographique."
+        }
+    }
+}

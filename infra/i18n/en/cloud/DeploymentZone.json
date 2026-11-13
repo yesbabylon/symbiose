@@ -1,0 +1,46 @@
+{
+    "name": "Deployment zone",
+    "plural": "Deployment zones",
+    "description": "Provider-specific deployment target located within a geographic cloud region.",
+    "model": {
+        "code": {
+            "label": "Code",
+            "description": "Provider-specific technical code of the deployment target.",
+            "help": "Use the identifier expected by the cloud provider API."
+        },
+        "name": {
+            "label": "Name",
+            "description": "Human-readable name of the deployment target.",
+            "help": "Use a name that distinguishes this target within its geographic region."
+        },
+        "type": {
+            "label": "Type",
+            "description": "Provider interpretation of the deployment target.",
+            "help": "Choose whether the target is an availability zone or a provider-specific technical region.",
+            "selection": {
+                "availability_zone": "Availability zone",
+                "provider_region": "Provider region"
+            }
+        },
+        "cloud_provider_id": {
+            "label": "Cloud provider",
+            "description": "Cloud provider exposing the deployment target.",
+            "help": "Select the provider before selecting the geographic region."
+        },
+        "region_id": {
+            "label": "Region",
+            "description": "Geographic region containing the deployment target.",
+            "help": "Select the geographic region to which this target belongs."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Deployment zone",
+            "description": "Displays and edits a deployment zone."
+        },
+        "list.default": {
+            "name": "Deployment zones",
+            "description": "Lists deployment targets by geographic region."
+        }
+    }
+}
