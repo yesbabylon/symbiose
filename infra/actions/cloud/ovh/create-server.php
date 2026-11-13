@@ -47,6 +47,7 @@ use infra\server\Server;
             'selection'         => [
                 'd2-2',
                 'd2-4',
+                'd2-8',
                 'b3-8'
             ],
             'default'           => 'd2-2'
@@ -224,9 +225,7 @@ $cloudProject = CloudProject::id($params['id'])
         'api_access_token',
         'api_access_token_expiry',
         'provider_catalog',
-        'cloud_provider_id' => [
-            'code'
-        ]
+        'cloud_provider_id' => ['code']
     ])
     ->first();
 
@@ -360,7 +359,9 @@ $base_url = "https://eu.api.ovh.com/1.0/cloud/project/$project_id";
 $password = $randomStr();
 
 $method = 'POST';
+
 $url = "$base_url/region/$region_code/instance";
+
 $network = [
     'private' => [
         'network' => [
@@ -369,6 +370,7 @@ $network = [
     ],
     'public' => true
 ];
+
 $body = [
     'availabilityZone'  => $ovh_availability_zone,
     'bootFrom'          => ['imageId' => $image['id'], 'imageRegionName' => $ovh_region_code],
@@ -441,6 +443,7 @@ if($response->getStatusCode() !== 200) {
 }
 
 $response_data = $response->body();
+
 if(isset($response_data['value']) && is_array($response_data['value'])) {
     $response_data = $response_data['value'];
 }
@@ -450,13 +453,13 @@ if(empty($response_data['id'])) {
 }
 
 $server = Server::create([
-    'name'               => $name,
-    'server_type'        => 'b2',
-    'cloud_provider_id'  => $cloudProject['cloud_provider_id']['id'],
-    'cloud_project_id'   => $cloudProject['id'],
-    'region_id'          => $region['id'],
-    'deployment_zone_id' => $deployment_zone['id']
-])
+        'name'               => $name,
+        'server_type'        => 'b2',
+        'cloud_provider_id'  => $cloudProject['cloud_provider_id']['id'],
+        'cloud_project_id'   => $cloudProject['id'],
+        'region_id'          => $region['id'],
+        'deployment_zone_id' => $deployment_zone['id']
+    ])
     ->first();
 
 Access::create([

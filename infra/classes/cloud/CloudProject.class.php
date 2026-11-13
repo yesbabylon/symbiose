@@ -69,4 +69,24 @@ class CloudProject extends Model {
 
         ];
     }
+
+    public static function onchange($event, $values): array {
+        $result = parent::onchange($event, $values);
+
+        if(isset($event['cloud_provider_id'])) {
+            $cloud_provider = CloudProvider::id($event['cloud_provider_id'])
+                ->read(['code'])
+                ->first();
+
+            if($cloud_provider && $cloud_provider['code'] === 'ovh') {
+                $result['api_credentials'] = json_encode([
+                    'application_key'    => '',
+                    'application_secret' => '',
+                    'consumer_key'       => ''
+                ], JSON_PRETTY_PRINT);
+            }
+        }
+
+        return $result;
+    }
 }
