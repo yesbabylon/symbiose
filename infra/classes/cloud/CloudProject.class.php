@@ -31,10 +31,40 @@ class CloudProject extends Model {
                 'required'          => true
             ],
 
+            'cloud_provider_code' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => 'Technical code of the cloud provider hosting the project.',
+                'relation'          => ['cloud_provider_id' => 'code'],
+                'readonly'          => true,
+                'visible'           => false
+            ],
+
             'extref_project_id' => [
                 'type'              => 'string',
                 'description'       => 'Project identifier assigned by the cloud provider.',
                 'required'          => true
+            ],
+
+            'api_credentials' => [
+                'type'        => 'string',
+                'usage'       => 'text/json',
+                'default'     => '{}',
+                'description' => 'JSON object with credentials for cloud provider APIs.'
+            ],
+
+            'provider_catalog' => [
+                'type'        => 'string',
+                'usage'       => 'text/json',
+                'default'     => '{}',
+                'description' => 'Provider-specific JSON catalog of cloud project resources.'
+            ],
+
+            'servers_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'infra\server\Server',
+                'foreign_field'     => 'cloud_project_id',
+                'description'       => 'Servers hosted in the cloud project.'
             ]
 
         ];

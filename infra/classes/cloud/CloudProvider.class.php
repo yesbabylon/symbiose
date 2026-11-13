@@ -37,6 +37,13 @@ class CloudProvider extends Model {
                 'foreign_object'    => 'infra\cloud\Region',
                 'foreign_field'     => 'cloud_provider_id',
                 'description'       => 'Geographic regions operated by the cloud provider.'
+            ],
+
+            'projects_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'infra\cloud\CloudProject',
+                'foreign_field'     => 'cloud_provider_id',
+                'description'       => 'The projects that are hosted by the cloud provider.'
             ]
 
         ];

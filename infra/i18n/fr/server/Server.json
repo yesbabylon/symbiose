@@ -18,6 +18,11 @@
             "description": "Fournisseur cloud qui héberge le serveur.",
             "help": "Sélectionnez le fournisseur avant de sélectionner une région."
         },
+        "extref_server_id": {
+            "label": "Identifiant externe du serveur",
+            "description": "Identifiant du serveur attribué par le fournisseur cloud externe.",
+            "help": "Cette valeur est synchronisée automatiquement après le provisionnement cloud."
+        },
         "region_id": {
             "label": "Région",
             "description": "Région cloud géographique qui héberge le serveur.",

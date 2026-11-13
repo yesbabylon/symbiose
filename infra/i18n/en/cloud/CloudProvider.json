@@ -17,12 +17,25 @@
             "label": "Regions",
             "description": "Geographic regions operated by the cloud provider.",
             "help": "Manage the provider's distinct cloud regions."
+        },
+        "projects_ids": {
+            "label": "Cloud projects",
+            "description": "Cloud projects hosted by the provider.",
+            "help": "Manage the projects associated with this cloud provider."
         }
     },
     "view": {
         "form.default": {
             "name": "Cloud provider",
-            "description": "Displays and edits a cloud provider and its regions."
+            "description": "Displays and edits a cloud provider and its regions.",
+            "layout": {
+                "section.regions": {
+                    "label": "Regions"
+                },
+                "section.projects": {
+                    "label": "Cloud projects"
+                }
+            }
         },
         "list.default": {
             "name": "Cloud providers",

@@ -17,12 +17,25 @@
             "label": "Régions",
             "description": "Régions géographiques exploitées par le fournisseur cloud.",
             "help": "Gérez les différentes régions cloud du fournisseur."
+        },
+        "projects_ids": {
+            "label": "Projets cloud",
+            "description": "Projets cloud hébergés par le fournisseur.",
+            "help": "Gérez les projets associés à ce fournisseur cloud."
         }
     },
     "view": {
         "form.default": {
             "name": "Fournisseur cloud",
-            "description": "Affiche et modifie un fournisseur cloud et ses régions."
+            "description": "Affiche et modifie un fournisseur cloud et ses régions.",
+            "layout": {
+                "section.regions": {
+                    "label": "Régions"
+                },
+                "section.projects": {
+                    "label": "Projets cloud"
+                }
+            }
         },
         "list.default": {
             "name": "Fournisseurs cloud",

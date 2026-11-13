@@ -26,7 +26,26 @@
                                                 "type": "field",
                                                 "value": "name",
                                                 "width": "70%"
-                                            },
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.zones",
+                        "label": "Zones",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "zones_ids",

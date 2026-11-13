@@ -27,7 +27,12 @@
     "view": {
         "form.default": {
             "name": "Région cloud",
-            "description": "Affiche et modifie une région cloud et ses zones de disponibilité."
+            "description": "Affiche et modifie une région cloud et ses zones de disponibilité.",
+            "layout": {
+                "section.zones": {
+                    "label": "Zones de disponibilité"
+                }
+            }
         },
         "list.default": {
             "name": "Régions cloud",
