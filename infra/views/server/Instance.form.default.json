@@ -22,6 +22,20 @@
             "label": "Add alert trigger from example",
             "controller": "infra_server_add-instance-alert-trigger",
             "visible": ["server_type", "in", ["b2", "k2", "s2", "admin"]]
+        },
+        {
+            "id": "action.create-dns-record",
+            "label": "Create DNS record",
+            "description": "Create or update the OVH A record for the instance.",
+            "controller": "infra_server_Instance_create-dns-record",
+            "confirm": true,
+            "params": {
+                "id": "object.id"
+            },
+            "visible": [
+                ["server_type", "=", "b2"],
+                ["has_dns_record", "=", false]
+            ]
         }
     ],
     "layout": {
@@ -38,6 +52,11 @@
                                             {
                                                 "type": "field",
                                                 "value": "server_type",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_dns_record",
                                                 "visible": false
                                             },
                                             {

@@ -266,7 +266,11 @@ try {
             throw new Exception('ovh_server_creation_failed', EQ_ERROR_UNKNOWN);
         }
 
-        Server::id($server['id'])->update(['extref_server_id' => $instance_id]);
+        Server::id($server['id'])
+            ->update([
+                'extref_server_id'  => $instance_id,
+                'up'                => true
+            ]);
     }
 
     $region_code = rawurlencode($ovh_region_code);

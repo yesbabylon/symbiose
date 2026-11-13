@@ -58,7 +58,7 @@ class Instance extends Model {
 
             'b2_instance_type' => [
                 'type'              => 'string',
-                'selection'         => ['equal', 'wordpress', 'equalpress', 'symbiose', 'discope', 'fmt'],
+                'selection'         => ['equal', 'wordpress', 'equalpress', 'symbiose', 'discope', 'fmt', 'mkdocs'],
                 'description'       => 'Type of b2 instance.',
                 'default'           => null,
                 'visible'           => ['server_type', '=', 'b2']
@@ -159,7 +159,12 @@ class Instance extends Model {
     }
 
     protected static function oncreate($self, $orm) {
+        $self->read(['uuid']);
         foreach($self as $id => $instance) {
+            if(!empty($instance['uuid'])) {
+                continue;
+            }
+
             // generate a new UUID
             do {
                 $uuid = DataGenerator::uuid();

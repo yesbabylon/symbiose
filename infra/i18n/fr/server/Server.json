@@ -113,6 +113,10 @@
             "name": "serveur",
             "description": "",
             "actions": {
+                "action.create-instance": {
+                    "label": "Créer une instance",
+                    "description": "Créer une nouvelle instance sur cet hôte au moyen de l’API B2."
+                },
                 "action.sync-status": {
                     "label": "Synchroniser statut"
                 },
@@ -176,7 +180,22 @@
         },
         "errors": {
             "invalid_cloud_provider": "Un fournisseur cloud et l'une de ses régions sont requis, et la région doit appartenir à ce fournisseur.",
-            "invalid_region": "La zone de déploiement doit appartenir à la région sélectionnée."
+            "invalid_region": "La zone de déploiement doit appartenir à la région sélectionnée.",
+            "invalid_instance_name": "Le nom de l’instance doit être un FQDN valide de 32 caractères maximum.",
+            "invalid_instance_password": "Le mot de passe de l’instance doit contenir entre 8 et 70 caractères.",
+            "invalid_cipher_key": "La clé de chiffrement doit contenir exactement 32 caractères.",
+            "invalid_mem_limit": "La limite mémoire doit être exprimée en mégaoctets ou gigaoctets, par exemple 1000M.",
+            "invalid_cpu_limit": "La limite CPU doit être un nombre positif.",
+            "invalid_eq_mem_free_limit": "La réserve mémoire eQual doit être exprimée en mégaoctets ou gigaoctets.",
+            "missing_dns_zone": "Une zone DNS est requise lorsque la création de l’enregistrement DNS est demandée.",
+            "missing_fmt_global_access": "Une instance FMT de type agence requiert l’URL et le jeton d’accès de l’API globale.",
+            "unknown_server": "Le serveur est introuvable.",
+            "invalid_server_type": "Le serveur sélectionné n’est pas un hôte B2.",
+            "unknown_product": "Le produit sélectionné est introuvable.",
+            "instance_already_exists": "Une instance portant ce nom existe déjà.",
+            "missing_b2_host_access": "L’accès de gestion B2 sur le port 8000 est manquant.",
+            "b2_instance_creation_failed": "L’hôte B2 n’a pas pu créer l’instance.",
+            "dns_record_creation_failed": "L’instance a été créée, mais son enregistrement DNS n’a pas pu être créé."
         }
     }
 }

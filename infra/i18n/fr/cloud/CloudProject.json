@@ -14,9 +14,9 @@
             "help": "Sélectionnez le fournisseur qui détient et exploite ce projet cloud."
         },
         "extref_project_id": {
-            "label": "Identifiant externe du projet",
+            "label": "Identifiant externe",
             "description": "Identifiant du projet attribué par le fournisseur cloud.",
-            "help": "Indiquez l'identifiant du projet chez le fournisseur, tel qu'un project_id OVHcloud ou Google Cloud."
+            "help": "Renseigne l'identifiant du projet chez le fournisseur, tel qu'un project_id OVHcloud ou Google Cloud."
         },
         "cloud_provider_code": {
             "label": "Code du fournisseur cloud",

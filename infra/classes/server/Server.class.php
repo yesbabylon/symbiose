@@ -243,9 +243,9 @@ class Server extends Model {
     public static function getOperationPolicies(): array {
         return array_replace_recursive(parent::getOperationPolicies(), [
             EQ_R_UPDATE => [
-                '*'                 => true,
-                'cloud_provider_id' => ['valid_cloud_location'],
-                'region_id'         => ['valid_cloud_location'],
+                '*'                  => true,
+                'cloud_provider_id'  => ['valid_cloud_location'],
+                'region_id'          => ['valid_cloud_location'],
                 'deployment_zone_id' => ['valid_cloud_location']
             ]
         ]);

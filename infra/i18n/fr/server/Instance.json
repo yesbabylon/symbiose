@@ -41,8 +41,17 @@
                 "symbiose": "Symbiose",
                 "wordpress": "WordPress",
                 "equalpress": "eQualPress",
-                "fmt": "FMT"
-            }
+                "discope": "Discope",
+                "fmt": "FMT",
+                "mkdocs": "MkDocs"
+            },
+            "description": "Type de pile applicative installée par B2.",
+            "help": ""
+        },
+        "has_dns_record": {
+            "label": "Enregistrement DNS",
+            "description": "Indique si un enregistrement DNS géré existe pour l’instance.",
+            "help": ""
         },
         "version": {
             "label": "Version",
@@ -111,6 +120,10 @@
                 "action.add-alert-trigger": {
                     "label": "Ajouter un déclencheur d'alerte",
                     "description": "Créer un déclencheur d'alerte d'instance et ses contrôles à partir d'un exemple."
+                },
+                "action.create-dns-record": {
+                    "label": "Créer l’enregistrement DNS",
+                    "description": "Créer ou mettre à jour l’enregistrement A OVH de l’instance."
                 }
             },
             "layout": {
@@ -144,6 +157,18 @@
             "name": "Instances",
             "description": "Affiche la liste des instances.",
             "layout": {}
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_instance": "L’instance est introuvable.",
+            "missing_server": "Aucun serveur n’est associé à l’instance.",
+            "invalid_server_type": "Le serveur associé n’est pas un hôte B2.",
+            "invalid_dns_zone": "Le FQDN de l’instance n’appartient pas à la zone DNS indiquée.",
+            "protected_dns_record_name": "Ce nom DNS est protégé et ne peut pas être utilisé.",
+            "missing_public_ip_address": "Le serveur ne possède aucune adresse IPv4 publique utilisable.",
+            "multiple_matching_dns_records": "Plusieurs enregistrements DNS correspondent déjà à cette instance.",
+            "dns_record_creation_failed": "L’enregistrement DNS n’a pas pu être créé."
         }
     }
 }

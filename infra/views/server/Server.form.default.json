@@ -3,6 +3,14 @@
     "description": "Default form for Server",
     "actions": [
         {
+            "id": "action.create-instance",
+            "label": "Create instance",
+            "description": "Create a new instance on the server using the B2 API.",
+            "controller": "infra_server_Server_create-instance",
+            "confirm": true,
+            "visible": ["server_type", "=", "b2"]
+        },
+        {
             "id": "action.sync-status",
             "label": "Synchronize status",
             "controller": "infra_server_Server_sync-status",

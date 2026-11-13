@@ -93,6 +93,10 @@
             "name": "server",
             "description": "",
             "actions": {
+                "action.create-instance": {
+                    "label": "Create instance",
+                    "description": "Create a new instance on this host using the B2 API."
+                },
                 "action.add-check": {
                     "label": "Add check",
                     "description": "Create an editable server check from an example."
@@ -147,7 +151,22 @@
         },
         "errors": {
             "invalid_cloud_provider": "A cloud provider and one of its regions are required, and the region must belong to that provider.",
-            "invalid_region": "The deployment zone must belong to the selected region."
+            "invalid_region": "The deployment zone must belong to the selected region.",
+            "invalid_instance_name": "The instance name must be a valid FQDN containing no more than 32 characters.",
+            "invalid_instance_password": "The instance password must contain between 8 and 70 characters.",
+            "invalid_cipher_key": "The cipher key must contain exactly 32 characters.",
+            "invalid_mem_limit": "The memory limit must be expressed in megabytes or gigabytes, for example 1000M.",
+            "invalid_cpu_limit": "The CPU limit must be a positive number.",
+            "invalid_eq_mem_free_limit": "The eQual memory reserve must be expressed in megabytes or gigabytes.",
+            "missing_dns_zone": "A DNS zone is required when DNS record creation is requested.",
+            "missing_fmt_global_access": "An FMT agency instance requires a global API URL and access token.",
+            "unknown_server": "The server was not found.",
+            "invalid_server_type": "The selected server is not a B2 host.",
+            "unknown_product": "The selected product was not found.",
+            "instance_already_exists": "An instance with this name already exists.",
+            "missing_b2_host_access": "The B2 management access on port 8000 is missing.",
+            "b2_instance_creation_failed": "The B2 host could not create the instance.",
+            "dns_record_creation_failed": "The instance was created, but its DNS record could not be created."
         }
     }
 }
