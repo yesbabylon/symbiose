@@ -36,10 +36,10 @@ class Account extends Model {
                 'dependents'        => ['level']
             ],
 
-            'is_group_account' => [
+            'is_control_account' => [
                 'type'              => 'boolean',
-                'description'       => "Flag telling if the account is a group/collector account.",
-                'help'              => "Accounting entries can only be made on non-group accounts.",
+                'description'       => "Flag telling if the account is a control/collector account.",
+                'help'              => "Accounting entries can only be made on non-control accounts.",
                 'default'           => false
             ],
 

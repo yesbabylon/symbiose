@@ -69,9 +69,7 @@ class AccountingOperation extends Model {
                 'description' => 'Date at which the operation is accounted.',
                 'help'        => 'This value is mandatory but can be manually set. There is a distinction between posting date and the time at which the operation is actually posted (issue date).',
                 'required'    => true,
-                'default'     => function() {
-                    return time();
-                },
+                'default'     => fn() => time(),
                 'dependents'  => ['fiscal_year']
             ],
 
@@ -537,7 +535,11 @@ class AccountingOperation extends Model {
             'operation_number',
             'organization_id',
             'fiscal_year',
-            'journal_id' => ['code']
+            'reversal_of_id',
+            'journal_id' => [
+                'code',
+                'has_reversal_sequence'
+            ]
         ]);
 
         foreach($self as $id => $operation) {
@@ -545,20 +547,33 @@ class AccountingOperation extends Model {
                 continue;
             }
 
+            $selector = ['organization_id' => $operation['organization_id']];
+
+            Setting::ensure_value(
+                'finance',
+                'accounting',
+                'operation.number_format',
+                '%s{journal}/%02d{year}/%05d{sequence}',
+                $selector
+            );
+
             $format = Setting::get_value(
                 'finance',
                 'accounting',
-                'accounting_operation.number_format',
+                'operation.number_format',
                 '%s{journal}/%02d{year}/%05d{sequence}',
-                ['organization_id' => $operation['organization_id']]
+                $selector
             );
-            $sequence = Setting::fetch_and_add(
-                'finance',
-                'accounting',
-                'accounting_operation.sequence',
-                1,
-                ['organization_id' => $operation['organization_id']]
-            );
+
+            $sequence_type = $operation['reversal_of_id']
+                && $operation['journal_id']['has_reversal_sequence']
+                    ? 'operation_reversal'
+                    : 'operation';
+
+            $sequence_code = "{$sequence_type}.sequence.{$operation['fiscal_year']}.{$operation['journal_id']['code']}";
+
+            Setting::ensure_sequence('finance', 'accounting', $sequence_code, 1, $selector);
+            $sequence = Setting::fetch_and_add('finance', 'accounting', $sequence_code, 1, $selector);
 
             if(!$sequence) {
                 throw new \Exception('unable_to_assign_operation_number', EQ_ERROR_INVALID_CONFIG);

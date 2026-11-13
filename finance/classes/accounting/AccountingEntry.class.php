@@ -135,9 +135,9 @@ class AccountingEntry extends Model {
                 continue;
             }
 
-            $format = Setting::get_value('finance', 'accounting', 'accounting_entry.number_format', '%s{journal}/%02d{year}/%05d{sequence}', ['organization_id' => $entry['journal_id']['organization_id']]);
+            $format = Setting::get_value('finance', 'accounting', 'entry.number_format', '%s{journal}/%02d{year}/%05d{sequence}', ['organization_id' => $entry['journal_id']['organization_id']]);
             $year = Setting::get_value('finance', 'accounting', 'fiscal_year', date('Y'), ['organization_id' => $entry['journal_id']['organization_id']]);
-            $sequence = Setting::fetch_and_add('finance', 'accounting', 'accounting_entry.sequence', 1, ['organization_id' => $entry['journal_id']['organization_id']]);
+            $sequence = Setting::fetch_and_add('finance', 'accounting', 'entry.sequence', 1, ['organization_id' => $entry['journal_id']['organization_id']]);
 
             if($sequence) {
                 $result[$id] = Setting::parse_format($format, [

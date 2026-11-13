@@ -1,0 +1,136 @@
+{
+    "name": "Exercice comptable",
+    "plural": "Exercices comptables",
+    "description": "Un exercice comptable définit l'intervalle comptable d'une organisation et ses périodes.",
+    "model": {
+        "organization_id": {
+            "label": "Organisation",
+            "description": "Organisation à laquelle appartient l'exercice comptable.",
+            "help": "Sélectionnez l'organisation dont la comptabilité est concernée."
+        },
+        "date_from": {
+            "label": "Date de début",
+            "description": "Premier jour inclus dans l'exercice comptable.",
+            "help": "Cette date détermine le début de la première période."
+        },
+        "date_to": {
+            "label": "Date de fin",
+            "description": "Dernier jour inclus dans l'exercice comptable.",
+            "help": "Cette date détermine la fin de la dernière période."
+        },
+        "fiscal_period_frequency": {
+            "label": "Fréquence des périodes",
+            "description": "Fréquence utilisée pour découper l'exercice comptable.",
+            "help": "Choisissez la durée des périodes générées automatiquement.",
+            "selection": {
+                "A": "Annuelle",
+                "S": "Semestrielle",
+                "T": "Tous les quatre mois",
+                "Q": "Trimestrielle"
+            }
+        },
+        "status": {
+            "label": "Statut",
+            "description": "État courant de l'exercice comptable.",
+            "help": "Le statut suit la préparation, l'ouverture et la clôture de l'exercice.",
+            "selection": {
+                "draft": "Brouillon",
+                "preopen": "Pré-ouvert",
+                "open": "Ouvert",
+                "preclosed": "Pré-clôturé",
+                "closed": "Clôturé"
+            }
+        },
+        "fiscal_periods_ids": {
+            "label": "Périodes comptables",
+            "description": "Périodes appartenant à l'exercice comptable.",
+            "help": "Les périodes sont générées à partir des dates et de la fréquence de l'exercice."
+        },
+        "previous_fiscal_year_id": {
+            "label": "Exercice précédent",
+            "description": "Exercice précédent de la même organisation.",
+            "help": "Cette valeur est calculée automatiquement à partir des dates."
+        },
+        "name": {
+            "label": "Nom",
+            "description": "Libellé lisible de l'exercice comptable.",
+            "help": "Le nom est calculé à partir des années de début et de fin."
+        },
+        "code": {
+            "label": "Code",
+            "description": "Code stable dérivé des années de début et de fin.",
+            "help": "Ce code peut être utilisé pour identifier l'exercice dans les séquences comptables."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Exercice comptable",
+            "description": "Gestion du calendrier, du statut et des périodes d'un exercice comptable.",
+            "actions": {
+                "action.generate_periods": {
+                    "label": "Générer les périodes",
+                    "description": "Régénérer les périodes à partir des dates et de la fréquence de l'exercice."
+                },
+                "action.preopen": {
+                    "label": "Pré-ouvrir",
+                    "description": "Valider le calendrier et préparer l'ouverture de l'exercice."
+                },
+                "action.revert": {
+                    "label": "Remettre en brouillon",
+                    "description": "Remettre l'exercice en brouillon pour modifier son calendrier."
+                },
+                "action.open": {
+                    "label": "Ouvrir",
+                    "description": "Ouvrir l'exercice pour la comptabilité."
+                },
+                "action.preclose": {
+                    "label": "Pré-clôturer",
+                    "description": "Pré-clôturer l'exercice après le traitement de ses périodes."
+                },
+                "action.close": {
+                    "label": "Clôturer",
+                    "description": "Clôturer l'exercice après la clôture de toutes ses périodes."
+                },
+                "action.reopen": {
+                    "label": "Rouvrir",
+                    "description": "Ramener l'exercice pré-clôturé au statut ouvert."
+                },
+                "action.repreclose": {
+                    "label": "Remettre en pré-clôture",
+                    "description": "Ramener le dernier exercice clôturé au statut pré-clôturé."
+                }
+            },
+            "layout": {
+                "section.general": {
+                    "label": "Informations générales"
+                },
+                "section.periods": {
+                    "label": "Périodes comptables"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Exercices comptables",
+            "description": "Liste des exercices comptables par organisation, calendrier et statut.",
+            "layout": {}
+        }
+    },
+    "error": {
+        "errors": {
+            "missing_organization": "L'organisation est obligatoire.",
+            "missing_date_from": "La date de début est obligatoire.",
+            "missing_date_to": "La date de fin est obligatoire.",
+            "invalid_date_range": "La date de début doit précéder ou être égale à la date de fin.",
+            "overlapping_fiscal_year": "Les dates chevauchent un autre exercice comptable de l'organisation.",
+            "fiscal_year_not_draft": "Les périodes ne peuvent être régénérées que pour un exercice en brouillon.",
+            "non_open_fiscal_period": "Une période non ouverte empêche la régénération des périodes.",
+            "invalid_status": "Le statut de l'exercice ne permet pas cette opération.",
+            "missing_fiscal_periods": "Au moins une période comptable est requise.",
+            "invalid_fiscal_period_dates": "Les périodes doivent être valides, contiguës et ordonnées.",
+            "incomplete_fiscal_period_coverage": "Les périodes doivent couvrir la totalité de l'exercice.",
+            "invalid_period_status": "Le statut d'au moins une période ne permet pas cette opération.",
+            "later_closed_fiscal_year": "Un exercice clôturé plus récent empêche la réouverture de cet exercice.",
+            "fiscal_year_not_editable": "Seul un exercice en brouillon peut être modifié ou supprimé."
+        }
+    }
+}

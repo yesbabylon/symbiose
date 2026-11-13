@@ -1,0 +1,44 @@
+{
+    "name": "Fiscal periods",
+    "description": "List of fiscal periods by fiscal year, calendar and status.",
+    "access": {
+        "groups": ["finance.default.users"]
+    },
+    "order": "date_from",
+    "sort": "asc",
+    "limit": 100,
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "fiscal_year_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "organization_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "date_from",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "date_to",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "10%"
+            }
+        ]
+    }
+}

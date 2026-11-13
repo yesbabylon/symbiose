@@ -1,0 +1,44 @@
+{
+    "name": "Fiscal years",
+    "description": "List of fiscal years by organization, calendar and status.",
+    "access": {
+        "groups": ["finance.default.users"]
+    },
+    "order": "date_from",
+    "sort": "desc",
+    "limit": 100,
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "organization_id",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "date_from",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "date_to",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "fiscal_period_frequency",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "10%"
+            }
+        ]
+    }
+}

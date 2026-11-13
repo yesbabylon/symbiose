@@ -1,0 +1,146 @@
+{
+    "name": "Fiscal period",
+    "description": "Review a fiscal period and manage its lifecycle.",
+    "access": {
+        "groups": ["finance.default.users"]
+    },
+    "actions": [
+        {
+            "id": "action.preclose",
+            "label": "Pre-close",
+            "description": "Pre-close the fiscal period.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "open"],
+            "params": {
+                "entity": "finance\\accounting\\FiscalPeriod",
+                "transition": "preclose",
+                "ids": []
+            },
+            "confirm": true
+        },
+        {
+            "id": "action.close",
+            "label": "Close",
+            "description": "Close the fiscal period.",
+            "controller": "core_model_transition",
+            "visible": ["status", "in", ["open", "preclosed"]],
+            "params": {
+                "entity": "finance\\accounting\\FiscalPeriod",
+                "transition": "close",
+                "ids": []
+            },
+            "confirm": true
+        },
+        {
+            "id": "action.reopen",
+            "label": "Reopen",
+            "description": "Return the pre-closed fiscal period to open status.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "preclosed"],
+            "params": {
+                "entity": "finance\\accounting\\FiscalPeriod",
+                "transition": "reopen",
+                "ids": []
+            },
+            "confirm": true
+        },
+        {
+            "id": "action.repreclose",
+            "label": "Return to pre-closed",
+            "description": "Return the closed fiscal period to pre-closed status.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "closed"],
+            "params": {
+                "entity": "finance\\accounting\\FiscalPeriod",
+                "transition": "repreclose",
+                "ids": []
+            },
+            "confirm": true
+        }
+    ],
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "id": "section.general",
+                        "label": "General information",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "heading": true,
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "fiscal_year_id",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "organization_id",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "code",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date_from",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date_to",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

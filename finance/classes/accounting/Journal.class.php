@@ -94,7 +94,21 @@ class Journal extends Model {
                 'sort'              => 'desc'
             ],
 
-            // #todo - add 'default_account_id'
+            'default_account_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'finance\accounting\Account',
+                'description'       => 'Default accounting account used by the journal.',
+                'domain'            => [
+                    ['organization_id', '=', 'object.organization_id'],
+                    ['is_control_account', '=', false]
+                ]
+            ],
+
+            'has_reversal_sequence' => [
+                'type'              => 'boolean',
+                'default'           => false,
+                'description'       => 'Distinct sequence for operation reversals.'
+            ],
 
             'has_parent' => [
                 'type'              => 'computed',

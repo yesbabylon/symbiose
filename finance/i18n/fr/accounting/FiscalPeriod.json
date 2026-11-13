@@ -1,0 +1,95 @@
+{
+    "name": "Période comptable",
+    "plural": "Périodes comptables",
+    "description": "Une période comptable est un intervalle continu appartenant à un exercice comptable.",
+    "model": {
+        "fiscal_year_id": {
+            "label": "Exercice comptable",
+            "description": "Exercice comptable auquel appartient la période.",
+            "help": "La période est créée et gérée depuis son exercice comptable."
+        },
+        "code": {
+            "label": "Numéro",
+            "description": "Position séquentielle de la période dans l'exercice.",
+            "help": "Ce numéro est attribué automatiquement lors de la génération des périodes."
+        },
+        "date_from": {
+            "label": "Date de début",
+            "description": "Premier jour inclus dans la période comptable.",
+            "help": "Cette date est calculée à partir du calendrier de l'exercice."
+        },
+        "date_to": {
+            "label": "Date de fin",
+            "description": "Dernier jour inclus dans la période comptable.",
+            "help": "Cette date est calculée à partir du calendrier de l'exercice."
+        },
+        "status": {
+            "label": "Statut",
+            "description": "État courant de la période comptable.",
+            "help": "Le statut suit l'ouverture, la pré-clôture et la clôture de la période.",
+            "selection": {
+                "open": "Ouverte",
+                "preclosed": "Pré-clôturée",
+                "closed": "Clôturée"
+            }
+        },
+        "organization_id": {
+            "label": "Organisation",
+            "description": "Organisation héritée de l'exercice comptable.",
+            "help": "Cette valeur est calculée automatiquement depuis l'exercice parent."
+        },
+        "fiscal_year_status": {
+            "label": "Statut de l'exercice",
+            "description": "Statut courant de l'exercice comptable parent.",
+            "help": "Cette valeur est utilisée pour contrôler les transitions de la période."
+        },
+        "name": {
+            "label": "Nom",
+            "description": "Libellé lisible de la période comptable.",
+            "help": "Le nom est calculé à partir du numéro et des dates de la période."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Période comptable",
+            "description": "Consultation d'une période comptable et gestion de son cycle de vie.",
+            "actions": {
+                "action.preclose": {
+                    "label": "Pré-clôturer",
+                    "description": "Pré-clôturer la période comptable."
+                },
+                "action.close": {
+                    "label": "Clôturer",
+                    "description": "Clôturer la période comptable."
+                },
+                "action.reopen": {
+                    "label": "Rouvrir",
+                    "description": "Ramener la période pré-clôturée au statut ouvert."
+                },
+                "action.repreclose": {
+                    "label": "Remettre en pré-clôture",
+                    "description": "Ramener la période clôturée au statut pré-clôturé."
+                }
+            },
+            "layout": {
+                "section.general": {
+                    "label": "Informations générales"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Périodes comptables",
+            "description": "Liste des périodes comptables par exercice, calendrier et statut.",
+            "layout": {}
+        }
+    },
+    "error": {
+        "errors": {
+            "invalid_status": "Le statut de la période ne permet pas cette opération.",
+            "invalid_fiscal_year_status": "Le statut de l'exercice comptable parent ne permet pas cette opération.",
+            "non_closed_previous_period": "Toutes les périodes précédentes doivent d'abord être clôturées.",
+            "non_open_next_period": "Toutes les périodes suivantes doivent d'abord être ouvertes.",
+            "fiscal_period_not_editable": "Une période ne peut être modifiée ou supprimée que si son exercice est en brouillon."
+        }
+    }
+}

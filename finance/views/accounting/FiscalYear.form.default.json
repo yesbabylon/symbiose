@@ -1,0 +1,225 @@
+{
+    "name": "Fiscal year",
+    "description": "Manage a fiscal year, its calendar and its fiscal periods.",
+    "access": {
+        "groups": ["finance.default.users"]
+    },
+    "actions": [
+        {
+            "id": "action.generate_periods",
+            "label": "Generate periods",
+            "description": "Regenerate periods from the fiscal year dates and frequency.",
+            "controller": "core_model_do",
+            "visible": ["status", "=", "draft"],
+            "params": {
+                "entity": "finance\\accounting\\FiscalYear",
+                "action": "generate_periods",
+                "ids": []
+            },
+            "confirm": true
+        },
+        {
+            "id": "action.preopen",
+            "label": "Pre-open",
+            "description": "Validate the calendar and prepare the fiscal year for opening.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "draft"],
+            "params": {
+                "entity": "finance\\accounting\\FiscalYear",
+                "transition": "preopen",
+                "ids": []
+            },
+            "confirm": true
+        },
+        {
+            "id": "action.revert",
+            "label": "Return to draft",
+            "description": "Return the fiscal year to draft status.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "preopen"],
+            "params": {
+                "entity": "finance\\accounting\\FiscalYear",
+                "transition": "revert",
+                "ids": []
+            }
+        },
+        {
+            "id": "action.open",
+            "label": "Open",
+            "description": "Open the fiscal year for accounting.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "preopen"],
+            "params": {
+                "entity": "finance\\accounting\\FiscalYear",
+                "transition": "open",
+                "ids": []
+            },
+            "confirm": true
+        },
+        {
+            "id": "action.preclose",
+            "label": "Pre-close",
+            "description": "Pre-close the fiscal year after its periods have been processed.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "open"],
+            "params": {
+                "entity": "finance\\accounting\\FiscalYear",
+                "transition": "preclose",
+                "ids": []
+            },
+            "confirm": true
+        },
+        {
+            "id": "action.close",
+            "label": "Close",
+            "description": "Close the fiscal year after all its periods have been closed.",
+            "controller": "core_model_transition",
+            "visible": ["status", "in", ["open", "preclosed"]],
+            "params": {
+                "entity": "finance\\accounting\\FiscalYear",
+                "transition": "close",
+                "ids": []
+            },
+            "confirm": true
+        },
+        {
+            "id": "action.reopen",
+            "label": "Reopen",
+            "description": "Return the pre-closed fiscal year to open status.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "preclosed"],
+            "params": {
+                "entity": "finance\\accounting\\FiscalYear",
+                "transition": "reopen",
+                "ids": []
+            },
+            "confirm": true
+        },
+        {
+            "id": "action.repreclose",
+            "label": "Return to pre-closed",
+            "description": "Return the latest closed fiscal year to pre-closed status.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "closed"],
+            "params": {
+                "entity": "finance\\accounting\\FiscalYear",
+                "transition": "repreclose",
+                "ids": []
+            },
+            "confirm": true
+        }
+    ],
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "id": "section.general",
+                        "label": "General information",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "heading": true,
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "organization_id",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "date_from",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date_to",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "fiscal_period_frequency",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "code",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "previous_fiscal_year_id",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.periods",
+                        "label": "Fiscal periods",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "fiscal_periods_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.default",
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -59,6 +59,11 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "default_account_id",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "has_parent",
                                                 "width": "50%"
                                             },

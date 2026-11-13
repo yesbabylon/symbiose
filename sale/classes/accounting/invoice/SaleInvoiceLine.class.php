@@ -42,7 +42,7 @@ class SaleInvoiceLine extends \finance\accounting\operation\AccountingOperationL
                 'foreign_object'    => 'finance\accounting\Account',
                 'description'       => 'Optional accounting account associated with the invoice line.',
                 'ondelete'          => 'null',
-                'domain'            => ['is_group_account', '=', false]
+                'domain'            => ['is_control_account', '=', false]
             ],
 
             /**

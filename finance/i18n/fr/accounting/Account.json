@@ -13,6 +13,11 @@
             "description": "",
             "help": ""
         },
+        "is_control_account": {
+            "label": "Compte collectif",
+            "description": "Indique si le compte centralise des écritures auxiliaires.",
+            "help": "Les écritures comptables ne peuvent être imputées que sur des comptes non collectifs."
+        },
         "nature": {
             "label": "Nature",
             "description": "Type d'opération auquel cette règle se rapporte.",

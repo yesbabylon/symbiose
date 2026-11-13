@@ -54,6 +54,11 @@
             "description": "Écritures comptables rattachées au journal.",
             "help": "Consultez les écritures enregistrées dans ce journal."
         },
+        "default_account_id": {
+            "label": "Compte par défaut",
+            "description": "Compte comptable utilisé par défaut pour ce journal.",
+            "help": "Sélectionnez le compte imputable proposé par défaut pour les opérations de ce journal."
+        },
         "has_parent": {
             "label": "Sous-journal",
             "description": "Indique si ce journal dépend d'un journal parent.",

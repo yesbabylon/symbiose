@@ -71,7 +71,7 @@ class AccountingOperationLine extends Model {
                 'description'    => 'Accounting account affected by the line.',
                 'required'       => true,
                 'ondelete'       => 'null',
-                'domain'         => ['is_group_account', '=', false],
+                'domain'         => ['is_control_account', '=', false],
                 'dependents'     => ['account_code', 'is_expense', 'is_income']
             ],
 
