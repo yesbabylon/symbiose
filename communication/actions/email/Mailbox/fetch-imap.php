@@ -183,19 +183,23 @@ try {
 
         foreach($message->getAttachments() as $attachment) {
             $disposition = strtolower(trim((string) $attachment->getDisposition()));
-            if(str_starts_with($disposition, 'inline')) {
+            $attachment_name = trim($attachment->getName() ?? '') ?: 'attachment';
+            $mime = strtolower(trim(explode(';', $attachment->getContentType() ?? '')[0]));
+
+            if($mime === 'application/octet-stream' && strtolower(pathinfo($attachment_name, PATHINFO_EXTENSION)) === 'pdf') {
+                $mime = 'application/pdf';
+            }
+
+            if(!in_array($mime, $allowed_mime_types, true)) {
+                if(!str_starts_with($disposition, 'inline')) {
+                    ++$attachment_count;
+                    $has_unsupported_attachment = true;
+                    $ignored_attachment_names[] = $attachment_name;
+                }
                 continue;
             }
 
             ++$attachment_count;
-
-            $attachment_name = trim($attachment->getName() ?? '') ?: 'attachment';
-            $mime = strtolower(trim(explode(';', $attachment->getContentType() ?? '')[0]));
-            if(!in_array($mime, $allowed_mime_types, true)) {
-                $has_unsupported_attachment = true;
-                $ignored_attachment_names[] = $attachment_name;
-                continue;
-            }
 
             $attachment_data = $attachment->getContent();
             if($attachment_data === null || $attachment_data === '') {

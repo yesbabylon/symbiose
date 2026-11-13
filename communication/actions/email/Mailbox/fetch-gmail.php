@@ -186,17 +186,17 @@ $extractMessageAttachments = function($payload) use (&$extractMessageAttachments
         }
     }
 
-    $is_attachment = str_contains($disposition, 'attachment') && $filename;
-    if($is_attachment && $size > 0) {
+    if($filename && $size > 0) {
         $attachment_id = $payload['body']['attachmentId'] ?? null;
-        $inline_data = $payload['body']['data'] ?? null;
+        $body_data = $payload['body']['data'] ?? null;
 
         $attachments[] = [
             'filename'      => $filename,
             'mimeType'      => $payload['mimeType'] ?? 'application/octet-stream',
             'size'          => $size,
-            'attachmentId'  => $attachment_id,  // null if inline
-            'data'          => $inline_data,    // null if external
+            'isInline'      => str_contains($disposition, 'inline'),
+            'attachmentId'  => $attachment_id,
+            'data'          => $body_data,
         ];
     }
 
@@ -369,7 +369,7 @@ foreach($message_refs as $message_ref) {
     }
 
     $attachments = $extractMessageAttachments($message['payload']);
-    $attachment_count = count($attachments);
+    $attachment_count = 0;
     $has_unsupported_attachment = false;
     $ignored_attachment_names = [];
 
@@ -377,11 +377,20 @@ foreach($message_refs as $message_ref) {
         $attachment_name = trim($attachment['filename'] ?? '') ?: 'attachment';
         $mime = strtolower(trim(explode(';', $attachment['mimeType'] ?? '')[0]));
 
+        if($mime === 'application/octet-stream' && strtolower(pathinfo($attachment_name, PATHINFO_EXTENSION)) === 'pdf') {
+            $mime = 'application/pdf';
+        }
+
         if(!in_array($mime, $allowed_mime_types, true)) {
-            $has_unsupported_attachment = true;
-            $ignored_attachment_names[] = $attachment_name;
+            if(($attachment['isInline'] ?? false) !== true) {
+                ++$attachment_count;
+                $has_unsupported_attachment = true;
+                $ignored_attachment_names[] = $attachment_name;
+            }
             continue;
         }
+
+        ++$attachment_count;
 
         if(!$attachment['data'] && !$attachment['attachmentId']) {
             $has_unsupported_attachment = true;
@@ -390,7 +399,7 @@ foreach($message_refs as $message_ref) {
         }
 
         $data = $attachment['data'];
-        if(!$data) {
+        if(!$data && $attachment['attachmentId']) {
             $data = $getAttachment($mailbox['access_token'], $message_id, $attachment['attachmentId']);
         }
 

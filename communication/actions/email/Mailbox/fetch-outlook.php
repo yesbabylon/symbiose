@@ -215,21 +215,28 @@ do {
             $attachments = $attData['value'] ?? [];
 
             foreach($attachments as $att) {
-                // Inline resources (for example signature images) are not user attachments.
-                if(($att['isInline'] ?? false) === true) {
+                $attachment_name = trim($att['name'] ?? '') ?: 'attachment';
+                $attachment_type = $att['@odata.type'] ?? null;
+                $mime = strtolower(trim(explode(';', $att['contentType'] ?? '')[0]));
+
+                if($mime === 'application/octet-stream' && strtolower(pathinfo($attachment_name, PATHINFO_EXTENSION)) === 'pdf') {
+                    $mime = 'application/pdf';
+                }
+
+                if(!in_array($mime, $allowed_mime_types, true)) {
+                    if(($att['isInline'] ?? false) !== true) {
+                        ++$attachment_count;
+                        $has_unsupported_attachment = true;
+                        $ignored_attachment_names[] = $attachment_name;
+                    }
                     continue;
                 }
 
                 ++$attachment_count;
 
-                $attachment_name = trim($att['name'] ?? '') ?: 'attachment';
-                $attachment_type = $att['@odata.type'] ?? null;
-                $mime = strtolower(trim(explode(';', $att['contentType'] ?? '')[0]));
-
                 if(
                     ($attachment_type && $attachment_type !== '#microsoft.graph.fileAttachment')
                     || !isset($att['contentBytes'])
-                    || !in_array($mime, $allowed_mime_types, true)
                 ) {
                     $has_unsupported_attachment = true;
                     $ignored_attachment_names[] = $attachment_name;
