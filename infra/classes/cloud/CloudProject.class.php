@@ -55,7 +55,7 @@ class CloudProject extends Model {
 
             'provider_catalog' => [
                 'type'        => 'string',
-                'usage'       => 'text/json',
+                'usage'       => 'text/json.medium',
                 'default'     => '{}',
                 'description' => 'Provider-specific JSON catalog of cloud project resources.'
             ],
