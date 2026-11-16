@@ -1,0 +1,25 @@
+{
+    "name": "Add a server alert trigger",
+    "description": "Create a server alert trigger and its checks from an example.",
+    "model": {
+        "id": {
+            "label": "Server",
+            "description": "Server to which the alert trigger will be added.",
+            "help": ""
+        },
+        "alert_trigger_id": {
+            "label": "Example alert trigger",
+            "description": "Example whose checks and alert configuration will be copied to the server.",
+            "help": "Only server examples that are not assigned to an object are available."
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_server": "The server was not found.",
+            "unknown_alert_trigger_template": "The selected server alert trigger example was not found.",
+            "empty_alert_trigger_template": "The selected server alert trigger example contains no checks.",
+            "invalid_alert_trigger_template": "The selected server alert trigger example contains an incompatible check.",
+            "alert_trigger_template_already_implemented": "This alert trigger example has already been added to the server."
+        }
+    }
+}
