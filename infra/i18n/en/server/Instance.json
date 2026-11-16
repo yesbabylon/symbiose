@@ -1,0 +1,48 @@
+{
+    "name": "Instance",
+    "plural": "Instances",
+    "description": "Application instance running on a server.",
+    "model": {
+        "b2_instance_type": {
+            "label": "B2 instance type",
+            "description": "Application stack installed by B2.",
+            "selection": {
+                "equal": "eQual",
+                "wordpress": "WordPress",
+                "equalpress": "eQualPress",
+                "symbiose": "Symbiose",
+                "discope": "Discope",
+                "fmt": "FMT",
+                "mkdocs": "MkDocs"
+            },
+            "help": ""
+        },
+        "has_dns_record": {
+            "label": "DNS record",
+            "description": "Whether a managed DNS record exists for the instance.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "actions": {
+                "action.create-dns-record": {
+                    "label": "Create DNS record",
+                    "description": "Create or update the OVH A record for the instance."
+                }
+            }
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_instance": "The instance was not found.",
+            "missing_server": "The instance is not associated with a server.",
+            "invalid_server_type": "The associated server is not a B2 host.",
+            "invalid_dns_zone": "The instance FQDN does not belong to the specified DNS zone.",
+            "protected_dns_record_name": "This protected DNS name cannot be used.",
+            "missing_public_ip_address": "The server has no usable public IPv4 address.",
+            "multiple_matching_dns_records": "Several DNS records already match this instance.",
+            "dns_record_creation_failed": "The DNS record could not be created."
+        }
+    }
+}
