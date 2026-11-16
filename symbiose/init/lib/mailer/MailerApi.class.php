@@ -268,9 +268,9 @@ class MailerApi extends Mailer {
             'to' => $email->to,
             'subject' => $email->subject,
             'body' => $email->body,
-            'reply_to' => $email->reply_to ?? null,
-            'cc' => $email->cc ?? [],
-            'bcc' => $email->bcc ?? []
+            'reply_to' => $email->reply_to,
+            'cc' => $email->cc,
+            'bcc' => $email->bcc
         ];
     }
 

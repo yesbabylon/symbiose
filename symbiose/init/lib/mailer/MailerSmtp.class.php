@@ -19,7 +19,7 @@ class MailerSmtp extends Mailer {
 
     /**
      * @param string $host
-     * @param string $port
+     * @param int|string $port
      * @param string $username
      * @param string $password
      * @param string|null $encryption ('tls', 'ssl')
@@ -37,7 +37,7 @@ class MailerSmtp extends Mailer {
             // setup SMTP settings
             $transport = new \Swift_SmtpTransport(
                 $host,
-                $port,
+                (int) $port,
                 $encryption
             );
 
@@ -67,22 +67,22 @@ class MailerSmtp extends Mailer {
 
     /**
      * @param array{
-     *     to: string,
-     *     reply_to: ?string,
-     *     cc: ?string,
-     *     bcc: ?string,
-     *     subject: ?string,
-     *     content-type: ?string,
-     *     body: ?string,
-     *     attachments: ?array{
+     *     to?: string,
+     *     reply_to?: string,
+     *     cc?: array<string>|string,
+     *     bcc?: array<string>|string,
+     *     subject?: string,
+     *     content-type?: string,
+     *     body?: string,
+     *     attachments?: array{
      *         name: string,
      *         type: string,
      *         data: string
      *     }[]
      * } $message
      * @param array{
-     *     from: ?string,
-     *     username: ?string
+     *     from?: string,
+     *     username?: string
      * } $options
      * @return \Swift_Message|null
      */

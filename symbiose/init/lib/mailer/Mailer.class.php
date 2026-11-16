@@ -20,7 +20,7 @@ class Mailer {
      * @param string $type ('smtp', 'api', 'brevo', 'sendgrid', 'postmark', 'resend', 'mailgun')
      * @param array{
      *     host?: string,
-     *     port?: string,
+     *     port?: int|string,
      *     username?: string,
      *     password?: string,
      *     from?: string,
@@ -77,7 +77,7 @@ class Mailer {
                 }
 
                 $from_email = null;
-                if(defined('EMAIL_SMTP_ACCOUNT_EMAIL') && !empty(constant('EMAIL_SMTP_ACCOUNT_EMAIL'))) {
+                if(defined('EMAIL_SMTP_ACCOUNT_EMAIL')) {
                     $from_email = constant('EMAIL_SMTP_ACCOUNT_EMAIL');
                 }
 
@@ -108,7 +108,7 @@ class Mailer {
                 if(isset($options['from'])) {
                     $config['from'] = $options['from'];
                 }
-                elseif(defined('EMAIL_SMTP_ACCOUNT_EMAIL') && !empty(constant('EMAIL_SMTP_ACCOUNT_EMAIL'))) {
+                elseif(defined('EMAIL_SMTP_ACCOUNT_EMAIL')) {
                     $config['from'] = constant('EMAIL_SMTP_ACCOUNT_EMAIL');
                 }
 
@@ -151,7 +151,6 @@ class Mailer {
                 throw new \Exception("unsupported_mailer_preset");
         }
 
-        return [];
     }
 
     public static function brevo(): array {
