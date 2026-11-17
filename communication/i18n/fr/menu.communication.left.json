@@ -1,6 +1,14 @@
 {
     "name": "Menu de gauche communication.",
     "view": {
+        "broadcasts": {
+            "label": "Envois groupés",
+            "help": ""
+        },
+        "broadcasts.all": {
+            "label": "Tous",
+            "help": ""
+        },
         "templates": {
             "label": "Modèles",
             "help": ""

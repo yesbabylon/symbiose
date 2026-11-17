@@ -269,6 +269,16 @@ class Document extends Model {
                 'description'       => "The links between document and templates."
             ],
 
+            'broadcasts_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'communication\broadcast\BroadcastMessage',
+                'foreign_field'     => 'documents_ids',
+                'rel_table'         => 'communication_broadcast_rel_document',
+                'rel_foreign_key'   => 'broadcast_id',
+                'rel_local_key'     => 'document_id',
+                'description'       => 'Broadcasts for which the document is selected as an attachment.'
+            ],
+
             'assignments_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'document\DocumentRoleAssignment',

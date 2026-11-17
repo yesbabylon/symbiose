@@ -1,0 +1,166 @@
+{
+    "name": "Broadcast message",
+    "description": "Prepare an email broadcast for a contact group.",
+    "actions": [
+        {
+            "id": "action.queue",
+            "label": "Queue emails",
+            "description": "Generate one pending outgoing email for each distinct recipient.",
+            "controller": "core_model_do",
+            "confirm": true,
+            "params": {
+                "entity": "communication\\broadcast\\BroadcastMessage",
+                "action": "queue",
+                "ids": []
+            },
+            "visible": ["status", "=", "draft"]
+        }
+    ],
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "id": "section.general",
+                        "label": "General",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "67%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "mailbox_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "contact_group_id",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "100%",
+                                                "readonly": true,
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "queued_at",
+                                                "width": "50%",
+                                                "readonly": true,
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "recipient_count",
+                                                "width": "50%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.content",
+                        "label": "Content",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "subject",
+                                                "width": "67%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "reply_to",
+                                                "width": "33%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "body",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.attachments",
+                        "label": "Attachments",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "documents_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": true,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.emails",
+                        "label": "Generated emails",
+                        "visible": ["status", "=", "queued"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "mails_ids",
+                                                "width": "100%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

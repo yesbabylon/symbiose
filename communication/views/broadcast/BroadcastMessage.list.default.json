@@ -1,0 +1,44 @@
+{
+    "name": "Broadcast messages",
+    "description": "Review email broadcasts and their queue status.",
+    "order": "id",
+    "sort": "desc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "mailbox_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "contact_group_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "recipient_count",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "queued_at",
+                "width": "15%",
+                "sortable": true
+            }
+        ]
+    }
+}

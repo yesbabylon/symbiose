@@ -148,6 +148,11 @@
             "label": "Pièces jointes",
             "description": "Pièces jointes utilisant le document.",
             "help": ""
+        },
+        "broadcasts_ids": {
+            "label": "Envois groupés",
+            "description": "Envois groupés utilisant le document comme pièce jointe.",
+            "help": "Cette relation répertorie les envois groupés auxquels le document est joint."
         }
     },
     "view": {

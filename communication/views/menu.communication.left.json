@@ -4,6 +4,28 @@
     "layout": {
         "items": [
             {
+                "id": "broadcasts",
+                "label": "Broadcasts",
+                "description": "",
+                "icon": "campaign",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "broadcasts.all",
+                        "type": "entry",
+                        "label": "All",
+                        "icon": "list",
+                        "description": "",
+                        "context": {
+                            "entity": "communication\\broadcast\\BroadcastMessage",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "desc"
+                        }
+                    }
+                ]
+            },
+            {
                 "id": "templates",
                 "label": "Templates",
                 "description": "",

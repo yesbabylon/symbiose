@@ -1,0 +1,114 @@
+{
+    "name": "Envoi groupé",
+    "plural": "Envois groupés",
+    "description": "Prépare un message et crée un e-mail sortant pour chaque destinataire d'une liste de contacts.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom interne permettant d'identifier l'envoi groupé.",
+            "help": "Utilisez un nom distinct du sujet si plusieurs campagnes partagent le même contenu."
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut actuel de traitement de l'envoi groupé.",
+            "help": "Un brouillon reste modifiable jusqu'à sa mise en file.",
+            "selection": {
+                "draft": "Brouillon",
+                "queued": "Mis en file"
+            }
+        },
+        "mailbox_id": {
+            "label": "Boîte d'envoi",
+            "description": "Boîte validée utilisée pour envoyer les e-mails générés.",
+            "help": "Seules les boîtes validées et autorisées à envoyer peuvent être sélectionnées."
+        },
+        "contact_group_id": {
+            "label": "Liste de contacts",
+            "description": "Groupe de contacts utilisé comme liste de diffusion.",
+            "help": "Chaque contact du groupe doit posséder une adresse e-mail valide."
+        },
+        "documents_ids": {
+            "label": "Pièces jointes",
+            "description": "Documents joints à chaque e-mail généré.",
+            "help": "Les documents sélectionnés sont copiés comme pièces jointes sur chaque e-mail sortant."
+        },
+        "subject": {
+            "label": "Sujet",
+            "description": "Sujet commun à tous les e-mails générés.",
+            "help": "Ce sujet sera repris à l'identique pour chaque destinataire."
+        },
+        "body": {
+            "label": "Contenu",
+            "description": "Contenu HTML commun à tous les e-mails générés.",
+            "help": "Le contenu est copié dans chaque e-mail sortant."
+        },
+        "reply_to": {
+            "label": "Répondre à",
+            "description": "Adresse de la boîte utilisée pour les réponses.",
+            "help": "Cette adresse est déterminée automatiquement depuis la boîte d'envoi."
+        },
+        "recipient_count": {
+            "label": "Destinataires",
+            "description": "Nombre d'adresses distinctes mises en file.",
+            "help": "Ce nombre est calculé lors de la mise en file."
+        },
+        "queued_at": {
+            "label": "Mis en file le",
+            "description": "Date et heure de création des e-mails sortants.",
+            "help": "Les e-mails restent en attente jusqu'au prochain envoi de la boîte."
+        },
+        "mails_ids": {
+            "label": "E-mails générés",
+            "description": "E-mails sortants créés pour cet envoi groupé.",
+            "help": "Le statut individuel permet de suivre leur traitement par la boîte d'envoi."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Envoi groupé",
+            "description": "Préparer et mettre en file un message destiné à une liste de contacts.",
+            "actions": {
+                "action.queue": {
+                    "label": "Mettre les e-mails en file",
+                    "description": "Créer un e-mail sortant en attente pour chaque destinataire distinct."
+                }
+            },
+            "layout": {
+                "section.general": {
+                    "label": "Informations générales"
+                },
+                "section.content": {
+                    "label": "Contenu"
+                },
+                "section.attachments": {
+                    "label": "Pièces jointes"
+                },
+                "section.emails": {
+                    "label": "E-mails générés"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Envois groupés",
+            "description": "Liste des envois groupés et de leur état de mise en file."
+        }
+    },
+    "error": {
+        "status": {
+            "not_draft": "Seuls les envois groupés au statut brouillon peuvent être mis en file."
+        },
+        "mailbox_id": {
+            "missing_mailbox": "Une boîte d'envoi est requise.",
+            "invalid_mailbox": "La boîte sélectionnée doit être validée et autorisée à envoyer."
+        },
+        "subject": {
+            "missing_subject": "Un sujet est requis."
+        },
+        "body": {
+            "missing_body": "Un contenu est requis."
+        },
+        "contact_group_id": {
+            "missing_recipients": "Le groupe doit contenir au moins un destinataire avec une adresse e-mail valide."
+        }
+    }
+}
