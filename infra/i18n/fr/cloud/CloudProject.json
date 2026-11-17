@@ -33,6 +33,11 @@
             "description": "Ressources propres au fournisseur disponibles pour ce projet cloud.",
             "help": "Synchronisez le catalogue pour actualiser les zones de déploiement, types d'instances, images, clés SSH et réseaux régionaux."
         },
+        "available_regions": {
+            "label": "Régions et zones de déploiement disponibles",
+            "description": "Zones de déploiement disponibles pour ce projet cloud, regroupées par région.",
+            "help": "Cette correspondance est extraite du catalogue synchronisé du fournisseur cloud."
+        },
         "api_credentials": {
             "label": "Identifiants API",
             "description": "Identifiants utilisés pour authentifier les requêtes auprès de l'API du fournisseur cloud.",

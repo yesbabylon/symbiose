@@ -33,6 +33,11 @@
             "description": "Provider-specific resources available to this cloud project.",
             "help": "Synchronize the catalog to refresh deployment zones, regional flavors, images, SSH keys and networks."
         },
+        "available_regions": {
+            "label": "Available regions and deployment zones",
+            "description": "Deployment zones available to this cloud project, grouped by region.",
+            "help": "This mapping is derived from the synchronized cloud provider catalog."
+        },
         "api_credentials": {
             "label": "API credentials",
             "description": "Credentials used to authenticate requests to the cloud provider API.",

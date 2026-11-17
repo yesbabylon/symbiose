@@ -24,17 +24,12 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "cloud_provider_id",
-                                                "width": "50%"
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
@@ -44,12 +39,30 @@
                                             {
                                                 "type": "field",
                                                 "value": "extref_project_id",
-                                                "width": "50%"
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "available_regions",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "height": 120
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "cloud_provider_id",
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "api_credentials",
-                                                "width": "50%"
+                                                "width": "100%"
                                             }
                                         ]
                                     }

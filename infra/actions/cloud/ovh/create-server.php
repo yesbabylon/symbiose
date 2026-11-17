@@ -413,7 +413,7 @@ Example of possible options:
     "public": true
   },
   "sshKey": {
-    "name": "lucas-Vivobook-ASUSLaptop"
+    "name": "provisioning"
   },
   "sshKeyCreate": null,
   "billingPeriod": "hourly",
