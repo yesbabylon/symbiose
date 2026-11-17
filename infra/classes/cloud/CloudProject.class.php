@@ -62,7 +62,7 @@ class CloudProject extends Model {
 
             'available_regions' => [
                 'type'              => 'computed',
-                'result'            => 'string',
+                'result_type'       => 'string',
                 'usage'             => 'text/json',
                 'description'       => 'Mapping of available region names to deployment zone codes.',
                 'store'             => false,
