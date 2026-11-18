@@ -20,6 +20,13 @@
             "visible": ["server_type", "in", ["b2", "k2"]]
         },
         {
+            "id": "action.sync-backups",
+            "label": "Synchronize backups",
+            "description": "Synchronize the backups hosted by the server.",
+            "controller": "infra_server_Server_sync-backups",
+            "visible": ["server_type", "in", ["b2", "k2"]]
+        },
+        {
             "id": "action.add-check",
             "label": "Add check from example",
             "controller": "infra_server_add-server-check",
@@ -245,6 +252,37 @@
                                                 "label": "Instances",
                                                 "widget": {
                                                     "view": "list.selection"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.backups",
+                        "label": "Backups",
+                        "visible": ["server_type", "in", ["k2", "b2"]],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "backups_ids",
+                                                "width": "100%",
+                                                "label": "Backups",
+                                                "widget": {
+                                                    "view": "list.default",
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
                                                 }
                                             }
                                         ]
