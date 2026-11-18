@@ -1,0 +1,39 @@
+{
+    "name": "Backups",
+    "description": "Default listing of server backups.",
+    "order": "backup_time",
+    "sort": "desc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "10%",
+                "sortable": true,
+                "visible": false,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "50%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "backup_time",
+                "width": "25%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "server_id",
+                "width": "25%",
+                "sortable": true,
+                "readonly": true
+            }
+        ]
+    }
+}

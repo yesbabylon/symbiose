@@ -175,7 +175,15 @@ class Server extends Model {
                 'foreign_field'     => 'object_id',
                 'domain'            => ['object_class', '=', 'infra\server\Server'],
                 'description'       => 'Alert triggers of the server.'
-            ]
+            ],
+
+            'backups_ids' => [
+                'type'              => 'one2many',
+                'foreign_field'     => 'server_id',
+                'foreign_object'    => 'infra\server\Backup',
+                'ondetach'          => 'delete',
+                'description'       => 'Backups that the server is hosting.'
+            ],
 
         ];
     }
