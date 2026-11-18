@@ -39,21 +39,8 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "cloud_provider_code",
-                                                "visible": false
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "extref_project_id",
+                                                "value": "description",
                                                 "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "available_regions",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "height": 120
-                                                }
                                             }
                                         ]
                                     },
@@ -62,13 +49,18 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "extref_project_id",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "cloud_provider_id",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "api_credentials",
-                                                "width": "100%"
+                                                "value": "cloud_provider_code",
+                                                "visible": false
                                             }
                                         ]
                                     }
@@ -101,7 +93,30 @@
                         ]
                     },
                     {
-                        "id": "section.provider-catalog",
+                        "id": "section.available-regions",
+                        "label": "Available regions",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "available_regions",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "height": 120
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.provider-info",
                         "label": "Provider catalog",
                         "rows": [
                             {
@@ -109,6 +124,11 @@
                                     {
                                         "width": "100%",
                                         "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "api_credentials",
+                                                "width": "100%"
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "provider_catalog",

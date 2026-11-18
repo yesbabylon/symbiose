@@ -24,6 +24,11 @@ class CloudProject extends Model {
                 'required'          => true
             ],
 
+            'description' => [
+                'type'              => 'string',
+                'description'       => 'Short description of the cloud project.',
+            ],
+
             'cloud_provider_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'infra\cloud\CloudProvider',
