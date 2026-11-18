@@ -115,26 +115,68 @@ foreach($self as $id => $server) {
     }
 
     $remote_backups = [];
-    foreach($hosted_backups as $instance_name => $backup_names) {
-        if(!is_string($instance_name) || $instance_name === '' || !is_array($backup_names)) {
+    foreach($hosted_backups as $instance_name => $instance_backups) {
+        if(!is_string($instance_name) || $instance_name === '' || !is_array($instance_backups)) {
             trigger_error("APP::Server {$id} returned an invalid backups response.", EQ_REPORT_ERROR);
             throw new Exception('invalid_backups_response', EQ_ERROR_UNKNOWN);
         }
 
-        $pattern = '/^'.preg_quote($instance_name, '/').'_(\d{8})(\d{5})_(?:\d+\.tar(?:\.gpg)?|stack\.tar\.gz)$/';
-        foreach($backup_names as $backup_name) {
-            if(!is_string($backup_name) || preg_match($pattern, $backup_name, $matches) !== 1) {
+        $backup_entries = $instance_backups;
+        if($server['server_type'] === 'b2') {
+            if(!array_key_exists('export', $instance_backups) || !array_key_exists('import', $instance_backups)) {
+                trigger_error("APP::B2 server {$id} returned an invalid backups response.", EQ_REPORT_ERROR);
+                throw new Exception('invalid_backups_response', EQ_ERROR_UNKNOWN);
+            }
+            if(!is_array($instance_backups['export']) || !is_array($instance_backups['import'])) {
+                trigger_error("APP::B2 server {$id} returned invalid import or export backup lists.", EQ_REPORT_ERROR);
+                throw new Exception('invalid_backups_response', EQ_ERROR_UNKNOWN);
+            }
+
+            // Only imported archives can be restored by the B2 host.
+            $backup_entries = $instance_backups['import'];
+        }
+
+        $backup_pattern = '/^'.preg_quote($instance_name, '/').'_(\d{8})(\d{5})_(?:\d+\.tar(?:\.gpg)?|stack\.tar\.gz)$/';
+        $legacy_stack_pattern = '/^stack-'.preg_quote($instance_name, '/').'-(\d{8})-(\d{2})(\d{2})(\d{2})(?:-\d+)?\.tar\.gz$/';
+        foreach($backup_entries as $backup_entry) {
+            $backup_name = $backup_entry;
+            if($server['server_type'] === 'b2' && is_array($backup_entry)) {
+                $backup_name = $backup_entry['filename'] ?? null;
+            }
+
+            if(!is_string($backup_name)) {
                 trigger_error("APP::Server {$id} returned an invalid backup filename.", EQ_REPORT_ERROR);
                 throw new Exception('invalid_backups_response', EQ_ERROR_UNKNOWN);
             }
 
-            $seconds = (int) $matches[2];
+            $matches = [];
+            if(preg_match($backup_pattern, $backup_name, $matches) === 1) {
+                $date_value = $matches[1];
+                $seconds = (int) $matches[2];
+            }
+            elseif(preg_match($legacy_stack_pattern, $backup_name, $matches) === 1) {
+                $date_value = $matches[1];
+                $hours = (int) $matches[2];
+                $minutes = (int) $matches[3];
+                $seconds_value = (int) $matches[4];
+                if($hours >= 24 || $minutes >= 60 || $seconds_value >= 60) {
+                    trigger_error("APP::Server {$id} returned an invalid backup timestamp.", EQ_REPORT_ERROR);
+                    throw new Exception('invalid_backups_response', EQ_ERROR_UNKNOWN);
+                }
+
+                $seconds = ($hours * 3600) + ($minutes * 60) + $seconds_value;
+            }
+            else {
+                trigger_error("APP::Server {$id} returned an invalid backup filename.", EQ_REPORT_ERROR);
+                throw new Exception('invalid_backups_response', EQ_ERROR_UNKNOWN);
+            }
+
             $date = DateTimeImmutable::createFromFormat(
                 '!Ymd',
-                $matches[1],
+                $date_value,
                 new DateTimeZone('UTC')
             );
-            if(!$date || $date->format('Ymd') !== $matches[1] || $seconds >= 86400) {
+            if(!$date || $date->format('Ymd') !== $date_value || $seconds >= 86400) {
                 trigger_error("APP::Server {$id} returned an invalid backup timestamp.", EQ_REPORT_ERROR);
                 throw new Exception('invalid_backups_response', EQ_ERROR_UNKNOWN);
             }
