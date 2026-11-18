@@ -1,0 +1,69 @@
+{
+    "name": "Servers",
+    "description": "Lists all servers of a cloud project.",
+    "order": "name",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true,
+                "visible": false
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "33%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "up",
+                "width": "33%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Type",
+                "value": "server_type",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "cloud_provider_id",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "region_id",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "deployment_zone_id",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "products_count",
+                "width": "33%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "instances_count",
+                "width": "33%",
+                "sortable": true,
+                "readonly": true
+            }
+        ]
+    }
+}
