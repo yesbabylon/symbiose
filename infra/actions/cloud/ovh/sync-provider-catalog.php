@@ -98,7 +98,6 @@ $getOvhCollection = function(array $api_credentials, string $path, array $query 
             'APP::Unable to retrieve an OVHcloud provider catalog resource.',
             EQ_REPORT_WARNING
         );
-        file_put_contents(QN_LOG_STORAGE_DIR.'/tmp.log', json_encode($response->body()).PHP_EOL, FILE_APPEND | LOCK_EX);
         throw new Exception('failed_retrieving_ovh_catalog', EQ_ERROR_UNKNOWN);
     }
 

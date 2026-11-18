@@ -49,6 +49,11 @@ use inventory\Product;
             'selection'         => ['equal', 'wordpress', 'equalpress', 'symbiose', 'fmt', 'mkdocs'],
             'default'           => 'equal'
         ],
+        'b2_instance_subtype' => [
+            'type'              => 'string',
+            'description'       => 'Used only when required by the B2 instance type.',
+            'help'              => '{ "fmt": ["global", "agency"] }'
+        ],
         'cipher_key' => [
             'type'              => 'string',
             'description'       => 'Optional 32-character cipher key. B2 generates one when omitted.',
@@ -79,11 +84,6 @@ use inventory\Product;
             'type'              => 'boolean',
             'description'       => 'Run the selected template initialization script after creation.',
             'default'           => false
-        ],
-        'instance_subtype' => [
-            'type'              => 'string',
-            'description'       => 'Used only when required by the B2 instance type.',
-            'default'           => ''
         ],
         'create_dns_record' => [
             'type'              => 'boolean',
@@ -128,6 +128,13 @@ if(
 
 if(strlen($params['password']) < 8 || strlen($params['password']) > 70) {
     throw new Exception('invalid_instance_password', EQ_ERROR_INVALID_PARAM);
+}
+
+$allowed_subtypes = [
+    'fmt' => ['global', 'agency']
+];
+if(!empty($allowed_subtypes[$params['b2_instance_type']]) && !in_array($params['b2_instance_subtype'], $allowed_subtypes[$params['b2_instance_type']])) {
+    throw new Exception('invalid_b2_instance_subtype', EQ_ERROR_INVALID_PARAM);
 }
 
 if($params['cipher_key'] !== '' && strlen($params['cipher_key']) !== 32) {
@@ -198,7 +205,11 @@ $create_params = [
     'INIT'              => $params['init']
 ];
 
-if($params['cipher_key'] !== '') {
+if(!empty($params['b2_instance_subtype'])) {
+    $create_params['INSTANCE_SUBTYPE'] = $params['b2_instance_subtype'];
+}
+
+if(!empty($params['cipher_key'])) {
     $create_params['CIPHER_KEY'] = $params['cipher_key'];
 }
 

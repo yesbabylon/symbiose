@@ -35,6 +35,7 @@ use infra\server\Status;
         'sync_instances' => [
             'type'              => 'boolean',
             'description'       => 'Synchronize statuses of all the instances of the server.',
+            'help'              => 'Only for b2 servers.',
             'default'           => false
         ]
     ],
@@ -72,6 +73,7 @@ foreach($params['scopes'] as $scope) {
 $scopes = array_keys($map_scopes);
 
 $self->read([
+    'server_type',
     'instances_ids',
     'checks_ids' => [
         'scope'
@@ -132,19 +134,27 @@ foreach($self as $id => $server) {
         }
 
         $ip_config = [
-            'ip_public' => [
-                'visibility'    => 'public',
-                'exposure'      => 'public'
-            ],
-            'ip_protected' => [
-                'visibility'    => 'protected',
-                'exposure'      => 'public'
-            ],
             'ip_private' => [
                 'visibility'    => 'private',
                 'exposure'      => 'private'
             ]
         ];
+
+        if($server['server_type'] === 'b2') {
+            $ip_config = array_merge(
+                [
+                    'ip_public' => [
+                        'visibility'    => 'public',
+                        'exposure'      => 'public'
+                    ],
+                    'ip_protected' => [
+                        'visibility'    => 'protected',
+                        'exposure'      => 'public'
+                    ]
+                ],
+                $ip_config
+            );
+        }
 
         foreach($ip_config as $config_key => $ip_values) {
             if(empty($status['config'][$config_key])) {
@@ -217,7 +227,7 @@ foreach($self as $id => $server) {
             'synced'    => time()
         ]);
 
-        if($params['sync_instances']) {
+        if($server['server_type'] === 'b2' && $params['sync_instances']) {
             foreach($server['instances_ids'] as $instance_id) {
                 eQual::run('do', 'infra_server_Instance_sync-status', [
                     'id'        => $instance_id,
@@ -240,13 +250,13 @@ foreach($self as $id => $server) {
             'scopes'            => json_encode(empty($scopes) ? $allowed_scopes : $scopes)
         ]);
 
-        // server is down (will cascade to instances)
+        // server is down (will cascade to instances if b2)
         Server::id($id)->update([
             'up'        => false,
             'synced'    => time()
         ]);
 
-        if($params['sync_instances']) {
+        if($server['server_type'] === 'b2' && $params['sync_instances']) {
             foreach($server['instances_ids'] as $instance_id) {
                 Status::create([
                     'object_class'      => Instance::class,

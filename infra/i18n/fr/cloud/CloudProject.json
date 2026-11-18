@@ -49,9 +49,13 @@
             "name": "Projet cloud",
             "description": "Affiche et modifie un projet cloud.",
             "actions": {
-                "action.create-server": {
-                    "label": "Créer un serveur OVHcloud",
-                    "description": "Crée un serveur dans ce projet OVHcloud."
+                "action.create-b2-server": {
+                    "label": "Créer un serveur b2 OVHcloud",
+                    "description": "Crée un serveur b2 dans ce projet OVHcloud."
+                },
+                "action.create-k2-server": {
+                    "label": "Créer un serveur k2 OVHcloud (backups)",
+                    "description": "Crée un serveur k2 dans ce projet OVHcloud, pour gérer les backups."
                 },
                 "action.sync-ovh-provider-catalog": {
                     "label": "Synchroniser le catalogue OVH",
@@ -91,6 +95,9 @@
             "invalid_provider_catalog": "Le catalogue du fournisseur n'a pas pu être encodé.",
             "unknown_server": "Le serveur est introuvable.",
             "invalid_name": "Le nom du serveur est invalide.",
+            "missing_backup_server": "Aucun serveur de sauvegarde k2 n'est disponible dans ce projet cloud.",
+            "invalid_backup_server": "Le serveur de sauvegarde sélectionné n'est pas un serveur k2 de ce projet cloud.",
+            "missing_backup_server_private_ip": "Le serveur de sauvegarde k2 sélectionné ne possède aucune adresse IPv4 privée.",
             "unknown_region": "La région cloud est introuvable.",
             "invalid_region": "La région sélectionnée n'est pas disponible pour ce projet cloud.",
             "unknown_deployment_zone": "La zone de déploiement est introuvable.",
