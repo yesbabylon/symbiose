@@ -12,6 +12,13 @@
             "visible": ["server_type", "=", "b2"]
         },
         {
+            "id": "action.backup",
+            "label": "Create backup",
+            "description": "Create an encrypted backup of this instance and send it to the configured backup host.",
+            "controller": "infra_server_Instance_backup",
+            "visible": ["server_type", "=", "b2"]
+        },
+        {
             "id": "action.add-check",
             "label": "Add check from example",
             "controller": "infra_server_add-instance-check",

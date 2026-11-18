@@ -113,6 +113,10 @@
                 "action.sync-status": {
                     "label": "Synchroniser statut"
                 },
+                "action.backup": {
+                    "label": "Créer une sauvegarde",
+                    "description": "Créer une sauvegarde chiffrée de cette instance et l’envoyer à l’hôte de sauvegarde configuré."
+                },
                 "action.add-check": {
                     "label": "Ajouter un contrôle",
                     "description": "Créer un contrôle d'instance modifiable à partir d'un exemple."
@@ -161,6 +165,10 @@
     },
     "error": {
         "errors": {
+            "missing_instance": "Sélectionnez au moins une instance à sauvegarder.",
+            "missing_b2_host_access": "L’accès de gestion B2 sur le port 8000 est manquant.",
+            "b2_instance_backup_failed": "L’hôte B2 n’a pas pu créer la sauvegarde de l’instance.",
+            "b2_instance_backup_export_failed": "L’hôte B2 n’a pas pu envoyer la sauvegarde de l’instance à l’hôte de sauvegarde.",
             "unknown_instance": "L’instance est introuvable.",
             "missing_server": "Aucun serveur n’est associé à l’instance.",
             "invalid_server_type": "Le serveur associé n’est pas un hôte B2.",

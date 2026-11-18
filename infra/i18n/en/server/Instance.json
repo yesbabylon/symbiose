@@ -26,6 +26,10 @@
     "view": {
         "form.default": {
             "actions": {
+                "action.backup": {
+                    "label": "Create backup",
+                    "description": "Create an encrypted backup of this instance and send it to the configured backup host."
+                },
                 "action.create-dns-record": {
                     "label": "Create DNS record",
                     "description": "Create or update the OVH A record for the instance."
@@ -35,9 +39,13 @@
     },
     "error": {
         "errors": {
+            "missing_instance": "Select at least one instance to back up.",
             "unknown_instance": "The instance was not found.",
             "missing_server": "The instance is not associated with a server.",
             "invalid_server_type": "The associated server is not a B2 host.",
+            "missing_b2_host_access": "The B2 management access on port 8000 is missing.",
+            "b2_instance_backup_failed": "The B2 host could not create the instance backup.",
+            "b2_instance_backup_export_failed": "The B2 host could not send the instance backup to the backup host.",
             "invalid_dns_zone": "The instance FQDN does not belong to the specified DNS zone.",
             "protected_dns_record_name": "This protected DNS name cannot be used.",
             "missing_public_ip_address": "The server has no usable public IPv4 address.",
