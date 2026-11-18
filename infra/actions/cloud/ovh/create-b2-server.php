@@ -13,7 +13,7 @@ use infra\cloud\Region;
 use infra\server\Server;
 
 [$params, $providers] = eQual::announce([
-    'description'   => "Create a new server in a specific cloud project.",
+    'description'   => "Create a new b2 server in a specific cloud project.",
     'params'        => [
         'id' => [
             'type'              => 'many2one',
@@ -464,7 +464,7 @@ $server = Server::create([
 
 Access::create([
     'server_id'     => $server['id'],
-    'description'   => 'Created by action create-ovh-server.',
+    'description'   => 'Created by action infra_cloud_ovh_create-b2-server.',
     'access_type'   => 'http',
     'host'          => $name,
     'port'          => '8000',

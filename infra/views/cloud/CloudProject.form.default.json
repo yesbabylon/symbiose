@@ -9,9 +9,15 @@
             "visible": ["cloud_provider_code", "=", "ovh"]
         },
         {
-            "id": "action.create-server",
-            "label": "Create OVHcloud server",
-            "controller": "infra_cloud_ovh_create-server",
+            "id": "action.create-b2-server",
+            "label": "Create OVHcloud b2 server",
+            "controller": "infra_cloud_ovh_create-b2-server",
+            "visible": ["cloud_provider_code", "=", "ovh"]
+        },
+        {
+            "id": "action.create-k2-server",
+            "label": "Create OVHcloud k2 server (backups)",
+            "controller": "infra_cloud_ovh_create-k2-server",
             "visible": ["cloud_provider_code", "=", "ovh"]
         }
     ],

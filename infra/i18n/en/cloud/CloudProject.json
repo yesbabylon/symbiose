@@ -49,9 +49,13 @@
             "name": "Cloud project",
             "description": "Displays and edits a cloud project.",
             "actions": {
-                "action.create-server": {
-                    "label": "Create OVHcloud server",
-                    "description": "Creates a server in this OVHcloud project."
+                "action.create-b2-server": {
+                    "label": "Create OVHcloud b2 server",
+                    "description": "Creates a b2 server in this OVHcloud project."
+                },
+                "action.create-k2-server": {
+                    "label": "Create OVHcloud k2 server (backups)",
+                    "description": "Creates a k2 server in this OVHcloud project, to manage backups."
                 },
                 "action.sync-ovh-provider-catalog": {
                     "label": "Synchronize OVH catalog",
