@@ -21,7 +21,8 @@ use infra\Access;
             'type'              => 'one2many',
             'foreign_object'    => 'infra\server\Instance',
             'description'       => 'Identifiers of the instances to back up.',
-            'default'           => []
+            'default'           => [],
+            'visible'           => false
         ],
         'encrypt' => [
             'type'              => 'boolean',
@@ -31,7 +32,8 @@ use infra\Access;
         'send_to_backup_host' => [
             'type'              => 'boolean',
             'description'       => 'Send the created backup to the configured backup host.',
-            'default'           => true
+            'default'           => true,
+            'required'          => true
         ]
     ],
     'access'        => [
