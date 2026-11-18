@@ -46,7 +46,10 @@ class Server extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'infra\cloud\CloudProject',
                 'description'       => 'Cloud project hosting the Server.',
-                'dependents'        => ['backups_ids' => ['cloud_project_id']],
+                'dependents'        => [
+                    'instances_ids' => ['cloud_project_id'],
+                    'backups_ids'   => ['cloud_project_id']
+                ],
                 // 'required'          => true
             ],
 

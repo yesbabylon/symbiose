@@ -3,6 +3,11 @@
     "plural": "Instances",
     "description": "Application instance running on a server.",
     "model": {
+        "cloud_project_id": {
+            "label": "Cloud project",
+            "description": "Cloud project of the server hosting the instance.",
+            "help": ""
+        },
         "b2_instance_type": {
             "label": "B2 instance type",
             "description": "Application stack installed by B2.",
@@ -48,10 +53,12 @@
             "multiple_instances_not_allowed": "Restore one instance at a time.",
             "missing_server": "The instance is not associated with a server.",
             "invalid_server_type": "The associated server is not a B2 host.",
+            "missing_cloud_project": "The instance’s server is not associated with a cloud project.",
             "missing_b2_host_access": "The B2 management access on port 8000 is missing.",
             "missing_backup": "Select a backup to restore.",
             "unknown_backup": "The selected backup was not found.",
-            "backup_not_available_for_instance": "The selected backup is not available through this instance’s server.",
+            "backup_not_on_k2_server": "The selected backup is not hosted by a K2 server.",
+            "backup_not_in_cloud_project": "The selected backup is not hosted in the instance’s cloud project.",
             "invalid_backup_filename": "The selected backup does not belong to this instance or uses an unsupported format.",
             "missing_backup_passphrase": "The B2 host GPG key passphrase is required for this encrypted backup.",
             "b2_instance_backup_import_failed": "The B2 host could not import the selected backup from its backup host.",

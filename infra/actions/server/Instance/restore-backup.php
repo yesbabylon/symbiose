@@ -23,7 +23,10 @@ use infra\server\Backup;
             'type'              => 'many2one',
             'foreign_object'    => 'infra\server\Backup',
             'description'       => 'Backup to use for restoring the instance.',
-            'domain'            => ['server_id', '=', 'object.server_id'],
+            'domain'            => [
+                ['server_type', '=', 'k2'],
+                ['cloud_project_id', '=', 'object.cloud_project_id']
+            ],
             'required'          => true
         ],
         'passphrase' => [
@@ -56,6 +59,7 @@ if(empty($params['ids']) && $params['id'] <= 0) {
 
 $self->read([
     'name',
+    'cloud_project_id',
     'server_id' => ['server_type']
 ]);
 
@@ -75,21 +79,27 @@ if(!$instance['server_id']) {
 if($instance['server_id']['server_type'] !== 'b2') {
     throw new Exception('invalid_server_type', EQ_ERROR_NOT_ALLOWED);
 }
+if(empty($instance['cloud_project_id'])) {
+    throw new Exception('missing_cloud_project', EQ_ERROR_INVALID_CONFIG);
+}
 
 if($params['backup_id'] <= 0) {
     throw new Exception('missing_backup', EQ_ERROR_MISSING_PARAM);
 }
 
 $backup = Backup::id($params['backup_id'])
-    ->read(['name', 'server_id'])
+    ->read(['name', 'server_type', 'cloud_project_id'])
     ->first();
 
 if(!$backup) {
     throw new Exception('unknown_backup', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
-if((int) $backup['server_id'] !== (int) $instance['server_id']['id']) {
-    throw new Exception('backup_not_available_for_instance', EQ_ERROR_NOT_ALLOWED);
+if($backup['server_type'] !== 'k2') {
+    throw new Exception('backup_not_on_k2_server', EQ_ERROR_NOT_ALLOWED);
+}
+if((int) $backup['cloud_project_id'] !== (int) $instance['cloud_project_id']) {
+    throw new Exception('backup_not_in_cloud_project', EQ_ERROR_NOT_ALLOWED);
 }
 
 $pattern = '/^'.preg_quote($instance['name'], '/').'_(\d{13}_\d+)\.tar(\.gpg)?$/';

@@ -79,6 +79,11 @@
             "description": "Serveur sur lequel l'instance s'exécute.",
             "help": ""
         },
+        "cloud_project_id": {
+            "label": "Projet cloud",
+            "description": "Projet cloud du serveur qui héberge l’instance.",
+            "help": ""
+        },
         "product_id": {
             "label": "Produit",
             "description": "Produit auquel appartient l’instance.",
@@ -173,7 +178,6 @@
             "missing_b2_host_access": "L’accès de gestion B2 sur le port 8000 est manquant.",
             "missing_backup": "Sélectionnez une sauvegarde à restaurer.",
             "unknown_backup": "La sauvegarde sélectionnée est introuvable.",
-            "backup_not_available_for_instance": "La sauvegarde sélectionnée n’est pas disponible via le serveur de cette instance.",
             "invalid_backup_filename": "La sauvegarde sélectionnée n’appartient pas à cette instance ou utilise un format non pris en charge.",
             "missing_backup_passphrase": "La phrase secrète de la clé GPG de l’hôte B2 est requise pour cette sauvegarde chiffrée.",
             "b2_instance_backup_import_failed": "L’hôte B2 n’a pas pu importer la sauvegarde sélectionnée depuis son hôte de sauvegarde.",
@@ -184,6 +188,9 @@
             "multiple_instances_not_allowed": "Restaurez une seule instance à la fois.",
             "missing_server": "Aucun serveur n’est associé à l’instance.",
             "invalid_server_type": "Le serveur associé n’est pas un hôte B2.",
+            "missing_cloud_project": "Le serveur de l’instance n’est associé à aucun projet cloud.",
+            "backup_not_on_k2_server": "La sauvegarde sélectionnée n’est pas hébergée par un serveur K2.",
+            "backup_not_in_cloud_project": "La sauvegarde sélectionnée n’est pas hébergée dans le projet cloud de l’instance.",
             "invalid_dns_zone": "Le FQDN de l’instance n’appartient pas à la zone DNS indiquée.",
             "protected_dns_record_name": "Ce nom DNS est protégé et ne peut pas être utilisé.",
             "missing_public_ip_address": "Le serveur ne possède aucune adresse IPv4 publique utilisable.",

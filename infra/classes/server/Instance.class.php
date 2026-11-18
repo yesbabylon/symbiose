@@ -113,8 +113,18 @@ class Instance extends Model {
                 'foreign_object'    => 'infra\server\Server',
                 'description'       => 'Server on which the instance runs.',
                 'ondelete'          => 'cascade',
-                'dependents'        => ['server_type'],
+                'dependents'        => ['server_type', 'cloud_project_id'],
                 'required'          => true
+            ],
+
+            'cloud_project_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'infra\cloud\CloudProject',
+                'description'       => 'Cloud project of the server hosting the instance.',
+                'relation'          => ['server_id' => 'cloud_project_id'],
+                'store'             => true,
+                'instant'           => true
             ],
 
             'accesses_ids' => [
