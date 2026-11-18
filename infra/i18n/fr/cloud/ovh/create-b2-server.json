@@ -1,0 +1,86 @@
+{
+    "name": "Créer un serveur OVHcloud",
+    "description": "Créer un serveur dans ce projet OVHcloud.",
+    "model": {
+        "id": {
+            "label": "Projet cloud",
+            "description": "Projet cloud dans lequel le serveur sera créé.",
+            "help": ""
+        },
+        "name": {
+            "label": "Nom du serveur",
+            "description": "Nom attribué au nouveau serveur.",
+            "help": "Utilisez un nom qui identifie clairement le serveur."
+        },
+        "region_id": {
+            "label": "Région",
+            "description": "Région cloud dans laquelle le serveur sera créé.",
+            "help": "Sélectionnez une région disponible dans le catalogue fournisseur synchronisé."
+        },
+        "availability_zone_id": {
+            "label": "Zone de disponibilité",
+            "description": "Zone de disponibilité dans laquelle le serveur sera créé.",
+            "help": "Laissez ce champ vide pour qu'OVHcloud sélectionne une zone de disponibilité."
+        },
+        "flavor": {
+            "label": "Type d'instance",
+            "description": "Configuration de calcul et de mémoire du serveur.",
+            "help": "Sélectionnez un type d'instance disponible dans la région choisie.",
+            "selection": {
+                "d2-2": "d2-2",
+                "d2-4": "d2-4",
+                "b3-8": "b3-8"
+            }
+        },
+        "image": {
+            "label": "Image du système d'exploitation",
+            "description": "Image du système d'exploitation installée sur le serveur.",
+            "help": "Sélectionnez une image disponible dans la région choisie.",
+            "selection": {
+                "Ubuntu 26.04 - UEFI": "Ubuntu 26.04 - UEFI",
+                "Ubuntu 24.04 - UEFI": "Ubuntu 24.04 - UEFI"
+            }
+        },
+        "billing_period": {
+            "label": "Période de facturation",
+            "description": "Fréquence de facturation appliquée au serveur.",
+            "help": "Sélectionnez la facturation horaire pour plus de flexibilité ou la facturation mensuelle pour un engagement mensuel.",
+            "selection": {
+                "monthly": "Mensuelle",
+                "hourly": "Horaire"
+            }
+        },
+        "backup_server_id": {
+            "label": "Serveur de sauvegarde",
+            "description": "Serveur k2 dont l'adresse IPv4 privée sera utilisée comme hôte de sauvegarde.",
+            "help": "Laissez ce champ vide pour utiliser le premier serveur k2 de ce projet cloud."
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_cloud_project": "Le projet cloud est introuvable.",
+            "wrong_cloud_provider": "Cette action n'est pas prise en charge par le fournisseur du projet cloud.",
+            "missing_extref_project_id": "Le projet cloud ne possède aucun identifiant externe chez le fournisseur.",
+            "missing_api_credentials": "Le projet cloud ne possède aucun identifiant d'API.",
+            "invalid_application_key": "La clé d'application OVHcloud est manquante ou invalide.",
+            "invalid_application_secret": "Le secret d'application OVHcloud est manquant ou invalide.",
+            "invalid_consumer_key": "La clé consommateur OVHcloud est manquante ou invalide.",
+            "invalid_name": "Le nom du serveur est invalide.",
+            "missing_backup_server": "Aucun serveur de sauvegarde k2 n'est disponible dans ce projet cloud.",
+            "invalid_backup_server": "Le serveur de sauvegarde sélectionné n'est pas un serveur k2 de ce projet cloud.",
+            "missing_backup_server_private_ip": "Le serveur de sauvegarde k2 sélectionné ne possède aucune adresse IPv4 privée.",
+            "unknown_region": "La région cloud est introuvable.",
+            "unknown_zone": "La zone de disponibilité est introuvable.",
+            "invalid_zone": "La zone de disponibilité sélectionnée n'appartient pas à la région sélectionnée.",
+            "invalid_provider_catalog": "Le catalogue du fournisseur est invalide.",
+            "invalid_region": "La région sélectionnée n'est pas disponible pour ce projet cloud.",
+            "invalid_flavor": "Le type d'instance sélectionné n'est pas disponible dans cette région.",
+            "invalid_image": "L'image de serveur sélectionnée n'est pas disponible dans cette région.",
+            "missing_ssh_key": "Aucune clé SSH n'est disponible pour ce projet cloud et cette région.",
+            "missing_private_network": "Aucun réseau privé avec un sous-réseau n'est disponible pour ce projet cloud et cette région.",
+            "failed_retrieving_ovh_time": "L'heure de l'API OVHcloud n'a pas pu être récupérée.",
+            "invalid_ovh_time_response": "OVHcloud a renvoyé une réponse d'heure d'API invalide.",
+            "failed_creating_ovh_server": "OVHcloud a rejeté la requête de création du serveur."
+        }
+    }
+}

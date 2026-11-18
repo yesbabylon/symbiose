@@ -17,7 +17,7 @@
             "params": {
                 "sync_instances": true
             },
-            "visible": ["server_type", "=", "b2"]
+            "visible": ["server_type", "in", ["b2", "k2"]]
         },
         {
             "id": "action.add-check",

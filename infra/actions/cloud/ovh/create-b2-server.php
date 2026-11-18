@@ -69,6 +69,15 @@ use infra\server\Server;
                 'hourly'
             ],
             'default'           => 'monthly'
+        ],
+        'backup_server_id' => [
+            'type'              => 'many2one',
+            'foreign_object'    => 'infra\server\Server',
+            'description'       => 'Identifier of the k2 server to use as backup host.',
+            'domain'            => [
+                ['cloud_project_id', '=', 'object.id'],
+                ['server_type', '=', 'k2']
+            ]
         ]
     ],
     'access'        => [
@@ -102,7 +111,7 @@ $randomStr = function(int $length = 16): string {
     return $str;
 };
 
-$getUserData = function(string $name, string $password): string {
+$getUserData = function(string $name, string $password, string $backup_host): string {
     $user_data = <<<'YAML'
 #cloud-config
 package_update: true
@@ -115,7 +124,7 @@ write_files:
     permissions: '0600'
     content: |
       HOSTNAME=__HOSTNAME__
-      BACKUP_HOST='backup.example.internal'
+      BACKUP_HOST=__BACKUP_HOST__
       PUBLIC_IP=''
       PRIVATE_IP=''
       GPG_PASSPHRASE=__PASSWORD__
@@ -161,6 +170,7 @@ runcmd:
 YAML;
 
     $user_data = str_replace('__HOSTNAME__', escapeshellarg($name), $user_data);
+    $user_data = str_replace('__BACKUP_HOST__', escapeshellarg($backup_host), $user_data);
 
     return str_replace('__PASSWORD__', escapeshellarg($password), $user_data);
 };
@@ -263,6 +273,38 @@ $name = $params['name'];
 
 if(empty($name)) {
     throw new Exception('invalid_name', EQ_ERROR_INVALID_PARAM);
+}
+
+$backup_server_domain = [
+    ['cloud_project_id', '=', $cloudProject['id']],
+    ['server_type', '=', 'k2']
+];
+
+if(!empty($params['backup_server_id'])) {
+    $backup_server_domain[] = ['id', '=', $params['backup_server_id']];
+}
+
+$backup_server = Server::search($backup_server_domain)
+    ->read([
+        'ip_address_ids' => ['ip_v4', 'visibility']
+    ])
+    ->first();
+
+if(!$backup_server) {
+    $error = empty($params['backup_server_id']) ? 'missing_backup_server' : 'invalid_backup_server';
+    throw new Exception($error, EQ_ERROR_INVALID_PARAM);
+}
+
+$backup_host = null;
+foreach($backup_server['ip_address_ids'] as $ip_address) {
+    if($ip_address['visibility'] === 'private' && !empty($ip_address['ip_v4'])) {
+        $backup_host = explode('/', $ip_address['ip_v4'])[0];
+        break;
+    }
+}
+
+if(is_null($backup_host)) {
+    throw new Exception('missing_backup_server_private_ip', EQ_ERROR_INVALID_PARAM);
 }
 
 $region = Region::id($params['region_id'])
@@ -380,7 +422,7 @@ $body = [
     'network'           => $network,
     'sshKey'            => ['name' => $ssh_key['name']],
     'billingPeriod'     => $params['billing_period'],
-    'userData'          => $getUserData($name, $password) // #memo - script that configures, installs and starts the b2-server
+    'userData'          => $getUserData($name, $password, $backup_host) // #memo - script that configures, installs and starts the b2-server
 ];
 
 /*
