@@ -84,7 +84,10 @@
                                             {
                                                 "type": "field",
                                                 "value": "servers_ids",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view_id": "list.project"
+                                                }
                                             }
                                         ]
                                     }
