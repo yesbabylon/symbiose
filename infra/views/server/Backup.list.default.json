@@ -33,6 +33,22 @@
                 "width": "25%",
                 "sortable": true,
                 "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "server_type",
+                "width": "25%",
+                "sortable": true,
+                "readonly": true,
+                "visible": false
+            },
+            {
+                "type": "field",
+                "value": "cloud_project_id",
+                "width": "25%",
+                "sortable": true,
+                "readonly": true,
+                "visible": false
             }
         ]
     }

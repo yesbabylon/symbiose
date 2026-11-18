@@ -46,6 +46,7 @@ class Server extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'infra\cloud\CloudProject',
                 'description'       => 'Cloud project hosting the Server.',
+                'dependents'        => ['backups_ids' => ['cloud_project_id']],
                 // 'required'          => true
             ],
 
@@ -84,7 +85,10 @@ class Server extends Model {
                 'selection'         => ['front', 'node', 'storage', 'b2', 'k2', 's2', 'admin'],
                 'default'           => 'front',
                 'onupdate'          => 'onupdateServerType',
-                'dependents'        => ['instances_ids' => ['server_type']]
+                'dependents'        => [
+                    'instances_ids' => ['server_type'],
+                    'backups_ids'   => ['server_type']
+                ]
             ],
 
             'synced' => [

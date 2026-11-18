@@ -106,6 +106,14 @@
                     "label": "Synchronize backups",
                     "description": "Synchronize the backups hosted by this server."
                 },
+                "action.import-backup": {
+                    "label": "Import backup",
+                    "description": "Import an instance backup from a K2 server in the same cloud project."
+                },
+                "action.export-backup": {
+                    "label": "Export backup",
+                    "description": "Export an existing instance backup to the configured K2 backup host."
+                },
                 "action.add-check": {
                     "label": "Add check",
                     "description": "Create an editable server check from an example."
@@ -174,14 +182,30 @@
             "missing_fmt_global_access": "An FMT agency instance requires a global API URL and access token.",
             "missing_server": "A server must be selected.",
             "unknown_server": "The server was not found.",
+            "multiple_servers_not_allowed": "Process one server at a time.",
             "invalid_server_type": "The selected server is not a B2 host.",
             "invalid_backup_server_type": "Backups can only be synchronized from B2 and K2 servers.",
+            "missing_cloud_project": "The selected server is not associated with a cloud project.",
+            "missing_project_backup_server": "No K2 backup server is available in the B2 server’s cloud project.",
+            "missing_instance": "Select an instance.",
+            "unknown_instance": "The selected instance was not found.",
+            "instance_not_on_server": "The selected instance does not belong to this B2 server.",
+            "missing_backup": "Select a backup.",
+            "unknown_backup": "The selected backup was not found.",
+            "backup_not_on_server": "The selected backup does not belong to this B2 server.",
+            "backup_not_on_k2_server": "The selected backup is not hosted by a K2 server.",
+            "backup_not_in_cloud_project": "The selected backup is not hosted in the B2 server’s cloud project.",
+            "invalid_backup_filename": "The selected backup does not belong to the selected instance or uses an unsupported format.",
             "unknown_product": "The selected product was not found.",
             "instance_already_exists": "An instance with this name already exists.",
             "missing_b2_host_access": "The B2 management access on port 8000 is missing.",
             "missing_backup_server_access": "The server management access on port 8000 is missing.",
             "backup_sync_failed": "The backups could not be fetched from the server.",
             "invalid_backups_response": "The server returned an invalid backups response.",
+            "backup_export_failed": "The instance backup could not be exported to the K2 backup host.",
+            "backup_import_failed": "The selected backup could not be imported from the K2 backup host.",
+            "b2_instance_backup_failed": "The B2 host could not create the instance backup.",
+            "b2_instance_backup_export_failed": "The B2 host could not send the instance backup to its backup host.",
             "b2_instance_creation_failed": "The B2 host could not create the instance.",
             "dns_record_creation_failed": "The instance was created, but its DNS record could not be created."
         }

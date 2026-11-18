@@ -129,6 +129,14 @@
                     "label": "Synchroniser les sauvegardes",
                     "description": "Synchroniser les sauvegardes hébergées par ce serveur."
                 },
+                "action.import-backup": {
+                    "label": "Importer une sauvegarde",
+                    "description": "Importer une sauvegarde d’instance depuis un serveur K2 du même projet cloud."
+                },
+                "action.export-backup": {
+                    "label": "Exporter une sauvegarde",
+                    "description": "Exporter une sauvegarde d’instance existante vers l’hôte de sauvegarde K2 configuré."
+                },
                 "action.add-check": {
                     "label": "Ajouter un contrôle",
                     "description": "Créer un contrôle de serveur modifiable à partir d'un exemple."
@@ -203,14 +211,30 @@
             "missing_fmt_global_access": "Une instance FMT de type agence requiert l’URL et le jeton d’accès de l’API globale.",
             "missing_server": "Un serveur doit être sélectionné.",
             "unknown_server": "Le serveur est introuvable.",
+            "multiple_servers_not_allowed": "Traitez un seul serveur à la fois.",
             "invalid_server_type": "Le serveur sélectionné n’est pas un hôte B2.",
             "invalid_backup_server_type": "Les sauvegardes ne peuvent être synchronisées que depuis des serveurs B2 et K2.",
+            "missing_cloud_project": "Le serveur sélectionné n’est associé à aucun projet cloud.",
+            "missing_project_backup_server": "Aucun serveur de sauvegarde K2 n’est disponible dans le projet cloud du serveur B2.",
+            "missing_instance": "Sélectionnez une instance.",
+            "unknown_instance": "L’instance sélectionnée est introuvable.",
+            "instance_not_on_server": "L’instance sélectionnée n’appartient pas à ce serveur B2.",
+            "missing_backup": "Sélectionnez une sauvegarde.",
+            "unknown_backup": "La sauvegarde sélectionnée est introuvable.",
+            "backup_not_on_server": "La sauvegarde sélectionnée n’appartient pas à ce serveur B2.",
+            "backup_not_on_k2_server": "La sauvegarde sélectionnée n’est pas hébergée par un serveur K2.",
+            "backup_not_in_cloud_project": "La sauvegarde sélectionnée n’est pas hébergée dans le projet cloud du serveur B2.",
+            "invalid_backup_filename": "La sauvegarde sélectionnée n’appartient pas à l’instance sélectionnée ou utilise un format non pris en charge.",
             "unknown_product": "Le produit sélectionné est introuvable.",
             "instance_already_exists": "Une instance portant ce nom existe déjà.",
             "missing_b2_host_access": "L’accès de gestion B2 sur le port 8000 est manquant.",
             "missing_backup_server_access": "L’accès de gestion du serveur sur le port 8000 est manquant.",
             "backup_sync_failed": "Les sauvegardes n’ont pas pu être récupérées depuis le serveur.",
             "invalid_backups_response": "Le serveur a renvoyé une réponse de sauvegardes invalide.",
+            "backup_export_failed": "La sauvegarde de l’instance n’a pas pu être exportée vers l’hôte de sauvegarde K2.",
+            "backup_import_failed": "La sauvegarde sélectionnée n’a pas pu être importée depuis l’hôte de sauvegarde K2.",
+            "b2_instance_backup_failed": "L’hôte B2 n’a pas pu créer la sauvegarde de l’instance.",
+            "b2_instance_backup_export_failed": "L’hôte B2 n’a pas pu envoyer la sauvegarde de l’instance à son hôte de sauvegarde.",
             "b2_instance_creation_failed": "L’hôte B2 n’a pas pu créer l’instance.",
             "dns_record_creation_failed": "L’instance a été créée, mais son enregistrement DNS n’a pas pu être créé."
         }

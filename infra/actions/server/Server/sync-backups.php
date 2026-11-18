@@ -132,8 +132,8 @@ foreach($self as $id => $server) {
                 throw new Exception('invalid_backups_response', EQ_ERROR_UNKNOWN);
             }
 
-            // Only imported archives can be restored by the B2 host.
-            $backup_entries = $instance_backups['import'];
+            // Only exported archives can be sent to the configured K2 backup host.
+            $backup_entries = $instance_backups['export'];
         }
 
         $backup_pattern = '/^'.preg_quote($instance_name, '/').'_(\d{8})(\d{5})_(?:\d+\.tar(?:\.gpg)?|stack\.tar\.gz)$/';

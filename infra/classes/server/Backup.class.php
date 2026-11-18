@@ -31,7 +31,26 @@ class Backup extends Model {
                 'foreign_object'    => 'infra\server\Server',
                 'description'       => 'Server attached to the backup.',
                 'ondelete'          => 'cascade',
+                'dependents'        => ['server_type', 'cloud_project_id'],
                 'required'          => true
+            ],
+
+            'server_type' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'relation'          => ['server_id' => 'server_type'],
+                'store'             => true,
+                'visible'           => false
+            ],
+
+            'cloud_project_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'infra\cloud\CloudProject',
+                'description'       => 'Cloud project of the server hosting the backup.',
+                'relation'          => ['server_id' => 'cloud_project_id'],
+                'store'             => true,
+                'visible'           => false
             ]
 
         ];
