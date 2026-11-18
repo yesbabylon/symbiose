@@ -170,6 +170,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
                 'dependents'        => ['name', 'operation_number', 'payment_reference']
             ],
 
+            // #todo - this should be computed based on Fundings and PaymentAllocations related to the invoice
             'payment_status' => [
                 'type'              => 'string',
                 'selection'         => [

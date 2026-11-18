@@ -67,6 +67,14 @@
             },
             {
                 "type": "field",
+                "value": "payment_status",
+                "width": "20%",
+                "widget": {
+                    "sortable": true
+                }
+            },
+            {
+                "type": "field",
                 "value": "total",
                 "width": "15%",
                 "sortable": true
