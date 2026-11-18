@@ -285,12 +285,6 @@
                                         "width": "100%",
                                         "items": [
                                             {
-                                                "id": "label.exportable-backups",
-                                                "type": "label",
-                                                "value": "Only exportable backups are fetched for B2 servers.",
-                                                "visible": ["server_type", "=", "b2"]
-                                            },
-                                            {
                                                 "type": "field",
                                                 "value": "backups_ids",
                                                 "width": "100%",

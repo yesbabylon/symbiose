@@ -186,9 +186,17 @@ class Server extends Model {
 
             'backups_ids' => [
                 'type'              => 'one2many',
-                'foreign_field'     => 'server_id',
                 'foreign_object'    => 'infra\server\Backup',
                 'ondetach'          => 'delete',
+                'domain'            => [
+                    [
+                        ['server_id', '=', 'object.id']
+                    ],
+                    [
+                        ['server_type', '=', 'k2'],
+                        ['cloud_project_id', '=', 'object.cloud_project_id']
+                    ]
+                ],
                 'description'       => 'Backups that the server is hosting.'
             ],
 

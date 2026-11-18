@@ -168,9 +168,6 @@
                 "section.backups": {
                     "label": "Sauvegardes"
                 },
-                "label.exportable-backups": {
-                    "label": "Seules les sauvegardes exportables sont récupérées pour les serveurs B2."
-                },
                 "section.softwares": {
                     "label": "Logiciels"
                 },

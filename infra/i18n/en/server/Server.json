@@ -145,9 +145,6 @@
                 "section.backups": {
                     "label": "Backups"
                 },
-                "label.exportable-backups": {
-                    "label": "Only exportable backups are fetched for B2 servers."
-                },
                 "section.softwares": {
                     "label": "Software"
                 },
