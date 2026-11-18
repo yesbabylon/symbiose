@@ -30,6 +30,10 @@
                     "label": "Create backup",
                     "description": "Create an encrypted backup of this instance and send it to the configured backup host."
                 },
+                "action.restore-backup": {
+                    "label": "Restore backup",
+                    "description": "Restore this instance from a backup available through its B2 server."
+                },
                 "action.create-dns-record": {
                     "label": "Create DNS record",
                     "description": "Create or update the OVH A record for the instance."
@@ -39,11 +43,19 @@
     },
     "error": {
         "errors": {
-            "missing_instance": "Select at least one instance to back up.",
+            "missing_instance": "Select an instance.",
             "unknown_instance": "The instance was not found.",
+            "multiple_instances_not_allowed": "Restore one instance at a time.",
             "missing_server": "The instance is not associated with a server.",
             "invalid_server_type": "The associated server is not a B2 host.",
             "missing_b2_host_access": "The B2 management access on port 8000 is missing.",
+            "missing_backup": "Select a backup to restore.",
+            "unknown_backup": "The selected backup was not found.",
+            "backup_not_available_for_instance": "The selected backup is not available through this instance’s server.",
+            "invalid_backup_filename": "The selected backup does not belong to this instance or uses an unsupported format.",
+            "missing_backup_passphrase": "The B2 host GPG key passphrase is required for this encrypted backup.",
+            "b2_instance_backup_import_failed": "The B2 host could not import the selected backup from its backup host.",
+            "b2_instance_restore_failed": "The B2 host could not restore the instance from the selected backup.",
             "b2_instance_backup_failed": "The B2 host could not create the instance backup.",
             "b2_instance_backup_export_failed": "The B2 host could not send the instance backup to the backup host.",
             "invalid_dns_zone": "The instance FQDN does not belong to the specified DNS zone.",

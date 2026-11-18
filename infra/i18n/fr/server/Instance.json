@@ -117,6 +117,10 @@
                     "label": "Créer une sauvegarde",
                     "description": "Créer une sauvegarde chiffrée de cette instance et l’envoyer à l’hôte de sauvegarde configuré."
                 },
+                "action.restore-backup": {
+                    "label": "Restaurer une sauvegarde",
+                    "description": "Restaurer cette instance depuis une sauvegarde disponible via son serveur B2."
+                },
                 "action.add-check": {
                     "label": "Ajouter un contrôle",
                     "description": "Créer un contrôle d'instance modifiable à partir d'un exemple."
@@ -165,11 +169,19 @@
     },
     "error": {
         "errors": {
-            "missing_instance": "Sélectionnez au moins une instance à sauvegarder.",
+            "missing_instance": "Sélectionnez une instance.",
             "missing_b2_host_access": "L’accès de gestion B2 sur le port 8000 est manquant.",
+            "missing_backup": "Sélectionnez une sauvegarde à restaurer.",
+            "unknown_backup": "La sauvegarde sélectionnée est introuvable.",
+            "backup_not_available_for_instance": "La sauvegarde sélectionnée n’est pas disponible via le serveur de cette instance.",
+            "invalid_backup_filename": "La sauvegarde sélectionnée n’appartient pas à cette instance ou utilise un format non pris en charge.",
+            "missing_backup_passphrase": "La phrase secrète de la clé GPG de l’hôte B2 est requise pour cette sauvegarde chiffrée.",
+            "b2_instance_backup_import_failed": "L’hôte B2 n’a pas pu importer la sauvegarde sélectionnée depuis son hôte de sauvegarde.",
+            "b2_instance_restore_failed": "L’hôte B2 n’a pas pu restaurer l’instance depuis la sauvegarde sélectionnée.",
             "b2_instance_backup_failed": "L’hôte B2 n’a pas pu créer la sauvegarde de l’instance.",
             "b2_instance_backup_export_failed": "L’hôte B2 n’a pas pu envoyer la sauvegarde de l’instance à l’hôte de sauvegarde.",
             "unknown_instance": "L’instance est introuvable.",
+            "multiple_instances_not_allowed": "Restaurez une seule instance à la fois.",
             "missing_server": "Aucun serveur n’est associé à l’instance.",
             "invalid_server_type": "Le serveur associé n’est pas un hôte B2.",
             "invalid_dns_zone": "Le FQDN de l’instance n’appartient pas à la zone DNS indiquée.",
