@@ -117,7 +117,7 @@
                     },
                     {
                         "id": "section.provider-info",
-                        "label": "Provider catalog",
+                        "label": "Provider info",
                         "rows": [
                             {
                                 "columns": [

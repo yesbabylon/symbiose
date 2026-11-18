@@ -70,7 +70,7 @@
                     "label": "Available regions"
                 },
                 "section.provider-info": {
-                    "label": "Provider catalog"
+                    "label": "Provider info"
                 }
             }
         },
