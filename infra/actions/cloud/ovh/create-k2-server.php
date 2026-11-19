@@ -361,8 +361,7 @@ $network = [
         'network' => [
             'id'        => $private_network['id'],
             'subnetId'  => $private_network['subnet_ids'][0]]
-    ],
-    'public' => true
+    ]
 ];
 
 $body = [
