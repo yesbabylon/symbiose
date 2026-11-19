@@ -6,8 +6,14 @@
 */
 
 $checks_script = EQ_BASEDIR . '/packages/infra/init/data/scripts/20-create-server-checks.php';
+$alert_triggers_script = EQ_BASEDIR . '/packages/infra/init/data/scripts/21-create-alert-triggers.php';
+
 if(!is_file($checks_script)) {
     throw new Exception('default_infra_checks_script_not_accessible', EQ_ERROR_INVALID_CONFIG);
 }
+if(!is_file($alert_triggers_script)) {
+    throw new Exception('default_infra_alert_triggers_script_not_accessible', EQ_ERROR_INVALID_CONFIG);
+}
 
 require $checks_script;
+require $alert_triggers_script;

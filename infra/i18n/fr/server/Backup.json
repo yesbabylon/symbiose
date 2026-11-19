@@ -1,0 +1,42 @@
+{
+    "name": "Sauvegarde",
+    "plural": "Sauvegardes",
+    "description": "Archive de sauvegarde hébergée sur un serveur de sauvegarde.",
+    "model": {
+        "name": {
+            "label": "Fichier de sauvegarde",
+            "description": "Nom de l’archive de sauvegarde.",
+            "help": ""
+        },
+        "backup_time": {
+            "label": "Date de sauvegarde",
+            "description": "Date et heure de création de la sauvegarde.",
+            "help": ""
+        },
+        "server_type": {
+            "label": "Type de serveur",
+            "description": "Type du serveur qui héberge l’archive de sauvegarde.",
+            "help": ""
+        },
+        "cloud_project_id": {
+            "label": "Projet cloud",
+            "description": "Projet cloud du serveur qui héberge l’archive de sauvegarde.",
+            "help": ""
+        },
+        "server_id": {
+            "label": "Serveur de sauvegarde",
+            "description": "Serveur qui héberge l’archive de sauvegarde.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Sauvegarde",
+            "description": "Affiche les détails d’une sauvegarde de serveur."
+        },
+        "list.default": {
+            "name": "Sauvegardes",
+            "description": "Liste les sauvegardes de serveur."
+        }
+    }
+}

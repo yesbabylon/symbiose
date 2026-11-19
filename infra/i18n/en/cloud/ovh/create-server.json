@@ -1,0 +1,86 @@
+{
+    "name": "Create an OVHcloud server",
+    "description": "Create a server in this OVHcloud project.",
+    "model": {
+        "id": {
+            "label": "Cloud project",
+            "description": "Cloud project in which the server will be created.",
+            "help": ""
+        },
+        "name": {
+            "label": "Server name",
+            "description": "Name assigned to the new server.",
+            "help": "Use a name that clearly identifies the server."
+        },
+        "region_id": {
+            "label": "Region",
+            "description": "Cloud region in which the server will be created.",
+            "help": "Select a region available in the synchronized provider catalog."
+        },
+        "availability_zone_id": {
+            "label": "Availability zone",
+            "description": "Availability zone in which the server will be created.",
+            "help": "Leave empty to let OVHcloud select an availability zone."
+        },
+        "flavor": {
+            "label": "Server flavor",
+            "description": "Compute and memory configuration of the server.",
+            "help": "Select a flavor available in the chosen region.",
+            "selection": {
+                "d2-2": "d2-2",
+                "d2-4": "d2-4",
+                "b3-8": "b3-8"
+            }
+        },
+        "image": {
+            "label": "Operating system image",
+            "description": "Operating system image installed on the server.",
+            "help": "Select an image available in the chosen region.",
+            "selection": {
+                "Ubuntu 26.04 - UEFI": "Ubuntu 26.04 - UEFI",
+                "Ubuntu 24.04 - UEFI": "Ubuntu 24.04 - UEFI"
+            }
+        },
+        "billing_period": {
+            "label": "Billing period",
+            "description": "Billing frequency applied to the server.",
+            "help": "Select hourly billing for flexibility or monthly billing for a monthly commitment.",
+            "selection": {
+                "monthly": "Monthly",
+                "hourly": "Hourly"
+            }
+        },
+        "backup_server_id": {
+            "label": "Backup server",
+            "description": "k2 server whose private IPv4 address will be used as the backup host.",
+            "help": "Leave empty to use the first k2 server in this cloud project."
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_cloud_project": "The cloud project was not found.",
+            "wrong_cloud_provider": "This action is not supported for the cloud project's provider.",
+            "missing_extref_project_id": "The cloud project has no external provider identifier.",
+            "missing_api_credentials": "The cloud project has no API credentials.",
+            "invalid_application_key": "The OVHcloud application key is missing or invalid.",
+            "invalid_application_secret": "The OVHcloud application secret is missing or invalid.",
+            "invalid_consumer_key": "The OVHcloud consumer key is missing or invalid.",
+            "invalid_name": "The server name is invalid.",
+            "missing_backup_server": "No k2 backup server is available in this cloud project.",
+            "invalid_backup_server": "The selected backup server is not a k2 server in this cloud project.",
+            "missing_backup_server_private_ip": "The selected k2 backup server has no private IPv4 address.",
+            "unknown_region": "The cloud region was not found.",
+            "unknown_zone": "The availability zone was not found.",
+            "invalid_zone": "The selected availability zone does not belong to the selected region.",
+            "invalid_provider_catalog": "The provider catalog is invalid.",
+            "invalid_region": "The selected region is not available for this cloud project.",
+            "invalid_flavor": "The selected server flavor is not available in this region.",
+            "invalid_image": "The selected server image is not available in this region.",
+            "missing_ssh_key": "No SSH key is available for this cloud project and region.",
+            "missing_private_network": "No private network with a subnet is available for this cloud project and region.",
+            "failed_retrieving_ovh_time": "The OVHcloud API time could not be retrieved.",
+            "invalid_ovh_time_response": "OVHcloud returned an invalid API time response.",
+            "failed_creating_ovh_server": "OVHcloud rejected the server creation request."
+        }
+    }
+}

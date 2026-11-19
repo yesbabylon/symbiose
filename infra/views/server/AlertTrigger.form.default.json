@@ -80,6 +80,7 @@
                     {
                         "id": "section.checks",
                         "label": "Checks",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -100,6 +101,7 @@
                     {
                         "id": "section.alert-messages",
                         "label": "Alert messages",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [

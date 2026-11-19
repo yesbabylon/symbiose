@@ -227,7 +227,10 @@
                     {
                         "id": "section.products",
                         "label": "Products",
-                        "visible": ["state", "<>", "draft"],
+                        "visible": [
+                            ["state", "<>", "draft"],
+                            ["server_type", "not in", ["k2", "s2", "admin"]]
+                        ],
                         "rows": [
                             {
                                 "columns": [
@@ -252,7 +255,10 @@
                     {
                         "id": "section.instances",
                         "label": "Instances",
-                        "visible": ["state", "<>", "draft"],
+                        "visible": [
+                            ["state", "<>", "draft"],
+                            ["server_type", "not in", ["k2", "s2", "admin"]]
+                        ],
                         "rows": [
                             {
                                 "columns": [
@@ -308,7 +314,10 @@
                     {
                         "id": "section.softwares",
                         "label": "Softwares",
-                        "visible": ["state", "<>", "draft"],
+                        "visible": [
+                            ["state", "<>", "draft"],
+                            ["server_type", "not in", ["k2", "s2", "admin"]]
+                        ],
                         "rows": [
                             {
                                 "columns": [

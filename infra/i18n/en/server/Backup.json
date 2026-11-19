@@ -1,0 +1,42 @@
+{
+    "name": "Backup",
+    "plural": "Backups",
+    "description": "Backup archive hosted on a backup server.",
+    "model": {
+        "name": {
+            "label": "Backup file",
+            "description": "Name of the backup archive.",
+            "help": ""
+        },
+        "backup_time": {
+            "label": "Backup time",
+            "description": "Date and time when the backup was created.",
+            "help": ""
+        },
+        "server_type": {
+            "label": "Server type",
+            "description": "Type of server hosting the backup archive.",
+            "help": ""
+        },
+        "cloud_project_id": {
+            "label": "Cloud project",
+            "description": "Cloud project of the server hosting the backup archive.",
+            "help": ""
+        },
+        "server_id": {
+            "label": "Backup server",
+            "description": "Server hosting the backup archive.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Backup",
+            "description": "Displays the details of a server backup."
+        },
+        "list.default": {
+            "name": "Backups",
+            "description": "Lists server backups."
+        }
+    }
+}

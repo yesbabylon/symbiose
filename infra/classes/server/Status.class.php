@@ -139,6 +139,9 @@ class Status extends Model {
             if(isset($status_data['state']['up'])) {
                 $data['up'] = $status_data['state']['up'];
             }
+            if(isset($status_data['state']['backups_disk'])) {
+                $data['backups_disk'] = $status_data['state']['backups_disk'];
+            }
             if(isset($status_data['instant']['ram_use'])) {
                 $data['ram_use'] = $status_data['instant']['ram_use'];
             }
