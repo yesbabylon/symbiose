@@ -158,11 +158,13 @@ class Check extends Model {
         $result = [];
         $self->read(['status_path']);
         foreach($self as $id => $check) {
-            $status_path_items = explode('.', $check['status_path']);
-
             $scope = 'none';
-            if(count($status_path_items) > 1) {
-                $scope = $status_path_items[0];
+            if(!empty($check['status_path'])) {
+                $status_path_items = explode('.', $check['status_path']);
+
+                if(count($status_path_items) > 1) {
+                    $scope = $status_path_items[0];
+                }
             }
 
             $result[$id] = $scope;
