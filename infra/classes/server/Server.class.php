@@ -187,6 +187,7 @@ class Server extends Model {
             'backups_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'infra\server\Backup',
+                'foreign_field'     => 'server_id',
                 'ondetach'          => 'delete',
                 'domain'            => [
                     [
