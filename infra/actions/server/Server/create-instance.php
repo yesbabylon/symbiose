@@ -110,13 +110,14 @@ use inventory\Product;
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context']
+    'providers'     => ['context', 'cron']
 ]);
 
 /**
- * @var \equal\php\Context $context
+ * @var \equal\php\Context      $context
+ * @var \equal\cron\Scheduler   $cron
  */
-['context' => $context] = $providers;
+['context' => $context, 'cron' => $cron] = $providers;
 
 $instance_name = strtolower(rtrim(trim($params['instance_name']), '.'));
 if(
@@ -284,6 +285,13 @@ $result = [
 if($dns_record_error !== null) {
     $result['dns_record_error'] = $dns_record_error;
 }
+
+$cron->schedule(
+    "infra.instance.{$instance['id']}.sync-after-creation",
+    strtotime('+5 minutes'),
+    'infra_server_Instance_sync-status',
+    ['id' => $instance['id']]
+);
 
 $context
     ->httpResponse()
