@@ -75,6 +75,7 @@ $self->read([
     'checks_ids' => [
         'is_success',
         'checked',
+        'check_value',
         'failure_count',
         'last_status_id' => [
             'status_data'
@@ -104,7 +105,9 @@ foreach($self as $id => $alertTrigger) {
 
     $decoded_status_data = json_decode($last_failed_check['last_status_id']['status_data'], true);
 
-    $values = [];
+    $values = [
+        'check_value' => $last_failed_check['check_value']
+    ];
     foreach($flatten($decoded_status_data) as $key => $value) {
         $values["status_data.$key"] = $value;
     }
