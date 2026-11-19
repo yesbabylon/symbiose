@@ -16,7 +16,7 @@ class Backup extends Model {
 
             'name' => [
                 'type'              => 'string',
-                'description'       => 'The name of the backup',
+                'description'       => 'The name of the backup.',
                 'required'          => true
             ],
 
