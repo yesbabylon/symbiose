@@ -194,16 +194,16 @@ $definitions = [
     ],
     [
         'code'          => 'server-k2-backup-disk-usage',
-        'description'   => 'Example K2 server check: backup disk usage must not exceed 90%.',
+        'description'   => 'Example K2 server check: backup disk usage must stay below 80%.',
         'translations'  => [
             'fr' => [
-                'description' => "Exemple de contrôle serveur K2 : l'utilisation du disque de sauvegarde ne doit pas dépasser 90 %."
+                'description' => "Exemple de contrôle serveur K2 : l'utilisation du disque de sauvegarde doit rester inférieure à 80 %."
             ]
         ],
         'object_class'  => Server::class,
-        'status_path'   => 'instant.backups_disk',
-        'operator'      => 'lte',
-        'check_value'   => '90',
+        'status_path'   => 'state.backups_disk',
+        'operator'      => 'lt',
+        'check_value'   => '80',
         'value'         => ''
     ],
     [

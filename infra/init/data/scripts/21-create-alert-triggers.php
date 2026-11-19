@@ -76,6 +76,26 @@ $definitions = [
         'repetition'        => 2
     ],
     [
+        'name'              => 'server.k2-backup-disk-usage-high',
+        'label'             => 'K2 backup disk usage high',
+        'description'       => 'Backup disk usage is {status_data.state.backups_disk}% and has reached the 80% warning threshold.',
+        'type'              => 'infra',
+        'variables'         => json_encode([
+            'status_data.state.backups_disk'
+        ]),
+        'with_send_email'   => true,
+        'translations'      => [
+            'fr' => [
+                'label'         => 'Utilisation élevée du disque de sauvegarde K2',
+                'description'   => "L'utilisation du disque de sauvegarde est de {status_data.state.backups_disk} % et a atteint le seuil d'alerte de 80 %."
+            ]
+        ],
+        'object_class'      => Server::class,
+        'check_codes'       => ['server-k2-backup-disk-usage'],
+        'scope'             => 'state',
+        'repetition'        => 2
+    ],
+    [
         'name'              => 'instance.down',
         'label'             => 'Instance down',
         'description'       => "The instance isn't running.",
