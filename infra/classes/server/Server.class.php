@@ -189,17 +189,8 @@ class Server extends Model {
                 'foreign_object'    => 'infra\server\Backup',
                 'foreign_field'     => 'server_id',
                 'ondetach'          => 'delete',
-                'domain'            => [
-                    [
-                        ['server_id', '=', 'object.id']
-                    ],
-                    [
-                        ['server_type', '=', 'k2'],
-                        ['cloud_project_id', '=', 'object.cloud_project_id']
-                    ]
-                ],
                 'description'       => 'Backups that the server is hosting.'
-            ],
+            ]
 
         ];
     }
