@@ -229,7 +229,7 @@ class AccountingEntry extends Model {
         ]);
 
         foreach($self as $entry) {
-            $operations[$entry['origin_object_class']][(int) $entry['origin_object_id']] = true;
+            $operations[(string) $entry['origin_object_class']][(int) $entry['origin_object_id']] = true;
         }
 
         foreach($operations as $origin_class => $operation_ids) {

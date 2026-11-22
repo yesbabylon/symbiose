@@ -72,9 +72,9 @@ foreach($self as $id => $server) {
     }
 
     $accesses = Access::search([
-        ['server_id', '=', $server['id']],
-        ['access_type', 'in', ['https', 'http']]
-    ])
+            ['server_id', '=', $server['id']],
+            ['access_type', 'in', ['https', 'http']]
+        ])
         ->read(['port', 'url', 'password'])
         ->get(true);
 
