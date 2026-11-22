@@ -15,7 +15,7 @@ use infra\server\Server;
 [$params, $providers] = eQual::announce([
     'description'   => 'Synchronize an OVHcloud server identifier and IP addresses after provisioning.',
     'params'        => [
-        'server_id' => [
+        'id' => [
             'type'              => 'many2one',
             'foreign_object'    => 'infra\server\Server',
             'description'       => 'Identifier of the local server to synchronize.',
@@ -126,7 +126,7 @@ $scheduleRetry = function() use($cron, $params): void {
     }
 
     $retry_params = [
-        'server_id'        => $params['server_id'],
+        'id'               => $params['id'],
         'attempt'          => $params['attempt'] + 1,
         'retry_on_failure' => $params['retry_on_failure']
     ];
@@ -135,9 +135,9 @@ $scheduleRetry = function() use($cron, $params): void {
     }
 
     $cron->schedule(
-        "infra.ovh-server.{$params['server_id']}.sync-provisioning",
+        "infra.ovh-server.{$params['id']}.sync-provisioning",
         strtotime('+5 minutes'),
-        'infra_cloud_ovh_sync-server',
+        'infra_server_Server_sync-from-project',
         $retry_params
     );
 };
@@ -165,7 +165,7 @@ $findResourceId = function(array $operation) use(&$findResourceId): ?string {
  * Action
  */
 
-$server = Server::id($params['server_id'])
+$server = Server::id($params['id'])
     ->read([
         'cloud_project_id',
         'region_id',

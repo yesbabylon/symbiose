@@ -1,6 +1,6 @@
 {
     "name": "Créer un serveur k2 OVHcloud",
-    "description": "Créer un serveur de sauvegarde k2 dans ce projet OVHcloud.",
+    "description": "Crée un serveur de sauvegarde k2 dans ce projet OVHcloud.",
     "model": {
         "id": {
             "label": "Projet cloud",

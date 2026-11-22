@@ -13,7 +13,7 @@ use infra\cloud\Region;
 use infra\server\Server;
 
 [$params, $providers] = eQual::announce([
-    'description'   => "Create a new k2 server in a specific cloud project.",
+    'description'   => "Create a new OVHcloud b2 server in a specific cloud project.",
     'params'        => [
         'id' => [
             'type'              => 'many2one',
@@ -23,7 +23,7 @@ use infra\server\Server;
         ],
         'name' => [
             'type'              => 'string',
-            'description'       => 'The name of the new k2 host server.',
+            'description'       => 'The name of the new b2 host server.',
             'required'          => true
         ],
         'region_id' => [
@@ -69,6 +69,15 @@ use infra\server\Server;
                 'hourly'
             ],
             'default'           => 'monthly'
+        ],
+        'backup_server_id' => [
+            'type'              => 'many2one',
+            'foreign_object'    => 'infra\server\Server',
+            'description'       => 'Identifier of the k2 server to use as backup host.',
+            'domain'            => [
+                ['cloud_project_id', '=', 'object.id'],
+                ['server_type', '=', 'k2']
+            ]
         ]
     ],
     'access'        => [
@@ -102,7 +111,7 @@ $randomStr = function(int $length = 16): string {
     return $str;
 };
 
-$getUserData = function(string $name, string $password): string {
+$getUserData = function(string $name, string $password, string $backup_host): string {
     $user_data = <<<'YAML'
 #cloud-config
 package_update: true
@@ -111,50 +120,57 @@ packages:
   - ca-certificates
 
 write_files:
-  - path: /root/k2-bootstrap.env
+  - path: /root/b2-bootstrap.env
     permissions: '0600'
     content: |
+      HOSTNAME=__HOSTNAME__
+      BACKUP_HOST=__BACKUP_HOST__
+      PUBLIC_IP=''
       PRIVATE_IP=''
-      BACKUPS_DISK=''
-      BACKUPS_PATH=/mnt/backups
-      MAX_TOKEN=3
-      TOKEN_VALIDITY=3600
+      GPG_PASSPHRASE=__PASSWORD__
+      ROOT_PASSWORD=__PASSWORD__
 
 runcmd:
   - |
     bash -euo pipefail <<'BASH'
+    PUBLIC_IP=''
     PRIVATE_IP=''
 
     for attempt in $(seq 1 30); do
+        PUBLIC_IP="$(ip -4 -o addr show dev ens3 scope global 2>/dev/null \
+            | awk 'NR == 1 { sub(/\/.*/, "", $4); print $4 }' || true)"
+
         PRIVATE_IP="$(ip -4 -o addr show dev ens4 scope global 2>/dev/null \
             | awk 'NR == 1 { sub(/\/.*/, "", $4); print $4 }' || true)"
 
-        if [[ -n "$PRIVATE_IP" ]]; then
+        if [[ -n "$PUBLIC_IP" && -n "$PRIVATE_IP" ]]; then
             break
         fi
 
         sleep 1
     done
 
-    if [[ -z "$PRIVATE_IP" ]]; then
-        echo 'Unable to resolve ens4 IPv4 address.' >&2
+    if [[ -z "$PUBLIC_IP" || -z "$PRIVATE_IP" ]]; then
+        echo 'Unable to resolve ens3 or ens4 IPv4 address.' >&2
         exit 1
     fi
 
     sed -i \
+        -e "s/^PUBLIC_IP='.*'$/PUBLIC_IP='${PUBLIC_IP}'/" \
         -e "s/^PRIVATE_IP='.*'$/PRIVATE_IP='${PRIVATE_IP}'/" \
-        /root/k2-bootstrap.env
+        /root/b2-bootstrap.env
 
-    git clone https://github.com/yesbabylon/k2.git /root/k2
-    cd /root/k2
-    install -m 600 /root/k2-bootstrap.env /root/k2/.env
-    rm /root/k2-bootstrap.env
+    git clone https://github.com/yesbabylon/b2.git /root/b2
+    cd /root/b2
+    install -m 600 /root/b2-bootstrap.env /root/b2/.env
+    rm /root/b2-bootstrap.env
     ./install.sh
-    systemctl start k2-listener.service
+    systemctl start b2-listener.service
     BASH
 YAML;
 
     $user_data = str_replace('__HOSTNAME__', escapeshellarg($name), $user_data);
+    $user_data = str_replace('__BACKUP_HOST__', escapeshellarg($backup_host), $user_data);
 
     return str_replace('__PASSWORD__', escapeshellarg($password), $user_data);
 };
@@ -259,6 +275,38 @@ if(empty($name)) {
     throw new Exception('invalid_name', EQ_ERROR_INVALID_PARAM);
 }
 
+$backup_server_domain = [
+    ['cloud_project_id', '=', $cloudProject['id']],
+    ['server_type', '=', 'k2']
+];
+
+if(!empty($params['backup_server_id'])) {
+    $backup_server_domain[] = ['id', '=', $params['backup_server_id']];
+}
+
+$backup_server = Server::search($backup_server_domain)
+    ->read([
+        'ip_address_ids' => ['ip_v4', 'visibility']
+    ])
+    ->first();
+
+if(!$backup_server) {
+    $error = empty($params['backup_server_id']) ? 'missing_backup_server' : 'invalid_backup_server';
+    throw new Exception($error, EQ_ERROR_INVALID_PARAM);
+}
+
+$backup_host = null;
+foreach($backup_server['ip_address_ids'] as $ip_address) {
+    if($ip_address['visibility'] === 'private' && !empty($ip_address['ip_v4'])) {
+        $backup_host = explode('/', $ip_address['ip_v4'])[0];
+        break;
+    }
+}
+
+if(is_null($backup_host)) {
+    throw new Exception('missing_backup_server_private_ip', EQ_ERROR_INVALID_PARAM);
+}
+
 $region = Region::id($params['region_id'])
     ->read(['code', 'cloud_provider_id'])
     ->first();
@@ -361,7 +409,8 @@ $network = [
         'network' => [
             'id'        => $private_network['id'],
             'subnetId'  => $private_network['subnet_ids'][0]]
-    ]
+    ],
+    'public' => true
 ];
 
 $body = [
@@ -373,7 +422,7 @@ $body = [
     'network'           => $network,
     'sshKey'            => ['name' => $ssh_key['name']],
     'billingPeriod'     => $params['billing_period'],
-    'userData'          => $getUserData($name, $password) // #memo - script that configures, installs and starts the k2-server
+    'userData'          => $getUserData($name, $password, $backup_host) // #memo - script that configures, installs and starts the b2-server
 ];
 
 /*
@@ -446,18 +495,18 @@ if(empty($response_data['id'])) {
 }
 
 $server = Server::create([
-    'name'               => $name,
-    'server_type'        => 'k2',
-    'cloud_provider_id'  => $cloudProject['cloud_provider_id']['id'],
-    'cloud_project_id'   => $cloudProject['id'],
-    'region_id'          => $region['id'],
-    'deployment_zone_id' => $deployment_zone['id']
-])
+        'name'               => $name,
+        'server_type'        => 'b2',
+        'cloud_provider_id'  => $cloudProject['cloud_provider_id']['id'],
+        'cloud_project_id'   => $cloudProject['id'],
+        'region_id'          => $region['id'],
+        'deployment_zone_id' => $deployment_zone['id']
+    ])
     ->first();
 
 Access::create([
     'server_id'     => $server['id'],
-    'description'   => 'Created by action infra_cloud_ovh_create-k2-server.',
+    'description'   => 'Created by action infra_cloud_cloudproject_ovh_create-b2-server.',
     'access_type'   => 'http',
     'host'          => $name,
     'port'          => '8000',
@@ -468,9 +517,9 @@ Access::create([
 $cron->schedule(
     "infra.ovh-server.{$server['id']}.sync-provisioning",
     strtotime('+5 minutes'),
-    'infra_cloud_ovh_sync-server',
+    'infra_server_Server_sync-from-project',
     [
-        'server_id'        => $server['id'],
+        'id'               => $server['id'],
         'operation_id'     => $response_data['id'],
         'attempt'          => 1,
         'retry_on_failure' => true

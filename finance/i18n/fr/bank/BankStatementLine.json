@@ -23,10 +23,38 @@
             "description": "Le relevé bancaire auquel la ligne se rapporte.",
             "help": ""
         },
+        "operation_type": {
+            "label": "Type de pièce",
+            "description": "Type de la pièce comptable créée à partir de la ligne bancaire.",
+            "help": "Cette valeur est fixée automatiquement.",
+            "selection": {
+                "bank_statement": "mouvement bancaire"
+            }
+        },
+        "posting_date": {
+            "label": "Date comptable",
+            "description": "Date comptable reprise depuis la date de transaction.",
+            "help": "Cette valeur est calculée automatiquement."
+        },
+        "journal_id": {
+            "label": "Journal bancaire",
+            "description": "Journal bancaire utilisé pour comptabiliser le mouvement.",
+            "help": "Le journal bancaire de l'organisation est sélectionné automatiquement."
+        },
         "date": {
             "label": "Date",
             "description": "Date à laquelle la déclaration a été émise.",
             "help": ""
+        },
+        "fiscal_year_id": {
+            "label": "Exercice comptable",
+            "description": "Exercice comptable contenant la date de transaction.",
+            "help": "Cette valeur est calculée automatiquement."
+        },
+        "fiscal_period_id": {
+            "label": "Période comptable",
+            "description": "Période comptable contenant la date de transaction.",
+            "help": "Cette valeur est calculée automatiquement."
         },
         "customer_id": {
             "label": "Client",
@@ -93,8 +121,18 @@
             "description": "Nom de la personne à l'origine du paiement.",
             "help": ""
         },
-        "status": {
-            "label": "Statut",
+        "accounting_account_id": {
+            "label": "Compte de contrepartie",
+            "description": "Compte comptable utilisé en contrepartie du mouvement bancaire.",
+            "help": "Sélectionnez un compte mouvementable correspondant à la nature de la transaction."
+        },
+        "accounting_account_code": {
+            "label": "Code du compte de contrepartie",
+            "description": "Code du compte comptable de contrepartie.",
+            "help": "Cette valeur est calculée automatiquement."
+        },
+        "reconciliation_status": {
+            "label": "Statut de réconciliation",
             "description": "Assignation de la ligne à un paiement.",
             "help": "",
             "selection": {
@@ -102,6 +140,17 @@
                 "ignored": "ignorée",
                 "reconciled": "réconciliée",
                 "to_refund": "à rembourser"
+            }
+        },
+        "status": {
+            "label": "Statut comptable",
+            "description": "État de traitement comptable de la ligne bancaire.",
+            "help": "La ligne doit être soumise avant sa comptabilisation.",
+            "selection": {
+                "pending": "en attente",
+                "proforma": "prête à comptabiliser",
+                "posted": "comptabilisée",
+                "cancelled": "annulée"
             }
         },
         "structured_message": {
@@ -134,6 +183,24 @@
         "form.default": {
             "name": "Ligne de Relevé Bancaire",
             "description": "",
+            "actions": {
+                "action.submit": {
+                    "label": "Soumettre",
+                    "description": "Marque la ligne comme prête à être comptabilisée."
+                },
+                "action.revert": {
+                    "label": "Rouvrir",
+                    "description": "Replace la ligne dans l'état en attente."
+                },
+                "action.post": {
+                    "label": "Comptabiliser",
+                    "description": "Génère et comptabilise l'écriture du mouvement bancaire."
+                },
+                "action.cancel": {
+                    "label": "Annuler",
+                    "description": "Annule la pièce et génère une extourne si elle est déjà comptabilisée."
+                }
+            },
             "layout": {}
         },
         "list.default": {
@@ -153,7 +220,23 @@
             "exceeded_price": "La somme des paiements ne peut pas être supérieurs au total de la ligne."
         },
         "errors": {
-            "already_imported": "Fichier déjà importé."
+            "already_imported": "Fichier déjà importé.",
+            "non_editable": "Seules les lignes comptables en attente peuvent être réconciliées.",
+            "missing_bank_statement": "La ligne doit appartenir à un relevé bancaire.",
+            "invalid_status": "Le statut comptable de la ligne ne permet pas cette opération.",
+            "missing_organisation": "L'organisation est obligatoire.",
+            "missing_posting_date": "La date comptable est obligatoire.",
+            "invalid_amount": "Le montant de la transaction doit être différent de zéro.",
+            "invalid_reconciliation_status": "Seules les lignes réconciliées peuvent être comptabilisées.",
+            "missing_accounting_account": "Un compte comptable de contrepartie est obligatoire.",
+            "invalid_accounting_account": "Le compte de contrepartie ne peut pas être un compte collectif.",
+            "missing_journal": "Un journal bancaire est obligatoire.",
+            "invalid_journal": "Le journal bancaire appartient à une autre organisation.",
+            "missing_bank_account": "Le journal bancaire doit posséder un compte comptable par défaut.",
+            "invalid_bank_account": "Le compte par défaut du journal bancaire ne peut pas être collectif.",
+            "invalid_fiscal_year": "L'exercice comptable n'accepte pas les écritures.",
+            "invalid_fiscal_period": "La période comptable n'accepte pas les écritures.",
+            "unbalanced_bank_statement": "Le relevé bancaire doit être équilibré avant la comptabilisation de ses lignes."
         }
     }
 }

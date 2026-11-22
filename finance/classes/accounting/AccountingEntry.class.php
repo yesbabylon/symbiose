@@ -7,6 +7,7 @@
 namespace finance\accounting;
 
 use equal\orm\Model;
+use finance\accounting\operation\AccountingOperation;
 use symbiose\setting\Setting;
 
 class AccountingEntry extends Model {
@@ -39,11 +40,21 @@ class AccountingEntry extends Model {
             'origin_object_class' => [
                 'type'              => 'string',
                 'description'       => 'Entity class that the entry originates from.',
+                'help'              => 'Accounting operation class, stored with its full namespace.',
             ],
 
             'origin_object_id' => [
                 'type'              => 'integer',
-                'description'       => 'Identifier of the object from which the entry originates.'
+                'description'       => 'Identifier of the object from which the entry originates.',
+                'help'              => 'Together with origin_object_class, this identifies the accounting operation linked to the entry.'
+            ],
+
+            'entry_reference' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'function'          => 'calcEntryReference',
+                'description'       => 'Number of the accounting operation linked to the entry.',
+                'readonly'          => true
             ],
 
             'debit' => [
@@ -88,9 +99,143 @@ class AccountingEntry extends Model {
                 ],
                 'default'           => 'pending',
                 'description'       => 'Status of the accounting entry.',
+                'dependents'        => ['entry_reference']
             ]
 
         ];
+    }
+
+    public static function getPolicies(): array {
+        return array_merge(parent::getPolicies(), [
+            'can_cancel' => [
+                'description' => 'Check whether the originating accounting operation can be cancelled.',
+                'function'    => 'policyCanCancel'
+            ]
+        ]);
+    }
+
+    public static function getActions() {
+        return array_merge(parent::getActions(), [
+            'cancel' => [
+                'description' => 'Cancel the originating accounting operation and reverse its accounting entries.',
+                'policies'    => ['can_cancel'],
+                'function'    => 'doCancel'
+            ]
+        ]);
+    }
+
+    protected static function calcEntryReference($self): array {
+        $result = [];
+        $operations = [];
+
+        $self->read([
+            'status',
+            'origin_object_class',
+            'origin_object_id'
+        ]);
+
+        foreach($self as $id => $entry) {
+
+            if(!in_array($entry['status'], ['posted', 'reversed'], true)) {
+                continue;
+            }
+
+            $origin_class = $entry['origin_object_class'] ?? null;
+            $origin_id = (int) ($entry['origin_object_id'] ?? 0);
+
+            if($origin_class && $origin_id > 0) {
+                $operations[(string) $origin_class][$origin_id][] = $id;
+            }
+        }
+
+        foreach($operations as $origin_class => $operation_entries) {
+            if(!class_exists($origin_class) || !is_a($origin_class, AccountingOperation::class, true)) {
+                continue;
+            }
+
+
+            $origin_operations = $origin_class::ids(array_keys($operation_entries))
+                ->read(['operation_number']);
+
+            foreach($origin_operations as $operation_id => $operation) {
+                foreach($operation_entries[$operation_id] as $entry_id) {
+                    $result[$entry_id] = $operation['operation_number'];
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    protected static function policyCanCancel($self, $orm): array {
+        $result = [];
+        $operations = [];
+
+        $self->read([
+            'status',
+            'origin_object_class',
+            'origin_object_id'
+        ]);
+
+        foreach($self as $id => $entry) {
+            if($entry['status'] !== 'posted') {
+                $result[$id]['invalid_status'] = 'Only a posted accounting entry can be cancelled.';
+                continue;
+            }
+
+            $origin_class = $entry['origin_object_class'] ?? null;
+            $origin_id = (int) ($entry['origin_object_id'] ?? 0);
+
+            if(!$origin_class || $origin_id <= 0) {
+                $result[$id]['missing_origin_operation'] = 'The accounting entry is not linked to an accounting operation.';
+                continue;
+            }
+
+            if(!class_exists($origin_class) || !is_a($origin_class, AccountingOperation::class, true)) {
+                $result[$id]['invalid_origin_operation'] = 'The accounting entry origin is not an accounting operation.';
+                continue;
+            }
+
+            $operations[(string) $origin_class][$origin_id][] = $id;
+        }
+
+        foreach($operations as $origin_class => $operation_entries) {
+            $transition_errors = $orm->canTransition(
+                $origin_class,
+                array_keys($operation_entries),
+                'cancel'
+            );
+
+            if(is_array($transition_errors) && count($transition_errors) === 0) {
+                continue;
+            }
+
+            foreach($operation_entries as $entry_ids) {
+                foreach($entry_ids as $entry_id) {
+                    $result[$entry_id]['origin_operation_not_cancellable'] = 'The originating accounting operation cannot be cancelled.';
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    protected static function doCancel($self) {
+        $operations = [];
+
+        $self->read([
+            'origin_object_class',
+            'origin_object_id'
+        ]);
+
+        foreach($self as $entry) {
+            $operations[$entry['origin_object_class']][(int) $entry['origin_object_id']] = true;
+        }
+
+        foreach($operations as $origin_class => $operation_ids) {
+            $origin_class::ids(array_keys($operation_ids))
+                ->transition('cancel');
+        }
     }
 
     protected static function calcIsBalanced($self) {

@@ -60,7 +60,7 @@
             },
             {
                 "type": "field",
-                "value": "status",
+                "value": "reconciliation_status",
                 "width": "10%"
             }
         ]

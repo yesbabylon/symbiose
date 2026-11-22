@@ -17,10 +17,10 @@
             "description": "Région cloud dans laquelle le serveur sera créé.",
             "help": "Sélectionnez une région disponible dans le catalogue fournisseur synchronisé."
         },
-        "availability_zone_id": {
-            "label": "Zone de disponibilité",
-            "description": "Zone de disponibilité dans laquelle le serveur sera créé.",
-            "help": "Laissez ce champ vide pour qu'OVHcloud sélectionne une zone de disponibilité."
+        "deployment_zone_id": {
+            "label": "Zone de déploiement",
+            "description": "Cible de déploiement dans laquelle le serveur sera créé.",
+            "help": "Sélectionnez une zone de déploiement disponible dans la région choisie."
         },
         "flavor": {
             "label": "Type d'instance",
@@ -29,6 +29,7 @@
             "selection": {
                 "d2-2": "d2-2",
                 "d2-4": "d2-4",
+                "d2-8": "d2-8",
                 "b3-8": "b3-8"
             }
         },

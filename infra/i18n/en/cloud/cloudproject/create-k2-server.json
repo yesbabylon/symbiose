@@ -1,6 +1,6 @@
 {
     "name": "Create an OVHcloud k2 server",
-    "description": "Create a k2 backup server in this OVHcloud project.",
+    "description": "Creates a k2 backup server in this OVHcloud project.",
     "model": {
         "id": {
             "label": "Cloud project",

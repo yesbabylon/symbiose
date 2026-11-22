@@ -297,11 +297,11 @@ class BankStatement extends Model {
 
     protected static function calcIsReconciled($self) {
         $result = [];
-        $self->read(['statement_lines_ids' => ['status']]);
+        $self->read(['statement_lines_ids' => ['reconciliation_status']]);
         foreach($self as $id => $statement) {
             $result[$id] = ($statement['statement_lines_ids']->count() > 0);
             foreach($statement['statement_lines_ids'] as $line) {
-                if(!in_array($line['status'], ['reconciled', 'ignored'], true)) {
+                if(!in_array($line['reconciliation_status'], ['reconciled', 'ignored'], true)) {
                     $result[$id] = false;
                     break;
                 }

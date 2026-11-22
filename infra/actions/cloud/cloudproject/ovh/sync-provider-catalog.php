@@ -10,7 +10,7 @@ use infra\cloud\CloudProject;
 use infra\cloud\DeploymentZone;
 
 [$params, $providers] = eQual::announce([
-    'description'   => 'Synchronize the provider resource catalog of a cloud project.',
+    'description'   => 'Synchronize the OVHcloud resource catalog of a cloud project.',
     'params'        => [
         'id' => [
             'type'              => 'many2one',

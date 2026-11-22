@@ -4,6 +4,57 @@
     "access": {
         "groups": ["sale.default.users"]
     },
+    "actions": [
+        {
+            "id": "action.submit",
+            "label": "Submit",
+            "description": "Mark the bank statement line as ready for posting.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "pending"],
+            "params": {
+                "entity": "finance\\bank\\BankStatementLine",
+                "transition": "submit",
+                "ids": []
+            }
+        },
+        {
+            "id": "action.revert",
+            "label": "Reopen",
+            "description": "Return the bank statement line to the pending state.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "proforma"],
+            "params": {
+                "entity": "finance\\bank\\BankStatementLine",
+                "transition": "revert",
+                "ids": []
+            }
+        },
+        {
+            "id": "action.post",
+            "label": "Post",
+            "description": "Post the bank movement to accounting.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "proforma"],
+            "params": {
+                "entity": "finance\\bank\\BankStatementLine",
+                "transition": "post",
+                "ids": []
+            }
+        },
+        {
+            "id": "action.cancel",
+            "label": "Cancel",
+            "description": "Cancel the accounting operation and reverse it when already posted.",
+            "controller": "core_model_transition",
+            "confirm": true,
+            "visible": ["status", "in", ["pending", "proforma", "posted"]],
+            "params": {
+                "entity": "finance\\bank\\BankStatementLine",
+                "transition": "cancel",
+                "ids": []
+            }
+        }
+    ],
     "layout": {
         "groups": [
             {
@@ -32,17 +83,22 @@
                                             {
                                                 "type": "field",
                                                 "value": "date",
-                                                "width": "33%"
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "amount",
-                                                "width": "33%"
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "reconciliation_status",
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "status",
-                                                "width": "33%"
+                                                "width": "25%"
                                             }
                                         ]
                                     },
@@ -67,6 +123,16 @@
                                             {
                                                 "type": "field",
                                                 "value": "account_holder",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "accounting_account_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "journal_id",
                                                 "width": "50%"
                                             }
                                         ]

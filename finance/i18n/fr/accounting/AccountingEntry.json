@@ -3,30 +3,30 @@
     "plural": "Entrées comptables",
     "description": "Les entrées comtpables traduisent les lignes de facture en entrées qui doivent être crées au sein des livres comptables.",
     "model": {
-        "name": {
-            "label": "Nom",
-            "description": "Étiquette pour le groupe.",
-            "help": ""
-        },
-        "invoice_id": {
-            "label": "Facture",
-            "description": "Facture à laquelle la ligne est liée.",
-            "help": ""
-        },
-        "account_id": {
-            "label": "Identifiant du compte",
-            "description": "",
-            "help": ""
-        },
         "debit": {
             "label": "Débit",
-            "description": "",
-            "help": ""
+            "description": "Montant total débité par les lignes de l'écriture.",
+            "help": "Cette valeur est calculée automatiquement à partir des lignes comptables."
         },
         "credit": {
             "label": "Crédit",
-            "description": "",
-            "help": ""
+            "description": "Montant total crédité par les lignes de l'écriture.",
+            "help": "Cette valeur est calculée automatiquement à partir des lignes comptables."
+        },
+        "origin_object_class": {
+            "label": "Classe de la pièce d'origine",
+            "description": "Classe de la pièce comptable à l'origine de l'écriture.",
+            "help": "La classe est enregistrée avec son espace de noms complet."
+        },
+        "origin_object_id": {
+            "label": "Pièce d'origine",
+            "description": "Identifiant de la pièce comptable à l'origine de l'écriture.",
+            "help": "Cet identifiant est utilisé avec la classe d'origine pour retrouver la pièce comptable."
+        },
+        "entry_reference": {
+            "label": "Référence de la pièce",
+            "description": "Numéro de la pièce comptable liée à l'écriture.",
+            "help": "Cette référence est calculée à partir du numéro de la pièce comptable d'origine."
         },
         "status": {
             "label": "Statut",
@@ -43,6 +43,12 @@
         "form.default": {
             "name": "Entrée comptable",
             "description": "",
+            "actions": {
+                "action.cancel": {
+                    "label": "Annuler",
+                    "description": "Annule la pièce comptable d'origine et génère les écritures d'extourne."
+                }
+            },
             "layout": {}
         },
         "list.default": {
@@ -51,5 +57,12 @@
             "layout": {}
         }
     },
-    "error": {}
+    "error": {
+        "errors": {
+            "invalid_status": "Seule une écriture comptabilisée peut être annulée.",
+            "missing_origin_operation": "L'écriture n'est liée à aucune pièce comptable.",
+            "invalid_origin_operation": "L'origine de l'écriture n'est pas une pièce comptable.",
+            "origin_operation_not_cancellable": "La pièce comptable d'origine ne peut pas être annulée."
+        }
+    }
 }
