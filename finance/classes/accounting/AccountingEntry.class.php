@@ -229,13 +229,19 @@ class AccountingEntry extends Model {
         ]);
 
         foreach($self as $entry) {
-            if(!$entry['origin_object_class'] || $entry['origin_object_id']) {
+            if(!$entry['origin_object_class'] || !$entry['origin_object_id']) {
                 continue;
             }
             $operations[$entry['origin_object_class']][$entry['origin_object_id']] = true;
         }
 
         foreach($operations as $origin_class => $operation_ids) {
+            if(!is_string($origin_class)
+                || !class_exists($origin_class)
+                || !is_a($origin_class, AccountingOperation::class, true)) {
+                continue;
+            }
+
             $origin_class::ids(array_keys($operation_ids))
                 ->transition('cancel');
         }

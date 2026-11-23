@@ -73,13 +73,7 @@ foreach((array) $params['allowed_extensions'] as $allowed_extension) {
 }
 
 $max_entries = 100;
-$max_uncompressed_size = 64 * 1024 * 1024;
-if(defined('UPLOAD_MAX_FILE_SIZE') && is_numeric(constant('UPLOAD_MAX_FILE_SIZE'))) {
-    $configured_max_size = (int) constant('UPLOAD_MAX_FILE_SIZE');
-    if($configured_max_size > 0) {
-        $max_uncompressed_size = $configured_max_size;
-    }
-}
+$max_uncompressed_size = (int) constant('UPLOAD_MAX_FILE_SIZE');
 
 $tmp_file = null;
 $zip = null;
@@ -116,7 +110,7 @@ try {
 
     for($index = 0; $index < $zip->numFiles; ++$index) {
         $stat = $zip->statIndex($index);
-        if($stat === false || !isset($stat['name'])) {
+        if($stat === false) {
             throw new Exception('invalid_archive_entry', EQ_ERROR_INVALID_PARAM);
         }
 
@@ -159,7 +153,7 @@ try {
             continue;
         }
 
-        $entry_size = (int) ($stat['size'] ?? -1);
+        $entry_size = (int) $stat['size'];
         if($entry_size < 0 || $entry_size > $max_uncompressed_size) {
             throw new Exception('archive_entry_too_large', EQ_ERROR_INVALID_PARAM);
         }
@@ -193,7 +187,7 @@ try {
         ];
 
         foreach(['organization_id', 'document_visibility', 'document_type_id', 'document_subtype_id'] as $field) {
-            if(isset($document[$field]) && $document[$field] !== null) {
+            if(isset($document[$field])) {
                 $document_values[$field] = $document[$field];
             }
         }
