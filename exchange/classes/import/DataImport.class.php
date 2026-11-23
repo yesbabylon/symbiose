@@ -13,6 +13,8 @@ use equal\orm\Model;
 
 class DataImport extends Model {
 
+    public const SUPPORTED_EXTENSIONS = [];
+
     public static function getName() {
         return "Data import";
     }
@@ -31,15 +33,51 @@ class DataImport extends Model {
 
             'data' => [
                 'type'              => 'binary',
-                'description'       => 'Raw binary data of the uploaded document.',
-                'help'              => 'This field is meant to be used for the subsequent document creation, and is emptied once the document creation is confirmed.'
+                'description'       => 'Transient binary data used to create the root input document.',
+                'help'              => 'Only root imports normally receive uploaded binary data. Child imports reference an existing document.'
             ],
 
             'document_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'document\document\Document',
-                'description'       => 'Targeted document of the import.',
+                'description'       => 'Input document processed by this import node.',
                 'readonly'          => true
+            ],
+
+            'parent_import_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'exchange\import\DataImport',
+                'description'       => 'Parent import that produced this import.',
+                'domain'            => [['id', '<>', 'object.id']]
+            ],
+
+            'child_imports_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'exchange\import\DataImport',
+                'foreign_field'     => 'parent_import_id',
+                'description'       => 'Imports produced while preparing this import.'
+            ],
+
+            'preparation_status' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'pending',
+                    'processing',
+                    'prepared',
+                    'failing'
+                ],
+                'default'           => 'pending',
+                'description'       => 'Current status of document expansion and normalization.'
+            ],
+
+            'source_path' => [
+                'type'              => 'string',
+                'description'       => 'Original path of the input document inside its container.'
+            ],
+
+            'sequence' => [
+                'type'              => 'integer',
+                'description'       => 'Order of this import among its siblings.'
             ],
 
             'import_type' => [
@@ -61,6 +99,12 @@ class DataImport extends Model {
                 'type'              => 'string',
                 'usage'             => 'text/json',
                 'description'       => 'Human readable descriptor of the processing result.'
+            ],
+
+            'has_errors' => [
+                'type'              => 'boolean',
+                'default'           => false,
+                'description'       => 'Indicates that this import or one of its descendants has errors.'
             ],
 
             'status' => [
@@ -213,39 +257,53 @@ class DataImport extends Model {
     }
 
     /**
+     * Build the values of the input document created from uploaded data.
+     */
+    protected static function computeDocumentValues($dataImport): array {
+        $documentType = DocumentType::search(['code', '=', $dataImport['import_type']])->first();
+
+        return [
+            'organization_id'   => $dataImport['organization_id'],
+            'name'              => $dataImport['name'],
+            'data'              => $dataImport['data'],
+            'document_type_id'  => $documentType['id'],
+            'is_origin'         => true,
+            'source'            => 'upload'
+        ];
+    }
+
+    /**
      * Handle data update (i.e. file upload).
      * This method is used to create the document based on received data, and start the processing.
      */
     protected static function onafterinstantiate($self) {
-        $self->read(['name', 'data', 'import_type', 'organization_id']);
+        $columns = static::getColumns();
+        $read_fields = ['name', 'data', 'document_id', 'import_type'];
+        foreach(['organization_id', 'document_type_id', 'document_subtype_id', 'document_visibility'] as $field) {
+            if(isset($columns[$field])) {
+                $read_fields[] = $field;
+            }
+        }
+
+        $self->read($read_fields);
 
         foreach($self as $id => $dataImport) {
-            if(!$dataImport['data']) {
-                continue;
-            }
+            if($dataImport['data']) {
+                $document = Document::create(static::computeDocumentValues($dataImport))->first();
 
-            $documentType = DocumentType::search(['code', '=', $dataImport['import_type']])->first();
-
-            $document = Document::create([
-                    'organization_id'   => $dataImport['organization_id'],
-                    'name'              => $dataImport['name'],
-                    'data'              => $dataImport['data'],
-                    'document_type_id'  => $documentType['id'],
-                    'is_origin'         => true,
-                    'source'            => 'upload'
-                ])
-                ->first();
-
-            self::id($id)->write([
+                static::id($id)->write([
                     // attach document
                     'document_id'   => $document['id'],
                     // remove current object data (pointless after successful import)
                     'data'          => null
                 ]);
+            }
         }
 
         if($self->getClass() !== self::class) {
-            $self->do('process');
+            foreach($self as $id => $dataImport) {
+                \eQual::run('do', 'exchange_import_DataImport_prepare', ['id' => $id]);
+            }
         }
 
     }

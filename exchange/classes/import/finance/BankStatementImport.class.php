@@ -11,6 +11,8 @@ use exchange\import\DataImport;
 
 class BankStatementImport extends DataImport {
 
+    public const SUPPORTED_EXTENSIONS = ['cod', 'coda', 'txt', 'xlsx'];
+
     public static function getName() {
         return 'Bank statement import';
     }

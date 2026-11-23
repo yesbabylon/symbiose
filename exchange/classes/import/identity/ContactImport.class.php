@@ -11,6 +11,8 @@ use exchange\import\DataImport;
 
 class ContactImport extends DataImport {
 
+    public const SUPPORTED_EXTENSIONS = ['csv', 'vcf', 'xlsx'];
+
     public static function getName() {
         return "Contact import";
     }
@@ -27,7 +29,7 @@ class ContactImport extends DataImport {
                 'description'    => 'Organization the accounting operation belongs to.',
                 'required'       => true,
                 'default'        => 1
-            ],
+                ],
 
             'import_type' => [
                 'type'              => 'string',

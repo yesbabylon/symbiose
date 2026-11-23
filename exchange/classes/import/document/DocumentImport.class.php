@@ -7,8 +7,6 @@
 
 namespace exchange\import\document;
 
-use document\document\Document;
-use document\document\DocumentType;
 use exchange\import\DataImport;
 
 class DocumentImport extends DataImport {
@@ -67,37 +65,23 @@ class DocumentImport extends DataImport {
         ];
     }
 
-    protected static function onafterinstantiate($self) {
-        $self->read(['name', 'data', 'document_type_id', 'document_subtype_id', 'organization_id']);
-
-        foreach($self as $id => $dataImport) {
-            if(!$dataImport['data']) {
-                continue;
-            }
-
-            $document = Document::create([
-                    'organization_id'       => $dataImport['organization_id'],
-                    'name'                  => $dataImport['name'],
-                    'data'                  => $dataImport['data'],
-                    'document_type_id'      => $dataImport['document_type_id'] ?? null,
-                    'document_subtype_id'   => $dataImport['document_subtype_id'] ?? null,
-                    'is_origin'             => true,
-                    'source'                => 'upload'
-                ])
-                ->first();
-
-            self::id($id)->write([
-                    // attach document
-                    'document_id'   => $document['id'],
-                    // remove current object data (pointless after successful import)
-                    'data'          => null
-                ]);
-        }
-
+    protected static function doProcess($self) {
         $self
             ->transition('mark_ready')
             ->transition('mark_imported');
+    }
 
+    protected static function computeDocumentValues($dataImport): array {
+        return [
+            'organization_id'       => $dataImport['organization_id'],
+            'name'                  => $dataImport['name'],
+            'data'                  => $dataImport['data'],
+            'document_type_id'      => $dataImport['document_type_id'] ?? null,
+            'document_subtype_id'   => $dataImport['document_subtype_id'] ?? null,
+            'document_visibility'   => $dataImport['document_visibility'],
+            'is_origin'             => true,
+            'source'                => 'upload'
+        ];
     }
 
 }
