@@ -105,7 +105,7 @@ class Page extends Model {
         $pages = $om->read(__CLASS__, $ids, ['chapter_id'], $lang);
 
         foreach($pages as $id => $page) {
-            Chapter::onupdatePagesIds($om, $page['chapter_id'], $values, $lang);
+            Chapter::triggerOnupdatePagesIds($om, $page['chapter_id'], $values, $lang);
         }
     }
 

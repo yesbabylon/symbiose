@@ -108,4 +108,8 @@ class Chapter extends Model {
         }
         $orm->read('learn\Module', array_keys($modules_ids), ['page_count'], $lang);
     }
+
+    public static function triggerOnupdatePagesIds($orm, $oids, $values, $lang) {
+        self::onupdatePagesIds($orm, $oids, $values, $lang);
+    }
 }
