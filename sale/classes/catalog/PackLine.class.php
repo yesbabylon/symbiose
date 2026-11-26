@@ -25,7 +25,7 @@ class PackLine extends Model {
 
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'sale\catalog\PackLine::calcName',
+                'function'          => 'calcName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the pack line.'
@@ -43,7 +43,7 @@ class PackLine extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => "The Product this line refers to.",
-                'onupdate'          => 'sale\catalog\PackLine::onupdateChildProductId'
+                'onupdate'          => 'onupdateChildProductId'
             ],
 
             'child_product_model_id' => [
@@ -51,7 +51,7 @@ class PackLine extends Model {
                 'foreign_object'    => 'sale\catalog\ProductModel',
                 'description'       => "The Product Model the line refers to.",
                 'required'          => true,
-                'onupdate'          => 'sale\catalog\PackLine::onupdateChildProductModelId'
+                'onupdate'          => 'onupdateChildProductModelId'
             ],
 
             'has_own_qty' => [
@@ -88,12 +88,12 @@ class PackLine extends Model {
         ];
     }
 
-    public static function onupdateChildProductId($om, $oids, $values, $lang) {
+    protected static function onupdateChildProductId($om, $oids, $values, $lang) {
         // #memo - disabled since one should use child_product_model_id instead of child_product_id
         // $om->update(__CLASS__, $oids, [ 'name' => null ], $lang);
     }
 
-    public static function onupdateChildProductModelId($om, $oids, $values, $lang) {
+    protected static function onupdateChildProductModelId($om, $oids, $values, $lang) {
         $om->update(__CLASS__, $oids, [ 'name' => null ], $lang);
     }
 

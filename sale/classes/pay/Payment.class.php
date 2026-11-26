@@ -201,7 +201,7 @@ class Payment extends FundingAllocation {
      * Assign customer_id and invoice_id from invoice relating to funding, if any.
      * Force recomputing of target funding computed fields (is_paid and paid_amount).
      */
-    public static function onupdateFundingId($self, $values) {
+    protected static function onupdateFundingId($self, $values) {
         trigger_error("ORM::calling sale\pay\Payment::onupdateFundingId", QN_REPORT_DEBUG);
 
         $funding_fields = [

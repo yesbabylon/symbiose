@@ -125,14 +125,14 @@ class Ticket extends Model {
         }
     }
 
-    public static function onupdateAssigneeId($om, $oids, $values, $lang) {
+    protected static function onupdateAssigneeId($om, $oids, $values, $lang) {
         $om->update(self::getType(), $oids, ['status' => 'pending']);
     }
 
     /**
      * Upon description update, we store the User-Agent header from the request into the `environment` field.
      */
-    public static function onupdateDescription($om, $oids, $values, $lang) {
+    protected static function onupdateDescription($om, $oids, $values, $lang) {
         $context = $om->getContainer()->get('context');
         $request = $context->getHttpRequest();
         $om->update(self::getType(), $oids, ['environment' => $request->getHeader('User-Agent')]);

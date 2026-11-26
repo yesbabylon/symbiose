@@ -113,7 +113,7 @@ class Leaf extends Model {
         return $result;
     }
 
-    public static function onupdateVisibility($om, $oids, $values, $lang) {
+    protected static function onupdateVisibility($om, $oids, $values, $lang) {
         $om->write(__CLASS__, $oids, ['visible' => null], $lang);
     }
 }

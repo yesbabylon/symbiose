@@ -99,13 +99,13 @@ class OrderPayment extends Model {
      * This handled is mostly called upon creation and assignation to an order.
      *
      */
-    public static function onupdateOrderId($om, $ids, $values, $lang) {
+    protected static function onupdateOrderId($om, $ids, $values, $lang) {
     }
 
     /**
      *
      */
-    public static function onupdateStatus($om, $ids, $values, $lang) {
+    protected static function onupdateStatus($om, $ids, $values, $lang) {
         /*
         $payments = $om->read(self::getType(), $ids, ['status', 'order_payment_parts_ids'], $lang);
         if($payments > 0) {
@@ -115,7 +115,7 @@ class OrderPayment extends Model {
         */
     }
 
-    public static function onupdateFundingId($om, $ids, $values, $lang) {
+    protected static function onupdateFundingId($om, $ids, $values, $lang) {
         $payments = $om->read(self::getType(), $ids, ['order_id', 'funding_id'], $lang);
         if($payments > 0) {
             foreach($payments as $pid => $payment) {
@@ -169,11 +169,11 @@ class OrderPayment extends Model {
         return $result;
     }
 
-    public static function onupdateOrderPaymentPartsIds($om, $ids, $values, $lang) {
+    protected static function onupdateOrderPaymentPartsIds($om, $ids, $values, $lang) {
         $om->write(__CLASS__, $ids, ['total_paid' => null], $lang);
     }
 
-    public static function onupdateOrderLinesIds($om, $ids, $values, $lang) {
+    protected static function onupdateOrderLinesIds($om, $ids, $values, $lang) {
         $om->write(__CLASS__, $ids, ['total_due' => null], $lang);
     }
 

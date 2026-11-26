@@ -285,7 +285,18 @@ class Document extends Model {
                 'foreign_field'     => 'object_id',
                 'domain'            => [ ['object_class', '=', 'document\document\Document'], ['object_id', '=', 'object.id'] ],
                 'description'       => "Links between document and related roles assignments."
+            ],
+
+            'attached_emails_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'communication\email\Email',
+                'foreign_field'     => 'outgoing_attachment_documents_ids',
+                'rel_table'         => 'communication_email_rel_documents',
+                'rel_foreign_key'   => 'email_id',
+                'rel_local_key'     => 'document_id',
+                'description'       => 'Emails the document is an attachment of.'
             ]
+
         ];
     }
 

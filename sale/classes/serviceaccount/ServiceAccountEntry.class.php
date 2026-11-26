@@ -891,7 +891,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
      * Synchronize customer_id with the customer_id from parent Service Account.
      * SALine CC are created from Service Account, so we need to sync with related customer.
      */
-    public static function onupdateServiceAccountId($self, $values) {
+    protected static function onupdateServiceAccountId($self, $values) {
         $self->read(['service_account_id']);
         foreach($self as $id => $line) {
             if($line['service_account_id']) {
@@ -1010,7 +1010,7 @@ class ServiceAccountEntry extends \equal\orm\Model {
     /**
      *
      */
-    public static function onupdatePoints($self) {
+    protected static function onupdatePoints($self) {
         $self->read(['service_account_id', 'report_id']);
         foreach($self as $id => $line) {
 

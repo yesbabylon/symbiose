@@ -70,7 +70,7 @@ class SaleModel extends Model {
         ];
     }
 
-    public static function onupdatePriceId($self) {
+    protected static function onupdatePriceId($self) {
         $self->read(['unit_price', 'price_id' => ['price']]);
         foreach($self as $id => $model) {
             if(is_null($model['unit_price'])) {

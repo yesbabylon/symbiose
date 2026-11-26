@@ -253,7 +253,7 @@ class SaleEntry extends Model {
      * @param $self
      * @return array
      */
-    public static function policyReadyForSubmission($self): array {
+    protected static function policyReadyForSubmission($self): array {
         $result = [];
         $self->read(['id']);
         foreach($self as $id => $entry) {
@@ -261,11 +261,11 @@ class SaleEntry extends Model {
         return $result;
     }
 
-    public static function policyCanApprove($self): array {
+    protected static function policyCanApprove($self): array {
         return [];
     }
 
-    public static function policyBillable($self): array {
+    protected static function policyBillable($self): array {
         $result = [];
         $self->read(['is_internal', 'customer_id', 'product_id', 'price_id', 'unit_price', 'qty', 'is_billable']);
         foreach($self as $id => $entry) {
@@ -282,7 +282,7 @@ class SaleEntry extends Model {
         return $result;
     }
 
-    public static function doCreateReceivable($self) {
+    protected static function doCreateReceivable($self) {
         $self->read(['id', 'is_internal', 'is_billable', 'date', 'invoice_group', 'model', 'receivable_queue_id', 'customer_id']);
         foreach($self as $id => $saleEntry) {
             if($saleEntry['is_internal']) {
@@ -384,7 +384,7 @@ class SaleEntry extends Model {
         ];
     }
 
-    public static function onupdateUnitPrice($self) {
+    protected static function onupdateUnitPrice($self) {
         $self->update(['total' => null]);
     }
 

@@ -52,7 +52,7 @@ class OrderPaymentPart extends \sale\pay\Payment {
         ];
     }
 
-    public static function onupdateAmount($om, $ids, $values, $lang) {
+    protected static function onupdateAmount($om, $ids, $values, $lang) {
         $parts = $om->read(get_called_class(), $ids, ['order_payment_id'], $lang);
         if($parts > 0) {
             $order_payments_ids = array_reduce($parts, function($c, $o) { return array_merge($c, [$o['order_payment_id']]); }, []);
@@ -60,7 +60,7 @@ class OrderPaymentPart extends \sale\pay\Payment {
         }
     }
 
-    public static function onupdateOrderPaymentId($om, $ids, $values, $lang) {
+    protected static function onupdateOrderPaymentId($om, $ids, $values, $lang) {
         $parts = $om->read(get_called_class(), $ids, ['order_payment_id.order_id'], $lang);
         if($parts > 0) {
             foreach($parts as $pid => $part) {

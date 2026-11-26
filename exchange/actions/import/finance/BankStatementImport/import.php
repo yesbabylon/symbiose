@@ -15,9 +15,6 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 [$params, $providers] = eQual::announce([
-    'type'          => 'do',
-    'name'          => 'import',
-    'package_name'  => 'exchange',
     'description'   => 'Create bank statements and lines from a checked import.',
     'params'        => [
         'id' => [

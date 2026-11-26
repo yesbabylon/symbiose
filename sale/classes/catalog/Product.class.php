@@ -221,7 +221,7 @@ class Product extends Model {
         return $result;
     }
 
-    public static function onupdateProductModelId($self) {
+    protected static function onupdateProductModelId($self) {
         $self->read(['groups_ids', 'product_model_id' => ['is_pack', 'has_own_price','can_sell','can_buy' , 'groups_ids', 'family_id']]);
         foreach($self as $id => $product) {
             if($product['groups_ids'] && count($product['groups_ids'])) {

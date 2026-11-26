@@ -342,7 +342,7 @@ class Server extends Model {
         ];
     }
 
-    public static function onupdateUp($self) {
+    protected static function onupdateUp($self) {
         $self->read(['up', 'server_type', 'instances_ids']);
         foreach($self as $server) {
             if($server['server_type'] === 'b2' && !$server['up']) {
@@ -351,11 +351,11 @@ class Server extends Model {
         }
     }
 
-    public static function onupdateServerType($self) {
+    protected static function onupdateServerType($self) {
         $self->do('create_management_api_access');
     }
 
-    public static function doCreateManagementApiAccess($self) {
+    protected static function doCreateManagementApiAccess($self) {
         $self->read([
             'server_type',
             'accesses_ids'      => ['access_type', 'protocol', 'port'],

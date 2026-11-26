@@ -26,7 +26,9 @@ use learn\Chapter;
 			'required'    => true
 		]
 	],
-	'access'      => 'public',
+	'access'      => [
+		'visibility' => 'public'
+	],
 	'response'    => [
 		'content-type'  => 'application/json',
 		'charset'       => 'utf-8',

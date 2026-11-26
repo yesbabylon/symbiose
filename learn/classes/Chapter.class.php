@@ -94,7 +94,7 @@ class Chapter extends Model {
     }
 
 
-    public static function onupdatePagesIds($orm, $oids, $values, $lang) {
+    protected static function onupdatePagesIds($orm, $oids, $values, $lang) {
         // force refresh page_count
         $orm->write(__CLASS__, $oids, ['page_count' => null], $lang);
 

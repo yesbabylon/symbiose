@@ -43,17 +43,21 @@ class Service extends Model {
             ],
 
             'has_subscription' => [
-                'type'              => 'boolean',
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
                 'description'       => 'The service has a subscription.',
-                'default'           => false,
-                'dependents'        => ['is_billable', 'is_internal', 'subscription_id'],
+                'store'             => true,
+                'relation'          => ['service_model_id' => 'has_subscription'],
+                'dependents'        => ['is_billable', 'is_internal'/*, 'subscription_id'*/],
             ],
 
             'is_billable' => [
-                'type'              => 'boolean',
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
                 'description'       => 'The service is billable.',
-                'visible'           => ['has_subscription', '=', true],
-                'default'           => false,
+                'store'             => true,
+                'relation'          => ['service_model_id' => 'has_subscription'],
+                'visible'           => ['has_subscription', '=', true]
             ],
 
             'is_auto_renew' => [
