@@ -73,7 +73,20 @@
             "name": "Importer un document",
             "description": "Sélectionner un fichier et renseigner ses métadonnées.",
             "layout": {},
-            "actions": {}
+            "actions": {
+                "action.check": {
+                    "label": "Contrôler",
+                    "description": "Contrôler la cohérence des données téléversées."
+                },
+                "action.import": {
+                    "label": "Importer",
+                    "description": "Importer les données téléversées."
+                },
+                "action.remove": {
+                    "label": "Supprimer",
+                    "description": "Supprimer cet import de données terminé ou en erreur."
+                }
+            }
         }
     },
     "error": {

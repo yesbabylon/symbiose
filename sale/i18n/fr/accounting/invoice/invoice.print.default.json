@@ -1,0 +1,37 @@
+{
+    "invoice": "Facture",
+    "credit_note": "Note de crédit",
+    "customer_name": "Nom",
+    "customer_address": "Adresse",
+    "registration_number": "N° d'entreprise",
+    "vat_number": "N° de TVA",
+    "number": "N°",
+    "date": "Date",
+    "status": "Statut",
+    "status_paid": "Payée",
+    "status_to_pay": "À payer",
+    "status_to_refund": "À rembourser",
+    "proforma_notice": "Ceci est une facture PROFORMA, établie pour répondre à une demande de prix exacte. Il s'agit d'un document à usage exclusivement commercial, qui n'a pas de valeur légale et ne doit pas faire l'objet d'un paiement. En cas de prise de service effective, une facture définitive sera établie après la conclusion de la vente.",
+    "total_excl_vat": "Total HT",
+    "total_incl_vat": "Total TTC",
+    "balance_of_must_be_paid_before": "Le solde de %price% doit être réglé avant le %due_date%",
+    "communication": "Communication",
+    "columns": {
+        "product": "Libellé produit",
+        "qty": "Qté",
+        "unit_price": "Prix unit.",
+        "discount": "Rem%",
+        "vat": "TVA",
+        "taxes": "Taxes",
+        "price_ex_vat": "Prix HT",
+        "price": "Prix"
+    },
+    "footer": {
+        "registration_number": "Numéro d'entreprise",
+        "iban": "IBAN",
+        "email": "E-mail",
+        "web": "Web",
+        "tel": "Tél",
+        "fax": "Fax"
+    }
+}

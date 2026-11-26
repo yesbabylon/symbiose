@@ -1,17 +1,45 @@
 {
     "name": "Document Import",
     "description": "Document import.",
-    "header": {
-        "actions": {
-            "ACTION.SAVE": [
-                {
-                    "id": "SAVE_AND_VIEW",
-                    "visible": true
-                }
-            ],
-            "ACTION.CANCEL": false
+    "actions": [
+        {
+            "id": "action.check",
+            "label": "Check",
+            "description": "Check consistency of uploaded data.",
+            "controller": "core_model_do",
+            "params": {
+                "entity": "exchange\\import\\document\\DocumentImport",
+                "action": "check",
+                "ids": []
+            },
+            "visible": ["status", "=", "pending"]
+        },
+        {
+            "id": "action.import",
+            "label": "Import",
+            "description": "Import the uploaded data.",
+            "controller": "core_model_do",
+            "params": {
+                "entity": "exchange\\import\\document\\DocumentImport",
+                "action": "import",
+                "ids": []
+            },
+            "visible": ["status", "=", "ready"]
+        },
+        {
+            "id": "action.remove",
+            "label": "Remove",
+            "description": "Remove this completed or failed data import.",
+            "controller": "core_model_do",
+            "params": {
+                "entity": "exchange\\import\\document\\DocumentImport",
+                "action": "remove",
+                "ids": []
+            },
+            "confirm": true,
+            "visible": ["status", "in", ["failing", "imported"]]
         }
-    },
+    ],
     "layout": {
         "groups": [
             {
@@ -54,6 +82,12 @@
                                                 "value": "document_visibility",
                                                 "width": "100%",
                                                 "required": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "100%",
+                                                "visible": false
                                             }
                                         ]
                                     }
@@ -66,13 +100,10 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "data",
+                                                "value": "logs",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "type": "upload",
-                                                    "autosave": false,
-                                                    "required": true,
-                                                    "height": "500"
+                                                    "height": 400
                                                 }
                                             }
                                         ]

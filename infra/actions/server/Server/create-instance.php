@@ -56,7 +56,7 @@ use inventory\Product;
         ],
         'cipher_key' => [
             'type'              => 'string',
-            'description'       => 'Optional 32-character cipher key. B2 generates one when omitted.',
+            'description'       => 'Optional base64 encoded 32 bytes cipher key. B2 generates one when omitted.',
             'default'           => ''
         ],
         'https_redirect' => [
@@ -138,7 +138,7 @@ if(!empty($allowed_subtypes[$params['b2_instance_type']]) && !in_array($params['
     throw new Exception('invalid_b2_instance_subtype', EQ_ERROR_INVALID_PARAM);
 }
 
-if($params['cipher_key'] !== '' && strlen($params['cipher_key']) !== 32) {
+if($params['cipher_key'] !== '' && strlen(base64_decode($params['cipher_key'])) !== 32) {
     throw new Exception('invalid_cipher_key', EQ_ERROR_INVALID_PARAM);
 }
 

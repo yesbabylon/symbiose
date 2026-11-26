@@ -58,6 +58,13 @@ class CloudProject extends Model {
                 'description'       => 'JSON object with credentials for cloud provider APIs.'
             ],
 
+            'cloud_provider_credential_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'core\security\Credential',
+                'description'       => 'Cloud provider API credentials.',
+                'required'          => true
+            ],
+
             'provider_catalog' => [
                 'type'              => 'string',
                 'usage'             => 'text/json.medium',

@@ -163,45 +163,66 @@ $getOrganizationLogo = function($invoice) {
     return $result;
 };
 
-$getLabels = function($lang) {
-    return [
-        'invoice'                        => Setting::get_value('sale', 'locale', 'label_invoice', 'Invoice', [], $lang),
-        'credit_note'                    => Setting::get_value('sale', 'locale', 'label_credit-note', 'Credit note', [], $lang),
-        'customer_name'                  => Setting::get_value('sale', 'locale', 'label_customer-name', 'Name', [], $lang),
-        'customer_address'               => Setting::get_value('sale', 'locale', 'label_customer-address', 'Address', [], $lang),
-        'registration_number'            => Setting::get_value('sale', 'locale', 'label_registration-number', 'Registration n°', [], $lang),
-        'vat_number'                     => Setting::get_value('sale', 'locale', 'label_vat-number', 'VAT n°', [], $lang),
-        'number'                         => Setting::get_value('sale', 'locale', 'label_number', 'N°', [], $lang),
-        'date'                           => Setting::get_value('sale', 'locale', 'label_date', 'Date', [], $lang),
-        'status'                         => Setting::get_value('sale', 'locale', 'label_status', 'Status', [], $lang),
-        'status_paid'                    => Setting::get_value('sale', 'locale', 'label_status-paid', 'Paid', [], $lang),
-        'status_to_pay'                  => Setting::get_value('sale', 'locale', 'label_status-to-pay', 'To pay', [], $lang),
-        'status_to_refund'               => Setting::get_value('sale', 'locale', 'label_status-to-refund', 'To refund', [], $lang),
-        'proforma_notice'                => Setting::get_value('sale', 'locale', 'label_proforma-notice', 'This is a proforma and must not be paid.', [], $lang),
-        'total_excl_vat'                 => Setting::get_value('sale', 'locale', 'label_total-ex-vat', 'Total VAT excl.', [], $lang),
-        'total_incl_vat'                 => Setting::get_value('sale', 'locale', 'label_total-inc-vat', 'Total VAT incl.', [], $lang),
-        'balance_of_must_be_paid_before' => Setting::get_value('sale', 'locale', 'label_balance-of-must-be-paid-before', 'Balance of %price% to be paid before %due_date%', [], $lang),
-        'communication'                  => Setting::get_value('sale', 'locale', 'label_communication', 'Communication', [], $lang),
-        'columns' => [
-            'product'                    => Setting::get_value('sale', 'locale', 'label_product-column', 'Product label', [], $lang),
-            'qty'                        => Setting::get_value('sale', 'locale', 'label_qty-column', 'Qty', [], $lang),
-            'unit_price'                 => Setting::get_value('sale', 'locale', 'label_unit-price-column', 'U. price', [], $lang),
-            'discount'                   => Setting::get_value('sale', 'locale', 'label_discount-column', 'Disc.', [], $lang),
-            'vat'                        => Setting::get_value('sale', 'locale', 'label_vat-column', 'VAT', [], $lang),
-            'taxes'                      => Setting::get_value('sale', 'locale', 'label_taxes-column', 'Taxes', [], $lang),
-            'price_ex_vat'               => Setting::get_value('sale', 'locale', 'label_price-ex-vat-column', 'Price ex. VAT', [], $lang),
-            'price'                      => Setting::get_value('sale', 'locale', 'label_price-column', 'Price', [], $lang)
-        ],
-        'footer' => [
-            'registration_number'        => Setting::get_value('sale', 'locale', 'label_footer-registration-number', 'Registration number', [], $lang),
-            'iban'                       => Setting::get_value('sale', 'locale', 'label_footer-iban', 'IBAN', [], $lang),
-            'email'                      => Setting::get_value('sale', 'locale', 'label_footer-email', 'Email', [], $lang),
-            'web'                        => Setting::get_value('sale', 'locale', 'label_footer-web', 'Web', [], $lang),
-            'tel'                        => Setting::get_value('sale', 'locale', 'label_footer-tel', 'Tel', [], $lang),
-            'fax'                        => Setting::get_value('sale', 'locale', 'label_footer-fax', 'Fax', [], $lang),
-        ]
-    ];
+$getLabels = function(string $lang, string $view_id, array $default_labels = []): array {
+    $labels_path = sprintf(
+        '%s/packages/sale/i18n/%s/accounting/invoice/invoice.%s.json',
+        EQ_BASEDIR,
+        $lang,
+        $view_id
+    );
+
+    if(!file_exists($labels_path)) {
+        return $default_labels;
+    }
+
+    $content = file_get_contents($labels_path);
+    $labels = $content === false ? null : json_decode($content, true);
+
+    if(!is_array($labels)) {
+        trigger_error('APP::Invalid invoice labels file: '.$labels_path, EQ_REPORT_WARNING);
+        return $default_labels;
+    }
+
+    return array_replace_recursive($default_labels, $labels);
 };
+
+$default_labels = [
+    'invoice'                        => 'Invoice',
+    'credit_note'                    => 'Credit note',
+    'customer_name'                  => 'Name',
+    'customer_address'               => 'Address',
+    'registration_number'            => 'Registration n°',
+    'vat_number'                     => 'VAT n°',
+    'number'                         => 'N°',
+    'date'                           => 'Date',
+    'status'                         => 'Status',
+    'status_paid'                    => 'Paid',
+    'status_to_pay'                  => 'To pay',
+    'status_to_refund'               => 'To refund',
+    'proforma_notice'                => 'This is a proforma and must not be paid.',
+    'total_excl_vat'                 => 'Total VAT excl.',
+    'total_incl_vat'                 => 'Total VAT incl.',
+    'balance_of_must_be_paid_before' => 'Balance of %price% to be paid before %due_date%',
+    'communication'                  => 'Communication',
+    'columns' => [
+        'product'      => 'Product label',
+        'qty'          => 'Qty',
+        'unit_price'   => 'U. price',
+        'discount'     => 'Disc.',
+        'vat'          => 'VAT',
+        'taxes'        => 'Taxes',
+        'price_ex_vat' => 'Price ex. VAT',
+        'price'        => 'Price'
+    ],
+    'footer' => [
+        'registration_number' => 'Registration number',
+        'iban'                => 'IBAN',
+        'email'               => 'Email',
+        'web'                 => 'Web',
+        'tel'                 => 'Tel',
+        'fax'                 => 'Fax'
+    ]
+];
 
 $getInvoicePaymentQrCodeUri = function($invoice) {
     // default to blank image (empty 1x1)
@@ -235,6 +256,11 @@ $lang = $params['lang'] ?? null;
 if(!$lang) {
     $invoice = SaleInvoice::id($params['id'])->read(['customer_id' => ['lang_id' => ['code']]])->first();
     $lang = $invoice['customer_id']['lang_id']['code'];
+}
+
+$lang = strtolower(trim((string) $lang));
+if(!preg_match('/^[a-z]{2}$/', $lang)) {
+    $lang = 'en';
 }
 
 $invoice = SaleInvoice::id($params['id'])
@@ -293,7 +319,7 @@ $values = [
     'locale'              => constant('L10N_LOCALE'),
     'date_format'         => Setting::get_value('core', 'locale', 'date_format', 'm/d/Y'),
     'currency'            => $getTwigCurrency(Setting::get_value('core', 'locale', 'currency', '€')),
-    'labels'              => $getLabels($lang),
+    'labels'              => $getLabels($lang, $params['view_id'], $default_labels),
     'debug'               => $params['debug'],
     'tax_lines'           => [],
 ];

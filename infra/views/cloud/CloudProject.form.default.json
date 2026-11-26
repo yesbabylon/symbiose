@@ -134,6 +134,11 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "cloud_provider_credential_id",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "provider_catalog",
                                                 "width": "100%",
                                                 "readonly": true,

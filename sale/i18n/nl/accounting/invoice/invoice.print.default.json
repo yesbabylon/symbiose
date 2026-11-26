@@ -1,0 +1,37 @@
+{
+    "invoice": "Factuur",
+    "credit_note": "Kredietwaardigheid",
+    "customer_name": "Naam",
+    "customer_address": "Adres",
+    "registration_number": "Registratienummer",
+    "vat_number": "BTW n°",
+    "number": "N°",
+    "date": "Datum",
+    "status": "Toestand",
+    "status_paid": "Betaald",
+    "status_to_pay": "Te betalen",
+    "status_to_refund": "Te vergoeden",
+    "proforma_notice": "Dit is een PROFORMA-factuur, opgesteld naar aanleiding van een exacte prijsaanvraag. Dit document is uitsluitend bestemd voor commercieel gebruik, heeft geen juridische waarde en mag niet worden betaald. Bij een daadwerkelijke dienstverlening wordt na het sluiten van de verkoop een definitieve factuur opgesteld.",
+    "total_excl_vat": "Totaal ex. BTW",
+    "total_incl_vat": "Totaal incl. BTW",
+    "balance_of_must_be_paid_before": "Saldo van %price% moet betaald zijn voor %due_date%",
+    "communication": "Communicatie",
+    "columns": {
+        "product": "Etiket",
+        "qty": "Hoev.",
+        "unit_price": "Een. prijs",
+        "discount": "Afn.",
+        "vat": "BTW",
+        "taxes": "Belasting",
+        "price_ex_vat": "Prijs ex. BTW",
+        "price": "Prijs"
+    },
+    "footer": {
+        "registration_number": "Registratienummer",
+        "iban": "IBAN",
+        "email": "E-mail",
+        "web": "Web",
+        "tel": "Tel",
+        "fax": "Fax"
+    }
+}
