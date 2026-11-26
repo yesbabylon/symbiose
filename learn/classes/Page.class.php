@@ -97,15 +97,15 @@ class Page extends Model {
         return $result;
     }
 
-    public static function onupdateNextActive($om, $ids, $values, $lang) {
+    protected static function onupdateNextActive($om, $ids, $values, $lang) {
         $om->write(__CLASS__, $ids, ['next_active' => null], $lang);
     }
 
-    public static function onupdateChapterId($om, $ids, $values, $lang) {
+    protected static function onupdateChapterId($om, $ids, $values, $lang) {
         $pages = $om->read(__CLASS__, $ids, ['chapter_id'], $lang);
 
         foreach($pages as $id => $page) {
-            Chapter::onupdatePagesIds($om, $page['chapter_id'], $values, $lang);
+            Chapter::triggerOnupdatePagesIds($om, $page['chapter_id'], $values, $lang);
         }
     }
 

@@ -15,7 +15,7 @@ class Condition extends Model {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'sale\discount\Condition::getDisplayName',
+                'function'          => 'calcName',
                 'store'             => true,
                 'description'       => 'Resulting display name of the condition.'
             ],
@@ -53,7 +53,7 @@ class Condition extends Model {
         ];
     }
 
-    public static function getDisplayName($om, $oids, $lang) {
+    protected static function calcName($om, $oids, $lang) {
         $result = [];
         $res = $om->read(__CLASS__, $oids, ['operand', 'operator', 'value']);
         foreach($res as $oid => $odata) {
@@ -61,6 +61,4 @@ class Condition extends Model {
         }
         return $result;
     }
-
-
 }

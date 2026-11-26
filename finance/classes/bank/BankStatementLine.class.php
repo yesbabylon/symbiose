@@ -414,7 +414,7 @@ class BankStatementLine extends AccountingOperation {
         return $result;
     }
 
-    public static function onupdatePaymentsIds($om, $ids, $values, $lang) {
+    protected static function onupdatePaymentsIds($om, $ids, $values, $lang) {
         $lines = $om->read(self::getType(), $ids, ['amount', 'payments_ids.amount']);
         if($lines > 0) {
             foreach($lines as $id => $line) {
@@ -432,7 +432,7 @@ class BankStatementLine extends AccountingOperation {
         }
     }
 
-    public static function onupdateReconciliationStatus($om, $ids, $values, $lang) {
+    protected static function onupdateReconciliationStatus($om, $ids, $values, $lang) {
         $lines = $om->read(self::getType(), $ids, ['reconciliation_status', 'bank_statement_id', 'payments_ids.customer_id']);
         if($lines > 0) {
             $statement_ids = [];

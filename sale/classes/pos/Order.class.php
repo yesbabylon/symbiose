@@ -145,13 +145,15 @@ class Order extends Model {
                 'description'       => 'The payments parts that relate to the order.'
             ],
 
+            /*
             'accounting_entries_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'finance\accounting\AccountingEntry',
                 'foreign_field'     => 'order_id',
                 'description'       => 'Accounting entries relating to the lines of the order.',
                 'ondetach'          => 'delete'
-            ]
+            ],
+            */
 
         ];
     }
@@ -159,7 +161,7 @@ class Order extends Model {
     /**
      * @param \equal\orm\ObjectManager  $om Instance of the ObjectManager service.
      */
-    public static function onupdateStatus($om, $ids, $values, $lang) {
+    protected static function onupdateStatus($om, $ids, $values, $lang) {
         // upon payment of the order, update related funding and invoice, if any
         if(isset($values['status']) && $values['status'] == 'paid') {
             $orders = $om->read(self::getType(), $ids, ['has_invoice', 'has_funding', 'funding_id.type', 'funding_id.invoice_id', 'order_lines_ids'], $lang);
@@ -188,15 +190,15 @@ class Order extends Model {
         }
     }
 
-    public static function onupdateSessionId($om, $ids, $values, $lang) {
+    protected static function onupdateSessionId($om, $ids, $values, $lang) {
         $om->write(get_called_class(), $ids, ['name' => null, 'sequence' => null], $lang);
     }
 
-    public static function onupdateOrderLinesIds($om, $ids, $values, $lang) {
+    protected static function onupdateOrderLinesIds($om, $ids, $values, $lang) {
         $om->write(get_called_class(), $ids, ['price' => null, 'total' => null], $lang);
     }
 
-    public static function onupdateFundingId($om, $ids, $values, $lang) {
+    protected static function onupdateFundingId($om, $ids, $values, $lang) {
         $orders = $om->read(self::getType(), $ids, ['funding_id'], $lang);
         if($orders > 0) {
             foreach($orders as $oid => $order) {

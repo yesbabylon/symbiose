@@ -97,7 +97,7 @@ class Software extends Model {
         ];
     }
 
-    public static function onupdateSoftwareModelId($self) {
+    protected static function onupdateSoftwareModelId($self) {
         $self->read(['software_model_id' => ['name', 'description', 'edition', 'version']]);
         foreach($self as $id => $software) {
             self::id($id)->update([

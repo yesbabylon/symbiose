@@ -94,7 +94,7 @@ class Chapter extends Model {
     }
 
 
-    public static function onupdatePagesIds($orm, $oids, $values, $lang) {
+    protected static function onupdatePagesIds($orm, $oids, $values, $lang) {
         // force refresh page_count
         $orm->write(__CLASS__, $oids, ['page_count' => null], $lang);
 
@@ -107,5 +107,9 @@ class Chapter extends Model {
             $modules_ids[$chapter['module_id']] = true;
         }
         $orm->read('learn\Module', array_keys($modules_ids), ['page_count'], $lang);
+    }
+
+    public static function triggerOnupdatePagesIds($orm, $oids, $values, $lang) {
+        self::onupdatePagesIds($orm, $oids, $values, $lang);
     }
 }

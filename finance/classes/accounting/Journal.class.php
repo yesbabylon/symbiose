@@ -99,7 +99,7 @@ class Journal extends Model {
                 'foreign_object'    => 'finance\accounting\Account',
                 'description'       => 'Default accounting account used by the journal.',
                 'domain'            => [
-                    ['organization_id', '=', 'object.organization_id'],
+                    // ['organization_id', '=', 'object.organization_id'],  #note - field not present in Account class
                     ['is_control_account', '=', false]
                 ]
             ],

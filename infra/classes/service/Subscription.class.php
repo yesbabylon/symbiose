@@ -159,7 +159,7 @@ class Subscription extends SubscriptionAbstract {
         return $result;
     }
 
-    public static function onupdateServiceId($self): void {
+    protected static function onupdateServiceId($self): void {
         $self->read(['service_id']);
         foreach($self as $id) {
             Service::id($id['service_id'])->update(['has_subscription' => true]);

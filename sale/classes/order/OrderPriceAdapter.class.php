@@ -87,7 +87,7 @@ class OrderPriceAdapter extends Model {
         ];
     }
 
-    public static function onupdateValue($om, $oids, $values, $lang) {
+    protected static function onupdateValue($om, $oids, $values, $lang) {
         // reset computed price for related orders and order_line_groups
         $discounts = $om->read(__CLASS__, $oids, ['order_id', 'order_line_id', 'order_line_group_id']);
 

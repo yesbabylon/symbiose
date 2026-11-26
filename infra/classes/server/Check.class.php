@@ -127,8 +127,11 @@ class Check extends Model {
             ],
 
             'checked' => [
-                'type'              => 'datetime',
-                'description'       => 'Date of last status evaluation.'
+                'type'              => 'computed',
+                'result_type'       => 'datetime',
+                'description'       => 'Date of last status evaluation.',
+                'store'             => true,
+                'function'          => 'calcChecked'
             ],
 
             'alert_triggers_ids' => [
@@ -168,6 +171,16 @@ class Check extends Model {
             }
 
             $result[$id] = $scope;
+        }
+
+        return $result;
+    }
+
+    protected static function calcChecked($self): array {
+        $result = [];
+        $self->read(['last_status_id' => ['created']]);
+        foreach($self as $id => $check) {
+            $result[$id] = $check['last_status_id']['created'] ?? null;
         }
 
         return $result;

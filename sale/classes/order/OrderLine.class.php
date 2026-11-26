@@ -100,7 +100,7 @@ class OrderLine extends Model {
             'qty' => [
                 'type'              => 'float',
                 'description'       => 'Quantity of product items for the line.',
-                'default'           => 0,
+                'default'           => 0.0,
                 'dependents'        => ['total', 'price', 'vat_rate','order_id' => ['total', 'price'], 'order_line_group_id' => ['total', 'price']]
             ],
 

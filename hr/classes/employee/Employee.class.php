@@ -8,6 +8,9 @@
 namespace hr\employee;
 
 use core\Group;
+use equal\access\AccessController;
+use equal\auth\AuthenticationManager;
+use equal\orm\Collection;
 use identity\Identity;
 use identity\IdentityFacetAbstract;
 use identity\User;
@@ -266,7 +269,16 @@ class Employee extends IdentityFacetAbstract {
         $self->do('sync_from_teams');
     }
 
-    protected static function policyCanCreateUserAccount($self, $user_id, $access): array {
+    /**
+     * @param Collection $self
+     * @param AuthenticationManager $auth
+     * @param AccessController $access
+     * @return array
+     * @throws \Exception
+     */
+    protected static function policyCanCreateUserAccount($self, $auth, $access): array {
+        $user_id = $auth->userId();
+
         $result = [];
         $is_allowed = $user_id === EQ_ROOT_USER_ID
             || $access->userHasGroup($user_id, 'admins')
@@ -281,7 +293,16 @@ class Employee extends IdentityFacetAbstract {
         return $result;
     }
 
-    protected static function policyCanManageUserAccount($self, $user_id, $access): array {
+    /**
+     * @param Collection $self
+     * @param AuthenticationManager $auth
+     * @param AccessController $access
+     * @return array
+     * @throws \Exception
+     */
+    protected static function policyCanManageUserAccount($self, $auth, $access): array {
+        $user_id = $auth->userId();
+
         $result = [];
         $is_allowed = $user_id === EQ_ROOT_USER_ID
             || $access->userHasGroup($user_id, 'admins')

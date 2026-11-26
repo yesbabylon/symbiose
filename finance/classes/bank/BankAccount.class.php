@@ -69,7 +69,7 @@ class BankAccount extends Model {
     }
 
 
-    public static function onupdateBankAccountIban($self) {
+    protected static function onupdateBankAccountIban($self) {
         $self->read(['organization_id', 'bank_account_iban']);
         foreach($self as $id => $bankAccount) {
             $organization = Organization::id($bankAccount['organization_id'])->read(['id', 'bank_account_ids'])->first();
@@ -86,7 +86,7 @@ class BankAccount extends Model {
         }
     }
 
-    public static function onupdateBankAccountBic($self) {
+    protected static function onupdateBankAccountBic($self) {
         $self->read(['organization_id', 'bank_account_bic']);
         foreach($self as $id => $bankAccount) {
             $organization = Organization::id($bankAccount['organization_id'])->read(['id', 'bank_account_ids'])->first();

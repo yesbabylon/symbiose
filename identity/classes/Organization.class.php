@@ -73,7 +73,7 @@ class Organization extends IdentityFacetAbstract {
         return [['identity_id']];
     }
 
-    public static function onupdateBankAccountIban($self) {
+    protected static function onupdateBankAccountIban($self) {
         $self->read(['bank_account_ids', 'bank_account_iban', 'bank_account_bic']);
         foreach($self as $id => $organization) {
             if(!isset($organization['bank_account_ids']) || empty($organization['bank_account_ids'])) {
@@ -92,7 +92,7 @@ class Organization extends IdentityFacetAbstract {
         }
     }
 
-    public static function onupdateBankAccountBic($self) {
+    protected static function onupdateBankAccountBic($self) {
         $self->read(['bank_account_ids', 'bank_account_bic']);
         foreach($self as $id => $organization) {
             // #memo - we don't create an account here since IBAN might not have been provided

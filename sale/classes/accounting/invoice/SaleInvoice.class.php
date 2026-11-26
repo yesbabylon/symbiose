@@ -461,7 +461,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
         ];
     }
 
-    public static function policyCanBeInvoiced($self): array {
+    protected static function policyCanBeInvoiced($self): array {
         $result = [];
         $self->read(['invoice_lines_ids']);
         foreach($self as $id => $invoice) {
@@ -735,7 +735,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
     /**
      * Create new credit notes to reverse the invoices.
      */
-    public static function doReverseInvoice($self) {
+    protected static function doReverseInvoice($self) {
         $self->read([
                 'status',
                 'invoice_type',
@@ -822,7 +822,7 @@ class SaleInvoice extends \finance\accounting\operation\AccountingOperation {
     /**
      * Create the fundings according to the invoices.
      */
-    public static function doCreateFunding($self) {
+    protected static function doCreateFunding($self) {
         $self->read(['id', 'price', 'payment_reference', 'due_date', 'funding_id']);
 
         foreach($self as $invoice) {

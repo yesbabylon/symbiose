@@ -112,7 +112,7 @@ class Address extends Model {
     }
 
 
-    public static function onupdateAddress($om, $oids, $values, $lang) {
+    protected static function onupdateAddress($om, $oids, $values, $lang) {
         $om->write(__CLASS__, $oids, [ 'display_name' => null ], $lang);
     }
 }

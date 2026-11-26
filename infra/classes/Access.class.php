@@ -169,7 +169,7 @@ class Access extends Model {
         return [];
     }
 
-    public static function onupdateType($self, $values) {
+    protected static function onupdateType($self, $values) {
         if(isset($values['port'])) {
             return;
         }

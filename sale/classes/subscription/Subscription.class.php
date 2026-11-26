@@ -475,7 +475,7 @@ class Subscription extends SubscriptionAbstract {
      * @param  array                        $ids
      * @return void
      */
-    public static function onupdateIsAutoRenew($om, $ids, $values, $lang) {
+    protected static function onupdateIsAutoRenew($om, $ids, $values, $lang) {
         self::ids($ids)->do('schedule_renewal');
     }
 

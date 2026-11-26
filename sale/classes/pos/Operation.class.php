@@ -92,7 +92,7 @@ class Operation extends Model {
      * @param  string                      $lang       Language in which multilang fields are being updated.
      * @return void
      */
-    public static function onupdateSessionId($om, $oids, $values, $lang) {
+    protected static function onupdateSessionId($om, $oids, $values, $lang) {
         $operations = $om->read(self::getType(), $oids, ['session_id.cashdesk_id'], $lang);
         if($operations > 0) {
             foreach($operations as $oid => $operation) {

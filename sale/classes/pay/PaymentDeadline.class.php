@@ -66,7 +66,7 @@ class PaymentDeadline extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\FundingPlan',
                 'description'       => "The payment plan the deadline applies to.",
-                'ondelete'          => 'delete'
+                'ondelete'          => 'cascade'
             ]
 
         ];

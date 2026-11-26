@@ -144,7 +144,7 @@ class Widget extends Model {
         }
     }
 
-    public static function onupdateType($orm, $oids, $values, $lang) {
+    protected static function onupdateType($orm, $oids, $values, $lang) {
         $res = $orm->read(__CLASS__, $oids, ['type'], $lang);
 
         if($res > 0 && count($res)) {

@@ -58,7 +58,7 @@ class Season extends Model {
         ];
     }
 
-    public static function onupdateSeasonCategoryId($self) {
+    protected static function onupdateSeasonCategoryId($self) {
         $self->read(['season_periods_ids']);
         foreach($self as $season) {
             SeasonPeriod::ids($season['season_periods_ids'])->update(['season_category_id' => null]);

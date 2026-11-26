@@ -143,7 +143,7 @@ class CashdeskSession extends Model {
      * Cashdesk assignement cannot be changed, so this handler is called once, when the session has just been created.
      *
      */
-    public static function onupdateCashdeskId($om, $oids, $values, $lang) {
+    protected static function onupdateCashdeskId($om, $oids, $values, $lang) {
         $sessions = $om->read(__CLASS__, $oids, ['cashdesk_id', 'amount_opening', 'user_id'], $lang);
 
         if($sessions > 0) {
@@ -159,7 +159,7 @@ class CashdeskSession extends Model {
         }
     }
 
-    public static function onupdateStatus($om, $oids, $values, $lang) {
+    protected static function onupdateStatus($om, $oids, $values, $lang) {
         // upon session closing, create additional operation if there is a delta in cash amount
         if(isset($values['status']) && $values['status'] == 'closed') {
             $sessions = $om->read(self::getType(), $oids, ['cashdesk_id', 'user_id', 'amount_opening', 'amount_closing', 'operations_ids.amount'], $lang);

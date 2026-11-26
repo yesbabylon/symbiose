@@ -206,42 +206,42 @@ class ProductModel extends Model {
         ];
     }
 
-    public static function onupdateIsPack($self) {
+    protected static function onupdateIsPack($self) {
         $self->read(['products_ids', 'is_pack']);
         foreach($self as $id => $model) {
             Product::ids($model['products_ids'])->update(['is_pack' => $model['is_pack']]);
         }
     }
 
-    public static function onupdateHasOwnPrice($self) {
+    protected static function onupdateHasOwnPrice($self) {
         $self->read(['products_ids', 'has_own_price']);
         foreach($self as $id => $model) {
             Product::ids($model['products_ids'])->update(['has_own_price' => $model['has_own_price']]);
         }
     }
 
-    public static function onupdateCanSell($self) {
+    protected static function onupdateCanSell($self) {
         $self->read(['products_ids', 'can_sell']);
         foreach($self as $id => $model) {
             Product::ids($model['products_ids'])->update(['can_sell' => $model['can_sell']]);
         }
     }
 
-    public static function onupdateCanBuy($self) {
+    protected static function onupdateCanBuy($self) {
         $self->read(['products_ids', 'can_buy']);
         foreach($self as $id => $model) {
             Product::ids($model['products_ids'])->update(['can_buy' => $model['can_buy']]);
         }
     }
 
-    public static function onupdateFamilyId($self) {
+    protected static function onupdateFamilyId($self) {
         $self->read(['products_ids', 'family_id']);
         foreach($self as $id => $model) {
             Product::ids($model['products_ids'])->update(['family_id' => $model['family_id']]);
         }
     }
 
-    public static function onupdateGroupsIds($self) {
+    protected static function onupdateGroupsIds($self) {
         $self->read(['products_ids', 'groups_ids']);
         foreach($self as $mid => $model) {
             $products = Product::ids($model['products_ids'])->read('groups_ids')->get();

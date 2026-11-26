@@ -698,7 +698,7 @@ class TimeEntry extends SaleEntry {
         );
     }
 
-    public static function onupdateProjectId($self): void {
+    protected static function onupdateProjectId($self): void {
         $self->read(['project_id' => ['name', 'receivable_queue_id']]);
         foreach($self as $id => $entry) {
             if(!$entry['project_id']) {
@@ -715,7 +715,7 @@ class TimeEntry extends SaleEntry {
         }
     }
 
-    public static function onupdateTicketId($self): void {
+    protected static function onupdateTicketId($self): void {
         $self->read(['ticket_id']);
         foreach($self as $id => $entry) {
             self::id($id)->update(['reference' => 'ticket '.$entry['ticket_id']]);
@@ -873,7 +873,7 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function policyReadyForSubmission($self): array {
+    protected static function policyReadyForSubmission($self): array {
         $result = [];
         $self->read(['description', 'project_id', 'user_id', 'origin', 'duration']);
         foreach($self as $id => $entry) {

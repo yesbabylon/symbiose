@@ -98,7 +98,7 @@ class IpAddress extends Model {
         return $result;
     }
 
-    public static function onupdateVisibility($self) {
+    protected static function onupdateVisibility($self) {
         $self->read(['server_id']);
         foreach($self as $ip_address) {
             Server::id($ip_address['server_id'])

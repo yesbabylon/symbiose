@@ -61,7 +61,7 @@ class UserStatus extends Model
 				'type'        => 'boolean',
 				'description' => 'The user has finished the module.',
 				'default'     => false,
-				'onupdate'    => 'learn\UserStatus::onupdateIsComplete'
+				'onupdate'    => 'onupdateIsComplete'
 			]
 
 		];
@@ -77,7 +77,7 @@ class UserStatus extends Model
 		];
 	}
 
-	public static function onupdateIsComplete($orm, $oids, $values, $lang)
+	protected static function onupdateIsComplete($orm, $oids, $values, $lang)
 	{
 
 		$statuses = $orm->read(__CLASS__, $oids, [

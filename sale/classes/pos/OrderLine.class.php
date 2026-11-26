@@ -62,7 +62,7 @@ class OrderLine extends Model {
                 'type'              => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Tax-excluded unit price (with automated discounts applied).',
-                'onupdate'          => '_resetPrice'
+                'onupdate'          => 'onupdateUnitPrice'
             ],
 
             'vat_rate' => [
@@ -70,7 +70,7 @@ class OrderLine extends Model {
                 'usage'             => 'amount/percent',
                 'description'       => 'VAT rate that applies to this line.',
                 'default'           => 0.0,
-                'onupdate'          => '_resetPrice'
+                'onupdate'          => 'onupdateVatRate'
             ],
 
             'discount' => [
@@ -78,15 +78,15 @@ class OrderLine extends Model {
                 'usage'             => 'amount/percent',
                 'description'       => 'Discount rate to apply on the unit price.',
                 'default'           => 0.0,
-                'onupdate'          => '_resetPrice'
+                'onupdate'          => 'onupdateDiscount'
             ],
 
             'qty' => [
                 'type'              => 'integer',
                 'usage'             => 'numeric/integer',
                 'description'       => 'Amount of units in this line.',
-                'default'           => 0.0,
-                'onupdate'          => '_resetPrice'
+                'default'           => 0,
+                'onupdate'          => 'onupdateQty'
             ],
 
             'total' => [
@@ -110,7 +110,7 @@ class OrderLine extends Model {
         ];
     }
 
-    public static function onupdateProductId($om, $oids, $values, $lang) {
+    protected static function onupdateProductId($om, $oids, $values, $lang) {
         $lines = $om->read(self::getType(), $oids, ['product_id']);
 
         foreach($lines as $lid => $line) {
@@ -154,6 +154,22 @@ class OrderLine extends Model {
                 trigger_error("ORM::no matching price list found for product {$line['product_id']} for date {$date}", QN_REPORT_WARNING);
             }
         }
+    }
+
+    protected static function onupdateUnitPrice($om, $ids, $values, $lang) {
+        self::_resetPrice($om, $ids, $values, $lang);
+    }
+
+    protected static function onupdateVatRate($om, $ids, $values, $lang) {
+        self::_resetPrice($om, $ids, $values, $lang);
+    }
+
+    protected static function onupdateDiscount($om, $ids, $values, $lang) {
+        self::_resetPrice($om, $ids, $values, $lang);
+    }
+
+    protected static function onupdateQty($om, $ids, $values, $lang) {
+        self::_resetPrice($om, $ids, $values, $lang);
     }
 
     protected static function calcTotal($om, $ids, $lang) {

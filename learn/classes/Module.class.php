@@ -153,7 +153,7 @@ class Module extends Model
 		return $result;
 	}
 
-	public static function onupdateChaptersIds($orm, $oids, $values, $lang)
+	protected static function onupdateChaptersIds($orm, $oids, $values, $lang)
 	{
 		// force immediate refresh chapter_count
 		$orm->write(__CLASS__, $oids, ['chapter_count' => null], $lang);

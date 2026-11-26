@@ -75,6 +75,7 @@ class Order extends Model {
                 'default'           => false
             ],
 
+            /*
             'contracts_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\contract\Contract',
@@ -82,6 +83,7 @@ class Order extends Model {
                 'sort'              => 'desc',
                 'description'       => 'List of contacts related to the order, if any.'
             ],
+            */
 
             'order_lines_ids' => [
                 'type'              => 'one2many',
@@ -153,7 +155,7 @@ class Order extends Model {
                     'external_impediment',      // cancellation due to external delivery failure (organisation, means of transport, ...)
                 ],
                 'description'       => "Reason for which the customer cancelled the order.",
-                'default'           => 'generic'
+                'default'           => 'other'
             ],
 
             'payment_status' => [
@@ -172,6 +174,7 @@ class Order extends Model {
                 'default'           => time()
             ],
 
+            /*
             'fundings_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\pay\Funding',
@@ -179,13 +182,16 @@ class Order extends Model {
                 'description'       => 'Fundings that relate to the order.',
                 'ondetach'          => 'delete'
             ],
+            */
 
+            /*
             'invoices_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\accounting\invoice\SaleInvoice',
                 'foreign_field'     => 'order_id',
                 'description'       => 'Invoices that relate to the order.'
-            ]
+            ],
+            */
 
         ];
     }

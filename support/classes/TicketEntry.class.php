@@ -57,7 +57,7 @@ class TicketEntry extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'support\Ticket',
                 'description'       => "Ticket the entry relates to.",
-                'ondelete'          => 'delete'
+                'ondelete'          => 'cascade'
             ],
 
             'attachments_ids' => [
@@ -71,7 +71,7 @@ class TicketEntry extends Model {
         ];
     }
 
-    public static function onupdateDescription($om, $oids, $values, $lang) {
+    protected static function onupdateDescription($om, $oids, $values, $lang) {
         // update excerpt
         $tickets = $om->read(self::getType(), $oids, ['description']);
         if($tickets > 0 && count($tickets)) {
@@ -92,7 +92,7 @@ class TicketEntry extends Model {
      * Handler for field status.
      * Used to intercept ticket submission and create a first entry.
      */
-    public static function onupdateStatus($om, $oids, $values, $lang) {
+    protected static function onupdateStatus($om, $oids, $values, $lang) {
         $entries = $om->read(self::getType(), $oids, ['status', 'creator', 'ticket_id', 'ticket_id.name', 'ticket_id.type', 'ticket_id.priority', 'ticket_id.creator', 'ticket_id.creator.login', 'ticket_id.assignee_id.login']);
         if($entries > 0 && count($entries)) {
             foreach($entries as $eid => $entry) {
