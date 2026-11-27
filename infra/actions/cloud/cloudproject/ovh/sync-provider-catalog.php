@@ -5,6 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
+use core\security\Credential;
 use equal\http\HttpRequest;
 use infra\cloud\CloudProject;
 use infra\cloud\DeploymentZone;
@@ -121,6 +122,7 @@ $cloud_project = CloudProject::id($params['id'])
     ->read([
         'extref_project_id',
         'api_credentials',
+        'cloud_provider_credential_id',
         'cloud_provider_id' => ['code']
     ])
     ->first();
@@ -141,9 +143,14 @@ if(empty($cloud_project['api_credentials'])) {
     throw new Exception('missing_api_credentials', EQ_ERROR_INVALID_PARAM);
 }
 
+/*
 $api_credentials = is_array($cloud_project['api_credentials'])
     ? $cloud_project['api_credentials']
     : json_decode($cloud_project['api_credentials'], true);
+*/
+
+$cloudProviderCredentials = Credential::id($cloud_project['cloud_provider_credential_id'])->read(['secret'])->first();
+$api_credentials = json_decode($cloudProviderCredentials['secret'], true);
 
 if(
     !is_array($api_credentials)
