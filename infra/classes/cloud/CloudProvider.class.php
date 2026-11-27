@@ -51,7 +51,14 @@ class CloudProvider extends Model {
                 'foreign_object'    => 'infra\cloud\CloudProject',
                 'foreign_field'     => 'cloud_provider_id',
                 'description'       => 'The projects that are hosted by the cloud provider.'
-            ]
+            ],
+
+            'credential_type_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'core\security\CredentialType',
+                'description'       => 'Type/format for Cloud provider API credentials.',
+                'required'          => true
+            ],
 
         ];
     }

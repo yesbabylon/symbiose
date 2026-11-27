@@ -21,6 +21,11 @@
                                                 "type": "field",
                                                 "value": "name",
                                                 "width": "70%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "credential_type_id",
+                                                "width": "50%"
                                             }
                                         ]
                                     }
